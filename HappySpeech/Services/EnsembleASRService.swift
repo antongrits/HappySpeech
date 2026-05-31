@@ -210,10 +210,15 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
             return baseSimilarity
         }
 
-        // Контекстная корректировка: штраф за замену взвешен на articulationDistance
+        // Контекстная корректировка: штраф за замену взвешен на child-aware
+        // дистанции. Закономерные детские замены (Р→Л, Ш→С, межзубные С/З)
+        // штрафуются мягко (~0.2), а не как «чужая» фонема (0.7–1.0). Так слово
+        // остаётся узнанным, а несформированный звук помечается отдельно, без
+        // несправедливого занижения phonetic accuracy.
+        let policy = ChildSpeechScoringPolicy()
         var totalDistance: Double = 0
         for i in 0 ..< reference.count {
-            totalDistance += IPADictionary.articulationDistance(reference[i], child[i])
+            totalDistance += policy.childAwareSubstitutionCost(reference[i], child[i])
         }
         let avgDistance = totalDistance / Double(reference.count)
         let articulationSimilarity = 1.0 - avgDistance

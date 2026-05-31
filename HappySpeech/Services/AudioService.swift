@@ -407,6 +407,114 @@ public protocol LocalLLMService: Sendable {
     func generateParentSummary(request: ParentSummaryRequest) async throws -> ParentSummaryResponse
     func generateRoute(request: RoutePlannerRequest) async throws -> RoutePlannerResponse
     func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse
+
+    /// Разбор ошибки ребёнка: классификация + тёплая микро-подсказка ребёнку и
+    /// конкретная артикуляционная подсказка родителю. On-device (Tier A/C).
+    func generateChildErrorHint(request: ChildErrorHintRequest) async throws -> ChildErrorHintResponse
+}
+
+// MARK: - LocalLLMService default (back-compat)
+
+public extension LocalLLMService {
+    /// Дефолт для совместимости: реализации, не предоставляющие свой разбор,
+    /// получают rule-based-эквивалент через детерминированный построитель.
+    func generateChildErrorHint(request: ChildErrorHintRequest) async throws -> ChildErrorHintResponse {
+        ChildErrorHintResponse.ruleBased(for: request)
+    }
+}
+
+/// Запрос на разбор ошибки ребёнка (decision point «errorAnalysis», углублённый).
+public struct ChildErrorHintRequest: Codable, Sendable {
+    public let word: String
+    public let targetSound: String
+    public let asrTranscript: String
+    public let asrConfidence: Double
+    public let pronunciationScore: Double
+    public let age: Int
+    /// Машинная категория из ``ChildSpeechScoringPolicy`` ("soundReplacement" и т.п.).
+    public let policyCategory: String
+
+    public init(
+        word: String,
+        targetSound: String,
+        asrTranscript: String,
+        asrConfidence: Double,
+        pronunciationScore: Double,
+        age: Int,
+        policyCategory: String
+    ) {
+        self.word = word
+        self.targetSound = targetSound
+        self.asrTranscript = asrTranscript
+        self.asrConfidence = asrConfidence
+        self.pronunciationScore = pronunciationScore
+        self.age = age
+        self.policyCategory = policyCategory
+    }
+}
+
+/// Ответ разбора ошибки: категория + подсказки ребёнку и родителю.
+public struct ChildErrorHintResponse: Codable, Sendable {
+    /// Категория ошибки (соответствует ``ErrorAnalysis/Category``).
+    public let category: String
+    /// Короткая тёплая подсказка ребёнку (≤8 слов, без слова «неправильно»).
+    public let childHint: String
+    /// Конкретная артикуляционная подсказка родителю (1–2 предложения).
+    public let parentHint: String
+
+    public init(category: String, childHint: String, parentHint: String) {
+        self.category = category
+        self.childHint = childHint
+        self.parentHint = parentHint
+    }
+
+    /// Детерминированный rule-based разбор — используется как fallback и дефолт.
+    /// Содержит реальные артикуляционные подсказки по группам звуков русского.
+    public static func ruleBased(for r: ChildErrorHintRequest) -> ChildErrorHintResponse {
+        let sound = r.targetSound.uppercased()
+        let childHint: String
+        let parentHint: String
+        // Артикуляционные подсказки по типичным группам (классическая русская методика).
+        switch sound {
+        case "Р", "РЬ":
+            childHint = "Заведи моторчик язычком вверху!"
+            parentHint = "Звук «Р»: язык поднят за верхние зубы, кончик дрожит. " +
+                "Начните с упражнения «балалайка» (д-д-д при поднятом языке), затем добавьте вибрацию."
+        case "Л", "ЛЬ":
+            childHint = "Прижми язычок к зубкам — л-л-л!"
+            parentHint = "Звук «Л»: кончик языка упирается в верхние зубы, бока опущены. " +
+                "Если выходит «в» или «й» — поработайте перед зеркалом над положением языка."
+        case "Ш", "Ж", "Щ", "Ч":
+            childHint = "Сделай язычок чашечкой — ш-ш-ш!"
+            parentHint = "Шипящие: язык «чашечкой» поднят к нёбу, губы округлены. " +
+                "Если заменяется на «с/з» — это сигматизм; потренируйте тёплую широкую струю воздуха."
+        case "С", "З", "Ц":
+            childHint = "Улыбнись и пусти ветерок — с-с-с!"
+            parentHint = "Свистящие: язык за нижними зубами, тонкая холодная струя. " +
+                "Межзубное произношение (язык между зубами) исправляется упражнением «заборчик»."
+        case "К", "Г", "Х":
+            childHint = "Спрячь язычок назад — к-к-к!"
+            parentHint = "Заднеязычные: спинка языка поднимается к нёбу сзади. " +
+                "Если заменяется на «т/д» — придержите кончик языка шпателем/чистым пальцем у нижних зубов."
+        default:
+            childHint = "Молодец, давай ещё разок!"
+            parentHint = "Повторите слово «\(r.word)» медленно, выделяя голосом нужный звук."
+        }
+
+        // Категория: уважаем уже посчитанную политикой, иначе выводим из метрик.
+        let category: String
+        if !r.policyCategory.isEmpty {
+            category = r.policyCategory
+        } else if r.asrConfidence < 0.35 {
+            category = ErrorAnalysis.Category.uncertain.rawValue
+        } else if r.pronunciationScore < 0.4 {
+            category = ErrorAnalysis.Category.soundOmission.rawValue
+        } else {
+            category = ErrorAnalysis.Category.soundDistortion.rawValue
+        }
+
+        return ChildErrorHintResponse(category: category, childHint: childHint, parentHint: parentHint)
+    }
 }
 
 public struct ParentSummaryRequest: Codable, Sendable {

@@ -95,6 +95,29 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
         return _ruleBasedMicroStory(request: request)
     }
 
+    // MARK: - Generate: Child Error Hint (углублённый error-analysis decision point)
+
+    public func generateChildErrorHint(request: ChildErrorHintRequest) async throws -> ChildErrorHintResponse {
+#if arch(arm64)
+        do {
+            let prompt = buildChildErrorHintPrompt(request: request)
+            let raw = try await MLXEngine.shared.generate(
+                prompt: prompt,
+                maxTokens: 160,
+                temperature: 0.4
+            )
+            if ChildSafetyValidator.validate(raw), let parsed = parseChildErrorHintJSON(raw, request: request) {
+                _isModelLoaded = true
+                return parsed
+            }
+            HSLogger.llm.warning("LocalLLMService: errorHint MLX rejected/unparsed, rule-based")
+        } catch {
+            HSLogger.llm.warning("LocalLLMService: MLX errorHint failed: \(error.localizedDescription), fallback")
+        }
+#endif
+        return ChildErrorHintResponse.ruleBased(for: request)
+    }
+
     // MARK: - Prompt Builders
 
     private func buildParentSummaryPrompt(request: ParentSummaryRequest) -> String {
@@ -128,6 +151,53 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
         про звук «\(request.targetSound)». \
         Используй слова: \(words). Максимум 3 предложения. Только история, без пояснений.
         """
+    }
+
+    private func buildChildErrorHintPrompt(request r: ChildErrorHintRequest) -> String {
+        // Встраиваем артикуляционную базу прямо в промпт — Qwen2.5-1.5B не знает
+        // русскую логопедическую методику, поэтому даём ей опору. Просим строгий JSON.
+        return """
+        Ты — добрый помощник логопеда для ребёнка \(r.age) лет. Разбери одну попытку \
+        произнести слово и дай две подсказки: ребёнку (очень коротко, тепло, без слова \
+        «неправильно») и родителю (конкретная артикуляция).
+
+        Данные попытки:
+        — слово: «\(r.word)»
+        — целевой звук: «\(r.targetSound)»
+        — что услышала программа: «\(r.asrTranscript)» (уверенность \(pct(r.asrConfidence)))
+        — оценка произношения: \(pct(r.pronunciationScore))
+        — предварительная категория: \(r.policyCategory)
+
+        Памятка по артикуляции (используй при подсказке родителю):
+        — Р: язык вверху за зубами, кончик вибрирует;
+        — Л: кончик языка упирается в верхние зубы;
+        — Ш/Ж/Щ/Ч: язык «чашечкой» к нёбу, губы округлены;
+        — С/З/Ц: язык за нижними зубами, тонкая струя воздуха;
+        — К/Г/Х: спинка языка поднимается к нёбу сзади.
+
+        Категории ошибки: soundDistortion, soundOmission, soundReplacement, hesitation, correct, uncertain.
+        Если уверенность ниже 0.35 — категория uncertain, подсказка ребёнку «давай ещё разок».
+
+        Ответь ТОЛЬКО JSON без markdown:
+        {"category":"...","child_hint":"...","parent_hint":"..."}
+        """
+    }
+
+    private func pct(_ x: Double) -> String { "\(Int((max(0, min(1, x)) * 100).rounded()))%" }
+
+    private func parseChildErrorHintJSON(_ text: String, request: ChildErrorHintRequest) -> ChildErrorHintResponse? {
+        guard let data = extractJSON(text),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+        let childHint = (obj["child_hint"] as? String ?? obj["childHint"] as? String)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let parentHint = (obj["parent_hint"] as? String ?? obj["parentHint"] as? String)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !childHint.isEmpty, !parentHint.isEmpty else { return nil }
+        // Категорию валидируем по известному множеству; иначе берём policyCategory.
+        let known = Set(["soundDistortion", "soundOmission", "soundReplacement", "hesitation", "correct", "uncertain"])
+        let rawCat = (obj["category"] as? String) ?? request.policyCategory
+        let category = known.contains(rawCat) ? rawCat : request.policyCategory
+        return ChildErrorHintResponse(category: category, childHint: childHint, parentHint: parentHint)
     }
 
     // MARK: - JSON Parsers

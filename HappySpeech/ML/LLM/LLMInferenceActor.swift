@@ -72,6 +72,12 @@ public actor LLMInferenceActor {
         }
     }
 
+    public func generateChildErrorHint(_ request: ChildErrorHintRequest) async throws -> ChildErrorHintResponse {
+        try await serialized {
+            try await self.localLLM.generateChildErrorHint(request: request)
+        }
+    }
+
     // MARK: - Serialization
 
     private func serialized<T: Sendable>(_ work: @Sendable () async throws -> T) async throws -> T {

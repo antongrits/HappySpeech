@@ -170,7 +170,16 @@ enum MFCCExtractor {
         vDSP_create_fftsetup(fftLog2n, FFTRadix(kFFTRadix2))
     }()
 
-    // MARK: Кэшированный Mel filterbank [nMFCC, nFFT/2+1].
+    // MARK: Кэшированный Mel filterbank [nMFCC, fftSize/2+1].
+    //
+    // FFT-бины. computePowerSpectrum паддит фрейм до fftSize (512, степень двойки) и
+    // возвращает fftSize/2 (=256) бинов. Поэтому bin index должен считаться от fftSize,
+    // а не от nFFT (400). До фикса верхние mel-полосы маппились в индексы > 256 и
+    // условие `where k < powerSpectrum.count` молча обнуляло их энергию, искажая
+    // верхнюю часть спектра (критично для шипящих/свистящих с энергией в 4–8 кГц).
+    //
+    // Частота k-го бина для FFT размера fftSize при SR=targetSR: f_k = k * SR / fftSize.
+    // Обратно: bin = f * fftSize / SR.
     private static let cachedMelFilterbank: (melPoints: [Float], hzPoints: [Float], binPoints: [Int]) = {
         let melMin: Float = 0
         let melMax = hzToMel(Float(targetSR / 2))
@@ -178,7 +187,10 @@ enum MFCCExtractor {
             melMin + Float(i) * (melMax - melMin) / Float(nMFCC + 1)
         }
         let hzPts  = melPts.map { melToHz($0) }
-        let binPts = hzPts.map { Int($0 / Float(targetSR) * Float(nFFT)) }
+        let maxBin = fftSize / 2
+        let binPts = hzPts.map { hz -> Int in
+            min(Int(hz / Float(targetSR) * Float(fftSize)), maxBin)
+        }
         return (melPts, hzPts, binPts)
     }()
 

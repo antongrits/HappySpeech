@@ -236,8 +236,34 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
 
     public func analyzeError(attempt: AttemptOutcome, target: String) async -> ErrorAnalysisDecisionOutcome {
         let start = Date()
+
+        // On-device углублённый разбор (Tier A) — COPPA-safe, без сети. Даёт более
+        // тёплую и конкретную подсказку, чем шаблонный rule-based. Категория из
+        // child-aware политики передаётся как опора для модели.
+        if await inferenceActor.isReady {
+            let policyCategory = rules.analyzeError(attempt: attempt, target: target).category.rawValue
+            let request = ChildErrorHintRequest(
+                word: attempt.word,
+                targetSound: target,
+                asrTranscript: attempt.asrTranscript,
+                asrConfidence: attempt.asrConfidence,
+                pronunciationScore: attempt.pronunciationScore,
+                age: 7,
+                policyCategory: policyCategory
+            )
+            if let resp = await withTimeout(ms: 8_000, { [inferenceActor] in
+                try? await inferenceActor.generateChildErrorHint(request)
+            }) {
+                let category = ErrorAnalysis.Category(rawValue: resp.category) ?? .uncertain
+                let analysis = ErrorAnalysis(category: category, hint: resp.childHint)
+                let meta = makeMeta(start: start, source: .onDevice, usedFallback: false)
+                logDecision(kind: "errorAnalysis", meta: meta, output: "od:\(category.rawValue)", childId: nil)
+                return ErrorAnalysisDecisionOutcome(analysis: analysis, meta: meta)
+            }
+        }
+
         let analysis = rules.analyzeError(attempt: attempt, target: target)
-        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: true)
         logDecision(kind: "errorAnalysis", meta: meta, output: analysis.category.rawValue, childId: nil)
         return ErrorAnalysisDecisionOutcome(analysis: analysis, meta: meta)
     }
