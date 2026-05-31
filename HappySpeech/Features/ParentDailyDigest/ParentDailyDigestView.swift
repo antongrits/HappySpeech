@@ -5,6 +5,8 @@ import SwiftUI
 struct ParentDailyDigestView: View {
 
     @State private var interactor = ParentDailyDigestInteractor()
+    @State private var bootstrapped = false
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -23,6 +25,15 @@ struct ParentDailyDigestView: View {
             }
             .navigationTitle(Text(String(localized: "parentDigest.nav.title")))
             .navigationBarTitleDisplayMode(.inline)
+            .task {
+                guard !bootstrapped else { return }
+                bootstrapped = true
+                interactor = ParentDailyDigestInteractor(
+                    sessionRepository: container.sessionRepository,
+                    childId: container.currentChildId
+                )
+                interactor.refresh()
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

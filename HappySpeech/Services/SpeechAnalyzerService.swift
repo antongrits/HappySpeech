@@ -1,3 +1,4 @@
+@preconcurrency import AVFoundation
 import Foundation
 import OSLog
 
@@ -166,18 +167,71 @@ public actor LiveSpeechAnalyzerService: SpeechAnalyzerService {
     }
 
     private func emitPartialTranscript() async {
-        // На WhisperKit-фолбэке мы пока не зовём live-API (Whisper не
-        // поточный). Эмитим заглушку «слушаю», чтобы UI получил
-        // первый event и не висел в loading. Полная транскрипция придёт
-        // от существующего `LiveASRService` после остановки записи.
+        // WhisperKit не поточный, поэтому «live» партиал мы получаем, прогоняя
+        // уже накопленный буфер через обычный `transcribe(url:)`. Пишем буфер во
+        // временный WAV (16 kHz mono Float32 — без ресемплинга) и берём гипотезу
+        // как промежуточный (isFinal: false) результат. Это реальная инкрементная
+        // транскрипция, а не заглушка: каждые ~0.8 c UI получает обновлённый текст.
         guard activeContinuation != nil else { return }
-        let placeholder = SpeechAnalyzerEvent(
-            transcript: "",
-            isFinal: false,
-            confidence: nil
-        )
-        activeContinuation?.yield(placeholder)
-        Self.logger.debug("Emitted partial placeholder; buffered=\(self.bufferedSamples.count)")
+        let snapshot = bufferedSamples
+        // Меньше ~0.3 c аудио — гипотеза нестабильна, пропускаем тик.
+        guard snapshot.count >= 4_800 else { return }
+
+        do {
+            let url = try Self.writeTemporaryWAV(samples: snapshot)
+            defer { try? FileManager.default.removeItem(at: url) }
+            let result = try await asrService.transcribe(url: url)
+            // Continuation мог завершиться, пока шла транскрипция.
+            guard activeContinuation != nil else { return }
+            let text = result.transcript.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !text.isEmpty else { return }
+            activeContinuation?.yield(SpeechAnalyzerEvent(
+                transcript: text,
+                isFinal: false,
+                confidence: result.confidence
+            ))
+            Self.logger.debug("Emitted partial transcript; samples=\(snapshot.count)")
+        } catch {
+            // Партиал — best-effort; ошибка тика не должна ронять live-сессию.
+            Self.logger.debug("Partial transcript skipped: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    /// Пишет 16 kHz mono Float32 PCM-буфер во временный WAV-файл для разовой
+    /// транскрипции. Возвращает URL; вызывающий обязан удалить файл.
+    private static func writeTemporaryWAV(samples: [Float]) throws -> URL {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("speechanalyzer-partial-\(UUID().uuidString)")
+            .appendingPathExtension("wav")
+
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM,
+            AVSampleRateKey: 16_000.0,
+            AVNumberOfChannelsKey: 1,
+            AVLinearPCMBitDepthKey: 32,
+            AVLinearPCMIsFloatKey: true,
+            AVLinearPCMIsNonInterleaved: false
+        ]
+        let audioFile = try AVAudioFile(forWriting: url, settings: settings)
+        let format = audioFile.processingFormat
+
+        guard let buffer = AVAudioPCMBuffer(
+            pcmFormat: format,
+            frameCapacity: AVAudioFrameCount(samples.count)
+        ) else {
+            throw SpeechAnalyzerError.engineFailed("PCM buffer allocation failed")
+        }
+        buffer.frameLength = AVAudioFrameCount(samples.count)
+        guard let channel = buffer.floatChannelData?[0] else {
+            throw SpeechAnalyzerError.engineFailed("PCM buffer has no channel data")
+        }
+        samples.withUnsafeBufferPointer { src in
+            if let base = src.baseAddress {
+                channel.update(from: base, count: samples.count)
+            }
+        }
+        try audioFile.write(from: buffer)
+        return url
     }
 }
 

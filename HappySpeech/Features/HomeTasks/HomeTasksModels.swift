@@ -198,7 +198,8 @@ enum HomeTasksModels {
 
     // MARK: - NotifyOverdue
 
-    /// Заглушка-обращение к NotificationService: «напомни завтра утром».
+    /// Запрос к `NotificationService` на утреннее напоминание о просроченных
+    /// заданиях: «напомни завтра утром в указанное время».
     enum NotifyOverdue {
         struct Request: Sendable {
             /// Часы (0–23) для утреннего напоминания.

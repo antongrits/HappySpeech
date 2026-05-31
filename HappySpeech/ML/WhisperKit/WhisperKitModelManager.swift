@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import OSLog
 import WhisperKit
@@ -355,18 +356,61 @@ public actor WhisperKitModelManagerLive: WhisperKitModelManagerProtocol {
         }
     }
 
-    /// Сверяем суммарный размер папки пака с `pack.sizeBytes` (±20% допуск).
-    /// SHA-256 checksum пока не реализован — файлы HuggingFace не имеют стабильного hash.
+    /// Проверка целостности скачанного пака. Стратегия:
+    /// 1. Транспорт уже защищён TLS (HuggingFace отдаёт файлы по HTTPS), а
+    ///    WhisperKit докачивает их атомарно — поэтому отдельного pre-baked
+    ///    SHA-256 на пак у нас нет (argmaxinc не публикует стабильный per-pack
+    ///    digest, теги репозитория меняются между ревизиями моделей).
+    /// 2. Структурная проверка: обязателен читаемый `config.json` — без него
+    ///    `WhisperKit` не инициализирует модель. Для аудита логируем его SHA-256
+    ///    (реально вычисленный, не сравниваемый с эталоном).
+    /// 3. Объёмная проверка: суммарный размер папки не ниже 80% ожидаемого —
+    ///    отсекает оборванные/частичные загрузки.
     private func verifyIntegrity(pack: WhisperKitModelPack) throws {
         let dir = directory(for: pack)
+
+        // (2) Структура: config.json должен существовать и читаться.
+        guard let configURL = locateFile(named: "config.json", in: dir),
+              let configData = try? Data(contentsOf: configURL),
+              !configData.isEmpty else {
+            HSLogger.asr.error("WhisperKit integrity check failed: config.json missing/empty for \(pack.rawValue, privacy: .public)")
+            throw ModelDownloadError.integrityCheckFailed(
+                expectedBytes: pack.sizeBytes,
+                actualBytes: directorySize(at: dir)
+            )
+        }
+        let digest = SHA256.hash(data: configData)
+        let digestHex = digest.map { String(format: "%02x", $0) }.joined()
+        HSLogger.asr.info("WhisperKit config.json sha256=\(digestHex, privacy: .public)")
+
+        // (3) Объём: не ниже 80% ожидаемого.
         let actualBytes = directorySize(at: dir)
         let expected = pack.sizeBytes
         let lowerBound = Int64(Double(expected) * 0.8)
-
         if actualBytes < lowerBound {
             HSLogger.asr.error("WhisperKit integrity check failed: expected ~\(expected), got \(actualBytes)")
             throw ModelDownloadError.integrityCheckFailed(expectedBytes: expected, actualBytes: actualBytes)
         }
+    }
+
+    /// Возвращает URL первого файла с заданным именем внутри дерева пака
+    /// (config.json лежит глубже корня: `<repo-slug>/<variant>/config.json`).
+    private func locateFile(named fileName: String, in dir: URL, maxDepth: Int = 4) -> URL? {
+        guard maxDepth > 0 else { return nil }
+        let contents = (try? FileManager.default.contentsOfDirectory(
+            at: dir,
+            includingPropertiesForKeys: [.isDirectoryKey],
+            options: [.skipsHiddenFiles]
+        )) ?? []
+        for url in contents {
+            if url.lastPathComponent == fileName { return url }
+            var isDir: ObjCBool = false
+            if FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir), isDir.boolValue,
+               let found = locateFile(named: fileName, in: url, maxDepth: maxDepth - 1) {
+                return found
+            }
+        }
+        return nil
     }
 
     private func directorySize(at url: URL) -> Int64 {

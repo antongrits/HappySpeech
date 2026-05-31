@@ -147,30 +147,25 @@ struct WeeklyParentTipView: View {
             isShareSheetPresented = true
         }
         .sheet(isPresented: $isShareSheetPresented) {
-            // Заглушка share-листа в MVP; полная интеграция UIActivityViewController
-            // подключится в post-launch итерации.
-            VStack(spacing: SpacingTokens.sp3) {
-                Text("Поделиться советом")
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                Text(interactor.state.tip.title)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.sp4)
-                HSButton(
-                    "Закрыть",
-                    style: .secondary,
-                    size: .medium,
-                    icon: "xmark"
-                ) {
-                    isShareSheetPresented = false
-                }
-            }
-            .padding(SpacingTokens.sp5)
-            .presentationDetents([.medium])
+            WeeklyParentTipShareSheet(items: [interactor.shareText])
+                .ignoresSafeArea()
         }
     }
+}
+
+// MARK: - Share sheet
+
+/// Системный share-лист (`UIActivityViewController`) для совета недели.
+/// SwiftUI `ShareLink` не покрывает кейс «поделиться по нажатию HSButton»,
+/// поэтому используем тонкую UIKit-обёртку (как в `WeeklyRecapView`).
+private struct WeeklyParentTipShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 // MARK: - Preview

@@ -18,8 +18,9 @@ protocol HomeTasksBusinessLogic: AnyObject {
 // MARK: - HomeTasksGameRouting
 
 /// Тонкая зависимость, которую Interactor дёргает при запуске упражнения.
-/// На текущем этапе — лог-заглушка; позже будет реальный coordinator-роут
-/// в шаблон игры по `exerciseType`/`targetSound`.
+/// Реализуется `HomeTasksRouter`, который пробрасывает событие в `onStartGame`.
+/// В боевом флоу `AppCoordinator` маршрутизирует в `.lessonPlayer` по
+/// `exerciseType` (kebab-case route → `GameType.fromTemplateRoute`).
 @MainActor
 protocol HomeTasksGameRouting: AnyObject {
     func routeToGame(exerciseType: String, targetSound: String)
@@ -32,7 +33,7 @@ protocol HomeTasksGameRouting: AnyObject {
 /// Использует in-memory seed (5–7 заданий разных типов).
 ///
 /// Зависимости:
-/// * `gameRouter` — заглушка маршрутизации в шаблон игры (передаёт View).
+/// * `gameRouter` — маршрутизация в шаблон игры (через `HomeTasksRouter` → View).
 /// * `notificationService` — реальный `NotificationService` (планирует утреннее
 ///   напоминание для просроченных заданий). Опционален: при `nil` Interactor
 ///   возвращает `scheduled = false` и Presenter покажет нейтральный toast.

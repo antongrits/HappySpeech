@@ -554,8 +554,15 @@ struct AppCoordinatorView: View {
                 .environment(\.circuitContext, .parent)
 
         case .homeTasks:
-            HomeTasksView()
-                .environment(\.circuitContext, .parent)
+            HomeTasksView(
+                onStartGame: { exerciseType, _ in
+                    coordinator.navigate(to: .lessonPlayer(
+                        templateType: exerciseType,
+                        childId: container.currentChildId
+                    ))
+                }
+            )
+            .environment(\.circuitContext, .parent)
 
         case .screening(let childId):
             ScreeningView(

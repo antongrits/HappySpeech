@@ -21,8 +21,11 @@ protocol ARActivityRoutingLogic: AnyObject {
 //
 // AR-игры открываются как `fullScreenCover` поверх SessionShell.
 // Router хранит коллбеки для каждой из 7 игр; View-слой привязывает их к
-// собственным `@State` флагам `show<Game>`. Игры без отдельного VIP-модуля
-// направляются к ближайшему существующему экрану (ARMirror/ARStoryQuest).
+// собственным `@State` флагам `show<Game>` — у каждой игры есть собственный
+// VIP-модуль (`Features/AR/<Game>`). `?? onRouteTo...` — защитный дефолт на
+// случай, если конкретный callback не привязан (preview/частичная сборка):
+// тогда открывается ближайший по типу экран (ARMirror для face-tracking,
+// ARStoryQuest для геймплейных), а не падение в no-op.
 @MainActor
 final class ARActivityRouter: ARActivityRoutingLogic {
 
@@ -46,7 +49,8 @@ final class ARActivityRouter: ARActivityRoutingLogic {
     func routeToARStoryQuest() { onRouteToStoryQuest?() }
 
     func routeToButterflyCatch() {
-        // Пока отдельный VIP не реализован — fallback к ARStoryQuest
+        // Открывает ButterflyCatchView; защитный дефолт — ближайший геймплейный
+        // экран (ARStoryQuest), если callback не привязан.
         onRouteToButterflyCatch?() ?? onRouteToStoryQuest?()
     }
 

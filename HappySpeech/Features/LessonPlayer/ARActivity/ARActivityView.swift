@@ -35,6 +35,12 @@ struct ARActivityView: View {
 
     @State private var showARMirror = false
     @State private var showARStoryQuest = false
+    @State private var showButterflyCatch = false
+    @State private var showBreathingAR = false
+    @State private var showMimicLyalya = false
+    @State private var showHoldThePose = false
+    @State private var showPoseSequence = false
+    @State private var showSoundAndFace = false
     @State private var bootstrapped = false
 
     // MARK: - Body
@@ -63,6 +69,30 @@ struct ARActivityView: View {
         }
         .fullScreenCover(isPresented: $showARStoryQuest, onDismiss: handleStoryQuestDismiss) {
             ARStoryQuestView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showButterflyCatch, onDismiss: handleStoryQuestDismiss) {
+            ButterflyCatchView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showBreathingAR, onDismiss: handleStoryQuestDismiss) {
+            BreathingARView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showMimicLyalya, onDismiss: handleMirrorDismiss) {
+            MimicLyalyaView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showHoldThePose, onDismiss: handleMirrorDismiss) {
+            HoldThePoseView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showPoseSequence, onDismiss: handleMirrorDismiss) {
+            PoseSequenceView()
+                .environment(container)
+        }
+        .fullScreenCover(isPresented: $showSoundAndFace, onDismiss: handleMirrorDismiss) {
+            SoundAndFaceView()
                 .environment(container)
         }
         .accessibilityElement(children: .contain)
@@ -322,12 +352,12 @@ struct ARActivityView: View {
 
         router.onRouteToMirror = { showARMirror = true }
         router.onRouteToStoryQuest = { showARStoryQuest = true }
-        router.onRouteToButterflyCatch = { showARStoryQuest = true }
-        router.onRouteToBreathingAR = { showARStoryQuest = true }
-        router.onRouteToMimicLyalya = { showARMirror = true }
-        router.onRouteToHoldThePose = { showARMirror = true }
-        router.onRouteToPoseSequence = { showARMirror = true }
-        router.onRouteToSoundAndFace = { showARMirror = true }
+        router.onRouteToButterflyCatch = { showButterflyCatch = true }
+        router.onRouteToBreathingAR = { showBreathingAR = true }
+        router.onRouteToMimicLyalya = { showMimicLyalya = true }
+        router.onRouteToHoldThePose = { showHoldThePose = true }
+        router.onRouteToPoseSequence = { showPoseSequence = true }
+        router.onRouteToSoundAndFace = { showSoundAndFace = true }
         router.onDismiss = { onComplete(display.lastScore) }
 
         self.interactor = interactor

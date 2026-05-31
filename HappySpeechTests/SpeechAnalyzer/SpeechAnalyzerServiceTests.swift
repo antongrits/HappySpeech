@@ -128,4 +128,27 @@ final class SpeechAnalyzerServiceTests: XCTestCase {
         // повторный stop безопасен.
         await live.stopLiveTranscript()
     }
+
+    func test_live_appendAudio_emitsRealPartialTranscript() async throws {
+        // Подаём достаточно сэмплов, чтобы пробить partialEmitInterval (12 800),
+        // и проверяем, что эмитится РЕАЛЬНЫЙ партиал (транскрипция через ASR),
+        // а не пустая заглушка. MockASRService возвращает "рыба".
+        let mockASR = MockASRService()
+        let live = LiveSpeechAnalyzerService(asrService: mockASR)
+        let stream = try await live.startLiveTranscript()
+
+        let consumeTask = Task<SpeechAnalyzerEvent?, Never> {
+            for await event in stream { return event }
+            return nil
+        }
+
+        // 13 000 нулевых сэмплов (16 kHz Float32) → один partial-тик.
+        await live.appendAudio(samples: [Float](repeating: 0.0, count: 13_000))
+
+        let received = await consumeTask.value
+        XCTAssertEqual(received?.transcript, "рыба")
+        XCTAssertEqual(received?.isFinal, false)
+        XCTAssertEqual(received?.confidence, 0.92)
+        await live.stopLiveTranscript()
+    }
 }

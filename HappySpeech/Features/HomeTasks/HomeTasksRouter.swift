@@ -16,10 +16,11 @@ protocol HomeTasksRoutingLogic {
 // `onOpenDetail` и `onStartGame`. Это позволяет встраивать экран и в push-стек,
 // и в sheet, и в preview без зависимостей от `AppCoordinator`.
 //
-// `routeToGame` реализован через `HomeTasksGameRouting`-протокол —
-// Interactor вызывает router через эту абстракцию. На текущем спринте
-// внешнего callback нет → роутер только пишет в OSLog. Когда появится общий
-// game-coordinator, View передаст `onStartGame` и навигация заработает.
+// `routeToGame` реализован через `HomeTasksGameRouting`-протокол — Interactor
+// вызывает router через эту абстракцию, а router пробрасывает событие в
+// `onStartGame`. В боевом флоу `AppCoordinator` передаёт callback, который
+// навигирует в `.lessonPlayer(templateType:childId:)`. В preview/тестах callback
+// может быть `nil` — тогда route безопасно no-op (фиксируется в OSLog).
 
 @MainActor
 final class HomeTasksRouter: HomeTasksRoutingLogic, HomeTasksGameRouting {

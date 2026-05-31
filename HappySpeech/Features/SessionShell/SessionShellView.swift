@@ -449,41 +449,11 @@ struct SessionShellBinder: View {
             LetterTracingView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
-        default:
-            placeholderGame(for: activity)
-        }
-    }
-
-    private func placeholderGame(for activity: SessionActivity) -> some View {
-        VStack(spacing: SpacingTokens.medium) {
-            Text(activity.gameType.localizedTitle)
-                .font(TypographyTokens.title())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, SpacingTokens.medium)
-            Text(String(
-                format: String(localized: "session.placeholder.target_sound %@"),
-                activity.soundTarget
-            ))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.medium)
-            HSButton(
-                String(localized: "general.done"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) {
-                Task { await onComplete(activity.id, 0.9) }
+        case .arActivity:
+            ARActivityView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityIdentifier("gameNextButton")
         }
-        .padding()
     }
 
     // MARK: - Reward overlay

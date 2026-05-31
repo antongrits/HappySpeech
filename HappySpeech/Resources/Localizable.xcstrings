@@ -25762,6 +25762,66 @@
         }
       }
     },
+    "parentDigest.kpi.accuracy": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "parentDigest.kpi.days %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld дн"
+          }
+        }
+      }
+    },
+    "parentDigest.kpi.minutes %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld мин"
+          }
+        }
+      }
+    },
+    "parentDigest.kpi.sessions": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сессии"
+          }
+        }
+      }
+    },
+    "parentDigest.kpi.streak": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия"
+          }
+        }
+      }
+    },
+    "parentDigest.kpi.today": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
     "parentDigest.nav.title": {
       "localizations": {
         "ru": {
@@ -52164,6 +52224,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Совет недели"
+          }
+        }
+      }
+    },
+    "weeklyTip.share.footer": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправлено из приложения HappySpeech"
           }
         }
       }
