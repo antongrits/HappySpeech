@@ -462,7 +462,7 @@
         {
           "id": "zh-wi-0",
           "word": "жук",
-          "imageAsset": "img_zhuk",
+          "imageAsset": "word_zhuk",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wi-0.m4a"
@@ -470,7 +470,7 @@
         {
           "id": "zh-wi-1",
           "word": "жаба",
-          "imageAsset": "img_zhaba",
+          "imageAsset": "word_zhaba",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wi-1.m4a"
@@ -486,7 +486,7 @@
         {
           "id": "zh-wi-3",
           "word": "жало",
-          "imageAsset": "img_zhalo",
+          "imageAsset": "word_zhalo",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wi-3.m4a"
@@ -494,7 +494,7 @@
         {
           "id": "zh-wi-4",
           "word": "желе",
-          "imageAsset": "img_zhele",
+          "imageAsset": "word_zhele",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wi-4.m4a"
@@ -502,7 +502,7 @@
         {
           "id": "zh-wi-5",
           "word": "жилет",
-          "imageAsset": "img_zhilet",
+          "imageAsset": "word_zhilet",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-5.m4a"
@@ -510,7 +510,7 @@
         {
           "id": "zh-wi-6",
           "word": "живот",
-          "imageAsset": "img_zhivot",
+          "imageAsset": "word_zhivot",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-6.m4a"
@@ -526,7 +526,7 @@
         {
           "id": "zh-wi-8",
           "word": "жираф",
-          "imageAsset": "img_zhiraf",
+          "imageAsset": "word_zhiraf",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-8.m4a"
@@ -534,7 +534,7 @@
         {
           "id": "zh-wi-9",
           "word": "журнал",
-          "imageAsset": "img_zhurnal",
+          "imageAsset": "word_zhurnal",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-9.m4a"
@@ -542,7 +542,7 @@
         {
           "id": "zh-wi-10",
           "word": "журавль",
-          "imageAsset": "img_zhuravl",
+          "imageAsset": "word_zhuravl",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-10.m4a"
@@ -550,7 +550,7 @@
         {
           "id": "zh-wi-11",
           "word": "жёлудь",
-          "imageAsset": "img_zholudj",
+          "imageAsset": "word_zholudj",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-11.m4a"
@@ -558,7 +558,7 @@
         {
           "id": "zh-wi-12",
           "word": "желток",
-          "imageAsset": "img_zheltok",
+          "imageAsset": "word_zheltok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-12.m4a"
@@ -566,7 +566,7 @@
         {
           "id": "zh-wi-13",
           "word": "жираф",
-          "imageAsset": "img_zhelezo",
+          "imageAsset": "word_zhelezo",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-13.m4a"
@@ -582,7 +582,7 @@
         {
           "id": "zh-wi-15",
           "word": "жасмин",
-          "imageAsset": "img_zhasmin",
+          "imageAsset": "word_zhasmin",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-15.m4a"
@@ -606,7 +606,7 @@
         {
           "id": "zh-wi-18",
           "word": "жатва",
-          "imageAsset": "img_zhatva",
+          "imageAsset": "word_zhatva",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-18.m4a"
@@ -614,7 +614,7 @@
         {
           "id": "zh-wi-19",
           "word": "женщина",
-          "imageAsset": "img_zhenshina",
+          "imageAsset": "word_zhenshina",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-19.m4a"
@@ -622,7 +622,7 @@
         {
           "id": "zh-wi-20",
           "word": "жемчуг",
-          "imageAsset": "img_zhemchug",
+          "imageAsset": "word_zhemchug",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-20.m4a"
@@ -646,7 +646,7 @@
         {
           "id": "zh-wi-23",
           "word": "жеребёнок",
-          "imageAsset": "img_zherebyonok",
+          "imageAsset": "word_zherebyonok",
           "audioAsset": null,
           "difficulty": 4,
           "audio_file": "Audio/Content/ZH/zh-wi-23.m4a"
@@ -662,7 +662,7 @@
         {
           "id": "zh-wi-25",
           "word": "жимолость",
-          "imageAsset": "img_zhimolost",
+          "imageAsset": "word_zhimolost",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-25.m4a"
@@ -670,7 +670,7 @@
         {
           "id": "zh-wi-26",
           "word": "жонглёр",
-          "imageAsset": "img_zhonglyor",
+          "imageAsset": "word_zhonglyor",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-26.m4a"
@@ -726,7 +726,7 @@
         {
           "id": "zh-wi-33",
           "word": "жираф",
-          "imageAsset": "img_zhivotnoe",
+          "imageAsset": "word_zhivotnoe",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-33.m4a"
@@ -750,7 +750,7 @@
         {
           "id": "zh-wi-36",
           "word": "жучок",
-          "imageAsset": "img_zhuchok",
+          "imageAsset": "word_zhuchok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-36.m4a"
@@ -766,7 +766,7 @@
         {
           "id": "zh-wi-38",
           "word": "жабры",
-          "imageAsset": "img_zhabry",
+          "imageAsset": "word_zhabry",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-38.m4a"
@@ -774,7 +774,7 @@
         {
           "id": "zh-wi-39",
           "word": "жокей",
-          "imageAsset": "img_zhokei",
+          "imageAsset": "word_zhokei",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-39.m4a"
@@ -782,7 +782,7 @@
         {
           "id": "zh-wi-40",
           "word": "жаворонок",
-          "imageAsset": "img_zhavoronok",
+          "imageAsset": "word_zhavoronok",
           "audioAsset": null,
           "difficulty": 4,
           "audio_file": "Audio/Content/ZH/zh-wi-40.m4a"
@@ -838,7 +838,7 @@
         {
           "id": "zh-wi-47",
           "word": "жеребец",
-          "imageAsset": "img_zherebyec",
+          "imageAsset": "word_zherebyec",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-47.m4a"
@@ -1008,7 +1008,7 @@
         {
           "id": "zh-wm-0",
           "word": "ежи",
-          "imageAsset": "img_ezhi",
+          "imageAsset": "word_ezhi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-0.m4a"
@@ -1016,7 +1016,7 @@
         {
           "id": "zh-wm-1",
           "word": "ужин",
-          "imageAsset": "img_uzhin",
+          "imageAsset": "word_uzhin",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-1.m4a"
@@ -1024,7 +1024,7 @@
         {
           "id": "zh-wm-2",
           "word": "лыжи",
-          "imageAsset": "img_lyzhi",
+          "imageAsset": "word_lyzhi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-2.m4a"
@@ -1032,7 +1032,7 @@
         {
           "id": "zh-wm-3",
           "word": "ножи",
-          "imageAsset": "img_nozhi",
+          "imageAsset": "word_nozhi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-3.m4a"
@@ -1040,7 +1040,7 @@
         {
           "id": "zh-wm-4",
           "word": "кожа",
-          "imageAsset": "img_kozha",
+          "imageAsset": "word_kozha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-4.m4a"
@@ -1048,7 +1048,7 @@
         {
           "id": "zh-wm-5",
           "word": "ножи",
-          "imageAsset": "img_nozhka",
+          "imageAsset": "word_nozhka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-5.m4a"
@@ -1056,7 +1056,7 @@
         {
           "id": "zh-wm-6",
           "word": "ложка",
-          "imageAsset": "img_lozhka",
+          "imageAsset": "word_lozhka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-6.m4a"
@@ -1064,7 +1064,7 @@
         {
           "id": "zh-wm-7",
           "word": "снежок",
-          "imageAsset": "img_snezhok",
+          "imageAsset": "word_snezhok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-7.m4a"
@@ -1096,7 +1096,7 @@
         {
           "id": "zh-wm-11",
           "word": "пижама",
-          "imageAsset": "img_pizhama",
+          "imageAsset": "word_pizhama",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-11.m4a"
@@ -1104,7 +1104,7 @@
         {
           "id": "zh-wm-12",
           "word": "художник",
-          "imageAsset": "img_hudozhnik",
+          "imageAsset": "word_hudozhnik",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-12.m4a"
@@ -1112,7 +1112,7 @@
         {
           "id": "zh-wm-13",
           "word": "ножи",
-          "imageAsset": "img_nozhovka",
+          "imageAsset": "word_nozhovka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-13.m4a"
@@ -1120,7 +1120,7 @@
         {
           "id": "zh-wm-14",
           "word": "дорожка",
-          "imageAsset": "img_dorozhka2",
+          "imageAsset": "word_dorozhka2",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-14.m4a"
@@ -1128,7 +1128,7 @@
         {
           "id": "zh-wm-15",
           "word": "одежда",
-          "imageAsset": "img_odezhda",
+          "imageAsset": "word_odezhda",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-15.m4a"
@@ -1144,7 +1144,7 @@
         {
           "id": "zh-wm-17",
           "word": "рог",
-          "imageAsset": "img_rozhok",
+          "imageAsset": "word_rozhok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-17.m4a"
@@ -1152,7 +1152,7 @@
         {
           "id": "zh-wm-18",
           "word": "мороженое",
-          "imageAsset": "img_morozhenoe",
+          "imageAsset": "word_morozhenoe",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-18.m4a"
@@ -1160,7 +1160,7 @@
         {
           "id": "zh-wm-19",
           "word": "ножницы",
-          "imageAsset": "img_nozhnicy",
+          "imageAsset": "word_nozhnicy",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-19.m4a"
@@ -1176,7 +1176,7 @@
         {
           "id": "zh-wm-21",
           "word": "сажа",
-          "imageAsset": "img_sazha",
+          "imageAsset": "word_sazha",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-21.m4a"
@@ -1184,7 +1184,7 @@
         {
           "id": "zh-wm-22",
           "word": "кожура",
-          "imageAsset": "img_kozhura",
+          "imageAsset": "word_kozhura",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-22.m4a"
@@ -1192,7 +1192,7 @@
         {
           "id": "zh-wm-23",
           "word": "пожар",
-          "imageAsset": "img_pozhar",
+          "imageAsset": "word_pozhar",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-23.m4a"
@@ -1264,7 +1264,7 @@
         {
           "id": "zh-wm-32",
           "word": "дождик",
-          "imageAsset": "img_dozhdik",
+          "imageAsset": "word_dozhdik",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-32.m4a"
@@ -1296,7 +1296,7 @@
         {
           "id": "zh-wm-36",
           "word": "прыжок",
-          "imageAsset": "img_pryzhok",
+          "imageAsset": "word_pryzhok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-36.m4a"
@@ -1304,7 +1304,7 @@
         {
           "id": "zh-wm-37",
           "word": "кружка",
-          "imageAsset": "img_kruzhka",
+          "imageAsset": "word_kruzhka",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-37.m4a"
@@ -1312,7 +1312,7 @@
         {
           "id": "zh-wm-38",
           "word": "пружина",
-          "imageAsset": "img_pruzhina",
+          "imageAsset": "word_pruzhina",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-38.m4a"
@@ -1352,7 +1352,7 @@
         {
           "id": "zh-wm-43",
           "word": "лужайка",
-          "imageAsset": "img_luzhajka",
+          "imageAsset": "word_luzhajka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-43.m4a"
@@ -1360,7 +1360,7 @@
         {
           "id": "zh-wm-44",
           "word": "снежинка",
-          "imageAsset": "img_snezhinка",
+          "imageAsset": "word_snezhinka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-44.m4a"
@@ -1374,7 +1374,7 @@
         {
           "id": "zh-wf-0",
           "word": "уж",
-          "imageAsset": "img_uzh",
+          "imageAsset": "word_uzh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-0.m4a"
@@ -1382,7 +1382,7 @@
         {
           "id": "zh-wf-1",
           "word": "нож",
-          "imageAsset": "img_yozh",
+          "imageAsset": "word_yozh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-1.m4a"
@@ -1390,7 +1390,7 @@
         {
           "id": "zh-wf-2",
           "word": "нож",
-          "imageAsset": "img_nozh",
+          "imageAsset": "word_nozh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-2.m4a"
@@ -1398,7 +1398,7 @@
         {
           "id": "zh-wf-3",
           "word": "чиж",
-          "imageAsset": "img_chizh",
+          "imageAsset": "word_chizh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-3.m4a"
@@ -1406,7 +1406,7 @@
         {
           "id": "zh-wf-4",
           "word": "морж",
-          "imageAsset": "img_morzh",
+          "imageAsset": "word_morzh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-4.m4a"
@@ -1414,7 +1414,7 @@
         {
           "id": "zh-wf-5",
           "word": "стриж",
-          "imageAsset": "img_strizh2",
+          "imageAsset": "word_strizh2",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-5.m4a"
@@ -1430,7 +1430,7 @@
         {
           "id": "zh-wf-7",
           "word": "гараж",
-          "imageAsset": "img_garazh2",
+          "imageAsset": "word_garazh2",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-7.m4a"
@@ -1438,7 +1438,7 @@
         {
           "id": "zh-wf-8",
           "word": "багаж",
-          "imageAsset": "img_bagazh",
+          "imageAsset": "word_bagazh",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-8.m4a"
@@ -1446,7 +1446,7 @@
         {
           "id": "zh-wf-9",
           "word": "пейзаж",
-          "imageAsset": "img_peyzazh2",
+          "imageAsset": "word_peyzazh2",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wf-9.m4a"
@@ -1462,7 +1462,7 @@
         {
           "id": "zh-wf-11",
           "word": "этаж",
-          "imageAsset": "img_etazh",
+          "imageAsset": "word_etazh",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-11.m4a"
@@ -1502,7 +1502,7 @@
         {
           "id": "zh-wf-16",
           "word": "гараж",
-          "imageAsset": "img_gulyash",
+          "imageAsset": "word_gulyash",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-16.m4a"

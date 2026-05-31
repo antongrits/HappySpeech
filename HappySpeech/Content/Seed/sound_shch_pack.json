@@ -462,7 +462,7 @@
         {
           "id": "shch-wi-0",
           "word": "щи",
-          "imageAsset": "img_shchi",
+          "imageAsset": "word_shchi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-0.m4a"
@@ -470,7 +470,7 @@
         {
           "id": "shch-wi-1",
           "word": "щука",
-          "imageAsset": "img_shchuka",
+          "imageAsset": "word_shchuka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-1.m4a"
@@ -478,7 +478,7 @@
         {
           "id": "shch-wi-2",
           "word": "щека",
-          "imageAsset": "img_shcheka",
+          "imageAsset": "word_shcheka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-2.m4a"
@@ -494,7 +494,7 @@
         {
           "id": "shch-wi-4",
           "word": "щётка",
-          "imageAsset": "img_shchoetka",
+          "imageAsset": "word_shchoetka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-4.m4a"
@@ -502,7 +502,7 @@
         {
           "id": "shch-wi-5",
           "word": "щель",
-          "imageAsset": "img_shchel",
+          "imageAsset": "word_shchel",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-5.m4a"
@@ -510,7 +510,7 @@
         {
           "id": "shch-wi-6",
           "word": "щенок",
-          "imageAsset": "img_shchenok",
+          "imageAsset": "word_shchenok",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-6.m4a"
@@ -526,7 +526,7 @@
         {
           "id": "shch-wi-8",
           "word": "щипцы",
-          "imageAsset": "img_shchipcy",
+          "imageAsset": "word_shchipcy",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wi-8.m4a"
@@ -534,7 +534,7 @@
         {
           "id": "shch-wi-9",
           "word": "щит",
-          "imageAsset": "img_shchit",
+          "imageAsset": "word_shchit",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wi-9.m4a"
@@ -590,7 +590,7 @@
         {
           "id": "shch-wi-16",
           "word": "щавель",
-          "imageAsset": "img_shchavel",
+          "imageAsset": "word_shchavel",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wi-16.m4a"
@@ -614,7 +614,7 @@
         {
           "id": "shch-wi-19",
           "word": "щепка",
-          "imageAsset": "img_shchepotka",
+          "imageAsset": "word_shchepotka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wi-19.m4a"
@@ -622,7 +622,7 @@
         {
           "id": "shch-wi-20",
           "word": "щетина",
-          "imageAsset": "img_shchetina",
+          "imageAsset": "word_shchetina",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wi-20.m4a"
@@ -694,7 +694,7 @@
         {
           "id": "shch-wi-29",
           "word": "щупальца",
-          "imageAsset": "img_shchupaltsa",
+          "imageAsset": "word_shchupaltsa",
           "audioAsset": null,
           "difficulty": 4,
           "audio_file": "Audio/Content/SHCH/shch-wi-29.m4a"
@@ -790,7 +790,7 @@
         {
           "id": "shch-wi-41",
           "word": "щепка",
-          "imageAsset": "img_shchepka",
+          "imageAsset": "word_shchepka",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wi-41.m4a"
@@ -868,7 +868,7 @@
         {
           "id": "shch-wm-0",
           "word": "вещи",
-          "imageAsset": "img_veshchi",
+          "imageAsset": "word_veshchi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-0.m4a"
@@ -876,7 +876,7 @@
         {
           "id": "shch-wm-1",
           "word": "ящик",
-          "imageAsset": "img_yashchik",
+          "imageAsset": "word_yashchik",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-1.m4a"
@@ -884,7 +884,7 @@
         {
           "id": "shch-wm-2",
           "word": "роща",
-          "imageAsset": "img_roshcha",
+          "imageAsset": "word_roshcha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-2.m4a"
@@ -892,7 +892,7 @@
         {
           "id": "shch-wm-3",
           "word": "чаша",
-          "imageAsset": "img_chashcha2",
+          "imageAsset": "word_chashcha2",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-3.m4a"
@@ -908,7 +908,7 @@
         {
           "id": "shch-wm-5",
           "word": "ящерица",
-          "imageAsset": "img_yashcheritsa",
+          "imageAsset": "word_yashcheritsa",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-5.m4a"
@@ -916,7 +916,7 @@
         {
           "id": "shch-wm-6",
           "word": "хищник",
-          "imageAsset": "img_hishchnik",
+          "imageAsset": "word_hishchnik",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-6.m4a"
@@ -932,7 +932,7 @@
         {
           "id": "shch-wm-8",
           "word": "пещера",
-          "imageAsset": "img_peshchera",
+          "imageAsset": "word_peshchera",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-8.m4a"
@@ -940,7 +940,7 @@
         {
           "id": "shch-wm-9",
           "word": "клещи",
-          "imageAsset": "img_kleshchi",
+          "imageAsset": "word_kleshchi",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-9.m4a"
@@ -956,7 +956,7 @@
         {
           "id": "shch-wm-11",
           "word": "площадь",
-          "imageAsset": "img_ploshchad",
+          "imageAsset": "word_ploshchad",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-11.m4a"
@@ -996,7 +996,7 @@
         {
           "id": "shch-wm-16",
           "word": "овощи",
-          "imageAsset": "img_ovoshchi",
+          "imageAsset": "word_ovoshchi",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-16.m4a"
@@ -1020,7 +1020,7 @@
         {
           "id": "shch-wm-19",
           "word": "плащ",
-          "imageAsset": "img_plashch",
+          "imageAsset": "word_plashch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-19.m4a"
@@ -1028,7 +1028,7 @@
         {
           "id": "shch-wm-20",
           "word": "борщ",
-          "imageAsset": "img_borshch",
+          "imageAsset": "word_borshch",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-20.m4a"
@@ -1036,7 +1036,7 @@
         {
           "id": "shch-wm-21",
           "word": "ищейка",
-          "imageAsset": "img_ishcheika",
+          "imageAsset": "word_ishcheika",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wm-21.m4a"
@@ -1044,7 +1044,7 @@
         {
           "id": "shch-wm-22",
           "word": "площадка",
-          "imageAsset": "img_ploshchadka",
+          "imageAsset": "word_ploshchadka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wm-22.m4a"
@@ -1148,7 +1148,7 @@
         {
           "id": "shch-wm-35",
           "word": "роща",
-          "imageAsset": "img_roshcha2",
+          "imageAsset": "word_roshcha2",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-35.m4a"
@@ -1274,7 +1274,7 @@
         {
           "id": "shch-wf-0",
           "word": "плащ",
-          "imageAsset": "img_plashch2",
+          "imageAsset": "word_plashch2",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-0.m4a"
@@ -1282,7 +1282,7 @@
         {
           "id": "shch-wf-1",
           "word": "борщ",
-          "imageAsset": "img_borshch2",
+          "imageAsset": "word_borshch2",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-1.m4a"
@@ -1290,7 +1290,7 @@
         {
           "id": "shch-wf-2",
           "word": "хвощ",
-          "imageAsset": "img_hvoshch",
+          "imageAsset": "word_hvoshch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-2.m4a"
@@ -1298,7 +1298,7 @@
         {
           "id": "shch-wf-3",
           "word": "клещ",
-          "imageAsset": "img_kleshch",
+          "imageAsset": "word_kleshch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-3.m4a"
@@ -1306,7 +1306,7 @@
         {
           "id": "shch-wf-4",
           "word": "лещ",
-          "imageAsset": "img_leshch",
+          "imageAsset": "word_leshch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-4.m4a"
@@ -1322,7 +1322,7 @@
         {
           "id": "shch-wf-6",
           "word": "сыщик",
-          "imageAsset": "img_syshchik",
+          "imageAsset": "word_syshchik",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wf-6.m4a"
@@ -1386,7 +1386,7 @@
         {
           "id": "shch-wf-14",
           "word": "хрящ",
-          "imageAsset": "img_hrashch",
+          "imageAsset": "word_hrashch",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wf-14.m4a"
@@ -1402,7 +1402,7 @@
         {
           "id": "shch-wf-16",
           "word": "плющ",
-          "imageAsset": "img_plyushch",
+          "imageAsset": "word_plyushch",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wf-16.m4a"
@@ -1410,7 +1410,7 @@
         {
           "id": "shch-wf-17",
           "word": "овощи",
-          "imageAsset": "img_ovoshch",
+          "imageAsset": "word_ovoshch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-17.m4a"
@@ -1434,7 +1434,7 @@
         {
           "id": "shch-wf-20",
           "word": "лещ",
-          "imageAsset": "img_leshch2",
+          "imageAsset": "word_leshch2",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-20.m4a"
@@ -1450,7 +1450,7 @@
         {
           "id": "shch-wf-22",
           "word": "плющ",
-          "imageAsset": "img_plyushch2",
+          "imageAsset": "word_plyushch2",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-22.m4a"
