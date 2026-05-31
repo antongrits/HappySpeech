@@ -46,6 +46,27 @@ struct AchievementWallView: View {
     @State private var didBootstrap = false
     @State private var showDetail = false
 
+    // Snapshot-only: при `true` `bootstrap()` пропускается, чтобы
+    // предзаготовленный `holder.loadVM` не перетёрся async-загрузкой и снимок
+    // ловил settled-кадр (стена значков), а не `ProgressView`.
+    private let skipBootstrapForSnapshot: Bool
+
+    init(childId: String) {
+        self.childId = childId
+        self.skipBootstrapForSnapshot = false
+    }
+
+    #if DEBUG
+    /// Preview/snapshot-only init: инжектит уже-загруженный holder и отключает
+    /// async-bootstrap для детерминированного settled-кадра. Прод-путь
+    /// (`init(childId:)`) не затрагивается.
+    init(childId: String, previewState holder: AchievementWallViewModelHolder) {
+        self.childId = childId
+        self._holder = State(initialValue: holder)
+        self.skipBootstrapForSnapshot = true
+    }
+    #endif
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
@@ -353,6 +374,9 @@ struct AchievementWallView: View {
     // MARK: - Lifecycle
 
     private func bootstrap() async {
+        #if DEBUG
+        if skipBootstrapForSnapshot { return }
+        #endif
         guard !didBootstrap else { return }
         didBootstrap = true
         let presenter = AchievementWallPresenter(displayLogic: holder)
@@ -444,15 +468,65 @@ private struct WallSnapshotView: View {
 
 // MARK: - Preview
 
+#if DEBUG
+// MARK: Preview data
+
+private extension AchievementWallViewModelHolder {
+    /// Статичные данные для Preview/snapshot: 9 значков (loaded-state).
+    /// Используется `init(childId:previewState:)` — спиннер не отображается.
+    static func previewLoaded() -> AchievementWallViewModelHolder {
+        let holder = AchievementWallViewModelHolder()
+        let cells: [AchievementWallCellViewModel] = [
+            .init(id: "firstSoundMastered", title: "Первый звук",
+                  iconName: "star.fill", isUnlocked: true, rarity: .common,
+                  accessibilityLabel: "Первый звук, открыто"),
+            .init(id: "fiveSoundsMastered", title: "Пять звуков",
+                  iconName: "star.circle.fill", isUnlocked: true, rarity: .rare,
+                  accessibilityLabel: "Пять звуков, открыто"),
+            .init(id: "allSoundsMastered", title: "Все звуки",
+                  iconName: "crown.fill", isUnlocked: false, rarity: .legendary,
+                  accessibilityLabel: "Все звуки, закрыто"),
+            .init(id: "streak7Days", title: "7 дней подряд",
+                  iconName: "flame.fill", isUnlocked: true, rarity: .common,
+                  accessibilityLabel: "7 дней подряд, открыто"),
+            .init(id: "streak30Days", title: "30 дней",
+                  iconName: "flame.circle.fill", isUnlocked: false, rarity: .rare,
+                  accessibilityLabel: "30 дней, закрыто"),
+            .init(id: "streak100Days", title: "100 дней",
+                  iconName: "trophy.fill", isUnlocked: false, rarity: .legendary,
+                  accessibilityLabel: "100 дней, закрыто"),
+            .init(id: "played10Rounds", title: "10 игр",
+                  iconName: "gamecontroller.fill", isUnlocked: true, rarity: .common,
+                  accessibilityLabel: "10 игр, открыто"),
+            .init(id: "played50Rounds", title: "50 игр",
+                  iconName: "rosette", isUnlocked: true, rarity: .rare,
+                  accessibilityLabel: "50 игр, открыто"),
+            .init(id: "played100Rounds", title: "100 игр",
+                  iconName: "medal.fill", isUnlocked: false, rarity: .legendary,
+                  accessibilityLabel: "100 игр, закрыто")
+        ]
+        holder.loadVM = AchievementWallModels.LoadWall.ViewModel(
+            heroTitle: "Стена Маши",
+            heroSubtitle: "Открыто 5 из 9",
+            cells: cells,
+            accessibilitySummary: "Стена достижений Маши, открыто 5 из 9"
+        )
+        return holder
+    }
+}
+
 #Preview("AchievementWall — Light") {
-    AchievementWallView(childId: "preview-child-1")
+    AchievementWallView(childId: "preview-child-1",
+                        previewState: .previewLoaded())
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
 }
 
 #Preview("AchievementWall — Dark") {
-    AchievementWallView(childId: "preview-child-1")
+    AchievementWallView(childId: "preview-child-1",
+                        previewState: .previewLoaded())
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
         .preferredColorScheme(.dark)
 }
+#endif

@@ -30,6 +30,27 @@ struct ComparisonDashboardView: View {
     @State private var presenter: ComparisonDashboardPresenter?
     @State private var router: ComparisonDashboardRouter?
 
+    // Snapshot-only: при `true` `.task`-bootstrap пропускается, чтобы
+    // предзаготовленный `viewModel` не перетёрся async-загрузкой и снимок
+    // ловил settled-кадр (graphs/empty), а не `ProgressView`.
+    private let skipBootstrapForSnapshot: Bool
+
+    // MARK: - Init
+
+    init() {
+        self.skipBootstrapForSnapshot = false
+    }
+
+    #if DEBUG
+    /// Preview/snapshot-only init: инжектит уже-загруженный `viewModel` и
+    /// отключает async-bootstrap, чтобы рендерить детерминированный settled-кадр
+    /// (без `ProgressView`). Прод-путь (`init()`) не затрагивается.
+    init(previewState viewModel: ComparisonDashboardViewModel) {
+        self._viewModel = State(initialValue: viewModel)
+        self.skipBootstrapForSnapshot = true
+    }
+    #endif
+
     // MARK: - Body
 
     var body: some View {
@@ -398,6 +419,9 @@ struct ComparisonDashboardView: View {
     // MARK: - VIP Bootstrap
 
     private func bootstrap() async {
+        #if DEBUG
+        if skipBootstrapForSnapshot { return }
+        #endif
         if interactor == nil {
             let presenter = ComparisonDashboardPresenter()
             let interactor = ComparisonDashboardInteractor(
@@ -421,8 +445,74 @@ struct ComparisonDashboardView: View {
 
 // MARK: - Preview
 
-#Preview("Comparison Dashboard") {
-    ComparisonDashboardView()
+#if DEBUG
+// MARK: Preview data
+
+private extension ComparisonDashboardViewModel {
+    /// Статичные данные для Preview/snapshot: два ребёнка, loaded-state, без
+    /// async-bootstrap. Используется `init(previewState:)` — спиннер не
+    /// отображается.
+    static func previewLoaded() -> ComparisonDashboardViewModel {
+        let vm = ComparisonDashboardViewModel()
+        vm.isLoading = false
+        vm.children = [
+            ComparisonDashboard.ChildComparisonData(
+                id: "c1",
+                name: "Маша",
+                colorTheme: "primary",
+                avatarStyle: "fox",
+                weeklySuccess: (1...7).map {
+                    .init(weekLabel: "Нед. \($0)", weekIndex: $0,
+                          successRate: min(1.0, 0.55 + 0.04 * Double($0 - 1)))
+                },
+                soundAccuracy: [
+                    .init(sound: "С", accuracy: 0.82),
+                    .init(sound: "Ш", accuracy: 0.66),
+                    .init(sound: "Р", accuracy: 0.48),
+                    .init(sound: "Л", accuracy: 0.74)
+                ],
+                dailyPracticeMinutes: zip(1...7, [8.0, 12, 6, 15, 10, 14, 9]).map {
+                    .init(dayLabel: "Д\($0.0)", dayIndex: $0.0, minutes: $0.1)
+                },
+                currentStreak: 12,
+                totalMinutes: 184
+            ),
+            ComparisonDashboard.ChildComparisonData(
+                id: "c2",
+                name: "Петя",
+                colorTheme: "sky",
+                avatarStyle: "bear",
+                weeklySuccess: (1...7).map {
+                    .init(weekLabel: "Нед. \($0)", weekIndex: $0,
+                          successRate: min(1.0, 0.42 + 0.05 * Double($0 - 1)))
+                },
+                soundAccuracy: [
+                    .init(sound: "С", accuracy: 0.70),
+                    .init(sound: "Ш", accuracy: 0.55),
+                    .init(sound: "Р", accuracy: 0.61),
+                    .init(sound: "Л", accuracy: 0.58)
+                ],
+                dailyPracticeMinutes: zip(1...7, [5.0, 9, 11, 7, 13, 6, 12]).map {
+                    .init(dayLabel: "Д\($0.0)", dayIndex: $0.0, minutes: $0.1)
+                },
+                currentStreak: 7,
+                totalMinutes: 142
+            )
+        ]
+        return vm
+    }
+}
+
+#Preview("Comparison Dashboard — Loaded") {
+    ComparisonDashboardView(previewState: .previewLoaded())
         .environment(AppContainer.preview())
         .environment(AppCoordinator())
 }
+
+#Preview("Comparison Dashboard — Dark") {
+    ComparisonDashboardView(previewState: .previewLoaded())
+        .environment(AppContainer.preview())
+        .environment(AppCoordinator())
+        .preferredColorScheme(.dark)
+}
+#endif

@@ -54,6 +54,28 @@ struct CoPlayView: View {
     @State private var presenter: CoPlayPresenter?
     @State private var router: CoPlayRouter?
 
+    // Snapshot-only: при `true` `setupAndStart()` пропускается, чтобы
+    // предзаготовленный holder (`startVM` + первый ход) не перетёрся
+    // async-bootstrap и снимок ловил settled-кадр (брифинг), а не `ProgressView`.
+    private let skipBootstrapForSnapshot: Bool
+
+    init(childId: String) {
+        self.childId = childId
+        self.skipBootstrapForSnapshot = false
+    }
+
+    #if DEBUG
+    /// Preview/snapshot-only init: инжектит уже-загруженный holder (брифинг
+    /// активности + первый ход) и отключает async-bootstrap для
+    /// детерминированного settled-кадра. Прод-путь (`init(childId:)`) не
+    /// затрагивается.
+    init(childId: String, previewState holder: CoPlayViewModelHolder) {
+        self.childId = childId
+        self._holder = State(initialValue: holder)
+        self.skipBootstrapForSnapshot = true
+    }
+    #endif
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
@@ -361,6 +383,9 @@ struct CoPlayView: View {
     // MARK: - Wiring
 
     private func setupAndStart(forceRestart: Bool = false) async {
+        #if DEBUG
+        if skipBootstrapForSnapshot { return }
+        #endif
         if interactor == nil {
             let presenter = CoPlayPresenter(displayLogic: holder)
             let worker = CoPlayWorker(childRepository: container.childRepository)
@@ -386,8 +411,83 @@ struct CoPlayView: View {
 // MARK: - Preview
 
 #if DEBUG
-#Preview("CoPlay / briefing") {
-    CoPlayView(childId: "preview-child-1")
+// MARK: Preview data
+
+private extension CoPlayViewModelHolder {
+    /// Статичные данные для Preview/snapshot: брифинг активности (loaded-state).
+    /// Используется `init(childId:previewState:)` — спиннер не отображается.
+    static func previewBriefing() -> CoPlayViewModelHolder {
+        let holder = CoPlayViewModelHolder()
+        let firstTurn = CoPlayModels.Start.TurnViewModel(
+            id: "turn-1",
+            role: .adult,
+            line: "Скажи: «Мяу-мяу»",
+            instruction: "Покажи, как мяукает кошка",
+            roleLabel: "Ход взрослого",
+            progressLabel: "Ход 1 из 6",
+            progressFraction: 1.0 / 6.0,
+            accessibilityLabel: "Ход взрослого. Скажи мяу-мяу"
+        )
+        holder.startVM = CoPlayModels.Start.ViewModel(
+            title: "Занятие вместе",
+            activityTitle: "Кто как говорит?",
+            symbolName: "person.2.fill",
+            adultBriefing: "По очереди показывайте, как говорят животные. "
+                + "Сначала вы — образец, потом малыш повторяет за вами.",
+            totalTurns: 6,
+            firstTurn: firstTurn
+        )
+        holder.currentTurn = firstTurn
+        holder.showBriefing = true
+        holder.isFinished = false
+        return holder
+    }
+
+    /// Статичные данные для Preview: активный ход (turn-state, показывает
+    /// реплику и кнопку «Готово»).
+    static func previewTurn() -> CoPlayViewModelHolder {
+        let holder = CoPlayViewModelHolder()
+        let turn = CoPlayModels.Start.TurnViewModel(
+            id: "turn-2",
+            role: .child,
+            line: "Мяу-мяу!",
+            instruction: "Повтори за мамой",
+            roleLabel: "Ход малыша",
+            progressLabel: "Ход 2 из 6",
+            progressFraction: 2.0 / 6.0,
+            accessibilityLabel: "Ход малыша. Мяу-мяу"
+        )
+        holder.startVM = CoPlayModels.Start.ViewModel(
+            title: "Занятие вместе",
+            activityTitle: "Кто как говорит?",
+            symbolName: "person.2.fill",
+            adultBriefing: "",
+            totalTurns: 6,
+            firstTurn: turn
+        )
+        holder.currentTurn = turn
+        holder.showBriefing = false
+        holder.isFinished = false
+        return holder
+    }
+}
+
+#Preview("CoPlay — Briefing") {
+    CoPlayView(childId: "preview-child-1",
+               previewState: .previewBriefing())
         .environment(AppContainer.preview())
+}
+
+#Preview("CoPlay — Turn") {
+    CoPlayView(childId: "preview-child-1",
+               previewState: .previewTurn())
+        .environment(AppContainer.preview())
+}
+
+#Preview("CoPlay — Briefing Dark") {
+    CoPlayView(childId: "preview-child-1",
+               previewState: .previewBriefing())
+        .environment(AppContainer.preview())
+        .preferredColorScheme(.dark)
 }
 #endif

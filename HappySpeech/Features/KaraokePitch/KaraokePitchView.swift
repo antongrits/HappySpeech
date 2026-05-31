@@ -78,6 +78,29 @@ struct KaraokePitchView: View {
     @State private var mascotState: LyalyaState = .thinking
     @State private var cardAppeared: Bool = false
 
+    // Snapshot-only: при `true` `bootstrap()` пропускается, чтобы
+    // предзаготовленный holder (фраза + modelContour) не перетёрся async-загрузкой
+    // и снимок ловил settled-кадр (фраза + pitch-Canvas), а не `ProgressView`.
+    private let skipBootstrapForSnapshot: Bool
+
+    init(childId: String) {
+        self.childId = childId
+        self.skipBootstrapForSnapshot = false
+    }
+
+    #if DEBUG
+    /// Preview/snapshot-only init: инжектит уже-загруженный holder (фраза +
+    /// эталонный контур + фаза `.ready`), показывает контент сразу
+    /// (`cardAppeared = true`, без entrance-fade) и отключает async-bootstrap.
+    /// Прод-путь (`init(childId:)`) не затрагивается.
+    init(childId: String, previewState holder: KaraokePitchViewModelHolder) {
+        self.childId = childId
+        self._holder = State(initialValue: holder)
+        self._cardAppeared = State(initialValue: true)
+        self.skipBootstrapForSnapshot = true
+    }
+    #endif
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -471,6 +494,9 @@ struct KaraokePitchView: View {
     // MARK: - Bootstrap & Actions
 
     private func bootstrap() async {
+        #if DEBUG
+        if skipBootstrapForSnapshot { return }
+        #endif
         guard !didBootstrap else { return }
         didBootstrap = true
         let presenter = KaraokePitchPresenter(displayLogic: holder)
@@ -522,15 +548,75 @@ private extension Array where Element == Bool {
 
 // MARK: - Preview
 
-#Preview("Karaoke — Light") {
-    KaraokePitchView(childId: "preview-child-1")
+#if DEBUG
+// MARK: Preview data
+
+private extension KaraokePitchViewModelHolder {
+    /// Статичные данные для Preview/snapshot: загруженная фраза + эталонный
+    /// pitch-контур, фаза `.ready` — settled-кадр Canvas.
+    /// Используется `init(childId:previewState:)` — спиннер не отображается.
+    static func previewReady() -> KaraokePitchViewModelHolder {
+        let holder = KaraokePitchViewModelHolder()
+        let phrase = KaraokePhrase(
+            id: "kr-preview-1",
+            text: "Какой красивый день!",
+            intonation: "exclamation",
+            intonationSymbol: "exclamationmark.circle"
+        )
+        holder.startVM = KaraokePitchModels.Start.ViewModel(
+            phraseText: phrase.text,
+            intonationSymbol: phrase.intonationSymbol,
+            modelContour: KaraokePitchCorpus.modelContour(for: phrase),
+            totalPhrases: 20,
+            currentIndex: 0,
+            accessibilityLabel: "Фраза: \(phrase.text). Восклицание."
+        )
+        holder.phase = .ready
+        return holder
+    }
+
+    /// Scored state: показывает три звезды и секцию с результатом.
+    static func previewScored() -> KaraokePitchViewModelHolder {
+        let holder = previewReady()
+        let phrase = KaraokePhrase(
+            id: "kr-preview-1",
+            text: "Какой красивый день!",
+            intonation: "exclamation",
+            intonationSymbol: "exclamationmark.circle"
+        )
+        holder.scoreVM = KaraokePitchModels.Score.ViewModel(
+            phraseText: phrase.text,
+            similarityPercent: 87,
+            starsEarned: 3,
+            feedbackMessage: "Отлично! Ты попал в мелодику фразы!",
+            modelContour: KaraokePitchCorpus.modelContour(for: phrase),
+            liveContour: KaraokePitchCorpus.modelContour(for: phrase),
+            accessibilityLabel: "Результат: 87%, три звезды"
+        )
+        holder.phase = .scored
+        return holder
+    }
+}
+
+#Preview("Karaoke — Ready (Light)") {
+    KaraokePitchView(childId: "preview-child-1",
+                     previewState: .previewReady())
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
 }
 
-#Preview("Karaoke — Dark") {
-    KaraokePitchView(childId: "preview-child-1")
+#Preview("Karaoke — Ready (Dark)") {
+    KaraokePitchView(childId: "preview-child-1",
+                     previewState: .previewReady())
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
         .preferredColorScheme(.dark)
 }
+
+#Preview("Karaoke — Scored") {
+    KaraokePitchView(childId: "preview-child-1",
+                     previewState: .previewScored())
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+}
+#endif
