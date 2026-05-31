@@ -207,4 +207,118 @@ final class EnsembleASRServiceTests: XCTestCase {
         XCTAssertEqual(result.detectedTier, .a)
         XCTAssertEqual(result.processingTimeMs, 45)
     }
+
+    // MARK: - Контекст слова/звука пробрасывается в зависимости (исправление пустых строк)
+
+    /// Spy-классификатор фонем: фиксирует переданный `expectedWord`.
+    private actor SpyPhonemeAnalysisService: PhonemeAnalysisService {
+        private(set) var lastExpectedWord: String = "<unset>"
+        func analyze(audio: Data, expectedWord: String) async throws -> PhonemeAnalysisResult {
+            lastExpectedWord = expectedWord
+            return PhonemeAnalysisResult(
+                expectedPhonemes: [],
+                predictedPhonemes: [],
+                alignmentScore: 0.8,
+                perPhonemeScore: [:],
+                overallScore: 0.8,
+                problemPhonemes: []
+            )
+        }
+    }
+
+    /// Spy-скорер: фиксирует переданный `targetSound`.
+    private final class SpyPronunciationScorer: PronunciationScorerService, @unchecked Sendable {
+        private let lock = NSLock()
+        private var _lastTargetSound = "<unset>"
+        var lastTargetSound: String { lock.withLock { _lastTargetSound } }
+        var isModelLoaded: Bool { true }
+        func loadModel() async throws {}
+        func score(audioURL: URL, targetSound: String) async throws -> PronunciationScore {
+            lock.withLock { _lastTargetSound = targetSound }
+            return PronunciationScore(rawValue: 0.8)
+        }
+    }
+
+    func test_live_tierA_passesRealWordAndSound_notEmptyStrings() async throws {
+        let phonemeSpy = SpyPhonemeAnalysisService()
+        let scorerSpy = SpyPronunciationScorer()
+        let sut = LiveEnsembleASRService(
+            whisperASR: MockASRService(),
+            phonemeClassifier: phonemeSpy,
+            pronunciationScorer: scorerSpy
+        )
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        _ = try await sut.recognize(url: url, tier: .a, expectedWord: "сова", targetSound: "whistling")
+
+        let word = await phonemeSpy.lastExpectedWord
+        XCTAssertEqual(word, "сова", "Реальное слово урока должно дойти до PhonemeClassifier (не пустая строка)")
+        XCTAssertEqual(scorerSpy.lastTargetSound, "whistling", "Реальный звук должен дойти до PronunciationScorer")
+    }
+
+    func test_live_tierB_passesRealWordAndSound_notEmptyStrings() async throws {
+        let phonemeSpy = SpyPhonemeAnalysisService()
+        let scorerSpy = SpyPronunciationScorer()
+        let sut = LiveEnsembleASRService(
+            whisperASR: MockASRService(),
+            phonemeClassifier: phonemeSpy,
+            pronunciationScorer: scorerSpy
+        )
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        _ = try await sut.recognize(url: url, tier: .b, expectedWord: "жук", targetSound: "hissing")
+
+        let word = await phonemeSpy.lastExpectedWord
+        XCTAssertEqual(word, "жук")
+        XCTAssertEqual(scorerSpy.lastTargetSound, "hissing")
+    }
+
+    // MARK: - Wav2Vec2 как 4-й голос (Tier B) — оживление мёртвого сервиса
+
+    func test_live_tierB_withWav2Vec2_producesValidConfidence() async throws {
+        let sut = LiveEnsembleASRService(
+            whisperASR: MockASRService(),
+            phonemeClassifier: MockPhonemeAnalysisService(),
+            pronunciationScorer: MockPronunciationScorerService(),
+            wav2Vec2: Wav2Vec2ServiceMock(text: "кот", confidence: 0.9)
+        )
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let result = try await sut.recognize(url: url, tier: .b, expectedWord: "кот", targetSound: "velar")
+        XCTAssertEqual(result.detectedTier, .b)
+        XCTAssertGreaterThan(result.confidence, 0.0, "Четырёхголосый ансамбль даёт ненулевую уверенность")
+        XCTAssertLessThanOrEqual(result.confidence, 1.0)
+    }
+
+    func test_live_tierB_wav2Vec2Failure_gracefullyDegradesToThreeVoices() async throws {
+        let sut = LiveEnsembleASRService(
+            whisperASR: MockASRService(),
+            phonemeClassifier: MockPhonemeAnalysisService(),
+            pronunciationScorer: MockPronunciationScorerService(),
+            wav2Vec2: Wav2Vec2ServiceMock(shouldThrow: true)
+        )
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        // Wav2Vec2 кидает ошибку → ансамбль должен gracefully свестись к трём голосам, не упасть.
+        let result = try await sut.recognize(url: url, tier: .b)
+        XCTAssertEqual(result.detectedTier, .b)
+        XCTAssertGreaterThanOrEqual(result.confidence, 0.0)
+    }
+
+    func test_mock_recognize_recordsContextParameters() async throws {
+        let mock = MockEnsembleASRService()
+        _ = try await mock.recognize(
+            url: URL(fileURLWithPath: "/tmp/x.wav"),
+            tier: .b,
+            expectedWord: "роза",
+            targetSound: "sonants"
+        )
+        XCTAssertEqual(mock.lastExpectedWord, "роза")
+        XCTAssertEqual(mock.lastTargetSound, "sonants")
+        XCTAssertEqual(mock.lastTier, .b)
+    }
 }

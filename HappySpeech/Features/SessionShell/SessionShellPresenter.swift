@@ -7,6 +7,14 @@ protocol SessionShellPresentationLogic: AnyObject {
     func presentStartSession(_ response: SessionShellModels.StartSession.Response) async
     func presentCompleteActivity(_ response: SessionShellModels.CompleteActivity.Response) async
     func presentPauseSession(_ response: SessionShellModels.PauseSession.Response)
+    func presentAnalyzeEmotion(_ response: SessionShellModels.AnalyzeEmotion.Response)
+}
+
+// MARK: - Default
+
+extension SessionShellPresentationLogic {
+    /// Дефолт — no-op: эмоциональный сигнал необязателен для всех дисплеев.
+    func presentAnalyzeEmotion(_ response: SessionShellModels.AnalyzeEmotion.Response) {}
 }
 
 // MARK: - SessionShellPresenter
@@ -94,6 +102,20 @@ final class SessionShellPresenter: SessionShellPresentationLogic {
             progressPercentage: percentage,
             timeSpentFormatted: Self.formatActiveTime(response.activeSeconds),
             motivationalPhrase: phrase
+        )
+        display?.displayPauseSession(vm)
+    }
+
+    // MARK: - AnalyzeEmotion
+
+    func presentAnalyzeEmotion(_ response: SessionShellModels.AnalyzeEmotion.Response) {
+        // Эмоция сама по себе не имеет отдельного UI — при накоплении негатива
+        // мягко предлагаем перерыв, переиспользуя существующий pause-VM.
+        guard response.suggestBreak else { return }
+        let vm = SessionShellModels.PauseSession.ViewModel(
+            progressPercentage: 0,
+            timeSpentFormatted: "",
+            motivationalPhrase: String(localized: "session.pause.motivational")
         )
         display?.displayPauseSession(vm)
     }

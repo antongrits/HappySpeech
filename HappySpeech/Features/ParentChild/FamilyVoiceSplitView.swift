@@ -9,6 +9,7 @@ struct FamilyVoiceSplitView: View {
     let realmActor: RealmActor
 
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var scene: FamilyVoiceScene?
@@ -48,7 +49,14 @@ struct FamilyVoiceSplitView: View {
         .ignoresSafeArea(edges: .bottom)
         .task {
             if scene == nil {
-                scene = FamilyVoiceScene(realmActor: realmActor)
+                // Split-режим: ребёнок записывает в верхней области, родитель — в нижней.
+                // SpeakerVerification помечает каждую запись (COPPA-различение).
+                scene = FamilyVoiceScene(
+                    realmActor: realmActor,
+                    pronunciationScorer: container.pronunciationService,
+                    ensembleASR: container.ensembleASRService,
+                    speakerVerification: container.speakerVerificationService
+                )
             }
             await scene?.interactor.fetchRecordings(.init(parentId: parentId))
         }

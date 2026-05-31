@@ -13,6 +13,18 @@ protocol SessionShellBusinessLogic: AnyObject {
     func resumeSession()
     func skipCurrentActivity() async
     func endSessionEarly() async
+
+    /// Анализирует эмоцию из голоса ребёнка (опционально, on-device, COPPA).
+    /// Вызывается играми после попытки, если доступна аудиозапись.
+    /// frustrated/sad → ускоряет предложение перерыва.
+    func analyzeEmotion(_ request: SessionShellModels.AnalyzeEmotion.Request) async
+}
+
+// MARK: - SessionShellBusinessLogic default
+
+extension SessionShellBusinessLogic {
+    /// Дефолт — no-op: игры без аудио-захвата не обязаны анализировать эмоцию.
+    func analyzeEmotion(_ request: SessionShellModels.AnalyzeEmotion.Request) async {}
 }
 
 // MARK: - SessionShellInteractor
@@ -36,6 +48,10 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private let adaptivePlannerService: any AdaptivePlannerService
     private let sessionRepository: any SessionRepository
     private let hapticService: any HapticService
+    /// Опциональное обнаружение эмоций (on-device, COPPA). Если подключено, голос
+    /// ребёнка анализируется после попытки и frustrated/sad ускоряет предложение
+    /// перерыва (дренирует сердце усталости). `nil` → поведение без изменений.
+    private let emotionDetectionService: (any EmotionDetectionServiceProtocol)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionShell")
 
     private var activities: [SessionActivity] = []
@@ -50,6 +66,10 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// 3 hearts → 0. Drained every `errorsPerHeart` consecutive incorrect answers.
     private var fatigueHearts: Int = 3
 
+    /// Подряд обнаруженных негативных эмоций (frustrated/sad). Сбрасывается при
+    /// положительной/нейтральной эмоции. Достигнув порога — дренирует сердце.
+    private var consecutiveNegativeEmotions: Int = 0
+
     // MARK: - Fatigue thresholds
 
     private let maxConsecutiveErrors = 3
@@ -57,18 +77,25 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private let initialHearts = 3
     private let maxSessionMinutes: Double = 15
 
+    /// Порог уверенности негативной эмоции, при котором она учитывается.
+    private let emotionConfidenceThreshold: Float = 0.6
+    /// Сколько подряд негативных эмоций дренируют одно сердце усталости.
+    private let negativeEmotionsPerHeart = 2
+
     // MARK: - Init
 
     init(
         contentService: any ContentService,
         adaptivePlannerService: any AdaptivePlannerService,
         sessionRepository: any SessionRepository,
-        hapticService: any HapticService
+        hapticService: any HapticService,
+        emotionDetectionService: (any EmotionDetectionServiceProtocol)? = nil
     ) {
         self.contentService = contentService
         self.adaptivePlannerService = adaptivePlannerService
         self.sessionRepository = sessionRepository
         self.hapticService = hapticService
+        self.emotionDetectionService = emotionDetectionService
     }
 
     // MARK: - SessionShellBusinessLogic
@@ -81,6 +108,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         currentIndex = 0
         isPaused = false
         fatigueHearts = initialHearts
+        consecutiveNegativeEmotions = 0
 
         let activities = await loadActivities(for: request)
         self.activities = activities
@@ -221,6 +249,38 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         if #available(iOS 16.1, *) {
             await LiveActivityManager.shared.end()
         }
+    }
+
+    func analyzeEmotion(_ request: SessionShellModels.AnalyzeEmotion.Request) async {
+        guard let emotionDetectionService else { return }
+        guard !request.pcmData.isEmpty else { return }
+
+        let result = await emotionDetectionService.analyze(pcmData: request.pcmData)
+        let isNegative = (result.emotion == .frustrated || result.emotion == .sad)
+            && result.confidence >= emotionConfidenceThreshold
+
+        if isNegative {
+            consecutiveNegativeEmotions += 1
+            let emotionRaw = result.emotion.rawValue
+            let conf = result.confidence
+            logger.info(
+                "Negative emotion \(emotionRaw, privacy: .public) conf=\(conf, format: .fixed(precision: 2)) streak=\(self.consecutiveNegativeEmotions)"
+            )
+            // Каждые `negativeEmotionsPerHeart` подряд негативных эмоций — минус сердце,
+            // ускоряя мягкое предложение перерыва (антифатиговое правило).
+            if consecutiveNegativeEmotions % negativeEmotionsPerHeart == 0 {
+                fatigueHearts = max(0, fatigueHearts - 1)
+                logger.info("Fatigue heart drained by emotion → hearts=\(self.fatigueHearts)")
+            }
+        } else {
+            // Положительная/нейтральная эмоция сбрасывает счётчик.
+            consecutiveNegativeEmotions = 0
+        }
+
+        let suggestBreak = detectFatigue()
+        await presenter?.presentAnalyzeEmotion(
+            .init(suggestBreak: suggestBreak, fatigueHearts: fatigueHearts)
+        )
     }
 
     // MARK: - Public read access (for SessionShellHost mirroring)

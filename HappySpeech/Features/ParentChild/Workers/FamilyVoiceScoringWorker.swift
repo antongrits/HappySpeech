@@ -4,15 +4,30 @@ import OSLog
 // MARK: - FamilyVoiceScoringWorker
 
 /// Compares child pronunciation against parent reference recording.
-/// Primary path: PronunciationScorer ML model (if available for the sound group).
-/// Fallback: RMS energy ratio heuristic.
+///
+/// Контур: родительский / семейный (parent-facing, за ParentalGate). Здесь
+/// допустима более тяжёлая, точная оценка, чем в kid-контуре игры.
+///
+/// Порядок путей (от точного к запасному):
+///   1. **Ensemble Tier B** — взвешенное голосование Whisper + PhonemeClassifier +
+///      PronunciationScorer (+ Wav2Vec2 CTC). Точнее всего; используется, если
+///      `ensembleASR` подключён. COPPA-ok: parent-контур.
+///   2. **PronunciationScorer** — одиночная CoreML-модель по группе звука.
+///   3. **RMS heuristic** — энергетический фолбэк (демо/без моделей).
 final class FamilyVoiceScoringWorker: Sendable {
 
     private let pronunciationScorer: (any PronunciationScorerService)?
+    /// Опциональный ансамблевый ASR (Tier B). Подключается из родительского
+    /// контура для более точной оценки. `nil` → используется одиночный scorer.
+    private let ensembleASR: (any EnsembleASRServiceProtocol)?
     private let logger = Logger(subsystem: "com.happyspeech", category: "FamilyVoiceScoringWorker")
 
-    init(pronunciationScorer: (any PronunciationScorerService)? = nil) {
+    init(
+        pronunciationScorer: (any PronunciationScorerService)? = nil,
+        ensembleASR: (any EnsembleASRServiceProtocol)? = nil
+    ) {
         self.pronunciationScorer = pronunciationScorer
+        self.ensembleASR = ensembleASR
     }
 
     // MARK: - Public API
@@ -26,6 +41,27 @@ final class FamilyVoiceScoringWorker: Sendable {
         // Determine sound group for ML scorer routing
         let group = soundGroup(for: referenceWord)
 
+        // Путь 1: Ensemble Tier B (наиболее точный). Только parent-контур.
+        if let ensembleASR {
+            do {
+                let audioURL = try FamilyVoiceRecorderWorker.resolveFilePath(childAudioPath)
+                let result = try await ensembleASR.recognize(
+                    url: audioURL,
+                    tier: .b,
+                    expectedWord: referenceWord.lowercased(),
+                    targetSound: group ?? ""
+                )
+                logger.info("Ensemble Tier B score for '\(referenceWord)': conf=\(result.confidence) ph=\(result.phonemeAccuracy)")
+                // Для семейного UX используем phonemeAccuracy (calibrated 0…1),
+                // а если он нулевой (нет targetSound) — общую уверенность ансамбля.
+                let value = result.phonemeAccuracy > 0 ? result.phonemeAccuracy : result.confidence
+                return max(0, min(1, value))
+            } catch {
+                logger.warning("Ensemble Tier B failed, falling back to single scorer: \(error)")
+            }
+        }
+
+        // Путь 2: одиночный PronunciationScorer.
         if let scorer = pronunciationScorer, let targetSound = group {
             do {
                 let audioURL = try FamilyVoiceRecorderWorker.resolveFilePath(childAudioPath)
@@ -40,7 +76,7 @@ final class FamilyVoiceScoringWorker: Sendable {
             }
         }
 
-        // Fallback: RMS heuristic (always returns a plausible score for demo)
+        // Путь 3: RMS heuristic (always returns a plausible score for demo)
         let score = await rmsHeuristicScore(childAudioPath: childAudioPath, word: referenceWord)
         logger.info("RMS heuristic score for '\(referenceWord)': \(score)")
         return score

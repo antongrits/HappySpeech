@@ -105,6 +105,23 @@ enum SessionShellModels {
         }
     }
 
+    // MARK: - AnalyzeEmotion
+
+    /// Опциональный анализ эмоции по голосу ребёнка (on-device, COPPA).
+    enum AnalyzeEmotion {
+        struct Request {
+            /// Float32 PCM Data (16kHz mono), скопированная из буфера записи ДО
+            /// async-границы (AVAudioPCMBuffer не Sendable).
+            let pcmData: Data
+        }
+        struct Response {
+            /// Стоит ли мягко предложить перерыв (накопились негативные эмоции).
+            let suggestBreak: Bool
+            /// Оставшиеся сердечки усталости (могут уменьшиться от эмоции).
+            let fatigueHearts: Int
+        }
+    }
+
     // MARK: - Feedback states
 
     /// State of the feedback overlay rendered above the game content.

@@ -640,10 +640,13 @@ public final class AppContainer {
     /// Kid circuit использует только Tier A (COPPA).
     public var ensembleASRService: any EnsembleASRServiceProtocol {
         if let existing = _ensembleASRService { return existing }
+        // Tier B (parent/specialist) усилен Wav2Vec2 CTC-декодером как 4-м голосом.
+        // Kid circuit использует только Tier A — Wav2Vec2 там не вызывается.
         let service = LiveEnsembleASRService(
             whisperASR: asrService,
             phonemeClassifier: phonemeAnalysisService,
-            pronunciationScorer: pronunciationService
+            pronunciationScorer: pronunciationService,
+            wav2Vec2: wav2Vec2Service
         )
         _ensembleASRService = service
         return service

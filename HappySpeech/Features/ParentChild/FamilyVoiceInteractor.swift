@@ -16,6 +16,8 @@ final class FamilyVoiceInteractor {
 
     private let recorderWorker: any FamilyVoiceRecording
     private let scoringWorker: FamilyVoiceScoringWorker
+    /// COPPA: помечает записи как parent / child через SpeakerVerification.
+    private let speakerTagWorker: FamilyVoiceSpeakerTagWorker
     private let realmActor: RealmActor
 
     /// Resolves the current microphone permission. Injectable so unit tests can
@@ -46,12 +48,20 @@ final class FamilyVoiceInteractor {
     init(
         realmActor: RealmActor,
         pronunciationScorer: (any PronunciationScorerService)? = nil,
+        ensembleASR: (any EnsembleASRServiceProtocol)? = nil,
+        speakerVerification: (any SpeakerVerificationServiceProtocol)? = nil,
         recorderWorker: (any FamilyVoiceRecording)? = nil,
         micPermissionProvider: (@Sendable () async -> Bool)? = nil
     ) {
         self.realmActor = realmActor
         self.recorderWorker = recorderWorker ?? FamilyVoiceRecorderWorker()
-        self.scoringWorker = FamilyVoiceScoringWorker(pronunciationScorer: pronunciationScorer)
+        self.scoringWorker = FamilyVoiceScoringWorker(
+            pronunciationScorer: pronunciationScorer,
+            ensembleASR: ensembleASR
+        )
+        self.speakerTagWorker = FamilyVoiceSpeakerTagWorker(
+            speakerVerification: speakerVerification
+        )
         self.micPermissionProvider = micPermissionProvider ?? {
             await FamilyVoiceInteractor.systemMicPermission()
         }
@@ -120,6 +130,14 @@ final class FamilyVoiceInteractor {
             }
             recordings.append(dto)
 
+            // COPPA: помечаем запись как parent (enroll первого профиля или verify).
+            // On-device, без сети; результат только логируется для безопасности контура.
+            let tag = await speakerTagWorker.tagParentRecording(
+                audioPath: relativePath,
+                ownerId: request.parentId
+            )
+            logger.info("Parent recording speaker tag=\(tag.rawValue, privacy: .public)")
+
             presenter?.presentRecordingStopped(.init(recording: dto, isNew: true))
         } catch {
             logger.error("Stop recording failed: \(error)")
@@ -183,6 +201,14 @@ final class FamilyVoiceInteractor {
         } catch {
             logger.error("Child recording stop failed: \(error)")
         }
+
+        // COPPA: подтверждаем, что запись из детской области — детская (не родитель).
+        // Сверяем с профилем родителя ДО удаления temp-файла. On-device, без сети.
+        let speakerTag = await speakerTagWorker.tagChildRecording(
+            audioPath: childPath,
+            parentOwnerId: parentId
+        )
+        logger.info("Child recording speaker tag=\(speakerTag.rawValue, privacy: .public)")
 
         // Score against word
         let score = await scoringWorker.score(
