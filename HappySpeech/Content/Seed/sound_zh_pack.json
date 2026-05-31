@@ -1120,7 +1120,7 @@
         {
           "id": "zh-wm-14",
           "word": "дорожка",
-          "imageAsset": "word_dorozhka2",
+          "imageAsset": "word_dorozhka",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-14.m4a"
@@ -1414,7 +1414,7 @@
         {
           "id": "zh-wf-5",
           "word": "стриж",
-          "imageAsset": "word_strizh2",
+          "imageAsset": "word_strizh",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-5.m4a"
@@ -1430,7 +1430,7 @@
         {
           "id": "zh-wf-7",
           "word": "гараж",
-          "imageAsset": "word_garazh2",
+          "imageAsset": "word_garazh",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-7.m4a"

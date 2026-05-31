@@ -494,7 +494,7 @@
         {
           "id": "ch-wi-4",
           "word": "чиж",
-          "imageAsset": "word_chizh2",
+          "imageAsset": "word_chizh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wi-4.m4a"
@@ -758,7 +758,7 @@
         {
           "id": "ch-wi-37",
           "word": "черника",
-          "imageAsset": "word_chernika2",
+          "imageAsset": "word_chernika",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wi-37.m4a"

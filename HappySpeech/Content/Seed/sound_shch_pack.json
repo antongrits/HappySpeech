@@ -1148,7 +1148,7 @@
         {
           "id": "shch-wm-35",
           "word": "роща",
-          "imageAsset": "word_roshcha2",
+          "imageAsset": "word_roshcha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-35.m4a"
@@ -1274,7 +1274,7 @@
         {
           "id": "shch-wf-0",
           "word": "плащ",
-          "imageAsset": "word_plashch2",
+          "imageAsset": "word_plashch",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-0.m4a"
@@ -1282,7 +1282,7 @@
         {
           "id": "shch-wf-1",
           "word": "борщ",
-          "imageAsset": "word_borshch2",
+          "imageAsset": "word_borshch",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-1.m4a"
@@ -1434,7 +1434,7 @@
         {
           "id": "shch-wf-20",
           "word": "лещ",
-          "imageAsset": "word_leshch2",
+          "imageAsset": "word_leshch",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wf-20.m4a"
@@ -1450,7 +1450,7 @@
         {
           "id": "shch-wf-22",
           "word": "плющ",
-          "imageAsset": "word_plyushch2",
+          "imageAsset": "word_plyushch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-22.m4a"

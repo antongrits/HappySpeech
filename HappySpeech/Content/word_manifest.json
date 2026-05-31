@@ -14444,6 +14444,819 @@
       "visualComplexity": "medium",
       "semanticCategory": "objects",
       "soundFamily": "Щ"
+    },
+    {
+      "word": "чай",
+      "asset": "word_chai",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чайка",
+      "asset": "word_chaika",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чайник",
+      "asset": "word_chainik",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чайник",
+      "asset": "word_chainik2",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чаща",
+      "asset": "word_chashcha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "complex",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чаща",
+      "asset": "word_chashcha2",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "complex",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чечевица",
+      "asset": "word_chechevica",
+      "recommendedStages": [
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чехол",
+      "asset": "word_chehol",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "человек",
+      "asset": "word_chelovek",
+      "recommendedStages": [
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чемпион",
+      "asset": "word_chempion",
+      "recommendedStages": [
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "черепаха",
+      "asset": "word_cherepaha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "дочка",
+      "asset": "word_dochka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "галоша",
+      "asset": "word_galosha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "гуляш",
+      "asset": "word_gulyash",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "хищник",
+      "asset": "word_hishchnik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "хрящ",
+      "asset": "word_hrashch",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "художник",
+      "asset": "word_hudozhnik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "хвощ",
+      "asset": "word_hvoshch",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "ищейка",
+      "asset": "word_ishcheika",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "кирпичик",
+      "asset": "word_kirpichik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "кочка",
+      "asset": "word_kochka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "кочка",
+      "asset": "word_kochka2",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "крышка",
+      "asset": "word_kryshka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "ландыш",
+      "asset": "word_landysh_b",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "лужайка",
+      "asset": "word_luzhajka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "лягушачка",
+      "asset": "word_lyagushachka",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "Маша",
+      "asset": "word_masha",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "ножка",
+      "asset": "word_nozhka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ножницы",
+      "asset": "word_nozhnicy",
+      "recommendedStages": [
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ножовка",
+      "asset": "word_nozhovka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "окошко",
+      "asset": "word_okoshko",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "овощ",
+      "asset": "word_ovoshch",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "пальчик",
+      "asset": "word_palchik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "пейзаж",
+      "asset": "word_peyzazh",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "complex",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "пейзаж",
+      "asset": "word_peyzazh2",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "complex",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "плюш",
+      "asset": "word_plyush",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "пожар",
+      "asset": "word_pozhar",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "птичка",
+      "asset": "word_ptichka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "рачки",
+      "asset": "word_rachki",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "речка",
+      "asset": "word_rechka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "рожок",
+      "asset": "word_rozhok",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ручка",
+      "asset": "word_ruchka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "шапка",
+      "asset": "word_shapka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шатёр",
+      "asset": "word_shator",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "щепотка",
+      "asset": "word_shchepotka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щетина",
+      "asset": "word_shchetina",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щипцы",
+      "asset": "word_shchipcy",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щётка",
+      "asset": "word_shchoetka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щупальца",
+      "asset": "word_shchupaltsa",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "шлем",
+      "asset": "word_shlem",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шофёр",
+      "asset": "word_shofor",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шприц",
+      "asset": "word_shpric",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "снежинка",
+      "asset": "word_snezhinka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "собачка",
+      "asset": "word_sobachka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "свеча",
+      "asset": "word_svecha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "сыщик",
+      "asset": "word_syshchik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "туча",
+      "asset": "word_tucha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "тушь",
+      "asset": "word_tush",
+      "recommendedStages": [
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "уши",
+      "asset": "word_ushi",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "ящик",
+      "asset": "word_yashchik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "ёж",
+      "asset": "word_yozh",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "зайчик",
+      "asset": "word_zaichik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFin"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "жатва",
+      "asset": "word_zhatva",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "complex",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "железо",
+      "asset": "word_zhelezo",
+      "recommendedStages": [
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "женщина",
+      "asset": "word_zhenshina",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жеребец",
+      "asset": "word_zherebyec",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "животное",
+      "asset": "word_zhivotnoe",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жокей",
+      "asset": "word_zhokei",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "people",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жёлудь",
+      "asset": "word_zholudj",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "Ж"
     }
   ],
   "totalWords": 1369,
