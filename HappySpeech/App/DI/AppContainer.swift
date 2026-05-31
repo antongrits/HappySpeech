@@ -739,6 +739,8 @@ public extension AppContainer {
         let sharedHFClient = HFInferenceClient()
         let sharedNetworkClient = NetworkClient()
         let sharedSyncService: any SyncService = LiveSyncService(realmActor: realmActor, networkMonitor: sharedNetworkMonitor)
+        // F1-016: единый планировщик интервальных повторов (UserDefaults-backed).
+        let sharedReviewScheduler: any ReviewSchedulerService = LiveReviewSchedulerService()
 
         return AppContainer(
             realmActor: realmActor,
@@ -766,7 +768,8 @@ public extension AppContainer {
             adaptivePlannerServiceFactory: {
                 LiveAdaptivePlannerService(
                     childRepository: childRepo,
-                    sessionRepository: sessionRepo
+                    sessionRepository: sessionRepo,
+                    reviewScheduler: sharedReviewScheduler
                 )
             },
             llmDecisionServiceFactory: {

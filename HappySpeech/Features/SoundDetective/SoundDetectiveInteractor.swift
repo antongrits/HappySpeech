@@ -141,6 +141,14 @@ final class SoundDetectiveInteractor: SoundDetectiveBusinessLogic, SoundDetectiv
         }
 
         if advance {
+            // F1-016: фиксируем результат слова в интервальном планировщике повторов.
+            // correct — только если попал сразу (без исчерпания попыток).
+            await adaptivePlanner?.recordItemOutcome(
+                childId: childId,
+                itemId: round.item.id,
+                sound: sessionTargetSound,
+                correct: isCorrect
+            )
             currentIndex += 1
         }
 

@@ -134,6 +134,7 @@ final class SyllableSnailInteractor: SyllableSnailBusinessLogic, SyllableSnailDa
             totalRounds: rounds.count
         )
         await presenter?.presentTap(response: response)
+        await recordItemIfResolved(round: round, evaluation: evaluation)
         await finishIfNeeded(evaluation.isFinished)
     }
 
@@ -171,6 +172,7 @@ final class SyllableSnailInteractor: SyllableSnailBusinessLogic, SyllableSnailDa
             totalRounds: rounds.count
         )
         await presenter?.presentSubmit(response: response)
+        await recordItemIfResolved(round: round, evaluation: evaluation)
         await finishIfNeeded(evaluation.isFinished)
     }
 
@@ -208,6 +210,7 @@ final class SyllableSnailInteractor: SyllableSnailBusinessLogic, SyllableSnailDa
             totalRounds: rounds.count
         )
         await presenter?.presentFix(response: response)
+        await recordItemIfResolved(round: round, evaluation: evaluation)
         await finishIfNeeded(evaluation.isFinished)
     }
 
@@ -278,6 +281,18 @@ final class SyllableSnailInteractor: SyllableSnailBusinessLogic, SyllableSnailDa
     private func finishIfNeeded(_ isFinished: Bool) async {
         guard isFinished else { return }
         await recordResult()
+    }
+
+    /// F1-016: фиксирует результат слова в интервальном планировщике, когда раунд
+    /// разрешился (advance). correct — только при чистом попадании (hit).
+    private func recordItemIfResolved(round: SnailRound, evaluation: Evaluation) async {
+        guard evaluation.advance else { return }
+        await adaptivePlanner?.recordItemOutcome(
+            childId: childId,
+            itemId: round.id,
+            sound: Self.skillTarget,
+            correct: evaluation.feedback == .hit
+        )
     }
 
     // MARK: - Adaptive

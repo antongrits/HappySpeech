@@ -104,6 +104,26 @@ public enum CorrectionStage: String, CaseIterable, Codable, Sendable, Comparable
     public static func < (lhs: CorrectionStage, rhs: CorrectionStage) -> Bool {
         lhs.stageIndex < rhs.stageIndex
     }
+
+    /// Стадии, упорядоченные по `stageIndex` (детерминированный порядок лестницы).
+    /// Исключает `.diff` — дифференциация не является линейным шагом откатной
+    /// лестницы, она надстраивается над автоматизацией (см. speech-methodology).
+    public static var ladder: [CorrectionStage] {
+        [.prep, .isolated, .syllable, .wordInit, .wordMed, .wordFinal, .phrase, .sentence, .story]
+    }
+
+    /// Предыдущий этап лестницы (методический откат «на шаг назад»).
+    ///
+    /// Методическое правило (correction-stages): регресс на словах → откат к
+    /// слогам, НЕ к изолированному звуку. Поэтому шаг — ровно один уровень вниз
+    /// по `ladder`. `.prep` (нижний) и `.isolated` уже базовые — откат
+    /// упирается в `.isolated`/`.prep`, ниже не опускаемся. Для `.diff`
+    /// предыдущим считается `.story` (последняя линейная стадия).
+    public var previous: CorrectionStage? {
+        if self == .diff { return .story }
+        guard let idx = Self.ladder.firstIndex(of: self), idx > 0 else { return nil }
+        return Self.ladder[idx - 1]
+    }
 }
 
 // MARK: - Template Types

@@ -149,6 +149,13 @@ final class WhoseTailInteractor: WhoseTailBusinessLogic, WhoseTailDataStore {
         }
 
         if advance {
+            // F1-016: результат слова в интервальный планировщик повторов.
+            await adaptivePlanner?.recordItemOutcome(
+                childId: childId,
+                itemId: round.id,
+                sound: sessionSoundTarget,
+                correct: isCorrect
+            )
             currentIndex += 1
         }
 

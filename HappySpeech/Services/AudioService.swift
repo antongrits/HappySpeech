@@ -156,6 +156,18 @@ public protocol AdaptivePlannerService: Sendable {
         qualityScore: SM2Quality
     ) async throws
 
+    /// F1-016: зафиксировать результат попытки по КОНКРЕТНОМУ слову в едином
+    /// планировщике интервальных повторов (лестница 1→3→7→14→30 дней).
+    /// Игры всех основных шаблонов вызывают это на каждое слово; due-повторы
+    /// затем подмешиваются в начало дневного маршрута. Имеет дефолтную пустую
+    /// реализацию — обратно совместимо с моками и старыми вызовами.
+    func recordItemOutcome(
+        childId: String,
+        itemId: String,
+        sound: String,
+        correct: Bool
+    ) async
+
     /// Подсказка UI: стоит ли сделать паузу / завершить сессию.
     /// Вычисляется синхронно, без I/O — можно звать прямо из Interactor'а.
     func shouldTakeBreak(
@@ -163,6 +175,17 @@ public protocol AdaptivePlannerService: Sendable {
         sessionDurationSec: Int,
         childAge: Int
     ) -> Bool
+}
+
+public extension AdaptivePlannerService {
+    /// Дефолт — no-op: реализации без интервального планировщика (моки, старые
+    /// конфигурации) просто игнорируют пословный outcome. F1-016.
+    func recordItemOutcome(
+        childId: String,
+        itemId: String,
+        sound: String,
+        correct: Bool
+    ) async {}
 }
 
 public struct AdaptiveRoute: Sendable {
@@ -197,6 +220,12 @@ public struct RouteStepItem: Sendable {
     public let durationTargetSec: Int
     /// Логопедический трек шага (F1-013/F1-021). По умолчанию — звуковой.
     public let track: RouteTrack
+    /// F1-015: шаг ретроспективного повторения предыдущего этапа в начале сессии
+    /// («вспомним, что уже умеем» — методическое требование correction-stages).
+    public let isRetrospective: Bool
+    /// F1-014: шаг-откат на предыдущий этап после регресса/долгого перерыва
+    /// («повторим прошлое» — управляемый методический регресс, без наказания).
+    public let isRollback: Bool
 
     public init(
         templateType: TemplateType,
@@ -205,7 +234,9 @@ public struct RouteStepItem: Sendable {
         difficulty: Int,
         wordCount: Int,
         durationTargetSec: Int,
-        track: RouteTrack = .sound
+        track: RouteTrack = .sound,
+        isRetrospective: Bool = false,
+        isRollback: Bool = false
     ) {
         self.templateType = templateType
         self.targetSound = targetSound
@@ -214,6 +245,8 @@ public struct RouteStepItem: Sendable {
         self.wordCount = wordCount
         self.durationTargetSec = durationTargetSec
         self.track = track
+        self.isRetrospective = isRetrospective
+        self.isRollback = isRollback
     }
 }
 

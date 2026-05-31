@@ -397,13 +397,18 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
 
     private let childRepository: (any ChildRepository)?
     private let sessionRepository: (any SessionRepository)?
+    /// F1-016: единый планировщик интервальных повторов слов-ошибок. Опционален —
+    /// при отсутствии маршрут собирается без подмешивания due-повторов (back-compat).
+    private let reviewScheduler: (any ReviewSchedulerService)?
 
     public init(
         childRepository: (any ChildRepository)? = nil,
-        sessionRepository: (any SessionRepository)? = nil
+        sessionRepository: (any SessionRepository)? = nil,
+        reviewScheduler: (any ReviewSchedulerService)? = nil
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
+        self.reviewScheduler = reviewScheduler
     }
 
     // MARK: buildDailyRoute
@@ -429,14 +434,40 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
         let now = Date()
         let hour = Calendar.current.component(.hour, from: now)
         let fatigue = Self.computeFatigue(state: primary, hour: hour)
+
+        // F1-014: откат стадии на шаг назад при регрессе/долгом перерыве.
+        let primarySessions = recentSessions.filter { $0.targetSound == primary.soundTarget }
+        let decision = StageProgressionPlanner.recommendedStage(
+            current: primary.stage,
+            soundSessions: primarySessions,
+            now: now
+        )
+        let workingStage = decision.stage
+
         // F1-021/F1-013: стратегия по нарушению накладывает доп-треки на звуковой маршрут.
-        let steps = DisorderRouteStrategy.composeRoute(
+        var steps = DisorderRouteStrategy.composeRoute(
             soundTarget: primary.soundTarget,
-            stage: primary.stage,
+            stage: workingStage,
             fatigue: fatigue,
             disorder: disorder
         )
-        let stepsTotal = steps.reduce(0) { $0 + $1.durationTargetSec }
+        // F1-014: если был откат — первый основной шаг помечаем как rollback («повторим прошлое»).
+        if decision.didRollback {
+            steps = Self.markFirstSoundStepRollback(steps)
+        }
+
+        // F1-016: due-повторы слов-ошибок подмешиваем В НАЧАЛО маршрута.
+        let reviewSteps = await reviewSteps(for: childId, sound: primary.soundTarget, now: now)
+        // F1-015: ретроспективный старт — 2–3 задания предыдущей стадии перед основной работой.
+        let retroSteps = StageProgressionPlanner.retrospectiveSteps(
+            currentStage: workingStage,
+            soundTarget: primary.soundTarget,
+            fatigue: fatigue
+        )
+        let intro = Self.dedupeIntro(reviewSteps + retroSteps)
+        let combined = intro + steps
+
+        let stepsTotal = combined.reduce(0) { $0 + $1.durationTargetSec }
         let cap = DisorderRouteStrategy.sessionCap(for: profile.age, disorder: disorder)
         let maxDuration = min(stepsTotal, cap)
 
@@ -446,19 +477,67 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
                 primary: primary,
                 fatigue: fatigue,
                 now: now,
-                stepsCount: steps.count,
+                stepsCount: combined.count,
                 stepsTotal: stepsTotal,
                 cap: cap,
                 disorder: disorder
             )
         )
+        if decision.didRollback {
+            HSLogger.planner.notice(
+                """
+                Stage rollback childId=\(childId, privacy: .private) \
+                sound=\(primary.soundTarget, privacy: .public) \
+                from=\(primary.stage.rawValue, privacy: .public) \
+                to=\(workingStage.rawValue, privacy: .public) \
+                trigger=\(decision.trigger.rawValue, privacy: .public)
+                """
+            )
+        }
 
         return AdaptiveRoute(
-            steps: steps,
+            steps: combined,
             maxDurationSec: maxDuration,
             fatigueLevel: fatigue,
             disorder: disorder
         )
+    }
+
+    /// F1-016: собирает шаги due-повторов через `ReviewSchedulerService` (если подключён).
+    private func reviewSteps(for childId: String, sound: String, now: Date) async -> [RouteStepItem] {
+        guard let reviewScheduler else { return [] }
+        let due = await reviewScheduler.dueReviews(
+            for: childId,
+            sound: sound,
+            now: now,
+            limit: 3
+        )
+        return due.map { StageProgressionPlanner.reviewStep(for: $0) }
+    }
+
+    /// Помечает первый звуковой (`.sound`) шаг маршрута как rollback-шаг.
+    static func markFirstSoundStepRollback(_ steps: [RouteStepItem]) -> [RouteStepItem] {
+        guard let idx = steps.firstIndex(where: { $0.track == .sound }) else { return steps }
+        var copy = steps
+        let s = copy[idx]
+        copy[idx] = RouteStepItem(
+            templateType: s.templateType,
+            targetSound: s.targetSound,
+            stage: s.stage,
+            difficulty: s.difficulty,
+            wordCount: s.wordCount,
+            durationTargetSec: s.durationTargetSec,
+            track: s.track,
+            isRetrospective: s.isRetrospective,
+            isRollback: true
+        )
+        return copy
+    }
+
+    /// Ограничивает вступительную часть (повторы + ретроспектива) 3-мя шагами,
+    /// чтобы сессия не раздувалась перед основной работой.
+    static func dedupeIntro(_ intro: [RouteStepItem]) -> [RouteStepItem] {
+        Array(intro.prefix(3))
     }
 
     private func fallbackRoute(for childId: String, disorder: SpeechDisorder) -> AdaptiveRoute {
@@ -562,6 +641,23 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
             reps=\(result.repetitions) \
             needsSpecialist=\(result.needsSpecialistReview)
             """
+        )
+    }
+
+    // MARK: recordItemOutcome (F1-016)
+
+    public func recordItemOutcome(
+        childId: String,
+        itemId: String,
+        sound: String,
+        correct: Bool
+    ) async {
+        guard let reviewScheduler else { return }
+        await reviewScheduler.recordOutcome(
+            childId: childId,
+            itemId: itemId,
+            sound: sound,
+            correct: correct
         )
     }
 
