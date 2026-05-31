@@ -513,6 +513,9 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         // Gender hint для голосовой модели
         seed.gender = profile.childGender
 
+        // F1-021: профиль нарушения определяет акценты дневного маршрута.
+        seed.disorder = profile.disorder
+
         AdaptivePlannerSeed.save(seed)
         logger.info("adaptivePlannerSeed saved sounds=\(seed.soundPriorities.count, privacy: .public)")
     }
@@ -593,6 +596,8 @@ struct AdaptivePlannerSeed: Sendable {
     var childAge: Int = 6
     var dailyMinutes: Int = 10
     var gender: ChildGender = .notSpecified
+    /// F1-021: профиль нарушения для первичного маршрута.
+    var disorder: SpeechDisorder = .default
 
     init() {}
 
@@ -622,6 +627,8 @@ struct AdaptivePlannerSeed: Sendable {
         let childAge: Int
         let dailyMinutes: Int
         let genderRaw: String
+        /// F1-021: опционально для обратной совместимости со старым seed.
+        let disorderRaw: String?
 
         init(from seed: AdaptivePlannerSeed) {
             self.soundPriorities = seed.soundPriorities.mapValues { $0.rawValue }
@@ -630,6 +637,7 @@ struct AdaptivePlannerSeed: Sendable {
             self.childAge = seed.childAge
             self.dailyMinutes = seed.dailyMinutes
             self.genderRaw = seed.gender.rawValue
+            self.disorderRaw = seed.disorder.rawValue
         }
     }
 
@@ -640,6 +648,7 @@ struct AdaptivePlannerSeed: Sendable {
         self.childAge = codable.childAge
         self.dailyMinutes = codable.dailyMinutes
         self.gender = ChildGender(rawValue: codable.genderRaw) ?? .notSpecified
+        self.disorder = SpeechDisorder(rawValue: codable.disorderRaw ?? "") ?? .default
     }
 }
 
@@ -658,6 +667,7 @@ extension OnboardingState {
             goals: Array(profile.goals).sorted(),
             difficultSounds: Array(profile.difficultSounds).sorted(),
             dailyMinutes: profile.dailyMinutes,
+            disorderRaw: profile.disorder.rawValue,
             reminderEnabled: profile.reminderEnabled,
             reminderHour: profile.reminderHour,
             reminderMinute: profile.reminderMinute,
@@ -681,6 +691,7 @@ extension OnboardingState {
             goals: Set(decoded.goals),
             difficultSounds: Set(decoded.difficultSounds),
             dailyMinutes: decoded.dailyMinutes,
+            disorder: SpeechDisorder(rawValue: decoded.disorderRaw ?? "") ?? .default,
             reminderEnabled: decoded.reminderEnabled,
             reminderHour: decoded.reminderHour,
             reminderMinute: decoded.reminderMinute,
@@ -702,6 +713,8 @@ extension OnboardingState {
         let goals: [String]
         let difficultSounds: [String]
         let dailyMinutes: Int
+        /// F1-021: опционально для обратной совместимости со старыми профилями.
+        let disorderRaw: String?
         let reminderEnabled: Bool
         let reminderHour: Int
         let reminderMinute: Int

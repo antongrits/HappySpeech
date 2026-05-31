@@ -201,6 +201,9 @@ public struct OnboardingProfile: Sendable, Equatable {
     public var difficultSounds: Set<String>
     public var dailyMinutes: Int
 
+    /// F1-021: тип речевого нарушения (по умолчанию — дислалия).
+    public var disorder: SpeechDisorder
+
     // Reminder
     public var reminderEnabled: Bool
     public var reminderHour: Int
@@ -226,6 +229,7 @@ public struct OnboardingProfile: Sendable, Equatable {
         goals: Set<String> = [],
         difficultSounds: Set<String> = [],
         dailyMinutes: Int = 10,
+        disorder: SpeechDisorder = .default,
         reminderEnabled: Bool = false,
         reminderHour: Int = 17,
         reminderMinute: Int = 0,
@@ -242,6 +246,7 @@ public struct OnboardingProfile: Sendable, Equatable {
         self.goals = goals
         self.difficultSounds = difficultSounds
         self.dailyMinutes = dailyMinutes
+        self.disorder = disorder
         self.reminderEnabled = reminderEnabled
         self.reminderHour = reminderHour
         self.reminderMinute = reminderMinute

@@ -163,6 +163,94 @@ public enum UserRole: String, Codable, Sendable {
     case child
 }
 
+// MARK: - Speech Disorder (F1-021)
+
+/// Тип речевого нарушения, который родитель/логопед указывает при настройке
+/// профиля ребёнка. Определяет акценты дневного маршрута в `AdaptivePlannerService`.
+///
+/// Методическое обоснование маршрутов — `wiki/concepts/speech-methodology.md`
+/// (Филичёва/Чиркина, Левина, Лопатина, Ткаченко). Приложение работает только
+/// с педагогически корректируемыми формами; при тяжёлых формах рекомендуется
+/// очный логопед (см. ethical-boundaries).
+public enum SpeechDisorder: String, Codable, Sendable, CaseIterable, Identifiable {
+    /// Дислалия — нарушение звукопроизношения при сохранном слухе. Базовый профиль.
+    case dyslalia
+    /// ФФН — фонетико-фонематическое недоразвитие (+ фонематический трек).
+    case ffn
+    /// ОНР III–IV — общее недоразвитие речи (4 параллельных трека).
+    case onr
+    /// ЗРР — задержка речевого развития (режим «медленного старта»).
+    case zrr
+    /// Заикание — нарушение плавности (дыхание/темп, без таймеров и соревнований).
+    case stuttering
+    /// Дизартрия (стёртая) — усиленная артикуляция + биообратная связь.
+    case dysarthria
+
+    public var id: String { rawValue }
+
+    /// Профиль по умолчанию при отсутствии явного выбора.
+    public static let `default`: SpeechDisorder = .dyslalia
+
+    public var displayName: String {
+        switch self {
+        case .dyslalia:   return String(localized: "disorder.dyslalia.title")
+        case .ffn:        return String(localized: "disorder.ffn.title")
+        case .onr:        return String(localized: "disorder.onr.title")
+        case .zrr:        return String(localized: "disorder.zrr.title")
+        case .stuttering: return String(localized: "disorder.stuttering.title")
+        case .dysarthria: return String(localized: "disorder.dysarthria.title")
+        }
+    }
+
+    public var disorderDescription: String {
+        switch self {
+        case .dyslalia:   return String(localized: "disorder.dyslalia.desc")
+        case .ffn:        return String(localized: "disorder.ffn.desc")
+        case .onr:        return String(localized: "disorder.onr.desc")
+        case .zrr:        return String(localized: "disorder.zrr.desc")
+        case .stuttering: return String(localized: "disorder.stuttering.desc")
+        case .dysarthria: return String(localized: "disorder.dysarthria.desc")
+        }
+    }
+
+    public var systemImageName: String {
+        switch self {
+        case .dyslalia:   return "waveform"
+        case .ffn:        return "ear"
+        case .onr:        return "text.bubble"
+        case .zrr:        return "tortoise"
+        case .stuttering: return "wind"
+        case .dysarthria: return "mouth"
+        }
+    }
+
+    /// Цель плавности речи (заикание): глобально гасит таймеры/скороговорки/
+    /// соревнования во всех играх (методический запрет, F1-024).
+    public var hasFluencyGoal: Bool { self == .stuttering }
+
+    /// Режим «медленного старта» (ЗРР): короткие сессии, акцент на вызов речи.
+    public var isSlowStart: Bool { self == .zrr }
+}
+
+// MARK: - Route Track (F1-013 / F1-021)
+
+/// Логопедический трек дневного маршрута. Используется планировщиком, чтобы
+/// чередовать разные направления коррекции в одной сессии (особенно для ОНР).
+public enum RouteTrack: String, Codable, Sendable, CaseIterable {
+    /// Произношение: постановка/автоматизация звука (базовый трек).
+    case sound
+    /// Фонематика: дифференциация, фонемный анализ, минимальные пары.
+    case phonemic
+    /// Грамматика: словоизменение/словообразование/синтаксис.
+    case grammar
+    /// Связная речь: пересказ, рассказ, понимание.
+    case coherentSpeech
+    /// Дыхание/темп/плавность (заикание).
+    case breathingFluency
+    /// Артикуляционная гимнастика (дизартрия, подготовка).
+    case articulation
+}
+
 // MARK: - Fatigue Level
 
 public enum FatigueLevel: Int, Codable, Sendable {

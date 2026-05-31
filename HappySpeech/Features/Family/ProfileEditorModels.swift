@@ -28,6 +28,25 @@ enum ProfileEditor {
         let avatarStyle: String
         let colorTheme: String
         let targetSounds: [String]
+        let disorder: SpeechDisorder
+
+        init(
+            childId: String,
+            name: String,
+            age: Int,
+            avatarStyle: String,
+            colorTheme: String,
+            targetSounds: [String],
+            disorder: SpeechDisorder = .default
+        ) {
+            self.childId = childId
+            self.name = name
+            self.age = age
+            self.avatarStyle = avatarStyle
+            self.colorTheme = colorTheme
+            self.targetSounds = targetSounds
+            self.disorder = disorder
+        }
     }
 
     struct SaveResponse {
@@ -90,6 +109,8 @@ final class ProfileEditorViewModel {
     var selectedAvatarId: String = "butterfly"
     var selectedThemeId: String = "coral"
     var targetSounds: [String] = []
+    /// F1-021: тип речевого нарушения — определяет акценты дневного маршрута.
+    var selectedDisorder: SpeechDisorder = .default
     var isSaving: Bool = false
     var isSaved: Bool = false
     var errorMessage: String?

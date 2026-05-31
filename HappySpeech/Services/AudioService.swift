@@ -169,6 +169,23 @@ public struct AdaptiveRoute: Sendable {
     public let steps: [RouteStepItem]
     public let maxDurationSec: Int
     public let fatigueLevel: FatigueLevel
+    /// Профиль нарушения, под который собран маршрут (F1-021).
+    public let disorder: SpeechDisorder
+
+    public init(
+        steps: [RouteStepItem],
+        maxDurationSec: Int,
+        fatigueLevel: FatigueLevel,
+        disorder: SpeechDisorder = .dyslalia
+    ) {
+        self.steps = steps
+        self.maxDurationSec = maxDurationSec
+        self.fatigueLevel = fatigueLevel
+        self.disorder = disorder
+    }
+
+    /// Уникальные треки, присутствующие в маршруте (для UI/тестов).
+    public var tracks: Set<RouteTrack> { Set(steps.map(\.track)) }
 }
 
 public struct RouteStepItem: Sendable {
@@ -178,6 +195,26 @@ public struct RouteStepItem: Sendable {
     public let difficulty: Int
     public let wordCount: Int
     public let durationTargetSec: Int
+    /// Логопедический трек шага (F1-013/F1-021). По умолчанию — звуковой.
+    public let track: RouteTrack
+
+    public init(
+        templateType: TemplateType,
+        targetSound: String,
+        stage: CorrectionStage,
+        difficulty: Int,
+        wordCount: Int,
+        durationTargetSec: Int,
+        track: RouteTrack = .sound
+    ) {
+        self.templateType = templateType
+        self.targetSound = targetSound
+        self.stage = stage
+        self.difficulty = difficulty
+        self.wordCount = wordCount
+        self.durationTargetSec = durationTargetSec
+        self.track = track
+    }
 }
 
 // MARK: - SyncService Protocol

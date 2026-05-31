@@ -17,9 +17,15 @@ final class ProfileEditorPresenter {
         vm.selectedAvatarId = response.avatarStyle
         vm.selectedThemeId = response.colorTheme
         vm.targetSounds = response.targetSounds
+        vm.selectedDisorder = response.disorder
         vm.isLoading = false
         vm.errorMessage = nil
         logger.debug("ProfileEditorPresenter: loaded child \(response.childId, privacy: .private)")
+    }
+
+    func presentDisorder(_ response: ProfileEditor.SetDisorderResponse) {
+        viewModel?.selectedDisorder = response.disorder
+        logger.debug("ProfileEditorPresenter: disorder set \(response.disorder.rawValue, privacy: .public)")
     }
 
     func presentLoading() {

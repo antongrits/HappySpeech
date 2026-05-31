@@ -81,6 +81,9 @@ struct ProfileEditorView: View {
                 // Age picker
                 ageSection
 
+                // Disorder picker (F1-021)
+                disorderSection
+
                 // Save button
                 saveButton
             }
@@ -271,6 +274,71 @@ struct ProfileEditorView: View {
             .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }
 
+    // MARK: - Disorder Section (F1-021)
+
+    private var disorderSection: some View {
+        HSLiquidGlassCard(style: .primary) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                sectionHeader(String(localized: "profile.editor.disorder"), icon: "list.bullet.clipboard")
+
+                Text(String(localized: "profile.editor.disorder.hint"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                ForEach(SpeechDisorder.allCases) { disorder in
+                    Button {
+                        viewModel.selectedDisorder = disorder
+                        Task { await applyDisorder(disorder) }
+                    } label: {
+                        disorderRow(disorder)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(disorder.displayName)
+                    .accessibilityHint(disorder.disorderDescription)
+                    .accessibilityAddTraits(
+                        viewModel.selectedDisorder == disorder ? .isSelected : []
+                    )
+                }
+            }
+        }
+    }
+
+    private func disorderRow(_ disorder: SpeechDisorder) -> some View {
+        let isSelected = viewModel.selectedDisorder == disorder
+        return HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            Image(systemName: disorder.systemImageName)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(isSelected ? viewModel.selectedThemeColor : ColorTokens.Parent.inkMuted)
+                .frame(width: 28)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                Text(disorder.displayName)
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Text(disorder.disorderDescription)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 0)
+
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(viewModel.selectedThemeColor)
+                    .accessibilityHidden(true)
+            }
+        }
+        .padding(SpacingTokens.sp3)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                .fill(isSelected ? viewModel.selectedThemeColor.opacity(0.12) : ColorTokens.Parent.surface)
+        )
+        .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.85), value: isSelected)
+    }
+
     // MARK: - Save Button
 
     private var saveButton: some View {
@@ -328,6 +396,13 @@ struct ProfileEditorView: View {
             age: viewModel.age,
             avatarStyle: viewModel.selectedAvatarId,
             colorTheme: viewModel.selectedThemeId
+        ))
+    }
+
+    private func applyDisorder(_ disorder: SpeechDisorder) async {
+        await interactor?.setDisorder(ProfileEditor.SetDisorderRequest(
+            childId: viewModel.childId,
+            disorder: disorder
         ))
     }
 }

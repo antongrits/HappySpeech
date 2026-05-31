@@ -72,7 +72,8 @@ final class ProfileEditorInteractor {
                 age:          dto.age,
                 avatarStyle:  dto.avatarStyle,
                 colorTheme:   dto.colorTheme,
-                targetSounds: dto.targetSounds
+                targetSounds: dto.targetSounds,
+                disorder:     SpeechDisorderStore.load(childId: dto.id)
             ))
 
             // После основного load — вычисляем прогресс по звукам для preview.
@@ -192,9 +193,25 @@ final class ProfileEditorInteractor {
             age:          original.age,
             avatarStyle:  original.avatarStyle,
             colorTheme:   original.colorTheme,
-            targetSounds: original.targetSounds
+            targetSounds: original.targetSounds,
+            disorder:     SpeechDisorderStore.load(childId: original.id)
         ))
         logger.debug("ProfileEditorInteractor: undo — restored original profile")
+    }
+
+    // MARK: - Speech disorder (F1-021)
+
+    /// Сохраняет выбранный тип речевого нарушения для ребёнка. Хранится вне
+    /// Realm (см. `SpeechDisorderStore`); планировщик читает его при сборке
+    /// дневного маршрута. Применяется немедленно — без кнопки «Сохранить».
+    func setDisorder(_ request: ProfileEditor.SetDisorderRequest) async {
+        let childId = currentChildId.isEmpty ? request.childId : currentChildId
+        guard !childId.isEmpty else {
+            logger.warning("ProfileEditorInteractor: setDisorder skipped — empty childId")
+            return
+        }
+        SpeechDisorderStore.save(request.disorder, childId: childId)
+        presenter?.presentDisorder(ProfileEditor.SetDisorderResponse(disorder: request.disorder))
     }
 
     // MARK: - Target sounds management
@@ -452,6 +469,15 @@ extension ProfileEditor {
 
     struct AddTargetSoundRequest { let sound: String }
     struct RemoveTargetSoundRequest { let sound: String }
+
+    struct SetDisorderRequest {
+        let childId: String
+        let disorder: SpeechDisorder
+    }
+
+    struct SetDisorderResponse {
+        let disorder: SpeechDisorder
+    }
 
     struct SoundProgressResponse {
         let items: [SoundProgressItem]
