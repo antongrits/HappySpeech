@@ -8,31 +8,71 @@ import SwiftUI
 final class ComprehensionDetectiveViewModelHolder: ComprehensionDetectiveDisplayLogic {
 
     var startVM: ComprehensionDetectiveModels.Start.ViewModel?
-    var lastPick: ComprehensionDetectiveModels.Pick.ViewModel?
+    var currentRound: ComprehensionDetectiveModels.Start.RoundViewModel?
+    var lastFeedback: FeedbackTier?
+    var lastLyalyaLine: String?
+    /// id картинки, выбранной в последней попытке (для подсветки промаха).
+    var chosenPictureId: String?
+    /// id правильной картинки для пульсации-подсказки (после 2 промахов).
+    var hintPictureId: String?
+    var summary: ComprehensionDetectiveModels.Pick.SummaryViewModel?
+    var isFinished: Bool = false
+    var showCelebration: Bool = false
+    /// Счётчик попыток в текущем раунде (для номера попытки в Request).
+    var attemptInRound: Int = 0
 
     func displayStart(viewModel: ComprehensionDetectiveModels.Start.ViewModel) async {
-        startVM = viewModel
-        lastPick = nil
+        self.startVM = viewModel
+        self.currentRound = viewModel.firstRound
+        resetRoundState()
+        self.isFinished = false
+        self.summary = nil
+        self.showCelebration = false
+        self.lastFeedback = nil
+        self.lastLyalyaLine = nil
     }
 
     func displayPick(viewModel: ComprehensionDetectiveModels.Pick.ViewModel) async {
-        lastPick = viewModel
+        self.lastFeedback = viewModel.feedback
+        self.lastLyalyaLine = viewModel.lyalyaLine
+        self.hintPictureId = viewModel.hintPictureId
+        self.isFinished = viewModel.isFinished
+        self.summary = viewModel.summary
+        self.showCelebration = viewModel.summary?.showCelebration ?? false
+
+        if let next = viewModel.nextRound {
+            // Новый раунд — стираем состояние предыдущего.
+            self.currentRound = next
+            resetRoundState()
+            self.lastFeedback = nil
+            self.lastLyalyaLine = nil
+        }
+    }
+
+    private func resetRoundState() {
+        self.chosenPictureId = nil
+        self.hintPictureId = nil
+        self.attemptInRound = 0
     }
 }
 
 // MARK: - ComprehensionDetectiveView (Clean Swift: View)
 //
-// v31 Волна B, Функция Ф.2 «Понимание-детектив».
+// v31 Волна B, Функция Ф.2 «Понимание-детектив» (F2-014).
 //
-// UX: верх — инструкция + кнопка «Повторить» (озвучивает Ляля / Siri TTS).
-// Ниже — 2×2 сетка SF-картинок. Тап по картинке проверяет ответ. На ошибке
-// можно тапнуть другую; на успехе — кнопка «Следующее».
+// Детская игра на понимание устной инструкции. Ляля-сыщик проговаривает
+// инструкцию (TTS), ребёнок видит 4 картинки в сетке 2×2 и тапает ту, что
+// соответствует инструкции. Сессия из фиксированного числа раундов разной
+// грамматической сложности (одно/два/три поручения, предлоги, перевёртыши).
 //
 // Accessibility:
-//   • Kid circuit: картинки ≥ 120pt; кнопки ≥ 56pt.
-//   • VoiceOver: каждая картинка озвучивается своей подписью.
-//   • Dynamic Type: инструкция multiline с minimumScaleFactor.
-//   • Reduced Motion: подсветка правильной — без spring анимации.
+//   • Kid circuit: картинки ≥ 120pt, кнопки ≥ 56pt.
+//   • VoiceOver: инструкция и каждая картинка озвучены подписями; объявление
+//     обратной связи после ответа.
+//   • Dynamic Type: инструкция multiline + minimumScaleFactor.
+//   • Reduced Motion: фон без анимации; подсветка/пульсация без spring;
+//     confetti → static.
+//   • Light + Dark: ColorTokens.Kid + Brand адаптируются.
 
 struct ComprehensionDetectiveView: View {
 
@@ -47,6 +87,7 @@ struct ComprehensionDetectiveView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     init(childId: String, preferredTier: GrammarTier? = nil) {
@@ -59,18 +100,37 @@ struct ComprehensionDetectiveView: View {
         category: "ComprehensionDetective.View"
     )
 
+    private let columns = [
+        GridItem(.flexible(), spacing: SpacingTokens.sp3),
+        GridItem(.flexible(), spacing: SpacingTokens.sp3)
+    ]
+
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
+                ColorTokens.Kid.bg.ignoresSafeArea()
+                if !reduceMotion {
+                    HSMeshGradientBackground(palette: .kidCool, animated: true)
+                        .ignoresSafeArea()
+                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                        .blendMode(.softLight)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
 
-                if let startVM = holder.startVM {
-                    contentSection(startVM)
+                if holder.isFinished, let summary = holder.summary {
+                    summarySection(summary)
+                } else if let round = holder.currentRound {
+                    gameSection(round: round)
                 } else {
                     loadingSection
+                }
+
+                if holder.showCelebration {
+                    HSConfettiView(preset: .celebration, isActive: $holder.showCelebration)
+                        .ignoresSafeArea()
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
                 }
             }
             .navigationTitle(Text("detective.title"))
@@ -94,223 +154,230 @@ struct ComprehensionDetectiveView: View {
         .environment(\.circuitContext, .kid)
     }
 
-    // MARK: - Content
+    // MARK: - Game
 
-    private func contentSection(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
+    private func gameSection(
+        round: ComprehensionDetectiveModels.Start.RoundViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            tierChipsRow(startVM)
-            progressRow(startVM)
-            instructionCard(startVM)
-            picturesGrid(startVM)
-            Spacer(minLength: SpacingTokens.sp2)
-            feedbackOrAdvance(startVM)
+            progressHeader(round)
+
+            // Ляля-сыщик произносит инструкцию.
+            HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+                HSSpeechBubble(
+                    holder.lastLyalyaLine ?? round.instruction,
+                    direction: .left,
+                    style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
+                )
+                .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
+                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+
+                replayButton
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            tierBadge(round)
+
+            Spacer(minLength: 0)
+
+            picturesGrid(round)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .id(round.id)
+                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+
+            Spacer(minLength: 0)
+        }
+        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
+    }
+
+    private var replayButton: some View {
+        Button {
+            Task { await replayInstruction() }
+        } label: {
+            Image(systemName: "speaker.wave.2.fill")
+                .font(.system(size: 22))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .frame(width: 56, height: 56)
+                .background(Circle().fill(ColorTokens.Brand.sky))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("detective.replay.a11y"))
+    }
+
+    private func progressHeader(
+        _ round: ComprehensionDetectiveModels.Start.RoundViewModel
+    ) -> some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            Text(round.progressLabel)
+                .font(TypographyTokens.caption(12).monospacedDigit())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
+                    Capsule()
+                        .fill(ColorTokens.Brand.sky)
+                        .frame(width: max(0, geo.size.width * round.progressFraction))
+                }
+            }
+            .frame(height: 10)
+            .accessibilityHidden(true)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.vertical, SpacingTokens.sp3)
+        .padding(.top, SpacingTokens.sp4)
     }
 
-    private func tierChipsRow(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
+    private func tierBadge(
+        _ round: ComprehensionDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: SpacingTokens.sp2) {
-                ForEach(startVM.availableTiers) { chip in
-                    Button {
-                        Task { await switchTier(to: chip.id) }
-                    } label: {
-                        Text(chip.title)
-                            .font(TypographyTokens.caption(13).weight(.medium))
-                            .foregroundStyle(chip.isSelected
-                                ? ColorTokens.Overlay.onAccent
-                                : ColorTokens.Kid.ink)
-                            .lineLimit(1)
-                            .padding(.horizontal, SpacingTokens.sp3)
-                            .padding(.vertical, SpacingTokens.sp1)
-                            .background(
-                                Capsule().fill(chip.isSelected
-                                    ? ColorTokens.Brand.sky
-                                    : ColorTokens.Kid.surfaceAlt)
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(Text(chip.title))
-                    .accessibilityAddTraits(chip.isSelected ? .isSelected : [])
-                }
-            }
-        }
-    }
-
-    private func progressRow(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
-    ) -> some View {
-        Text(startVM.progressLabel)
-            .font(TypographyTokens.caption(12).monospacedDigit())
+        Text(round.tierLabel)
+            .font(TypographyTokens.caption(12).weight(.medium))
             .foregroundStyle(ColorTokens.Kid.inkMuted)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.sp1)
+            .background(Capsule().fill(ColorTokens.Kid.surfaceAlt))
+            .accessibilityLabel(Text(round.tierHint))
     }
 
-    private func instructionCard(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
-    ) -> some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                Image(systemName: "ear.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(ColorTokens.Brand.sky)
-                    .hsSymbolEffect(.pulse, value: startVM.instruction)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(startVM.instruction)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.7)
-                        .accessibilityLabel(Text(startVM.accessibilityLabel))
-                    Text(startVM.tierHint)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                }
-                Spacer()
-                Button {
-                    Task { await replayInstruction() }
-                } label: {
-                    Image(systemName: "speaker.wave.2.fill")
-                        .font(.system(size: 24))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .frame(width: 56, height: 56)
-                        .background(Circle().fill(ColorTokens.Brand.sky))
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(Text("detective.replay.a11y"))
-            }
-            .frame(maxWidth: .infinity)
-        }
-    }
+    // MARK: - Pictures grid (2×2)
 
     private func picturesGrid(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
+        _ round: ComprehensionDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        let columns = Array(
-            repeating: GridItem(.flexible(), spacing: SpacingTokens.sp3),
-            count: 2
-        )
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
-            ForEach(Array(startVM.pictures.enumerated()), id: \.element.id) { index, picture in
+        LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
+            ForEach(round.pictures) { picture in
                 pictureTile(picture)
-                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
-                        content
-                            .opacity(phase.isIdentity ? 1 : 0)
-                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
-                    }
-                    .hsParallaxTile(factor: 0.2)
-                    .zIndex(Double(startVM.pictures.count - index))
             }
         }
-        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.lastPick?.correctPictureId)
+        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.hintPictureId)
     }
 
     private func pictureTile(
         _ picture: ComprehensionDetectiveModels.Start.PictureViewModel
     ) -> some View {
-        let tint = tileTint(for: picture)
+        let isHinted = holder.hintPictureId == picture.id
+        let isChosenMiss = holder.chosenPictureId == picture.id
+            && holder.lastFeedback != nil
+            && holder.lastFeedback != .hit
+        let isRevealedHit = holder.lastFeedback == .hit
+            && holder.chosenPictureId == picture.id
+
         return Button {
             Task { await pick(picture) }
         } label: {
-            Image(systemName: picture.symbolName)
-                .font(.system(size: 56))
-                .foregroundStyle(tint.contentColor)
-                .frame(maxWidth: .infinity, minHeight: 120)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(tint.background)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .strokeBorder(tint.border, lineWidth: 2)
-                )
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
+                Image(systemName: picture.symbolName)
+                    .font(.system(size: 56))
+                    .foregroundStyle(tileTint(isHit: isRevealedHit, isHinted: isHinted))
+                    .frame(maxWidth: .infinity, minHeight: 120)
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .stroke(
+                        tileStroke(isHit: isRevealedHit, isHinted: isHinted, isMiss: isChosenMiss),
+                        lineWidth: tileStrokeWidth(isHit: isRevealedHit, isHinted: isHinted, isMiss: isChosenMiss)
+                    )
+            )
+            .scaleEffect(reduceMotion ? 1 : (isHinted ? 1.04 : 1))
         }
         .buttonStyle(.plain)
-        .disabled(holder.lastPick?.isCorrect == true)
+        .disabled(holder.lastFeedback == .hit)
         .accessibilityLabel(Text(picture.accessibilityLabel))
         .accessibilityHint(Text("detective.tile.hint"))
+        .accessibilityAddTraits(isRevealedHit ? [.isButton, .isSelected] : .isButton)
     }
 
-    private struct TileTint {
-        let background: Color
-        let border: Color
-        let contentColor: Color
+    private func tileTint(isHit: Bool, isHinted: Bool) -> Color {
+        if isHit { return ColorTokens.Brand.mint }
+        if isHinted { return ColorTokens.Brand.sky }
+        return ColorTokens.Kid.ink
     }
 
-    private func tileTint(
-        for picture: ComprehensionDetectiveModels.Start.PictureViewModel
-    ) -> TileTint {
-        if let pick = holder.lastPick,
-           pick.correctPictureId == picture.id {
-            return .init(
-                background: ColorTokens.Brand.mint.opacity(0.20),
-                border: ColorTokens.Brand.mint,
-                contentColor: ColorTokens.Brand.mint
-            )
-        }
-        return .init(
-            background: ColorTokens.Kid.surface,
-            border: ColorTokens.Brand.sky.opacity(0.55),
-            contentColor: ColorTokens.Kid.ink
-        )
+    private func tileStroke(isHit: Bool, isHinted: Bool, isMiss: Bool) -> Color {
+        if isHit { return ColorTokens.Brand.mint }
+        if isHinted { return ColorTokens.Brand.sky }
+        if isMiss { return ColorTokens.Brand.butter }
+        return ColorTokens.Brand.sky.opacity(0.4)
     }
 
-    @ViewBuilder
-    private func feedbackOrAdvance(
-        _ startVM: ComprehensionDetectiveModels.Start.ViewModel
-    ) -> some View {
-        if let pick = holder.lastPick {
-            VStack(spacing: SpacingTokens.sp2) {
-                feedbackBanner(pick)
-                if pick.isCorrect {
-                    Button {
-                        Task { await advance() }
-                    } label: {
-                        Text("detective.next")
-                            .font(TypographyTokens.headline(17))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .frame(maxWidth: .infinity, minHeight: 56)
-                            .background(
-                                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                                    .fill(ColorTokens.Brand.mint)
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityHint(Text("detective.next.hint"))
-                }
-            }
-        } else {
-            Color.clear.frame(height: 1)
+    private func tileStrokeWidth(isHit: Bool, isHinted: Bool, isMiss: Bool) -> CGFloat {
+        (isHit || isHinted || isMiss) ? 3 : 1.5
+    }
+
+    private func bubbleStyle(_ feedback: FeedbackTier?) -> HSSpeechBubble.BubbleStyle {
+        switch feedback {
+        case .hit:    return .lyalya
+        case .retry:  return .hint
+        case .almost, .none: return .question
         }
     }
 
-    private func feedbackBanner(
-        _ pick: ComprehensionDetectiveModels.Pick.ViewModel
+    // MARK: - Summary
+
+    private func summarySection(
+        _ summary: ComprehensionDetectiveModels.Pick.SummaryViewModel
     ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-            Text(pick.toastTitle)
-                .font(TypographyTokens.headline(15))
+        VStack(spacing: SpacingTokens.sp5) {
+            Spacer()
+
+            Image(systemName: summary.accuracyFraction >= 0.8
+                ? "magnifyingglass.circle.fill"
+                : "hand.thumbsup.circle.fill")
+                .font(.system(size: 80))
+                .foregroundStyle(ColorTokens.Brand.sky)
+                .hsSymbolEffect(.bounce, value: summary.scoreText)
+                .accessibilityHidden(true)
+
+            Text(summary.title)
+                .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
-            Text(pick.toastDetail)
-                .font(TypographyTokens.caption(13))
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+
+            Text(summary.scoreText)
+                .font(TypographyTokens.headline(20).monospacedDigit())
+                .foregroundStyle(ColorTokens.Brand.primary)
+
+            Text(summary.encouragement)
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .padding(.horizontal, SpacingTokens.sp6)
+
+            Spacer()
+
+            VStack(spacing: SpacingTokens.sp3) {
+                Button {
+                    Task { await restart() }
+                } label: {
+                    Text("detective.summary.again")
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .frame(maxWidth: .infinity, minHeight: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                                .fill(ColorTokens.Brand.primary)
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint(Text("detective.summary.again.hint"))
+
+                Button {
+                    dismiss()
+                } label: {
+                    Text("detective.summary.done")
+                        .font(TypographyTokens.body(16).weight(.medium))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.sp6)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(pick.isCorrect
-                    ? ColorTokens.Brand.mint.opacity(0.18)
-                    : ColorTokens.Semantic.warning.opacity(0.15))
-        )
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
     }
 
     // MARK: - Loading
@@ -331,11 +398,12 @@ struct ComprehensionDetectiveView: View {
     private func setupAndStart() async {
         if interactor == nil {
             let presenter = ComprehensionDetectivePresenter(displayLogic: holder)
-            let worker = ComprehensionDetectiveWorker()
+            let worker = ComprehensionDetectiveWorker(childRepository: container.childRepository)
             let interactor = ComprehensionDetectiveInteractor(
                 childId: childId,
                 worker: worker,
-                hapticService: container.hapticService
+                hapticService: container.hapticService,
+                adaptivePlanner: container.adaptivePlannerService
             )
             interactor.presenter = presenter
             self.presenter = presenter
@@ -345,34 +413,36 @@ struct ComprehensionDetectiveView: View {
         await interactor?.start(request: .init(childId: childId, preferredTier: preferredTier))
     }
 
+    private func restart() async {
+        // Уровень следующей сессии — рекомендованный (≥80% → ступень выше).
+        let nextTier = interactor?.recommendedNextTier ?? preferredTier
+        await interactor?.start(request: .init(childId: childId, preferredTier: nextTier))
+    }
+
     private func pick(
         _ picture: ComprehensionDetectiveModels.Start.PictureViewModel
     ) async {
         guard !pickInFlight else { return }
         pickInFlight = true
         defer { pickInFlight = false }
-        await interactor?.pick(request: .init(pictureId: picture.id))
-    }
-
-    private func advance() async {
-        await interactor?.nextItem(request: .init(nextTier: nil))
-    }
-
-    private func switchTier(to rawValue: Int) async {
-        guard let tier = GrammarTier(rawValue: rawValue) else { return }
-        await interactor?.nextItem(request: .init(nextTier: tier))
+        holder.chosenPictureId = picture.id
+        holder.attemptInRound += 1
+        await interactor?.pick(
+            request: .init(pictureId: picture.id, attemptInRound: holder.attemptInRound)
+        )
     }
 
     private func replayInstruction() async {
-        guard let item = interactor?.currentItem else { return }
-        await ComprehensionDetectiveWorker().voiceInstruction(item.instruction)
+        guard let round = holder.currentRound else { return }
+        await ComprehensionDetectiveWorker(childRepository: container.childRepository)
+            .voiceInstruction(round.instruction, slowly: false)
     }
 }
 
 // MARK: - Preview
 
 #if DEBUG
-#Preview("ComprehensionDetective / start") {
+#Preview("ComprehensionDetective / game") {
     ComprehensionDetectiveView(childId: "preview-child-1")
         .environment(AppContainer.preview())
 }
