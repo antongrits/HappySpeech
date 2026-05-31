@@ -63,7 +63,11 @@ struct OnboardingFlowView: View {
                 // (35 illustration generated via Imagen). Используется как мягкий
                 // фон-баннер за gradient/mesh — НЕ перекрывает UI, низкая
                 // непрозрачность + screen blendMode для гармонии с палитрой.
+                // P-FIX: клампим hero к размеру экрана — scaledToFill(16:9) иначе
+                // раздувал layout ZStack по ширине (~3×) и ломал весь онбординг на SE.
                 heroBackground
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
 
                 VStack(spacing: 0) {
                     progressHeader
@@ -91,6 +95,11 @@ struct OnboardingFlowView: View {
                         )
                         .padding(.bottom, geometry.safeAreaInsets.bottom)
                 }
+                // P-FIX (SE/iOS26 overflow): жёстко ограничиваем контент шириной
+                // экрана. Без этого scaledToFill hero-баннер (16:9) раздувал ZStack
+                // до ~3× ширины → весь UV (прогресс/заголовок/кнопка) уезжал за
+                // правый край (экран выглядел пустым). frame(width:) гарантирует SE-fit.
+                .frame(width: geometry.size.width)
             }
         }
         .ignoresSafeArea(edges: .bottom)
@@ -307,10 +316,11 @@ struct OnboardingFlowView: View {
             }
         }
         .id(display.currentStep)
-        .transition(.asymmetric(
-            insertion: .move(edge: .trailing).combined(with: .opacity),
-            removal: .move(edge: .leading).combined(with: .opacity)
-        ))
+        // P-FIX (SE/iOS26): была .move(edge:.trailing) — при прерванной/незавершённой
+        // анимации контент оставался смещённым за правый край (экран выглядел пустым +
+        // текст обрезан). Заменено на .opacity: fade не уносит контент за экран —
+        // в худшем случае кадр чуть бледный, но НА МЕСТЕ и читаемый.
+        .transition(.opacity)
         .animation(reduceMotion ? nil : MotionTokens.page, value: display.currentStep)
     }
 

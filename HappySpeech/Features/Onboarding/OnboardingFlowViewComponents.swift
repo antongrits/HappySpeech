@@ -14,11 +14,11 @@ struct OnboardingWelcomeStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            // Block I v19: scaleEffect убран с 2D Ляли (требование: 2D без анимаций).
-            // Оставлен только opacity-вход (fade-in) — минимально допустимый UX-переход.
-            // F.tier1 v21: hero — мягче в dark.
+            // P-FIX (SE/iOS26): контент welcome-шага ВСЕГДА видим — без opacity-гейта,
+            // который мог застрять на 0 (экран выглядел пустым). Вход — только мягкий
+            // offset-settle через `.task` (надёжнее onAppear); offset не скрывает контент.
             LyalyaHeroView(state: .waving, size: 240)
-                .opacity(appeared ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -40,15 +40,13 @@ struct OnboardingWelcomeStep: View {
                     .padding(.horizontal, SpacingTokens.large)
                     .lineSpacing(4)
             }
-            .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : 20)
+            .offset(y: appeared ? 0 : 14)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: appeared)
 
             Spacer()
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.15)) {
-                appeared = true
-            }
+        .task {
+            appeared = true
         }
     }
 }
