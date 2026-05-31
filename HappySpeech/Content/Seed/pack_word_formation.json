@@ -1,0 +1,885 @@
+{
+  "id": "pack_word_formation_v1",
+  "soundTarget": "грамматика.словообр",
+  "group": "грамматика",
+  "version": 1,
+  "roundsPerSession": 10,
+  "items": [
+    {
+      "id": "wf-dim-stol",
+      "subtask": "diminutive",
+      "baseWord": "стол",
+      "baseImage": "word_stol",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-stol-c", "text": "столик", "isCorrect": true },
+        { "id": "wf-dim-stol-d1", "text": "столёнок", "isCorrect": false }
+      ],
+      "spokenForm": "Столик."
+    },
+    {
+      "id": "wf-dim-grib",
+      "subtask": "diminutive",
+      "baseWord": "гриб",
+      "baseImage": "word_grib",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-grib-c", "text": "грибок", "isCorrect": true },
+        { "id": "wf-dim-grib-d1", "text": "грибик", "isCorrect": false }
+      ],
+      "spokenForm": "Грибок."
+    },
+    {
+      "id": "wf-dim-zayac",
+      "subtask": "diminutive",
+      "baseWord": "заяц",
+      "baseImage": "word_hare",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-zayac-c", "text": "зайчик", "isCorrect": true },
+        { "id": "wf-dim-zayac-d1", "text": "заяцик", "isCorrect": false }
+      ],
+      "spokenForm": "Зайчик."
+    },
+    {
+      "id": "wf-dim-dom",
+      "subtask": "diminutive",
+      "baseWord": "дом",
+      "baseImage": "word_house",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-dom-c", "text": "домик", "isCorrect": true },
+        { "id": "wf-dim-dom-d1", "text": "домок", "isCorrect": false }
+      ],
+      "spokenForm": "Домик."
+    },
+    {
+      "id": "wf-dim-kot",
+      "subtask": "diminutive",
+      "baseWord": "кот",
+      "baseImage": "word_kot",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-kot-c", "text": "котик", "isCorrect": true },
+        { "id": "wf-dim-kot-d1", "text": "котёнок", "isCorrect": false }
+      ],
+      "spokenForm": "Котик."
+    },
+    {
+      "id": "wf-dim-nos",
+      "subtask": "diminutive",
+      "baseWord": "нос",
+      "baseImage": "word_nos",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-nos-c", "text": "носик", "isCorrect": true },
+        { "id": "wf-dim-nos-d1", "text": "носок", "isCorrect": false }
+      ],
+      "spokenForm": "Носик."
+    },
+    {
+      "id": "wf-dim-myach",
+      "subtask": "diminutive",
+      "baseWord": "мяч",
+      "baseImage": "word_ball",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-myach-c", "text": "мячик", "isCorrect": true },
+        { "id": "wf-dim-myach-d1", "text": "мячок", "isCorrect": false }
+      ],
+      "spokenForm": "Мячик."
+    },
+    {
+      "id": "wf-dim-zub",
+      "subtask": "diminutive",
+      "baseWord": "зуб",
+      "baseImage": "word_zub",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-zub-c", "text": "зубик", "isCorrect": true },
+        { "id": "wf-dim-zub-d1", "text": "зубок", "isCorrect": false }
+      ],
+      "spokenForm": "Зубик."
+    },
+    {
+      "id": "wf-dim-shar",
+      "subtask": "diminutive",
+      "baseWord": "шар",
+      "baseImage": "word_shar",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-shar-c", "text": "шарик", "isCorrect": true },
+        { "id": "wf-dim-shar-d1", "text": "шарок", "isCorrect": false }
+      ],
+      "spokenForm": "Шарик."
+    },
+    {
+      "id": "wf-dim-list",
+      "subtask": "diminutive",
+      "baseWord": "лист",
+      "baseImage": "word_leaf",
+      "prompt": "Назови ласково",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-list-c", "text": "листик", "isCorrect": true },
+        { "id": "wf-dim-list-d1", "text": "листёнок", "isCorrect": false }
+      ],
+      "spokenForm": "Листик."
+    },
+    {
+      "id": "wf-dim-klyuch",
+      "subtask": "diminutive",
+      "baseWord": "ключ",
+      "baseImage": "word_key",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-dim-klyuch-c", "text": "ключик", "isCorrect": true },
+        { "id": "wf-dim-klyuch-d1", "text": "ключок", "isCorrect": false }
+      ],
+      "spokenForm": "Ключик."
+    },
+    {
+      "id": "wf-dim-tsvetok",
+      "subtask": "diminutive",
+      "baseWord": "цветок",
+      "baseImage": "word_tsvetok",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-tsvetok-c", "text": "цветочек", "isCorrect": true },
+        { "id": "wf-dim-tsvetok-d1", "text": "цветик", "isCorrect": false }
+      ],
+      "spokenForm": "Цветочек."
+    },
+    {
+      "id": "wf-dim-solntse",
+      "subtask": "diminutive",
+      "baseWord": "солнце",
+      "baseImage": "word_solntse",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-solntse-c", "text": "солнышко", "isCorrect": true },
+        { "id": "wf-dim-solntse-d1", "text": "солнечко", "isCorrect": false }
+      ],
+      "spokenForm": "Солнышко."
+    },
+    {
+      "id": "wf-dim-zvezda",
+      "subtask": "diminutive",
+      "baseWord": "звезда",
+      "baseImage": "word_star",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-zvezda-c", "text": "звёздочка", "isCorrect": true },
+        { "id": "wf-dim-zvezda-d1", "text": "звездик", "isCorrect": false }
+      ],
+      "spokenForm": "Звёздочка."
+    },
+    {
+      "id": "wf-dim-lampa",
+      "subtask": "diminutive",
+      "baseWord": "лампа",
+      "baseImage": "word_lamp",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-lampa-c", "text": "лампочка", "isCorrect": true },
+        { "id": "wf-dim-lampa-d1", "text": "лампик", "isCorrect": false }
+      ],
+      "spokenForm": "Лампочка."
+    },
+    {
+      "id": "wf-dim-kniga",
+      "subtask": "diminutive",
+      "baseWord": "книга",
+      "baseImage": "word_book",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-kniga-c", "text": "книжка", "isCorrect": true },
+        { "id": "wf-dim-kniga-d1", "text": "книгочка", "isCorrect": false }
+      ],
+      "spokenForm": "Книжка."
+    },
+    {
+      "id": "wf-dim-lozhka",
+      "subtask": "diminutive",
+      "baseWord": "ложка",
+      "baseImage": "word_spoon",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-lozhka-c", "text": "ложечка", "isCorrect": true },
+        { "id": "wf-dim-lozhka-d1", "text": "ложичка", "isCorrect": false }
+      ],
+      "spokenForm": "Ложечка."
+    },
+    {
+      "id": "wf-dim-chashka",
+      "subtask": "diminutive",
+      "baseWord": "чашка",
+      "baseImage": "word_chashka",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-chashka-c", "text": "чашечка", "isCorrect": true },
+        { "id": "wf-dim-chashka-d1", "text": "чашичка", "isCorrect": false }
+      ],
+      "spokenForm": "Чашечка."
+    },
+    {
+      "id": "wf-dim-koza",
+      "subtask": "diminutive",
+      "baseWord": "коза",
+      "baseImage": "word_goat",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-koza-c", "text": "козочка", "isCorrect": true },
+        { "id": "wf-dim-koza-d1", "text": "козёнок", "isCorrect": false }
+      ],
+      "spokenForm": "Козочка."
+    },
+    {
+      "id": "wf-dim-sobaka",
+      "subtask": "diminutive",
+      "baseWord": "собака",
+      "baseImage": "word_sobaka",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-sobaka-c", "text": "собачка", "isCorrect": true },
+        { "id": "wf-dim-sobaka-d1", "text": "собакочка", "isCorrect": false }
+      ],
+      "spokenForm": "Собачка."
+    },
+    {
+      "id": "wf-dim-belka",
+      "subtask": "diminutive",
+      "baseWord": "белка",
+      "baseImage": "word_belka",
+      "prompt": "Назови ласково",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-dim-belka-c", "text": "белочка", "isCorrect": true },
+        { "id": "wf-dim-belka-d1", "text": "белкочка", "isCorrect": false }
+      ],
+      "spokenForm": "Белочка."
+    },
+
+    {
+      "id": "wf-many-stul",
+      "subtask": "oneMany",
+      "baseWord": "стул",
+      "baseImage": "word_stul",
+      "prompt": "Один стул — а если много?",
+      "difficulty": 2,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-stul-c", "text": "стулья", "isCorrect": true },
+        { "id": "wf-many-stul-d1", "text": "стулы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Стулья."
+    },
+    {
+      "id": "wf-many-uho",
+      "subtask": "oneMany",
+      "baseWord": "ухо",
+      "baseImage": "word_ukho",
+      "prompt": "Одно ухо — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-uho-c", "text": "уши", "isCorrect": true },
+        { "id": "wf-many-uho-d1", "text": "ухи", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Уши."
+    },
+    {
+      "id": "wf-many-derevo",
+      "subtask": "oneMany",
+      "baseWord": "дерево",
+      "baseImage": "word_tree",
+      "prompt": "Одно дерево — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-derevo-c", "text": "деревья", "isCorrect": true },
+        { "id": "wf-many-derevo-d1", "text": "деревы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Деревья."
+    },
+    {
+      "id": "wf-many-vedro",
+      "subtask": "oneMany",
+      "baseWord": "ведро",
+      "baseImage": "word_bucket",
+      "prompt": "Одно ведро — а если много?",
+      "difficulty": 3,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-vedro-c", "text": "вёдра", "isCorrect": true },
+        { "id": "wf-many-vedro-d1", "text": "ведры", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Вёдра."
+    },
+    {
+      "id": "wf-many-okno",
+      "subtask": "oneMany",
+      "baseWord": "окно",
+      "baseImage": "word_window",
+      "prompt": "Одно окно — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-okno-c", "text": "окна", "isCorrect": true },
+        { "id": "wf-many-okno-d1", "text": "окны", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Окна."
+    },
+    {
+      "id": "wf-many-stol",
+      "subtask": "oneMany",
+      "baseWord": "стол",
+      "baseImage": "word_stol",
+      "prompt": "Один стол — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-stol-c", "text": "столы", "isCorrect": true },
+        { "id": "wf-many-stol-d1", "text": "столья", "isCorrect": false }
+      ],
+      "spokenForm": "Столы."
+    },
+    {
+      "id": "wf-many-grib",
+      "subtask": "oneMany",
+      "baseWord": "гриб",
+      "baseImage": "word_grib",
+      "prompt": "Один гриб — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-grib-c", "text": "грибы", "isCorrect": true },
+        { "id": "wf-many-grib-d1", "text": "грибья", "isCorrect": false }
+      ],
+      "spokenForm": "Грибы."
+    },
+    {
+      "id": "wf-many-kot",
+      "subtask": "oneMany",
+      "baseWord": "кот",
+      "baseImage": "word_kot",
+      "prompt": "Один кот — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-kot-c", "text": "коты", "isCorrect": true },
+        { "id": "wf-many-kot-d1", "text": "котья", "isCorrect": false }
+      ],
+      "spokenForm": "Коты."
+    },
+    {
+      "id": "wf-many-nos",
+      "subtask": "oneMany",
+      "baseWord": "нос",
+      "baseImage": "word_nos",
+      "prompt": "Один нос — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-nos-c", "text": "носы", "isCorrect": true },
+        { "id": "wf-many-nos-d1", "text": "носья", "isCorrect": false }
+      ],
+      "spokenForm": "Носы."
+    },
+    {
+      "id": "wf-many-dom",
+      "subtask": "oneMany",
+      "baseWord": "дом",
+      "baseImage": "word_house",
+      "prompt": "Один дом — а если много?",
+      "difficulty": 2,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-dom-c", "text": "дома", "isCorrect": true },
+        { "id": "wf-many-dom-d1", "text": "домы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Дома."
+    },
+    {
+      "id": "wf-many-glaz",
+      "subtask": "oneMany",
+      "baseWord": "глаз",
+      "baseImage": "word_glaz",
+      "prompt": "Один глаз — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-glaz-c", "text": "глаза", "isCorrect": true },
+        { "id": "wf-many-glaz-d1", "text": "глазы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Глаза."
+    },
+    {
+      "id": "wf-many-shar",
+      "subtask": "oneMany",
+      "baseWord": "шар",
+      "baseImage": "word_shar",
+      "prompt": "Один шар — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-shar-c", "text": "шары", "isCorrect": true },
+        { "id": "wf-many-shar-d1", "text": "шарья", "isCorrect": false }
+      ],
+      "spokenForm": "Шары."
+    },
+    {
+      "id": "wf-many-zub",
+      "subtask": "oneMany",
+      "baseWord": "зуб",
+      "baseImage": "word_zub",
+      "prompt": "Один зуб — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-zub-c", "text": "зубы", "isCorrect": true },
+        { "id": "wf-many-zub-d1", "text": "зубья", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Зубы."
+    },
+    {
+      "id": "wf-many-kniga",
+      "subtask": "oneMany",
+      "baseWord": "книга",
+      "baseImage": "word_book",
+      "prompt": "Одна книга — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-kniga-c", "text": "книги", "isCorrect": true },
+        { "id": "wf-many-kniga-d1", "text": "книгы", "isCorrect": false }
+      ],
+      "spokenForm": "Книги."
+    },
+    {
+      "id": "wf-many-ryba",
+      "subtask": "oneMany",
+      "baseWord": "рыба",
+      "baseImage": "word_ryba",
+      "prompt": "Одна рыба — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-ryba-c", "text": "рыбы", "isCorrect": true },
+        { "id": "wf-many-ryba-d1", "text": "рыбья", "isCorrect": false }
+      ],
+      "spokenForm": "Рыбы."
+    },
+    {
+      "id": "wf-many-ptica",
+      "subtask": "oneMany",
+      "baseWord": "птица",
+      "baseImage": "word_bird",
+      "prompt": "Одна птица — а если много?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        { "id": "wf-many-ptica-c", "text": "птицы", "isCorrect": true },
+        { "id": "wf-many-ptica-d1", "text": "птицья", "isCorrect": false }
+      ],
+      "spokenForm": "Птицы."
+    },
+    {
+      "id": "wf-many-zvezda",
+      "subtask": "oneMany",
+      "baseWord": "звезда",
+      "baseImage": "word_star",
+      "prompt": "Одна звезда — а если много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-zvezda-c", "text": "звёзды", "isCorrect": true },
+        { "id": "wf-many-zvezda-d1", "text": "звездья", "isCorrect": false }
+      ],
+      "spokenForm": "Звёзды."
+    },
+    {
+      "id": "wf-many-koleso",
+      "subtask": "oneMany",
+      "baseWord": "колесо",
+      "baseImage": "word_koleso",
+      "prompt": "Одно колесо — а если много?",
+      "difficulty": 3,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-many-koleso-c", "text": "колёса", "isCorrect": true },
+        { "id": "wf-many-koleso-d1", "text": "колесы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Колёса."
+    },
+    {
+      "id": "wf-many-pero",
+      "subtask": "oneMany",
+      "baseWord": "перо",
+      "baseImage": "word_feather",
+      "prompt": "Одно перо — а если много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-many-pero-c", "text": "перья", "isCorrect": true },
+        { "id": "wf-many-pero-d1", "text": "перы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Перья."
+    },
+    {
+      "id": "wf-many-list",
+      "subtask": "oneMany",
+      "baseWord": "лист",
+      "baseImage": "word_leaf",
+      "prompt": "Один лист — а если много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-many-list-c", "text": "листья", "isCorrect": true },
+        { "id": "wf-many-list-d1", "text": "листы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Листья."
+    },
+    {
+      "id": "wf-many-koltso",
+      "subtask": "oneMany",
+      "baseWord": "кольцо",
+      "baseImage": "word_koltso",
+      "prompt": "Одно кольцо — а если много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-many-koltso-c", "text": "кольца", "isCorrect": true },
+        { "id": "wf-many-koltso-d1", "text": "кольцы", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Кольца."
+    },
+
+    {
+      "id": "wf-manyof-stul",
+      "subtask": "manyOf",
+      "baseWord": "стул",
+      "baseImage": "word_stul",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-stul-c", "text": "много стульев", "isCorrect": true },
+        { "id": "wf-manyof-stul-d1", "text": "много стулов", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-stul-d2", "text": "много стулья", "isCorrect": false }
+      ],
+      "spokenForm": "Много стульев."
+    },
+    {
+      "id": "wf-manyof-okno",
+      "subtask": "manyOf",
+      "baseWord": "окно",
+      "baseImage": "word_window",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-okno-c", "text": "нет окон", "isCorrect": true },
+        { "id": "wf-manyof-okno-d1", "text": "нет окнов", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-okno-d2", "text": "нет окны", "isCorrect": false }
+      ],
+      "spokenForm": "Нет окон."
+    },
+    {
+      "id": "wf-manyof-grib",
+      "subtask": "manyOf",
+      "baseWord": "гриб",
+      "baseImage": "word_grib",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-grib-c", "text": "много грибов", "isCorrect": true },
+        { "id": "wf-manyof-grib-d1", "text": "много грибей", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много грибов."
+    },
+    {
+      "id": "wf-manyof-vedro",
+      "subtask": "manyOf",
+      "baseWord": "ведро",
+      "baseImage": "word_bucket",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-vedro-c", "text": "нет вёдер", "isCorrect": true },
+        { "id": "wf-manyof-vedro-d1", "text": "нет ведров", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-vedro-d2", "text": "нет ведёров", "isCorrect": false }
+      ],
+      "spokenForm": "Нет вёдер."
+    },
+    {
+      "id": "wf-manyof-derevo",
+      "subtask": "manyOf",
+      "baseWord": "дерево",
+      "baseImage": "word_tree",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-derevo-c", "text": "много деревьев", "isCorrect": true },
+        { "id": "wf-manyof-derevo-d1", "text": "много деревов", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-derevo-d2", "text": "много деревья", "isCorrect": false }
+      ],
+      "spokenForm": "Много деревьев."
+    },
+    {
+      "id": "wf-manyof-stol",
+      "subtask": "manyOf",
+      "baseWord": "стол",
+      "baseImage": "word_stol",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-stol-c", "text": "много столов", "isCorrect": true },
+        { "id": "wf-manyof-stol-d1", "text": "много столей", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много столов."
+    },
+    {
+      "id": "wf-manyof-kot",
+      "subtask": "manyOf",
+      "baseWord": "кот",
+      "baseImage": "word_kot",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-kot-c", "text": "много котов", "isCorrect": true },
+        { "id": "wf-manyof-kot-d1", "text": "много котей", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много котов."
+    },
+    {
+      "id": "wf-manyof-ryba",
+      "subtask": "manyOf",
+      "baseWord": "рыба",
+      "baseImage": "word_ryba",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-ryba-c", "text": "много рыб", "isCorrect": true },
+        { "id": "wf-manyof-ryba-d1", "text": "много рыбов", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много рыб."
+    },
+    {
+      "id": "wf-manyof-ptica",
+      "subtask": "manyOf",
+      "baseWord": "птица",
+      "baseImage": "word_bird",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-ptica-c", "text": "много птиц", "isCorrect": true },
+        { "id": "wf-manyof-ptica-d1", "text": "много птицев", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много птиц."
+    },
+    {
+      "id": "wf-manyof-kniga",
+      "subtask": "manyOf",
+      "baseWord": "книга",
+      "baseImage": "word_book",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-kniga-c", "text": "много книг", "isCorrect": true },
+        { "id": "wf-manyof-kniga-d1", "text": "много книгов", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много книг."
+    },
+    {
+      "id": "wf-manyof-koza",
+      "subtask": "manyOf",
+      "baseWord": "коза",
+      "baseImage": "word_goat",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-koza-c", "text": "много коз", "isCorrect": true },
+        { "id": "wf-manyof-koza-d1", "text": "много козов", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много коз."
+    },
+    {
+      "id": "wf-manyof-lozhka",
+      "subtask": "manyOf",
+      "baseWord": "ложка",
+      "baseImage": "word_spoon",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-lozhka-c", "text": "нет ложек", "isCorrect": true },
+        { "id": "wf-manyof-lozhka-d1", "text": "нет ложков", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Нет ложек."
+    },
+    {
+      "id": "wf-manyof-chashka",
+      "subtask": "manyOf",
+      "baseWord": "чашка",
+      "baseImage": "word_chashka",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-chashka-c", "text": "нет чашек", "isCorrect": true },
+        { "id": "wf-manyof-chashka-d1", "text": "нет чашков", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Нет чашек."
+    },
+    {
+      "id": "wf-manyof-yabloko",
+      "subtask": "manyOf",
+      "baseWord": "яблоко",
+      "baseImage": "word_apple",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-yabloko-c", "text": "много яблок", "isCorrect": true },
+        { "id": "wf-manyof-yabloko-d1", "text": "много яблоков", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много яблок."
+    },
+    {
+      "id": "wf-manyof-konfeta",
+      "subtask": "manyOf",
+      "baseWord": "конфета",
+      "baseImage": "word_konfeta",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-konfeta-c", "text": "много конфет", "isCorrect": true },
+        { "id": "wf-manyof-konfeta-d1", "text": "много конфетов", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много конфет."
+    },
+    {
+      "id": "wf-manyof-shar",
+      "subtask": "manyOf",
+      "baseWord": "шар",
+      "baseImage": "word_shar",
+      "prompt": "Чего много?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        { "id": "wf-manyof-shar-c", "text": "много шаров", "isCorrect": true },
+        { "id": "wf-manyof-shar-d1", "text": "много шарей", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много шаров."
+    },
+    {
+      "id": "wf-manyof-zub",
+      "subtask": "manyOf",
+      "baseWord": "зуб",
+      "baseImage": "word_zub",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-zub-c", "text": "нет зубов", "isCorrect": true },
+        { "id": "wf-manyof-zub-d1", "text": "нет зубьев", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Нет зубов."
+    },
+    {
+      "id": "wf-manyof-zvezda",
+      "subtask": "manyOf",
+      "baseWord": "звезда",
+      "baseImage": "word_star",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        { "id": "wf-manyof-zvezda-c", "text": "много звёзд", "isCorrect": true },
+        { "id": "wf-manyof-zvezda-d1", "text": "много звездов", "isCorrect": false, "isNearMiss": true }
+      ],
+      "spokenForm": "Много звёзд."
+    },
+    {
+      "id": "wf-manyof-tsvetok",
+      "subtask": "manyOf",
+      "baseWord": "цветок",
+      "baseImage": "word_tsvetok",
+      "prompt": "Чего много?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        { "id": "wf-manyof-tsvetok-c", "text": "много цветов", "isCorrect": true },
+        { "id": "wf-manyof-tsvetok-d1", "text": "много цветков", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-tsvetok-d2", "text": "много цветочков", "isCorrect": false }
+      ],
+      "spokenForm": "Много цветов."
+    },
+    {
+      "id": "wf-manyof-uho",
+      "subtask": "manyOf",
+      "baseWord": "ухо",
+      "baseImage": "word_ukho",
+      "prompt": "Чего нет?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        { "id": "wf-manyof-uho-c", "text": "нет ушей", "isCorrect": true },
+        { "id": "wf-manyof-uho-d1", "text": "нет ухов", "isCorrect": false, "isNearMiss": true },
+        { "id": "wf-manyof-uho-d2", "text": "нет ух", "isCorrect": false }
+      ],
+      "spokenForm": "Нет ушей."
+    }
+  ]
+}

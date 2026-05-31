@@ -42,6 +42,7 @@ protocol ChildHomeRoutingLogic {
     func routeToSoundDetective(childId: String)
     func routeToSyllableSnail(childId: String)
     func routeToFourthExtra(childId: String)
+    func routeToWordFormation(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -244,5 +245,11 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// F2-005 — «Четвёртый лишний» (классификация / обобщение).
     func routeToFourthExtra(childId: String) {
         coordinator?.navigate(to: .fourthExtra(childId: childId))
+    }
+
+    /// F2-007 — «Назови ласково / Один-много-нет» (словообразование +
+    /// словоизменение: уменьш.-ласк. / число / родительный множ.).
+    func routeToWordFormation(childId: String) {
+        coordinator?.navigate(to: .wordFormation(childId: childId))
     }
 }

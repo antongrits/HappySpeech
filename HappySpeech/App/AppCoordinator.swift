@@ -222,6 +222,12 @@ enum AppRoute: Hashable {
     /// или фонетический (3 слова с целевым звуком + 1 без).
     case fourthExtra(childId: String)
 
+    /// F2-007 (kid): «Назови ласково / Один-много-нет» — словообразование
+    /// (уменьш.-ласк. суффиксы) + словоизменение (число, родительный множ.).
+    /// Под-типы: diminutive / oneMany / manyOf. Выбор нормативной формы среди
+    /// опций «норма vs ошибка-дистрактор».
+    case wordFormation(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -1025,6 +1031,10 @@ struct AppCoordinatorView: View {
             FourthExtraView(childId: childId)
                 .environment(\.circuitContext, .kid)
 
+        case .wordFormation(let childId):
+            WordFormationView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1610,6 +1620,8 @@ extension AppCoordinatorView {
             return .syllableSnail(childId: previewChild)
         case "fourthExtra", "fourth-extra", "oddOneOut":
             return .fourthExtra(childId: previewChild)
+        case "wordFormation", "word-formation", "nameNicely", "oneManyNone":
+            return .wordFormation(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":

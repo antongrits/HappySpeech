@@ -59468,6 +59468,281 @@
           }
         }
       }
+    },
+    "wordFormation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скажи правильно"
+          }
+        }
+      }
+    },
+    "wordFormation.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назови ласково"
+          }
+        }
+      }
+    },
+    "wordFormation.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назови ласково, скажи «один — много» и «чего много или нет»"
+          }
+        }
+      }
+    },
+    "wordFormation.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим слова…"
+          }
+        }
+      }
+    },
+    "wordFormation.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру «Скажи правильно»"
+          }
+        }
+      }
+    },
+    "wordFormation.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "wordFormation.prompt.diminutive": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назови ласково"
+          }
+        }
+      }
+    },
+    "wordFormation.prompt.oneMany": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Один — а если много?"
+          }
+        }
+      }
+    },
+    "wordFormation.prompt.manyOf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чего много или чего нет?"
+          }
+        }
+      }
+    },
+    "wordFormation.base.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинка: %@. Выбери, как сказать правильно."
+          }
+        }
+      }
+    },
+    "wordFormation.option.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вариант: %@"
+          }
+        }
+      }
+    },
+    "wordFormation.option.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы выбрать и послушать форму"
+          }
+        }
+      }
+    },
+    "wordFormation.feedback.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно! %@"
+          }
+        }
+      }
+    },
+    "wordFormation.feedback.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Послушай ещё раз, как сказать правильно."
+          }
+        }
+      }
+    },
+    "wordFormation.feedback.almost.near": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти получилось! Послушай, как звучит правильная форма."
+          }
+        }
+      }
+    },
+    "wordFormation.feedback.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай вместе. Правильная форма подсвечена — послушай её."
+          }
+        }
+      }
+    },
+    "wordFormation.repeat.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "А теперь скажи эту форму сам(а)!"
+          }
+        }
+      }
+    },
+    "wordFormation.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здорово! Ты говоришь правильно!"
+          }
+        }
+      }
+    },
+    "wordFormation.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо получается! Продолжаем учиться."
+          }
+        }
+      }
+    },
+    "wordFormation.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы молодцы, что играли. В следующий раз получится ещё лучше!"
+          }
+        }
+      }
+    },
+    "wordFormation.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "wordFormation.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "wordFormation.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть ещё раз"
+          }
+        }
+      }
+    },
+    "wordFormation.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую игру «Скажи правильно»"
+          }
+        }
+      }
+    },
+    "wordFormation.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -1075,6 +1075,17 @@ extension ChildHomeView {
             router?.routeToFourthExtra(childId: childId)
         }
 
+        // F2-007 (Wave 2) — Word Formation «Назови ласково / Один-много-нет»
+        // (словообразование + словоизменение: уменьш.-ласк., число, род. множ.).
+        ChildHomeV25EntryCard(
+            titleKey: "wordFormation.entry.title",
+            hintKey: "wordFormation.entry.hint",
+            iconName: "textformat.abc",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToWordFormation(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",

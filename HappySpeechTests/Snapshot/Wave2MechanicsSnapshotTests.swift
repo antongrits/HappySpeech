@@ -72,6 +72,19 @@ final class Wave2MechanicsSnapshotTests: XCTestCase {
         try record(view, screen: "FourthExtraView", maxDiffRatio: 0.10)
     }
 
+    // MARK: - F2-007 WordFormationView (kid, childId)
+
+    func test_wordFormation_rendersInBothThemes() throws {
+        let view = WordFormationView(childId: "preview-child-1")
+            .environment(AppCoordinator())
+            .environment(AppContainer.preview())
+        // Допуск 10%: картинка-основа в translucent HSLiquidGlassCard
+        // (.ultraThinMaterial fallback под reduceMotion) поверх asset-картинки —
+        // material-blur даёт суб-пиксельный GPU-jitter между процессами, как у
+        // SoundDetectiveView / FourthExtraView выше.
+        try record(view, screen: "WordFormationView", maxDiffRatio: 0.10)
+    }
+
     // MARK: - Rendering engine
 
     private func render<V: View>(
