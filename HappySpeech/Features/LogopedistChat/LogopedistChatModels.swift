@@ -97,6 +97,18 @@ public struct SpecialistInfo: Sendable, Equatable {
     public let credentialsKey: String  // «Логопед-дефектолог», «Нейропсихолог»
     public let isOnline: Bool
     public let lastSeenAt: Date?
+
+    public init(
+        displayName: String,
+        credentialsKey: String,
+        isOnline: Bool,
+        lastSeenAt: Date?
+    ) {
+        self.displayName = displayName
+        self.credentialsKey = credentialsKey
+        self.isOnline = isOnline
+        self.lastSeenAt = lastSeenAt
+    }
 }
 
 // MARK: - LogopedistChatModels namespace
@@ -116,6 +128,37 @@ enum LogopedistChatModels {
             let specialist: SpecialistInfo?
             let messages: [ChatMessage]
             let isConnected: Bool
+            /// Кол-во непрочитанных входящих сообщений (для бейджа).
+            let unreadCount: Int
+            /// Кол-во сообщений, ожидающих отправки (offline-очередь).
+            let pendingOutboxCount: Int
+            /// Состояние связи с логопедом (форма кода / подключён / ошибка).
+            let linkState: ChatLinkState
+
+            init(
+                specialist: SpecialistInfo?,
+                messages: [ChatMessage],
+                isConnected: Bool,
+                unreadCount: Int = 0,
+                pendingOutboxCount: Int = 0,
+                linkState: ChatLinkState? = nil
+            ) {
+                self.specialist = specialist
+                self.messages = messages
+                self.isConnected = isConnected
+                self.unreadCount = unreadCount
+                self.pendingOutboxCount = pendingOutboxCount
+                // Если linkState не передан — выводим из specialist/isConnected
+                // (сохраняет совместимость с тестами, конструирующими Response
+                // только через specialist/messages/isConnected).
+                if let linkState {
+                    self.linkState = linkState
+                } else if let specialist {
+                    self.linkState = .connected(specialist)
+                } else {
+                    self.linkState = .notConnected
+                }
+            }
         }
 
         struct ViewModel: Sendable {
@@ -130,8 +173,55 @@ enum LogopedistChatModels {
             let connectionHint: String?
             /// Текст честного пустого состояния, когда специалист не подключён.
             let emptyStateHint: String?
+            /// Плоский список сообщений (совместимость + a11y rotor).
             let messages: [MessageRow]
+            /// Сообщения, сгруппированные по дате (UI рисует date-разделители).
+            let sections: [DaySection]
             let composerEnabled: Bool
+            /// Показывать ли форму ввода кода логопеда (когда не подключён).
+            let showConnectForm: Bool
+            /// Подпись индикатора offline-очереди (`nil` — нечего показывать).
+            let outboxLabel: String?
+            /// Подпись непрочитанных (`nil` — нет непрочитанных).
+            let unreadBadge: String?
+
+            init(
+                specialistName: String,
+                credentials: String,
+                onlineStatusLabel: String?,
+                isOnline: Bool,
+                isConnected: Bool,
+                connectionHint: String?,
+                emptyStateHint: String?,
+                messages: [MessageRow],
+                composerEnabled: Bool,
+                sections: [DaySection] = [],
+                showConnectForm: Bool = false,
+                outboxLabel: String? = nil,
+                unreadBadge: String? = nil
+            ) {
+                self.specialistName = specialistName
+                self.credentials = credentials
+                self.onlineStatusLabel = onlineStatusLabel
+                self.isOnline = isOnline
+                self.isConnected = isConnected
+                self.connectionHint = connectionHint
+                self.emptyStateHint = emptyStateHint
+                self.messages = messages
+                self.sections = sections
+                self.composerEnabled = composerEnabled
+                self.showConnectForm = showConnectForm
+                self.outboxLabel = outboxLabel
+                self.unreadBadge = unreadBadge
+            }
+        }
+
+        /// Группа сообщений за один день с человекочитаемым заголовком
+        /// («Сегодня», «Вчера», «25 апреля»).
+        struct DaySection: Identifiable, Sendable {
+            let id: String
+            let dateLabel: String
+            let messages: [MessageRow]
         }
 
         struct MessageRow: Identifiable, Sendable {
@@ -151,6 +241,39 @@ enum LogopedistChatModels {
             let title: String
             let symbolName: String
             let durationLabel: String?
+        }
+    }
+
+    // MARK: Connect (подключение логопеда по коду)
+
+    enum Connect {
+
+        struct Request: Sendable {
+            let familyId: String
+            let code: String
+        }
+
+        struct Response: Sendable {
+            let resultState: ChatLinkState
+        }
+
+        struct ViewModel: Sendable {
+            let isConnected: Bool
+            /// Сообщение об ошибке (`nil` — успех).
+            let errorMessage: String?
+            /// Сообщение об успехе (`nil` — ошибка).
+            let successMessage: String?
+        }
+    }
+
+    // MARK: Subscribe (real-time обновление треда)
+
+    enum Subscribe {
+
+        struct Response: Sendable {
+            let messages: [ChatMessage]
+            let unreadCount: Int
+            let pendingOutboxCount: Int
         }
     }
 

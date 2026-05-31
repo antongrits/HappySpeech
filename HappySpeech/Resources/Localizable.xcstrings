@@ -7374,6 +7374,227 @@
         }
       }
     },
+    "chat.connect.codePlaceholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Код логопеда"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Therapist code"
+          }
+        }
+      }
+    },
+    "chat.connect.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect"
+          }
+        }
+      }
+    },
+    "chat.connect.error.alreadyConnected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этот код уже использован другой семьёй"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This code has already been used by another family"
+          }
+        }
+      }
+    },
+    "chat.connect.error.backend": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось подключиться: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection failed: %@"
+          }
+        }
+      }
+    },
+    "chat.connect.error.expired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Срок действия кода истёк"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This code has expired"
+          }
+        }
+      }
+    },
+    "chat.connect.error.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось подключить логопеда. Попробуйте позже"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not connect the therapist. Please try again later"
+          }
+        }
+      }
+    },
+    "chat.connect.error.invalidCode": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Код должен содержать 6 символов"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code must be 6 characters long"
+          }
+        }
+      }
+    },
+    "chat.connect.error.notAuthenticated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Войдите в аккаунт, чтобы подключить логопеда"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to connect a therapist"
+          }
+        }
+      }
+    },
+    "chat.connect.error.notFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Код не найден. Проверьте правильность ввода"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Code not found. Please check it and try again"
+          }
+        }
+      }
+    },
+    "chat.connect.privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед видит только прогресс занятий, без личных данных ребёнка. Чат доступен только родителю и специалисту."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The therapist sees only lesson progress, not your child’s personal data. The chat is available to the parent and specialist only."
+          }
+        }
+      }
+    },
+    "chat.connect.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введите код подключения, который выдал логопед вашего ребёнка. После подключения вы сможете обмениваться сообщениями и записями занятий."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the connection code provided by your child’s speech therapist. Once connected, you can exchange messages and lesson recordings."
+          }
+        }
+      }
+    },
+    "chat.connect.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед подключён"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Therapist connected"
+          }
+        }
+      }
+    },
+    "chat.connect.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключите логопеда"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect your speech therapist"
+          }
+        }
+      }
+    },
     "chat.connection.offline.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -7484,6 +7705,23 @@
         }
       }
     },
+    "chat.outbox.pending": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидает отправки: %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting to send: %lld"
+          }
+        }
+      }
+    },
     "chat.screen.title": {
       "extractionState": "manual",
       "localizations": {
@@ -7495,6 +7733,40 @@
         }
       }
     },
+    "chat.section.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        }
+      }
+    },
+    "chat.section.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вчера"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yesterday"
+          }
+        }
+      }
+    },
     "chat.send.confirmation": {
       "extractionState": "manual",
       "localizations": {
@@ -7502,6 +7774,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сообщение отправлено"
+          }
+        }
+      }
+    },
+    "chat.send.error.offline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет сети — сообщение отправится автоматически"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No connection — the message will be sent automatically"
           }
         }
       }
@@ -7568,6 +7857,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "В сети"
+          }
+        }
+      }
+    },
+    "chat.specialist.unknown": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech therapist"
           }
         }
       }
@@ -13933,6 +14239,198 @@
           "stringUnit": {
             "state": "translated",
             "value": "Дневник речевого роста"
+          }
+        }
+      }
+    },
+    "disorder.dysarthria.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mild dysarthria. Route: extended articulation exercises and sound work."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стёртая дизартрия. Маршрут: усиленная артикуляционная гимнастика и звуковая работа."
+          }
+        }
+      }
+    },
+    "disorder.dysarthria.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dysarthria"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дизартрия"
+          }
+        }
+      }
+    },
+    "disorder.dyslalia.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound-production disorder with normal hearing. Route: sound setting and automation."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нарушение звукопроизношения при сохранном слухе. Маршрут: постановка и автоматизация звуков."
+          }
+        }
+      }
+    },
+    "disorder.dyslalia.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dyslalia"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дислалия"
+          }
+        }
+      }
+    },
+    "disorder.ffn.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phonetic-phonemic underdevelopment. Route: pronunciation + phonemic track."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонетико-фонематическое недоразвитие. Маршрут: произношение + фонематический трек."
+          }
+        }
+      }
+    },
+    "disorder.ffn.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phonemic underdevelopment"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ФФН"
+          }
+        }
+      }
+    },
+    "disorder.onr.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General speech underdevelopment (levels III–IV). Route: pronunciation, phonemics, grammar and connected speech."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общее недоразвитие речи (III–IV ур.). Маршрут: произношение, фонематика, грамматика и связная речь."
+          }
+        }
+      }
+    },
+    "disorder.onr.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General speech underdevelopment"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ОНР"
+          }
+        }
+      }
+    },
+    "disorder.stuttering.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech fluency disorder. Route: breathing and tempo, no timers or competitions."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нарушение плавности речи. Маршрут: дыхание и темп, без таймеров и соревнований."
+          }
+        }
+      }
+    },
+    "disorder.stuttering.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stuttering"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заикание"
+          }
+        }
+      }
+    },
+    "disorder.zrr.desc": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delayed speech development. Route: “slow start” — short sessions, speech elicitation and naming."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задержка речевого развития. Маршрут: «медленный старт» — короткие занятия, вызов речи и называние."
+          }
+        }
+      }
+    },
+    "disorder.zrr.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delayed speech development"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ЗРР"
           }
         }
       }
@@ -29901,6 +30399,38 @@
         }
       }
     },
+    "profile.editor.disorder": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disorder type"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тип нарушения"
+          }
+        }
+      }
+    },
+    "profile.editor.disorder.hint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affects which activities appear in the child’s daily route."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Влияет на то, какие занятия попадают в дневной маршрут ребёнка."
+          }
+        }
+      }
+    },
     "profile.editor.error.age_too_old": {
       "extractionState": "manual",
       "localizations": {
@@ -45100,6 +45630,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Первичная оценка"
+          }
+        }
+      }
+    },
+    "specialist.credentials.logopedist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед-дефектолог"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech therapist"
           }
         }
       }
@@ -60345,230 +60892,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "disorder.dyslalia.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dyslalia"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дислалия"
-          }
-        }
-      }
-    },
-    "disorder.dyslalia.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sound-production disorder with normal hearing. Route: sound setting and automation."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нарушение звукопроизношения при сохранном слухе. Маршрут: постановка и автоматизация звуков."
-          }
-        }
-      }
-    },
-    "disorder.ffn.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phonemic underdevelopment"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ФФН"
-          }
-        }
-      }
-    },
-    "disorder.ffn.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phonetic-phonemic underdevelopment. Route: pronunciation + phonemic track."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фонетико-фонематическое недоразвитие. Маршрут: произношение + фонематический трек."
-          }
-        }
-      }
-    },
-    "disorder.onr.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "General speech underdevelopment"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ОНР"
-          }
-        }
-      }
-    },
-    "disorder.onr.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "General speech underdevelopment (levels III–IV). Route: pronunciation, phonemics, grammar and connected speech."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Общее недоразвитие речи (III–IV ур.). Маршрут: произношение, фонематика, грамматика и связная речь."
-          }
-        }
-      }
-    },
-    "disorder.zrr.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delayed speech development"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ЗРР"
-          }
-        }
-      }
-    },
-    "disorder.zrr.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delayed speech development. Route: “slow start” — short sessions, speech elicitation and naming."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задержка речевого развития. Маршрут: «медленный старт» — короткие занятия, вызов речи и называние."
-          }
-        }
-      }
-    },
-    "disorder.stuttering.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stuttering"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заикание"
-          }
-        }
-      }
-    },
-    "disorder.stuttering.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Speech fluency disorder. Route: breathing and tempo, no timers or competitions."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нарушение плавности речи. Маршрут: дыхание и темп, без таймеров и соревнований."
-          }
-        }
-      }
-    },
-    "disorder.dysarthria.title": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dysarthria"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дизартрия"
-          }
-        }
-      }
-    },
-    "disorder.dysarthria.desc": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mild dysarthria. Route: extended articulation exercises and sound work."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Стёртая дизартрия. Маршрут: усиленная артикуляционная гимнастика и звуковая работа."
-          }
-        }
-      }
-    },
-    "profile.editor.disorder": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Disorder type"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тип нарушения"
-          }
-        }
-      }
-    },
-    "profile.editor.disorder.hint": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Affects which activities appear in the child’s daily route."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Влияет на то, какие занятия попадают в дневной маршрут ребёнка."
           }
         }
       }

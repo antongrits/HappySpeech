@@ -221,6 +221,7 @@
 		1A69FCD75147584306D47D18 /* BreathingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29035CC85F1A87A2C2AF6966 /* BreathingPresenter.swift */; };
 		1A7F12F8DB0E3A47AC896F72 /* SoundJournalKidInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006A7A2D1BDA909A18780E0D /* SoundJournalKidInteractorTests.swift */; };
 		1ABBC32B12FE1A573B4B0F99 /* SpecialistAssessmentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A268175831F41B408AE1E55 /* SpecialistAssessmentModels.swift */; };
+		1AC7B86C3F3D9BF0A019AA32 /* FirestoreChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9978CA54FE072A31EA7352 /* FirestoreChatRepository.swift */; };
 		1AE4B7012872B51B8021E0A6 /* HSProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECC85DF512FE258194C72FA /* HSProgressRing.swift */; };
 		1B1FAEF007771E7A38068986 /* ARZoneViewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5006EEE6B8DC17E8457BED27 /* ARZoneViewCards.swift */; };
 		1B1FC813CA84884334DAAC48 /* ButterflyCatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DF7F4CE52A379DC347EF6D /* ButterflyCatchPresenter.swift */; };
@@ -1045,6 +1046,7 @@
 		7D4B51535067F7643765551E /* Wav2Vec2ServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00A14BF799AF76ADE018183 /* Wav2Vec2ServiceLive.swift */; };
 		7D68E4872A8A1C2FCE20546A /* VoiceCloneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CFDF5B922F9880D1A07C023 /* VoiceCloneService.swift */; };
 		7D75257DC7FDDAFAB1D3F1BA /* AdvancedGameSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B39162C028EF46673703F6 /* AdvancedGameSnapshotTests.swift */; };
+		7DB3EDFC5F4F5DC69D97BF34 /* ChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE502C21AD382CF9B8153B04 /* ChatRepository.swift */; };
 		7DDCE6EC79CEBB156DFE81FC /* LLMModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FB3BE0C34A7B7D31FC80B2 /* LLMModelManager.swift */; };
 		7DEC5B7AA3C2C2A167F191FC /* HSHeroCardTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC3C2E419CD6451497A6261F /* HSHeroCardTransition.swift */; };
 		7DFAB63FCBCB6AB484942417 /* GetWeeklySummaryIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18ADF953E4581E65B762770 /* GetWeeklySummaryIntent.swift */; };
@@ -1879,6 +1881,7 @@
 		ECDCB67720AA3E282D0466FA /* SessionShellViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3C10CC16EAD8E85F69C85 /* SessionShellViewComponents.swift */; };
 		ECF41C0048419DB61601BF98 /* WeeklyChallengeInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B4548A0113237F5B73C17CC /* WeeklyChallengeInteractorTests.swift */; };
 		ECFAABE56F7D67B79B3A1B1E /* RussianPhonemeClassifierWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3915545C5C891A8018EDDE44 /* RussianPhonemeClassifierWrapper.swift */; };
+		ED087D6EDE42000D0E2FA2BB /* MockChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7990DDA68ED4DB42A512EB61 /* MockChatRepository.swift */; };
 		ED3DD5430B6834AF615AFF82 /* HSTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D952C841DB7529B7C764C /* HSTypes.swift */; };
 		ED90CE93A90D3D17C5363A0D /* SentenceBuilderKidModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDDEE6E9003BD39D6BAFF0 /* SentenceBuilderKidModels.swift */; };
 		EDC28B8D6C407FD1D33F3055 /* FamilyAchievementsDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15057350461275C085487F8D /* FamilyAchievementsDisplayLogic.swift */; };
@@ -3056,6 +3059,7 @@
 		796942EF029A5B92A5B54EF0 /* DialectAdaptationWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialectAdaptationWorkerTests.swift; sourceTree = "<group>"; };
 		7981115208C9347DB45DC0B4 /* SpecialistHomeViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistHomeViewComponents.swift; sourceTree = "<group>"; };
 		79853A6CBF1D788687E7CE53 /* ChildHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeView.swift; sourceTree = "<group>"; };
+		7990DDA68ED4DB42A512EB61 /* MockChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRepository.swift; sourceTree = "<group>"; };
 		7998054336FEE3002AA95A11 /* ArticulationImitationDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationImitationDisplayLogic.swift; sourceTree = "<group>"; };
 		79B3C6EE37DA58B7455558E6 /* SortingViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewComponents.swift; sourceTree = "<group>"; };
 		79BE1A2DA186105122A46554 /* StutteringModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StutteringModels.swift; sourceTree = "<group>"; };
@@ -3860,6 +3864,7 @@
 		DDDAE0340336A3AE2680B1FA /* FamilyInviteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInviteService.swift; sourceTree = "<group>"; };
 		DDE6A5487C8E2AA76D50405F /* WhoseTailWorkerCorpusTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseTailWorkerCorpusTests.swift; sourceTree = "<group>"; };
 		DE08F6C4513582B7021F5041 /* MusicalSoundDrumsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalSoundDrumsInteractor.swift; sourceTree = "<group>"; };
+		DE502C21AD382CF9B8153B04 /* ChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRepository.swift; sourceTree = "<group>"; };
 		DE706CD7349C69C60F1F967B /* FamilyVoiceMessageHubInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceMessageHubInteractorTests.swift; sourceTree = "<group>"; };
 		DE7E783D0F611CBEFCE1D6FE /* MinimalPairsInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalPairsInteractorTests.swift; sourceTree = "<group>"; };
 		DE899F0E90B815D3D7E6A1F6 /* StoryCompletionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCompletionInteractor.swift; sourceTree = "<group>"; };
@@ -4060,6 +4065,7 @@
 		FA4A71D407C04D88D150E837 /* HSSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSSticker.swift; sourceTree = "<group>"; };
 		FA6C97CA78EE5F5153788247 /* VisualAcousticDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAcousticDisplayLogic.swift; sourceTree = "<group>"; };
 		FA95CCC64A634DE7E6226759 /* YINPitchTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YINPitchTrackerTests.swift; sourceTree = "<group>"; };
+		FA9978CA54FE072A31EA7352 /* FirestoreChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreChatRepository.swift; sourceTree = "<group>"; };
 		FA9A83CC7AAF2E7C3878729B /* SentenceBuilderRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceBuilderRouter.swift; sourceTree = "<group>"; };
 		FA9F473597F0F6D5716C9F0B /* russian_phonemes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = russian_phonemes.json; sourceTree = "<group>"; };
 		FAA882DF0FA0C8B522E021A6 /* MockRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRepositoryTests.swift; sourceTree = "<group>"; };
@@ -5129,6 +5135,7 @@
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
 				00EF543077114B3916857A9C /* BiometricGateService.swift */,
+				DE502C21AD382CF9B8153B04 /* ChatRepository.swift */,
 				4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */,
 				028723D537ED28ADEED77DE0 /* DailyUsageTracker.swift */,
 				727E0FFC0DDBBC1AB7CBC2FC /* EmotionDetectionServiceLive.swift */,
@@ -5137,6 +5144,7 @@
 				03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */,
 				DDDAE0340336A3AE2680B1FA /* FamilyInviteService.swift */,
 				6A7AD06E36F98576154F4BA3 /* FCMService.swift */,
+				FA9978CA54FE072A31EA7352 /* FirestoreChatRepository.swift */,
 				DF5AA006CB357938F3D6526B /* HapticService.swift */,
 				EB662F1E5BE3B84515181365 /* InstallationsService.swift */,
 				1B5A31B335F2D5B7CF93A251 /* LiveAuthService.swift */,
@@ -5144,6 +5152,7 @@
 				01F8A392491212CD89BEFC4D /* LiveStoreService.swift */,
 				8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */,
 				8ACE4C94F58853CF8FCCA1FB /* MLModelWarmupService.swift */,
+				7990DDA68ED4DB42A512EB61 /* MockChatRepository.swift */,
 				AA9B989B699B2B41B5EEE405 /* MockServices.swift */,
 				68DC9DF0D0F598E7E283DC1C /* MockStoreService.swift */,
 				544D37B6107ECDF496772A0F /* MockVoiceCloneService.swift */,
@@ -10621,6 +10630,7 @@
 				576A723F9FE4C23601F13190 /* CardModifier.swift in Sources */,
 				65325CA7264CF49DACE55961 /* CelebrationOverlayView.swift in Sources */,
 				24A6C133B23078C6B8DD90B8 /* ChangelogView.swift in Sources */,
+				7DB3EDFC5F4F5DC69D97BF34 /* ChatRepository.swift in Sources */,
 				FFACABB6CE2C4008899CC1E0 /* ChildAchievementShareInteractor.swift in Sources */,
 				D68E0D81C3571860E4F4F0EE /* ChildAchievementShareModels.swift in Sources */,
 				521082CD23C059C958BAAC9E /* ChildAchievementShareView.swift in Sources */,
@@ -10833,6 +10843,7 @@
 				375C55D1D4C7BD91375BF81A /* FingerPlayPresenter.swift in Sources */,
 				99EFE0F8577628B7426981F1 /* FingerPlayRouter.swift in Sources */,
 				82D961938A0F39914FC22D46 /* FingerPlayView.swift in Sources */,
+				1AC7B86C3F3D9BF0A019AA32 /* FirestoreChatRepository.swift in Sources */,
 				EA6176AC8F6CF3A49BDBCC87 /* FluencyAnalyzerWorker.swift in Sources */,
 				8BDE22CB0234125CB8CAB599 /* FluencyDiaryInteractor.swift in Sources */,
 				074189D483D26A40098AD93D /* FluencyDiaryModels.swift in Sources */,
@@ -11082,6 +11093,7 @@
 				0934AF4CE4B5E20F44E1D1FC /* MinimalPairsRouter.swift in Sources */,
 				13F43FD7B288EC7199E1AA8E /* MinimalPairsView.swift in Sources */,
 				20A0441D2AD1A8F7AB0F7BBA /* MinimalPairsViewComponents.swift in Sources */,
+				ED087D6EDE42000D0E2FA2BB /* MockChatRepository.swift in Sources */,
 				7A54C3CF7275DA82375F7DC2 /* MockLLMDecisionService.swift in Sources */,
 				B5B5C7191EE7880DBE139478 /* MockLLMModelManager.swift in Sources */,
 				2F725C4098A8DB8315DEEACB /* MockServices.swift in Sources */,

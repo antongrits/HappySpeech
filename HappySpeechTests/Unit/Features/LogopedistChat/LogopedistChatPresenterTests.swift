@@ -159,6 +159,94 @@ final class LogopedistChatPresenterTests: XCTestCase {
         await sut.presentAttachAudio(response: response)
         XCTAssertTrue(spyDisplay.displayAttachAudioCalled)
     }
+
+    // MARK: - Block R.2 v32: connect / grouping / unread / outbox / connect form
+
+    func test_presentLoad_notConnected_showsConnectForm() async {
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil, messages: [], isConnected: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertTrue(spyDisplay.lastLoadViewModel?.showConnectForm ?? false,
+                      "Без подключённого логопеда показываем форму ввода кода")
+    }
+
+    func test_presentLoad_connected_hidesConnectForm() async {
+        let specialist = SpecialistInfo(
+            displayName: "Ирина", credentialsKey: "specialist.credentials.logopedist",
+            isOnline: true, lastSeenAt: nil
+        )
+        let response = LogopedistChatModels.Load.Response(
+            specialist: specialist, messages: [], isConnected: true
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertFalse(spyDisplay.lastLoadViewModel?.showConnectForm ?? true)
+    }
+
+    func test_presentLoad_groupsMessagesByDay() async {
+        let cal = Calendar.current
+        let today = Date()
+        // swiftlint:disable:next force_unwrapping
+        let twoDaysAgo = cal.date(byAdding: .day, value: -2, to: today)!
+        let messages = [
+            ChatMessage(id: "m1", sender: .parent, text: "Старое", createdAt: twoDaysAgo, status: .sent),
+            ChatMessage(id: "m2", sender: .specialist, text: "Сегодня 1", createdAt: today, status: .delivered),
+            ChatMessage(id: "m3", sender: .parent, text: "Сегодня 2", createdAt: today, status: .sent)
+        ]
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil, messages: messages, isConnected: true
+        )
+        await sut.presentLoad(response: response)
+        let sections = spyDisplay.lastLoadViewModel?.sections ?? []
+        XCTAssertEqual(sections.count, 2, "Сообщения двух разных дней → 2 секции")
+        XCTAssertEqual(sections.last?.dateLabel, "Сегодня")
+        XCTAssertEqual(sections.last?.messages.count, 2, "В сегодняшней секции — 2 сообщения")
+    }
+
+    func test_presentLoad_unreadBadge_reflectsCount() async {
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil, messages: [], isConnected: true,
+            unreadCount: 3, pendingOutboxCount: 0
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertEqual(spyDisplay.lastLoadViewModel?.unreadBadge, "3")
+    }
+
+    func test_presentLoad_noUnread_noBadge() async {
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil, messages: [], isConnected: true,
+            unreadCount: 0, pendingOutboxCount: 0
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertNil(spyDisplay.lastLoadViewModel?.unreadBadge)
+    }
+
+    func test_presentLoad_pendingOutbox_setsLabel() async {
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil, messages: [], isConnected: true,
+            unreadCount: 0, pendingOutboxCount: 2
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertNotNil(spyDisplay.lastLoadViewModel?.outboxLabel,
+                        "При непустой offline-очереди показываем индикатор")
+    }
+
+    func test_presentConnect_success_setsConnectedAndSuccessMessage() async {
+        let specialist = SpecialistInfo(
+            displayName: "Ирина", credentialsKey: "k", isOnline: true, lastSeenAt: nil
+        )
+        await sut.presentConnect(response: .init(resultState: .connected(specialist)))
+        XCTAssertTrue(spyDisplay.lastConnectViewModel?.isConnected ?? false)
+        XCTAssertNotNil(spyDisplay.lastConnectViewModel?.successMessage)
+        XCTAssertNil(spyDisplay.lastConnectViewModel?.errorMessage)
+    }
+
+    func test_presentConnect_failure_setsErrorMessage() async {
+        await sut.presentConnect(response: .init(resultState: .failed(.codeNotFound)))
+        XCTAssertFalse(spyDisplay.lastConnectViewModel?.isConnected ?? true)
+        XCTAssertNotNil(spyDisplay.lastConnectViewModel?.errorMessage)
+        XCTAssertNil(spyDisplay.lastConnectViewModel?.successMessage)
+    }
 }
 
 // MARK: - SpyLogopedistChatDisplay
@@ -169,8 +257,10 @@ private final class SpyLogopedistChatDisplay: LogopedistChatDisplayLogic {
     var displayLoadCalled = false
     var displaySendCalled = false
     var displayAttachAudioCalled = false
+    var displayConnectCalled = false
 
     var lastLoadViewModel: LogopedistChatModels.Load.ViewModel?
+    var lastConnectViewModel: LogopedistChatModels.Connect.ViewModel?
 
     func displayLoad(viewModel: LogopedistChatModels.Load.ViewModel) async {
         displayLoadCalled = true
@@ -183,5 +273,10 @@ private final class SpyLogopedistChatDisplay: LogopedistChatDisplayLogic {
 
     func displayAttachAudio(viewModel: LogopedistChatModels.AttachAudio.ViewModel) async {
         displayAttachAudioCalled = true
+    }
+
+    func displayConnect(viewModel: LogopedistChatModels.Connect.ViewModel) async {
+        displayConnectCalled = true
+        lastConnectViewModel = viewModel
     }
 }

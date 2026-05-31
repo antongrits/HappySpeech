@@ -66,6 +66,11 @@ public final class AppContainer {
     private var _familyInviteService: (any FamilyInviteServiceProtocol)?
     private var _realtimeDatabaseService: (any RealtimeDatabaseServiceProtocol)?
 
+    // Block R.2 (v32): ChatRepository — реальный чат parent ↔ specialist (Firestore).
+    // Lazy. Live: FirestoreChatRepository. Preview/Test: MockChatRepository.
+    // COPPA: только родительский/специалистский контур.
+    private var _chatRepository: (any ChatRepository)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -501,6 +506,23 @@ public final class AppContainer {
         if let rdb = realtimeDatabase { _realtimeDatabaseService = rdb }
     }
 
+    // MARK: - Block R.2 (v32): ChatRepository
+
+    /// Репозиторий чата «родитель ↔ логопед» (Firestore, offline-first, real-time).
+    /// Только родительский/специалистский контур (COPPA). См. ``ChatRepository``.
+    public var chatRepository: any ChatRepository {
+        if let existing = _chatRepository { return existing }
+        let new: any ChatRepository = FirestoreChatRepository(networkMonitor: networkMonitor)
+        _chatRepository = new
+        return new
+    }
+
+    /// Подмена ``chatRepository`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `chatRepository`.
+    public func overrideChatRepository(_ repository: any ChatRepository) {
+        _chatRepository = repository
+    }
+
     public var soundService: any SoundServiceProtocol {
         if let existing = _soundService { return existing }
         let new = LiveSoundService()
@@ -890,6 +912,9 @@ public extension AppContainer {
         container.overrideStoreService(MockStoreService())
         // Block M (v12): VoiceClone — mock без AVSpeechSynthesizer/файлов в preview/tests.
         container.overrideVoiceCloneService(MockVoiceCloneService())
+        // Block R.2 (v32): ChatRepository — seeded mock с подключённым логопедом и
+        // переписки, чтобы preview / snapshot чата не показывали пустой экран.
+        container.overrideChatRepository(MockChatRepository.previewSeeded())
         return container
     }
 }

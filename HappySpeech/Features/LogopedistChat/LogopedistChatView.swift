@@ -10,8 +10,10 @@ final class LogopedistChatViewModelHolder: LogopedistChatDisplayLogic {
     var loadVM: LogopedistChatModels.Load.ViewModel?
     var sendVM: LogopedistChatModels.Send.ViewModel?
     var attachVM: LogopedistChatModels.AttachAudio.ViewModel?
+    var connectVM: LogopedistChatModels.Connect.ViewModel?
     var showToast: Bool = false
     var isSending: Bool = false
+    var isConnecting: Bool = false
 
     func displayLoad(viewModel: LogopedistChatModels.Load.ViewModel) async {
         self.loadVM = viewModel
@@ -26,6 +28,14 @@ final class LogopedistChatViewModelHolder: LogopedistChatDisplayLogic {
     func displayAttachAudio(viewModel: LogopedistChatModels.AttachAudio.ViewModel) async {
         self.attachVM = viewModel
         self.showToast = true
+    }
+
+    func displayConnect(viewModel: LogopedistChatModels.Connect.ViewModel) async {
+        self.connectVM = viewModel
+        self.isConnecting = false
+        if viewModel.successMessage != nil {
+            self.showToast = true
+        }
     }
 }
 
@@ -50,12 +60,18 @@ struct LogopedistChatView: View {
     let parentId: String
     let specialistId: String
 
-    @State private var holder = LogopedistChatViewModelHolder()
+    @State private var holder: LogopedistChatViewModelHolder
     @State private var interactor: LogopedistChatInteractor?
     @State private var presenter: LogopedistChatPresenter?
     @State private var router: LogopedistChatRouter?
     @State private var composerText: String = ""
+    @State private var connectCode: String = ""
     @State private var attachActionShown: Bool = false
+    @State private var subscriptionTask: Task<Void, Never>?
+
+    /// DEBUG-only seam: при `true` `.task`-bootstrap делает ранний return и не
+    /// перетирает инжектированное состояние async-загрузкой (snapshot-детерминизм).
+    private let skipBootstrapForSnapshot: Bool
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -66,7 +82,23 @@ struct LogopedistChatView: View {
     init(parentId: String, specialistId: String) {
         self.parentId = parentId
         self.specialistId = specialistId
+        _holder = State(initialValue: LogopedistChatViewModelHolder())
+        self.skipBootstrapForSnapshot = false
     }
+
+    #if DEBUG
+    /// DEBUG-only init для snapshot-тестов: инжектит уже-загруженный holder.
+    init(
+        parentId: String,
+        specialistId: String,
+        previewState holder: LogopedistChatViewModelHolder
+    ) {
+        self.parentId = parentId
+        self.specialistId = specialistId
+        _holder = State(initialValue: holder)
+        self.skipBootstrapForSnapshot = true
+    }
+    #endif
 
     var body: some View {
         NavigationStack {
@@ -81,14 +113,20 @@ struct LogopedistChatView: View {
 
                 VStack(spacing: 0) {
                     if let viewModel = holder.loadVM {
-                        chatHeader(viewModel: viewModel)
-                        if let connectionHint = viewModel.connectionHint {
-                            connectionWarning(text: connectionHint)
+                        if viewModel.showConnectForm {
+                            connectForm
+                        } else {
+                            chatHeader(viewModel: viewModel)
+                            if let outboxLabel = viewModel.outboxLabel {
+                                connectionWarning(text: outboxLabel)
+                            } else if let connectionHint = viewModel.connectionHint {
+                                connectionWarning(text: connectionHint)
+                            }
+                            messagesList(viewModel: viewModel)
+                            Divider()
+                                .background(ColorTokens.Parent.line)
+                            composerView(viewModel: viewModel)
                         }
-                        messagesList(viewModel: viewModel)
-                        Divider()
-                            .background(ColorTokens.Parent.line)
-                        composerView(viewModel: viewModel)
                     } else {
                         loadingSection
                             .frame(maxHeight: .infinity)
@@ -111,7 +149,8 @@ struct LogopedistChatView: View {
             }
             .overlay(alignment: .top) {
                 if holder.showToast,
-                   let toast = holder.sendVM?.confirmationMessage
+                   let toast = holder.connectVM?.successMessage
+                                ?? holder.sendVM?.confirmationMessage
                                 ?? holder.attachVM?.confirmationMessage {
                     toastBanner(text: toast)
                         .padding(.top, SpacingTokens.sp2)
@@ -134,6 +173,10 @@ struct LogopedistChatView: View {
         .task {
             await setupAndLoad()
         }
+        .onDisappear {
+            subscriptionTask?.cancel()
+            subscriptionTask = nil
+        }
     }
 
     // MARK: - Loading
@@ -147,6 +190,90 @@ struct LogopedistChatView: View {
         }
         .padding(.top, SpacingTokens.sp10)
         .frame(maxWidth: .infinity)
+    }
+
+    // MARK: - Connect form
+    //
+    // Показывается, пока логопед не подключён к семье. Родитель вводит
+    // 6-символьный код, выданный специалистом. Честное состояние вместо
+    // выдуманного собеседника (project guide §11).
+
+    private var connectForm: some View {
+        ScrollView {
+            VStack(spacing: SpacingTokens.sp4) {
+                LyalyaMascotView(state: .waving, size: 120)
+                    .frame(height: 120)
+                    .accessibilityHidden(true)
+
+                Text("chat.connect.title")
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+
+                Text("chat.connect.subtitle")
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .padding(.horizontal, SpacingTokens.sp4)
+
+                TextField(
+                    String(localized: "chat.connect.codePlaceholder"),
+                    text: $connectCode
+                )
+                .font(TypographyTokens.headline(18))
+                .multilineTextAlignment(.center)
+                .textInputAutocapitalization(.characters)
+                .autocorrectionDisabled(true)
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .padding(.vertical, SpacingTokens.sp3)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(ColorTokens.Parent.bgDeep)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+                )
+                .onChange(of: connectCode) { _, newValue in
+                    let filtered = newValue.uppercased().filter { $0.isLetter || $0.isNumber }
+                    connectCode = String(filtered.prefix(6))
+                }
+                .accessibilityLabel(Text("chat.connect.codePlaceholder"))
+
+                if let error = holder.connectVM?.errorMessage {
+                    Text(error)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .accessibilityLabel(Text(error))
+                }
+
+                HSButton(
+                    String(localized: "chat.connect.cta"),
+                    style: .primary,
+                    size: .large,
+                    icon: "link",
+                    isLoading: holder.isConnecting
+                ) {
+                    Task { await connect() }
+                }
+                .disabled(connectCode.count != 6 || holder.isConnecting)
+
+                Text("chat.connect.privacy")
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .padding(.top, SpacingTokens.sp2)
+            }
+            .padding(SpacingTokens.sp5)
+            .frame(maxWidth: .infinity)
+        }
     }
 
     // MARK: - Header
@@ -282,20 +409,23 @@ struct LogopedistChatView: View {
                         chatHeroEmptyState(viewModel: viewModel)
                             .padding(.top, SpacingTokens.sp6)
                     }
-                    ForEach(Array(viewModel.messages.enumerated()), id: \.element.id) { index, message in
-                        messageBubble(message: message)
-                            .id(message.id)
-                            .scrollTransition(
-                                .animated(reduceMotion
-                                    ? .linear(duration: 0)
-                                    : .spring(response: 0.5, dampingFraction: 0.85))
-                            ) { content, phase in
-                                content
-                                    .opacity(phase.isIdentity ? 1 : 0)
-                                    .scaleEffect(phase.isIdentity ? 1 : 0.96)
-                            }
-                            .hsParallaxTile(factor: 0.12)
-                            .zIndex(Double(viewModel.messages.count - index))
+                    ForEach(viewModel.sections) { section in
+                        dateSeparator(label: section.dateLabel)
+                        ForEach(Array(section.messages.enumerated()), id: \.element.id) { index, message in
+                            messageBubble(message: message)
+                                .id(message.id)
+                                .scrollTransition(
+                                    .animated(reduceMotion
+                                        ? .linear(duration: 0)
+                                        : .spring(response: 0.5, dampingFraction: 0.85))
+                                ) { content, phase in
+                                    content
+                                        .opacity(phase.isIdentity ? 1 : 0)
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                                }
+                                .hsParallaxTile(factor: 0.12)
+                                .zIndex(Double(section.messages.count - index))
+                        }
                     }
                     Color.clear
                         .frame(height: 8)
@@ -314,6 +444,25 @@ struct LogopedistChatView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func dateSeparator(label: String) -> some View {
+        HStack {
+            Spacer()
+            Text(label)
+                .font(TypographyTokens.caption(11).weight(.medium))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .padding(.horizontal, SpacingTokens.sp3)
+                .padding(.vertical, SpacingTokens.sp1)
+                .background(
+                    Capsule().fill(ColorTokens.Parent.surface.opacity(0.85))
+                )
+            Spacer()
+        }
+        .padding(.vertical, SpacingTokens.sp1)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(label))
     }
 
     @ViewBuilder
@@ -533,11 +682,15 @@ struct LogopedistChatView: View {
     // MARK: - Wiring
 
     private func setupAndLoad() async {
+        // Snapshot seam: holder уже инжектирован — не запускаем async-загрузку.
+        if skipBootstrapForSnapshot { return }
+
         if interactor == nil {
             let presenter = LogopedistChatPresenter(displayLogic: holder)
             let interactor = LogopedistChatInteractor(
                 parentId: parentId,
                 specialistId: specialistId,
+                repository: container.chatRepository,
                 hapticService: container.hapticService
             )
             interactor.presenter = presenter
@@ -550,6 +703,28 @@ struct LogopedistChatView: View {
             parentId: parentId,
             specialistId: specialistId
         ))
+
+        // Запускаем real-time подписку (живёт пока View на экране).
+        startSubscriptionIfNeeded()
+    }
+
+    private func startSubscriptionIfNeeded() {
+        guard subscriptionTask == nil, let interactor else { return }
+        subscriptionTask = Task { await interactor.subscribe() }
+    }
+
+    private func connect() async {
+        guard connectCode.count == 6 else { return }
+        holder.isConnecting = true
+        await interactor?.connect(request: .init(
+            familyId: parentId,
+            code: connectCode
+        ))
+        // При успехе Interactor сам перезагрузит тред; запускаем подписку.
+        if holder.connectVM?.isConnected == true {
+            connectCode = ""
+            startSubscriptionIfNeeded()
+        }
     }
 
     private func send() async {
@@ -564,11 +739,6 @@ struct LogopedistChatView: View {
             text: text,
             now: Date()
         ))
-        // Reload after send (auto-reply append).
-        await interactor?.load(request: .init(
-            parentId: parentId,
-            specialistId: specialistId
-        ))
     }
 
     private func attachAudio() async {
@@ -578,10 +748,6 @@ struct LogopedistChatView: View {
             attachmentTitle: String(localized: "chat.attachment.audio.title"),
             durationSeconds: 30,
             now: Date()
-        ))
-        await interactor?.load(request: .init(
-            parentId: parentId,
-            specialistId: specialistId
         ))
     }
 }

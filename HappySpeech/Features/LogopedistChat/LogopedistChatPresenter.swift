@@ -8,6 +8,12 @@ protocol LogopedistChatPresentationLogic: AnyObject, Sendable {
     func presentLoad(response: LogopedistChatModels.Load.Response) async
     func presentSend(response: LogopedistChatModels.Send.Response) async
     func presentAttachAudio(response: LogopedistChatModels.AttachAudio.Response) async
+    func presentConnect(response: LogopedistChatModels.Connect.Response) async
+}
+
+// Default no-op so existing presenter doubles (test spies) keep conforming.
+extension LogopedistChatPresentationLogic {
+    func presentConnect(response: LogopedistChatModels.Connect.Response) async {}
 }
 
 // MARK: - LogopedistChatPresenter (Clean Swift: Presenter)
@@ -31,7 +37,9 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
 
     private let timeFormatter: DateFormatter
     private let dateFormatter: DateFormatter
+    private let sectionFormatter: DateFormatter
     private let durationFormatter: DateComponentsFormatter
+    private let calendar: Calendar
 
     init(displayLogic: (any LogopedistChatDisplayLogic)? = nil) {
         self.displayLogic = displayLogic
@@ -45,11 +53,20 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
         dateFmt.locale = Locale(identifier: "ru_RU")
         self.dateFormatter = dateFmt
 
+        let sectionFmt = DateFormatter()
+        sectionFmt.dateFormat = "d MMMM yyyy"
+        sectionFmt.locale = Locale(identifier: "ru_RU")
+        self.sectionFormatter = sectionFmt
+
         let durFmt = DateComponentsFormatter()
         durFmt.unitsStyle = .abbreviated
         durFmt.allowedUnits = [.minute, .second]
         durFmt.zeroFormattingBehavior = .dropAll
         self.durationFormatter = durFmt
+
+        var cal = Calendar(identifier: .gregorian)
+        cal.locale = Locale(identifier: "ru_RU")
+        self.calendar = cal
     }
 
     // MARK: - Load
@@ -93,6 +110,27 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
         let messageRows = response.messages.map { msg -> LogopedistChatModels.Load.MessageRow in
             mapMessage(msg)
         }
+        let sections = groupByDay(response.messages)
+
+        // Форму ввода кода показываем, только когда логопед реально не подключён.
+        let showConnectForm: Bool
+        switch response.linkState {
+        case .connected:
+            showConnectForm = false
+        default:
+            showConnectForm = !isConnected
+        }
+
+        let outboxLabel: String? = response.pendingOutboxCount > 0
+            ? String(
+                format: String(localized: "chat.outbox.pending"),
+                response.pendingOutboxCount
+            )
+            : nil
+
+        let unreadBadge: String? = response.unreadCount > 0
+            ? "\(response.unreadCount)"
+            : nil
 
         let viewModel = LogopedistChatModels.Load.ViewModel(
             specialistName: specialistName,
@@ -103,10 +141,88 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
             connectionHint: connectionHint,
             emptyStateHint: emptyStateHint,
             messages: messageRows,
-            composerEnabled: isConnected
+            composerEnabled: isConnected,
+            sections: sections,
+            showConnectForm: showConnectForm,
+            outboxLabel: outboxLabel,
+            unreadBadge: unreadBadge
         )
 
         await displayLogic?.displayLoad(viewModel: viewModel)
+    }
+
+    // MARK: - Connect
+
+    func presentConnect(response: LogopedistChatModels.Connect.Response) async {
+        let viewModel: LogopedistChatModels.Connect.ViewModel
+        switch response.resultState {
+        case .connected:
+            viewModel = LogopedistChatModels.Connect.ViewModel(
+                isConnected: true,
+                errorMessage: nil,
+                successMessage: String(localized: "chat.connect.success")
+            )
+        case .failed(let error):
+            viewModel = LogopedistChatModels.Connect.ViewModel(
+                isConnected: false,
+                errorMessage: error.errorDescription ?? String(localized: "chat.connect.error.generic"),
+                successMessage: nil
+            )
+        case .connecting, .notConnected:
+            viewModel = LogopedistChatModels.Connect.ViewModel(
+                isConnected: false,
+                errorMessage: nil,
+                successMessage: nil
+            )
+        }
+        await displayLogic?.displayConnect(viewModel: viewModel)
+    }
+
+    // MARK: - Date grouping
+
+    /// Группирует сообщения по календарному дню. Заголовки: «Сегодня», «Вчера»,
+    /// иначе — «25 апреля 2026». Сообщения предполагаются отсортированными по
+    /// возрастанию `createdAt`; порядок секций сохраняется.
+    private func groupByDay(_ messages: [ChatMessage]) -> [LogopedistChatModels.Load.DaySection] {
+        guard !messages.isEmpty else { return [] }
+        var sections: [LogopedistChatModels.Load.DaySection] = []
+        var currentKey: Date?
+        var bucket: [ChatMessage] = []
+
+        func flush() {
+            guard let key = currentKey, !bucket.isEmpty else { return }
+            let rows = bucket.map { mapMessage($0) }
+            sections.append(
+                LogopedistChatModels.Load.DaySection(
+                    id: ISO8601DateFormatter().string(from: key),
+                    dateLabel: sectionLabel(for: key),
+                    messages: rows
+                )
+            )
+            bucket = []
+        }
+
+        for message in messages.sorted(by: { $0.createdAt < $1.createdAt }) {
+            let dayStart = calendar.startOfDay(for: message.createdAt)
+            if currentKey == nil { currentKey = dayStart }
+            if dayStart != currentKey {
+                flush()
+                currentKey = dayStart
+            }
+            bucket.append(message)
+        }
+        flush()
+        return sections
+    }
+
+    private func sectionLabel(for date: Date) -> String {
+        if calendar.isDateInToday(date) {
+            return String(localized: "chat.section.today")
+        }
+        if calendar.isDateInYesterday(date) {
+            return String(localized: "chat.section.yesterday")
+        }
+        return sectionFormatter.string(from: date)
     }
 
     // MARK: - Send

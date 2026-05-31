@@ -351,6 +351,107 @@ service cloud.firestore {
     }
 
     // ------------------------------------------------------------------
+    // /chat_links/{shortCode} — инвайт-связь «логопед → семья» (Block R.2 v32).
+    //
+    // Специалист создаёт документ с 6-символьным shortCode (= document id) и
+    // своими публичными данными (имя, credentialsKey). Родитель находит его по
+    // коду (get по id), валидирует TTL/consumed и помечает consumed при
+    // подключении. Никаких PII ребёнка здесь нет.
+    // ------------------------------------------------------------------
+
+    function isChatLinkPayloadValid(data) {
+      return data.specialistId is string
+        && data.specialistId.size() > 0
+        && (!('displayName' in data) || isValidString(data.displayName, 100))
+        && data.consumed is bool;
+    }
+
+    match /chat_links/{shortCode} {
+      // Любой аутентифицированный пользователь может прочитать инвайт по коду,
+      // чтобы подключиться (код знают только участники).
+      allow read: if isSignedIn();
+
+      // Создаёт только специалист — для самого себя.
+      allow create: if isSpecialist()
+        && request.resource.data.specialistId == request.auth.uid
+        && isChatLinkPayloadValid(request.resource.data)
+        && request.resource.data.consumed == false;
+
+      // Обновлять можно либо специалисту-владельцу, либо родителю —
+      // только для пометки consumed (применение инвайта). specialistId неизменен.
+      allow update: if isSignedIn()
+        && request.resource.data.specialistId == resource.data.specialistId
+        && (
+          (isSpecialist() && resource.data.specialistId == request.auth.uid)
+          || (
+            request.resource.data.consumed == true
+            && request.resource.data.consumedBy == request.auth.uid
+          )
+        );
+
+      allow delete: if isAdmin()
+        || (isSpecialist() && resource.data.specialistId == request.auth.uid);
+    }
+
+    // ------------------------------------------------------------------
+    // /chats/{chatId} — тред «родитель ↔ логопед» (Block R.2 v32).
+    //
+    // chatId детерминирован из (familyId, specialistId) — пара uid, без PII.
+    // Участники: familyId (родитель) и specialistId (логопед). Только они
+    // читают/пишут метаданные и сообщения. Ребёнок в чате не участвует (COPPA).
+    // ------------------------------------------------------------------
+
+    function isChatParticipant(data) {
+      return isSignedIn()
+        && (request.auth.uid == data.familyId || request.auth.uid == data.specialistId);
+    }
+
+    match /chats/{chatId} {
+      // Метаданные чата: участники читают; создаёт/обновляет любой участник.
+      allow read: if isChatParticipant(resource.data) || isAdmin();
+
+      allow create: if isSignedIn()
+        && hasFields(request.resource.data, ['familyId', 'specialistId'])
+        && (request.auth.uid == request.resource.data.familyId
+            || request.auth.uid == request.resource.data.specialistId);
+
+      allow update: if isChatParticipant(resource.data)
+        && request.resource.data.familyId == resource.data.familyId
+        && request.resource.data.specialistId == resource.data.specialistId;
+
+      allow delete: if isAdmin();
+
+      // ----------------------------------------------------------------
+      // /chats/{chatId}/messages/{messageId}
+      // Читают/создают только участники родительского треда. senderRole
+      // ограничен 'parent'|'specialist' — ребёнок (kid) писать не может.
+      // ----------------------------------------------------------------
+
+      match /messages/{messageId} {
+        function chatMeta() {
+          return get(/databases/$(database)/documents/chats/$(chatId)).data;
+        }
+
+        allow read: if isChatParticipant(chatMeta()) || isAdmin();
+
+        allow create: if isChatParticipant(chatMeta())
+          && hasFields(request.resource.data, ['id', 'senderRole', 'createdAt'])
+          && request.resource.data.senderRole in ['parent', 'specialist']
+          && (!('text' in request.resource.data)
+              || request.resource.data.text.size() <= 4000)
+          && isValidTimestamp(request.resource.data.createdAt)
+          && request.resource.data.read is bool;
+
+        // Обновлять можно только поле read (пометка прочитанным).
+        allow update: if isChatParticipant(chatMeta())
+          && request.resource.data.id == resource.data.id
+          && request.resource.data.senderRole == resource.data.senderRole;
+
+        allow delete: if isAdmin();
+      }
+    }
+
+    // ------------------------------------------------------------------
     // /audits/{auditId} — append-only audit log (admin-only read).
     // Created by Cloud Functions only; never read/written by clients.
     // ------------------------------------------------------------------

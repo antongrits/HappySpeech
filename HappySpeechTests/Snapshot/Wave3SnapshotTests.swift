@@ -136,12 +136,102 @@ final class Wave3SnapshotTests: XCTestCase {
     }
 
     // MARK: - 9. LogopedistChatView (parent↔specialist, parentId + specialistId)
+    //
+    // v32: snapshot ловит SETTLED-кадр с реальной перепиской (а не пустой
+    // loading-state) через DEBUG-only `previewState` seam. Стейт детерминирован.
 
+    @MainActor
     func test_logopedistChat_rendersInBothThemes() throws {
-        let view = LogopedistChatView(parentId: "preview-parent-1", specialistId: "preview-specialist-1")
-            .environment(AppCoordinator())
-            .environment(AppContainer.preview())
+        let view = LogopedistChatView(
+            parentId: "preview-parent-1",
+            specialistId: "preview-specialist-1",
+            previewState: Self.makeChatHolder()
+        )
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
         try record(view, screen: "LogopedistChatView")
+    }
+
+    // MARK: - 9b. LogopedistChatView — connect form (не подключён)
+
+    @MainActor
+    func test_logopedistChatConnectForm_rendersInBothThemes() throws {
+        let view = LogopedistChatView(
+            parentId: "preview-parent-1",
+            specialistId: "preview-specialist-1",
+            previewState: Self.makeConnectFormHolder()
+        )
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+        try record(view, screen: "LogopedistChatConnectForm")
+    }
+
+    // MARK: - Chat holders (deterministic)
+
+    @MainActor
+    private static func makeChatHolder() -> LogopedistChatViewModelHolder {
+        let holder = LogopedistChatViewModelHolder()
+        let rows = [
+            LogopedistChatModels.Load.MessageRow(
+                id: "s1", isFromParent: false, text: "Добрый день! Звук «С» стал стабильнее.",
+                timeLabel: "10:15", statusLabel: "", statusSymbol: nil, isRead: true,
+                attachment: nil, accessibilityLabel: "Логопед, Добрый день, 10:15"
+            ),
+            LogopedistChatModels.Load.MessageRow(
+                id: "p1", isFromParent: true, text: "Спасибо! Дома повторяем каждый день.",
+                timeLabel: "10:20", statusLabel: "Прочитано", statusSymbol: "checkmark.circle.fill",
+                isRead: true, attachment: nil, accessibilityLabel: "Вы, Спасибо, 10:20"
+            ),
+            LogopedistChatModels.Load.MessageRow(
+                id: "p2", isFromParent: true, text: "Прикладываю запись занятия.",
+                timeLabel: "10:21", statusLabel: "Отправлено", statusSymbol: "checkmark",
+                isRead: false,
+                attachment: LogopedistChatModels.Load.AttachmentRow(
+                    id: "att", title: "Запись занятия", symbolName: "waveform", durationLabel: "28 сек"
+                ),
+                accessibilityLabel: "Вы, запись занятия, 10:21"
+            )
+        ]
+        let section = LogopedistChatModels.Load.DaySection(
+            id: "today", dateLabel: "Сегодня", messages: rows
+        )
+        holder.loadVM = LogopedistChatModels.Load.ViewModel(
+            specialistName: "Ирина Петрова",
+            credentials: "Логопед-дефектолог",
+            onlineStatusLabel: "В сети",
+            isOnline: true,
+            isConnected: true,
+            connectionHint: nil,
+            emptyStateHint: nil,
+            messages: rows,
+            composerEnabled: true,
+            sections: [section],
+            showConnectForm: false,
+            outboxLabel: nil,
+            unreadBadge: nil
+        )
+        return holder
+    }
+
+    @MainActor
+    private static func makeConnectFormHolder() -> LogopedistChatViewModelHolder {
+        let holder = LogopedistChatViewModelHolder()
+        holder.loadVM = LogopedistChatModels.Load.ViewModel(
+            specialistName: "Логопед не подключён",
+            credentials: "—",
+            onlineStatusLabel: nil,
+            isOnline: false,
+            isConnected: false,
+            connectionHint: nil,
+            emptyStateHint: "Подключите логопеда вашего ребёнка",
+            messages: [],
+            composerEnabled: false,
+            sections: [],
+            showConnectForm: true,
+            outboxLabel: nil,
+            unreadBadge: nil
+        )
+        return holder
     }
 
     // MARK: - 10. LogorhythmicsView (kid, childId)
