@@ -47,14 +47,16 @@ final class GamePlaythroughUITests: XCTestCase {
 
     private var helper: GamePlaythroughHelper!
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
         helper = GamePlaythroughHelper()
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         helper.terminate()
         helper = nil
+        try await super.tearDown()
     }
 
     // MARK: - 1. Listen and Choose

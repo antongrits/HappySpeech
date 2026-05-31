@@ -18,16 +18,18 @@ final class OnboardingFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
         app = XCUIApplication()
         app.launchArguments = ["-UITestResetState", "-UITestDisableAnimations"]
         app.launch()
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         app.terminate()
         app = nil
+        try await super.tearDown()
     }
 
     // MARK: - 1. Онбординг или главный экран появляются при запуске

@@ -25,7 +25,8 @@ final class DemoEndToEndUITest: XCTestCase {
 
     // MARK: - Setup / Teardown
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
         app = XCUIApplication()
         app.launchArguments = [
@@ -36,9 +37,10 @@ final class DemoEndToEndUITest: XCTestCase {
         app.launch()
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         app.terminate()
         app = nil
+        try await super.tearDown()
     }
 
     // MARK: - 1. Demo экран появляется при запуске с --demo-mode

@@ -18,7 +18,8 @@ final class NavigationFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!
 
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        try await super.setUp()
         continueAfterFailure = false
         app = XCUIApplication()
         app.launchArguments = [
@@ -29,9 +30,10 @@ final class NavigationFlowUITests: XCTestCase {
         app.launch()
     }
 
-    override func tearDownWithError() throws {
+    override func tearDown() async throws {
         app.terminate()
         app = nil
+        try await super.tearDown()
     }
 
     // MARK: - 1. Smoke-тест: приложение запускается без краша

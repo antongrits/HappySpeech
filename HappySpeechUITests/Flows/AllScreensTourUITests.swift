@@ -44,7 +44,8 @@ final class AllScreensTourUITests: XCTestCase {
     /// `xcodebuild test`. `Foundation.Process` недоступен в iOS test runner
     /// (только macOS), поэтому grant выполняется снаружи. Внутри теста —
     /// только interruption monitor как fallback (см. captureScreen).
-    override func setUpWithError() throws {
+    override func setUp() async throws {
+        try await super.setUp()
         // continueAfterFailure = true → если один screen не зарендерился, tour
         // не останавливается и остальные 103 routes всё равно проверяются.
         continueAfterFailure = true
