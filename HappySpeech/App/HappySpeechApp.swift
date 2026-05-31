@@ -38,32 +38,11 @@ struct HappySpeechApp: App {
                     log: HSSignpost.pointsOfInterest,
                     name: "AppLaunch")
 
-        // Пропускаем Firebase bootstrap в XCTest-окружении: хост-процесс XCTest загружает
-        // бинарь приложения, и отсутствующий GoogleService-Info.plist вызывает NSException SIGABRT
-        // до запуска тестов.
-        let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        if !isTesting, FirebaseApp.app() == nil {
-            // Защита от placeholder-значений в GoogleService-Info.plist (CI / Debug без Firebase).
-            if let plistURL = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
-               let plist = NSDictionary(contentsOf: plistURL),
-               let apiKey = plist["API_KEY"] as? String,
-               !apiKey.hasPrefix("REPLACE_") {
-
-                // D.4 — App Check: DeviceCheck в production, Debug provider в Debug/Simulator builds.
-                // Конфигурация App Check ДОЛЖНА быть установлена до FirebaseApp.configure().
-#if DEBUG
-                let appCheckFactory = AppCheckDebugProviderFactory()
-#else
-                let appCheckFactory = DeviceCheckProviderFactory()
-#endif
-                AppCheck.setAppCheckProviderFactory(appCheckFactory)
-
-                FirebaseApp.configure()
-                HSLogger.app.info("FirebaseApp.configure() вызван с App Check (\(String(describing: type(of: appCheckFactory)), privacy: .public))")
-            } else {
-                HSLogger.app.warning("GoogleService-Info.plist содержит placeholder — Firebase пропущен (Debug/CI режим)")
-            }
-        }
+        // Firebase конфигурируется здесь И в начале makeContainer(): `container` —
+        // property default, инициализируется раньше тела init(), поэтому реальная
+        // конфигурация происходит в makeContainer() до создания LiveAuthService/GoogleSignIn.
+        // Guard FirebaseApp.app() == nil делает этот вызов идемпотентным.
+        Self.bootstrapFirebaseIfNeeded()
 
         // Конец App.init(): все синхронные инициализации завершены.
         // bootstrapApp() закроет интервал после Realm.open() — это и есть cold start.
@@ -102,10 +81,38 @@ struct HappySpeechApp: App {
         return manager.preferredColorScheme
     }
 
+    /// Конфигурирует Firebase (+ App Check provider) ровно один раз, до создания
+    /// сервисов, которые от него зависят (LiveAuthService / GoogleSignIn). В XCTest
+    /// пропускается: хост-процесс XCTest загружает бинарь приложения, а отсутствующий /
+    /// placeholder GoogleService-Info.plist вызвал бы SIGABRT.
+    static func bootstrapFirebaseIfNeeded() {
+        let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        guard !isTesting, FirebaseApp.app() == nil else { return }
+        // Защита от placeholder-значений в GoogleService-Info.plist (CI / Debug без Firebase).
+        guard let plistURL = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
+              let plist = NSDictionary(contentsOf: plistURL),
+              let apiKey = plist["API_KEY"] as? String,
+              !apiKey.hasPrefix("REPLACE_") else {
+            HSLogger.app.warning("GoogleService-Info.plist содержит placeholder — Firebase пропущен (Debug/CI режим)")
+            return
+        }
+        // D.4 — App Check: DeviceCheck в production, Debug provider в Debug/Simulator builds.
+#if DEBUG
+        let appCheckFactory = AppCheckDebugProviderFactory()
+#else
+        let appCheckFactory = DeviceCheckProviderFactory()
+#endif
+        AppCheck.setAppCheckProviderFactory(appCheckFactory)
+        FirebaseApp.configure()
+        HSLogger.app.info("FirebaseApp.configure() вызван с App Check (\(String(describing: type(of: appCheckFactory)), privacy: .public))")
+    }
+
     /// Выбирает production или preview-контейнер в зависимости от launch arguments.
     /// При запуске UI-тестов с флагами -UITestMockServices или -UITestOffline
     /// используется AppContainer.preview() с MockNetworkMonitor.
     private static func makeContainer() -> AppContainer {
+        // Firebase — до любых сервисов контейнера (LiveAuthService/GoogleSignIn зависят от него).
+        bootstrapFirebaseIfNeeded()
         let args = ProcessInfo.processInfo.arguments
         let hasStartRoute = args.contains("-HSStartRoute")
         // Use preview (mock) container when running unit tests to avoid real
