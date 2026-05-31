@@ -278,7 +278,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         }
 
         let suggestBreak = detectFatigue()
-        await presenter?.presentAnalyzeEmotion(
+        presenter?.presentAnalyzeEmotion(
             .init(suggestBreak: suggestBreak, fatigueHearts: fatigueHearts)
         )
     }
