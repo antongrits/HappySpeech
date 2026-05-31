@@ -59116,6 +59116,281 @@
           }
         }
       }
+    },
+    "fourthExtra.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Четвёртый лишний"
+          }
+        }
+      }
+    },
+    "fourthExtra.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Четвёртый лишний"
+          }
+        }
+      }
+    },
+    "fourthExtra.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди картинку, которая не подходит к остальным трём"
+          }
+        }
+      }
+    },
+    "fourthExtra.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "fourthExtra.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим картинки…"
+          }
+        }
+      }
+    },
+    "fourthExtra.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "fourthExtra.prompt.semantic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Три картинки дружат, а одна — лишняя. Какая не подходит?"
+          }
+        }
+      }
+    },
+    "fourthExtra.prompt.phonetic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В трёх словах есть звук «%@», а в одном — нет. Найди лишнее слово."
+          }
+        }
+      }
+    },
+    "fourthExtra.card.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинка: %@"
+          }
+        }
+      }
+    },
+    "fourthExtra.card.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, если эта картинка лишняя"
+          }
+        }
+      }
+    },
+    "fourthExtra.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Четыре картинки: %@. Выбери лишнюю."
+          }
+        }
+      }
+    },
+    "fourthExtra.grouping.sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "слова со звуком «%@»"
+          }
+        }
+      }
+    },
+    "fourthExtra.feedback.hit.full": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец, навёл порядок! Это %1$@, а лишний — %2$@."
+          }
+        }
+      }
+    },
+    "fourthExtra.feedback.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец, навёл порядок! Это %@."
+          }
+        }
+      }
+    },
+    "fourthExtra.feedback.hit.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец, навёл порядок!"
+          }
+        }
+      }
+    },
+    "fourthExtra.feedback.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Подумай, что общего у трёх картинок?"
+          }
+        }
+      }
+    },
+    "fourthExtra.feedback.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лишний прячется — посмотри, кто не дружит с остальными."
+          }
+        }
+      }
+    },
+    "fourthExtra.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здорово! Ты отлично наводишь порядок."
+          }
+        }
+      }
+    },
+    "fourthExtra.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо получается! Давай ещё немного потренируемся."
+          }
+        }
+      }
+    },
+    "fourthExtra.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мы молодцы, что играли вместе. В следующий раз получится ещё лучше!"
+          }
+        }
+      }
+    },
+    "fourthExtra.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порядок наведён!"
+          }
+        }
+      }
+    },
+    "fourthExtra.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "fourthExtra.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть ещё раз"
+          }
+        }
+      }
+    },
+    "fourthExtra.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую игру «Четвёртый лишний»"
+          }
+        }
+      }
+    },
+    "fourthExtra.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

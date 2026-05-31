@@ -217,6 +217,11 @@ enum AppRoute: Hashable {
     /// перестановок и пропусков слогов). Уровни tier 1 → 4.
     case syllableSnail(childId: String)
 
+    /// F2-005 (kid): «Четвёртый лишний» — классификация и обобщение. Из 4
+    /// картинок убрать «лишнюю»: семантический (по категории/функции/среде)
+    /// или фонетический (3 слова с целевым звуком + 1 без).
+    case fourthExtra(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -1016,6 +1021,10 @@ struct AppCoordinatorView: View {
             SyllableSnailView(childId: childId)
                 .environment(\.circuitContext, .kid)
 
+        case .fourthExtra(let childId):
+            FourthExtraView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1599,6 +1608,8 @@ extension AppCoordinatorView {
             return .soundDetective(childId: previewChild)
         case "syllableSnail", "snail", "syllableStructure":
             return .syllableSnail(childId: previewChild)
+        case "fourthExtra", "fourth-extra", "oddOneOut":
+            return .fourthExtra(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":

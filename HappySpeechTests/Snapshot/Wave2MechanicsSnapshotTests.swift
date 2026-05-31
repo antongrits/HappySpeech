@@ -60,6 +60,18 @@ final class Wave2MechanicsSnapshotTests: XCTestCase {
         try record(view, screen: "SyllableSnailView", maxDiffRatio: 0.10)
     }
 
+    // MARK: - F2-005 FourthExtraView (kid, childId)
+
+    func test_fourthExtra_rendersInBothThemes() throws {
+        let view = FourthExtraView(childId: "preview-child-1")
+            .environment(AppCoordinator())
+            .environment(AppContainer.preview())
+        // Допуск 10%: карточки сетки 2×2 используют translucent
+        // HSLiquidGlassCard поверх asset-картинок — material-blur даёт
+        // суб-пиксельный GPU-jitter между процессами, как у SoundDetectiveView.
+        try record(view, screen: "FourthExtraView", maxDiffRatio: 0.10)
+    }
+
     // MARK: - Rendering engine
 
     private func render<V: View>(

@@ -1064,6 +1064,17 @@ extension ChildHomeView {
             router?.routeToSyllableSnail(childId: childId)
         }
 
+        // F2-005 (Wave 2) — Fourth Extra «Четвёртый лишний»
+        // (классификация / обобщение: семантический + фонетический варианты).
+        ChildHomeV25EntryCard(
+            titleKey: "fourthExtra.entry.title",
+            hintKey: "fourthExtra.entry.hint",
+            iconName: "square.grid.2x2.fill",
+            accent: ColorTokens.Brand.gold
+        ) {
+            router?.routeToFourthExtra(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",

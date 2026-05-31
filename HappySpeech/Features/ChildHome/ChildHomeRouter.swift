@@ -41,6 +41,7 @@ protocol ChildHomeRoutingLogic {
     // Wave 2 mechanics
     func routeToSoundDetective(childId: String)
     func routeToSyllableSnail(childId: String)
+    func routeToFourthExtra(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -238,5 +239,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// F2-003 — «Слоговая улитка» (слоговая структура слова по Марковой).
     func routeToSyllableSnail(childId: String) {
         coordinator?.navigate(to: .syllableSnail(childId: childId))
+    }
+
+    /// F2-005 — «Четвёртый лишний» (классификация / обобщение).
+    func routeToFourthExtra(childId: String) {
+        coordinator?.navigate(to: .fourthExtra(childId: childId))
     }
 }

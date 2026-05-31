@@ -1,0 +1,513 @@
+{
+  "id": "pack_fourth_extra_v1",
+  "soundTarget": "лексика",
+  "group": "лексика",
+  "version": 1,
+  "roundsPerSession": 10,
+  "items": [
+    {
+      "id": "fe-sem-fruits-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "фрукты",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "яблоко", "imageAsset": "word_apple", "isExtra": false },
+        { "word": "груша", "imageAsset": "word_grusha", "isExtra": false },
+        { "word": "банан", "imageAsset": "word_banan", "isExtra": false },
+        { "word": "стул", "imageAsset": "word_stul", "isExtra": true, "extraReason": "это мебель, а не фрукт" }
+      ]
+    },
+    {
+      "id": "fe-sem-transport-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "транспорт",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "машина", "imageAsset": "word_car", "isExtra": false },
+        { "word": "автобус", "imageAsset": "word_avtobus", "isExtra": false },
+        { "word": "поезд", "imageAsset": "word_train", "isExtra": false },
+        { "word": "чашка", "imageAsset": "word_chashka", "isExtra": true, "extraReason": "это посуда, а не транспорт" }
+      ]
+    },
+    {
+      "id": "fe-sem-dishes-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "посуда",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "чашка", "imageAsset": "word_chashka", "isExtra": false },
+        { "word": "тарелка", "imageAsset": "word_tarelka", "isExtra": false },
+        { "word": "ложка", "imageAsset": "word_spoon", "isExtra": false },
+        { "word": "медведь", "imageAsset": "word_bear", "isExtra": true, "extraReason": "это животное, а не посуда" }
+      ]
+    },
+    {
+      "id": "fe-sem-flowers-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "цветы",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "роза", "imageAsset": "word_rose", "isExtra": false },
+        { "word": "ромашка", "imageAsset": "word_romashka", "isExtra": false },
+        { "word": "цветок", "imageAsset": "word_tsvetok", "isExtra": false },
+        { "word": "кот", "imageAsset": "word_kot", "isExtra": true, "extraReason": "это животное, а не цветок" }
+      ]
+    },
+    {
+      "id": "fe-sem-clothing-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "одежда",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "юбка", "imageAsset": "word_yubka", "isExtra": false },
+        { "word": "платье", "imageAsset": "word_plate", "isExtra": false },
+        { "word": "рубашка", "imageAsset": "word_rubashka", "isExtra": false },
+        { "word": "морковь", "imageAsset": "word_morkov", "isExtra": true, "extraReason": "это овощ, а не одежда" }
+      ]
+    },
+    {
+      "id": "fe-sem-domestic-1",
+      "variant": "semantic",
+      "rule": "habitat",
+      "categoryLabel": "домашние животные",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "корова", "imageAsset": "word_cow", "isExtra": false },
+        { "word": "коза", "imageAsset": "word_goat", "isExtra": false },
+        { "word": "лошадь", "imageAsset": "word_horse", "isExtra": false },
+        { "word": "слон", "imageAsset": "word_slon", "isExtra": true, "extraReason": "это дикое животное" }
+      ]
+    },
+    {
+      "id": "fe-sem-wild-1",
+      "variant": "semantic",
+      "rule": "habitat",
+      "categoryLabel": "дикие животные",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "волк", "imageAsset": "word_volk", "isExtra": false },
+        { "word": "лиса", "imageAsset": "word_fox", "isExtra": false },
+        { "word": "тигр", "imageAsset": "word_tigr", "isExtra": false },
+        { "word": "собака", "imageAsset": "word_sobaka", "isExtra": true, "extraReason": "это домашнее животное" }
+      ]
+    },
+    {
+      "id": "fe-sem-vegetables-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "овощи",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "помидор", "imageAsset": "word_pomidor", "isExtra": false },
+        { "word": "огурец", "imageAsset": "word_ogurets", "isExtra": false },
+        { "word": "капуста", "imageAsset": "word_kapusta", "isExtra": false },
+        { "word": "банан", "imageAsset": "word_banan", "isExtra": true, "extraReason": "это фрукт, а не овощ" }
+      ]
+    },
+    {
+      "id": "fe-sem-furniture-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "мебель",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "стол", "imageAsset": "word_stol", "isExtra": false },
+        { "word": "шкаф", "imageAsset": "word_shkaf", "isExtra": false },
+        { "word": "кровать", "imageAsset": "word_bed", "isExtra": false },
+        { "word": "петух", "imageAsset": "word_rooster", "isExtra": true, "extraReason": "это птица, а не мебель" }
+      ]
+    },
+    {
+      "id": "fe-sem-fruits-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "фрукты",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "банан", "imageAsset": "word_banan", "isExtra": false },
+        { "word": "лимон", "imageAsset": "word_lemon", "isExtra": false },
+        { "word": "апельсин", "imageAsset": "word_apelsin", "isExtra": false },
+        { "word": "репа", "imageAsset": "word_repa", "isExtra": true, "extraReason": "это овощ, а не фрукт" }
+      ]
+    },
+    {
+      "id": "fe-sem-vehicles-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "транспорт",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "велосипед", "imageAsset": "word_velosiped", "isExtra": false },
+        { "word": "грузовик", "imageAsset": "word_gruzovik", "isExtra": false },
+        { "word": "ракета", "imageAsset": "word_raketa", "isExtra": false },
+        { "word": "диван", "imageAsset": "word_divan", "isExtra": true, "extraReason": "это мебель, а не транспорт" }
+      ]
+    },
+    {
+      "id": "fe-sem-birds-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "птицы",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "воробей", "imageAsset": "word_vorobey", "isExtra": false },
+        { "word": "ворона", "imageAsset": "word_vorona", "isExtra": false },
+        { "word": "сова", "imageAsset": "word_sova", "isExtra": false },
+        { "word": "рыба", "imageAsset": "word_ryba", "isExtra": true, "extraReason": "рыба живёт в воде, а не птица" }
+      ]
+    },
+    {
+      "id": "fe-sem-dishes-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "посуда",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "кастрюля", "imageAsset": "word_kastryulya", "isExtra": false },
+        { "word": "сковорода", "imageAsset": "word_skovoroda", "isExtra": false },
+        { "word": "чайник", "imageAsset": "word_chaynik", "isExtra": false },
+        { "word": "кукла", "imageAsset": "word_doll", "isExtra": true, "extraReason": "это игрушка, а не посуда" }
+      ]
+    },
+    {
+      "id": "fe-sem-trees-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "части растения",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "дерево", "imageAsset": "word_tree", "isExtra": false },
+        { "word": "лист", "imageAsset": "word_leaf", "isExtra": false },
+        { "word": "ветка", "imageAsset": "word_vetka", "isExtra": false },
+        { "word": "мяч", "imageAsset": "word_ball", "isExtra": true, "extraReason": "это игрушка, а не растение" }
+      ]
+    },
+    {
+      "id": "fe-sem-sky-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "небо",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "солнце", "imageAsset": "word_solntse", "isExtra": false },
+        { "word": "луна", "imageAsset": "word_moon", "isExtra": false },
+        { "word": "звезда", "imageAsset": "word_star", "isExtra": false },
+        { "word": "забор", "imageAsset": "word_zabor", "isExtra": true, "extraReason": "забор стоит на земле, а не в небе" }
+      ]
+    },
+    {
+      "id": "fe-sem-toys-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "игрушки",
+      "difficulty": 1,
+      "minAge": 5,
+      "members": [
+        { "word": "кубик", "imageAsset": "word_kubik", "isExtra": false },
+        { "word": "кукла", "imageAsset": "word_doll", "isExtra": false },
+        { "word": "юла", "imageAsset": "word_yula", "isExtra": false },
+        { "word": "лук", "imageAsset": "word_onion", "isExtra": true, "extraReason": "это овощ, а не игрушка" }
+      ]
+    },
+    {
+      "id": "fe-sem-fish-1",
+      "variant": "semantic",
+      "rule": "habitat",
+      "categoryLabel": "рыбы",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "сом", "imageAsset": "word_som", "isExtra": false },
+        { "word": "щука", "imageAsset": "word_shchuka", "isExtra": false },
+        { "word": "рыба", "imageAsset": "word_ryba", "isExtra": false },
+        { "word": "белка", "imageAsset": "word_belka", "isExtra": true, "extraReason": "белка живёт в лесу, а не в воде" }
+      ]
+    },
+    {
+      "id": "fe-sem-food-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "еда",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "хлеб", "imageAsset": "word_hleb", "isExtra": false },
+        { "word": "сыр", "imageAsset": "word_syr", "isExtra": false },
+        { "word": "суп", "imageAsset": "word_sup", "isExtra": false },
+        { "word": "зонт", "imageAsset": "word_umbrella", "isExtra": true, "extraReason": "это вещь, а не еда" }
+      ]
+    },
+    {
+      "id": "fe-sem-cutlery-1",
+      "variant": "semantic",
+      "rule": "function",
+      "categoryLabel": "посуда для еды",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "ложка", "imageAsset": "word_spoon", "isExtra": false },
+        { "word": "вилка", "imageAsset": "word_fork", "isExtra": false },
+        { "word": "нож", "imageAsset": "word_nozh", "isExtra": false },
+        { "word": "слон", "imageAsset": "word_slon", "isExtra": true, "extraReason": "это животное, а не столовый прибор" }
+      ]
+    },
+    {
+      "id": "fe-sem-clothing-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "одежда",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "шуба", "imageAsset": "word_shuba", "isExtra": false },
+        { "word": "шарф", "imageAsset": "word_sharf", "isExtra": false },
+        { "word": "шапка", "imageAsset": "word_hat", "isExtra": false },
+        { "word": "торт", "imageAsset": "word_cake", "isExtra": true, "extraReason": "это еда, а не одежда" }
+      ]
+    },
+    {
+      "id": "fe-sem-house-1",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "части дома",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "дом", "imageAsset": "word_house", "isExtra": false },
+        { "word": "окно", "imageAsset": "word_window", "isExtra": false },
+        { "word": "дверь", "imageAsset": "word_door", "isExtra": false },
+        { "word": "коза", "imageAsset": "word_goat", "isExtra": true, "extraReason": "это животное, а не часть дома" }
+      ]
+    },
+    {
+      "id": "fe-sem-wildanimals-2",
+      "variant": "semantic",
+      "rule": "habitat",
+      "categoryLabel": "лесные звери",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "медведь", "imageAsset": "word_bear", "isExtra": false },
+        { "word": "лиса", "imageAsset": "word_fox", "isExtra": false },
+        { "word": "заяц", "imageAsset": "word_hare", "isExtra": false },
+        { "word": "кошка", "imageAsset": "word_cat", "isExtra": true, "extraReason": "кошка живёт дома, а не в лесу" }
+      ]
+    },
+    {
+      "id": "fe-sem-vegetables-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "овощи",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "картошка", "imageAsset": "word_kartoshka", "isExtra": false },
+        { "word": "лук", "imageAsset": "word_onion", "isExtra": false },
+        { "word": "морковь", "imageAsset": "word_morkov", "isExtra": false },
+        { "word": "слива", "imageAsset": "word_sliva", "isExtra": true, "extraReason": "это фрукт, а не овощ" }
+      ]
+    },
+    {
+      "id": "fe-sem-birds-2",
+      "variant": "semantic",
+      "rule": "category",
+      "categoryLabel": "птицы",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "гусь", "imageAsset": "word_goose", "isExtra": false },
+        { "word": "курица", "imageAsset": "word_hen", "isExtra": false },
+        { "word": "петух", "imageAsset": "word_rooster", "isExtra": false },
+        { "word": "корова", "imageAsset": "word_cow", "isExtra": true, "extraReason": "это животное, а не птица" }
+      ]
+    },
+    {
+      "id": "fe-phon-sh-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Ш",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "шапка", "imageAsset": "word_hat", "isExtra": false },
+        { "word": "шуба", "imageAsset": "word_shuba", "isExtra": false },
+        { "word": "машина", "imageAsset": "word_car", "isExtra": false },
+        { "word": "рак", "imageAsset": "word_rak", "isExtra": true, "extraReason": "в слове нет звука Ш" }
+      ]
+    },
+    {
+      "id": "fe-phon-s-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "С",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "сок", "imageAsset": "word_sok", "isExtra": false },
+        { "word": "сани", "imageAsset": "word_sani", "isExtra": false },
+        { "word": "нос", "imageAsset": "word_nos", "isExtra": false },
+        { "word": "мяч", "imageAsset": "word_ball", "isExtra": true, "extraReason": "в слове нет звука С" }
+      ]
+    },
+    {
+      "id": "fe-phon-r-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Р",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "рак", "imageAsset": "word_rak", "isExtra": false },
+        { "word": "рыба", "imageAsset": "word_ryba", "isExtra": false },
+        { "word": "корова", "imageAsset": "word_cow", "isExtra": false },
+        { "word": "лук", "imageAsset": "word_onion", "isExtra": true, "extraReason": "в слове нет звука Р" }
+      ]
+    },
+    {
+      "id": "fe-phon-l-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Л",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "лук", "imageAsset": "word_onion", "isExtra": false },
+        { "word": "стол", "imageAsset": "word_stol", "isExtra": false },
+        { "word": "лиса", "imageAsset": "word_fox", "isExtra": false },
+        { "word": "кот", "imageAsset": "word_kot", "isExtra": true, "extraReason": "в слове нет звука Л" }
+      ]
+    },
+    {
+      "id": "fe-phon-z-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "З",
+      "difficulty": 2,
+      "minAge": 6,
+      "members": [
+        { "word": "зуб", "imageAsset": "word_zub", "isExtra": false },
+        { "word": "коза", "imageAsset": "word_goat", "isExtra": false },
+        { "word": "роза", "imageAsset": "word_rose", "isExtra": false },
+        { "word": "сом", "imageAsset": "word_som", "isExtra": true, "extraReason": "в слове нет звука З" }
+      ]
+    },
+    {
+      "id": "fe-phon-zh-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Ж",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "жираф", "imageAsset": "word_giraffe", "isExtra": false },
+        { "word": "жук", "imageAsset": "word_beetle", "isExtra": false },
+        { "word": "нож", "imageAsset": "word_nozh", "isExtra": false },
+        { "word": "сок", "imageAsset": "word_sok", "isExtra": true, "extraReason": "в слове нет звука Ж" }
+      ]
+    },
+    {
+      "id": "fe-phon-ch-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Ч",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "чашка", "imageAsset": "word_chashka", "isExtra": false },
+        { "word": "чайник", "imageAsset": "word_chaynik", "isExtra": false },
+        { "word": "ключ", "imageAsset": "word_key", "isExtra": false },
+        { "word": "стол", "imageAsset": "word_stol", "isExtra": true, "extraReason": "в слове нет звука Ч" }
+      ]
+    },
+    {
+      "id": "fe-phon-ts-1",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Ц",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "цветок", "imageAsset": "word_tsvetok", "isExtra": false },
+        { "word": "синица", "imageAsset": "word_sinitsa", "isExtra": false },
+        { "word": "огурец", "imageAsset": "word_ogurets", "isExtra": false },
+        { "word": "лук", "imageAsset": "word_onion", "isExtra": true, "extraReason": "в слове нет звука Ц" }
+      ]
+    },
+    {
+      "id": "fe-phon-s-2",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "С",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "слон", "imageAsset": "word_slon", "isExtra": false },
+        { "word": "сыр", "imageAsset": "word_syr", "isExtra": false },
+        { "word": "лиса", "imageAsset": "word_fox", "isExtra": false },
+        { "word": "зуб", "imageAsset": "word_zub", "isExtra": true, "extraReason": "в слове нет звука С" }
+      ]
+    },
+    {
+      "id": "fe-phon-sh-2",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Ш",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "мышь", "imageAsset": "word_mysh", "isExtra": false },
+        { "word": "камыш", "imageAsset": "word_kamysh", "isExtra": false },
+        { "word": "шкаф", "imageAsset": "word_shkaf", "isExtra": false },
+        { "word": "нос", "imageAsset": "word_nos", "isExtra": true, "extraReason": "в слове нет звука Ш" }
+      ]
+    },
+    {
+      "id": "fe-phon-r-2",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Р",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "топор", "imageAsset": "word_topor", "isExtra": false },
+        { "word": "забор", "imageAsset": "word_zabor", "isExtra": false },
+        { "word": "помидор", "imageAsset": "word_pomidor", "isExtra": false },
+        { "word": "стол", "imageAsset": "word_stol", "isExtra": true, "extraReason": "в слове нет звука Р" }
+      ]
+    },
+    {
+      "id": "fe-phon-l-2",
+      "variant": "phonetic",
+      "rule": "sound",
+      "targetSound": "Л",
+      "difficulty": 3,
+      "minAge": 7,
+      "members": [
+        { "word": "лампа", "imageAsset": "word_lamp", "isExtra": false },
+        { "word": "лодка", "imageAsset": "word_boat", "isExtra": false },
+        { "word": "малина", "imageAsset": "word_malina", "isExtra": false },
+        { "word": "рак", "imageAsset": "word_rak", "isExtra": true, "extraReason": "в слове нет звука Л" }
+      ]
+    }
+  ]
+}
