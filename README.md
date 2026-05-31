@@ -1,444 +1,142 @@
 # HappySpeech
 
-**HappySpeech** is a Russian-language, offline-first iOS application for speech
-correction and language development in children aged 5–8. It is built for the
-Apple Kids Category and is methodologically grounded in classical Russian
-speech-therapy practice (Filicheva, Chirkina, Tkachenko, Kartushina).
+> Русскоязычное офлайн-приложение для коррекции и развития речи у детей 5–8 лет.
+> A Russian-language, offline-first iOS app for speech correction and language
+> development in children aged 5–8.
 
-The app helps a child set and automate the sounds of Russian, develop phonemic
-hearing, expand vocabulary, work on prosody and breathing, and practice
-connected speech — all while running **completely without an internet
-connection**. Parents get progress analytics and a speech-growth diary;
-speech-language pathologists get a dedicated screening and assessment workspace.
+[Русский](#happyspeech--русский) · [English](#happyspeech--english)
 
 ---
 
-## Table of Contents
+# HappySpeech — Русский
 
-- [Overview](#overview)
-- [Target Audiences](#target-audiences)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [On-Device ML Models](#on-device-ml-models)
-- [Requirements](#requirements)
-- [Build & Run](#build--run)
-- [Firebase Setup (optional)](#firebase-setup-optional)
-- [Testing](#testing)
-- [Repository Structure](#repository-structure)
-- [Content Engine](#content-engine)
-- [Localization](#localization)
-- [Accessibility](#accessibility)
-- [Privacy & COPPA](#privacy--coppa)
+**HappySpeech** — детское логопедическое iOS-приложение (Apple Kids Category, offline-first).
+Методическая основа — классическая русская логопедия (Филичева, Чиркина, Ткаченко,
+Картушина). Приложение помогает ребёнку поставить и автоматизировать звуки русского языка,
+развить фонематический слух, расширить словарь, поработать над просодикой и дыханием и
+перейти к связной речи — **полностью без подключения к интернету**.
+
+Весь обучающий контент — тексты, аудио, иллюстрации, ML-модели — вшит в приложение при
+сборке, поэтому ядро работает офлайн. Firebase используется только для опциональной
+синхронизации прогресса между устройствами родителя и ребёнка.
+
+Три контура: **детский** (игровой, с маскотом «Ляля»), **родительский** (аналитика
+прогресса, дневник речи) и **специалистский** (скрининг, оценка, отчёты). Скрытый
+`AdaptivePlannerService` собирает дневной маршрут упражнений с учётом усталости и
+интервальных повторений.
+
+## Возможности
+- **Постановка звуков:** 4 группы (свистящие С/З/Ц, шипящие Ш/Ж/Ч/Щ, соноры Р/Рь/Л/Ль,
+  заднеязычные К/Г/Х) × 14 этапов; on-device оценка качества звука (Core ML PronunciationScorer).
+- **30+ игровых механик:** «Слушай и выбирай», минимальные пары, бинго, ритм, дыхание,
+  слоговая улитка, звуковой детектив, словообразование, «Чей хвост», «Четвёртый лишний» и др.
+- **Словарь и грамматика:** 20 лексических тем, согласование рода/числа/падежа, конструктор слогов.
+- **Связная речь:** пересказ, рассказ по картинкам, описание по плану-схеме (Ткаченко), ASR-оценка.
+- **Просодика и дыхание:** интонация, темп, логоритмика (CoreMotion), караоке-питч (YIN),
+  спектрограмма в реальном времени (vDSP FFT) — ребёнок «видит» свой звук.
+- **AR-артикуляция:** ARKit Face Tracking — внешние блендшейпы для тренировки уклада.
+- **Распознавание речи:** WhisperKit + ансамбль, подстройка под детский голос.
+- **Родитель:** аналитика прогресса (Swift Charts), дневник речи (шифрование AES-GCM),
+  чат со специалистом, семейные голосовые записи.
+- **Специалист:** скрининг, формальная оценка (Левина/Архипова), отчёты.
+- Маскот «Ляля» с профессиональной озвучкой (GCP Chirp3-HD); обучающие видео-мультики.
+
+## Технологии
+SwiftUI 6 · Swift 6 (strict concurrency) · Clean Swift (VIP) · Realm · Firebase
+(Auth/Firestore/Storage/App Check/Functions/Remote Config/FCM) · WhisperKit · Core ML ·
+MLX (Qwen2.5-1.5B on-device) · ARKit · Accelerate/vDSP · Swift Charts · Pow.
+
+## Архитектура
+`App` (DI-контейнер, координатор) · `Core` · `DesignSystem` (токены + компоненты) ·
+`Features` (Clean Swift VIP) · `Services` · `Data` (Realm) · `Content` (контент-движок) ·
+`ML` · `Sync` · `Resources`. Фичи обращаются к данным/ML только через протоколы сервисов.
+
+## Сборка и запуск
+```bash
+brew install xcodegen swiftlint
+xcodegen generate
+open HappySpeech.xcodeproj
+# или из командной строки:
+xcodebuild -project HappySpeech.xcodeproj -scheme HappySpeech \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
+```
+
+## Тесты
+```bash
+xcodebuild test -project HappySpeech.xcodeproj -scheme HappySpeech \
+  -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)'
+```
+Юнит (XCTest/Swift Testing), snapshot (light+dark), UI-тесты (XCUITest).
+
+## Приватность и COPPA
+Offline-first; никаких сторонних трекеров, рекламы и аналитических SDK. Детское аудио
+обрабатывается **на устройстве** и не загружается на сервер. Внешние ссылки — только за
+parental gate. Приложение — педагогическая поддержка, не медицинская диагностика.
 
 ---
 
-## Overview
+# HappySpeech — English
 
-HappySpeech supports a 5–8 year-old child in:
+**HappySpeech** is a Russian-language, offline-first iOS app for speech correction and
+language development in children aged 5–8. Built for the Apple Kids Category and grounded
+in classical Russian speech-therapy methodology (Filicheva, Chirkina, Tkachenko,
+Kartushina). It helps a child set and automate the sounds of Russian, develop phonemic
+hearing, expand vocabulary, work on prosody and breathing, and move to connected speech —
+**entirely without an internet connection**.
 
-- **setting and automating** the sounds of the Russian language;
-- developing **phonemic hearing** (discriminating opposing phonemes);
-- expanding **object, verb, and attribute vocabulary**;
-- working on **prosody, speech tempo/rhythm, and breathing**;
-- practicing **retelling and connected speech**.
+All learning content — text, audio, illustrations, and ML models — is bundled at build
+time, so the core experience runs offline. Firebase is used only for optional cross-device
+progress sync between a parent's and a child's device.
 
-All learning content — text, audio, illustrations, and ML models — is bundled
-into the app at build time, so the core experience runs **fully offline**.
-Firebase is used only for optional cross-device progress sync between a parent's
-and a child's device; it is not required for the app to work.
-
-The experience is organized into three user "contours" (kid / parent /
-specialist), plus a hidden adaptive planner that assembles each child's daily
-route of exercises.
-
----
-
-## Target Audiences
-
-| Contour        | Who uses it                    | UI tone                               |
-| -------------- | ------------------------------ | ------------------------------------- |
-| **Kid**        | Child aged 5–8                 | Playful, warm, low-text               |
-| **Parent**     | Parent / guardian              | Calm, structured, jargon-free         |
-| **Specialist** | SLP / defectologist            | Analytical, with assessment tooling   |
-
-The **`AdaptivePlannerService`** composes a daily exercise route taking into
-account the child's fatigue and spaced repetition, so practice stays effective
-without overwhelming the child.
-
----
+Three circuits: **child** (playful, with the «Lyalya» mascot), **parent** (progress
+analytics, speech-growth diary), and **specialist** (screening, assessment, reports). A
+hidden `AdaptivePlannerService` composes each child's daily route with fatigue awareness
+and spaced repetition.
 
 ## Features
+- **Sound production:** 4 groups (whistling, hissing, sonorant, velar) × 14 stages;
+  on-device sound-quality scoring (Core ML PronunciationScorer).
+- **30+ game mechanics:** listen-and-choose, minimal pairs, bingo, rhythm, breathing,
+  syllable snail, sound detective, word formation, «Whose tail», «Odd one out», and more.
+- **Vocabulary & grammar:** 20 lexical themes, case/number/gender agreement, syllable builder.
+- **Connected speech:** retelling, picture stories, plan-schema description (Tkachenko), ASR scoring.
+- **Prosody & breathing:** intonation, tempo, logorhythmics (CoreMotion), karaoke pitch (YIN),
+  real-time spectrogram (vDSP FFT) — the child *sees* their sound.
+- **AR articulation:** ARKit Face Tracking — external blendshapes for posture practice.
+- **Speech recognition:** WhisperKit + ensemble, tuned for children's voices.
+- **Parent:** progress analytics (Swift Charts), encrypted speech diary (AES-GCM), chat
+  with a specialist, family voice recordings.
+- **Specialist:** screening, formal assessment (Levina/Arkhipova), reports.
+- «Lyalya» mascot with professional voice-over (GCP Chirp3-HD); educational cartoon videos.
 
-### Sound production
-
-- **4 sound groups** (whistling С/З/Ц, hissing Ш/Ж/Ч/Щ, sonorant Р/Рь/Л/Ль,
-  velar К/Г/Х) × **14 correction stages**, from articulation preparation to
-  free speech.
-- **4 `PronunciationScorer` Core ML models** (one per group) that evaluate the
-  quality of a produced sound entirely on-device.
-- **16 exercise templates** (`listen-and-choose`, `repeat-after-model`,
-  `drag-and-match`, `puzzle-reveal`, `minimal-pairs`, `narrative-quest`,
-  `articulation-imitation`, `sorting`, `memory`, `bingo`, `sound-hunter`,
-  `story-completion`, `visual-acoustic`, `breathing`, `rhythm`,
-  `listen-and-choose`).
-
-### Vocabulary & grammar
-
-- **20 lexical themes × 60–105 words** with object + verb + attribute vocabulary
-  (Filicheva/Chirkina methodology).
-- **`GrammarGame`** — agreement of case, number, and gender.
-- **`LexicalThemes`** — themed study ("Vegetables", "Wild Animals",
-  "Professions", etc.).
-- **`SyllableConstructor`** — building words from syllables.
-- **`WordBank`** — the child's personal vocabulary.
-
-### Connected speech
-
-- **`Retelling`** — retelling from pictures and a plan.
-- **`Storytelling`** — composing a story from a picture series.
-- **`OralStoryCreator`** — an oral story from 3 random pictures, with ASR
-  transcription and a lexical-diversity (TTR) score.
-- **`ObjectDescriptionMap`** — describing an object from a 6–8 pictogram plan
-  schema (Tkachenko methodology); ASR + `DescriptionCoverageAnalyzer` measures
-  how many plan items are covered.
-- **`ComprehensionDetective`** — listening-comprehension game.
-
-### Prosody & tempo/rhythm
-
-- **`Prosody`** — interrogative vs. declarative intonation.
-- **`SpeechTempo`** — slow vs. fast tempo.
-- **`BreatheAndSpeak`** — breathing exercises with a visual pacer.
-- **`Logorhythmics`** — logorhythmics (Kartushina): the child chants rhymes to a
-  software beat while the iPhone accelerometer detects taps/stomps and computes
-  an F1 match against the beat pattern.
-- **`KaraokePitch`** — singing along a reference pitch contour; a YIN pitch
-  tracker scores how well the child hits the note.
-
-### Phonemic hearing
-
-- **`PhonemicListening`** — discriminating opposing phonemes.
-- **`SoundTrafficLight`** — minimal-pair discrimination (С/Ш, Р/Л, З/Ж, …).
-- **`MinimalPairs`** template via the shared `LessonPlayer`.
-
-### Special modules
-
-- **`FingerPlay`** — Vision `VNDetectHumanHandPoseRequest` recognizes the
-  child's hand pose for finger games.
-- **`LetterTrace`** — letter tracing with PencilKit (iPad + Apple Pencil, or
-  finger).
-- **`ARFaceFilter`** — ARKit Face Tracking used as a mirror for articulation
-  practice.
-- **`StutteringModule`** — fluency-training module with 5 techniques.
-- **`SpeechVisualization`** — a real-time voice spectrogram (vDSP FFT).
-
-### Parent contour
-
-- **`ParentHome`** — overview of every child's progress in the family.
-- **`ProgressDashboard`** — charts by sound, week, and accuracy, with an
-  interactive (scrubbable) accuracy trend.
-- **`NeurolinguistInsights`** — weekly report with interpreted results.
-- **`SpeechGrowthDiary`** — an encrypted (AES-GCM-256, key in Keychain) video
-  diary of the child's speech samples.
-- **`ParentVoiceNote`** — voice notes from parent to child.
-- **`ParentGuide`** — educational cards about speech development.
-- **`SpeechNormsEncyclopedia`** — age-based speech-development norms.
-- **`DailyTimeCap`** — a parent-configurable daily in-app time limit (internal
-  accumulator, no Family Controls dependency).
-
-### Specialist contour
-
-- **`Specialist`** — the SLP workspace.
-- **`SpecialistAssessment`** — a formal screening questionnaire (Levina/Arkhipova).
-- **`Screening`** — a quick first-pass evaluation.
-- **`LogopedistChat`** — a parent ↔ specialist text channel (Firebase).
-
-### Family & social
-
-- **`Family`, `FamilyCalendar`, `FamilyLeaderboard`, `FamilyAchievements`,
-  `FamilyAwardsCabinet`** — a multi-user family model.
-- **`SharePlay`** — co-op lesson over FaceTime (iOS 15+).
-- **`SiblingMultiplayer`** — two children playing on one device.
-- **`WeeklyChallenge`, `DailyChallenge`, `DailyStreak`** — gamification.
-
-### Gamification
-
-- **`Rewards`, `RewardShop`, `WorldMap`** — characters, rewards, a world map of
-  sound "islands".
-- **`LessonPlayer`** — the unified lesson engine featuring the mascot "Lyalya".
-- Push notifications via `UNUserNotificationCenter` and Live Activities via
-  `ActivityKit` for long lessons.
-
-Each feature lives under `HappySpeech/Features/<FeatureName>/`.
-
----
-
-## Technology Stack
-
-| Layer                  | Technology                                                                   |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| UI                     | SwiftUI 6 + UIKit wrappers (PencilKit, AR, Camera)                           |
-| Architecture           | Clean Swift (VIP) + protocol-oriented dependency injection                   |
-| Concurrency            | Swift 6 strict concurrency, `async/await` throughout                         |
-| Local database         | Realm Swift (schema v12, migrations in `Data/Migrations`)                    |
-| Cloud (optional)       | Firebase Auth, Firestore, Storage, App Check, Functions, Performance, Messaging |
-| Authentication         | Sign in with Apple + Google Sign-In                                          |
-| Speech recognition     | WhisperKit (bundled `whisper-base` Russian) + iOS 26 SpeechAnalyzer fallback  |
-| Voice activity (VAD)   | SileroVAD (Core ML) + energy-based fallback                                  |
-| AR / Computer Vision   | ARKit Face Tracking, Vision Hand Pose, ARFaceAnchor blendshapes              |
-| Audio                  | AVAudioEngine (16 kHz mono), AVAudioRecorder, pre-recorded professional voice |
-| Voice prompts          | Pre-rendered Russian narrator/mascot voice (AAC `.m4a`), bundled offline      |
-| DSP                    | Accelerate / vDSP (FFT, MFCC, YIN pitch detection)                           |
-| On-device LLM          | Core ML 7 + MLX Swift (Qwen2.5-1.5B-Instruct-4bit)                           |
-| 3D                     | RealityKit (mascot "Lyalya" as USDZ + blendshapes)                          |
-| Animation              | Lottie (via SwiftPM) + native SwiftUI                                        |
-| Logging                | OSLog (no `print` in code)                                                   |
-| Tests                  | XCTest + Swift Testing + SnapshotTesting                                     |
-| Linting                | SwiftLint (`--strict`, enforced via pre-commit hook)                         |
-| Project generation     | XcodeGen (`project.yml` → `.xcodeproj`)                                      |
-| Secrets / encryption   | KeychainAccess (AES-GCM-256 content-encryption keys)                         |
-
-> No third-party trackers, ads, Firebase Analytics, or Crashlytics — these are
-> incompatible with the Apple Kids Category and COPPA.
-
----
+## Tech stack
+SwiftUI 6 · Swift 6 (strict concurrency) · Clean Swift (VIP) · Realm · Firebase
+(Auth/Firestore/Storage/App Check/Functions/Remote Config/FCM) · WhisperKit · Core ML ·
+MLX (on-device Qwen2.5-1.5B) · ARKit · Accelerate/vDSP · Swift Charts · Pow.
 
 ## Architecture
-
-Every feature is an **independent Clean Swift (VIP) module**:
-
-```
-Features/<FeatureName>/
-├── <Feature>View.swift          SwiftUI root (no business logic)
-├── <Feature>Interactor.swift    Business logic, request dispatch
-├── <Feature>Presenter.swift     Builds the ViewModel from a Response
-├── <Feature>Router.swift        Navigation (via AppCoordinator)
-├── <Feature>Models.swift        Request / Response / ViewModel types
-├── <Feature>DisplayLogic.swift  View ↔ Presenter protocol
-└── Workers/                     Isolated service calls
-```
-
-Project layers:
-
-```
-App/           @main, AppCoordinator, the AppContainer DI container
-Core/          Base utilities, Logger, Errors, extensions
-DesignSystem/  Tokens (Color/Typography/Spacing/Radius/Shadow/Motion) + HS* components
-Shared/        Reusable view modifiers
-Features/      Feature modules (Clean Swift VIP)
-Services/      AudioService, ASRService, ARService, PermissionService,
-               NotificationService, HapticService, SyncService, ContentService,
-               AdaptivePlannerService, AnalyticsService, NetworkMonitor,
-               DailyUsageTracker, …
-Data/          Realm models, repositories, migrations (schema v12)
-Content/       ContentEngine, pack schemas, seed packs (JSON)
-ML/            Wrappers over WhisperKit / SileroVAD / PronunciationScorer / LocalLLM
-Sync/          Firestore bridge, sync queue, conflict resolver
-Analytics/     Local event bus (no external SDK)
-Resources/     Assets.xcassets, audio, Core ML models, localizations
-```
-
-Import rules (arrows = allowed import direction):
-
-```
-Features ─→ DesignSystem, Shared, Core, Services (via protocols)
-Services ─→ Data, ML, Sync, Core
-Data      ─→ Core
-Sync      ─→ Data, Core
-ML        ─→ Core
-DesignSystem ─→ Core
-```
-
-Features **never** import `Data`, `ML`, or `Sync` directly — only through
-service protocols resolved from `AppContainer`.
-
----
-
-## On-Device ML Models
-
-All models are bundled in `HappySpeech/Resources/Models/`. There are **no
-runtime downloads** from the network.
-
-| Model                                     | Purpose                                          |
-| ----------------------------------------- | ------------------------------------------------ |
-| `PronunciationScorer_hissing.mlpackage`   | Scores hissing sounds (Ш, Ж, Ч, Щ)              |
-| `PronunciationScorer_whistling.mlpackage` | Scores whistling sounds (С, З, Ц)               |
-| `PronunciationScorer_sonants.mlpackage`   | Scores sonorant sounds (Р, Рь, Л, Ль)           |
-| `PronunciationScorer_velar.mlpackage`     | Scores velar sounds (К, Г, Х)                   |
-| `RussianPhonemeClassifier.mlpackage`      | Classifies 42 Russian phonemes                   |
-| `Wav2Vec2RuChild.mlpackage`               | Wav2Vec2 fine-tuned for child speech             |
-| `SileroVAD.mlpackage`                     | Voice activity detection                         |
-| `SoundClassifier.mlpackage`               | Acoustic-environment classification              |
-| `SpeakerVerification.mlpackage`           | Distinguishes "child's voice vs. parent's voice" |
-| `EmotionDetection.mlpackage`              | Detects the child's emotion from voice           |
-| `TonguePostureClassifier.mlpackage`       | Classifies tongue poses (from ARKit blendshapes) |
-| `LLM/` (Qwen2.5-1.5B-Instruct-4bit)       | On-device LLM via MLX Swift                      |
-| `Whisper/`                                | WhisperKit Russian base model                    |
-
----
-
-## Requirements
-
-- macOS 14+
-- Xcode 16+ (Swift 6)
-- iOS 17.0+ (deployment target)
-- Test simulators: iPhone SE (3rd generation), iPhone 17 Pro
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen) — `brew install xcodegen`
-- [SwiftLint](https://github.com/realm/SwiftLint) — `brew install swiftlint`
-- [Pillow](https://pillow.readthedocs.io/) for asset processing — `pip install Pillow`
-- Node.js 20+ (for Firebase Cloud Functions, optional)
-
----
+`App` (DI container, coordinator) · `Core` · `DesignSystem` (tokens + components) ·
+`Features` (Clean Swift VIP) · `Services` · `Data` (Realm) · `Content` (content engine) ·
+`ML` · `Sync` · `Resources`. Features reach data/ML only through service protocols.
 
 ## Build & Run
-
 ```bash
-# Clone
-git clone git@github.com:antongrits/HappySpeech.git
-cd HappySpeech
-
-# Generate the .xcodeproj from project.yml
+brew install xcodegen swiftlint
 xcodegen generate
-
-# Open in Xcode
 open HappySpeech.xcodeproj
-
-# Or build from the command line on a simulator:
-xcodebuild \
-  -project HappySpeech.xcodeproj \
-  -scheme HappySpeech \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-  -configuration Debug \
-  build
+# or from the command line:
+xcodebuild -project HappySpeech.xcodeproj -scheme HappySpeech \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' build
 ```
-
-### SwiftLint
-
-```bash
-swiftlint --strict
-```
-
-All Swift files must pass `--strict` with zero violations. A pre-commit hook
-runs SwiftLint on changed files automatically.
-
----
-
-## Firebase Setup (optional)
-
-Cloud sync is optional. To enable it:
-
-1. Create a project in the [Firebase Console](https://console.firebase.google.com/).
-2. Add an iOS app with bundle ID `com.mmf.bsu.HappySpeech`.
-3. Download `GoogleService-Info.plist` and place it in `HappySpeech/Resources/`.
-   The file is git-ignored — every developer keeps their own.
-4. Without `GoogleService-Info.plist`, the app runs fully offline with no sync.
-
----
 
 ## Testing
-
 ```bash
-# Full suite on iPhone 17 Pro
-xcodebuild test \
-  -project HappySpeech.xcodeproj \
-  -scheme HappySpeech \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
-
-# A single test class
-xcodebuild test \
-  -project HappySpeech.xcodeproj \
-  -scheme HappySpeech \
-  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
-  -only-testing:HappySpeechTests/LogorhythmicsTests
+xcodebuild test -project HappySpeech.xcodeproj -scheme HappySpeech \
+  -destination 'platform=iOS Simulator,name=iPhone SE (3rd generation)'
 ```
-
-The project ships an extensive test suite (6000+ test cases): unit tests on
-Presenters/Interactors/Workers, integration tests on services, snapshot tests on
-DesignSystem components and key screens, and XCUITest UI tests. Snapshot tests
-render with Reduce Motion forced on, so animated backgrounds are frozen to a
-deterministic resting state.
-
----
-
-## Repository Structure
-
-```
-HappySpeech/
-├── HappySpeech/                       Main iOS application
-│   ├── App/                           @main, AppCoordinator, DI
-│   ├── Core/                          Base utilities, Logger, Errors
-│   ├── DesignSystem/                  Tokens + HS* components
-│   ├── Shared/                        Reusable modifiers
-│   ├── Features/                      Feature modules (Clean Swift VIP)
-│   ├── Services/                      Service layer
-│   ├── Data/                          Realm models, migrations, repositories
-│   ├── Content/                       ContentEngine, JSON packs
-│   ├── ML/                            Core ML / WhisperKit / MLX wrappers
-│   ├── Sync/                          Firebase bridge, queue, conflict resolver
-│   ├── Analytics/                     Local event bus
-│   └── Resources/                     Assets, audio, ML models, localizations
-├── HappySpeechTests/                  Unit & snapshot tests
-├── HappySpeechUITests/                UI tests
-├── HappySpeechWidgetExtension/        "Today" home-screen widgets
-├── functions/                         Firebase Cloud Functions (TypeScript)
-├── docs/                              Documentation (privacy, App Store metadata)
-├── scripts/                           Build & asset scripts
-├── project.yml                        XcodeGen configuration
-└── README.md                          This file
-```
-
----
-
-## Content Engine
-
-- **Schema:** `HappySpeech/Content/Schemas/content-pack.schema.json`
-- **Seed packs:** `HappySpeech/Content/Seed/pack_*.json` and `sound_*_pack.json`
-  (vegetables, fruits, animals, professions, berries, trees, flowers, fish,
-  logorhythmics, objects-to-describe, finger play, story-creator stimuli, and
-  the per-sound articulation packs).
-- **Lesson assembly:** `ContentEngine.swift` composes a `Lesson` from a pack by
-  combining exercise-template builders.
-- **Word → illustration mapping:** `word_manifest.json` maps each Russian word
-  to a bundled `word_*` illustration asset, surfaced via `LessonContentMap`.
-
-All packs are bundled under `Resources/Content/` and `Resources/Audio/Content/`.
-
----
-
-## Localization
-
-The app is Russian-first. All user-facing strings go through
-`String(localized:)` backed by a String Catalog (`Localizable.xcstrings`).
-
-An English string set exists as a placeholder for App Store metadata, but the
-kid/parent interface is currently Russian only. The bilingual module
-(`BilingualMode`) lets a child hear translations of basic words in Belarusian
-(be-BY) and English (en-US) via pre-recorded professional voice clips bundled
-with the app.
-
----
-
-## Accessibility
-
-- **Dynamic Type** — supported from `.small` to `.accessibilityLarge`. Every CTA
-  uses `.lineLimit(nil)` + `.minimumScaleFactor(0.85)` so text never clips.
-- **Reduce Motion** — animations fall back to static rendering when
-  `@Environment(\.accessibilityReduceMotion) == true`.
-- **VoiceOver** — labels and hints on every interactive element.
-- **WCAG AA contrast** — all DesignSystem colors meet 4.5:1 for text.
-- **Haptics** — custom `CHHapticEngine` patterns for feedback.
-- **Touch targets** — ≥ 56 pt, per Apple HIG for kids' apps.
-
----
+Unit (XCTest/Swift Testing), snapshot (light+dark), and UI tests (XCUITest).
 
 ## Privacy & COPPA
-
-- All of the child's audio recordings are processed **on-device only** and are
-  never uploaded.
-- The speech-growth video diary is encrypted with AES-GCM-256; the key lives in
-  the Keychain with `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`.
-- No third-party trackers, ads, or third-party analytics.
-- All external links are gated behind a parental gate.
-- The daily in-app time limit is parent-configured (internal accumulator, no iOS
-  Screen Time API).
-- Apple Kids Category compliant.
+Offline-first; no third-party trackers, ads, or analytics SDKs. A child's audio is
+processed **on-device** and never uploaded to a server. External links sit behind a
+parental gate. The app is pedagogical support, not medical diagnosis.
