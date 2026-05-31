@@ -146,7 +146,7 @@ struct WhoseTailPackLoader {
     private static let fallbackRounds: [WhoseRound] = [
         WhoseRound(
             id: "wt-fb-poss-fox", subtask: .possessiveTail,
-            cueImage: "pawprint.fill", question: "Чей это хвост?",
+            cueImage: "tail_fox", question: "Чей это хвост?",
             options: [
                 .init(id: "wt-fb-poss-fox-c", word: "лиса", imageAsset: "word_fox",
                       isCorrect: true, form: "лисий хвост"),
@@ -157,7 +157,7 @@ struct WhoseTailPackLoader {
         ),
         WhoseRound(
             id: "wt-fb-poss-hare", subtask: .possessiveTail,
-            cueImage: "pawprint.fill", question: "Чей это хвост?",
+            cueImage: "tail_hare", question: "Чей это хвост?",
             options: [
                 .init(id: "wt-fb-poss-hare-c", word: "заяц", imageAsset: "word_hare",
                       isCorrect: true, form: "заячий хвост"),
@@ -168,7 +168,7 @@ struct WhoseTailPackLoader {
         ),
         WhoseRound(
             id: "wt-fb-poss-wolf", subtask: .possessiveTail,
-            cueImage: "pawprint.fill", question: "Чей это хвост?",
+            cueImage: "tail_volk", question: "Чей это хвост?",
             options: [
                 .init(id: "wt-fb-poss-wolf-c", word: "волк", imageAsset: "word_volk",
                       isCorrect: true, form: "волчий хвост"),
@@ -181,7 +181,7 @@ struct WhoseTailPackLoader {
         ),
         WhoseRound(
             id: "wt-fb-home-fox", subtask: .animalHome,
-            cueImage: "mountain.2.fill", question: "Чей это домик? Чья это нора?",
+            cueImage: "home_nora_fox", question: "Чей это домик? Чья это нора?",
             options: [
                 .init(id: "wt-fb-home-fox-c", word: "лиса", imageAsset: "word_fox",
                       isCorrect: true, form: "лисья нора"),
@@ -192,7 +192,7 @@ struct WhoseTailPackLoader {
         ),
         WhoseRound(
             id: "wt-fb-home-bear", subtask: .animalHome,
-            cueImage: "mountain.2.fill", question: "Чей это домик? Чья это берлога?",
+            cueImage: "home_berloga", question: "Чей это домик? Чья это берлога?",
             options: [
                 .init(id: "wt-fb-home-bear-c", word: "медведь", imageAsset: "word_bear",
                       isCorrect: true, form: "медвежья берлога"),

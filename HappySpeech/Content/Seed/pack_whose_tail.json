@@ -8,7 +8,7 @@
     {
       "id": "wt-poss-1",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_fox",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -33,7 +33,7 @@
     {
       "id": "wt-poss-2",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_hare",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -58,7 +58,7 @@
     {
       "id": "wt-poss-3",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_cat",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -83,7 +83,7 @@
     {
       "id": "wt-poss-4",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_sobaka",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -108,7 +108,7 @@
     {
       "id": "wt-poss-5",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_korova",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -133,7 +133,7 @@
     {
       "id": "wt-poss-6",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_loshad",
       "question": "Чей это хвост?",
       "difficulty": 1,
       "minAge": 5,
@@ -158,7 +158,7 @@
     {
       "id": "wt-poss-7",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_fox",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -190,7 +190,7 @@
     {
       "id": "wt-poss-8",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_volk",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -222,7 +222,7 @@
     {
       "id": "wt-poss-9",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_bear",
       "question": "Чья это лапа?",
       "difficulty": 2,
       "minAge": 6,
@@ -254,7 +254,7 @@
     {
       "id": "wt-poss-10",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_korova",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -286,7 +286,7 @@
     {
       "id": "wt-poss-11",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_belka",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -318,7 +318,7 @@
     {
       "id": "wt-poss-12",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_koza",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -350,7 +350,7 @@
     {
       "id": "wt-poss-13",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_hare",
       "question": "Чьи это уши?",
       "difficulty": 2,
       "minAge": 6,
@@ -382,7 +382,7 @@
     {
       "id": "wt-poss-14",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_fox",
       "question": "Чья это лапа?",
       "difficulty": 3,
       "minAge": 7,
@@ -414,7 +414,7 @@
     {
       "id": "wt-poss-15",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_volk",
       "question": "Чей это хвост?",
       "difficulty": 3,
       "minAge": 7,
@@ -453,7 +453,7 @@
     {
       "id": "wt-poss-16",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_belka",
       "question": "Чья это лапа?",
       "difficulty": 3,
       "minAge": 7,
@@ -492,7 +492,7 @@
     {
       "id": "wt-poss-17",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_bear",
       "question": "Чья это лапа?",
       "difficulty": 3,
       "minAge": 7,
@@ -531,7 +531,7 @@
     {
       "id": "wt-poss-18",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_lev",
       "question": "Чей это хвост?",
       "difficulty": 3,
       "minAge": 7,
@@ -563,7 +563,7 @@
     {
       "id": "wt-poss-19",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_tigr",
       "question": "Чей это хвост?",
       "difficulty": 3,
       "minAge": 8,
@@ -602,7 +602,7 @@
     {
       "id": "wt-poss-20",
       "subtask": "possessiveTail",
-      "cueImage": "pawprint.fill",
+      "cueImage": "tail_mysh",
       "question": "Чей это хвост?",
       "difficulty": 2,
       "minAge": 6,
@@ -634,7 +634,7 @@
     {
       "id": "wt-home-1",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_nora_fox",
       "question": "Чей это домик? Чья это нора?",
       "difficulty": 2,
       "minAge": 6,
@@ -659,7 +659,7 @@
     {
       "id": "wt-home-2",
       "subtask": "animalHome",
-      "cueImage": "tree.fill",
+      "cueImage": "home_duplo",
       "question": "Чьё это дупло?",
       "difficulty": 2,
       "minAge": 6,
@@ -684,7 +684,7 @@
     {
       "id": "wt-home-3",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_berloga",
       "question": "Чей это домик? Чья это берлога?",
       "difficulty": 2,
       "minAge": 6,
@@ -709,7 +709,7 @@
     {
       "id": "wt-home-4",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_logovo",
       "question": "Чьё это логово?",
       "difficulty": 2,
       "minAge": 6,
@@ -734,7 +734,7 @@
     {
       "id": "wt-home-5",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_norka_mysh",
       "question": "Чей это домик? Чья это норка?",
       "difficulty": 2,
       "minAge": 6,
@@ -759,7 +759,7 @@
     {
       "id": "wt-home-6",
       "subtask": "animalHome",
-      "cueImage": "house.fill",
+      "cueImage": "home_budka",
       "question": "Чей это домик? Чья это будка?",
       "difficulty": 2,
       "minAge": 6,
@@ -784,7 +784,7 @@
     {
       "id": "wt-home-7",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_nora_fox",
       "question": "Чей это домик? Чья это нора?",
       "difficulty": 3,
       "minAge": 7,
@@ -816,7 +816,7 @@
     {
       "id": "wt-home-8",
       "subtask": "animalHome",
-      "cueImage": "tree.fill",
+      "cueImage": "home_duplo",
       "question": "Чьё это дупло?",
       "difficulty": 3,
       "minAge": 7,
@@ -848,7 +848,7 @@
     {
       "id": "wt-home-9",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_berloga",
       "question": "Чей это домик? Чья это берлога?",
       "difficulty": 3,
       "minAge": 7,
@@ -880,7 +880,7 @@
     {
       "id": "wt-home-10",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_logovo",
       "question": "Чьё это логово?",
       "difficulty": 3,
       "minAge": 7,
@@ -912,7 +912,7 @@
     {
       "id": "wt-home-11",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_norka_mysh",
       "question": "Чей это домик? Чья это норка?",
       "difficulty": 3,
       "minAge": 7,
@@ -944,7 +944,7 @@
     {
       "id": "wt-home-12",
       "subtask": "animalHome",
-      "cueImage": "house.fill",
+      "cueImage": "home_budka",
       "question": "Чей это домик? Чья это будка?",
       "difficulty": 3,
       "minAge": 7,
@@ -976,7 +976,7 @@
     {
       "id": "wt-home-13",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_nora_fox",
       "question": "Чей это домик? Чья это нора?",
       "difficulty": 2,
       "minAge": 6,
@@ -1001,7 +1001,7 @@
     {
       "id": "wt-home-14",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_norka_hare",
       "question": "Чей это домик? Чья это норка?",
       "difficulty": 2,
       "minAge": 6,
@@ -1026,7 +1026,7 @@
     {
       "id": "wt-home-15",
       "subtask": "animalHome",
-      "cueImage": "house.fill",
+      "cueImage": "home_domik_cat",
       "question": "Чьё это домик?",
       "difficulty": 2,
       "minAge": 6,
@@ -1051,7 +1051,7 @@
     {
       "id": "wt-home-16",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_berloga",
       "question": "Чей это домик? Чья это берлога?",
       "difficulty": 3,
       "minAge": 7,
@@ -1083,7 +1083,7 @@
     {
       "id": "wt-home-17",
       "subtask": "animalHome",
-      "cueImage": "tree.fill",
+      "cueImage": "home_duplo",
       "question": "Чьё это дупло?",
       "difficulty": 3,
       "minAge": 7,
@@ -1115,7 +1115,7 @@
     {
       "id": "wt-home-18",
       "subtask": "animalHome",
-      "cueImage": "mountain.2.fill",
+      "cueImage": "home_logovo",
       "question": "Чьё это логово?",
       "difficulty": 3,
       "minAge": 8,

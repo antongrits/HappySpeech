@@ -243,7 +243,7 @@ struct WhoseTailView: View {
     ) -> some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
             VStack(spacing: SpacingTokens.sp3) {
-                HSContentSymbol(round.cueImage, size: 88, tint: ColorTokens.Brand.primary)
+                HSContentSymbol(round.cueImage, size: 150, tint: ColorTokens.Brand.primary)
                     // На hit улика «оживает» — лёгкий акцент.
                     .scaleEffect(reduceMotion ? 1 : (holder.lastFeedback == .hit ? 1.08 : 1))
 
