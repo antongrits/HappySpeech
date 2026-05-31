@@ -60,6 +60,12 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
     private var result: SessionResult?
     private var persistenceTask: Task<Void, Never>?
 
+    /// При `true` пропускаем async post-session persistence (стикер/стрик/ачивки).
+    /// Используется в preview/snapshot, где async-обновления `display` гонятся с
+    /// захватом кадра и делают снимок недетерминированным. В проде всегда `false` —
+    /// сама persistence-логика покрыта unit-тестами интерактора напрямую.
+    private let skipsPersistence: Bool
+
     // MARK: - Constants
 
     private static let accuracyTwoStars: Float = 0.60
@@ -133,11 +139,13 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
     init(
         realmActor: RealmActor,
         sessionRepository: any SessionRepository,
-        childRepository: any ChildRepository
+        childRepository: any ChildRepository,
+        skipsPersistence: Bool = false
     ) {
         self.realmActor = realmActor
         self.sessionRepository = sessionRepository
         self.childRepository = childRepository
+        self.skipsPersistence = skipsPersistence
     }
 
     // MARK: - BusinessLogic: loadResult
@@ -160,7 +168,10 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
         )
         presenter?.presentLoadResult(response)
 
-        // Асинхронно: сохранить данные + разблокировать ачивки + стикер + стрик
+        // Асинхронно: сохранить данные + разблокировать ачивки + стикер + стрик.
+        // В preview/snapshot пропускаем — иначе async-обновления display гонятся
+        // с захватом кадра (недетерминированный снимок).
+        guard !skipsPersistence else { return }
         persistenceTask = Task { [weak self] in
             await self?.runPostSessionPersistence(result: res, breakdown: breakdown)
         }
@@ -448,7 +459,8 @@ extension SessionCompleteInteractor {
         return SessionCompleteInteractor(
             realmActor: realmActor,
             sessionRepository: sessionRepo,
-            childRepository: childRepo
+            childRepository: childRepo,
+            skipsPersistence: true
         )
     }
 }

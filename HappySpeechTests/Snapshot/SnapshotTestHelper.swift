@@ -217,6 +217,63 @@ enum SnapshotTestHelper {
         )
     }
 
+    // MARK: - Smoke render assert (для inherently-анимированных экранов)
+
+    /// Рендерит view и проверяет, что кадр НЕ пустой/однотонный, без сравнения с
+    /// эталоном. Применяется к экранам с многостадийным async-reveal
+    /// (`SessionCompleteView`): их пиксельный снимок недетерминирован (захват
+    /// гонится с reveal-пайплайном), а флаки-pixel-тест хуже отсутствия — он
+    /// рандомно валит CI и маскирует реальные регрессии в шуме. Smoke-тест ловит
+    /// главный класс регрессий (краш конструкции / пустой кадр / отсутствие env),
+    /// что и было реальным дефектом. Визуал такого экрана выверяется вручную.
+    @MainActor
+    static func assertRendersNonBlank<V: View>(
+        _ view: V,
+        size: CGSize = CGSize(width: 375, height: 667),
+        style: UIUserInterfaceStyle = .light,
+        reduceMotion: Bool = true,
+        label: String,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let image = renderView(view, size: size, style: style, reduceMotion: reduceMotion)
+        guard let cgImage = image.cgImage else {
+            XCTFail("Кадр не отрендерился (нет cgImage): \(label)", file: file, line: line)
+            return
+        }
+        XCTAssertGreaterThan(cgImage.width, 0, "Пустая ширина кадра: \(label)", file: file, line: line)
+        XCTAssertGreaterThan(cgImage.height, 0, "Пустая высота кадра: \(label)", file: file, line: line)
+
+        // Даунскейл 32×32 и проверка вариации яркости — пустой/однотонный кадр
+        // (краш до отрисовки, отсутствие env, белый прямоугольник) её не даст.
+        let dim = 32
+        let bytesPerPixel = 4
+        let bytesPerRow = dim * bytesPerPixel
+        var buffer = [UInt8](repeating: 0, count: dim * bytesPerRow)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        guard let ctx = CGContext(
+            data: &buffer, width: dim, height: dim,
+            bitsPerComponent: 8, bytesPerRow: bytesPerRow,
+            space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else {
+            XCTFail("CGContext не создан: \(label)", file: file, line: line)
+            return
+        }
+        ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: dim, height: dim))
+        var minLum: Int = 255
+        var maxLum: Int = 0
+        for pixel in stride(from: 0, to: buffer.count, by: bytesPerPixel) {
+            let lum = (Int(buffer[pixel]) + Int(buffer[pixel + 1]) + Int(buffer[pixel + 2])) / 3
+            if lum < minLum { minLum = lum }
+            if lum > maxLum { maxLum = lum }
+        }
+        XCTAssertGreaterThan(
+            maxLum - minLum, 12,
+            "Кадр выглядит пустым/однотонным (\(label)): variance=\(maxLum - minLum)",
+            file: file, line: line
+        )
+    }
+
     // MARK: - View rendering
 
     /// Рендерит SwiftUI-view в `UIImage` фиксированного размера.

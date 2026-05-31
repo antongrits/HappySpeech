@@ -908,8 +908,10 @@ struct SessionCompleteView: View {
             }
         }
 
-        // Confetti при высокой точности
-        if display.showConfetti {
+        // Confetti при высокой точности. Подавляем при Reduced Motion (Apple HIG —
+        // салют это чистое движение, убираем для motion-sensitive детей) и в
+        // screenshot/snapshot-режиме (частицы случайны → детерминизм кадра).
+        if display.showConfetti && !reduceMotion && !Self.isScreenshotMode {
             try? await Task.sleep(for: .seconds(reduceMotion ? 0.1 : 0.5))
             withAnimation(reduceMotion ? nil : .easeIn(duration: 0.25)) {
                 confettiVisible = true
@@ -919,9 +921,13 @@ struct SessionCompleteView: View {
             await container.hapticService.playLevelUp()
         }
 
-        // Achievement popup при наличии новых ачивок
+        // Achievement popup при наличии новых ачивок. Под Reduced Motion / snapshot
+        // показываем синхронно без задержки — иначе захват кадра гонится с
+        // 0.1s-таймером (popup то виден, то нет → недетерминированный снимок).
         if display.hasNewAchievements && !display.pendingAchievements.isEmpty {
-            try? await Task.sleep(for: .seconds(reduceMotion ? 0.1 : 0.8))
+            if !reduceMotion && !Self.isScreenshotMode {
+                try? await Task.sleep(for: .seconds(0.8))
+            }
             withAnimation(reduceMotion ? nil : MotionTokens.bounce) {
                 achievementPopVisible = true
             }
