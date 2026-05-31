@@ -680,4 +680,237 @@ final class AllScreensTourUITests: XCTestCase {
     func test_route_familyVoiceLibrary() {
         captureScreen(route: "familyVoiceLibrary", anchorTimeout: 8)
     }
+
+    // MARK: - Дополнение покрытия: ранее непокрытые route (v32 QA)
+    //
+    // Эти маршруты резолвятся в AppCoordinator.resolveStartRoute, но не имели
+    // screenshot-покрытия в туре. Добавлены для полноты (178/178 route).
+
+    func test_route_customization() {
+        captureScreen(route: "customization", anchorTimeout: 8)
+    }
+
+    func test_route_plainProgress() {
+        captureScreen(route: "plainProgress", anchorTimeout: 8)
+    }
+
+    func test_route_parentGuide() {
+        captureScreen(route: "parentGuide", anchorTimeout: 8)
+    }
+
+    func test_route_soundTrafficLight() {
+        captureScreen(route: "soundTrafficLight", anchorTimeout: 8)
+    }
+
+    func test_route_phonemicListening() {
+        captureScreen(route: "phonemicListening", anchorTimeout: 8)
+    }
+
+    func test_route_speechTempo() {
+        captureScreen(route: "speechTempo", anchorTimeout: 8)
+    }
+
+    func test_route_breatheAndSpeak() {
+        captureScreen(route: "breatheAndSpeak", anchorTimeout: 8)
+    }
+
+    func test_route_prosody() {
+        captureScreen(route: "prosody", anchorTimeout: 8)
+    }
+
+    func test_route_retelling() {
+        captureScreen(route: "retelling", anchorTimeout: 8)
+    }
+
+    func test_route_lexicalThemes() {
+        captureScreen(route: "lexicalThemes", anchorTimeout: 8)
+    }
+
+    func test_route_storytelling() {
+        captureScreen(route: "storytelling", anchorTimeout: 8)
+    }
+
+    func test_route_coPlay() {
+        captureScreen(route: "coPlay", anchorTimeout: 8)
+    }
+
+    func test_route_assignedHomework() {
+        captureScreen(route: "assignedHomework", anchorTimeout: 8)
+    }
+
+    func test_route_speechNormsEncyclopedia() {
+        captureScreen(route: "speechNormsEncyclopedia", anchorTimeout: 8)
+    }
+
+    func test_route_dailyRitualsMorning() {
+        captureScreen(route: "dailyRitualsMorning", anchorTimeout: 8)
+    }
+
+    func test_route_dailyRitualsEvening() {
+        captureScreen(route: "dailyRitualsEvening", anchorTimeout: 8)
+    }
+
+    func test_route_syllableConstructor() {
+        captureScreen(route: "syllableConstructor", anchorTimeout: 8)
+    }
+
+    func test_route_comprehensionDetective() {
+        captureScreen(route: "comprehensionDetective", anchorTimeout: 8)
+    }
+
+    func test_route_bedtimeMode() {
+        captureScreen(route: "bedtimeMode", anchorTimeout: 8)
+    }
+
+    func test_route_parentVoiceNote() {
+        captureScreen(route: "parentVoiceNote", anchorTimeout: 8)
+    }
+
+    func test_route_rewardShop() {
+        captureScreen(route: "rewardShop", anchorTimeout: 8)
+    }
+
+    func test_route_letterTrace() {
+        captureScreen(route: "letterTrace", anchorTimeout: 8)
+    }
+
+    func test_route_customWordList() {
+        captureScreen(route: "customWordList", anchorTimeout: 8)
+    }
+
+    func test_route_readAloudStory() {
+        captureScreen(route: "readAloudStory", anchorTimeout: 8)
+    }
+
+    func test_route_specialistAssessment() {
+        captureScreen(route: "specialistAssessment", anchorTimeout: 8)
+    }
+
+    func test_route_karaokePitch() {
+        captureScreen(route: "karaokePitch", anchorTimeout: 8)
+    }
+
+    func test_route_fingerPlay() {
+        captureScreen(route: "fingerPlay", anchorTimeout: 8)
+    }
+
+    func test_route_oralStoryCreator() {
+        captureScreen(route: "oralStoryCreator", anchorTimeout: 8)
+    }
+
+    func test_route_speechGrowthDiary() {
+        captureScreen(route: "speechGrowthDiary", anchorTimeout: 8)
+    }
+
+    func test_route_objectDescriptionMap() {
+        captureScreen(route: "objectDescriptionMap", anchorTimeout: 8)
+    }
+
+    func test_route_logorhythmics() {
+        captureScreen(route: "logorhythmics", anchorTimeout: 8)
+    }
+
+    func test_route_dailyTimeCap() {
+        captureScreen(route: "dailyTimeCap", anchorTimeout: 8)
+    }
+
+    func test_route_bilingualMode() {
+        captureScreen(route: "bilingualMode", anchorTimeout: 8)
+    }
+
+    func test_route_literacyStart() {
+        captureScreen(route: "literacyStart", anchorTimeout: 8)
+    }
+
+    func test_route_soundOfTheDay() {
+        captureScreen(route: "soundOfTheDay", anchorTimeout: 8)
+    }
+
+    func test_route_voiceJournal() {
+        captureScreen(route: "voiceJournal", anchorTimeout: 8)
+    }
+
+    func test_route_familyChallenge() {
+        captureScreen(route: "familyChallenge", anchorTimeout: 8)
+    }
+
+    func test_route_lyalyaMail() {
+        captureScreen(route: "lyalyaMail", anchorTimeout: 8)
+    }
+
+    func test_route_achievementWall() {
+        captureScreen(route: "achievementWall", anchorTimeout: 8)
+    }
+
+    func test_route_morningRoutine() {
+        captureScreen(route: "morningRoutine", anchorTimeout: 8)
+    }
+
+    func test_route_eveningReflection() {
+        captureScreen(route: "eveningReflection", anchorTimeout: 8)
+    }
+
+    func test_route_dailyMissionsHub() {
+        captureScreen(route: "dailyMissionsHub", anchorTimeout: 8)
+    }
+
+    func test_route_soundExplorerMap() {
+        captureScreen(route: "soundExplorerMap", anchorTimeout: 8)
+    }
+
+    func test_route_wordOfTheDay() {
+        captureScreen(route: "wordOfTheDay", anchorTimeout: 8)
+    }
+
+    func test_route_speechHomeworkPlanner() {
+        captureScreen(route: "speechHomeworkPlanner", anchorTimeout: 8)
+    }
+
+    func test_route_parentMoodCheckIn() {
+        captureScreen(route: "parentMoodCheckIn", anchorTimeout: 8)
+    }
+
+    func test_route_lyalyaPersonalCoach() {
+        captureScreen(route: "lyalyaPersonalCoach", anchorTimeout: 8)
+    }
+
+    func test_route_weeklyRecap() {
+        captureScreen(route: "weeklyRecap", anchorTimeout: 8)
+    }
+
+    func test_route_childAchievementShare() {
+        captureScreen(route: "childAchievementShare", anchorTimeout: 8)
+    }
+
+    func test_route_audioMemoryGame() {
+        captureScreen(route: "audioMemoryGame", anchorTimeout: 8)
+    }
+
+    func test_route_visualVocabularyFlip() {
+        captureScreen(route: "visualVocabularyFlip", anchorTimeout: 8)
+    }
+
+    func test_route_goalTrackerKid() {
+        captureScreen(route: "goalTrackerKid", anchorTimeout: 8)
+    }
+
+    func test_route_habitStreakDashboard() {
+        captureScreen(route: "habitStreakDashboard", anchorTimeout: 8)
+    }
+
+    func test_route_phonemeJourneyMap() {
+        captureScreen(route: "phonemeJourneyMap", anchorTimeout: 8)
+    }
+
+    func test_route_tongueTwisterArena() {
+        captureScreen(route: "tongueTwisterArena", anchorTimeout: 8)
+    }
+
+    func test_route_storyEndingMaker() {
+        captureScreen(route: "storyEndingMaker", anchorTimeout: 8)
+    }
+
+    func test_route_speechRiddles() {
+        captureScreen(route: "speechRiddles", anchorTimeout: 8)
+    }
 }
