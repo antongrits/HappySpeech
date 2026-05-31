@@ -176,7 +176,13 @@ struct SyllableConstructorView: View {
         // hero для слова + иллюстрации, ultraThick стекло над kidWarm mesh.
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             VStack(spacing: SpacingTokens.sp2) {
-                if let symbol = startVM.symbolName {
+                // Fix v34-polish — если слово = имя маскота «Ляля», вместо
+                // generic-смайлика (pack отдаёт symbol "face.smiling") показываем
+                // самого маскота: ребёнок узнаёт Лялю, а не безличный SF-символ.
+                if isMascotWord(startVM.wordLabel) {
+                    LyalyaMascotView(state: .happy, size: 72)
+                        .accessibilityHidden(true)
+                } else if let symbol = startVM.symbolName {
                     // HSContentSymbol auto-routes: word_* → Asset Catalog illustration,
                     // SF Symbol name → системная иконка fallback. Закрывает P0-3 v32
                     // design audit — раньше отображался "person.fill" заглушкой вместо
@@ -199,6 +205,11 @@ struct SyllableConstructorView: View {
             }
             .frame(maxWidth: .infinity)
         }
+    }
+
+    /// Является ли слово именем маскота «Ляля» (регистронезависимо, без пробелов).
+    private func isMascotWord(_ word: String) -> Bool {
+        word.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == "ляля"
     }
 
     private func slotsRow(
@@ -235,10 +246,19 @@ struct SyllableConstructorView: View {
             .accessibilityLabel(Text(tile.accessibilityLabel))
             .accessibilityHint(Text("syllable.slot.return.hint"))
         } else {
+            // Fix v34-polish — раньше пустой слот был только пунктирным контуром
+            // (Kid.line) на прозрачном фоне — «дырка» в макете, слабо читался как
+            // drop-зона. Добавлена мягкая подложка Kid.surfaceAlt + цветной
+            // (Brand.primary) пунктир: слот выглядит как явное приглашение
+            // положить слог, не перетягивая внимание с заполненных слотов.
             RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .strokeBorder(
-                    ColorTokens.Kid.line,
-                    style: .init(lineWidth: 2, dash: [6, 4])
+                .fill(ColorTokens.Kid.surfaceAlt)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .strokeBorder(
+                            ColorTokens.Brand.primary.opacity(0.45),
+                            style: .init(lineWidth: 2, dash: [6, 4])
+                        )
                 )
                 .frame(minWidth: 64, minHeight: 56)
                 .accessibilityHidden(true)

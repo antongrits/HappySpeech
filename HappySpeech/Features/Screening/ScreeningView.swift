@@ -70,6 +70,13 @@ struct ScreeningView: View {
                                 onRecord: { startOrStop() },
                                 onPlay: { replay(vm: stageVM) }
                             )
+                            // Fix v34-polish — низ экрана выглядел пустовато
+                            // (карточка узкая, прижата к центру по высоте Spacer'ами,
+                            // но на ширину ничем не ограничена). Кап maxWidth 520pt
+                            // удерживает карточку компактной и читаемой на iPad/Plus,
+                            // а на SE/обычных iPhone она занимает доступную ширину —
+                            // без overflow. Вертикальное центрирование — через Spacer'ы выше.
+                            .frame(maxWidth: 520)
                             .id(stageVM.stageIndex)
                             .transition(
                                 reduceMotion
@@ -407,17 +414,10 @@ private struct StageCard: View {
                 }
 
                 // Fix #16 — кнопки скрининга центрируются по карточке:
-                // HSButton прижимается к ширине card по `medium`-gap-у, recordButton
+                // listenButton прижимается к ширине card по `medium`-gap-у, recordButton
                 // справа, всё это через frame(maxWidth: .infinity, alignment: .center).
                 HStack(spacing: SpacingTokens.medium) {
-                    HSButton(
-                        String(localized: "screening.prompt.listen"),
-                        style: .secondary,
-                        action: onPlay
-                    )
-                    .frame(minWidth: 56, minHeight: 56)
-                    .accessibilityLabel(String(localized: "screening.accessibility.listen"))
-
+                    listenButton
                     if vm.showRecordButton {
                         recordButton
                     }
@@ -432,6 +432,38 @@ private struct StageCard: View {
                 }
             }
         }
+    }
+
+    // Fix v34-polish — раньше использовалась HSButton(.secondary), но под
+    // parent-контуром (ScreeningView задаёт circuitContext = .parent) она
+    // подхватывала Parent.accent — системно-синий iOS-link цвет, выбивавшийся
+    // из тёплой бренд-палитры экрана. Заменено на кастомную кнопку с
+    // ColorTokens.Brand.primary (коралл) и мягкой tinted-подложкой —
+    // визуально согласовано с record-кнопкой и play-кнопками в других играх.
+    private var listenButton: some View {
+        Button(action: onPlay) {
+            Label {
+                Text(String(localized: "screening.prompt.listen"))
+                    .font(TypographyTokens.cta())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            } icon: {
+                Image(systemName: "speaker.wave.2.fill")
+            }
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .padding(.horizontal, SpacingTokens.large)
+            .frame(minHeight: 56)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                    .fill(ColorTokens.Brand.primary.opacity(0.15))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.primary.opacity(0.4), lineWidth: 1.5)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "screening.accessibility.listen"))
     }
 
     private var recordButton: some View {
