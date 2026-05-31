@@ -37462,12 +37462,166 @@
         }
       }
     },
+    "sentenceBuilder.card.a11y.prep": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маленькое слово %@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.card.a11y.word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.card.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы поставить слово в ленту"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
     "sentenceBuilder.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.done.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить собранную фразу"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо получается, продолжай!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты настоящий мастер слов!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С каждым разом всё лучше!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собери слова в правильном порядке"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конструктор предложения"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.feedback.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Послушай, как звучит, и попробуй ещё раз."
+          }
+        }
+      }
+    },
+    "sentenceBuilder.feedback.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здорово! %@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.feedback.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай вместе! Я подскажу первое слово."
           }
         }
       }
@@ -37492,12 +37646,188 @@
         }
       }
     },
+    "sentenceBuilder.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовлю задания…"
+          }
+        }
+      }
+    },
     "sentenceBuilder.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Собери фразу"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.prompt.agreement": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подбери слово, чтобы оно подходило по форме!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.prompt.preposition": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставь нужное маленькое слово!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.prompt.wordOrder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собери из слов правильную фразу!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд. %@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.scene.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинка-подсказка. %@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.slot.a11y.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слот %1$d из %2$d, пусто"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.slot.a11y.filled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слот %1$d из %2$d, слово %3$@"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.slot.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы убрать слово обратно"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую игру"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конструктор предложения"
           }
         }
       }

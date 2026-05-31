@@ -1098,6 +1098,18 @@ extension ChildHomeView {
             router?.routeToWhoseTail(childId: childId)
         }
 
+        // F2-004 (Wave 2) — Sentence Builder «Конструктор предложения»
+        // (синтаксис: порядок слов / согласование / предлоги; последовательная
+        // сборка ленты слов-карточек с частичной оценкой).
+        ChildHomeV25EntryCard(
+            titleKey: "sentenceBuilder.entry.title",
+            hintKey: "sentenceBuilder.entry.hint",
+            iconName: "text.append",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToSentenceConstructor(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",

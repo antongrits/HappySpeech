@@ -1,0 +1,373 @@
+{
+  "id": "pack_sentence_builder_v1",
+  "soundTarget": "грамматика.синтаксис",
+  "group": "грамматика",
+  "version": 1,
+  "roundsPerSession": 10,
+  "items": [
+    {
+      "id": "sb-order-cat-sofa",
+      "subtask": "wordOrder",
+      "sceneImage": "cat.fill",
+      "difficulty": 1,
+      "minAge": 6,
+      "tokens": [
+        { "id": "t-cat-1", "text": "кот", "role": "subject" },
+        { "id": "t-cat-2", "text": "спит", "role": "verb" },
+        { "id": "t-cat-3", "text": "на", "role": "prep" },
+        { "id": "t-cat-4", "text": "диване", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-cat-1", "t-cat-2", "t-cat-3", "t-cat-4"]],
+      "spokenSentence": "Кот спит на диване."
+    },
+    {
+      "id": "sb-order-fish-water",
+      "subtask": "wordOrder",
+      "sceneImage": "fish.fill",
+      "difficulty": 1,
+      "minAge": 6,
+      "tokens": [
+        { "id": "t-fish-1", "text": "рыба", "role": "subject" },
+        { "id": "t-fish-2", "text": "плывёт", "role": "verb" },
+        { "id": "t-fish-3", "text": "в", "role": "prep" },
+        { "id": "t-fish-4", "text": "воде", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-fish-1", "t-fish-2", "t-fish-3", "t-fish-4"]],
+      "spokenSentence": "Рыба плывёт в воде."
+    },
+    {
+      "id": "sb-order-boy-book",
+      "subtask": "wordOrder",
+      "sceneImage": "book.fill",
+      "difficulty": 1,
+      "minAge": 6,
+      "tokens": [
+        { "id": "t-boy-1", "text": "мальчик", "role": "subject" },
+        { "id": "t-boy-2", "text": "читает", "role": "verb" },
+        { "id": "t-boy-3", "text": "книгу", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-boy-1", "t-boy-2", "t-boy-3"]],
+      "spokenSentence": "Мальчик читает книгу."
+    },
+    {
+      "id": "sb-order-sun-shine",
+      "subtask": "wordOrder",
+      "sceneImage": "sun.max.fill",
+      "difficulty": 1,
+      "minAge": 6,
+      "tokens": [
+        { "id": "t-sun-1", "text": "солнце", "role": "subject" },
+        { "id": "t-sun-2", "text": "светит", "role": "verb" },
+        { "id": "t-sun-3", "text": "ярко", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-sun-1", "t-sun-2", "t-sun-3"]],
+      "spokenSentence": "Солнце светит ярко."
+    },
+    {
+      "id": "sb-order-car-road",
+      "subtask": "wordOrder",
+      "sceneImage": "car.fill",
+      "difficulty": 2,
+      "minAge": 7,
+      "tokens": [
+        { "id": "t-car-1", "text": "машина", "role": "subject" },
+        { "id": "t-car-2", "text": "едет", "role": "verb" },
+        { "id": "t-car-3", "text": "по", "role": "prep" },
+        { "id": "t-car-4", "text": "дороге", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-car-1", "t-car-2", "t-car-3", "t-car-4"]],
+      "spokenSentence": "Машина едет по дороге."
+    },
+    {
+      "id": "sb-order-girl-flower",
+      "subtask": "wordOrder",
+      "sceneImage": "paintbrush.fill",
+      "difficulty": 2,
+      "minAge": 7,
+      "tokens": [
+        { "id": "t-gf-1", "text": "девочка", "role": "subject" },
+        { "id": "t-gf-2", "text": "рисует", "role": "verb" },
+        { "id": "t-gf-3", "text": "красный", "role": "adjective" },
+        { "id": "t-gf-4", "text": "цветок", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-gf-1", "t-gf-2", "t-gf-3", "t-gf-4"]],
+      "spokenSentence": "Девочка рисует красный цветок."
+    },
+    {
+      "id": "sb-order-grandma-scarf",
+      "subtask": "wordOrder",
+      "sceneImage": "person.fill",
+      "difficulty": 3,
+      "minAge": 8,
+      "tokens": [
+        { "id": "t-gr-1", "text": "бабушка", "role": "subject" },
+        { "id": "t-gr-2", "text": "вяжет", "role": "verb" },
+        { "id": "t-gr-3", "text": "тёплый", "role": "adjective" },
+        { "id": "t-gr-4", "text": "шарф", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-gr-1", "t-gr-2", "t-gr-3", "t-gr-4"]],
+      "spokenSentence": "Бабушка вяжет тёплый шарф."
+    },
+    {
+      "id": "sb-order-hare-carrot",
+      "subtask": "wordOrder",
+      "sceneImage": "hare.fill",
+      "difficulty": 3,
+      "minAge": 8,
+      "tokens": [
+        { "id": "t-hare-1", "text": "заяц", "role": "subject" },
+        { "id": "t-hare-2", "text": "грызёт", "role": "verb" },
+        { "id": "t-hare-3", "text": "морковку", "role": "object" }
+      ],
+      "distractors": [
+        { "id": "t-hare-d1", "text": "стол", "role": "noun" },
+        { "id": "t-hare-d2", "text": "облако", "role": "noun" }
+      ],
+      "acceptedOrders": [["t-hare-1", "t-hare-2", "t-hare-3"]],
+      "spokenSentence": "Заяц грызёт морковку."
+    },
+    {
+      "id": "sb-agree-red-apple",
+      "subtask": "agreement",
+      "sceneImage": "apple.logo",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "a-ap-m", "text": "красный", "role": "adjective" },
+        { "id": "a-ap-f", "text": "красная", "role": "adjective" },
+        { "id": "a-ap-n", "text": "красное", "role": "adjective" },
+        { "id": "a-ap-noun", "text": "яблоко", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-ap-n", "a-ap-noun"]],
+      "spokenSentence": "Красное яблоко."
+    },
+    {
+      "id": "sb-agree-big-dog",
+      "subtask": "agreement",
+      "sceneImage": "pawprint.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "a-dog-m", "text": "большой", "role": "adjective" },
+        { "id": "a-dog-f", "text": "большая", "role": "adjective" },
+        { "id": "a-dog-n", "text": "большое", "role": "adjective" },
+        { "id": "a-dog-noun", "text": "собака", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-dog-f", "a-dog-noun"]],
+      "spokenSentence": "Большая собака."
+    },
+    {
+      "id": "sb-agree-blue-ball",
+      "subtask": "agreement",
+      "sceneImage": "circle.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "a-ball-m", "text": "синий", "role": "adjective" },
+        { "id": "a-ball-f", "text": "синяя", "role": "adjective" },
+        { "id": "a-ball-n", "text": "синее", "role": "adjective" },
+        { "id": "a-ball-noun", "text": "шар", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-ball-m", "a-ball-noun"]],
+      "spokenSentence": "Синий шар."
+    },
+    {
+      "id": "sb-agree-yellow-sun",
+      "subtask": "agreement",
+      "sceneImage": "sun.max.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "a-sun-m", "text": "жёлтый", "role": "adjective" },
+        { "id": "a-sun-f", "text": "жёлтая", "role": "adjective" },
+        { "id": "a-sun-n", "text": "жёлтое", "role": "adjective" },
+        { "id": "a-sun-noun", "text": "солнце", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-sun-n", "a-sun-noun"]],
+      "spokenSentence": "Жёлтое солнце."
+    },
+    {
+      "id": "sb-agree-green-trees",
+      "subtask": "agreement",
+      "sceneImage": "tree.fill",
+      "difficulty": 3,
+      "minAge": 7,
+      "tokens": [
+        { "id": "a-tr-m", "text": "зелёный", "role": "adjective" },
+        { "id": "a-tr-f", "text": "зелёная", "role": "adjective" },
+        { "id": "a-tr-pl", "text": "зелёные", "role": "adjective" },
+        { "id": "a-tr-noun", "text": "деревья", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-tr-pl", "a-tr-noun"]],
+      "spokenSentence": "Зелёные деревья."
+    },
+    {
+      "id": "sb-prep-bird-tree",
+      "subtask": "preposition",
+      "sceneImage": "bird.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "p-bird-1", "text": "птица", "role": "subject" },
+        { "id": "p-bird-2", "text": "сидит", "role": "verb" },
+        { "id": "p-bird-on", "text": "на", "role": "prep" },
+        { "id": "p-bird-under", "text": "под", "role": "prep" },
+        { "id": "p-bird-behind", "text": "за", "role": "prep" },
+        { "id": "p-bird-3", "text": "дереве", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-bird-1", "p-bird-2", "p-bird-on", "p-bird-3"]],
+      "spokenSentence": "Птица сидит на дереве."
+    },
+    {
+      "id": "sb-prep-ball-table",
+      "subtask": "preposition",
+      "sceneImage": "circle.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "p-ball-1", "text": "мяч", "role": "subject" },
+        { "id": "p-ball-2", "text": "лежит", "role": "verb" },
+        { "id": "p-ball-under", "text": "под", "role": "prep" },
+        { "id": "p-ball-on", "text": "на", "role": "prep" },
+        { "id": "p-ball-near", "text": "у", "role": "prep" },
+        { "id": "p-ball-3", "text": "столом", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-ball-1", "p-ball-2", "p-ball-under", "p-ball-3"]],
+      "spokenSentence": "Мяч лежит под столом."
+    },
+    {
+      "id": "sb-prep-book-bag",
+      "subtask": "preposition",
+      "sceneImage": "bag.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "p-book-1", "text": "книга", "role": "subject" },
+        { "id": "p-book-in", "text": "в", "role": "prep" },
+        { "id": "p-book-on", "text": "на", "role": "prep" },
+        { "id": "p-book-under", "text": "под", "role": "prep" },
+        { "id": "p-book-2", "text": "сумке", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-book-1", "p-book-in", "p-book-2"]],
+      "spokenSentence": "Книга в сумке."
+    },
+    {
+      "id": "sb-prep-cat-wardrobe",
+      "subtask": "preposition",
+      "sceneImage": "cat.fill",
+      "difficulty": 3,
+      "minAge": 7,
+      "tokens": [
+        { "id": "p-cw-1", "text": "кот", "role": "subject" },
+        { "id": "p-cw-2", "text": "спрятался", "role": "verb" },
+        { "id": "p-cw-behind", "text": "за", "role": "prep" },
+        { "id": "p-cw-in", "text": "в", "role": "prep" },
+        { "id": "p-cw-on", "text": "на", "role": "prep" },
+        { "id": "p-cw-3", "text": "шкафом", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-cw-1", "p-cw-2", "p-cw-behind", "p-cw-3"]],
+      "spokenSentence": "Кот спрятался за шкафом."
+    },
+    {
+      "id": "sb-prep-fish-bowl",
+      "subtask": "preposition",
+      "sceneImage": "fish.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "p-fb-1", "text": "рыбка", "role": "subject" },
+        { "id": "p-fb-2", "text": "плавает", "role": "verb" },
+        { "id": "p-fb-in", "text": "в", "role": "prep" },
+        { "id": "p-fb-under", "text": "под", "role": "prep" },
+        { "id": "p-fb-3", "text": "банке", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-fb-1", "p-fb-2", "p-fb-in", "p-fb-3"]],
+      "spokenSentence": "Рыбка плавает в банке."
+    },
+    {
+      "id": "sb-order-leaf-falls",
+      "subtask": "wordOrder",
+      "sceneImage": "leaf.fill",
+      "difficulty": 2,
+      "minAge": 6,
+      "tokens": [
+        { "id": "t-leaf-1", "text": "листок", "role": "subject" },
+        { "id": "t-leaf-2", "text": "падает", "role": "verb" },
+        { "id": "t-leaf-3", "text": "с", "role": "prep" },
+        { "id": "t-leaf-4", "text": "дерева", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["t-leaf-1", "t-leaf-2", "t-leaf-3", "t-leaf-4"]],
+      "spokenSentence": "Листок падает с дерева."
+    },
+    {
+      "id": "sb-agree-warm-scarf",
+      "subtask": "agreement",
+      "sceneImage": "scribble",
+      "difficulty": 3,
+      "minAge": 7,
+      "tokens": [
+        { "id": "a-sc-m", "text": "тёплый", "role": "adjective" },
+        { "id": "a-sc-f", "text": "тёплая", "role": "adjective" },
+        { "id": "a-sc-n", "text": "тёплое", "role": "adjective" },
+        { "id": "a-sc-noun", "text": "шарф", "role": "noun" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["a-sc-m", "a-sc-noun"]],
+      "spokenSentence": "Тёплый шарф."
+    },
+    {
+      "id": "sb-prep-bird-nest",
+      "subtask": "preposition",
+      "sceneImage": "bird.fill",
+      "difficulty": 3,
+      "minAge": 7,
+      "tokens": [
+        { "id": "p-bn-1", "text": "птенец", "role": "subject" },
+        { "id": "p-bn-2", "text": "сидит", "role": "verb" },
+        { "id": "p-bn-in", "text": "в", "role": "prep" },
+        { "id": "p-bn-on", "text": "на", "role": "prep" },
+        { "id": "p-bn-near", "text": "около", "role": "prep" },
+        { "id": "p-bn-3", "text": "гнезде", "role": "object" }
+      ],
+      "distractors": [],
+      "acceptedOrders": [["p-bn-1", "p-bn-2", "p-bn-in", "p-bn-3"]],
+      "spokenSentence": "Птенец сидит в гнезде."
+    },
+    {
+      "id": "sb-order-dog-bone",
+      "subtask": "wordOrder",
+      "sceneImage": "pawprint.fill",
+      "difficulty": 3,
+      "minAge": 7,
+      "tokens": [
+        { "id": "t-db-1", "text": "собака", "role": "subject" },
+        { "id": "t-db-2", "text": "грызёт", "role": "verb" },
+        { "id": "t-db-3", "text": "большую", "role": "adjective" },
+        { "id": "t-db-4", "text": "кость", "role": "object" }
+      ],
+      "distractors": [
+        { "id": "t-db-d1", "text": "ложка", "role": "noun" }
+      ],
+      "acceptedOrders": [["t-db-1", "t-db-2", "t-db-3", "t-db-4"]],
+      "spokenSentence": "Собака грызёт большую кость."
+    }
+  ]
+}

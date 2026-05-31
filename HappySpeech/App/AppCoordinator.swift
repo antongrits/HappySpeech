@@ -235,6 +235,16 @@ enum AppRoute: Hashable {
     /// озвучка целевой формы на hit (закрепление по слуху).
     case whoseTail(childId: String)
 
+    /// F2-004 (kid): «Конструктор предложения» — синтаксис (порядок слов,
+    /// согласование род/число, предлоги). ЕДИНСТВЕННАЯ механика с
+    /// последовательной сборкой ленты слов-карточек (а не выбором одного
+    /// ответа). Под-типы: wordOrder / agreement / preposition. Частичная оценка
+    /// `matchesPartially` (точное совпадение → hit; ≥60% соседних пар или
+    /// перепутан только предлог → almost) + озвучка фразы на hit.
+    /// Имя `sentenceConstructor` — чтобы не конфликтовать с MVP
+    /// `sentenceBuilderKid`.
+    case sentenceConstructor(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -1046,6 +1056,10 @@ struct AppCoordinatorView: View {
             WhoseTailView(childId: childId)
                 .environment(\.circuitContext, .kid)
 
+        case .sentenceConstructor(let childId):
+            SentenceBuilderView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1635,6 +1649,8 @@ extension AppCoordinatorView {
             return .wordFormation(childId: previewChild)
         case "whoseTail", "whose-tail", "whoseHome", "possessiveAdjectives":
             return .whoseTail(childId: previewChild)
+        case "sentenceConstructor", "sentence-constructor", "sentenceSyntax", "constructSentence":
+            return .sentenceConstructor(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":

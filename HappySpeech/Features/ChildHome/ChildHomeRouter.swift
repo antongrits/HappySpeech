@@ -259,4 +259,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     func routeToWhoseTail(childId: String) {
         coordinator?.navigate(to: .whoseTail(childId: childId))
     }
+
+    /// F2-004 — «Конструктор предложения» (синтаксис: порядок слов, согласование,
+    /// предлоги; последовательная сборка ленты слов-карточек).
+    func routeToSentenceConstructor(childId: String) {
+        coordinator?.navigate(to: .sentenceConstructor(childId: childId))
+    }
 }

@@ -98,6 +98,19 @@ final class Wave2MechanicsSnapshotTests: XCTestCase {
         try record(view, screen: "WhoseTailView", maxDiffRatio: 0.10)
     }
 
+    // MARK: - F2-004 SentenceBuilderView (kid, childId)
+
+    func test_sentenceBuilder_rendersInBothThemes() throws {
+        let view = SentenceBuilderView(childId: "preview-child-1")
+            .environment(AppCoordinator())
+            .environment(AppContainer.preview())
+        // Допуск 10%: сцена-карточка и карточки-слова в translucent
+        // HSLiquidGlassCard (.ultraThinMaterial fallback под reduceMotion) —
+        // material-blur даёт суб-пиксельный GPU-jitter между процессами, как у
+        // SoundDetectiveView / WhoseTailView выше.
+        try record(view, screen: "SentenceBuilderView", maxDiffRatio: 0.10)
+    }
+
     // MARK: - Rendering engine
 
     private func render<V: View>(
