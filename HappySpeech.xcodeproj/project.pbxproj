@@ -589,6 +589,7 @@
 		451E588214972663444E4588 /* celebrate_daily_goal.json in Resources */ = {isa = PBXBuildFile; fileRef = 65B7BED08F4514F556760A3A /* celebrate_daily_goal.json */; };
 		45258DC7D3EB47A6C170BC83 /* RealtimeDatabaseServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06639D1A4BA6BCB074C9436 /* RealtimeDatabaseServiceTests.swift */; };
 		45272567B5EF98C199B6FFCB /* SpecialistHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DADB3A8CCCBF25BF13D14C /* SpecialistHomeView.swift */; };
+		45338CA7F1CE77C8153CF0B6 /* AdaptiveVADTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23267834C0DE61713B1BECC6 /* AdaptiveVADTests.swift */; };
 		4558B31DC1106ACC31648BC1 /* MLModelWarmupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACE4C94F58853CF8FCCA1FB /* MLModelWarmupService.swift */; };
 		4573410C8AA39A139F409E3A /* InsightAggregatorWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE91F693AAC3562995743F7 /* InsightAggregatorWorker.swift */; };
 		459B3C13AA371EE5CC4E4124 /* FamilyLeaderboardInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C362F4193828FAC4BCEC3609 /* FamilyLeaderboardInteractorTests.swift */; };
@@ -2368,6 +2369,7 @@
 		22798416EADECE6CA694A2C3 /* FamilyChallengePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyChallengePresenter.swift; sourceTree = "<group>"; };
 		22BA2C08511D847EA5E6F87E /* SessionShellInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionShellInteractor.swift; sourceTree = "<group>"; };
 		22D29770EF1128CE98AA8CE6 /* ARMirrorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMirrorInteractor.swift; sourceTree = "<group>"; };
+		23267834C0DE61713B1BECC6 /* AdaptiveVADTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveVADTests.swift; sourceTree = "<group>"; };
 		232F439D700EB6F6C96EED18 /* SpeechNormsEncyclopediaPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechNormsEncyclopediaPresenter.swift; sourceTree = "<group>"; };
 		236050EF9E3A032CE1FED7A9 /* MemoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPresenter.swift; sourceTree = "<group>"; };
 		2385AEF35EE1951DC4FE0881 /* SoundTrafficLightCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTrafficLightCorpus.swift; sourceTree = "<group>"; };
@@ -8601,6 +8603,7 @@
 			children = (
 				7BB0BAB5FBC63C570F6099A1 /* AdaptivePlannerDisorderRouteTests.swift */,
 				865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */,
+				23267834C0DE61713B1BECC6 /* AdaptiveVADTests.swift */,
 				E74AD87E91167088238F1EFA /* AmbientSoundServiceTests.swift */,
 				0638A6490D5D421707BF0454 /* AnalyticsServiceTests.swift */,
 				4C8E4186D5274080E5AE3C22 /* AppContainerLiveLLMWiringTests.swift */,
@@ -9963,6 +9966,7 @@
 				71733376C9124CF0BFA58298 /* AchievementsSnapshotWorkerTests.swift in Sources */,
 				66A0AAB6CFFC14C58028CB7A /* AdaptivePlannerDisorderRouteTests.swift in Sources */,
 				18EE52420708B7292A392B9C /* AdaptivePlannerServiceTests.swift in Sources */,
+				45338CA7F1CE77C8153CF0B6 /* AdaptiveVADTests.swift in Sources */,
 				7D75257DC7FDDAFAB1D3F1BA /* AdvancedGameSnapshotTests.swift in Sources */,
 				A666FEDA0DE6A46BD6E0D41D /* AirStreamAnalyzerTests.swift in Sources */,
 				9C06BEBE96C1BC91D17E0404 /* AmbientSoundServiceTests.swift in Sources */,

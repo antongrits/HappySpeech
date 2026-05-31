@@ -109,14 +109,62 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     // MARK: - Transcribe
 
     public func transcribe(url: URL) async throws -> ASRResult {
+        try await transcribe(url: url, expectedWord: nil, childAge: nil)
+    }
+
+    /// Распознавание с word-list biasing и возрастной адаптацией под детскую речь.
+    ///
+    /// Усиления относительно базового пути (все настраивают `DecodingOptions`):
+    /// 1. **Word-list biasing** — ожидаемое слово урока токенизируется и подаётся
+    ///    как `promptTokens` (Whisper `<|startofprev|>`-prompt). Декодер смещается
+    ///    к целевому слову, что критично для искажённой логопедической речи.
+    /// 2. **Возрастной prompt** — для младших детей в prompt добавляется указание
+    ///    на простую детскую речь, снижая «доводку» до длинных взрослых фраз.
+    /// 3. **Temperature fallback** — 4 ступени (0.0→0.8) восстанавливают вывод,
+    ///    когда жадное декодирование схлопывается на тихой/нечёткой речи.
+    /// 4. **Повышенная толерантность** — ослаблены `compressionRatioThreshold`,
+    ///    `logProbThreshold`, `noSpeechThreshold`, чтобы короткие/искажённые
+    ///    детские произнесения не отбрасывались как «не речь».
+    public func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult {
         guard let whisper, _isReady else {
             throw AppError.asrModelNotLoaded
         }
+
+        // --- Word-list biasing: токенизируем ожидаемое слово + возрастной prompt ---
+        var promptTokens: [Int]?
+        if let tokenizer = whisper.tokenizer {
+            var promptText = ""
+            if let word = expectedWord?.trimmingCharacters(in: .whitespacesAndNewlines), !word.isEmpty {
+                promptText = word
+            }
+            if let age = childAge, age <= 7 {
+                // Короткая возрастная подсказка — простая детская речь.
+                promptText = promptText.isEmpty ? "детская речь" : "\(promptText). детская речь"
+            }
+            if !promptText.isEmpty {
+                let encoded = tokenizer.encode(text: " " + promptText)
+                    .filter { $0 < tokenizer.specialTokens.specialTokenBegin }
+                if !encoded.isEmpty {
+                    promptTokens = encoded
+                }
+            }
+        }
+
         let options = DecodingOptions(
             task: .transcribe,
             language: "ru",
-            temperatureFallbackCount: 2
+            temperature: 0.0,
+            temperatureIncrementOnFallback: 0.2,
+            temperatureFallbackCount: 4,                 // 0.0 → 0.8: восстановление на нечёткой речи
+            usePrefillPrompt: true,
+            wordTimestamps: true,
+            promptTokens: promptTokens,                  // word-list biasing
+            // Повышенная толерантность к короткой/искажённой детской речи:
+            compressionRatioThreshold: 3.0,              // дефолт 2.4 — реже бракуем «повторы»
+            logProbThreshold: -1.5,                      // дефолт -1.0 — принимаем менее уверенные токены
+            noSpeechThreshold: 0.8                       // дефолт 0.6 — реже считаем тишиной
         )
+
         let results = try await whisper.transcribe(audioPath: url.path, decodeOptions: options)
         let texts = results.compactMap { $0.text }
         let text = texts.joined(separator: " ").trimmingCharacters(in: .whitespaces)

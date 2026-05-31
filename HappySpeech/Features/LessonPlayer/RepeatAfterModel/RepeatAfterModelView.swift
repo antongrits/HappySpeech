@@ -742,7 +742,10 @@ struct RepeatAfterModelView: View {
         asrTask = Task { @MainActor in
             do {
                 let url = try await audioService.stopRecording()
-                let result = try await asrService.transcribe(url: url)
+                // Word-list biasing: подсказываем декодеру ожидаемое слово урока,
+                // чтобы устойчивее распознавать искажённую детскую речь.
+                let expected = display.currentWord?.word
+                let result = try await asrService.transcribe(url: url, expectedWord: expected)
                 interactor.submitTranscript(.init(
                     transcript: result.transcript,
                     confidence: Float(result.confidence)

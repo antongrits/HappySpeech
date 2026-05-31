@@ -229,7 +229,8 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
             guard let self else { return }
             do {
                 let url = try await audioService.stopRecording()
-                let result = try await asrService.transcribe(url: url)
+                // Word-list biasing на ожидаемое слово-цель плитки.
+                let result = try await asrService.transcribe(url: url, expectedWord: targetWord)
                 let score = Self.score(transcript: result.transcript,
                                        target: targetWord,
                                        confidence: Float(result.confidence))

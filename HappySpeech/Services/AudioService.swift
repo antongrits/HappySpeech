@@ -48,9 +48,36 @@ public protocol ASRService: Sendable {
     func transcribe(url: URL) async throws -> ASRResult
     func loadModel() async throws
     func loadModel(tier: ASRTier) async throws
+
+    /// Распознаёт речь с подсказкой ожидаемого слова и возраста ребёнка.
+    ///
+    /// Контекстное смещение (word-list biasing) и возрастной prompt повышают
+    /// устойчивость к искажённой детской речи: декодер Whisper получает
+    /// ожидаемое слово урока как `promptTokens` (механизм `<|startofprev|>`),
+    /// что увеличивает вероятность распознать целевое слово даже при нечётком
+    /// произношении (типично для логопедических искажений).
+    ///
+    /// - Parameters:
+    ///   - url: путь к аудиофайлу.
+    ///   - expectedWord: ожидаемое слово/фраза урока (nil → без смещения).
+    ///   - childAge: возраст ребёнка в годах (влияет на возрастной prompt и
+    ///     толерантность порогов).
+    /// - Returns: результат распознавания.
+    func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult
 }
 
 public extension ASRService {
+
+    /// Обратная совместимость: реализации без contextual biasing откатываются
+    /// на базовый `transcribe(url:)`. `LiveASRService` переопределяет метод.
+    func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult {
+        try await transcribe(url: url)
+    }
+
+    /// Удобная перегрузка только с ожидаемым словом.
+    func transcribe(url: URL, expectedWord: String?) async throws -> ASRResult {
+        try await transcribe(url: url, expectedWord: expectedWord, childAge: nil)
+    }
 
     /// Адаптивно выбирает Whisper-пак под возраст ребёнка и performance tier
     /// устройства и загружает соответствующий ``ASRTier``.
