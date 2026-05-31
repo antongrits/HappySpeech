@@ -32,7 +32,7 @@ protocol WeeklyChallengeDataStore: AnyObject {
 //
 // Примечание: интегрируется с SessionRepository через ChildHomeInteractor —
 // при completed сессии вызывается markDay(today). MVP: ручная отметка
-// (для демонстрации в дипломе).
+// (для демонстрации).
 
 @MainActor
 final class WeeklyChallengeInteractor: WeeklyChallengeBusinessLogic, WeeklyChallengeDataStore {

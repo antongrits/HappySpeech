@@ -31,7 +31,7 @@ struct ParentHomeView: View {
         Group {
             // P0.2 fix v19: always use tabLayout on iPhone (iOS 26 on SE3 simulator
             // may return .regular hSizeClass or .pad idiom via new adaptive APIs).
-            // sidebarLayout is intentionally disabled for diploma build (iPhone-only).
+            // sidebarLayout is intentionally disabled for this build (iPhone-only) (iPhone-only).
             tabLayout
         }
         .tint(ColorTokens.Parent.accent)
@@ -291,7 +291,7 @@ private struct ParentDashboardTab: View {
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
-                // Diploma fix #8 — sectionGap (32) на parent-dashboard выглядел
+                // Fix #8 — sectionGap (32) на parent-dashboard выглядел
                 // воздушно-разреженным: 18 карточек разъезжались на
                 // ~600pt лишнего скролла. Сжато до `large` (24), карточки
                 // ближе друг к другу, дашборд читается сразу как структура.

@@ -62,7 +62,7 @@ struct SessionCompleteView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionCompleteView")
 
-    /// Diploma fix #11f — screenshot-tour mode (true when launched with
+    /// Fix #11f — screenshot-tour mode (true when launched with
     /// `-HSStartRoute`). Заморозить анимированный mesh-фон + конфетти, чтобы
     /// захват получил стабильный кадр.
     fileprivate static var isScreenshotMode: Bool {
@@ -84,7 +84,7 @@ struct SessionCompleteView: View {
     // MARK: - Body
 
     var body: some View {
-        // Diploma fix v35 (SE 3 footer overlap) — корневая причина:
+        // Fix v35 (SE 3 footer overlap) — корневая причина:
         // прежний ZStack(alignment:.bottom) клал actionButtons как absolute
         // overlay поверх ScrollView, а контент компенсировался ручным
         // `.padding(.bottom, 240)`. На iPhone SE (3rd gen) высота footer
@@ -134,7 +134,7 @@ struct SessionCompleteView: View {
             }
 
             if let toast = display.toastMessage {
-                // Diploma fix v35 — ZStack теперь центрирован (footer уехал в
+                // Fix v35 — ZStack теперь центрирован (footer уехал в
                 // safeAreaInset). Toast прижимаем к низу через frame-alignment,
                 // чтобы он по-прежнему всплывал над footer-кнопками.
                 VStack {
@@ -187,7 +187,7 @@ struct SessionCompleteView: View {
                 .accessibilityHidden(true)
         }
         .navigationBarBackButtonHidden()
-        // Diploma fix #15e — на SessionComplete просвечивал системный tab bar
+        // Fix #15e — на SessionComplete просвечивал системный tab bar
         // от родительского NavigationStack (kid-контур). Скрываем явно — иначе
         // оранжевый footer bleed-ил через mesh-фон celebration-экрана.
         .toolbar(.hidden, for: .tabBar)
@@ -233,7 +233,7 @@ struct SessionCompleteView: View {
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
             // F.tier1 v21: hero — мягче в dark.
             // E v21: 3D hero на SessionComplete (celebration phase).
-            // Diploma fix v32-postreaudit — PNG ассета mascot_lyalya_*
+            // Fix v32-postreaudit — PNG ассета mascot_lyalya_*
             // содержит непрозрачный белый прямоугольник (не альфа-канал), из-за
             // чего celebration hero выглядел как «фотография на белом листе»
             // поверх золотого фона. Клипуем по кругу и оборачиваем в мягкий
@@ -287,7 +287,7 @@ struct SessionCompleteView: View {
         let visible = display.isPhaseVisible(.scoreReveal)
         VStack(spacing: SpacingTokens.medium) {
             ZStack {
-                // Diploma fix #11b — track использует Kid.line (заметно темнее
+                // Fix #11b — track использует Kid.line (заметно темнее
                 // чем surfaceAlt) поверх золотого mesh-фона celebration screen,
                 // иначе кольцо «white-on-white» и невидимо на скриншотах.
                 Circle()
@@ -306,7 +306,7 @@ struct SessionCompleteView: View {
                     .shadow(color: scoreColor.opacity(0.35), radius: 8, x: 0, y: 0)
 
                 VStack(spacing: SpacingTokens.micro) {
-                    // Diploma fix #11c — score-number поверх mesh-фона должен
+                    // Fix #11c — score-number поверх mesh-фона должен
                     // иметь высокий контраст: используем Kid.ink + kidDisplay(48).
                     Text("\(animatedScore)")
                         .font(TypographyTokens.kidDisplay(48))
@@ -342,7 +342,7 @@ struct SessionCompleteView: View {
 
     @ViewBuilder
     private var scoreBreakdownRow: some View {
-        // Diploma fix #11d — chip-ряд (баллы / бонус / штраф) центрируется по
+        // Fix #11d — chip-ряд (баллы / бонус / штраф) центрируется по
         // экрану. Раньше «Бонус» прижимался к правому краю на узких устройствах
         // из-за natural-content alignment в HStack.
         HStack(spacing: SpacingTokens.small) {
@@ -359,7 +359,7 @@ struct SessionCompleteView: View {
     }
 
     private func breakdownChip(label: String, color: Color) -> some View {
-        // Diploma fix v34 — chip-ряд лежит поверх gold mesh-фона. Старый
+        // Fix v34 — chip-ряд лежит поверх gold mesh-фона. Старый
         // вариант `color text on color.opacity(0.12) bg` делал «бонус» pill
         // невидимым (gold-on-gold). Используем непрозрачный Kid.surface как
         // подложку с цветным border, текст оставляем цветным с увеличенным
@@ -385,7 +385,7 @@ struct SessionCompleteView: View {
     @ViewBuilder
     private var starsPhase: some View {
         let visible = display.isPhaseVisible(.stars)
-        // Diploma fix #11g — добавляем явный caption «Звёзд: N из M» под рядом
+        // Fix #11g — добавляем явный caption «Звёзд: N из M» под рядом
         // звёзд: kids в скриншот-туре не видят прогресса «3 заполненные vs
         // пустые», а родитель/специалист тоже хочет численную оценку.
         VStack(spacing: SpacingTokens.sp2) {
@@ -759,7 +759,7 @@ struct SessionCompleteView: View {
     private var backgroundLayer: some View {
         ZStack {
             ColorTokens.Kid.bg
-            // Diploma fix #11f — анимация mesh-фазы отключается под
+            // Fix #11f — анимация mesh-фазы отключается под
             // -HSStartRoute (скриншот-тур), иначе на захвате ловится
             // волнистый артефакт переходного кадра.
             HSMeshGradientBackground(palette: .rewards, animated: !Self.isScreenshotMode)
@@ -768,7 +768,7 @@ struct SessionCompleteView: View {
                     if Self.isScreenshotMode { tx.disablesAnimations = true }
                 }
 
-            // Diploma fix v34 — после уплощения mesh-палитры .rewards до
+            // Fix v34 — после уплощения mesh-палитры .rewards до
             // монохромного butter (см. HSMeshGradientBackground) восстанавливаем
             // gold/primaryLo сияние через radial overlay. Banding больше не
             // появляется (radial — не интерполяция между точками), а золотой
@@ -796,7 +796,7 @@ struct SessionCompleteView: View {
             .allowsHitTesting(false)
             .accessibilityHidden(true)
 
-            // Diploma fix v32-postreaudit — декоративный celebration banner
+            // Fix v32-postreaudit — декоративный celebration banner
             // (Hero/celebration_*) использовал `scaledToFill().frame(maxWidth:
             // .infinity).clipped()`. PNG с aspect ratio шире screen раздувал
             // intrinsic-width родительского ZStack body (через ignoresSafeArea
@@ -834,7 +834,7 @@ struct SessionCompleteView: View {
     // MARK: - Helpers
 
     private var lyalyaResultState: LyalyaState {
-        // Diploma fix #15a — SessionComplete всегда celebrating: финальный
+        // Fix #15a — SessionComplete всегда celebrating: финальный
         // экран — кульминация урока, маскот празднует, независимо от score.
         // Поощрение/обучение через score breakdown ниже, а не через мрачную
         // мордочку Ляли. Канонический asset обновляется параллельно (icon-
@@ -943,7 +943,7 @@ struct SessionCompleteView: View {
             return
         }
         let targetFraction = Double(target) / 100.0
-        // Diploma fix v33 P1 — в screenshot-туре (-HSStartRoute) пропускаем
+        // Fix v33 P1 — в screenshot-туре (-HSStartRoute) пропускаем
         // count-up анимацию: ринг сразу заполняется на нужную долю, иначе
         // на захвате на 12 с кадр ловится с пустым кольцом (0%) и
         // непропорциональным числом «75» внутри пустого круга.

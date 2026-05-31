@@ -51,7 +51,7 @@ struct CustomizationView: View {
 
     // MARK: - Local UI state
 
-    // Diploma fix 3.20 — стартовое состояние превью Ляли — бодрый канонический
+    // Fix 3.20 — стартовое состояние превью Ляли — бодрый канонический
     // вид (.happy → mascot_lyalya_happy), а не .idle (mascot_lyalya_sleep с
     // полуприкрытыми глазами), чтобы ребёнок видел весёлую Лялю.
     @State private var lyalyaState: LyalyaState = .happy
@@ -68,7 +68,7 @@ struct CustomizationView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            // Diploma fix v32-postreaudit — фиксируем ZStack по screen-bounds,
+            // Fix v32-postreaudit — фиксируем ZStack по screen-bounds,
             // иначе GeometryReader в GuidedTourContainer (AppCoordinatorView)
             // оставляет ZStack схлопнутым по intrinsic size и контент
             // (live-preview Ляли, tab picker) уезжает к topLeading.

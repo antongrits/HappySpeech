@@ -27,7 +27,7 @@ final class SeasonalEventsManager: ObservableObject {
 
     /// Пересчитывает активное событие по дате (по умолчанию — сегодня).
     ///
-    /// Diploma fix #3b — для `.easter` используется точный gating через
+    /// Fix #3b — для `.easter` используется точный gating через
     /// `OrthodoxEasterCalendar.isWithin(days: 4, of:)` по алгоритму Meeus.
     /// Раньше «Пасха» включалась на все 3 месяца (март-май), сейчас — только
     /// в окне ±4 дня вокруг реальной даты православной Пасхи того года.

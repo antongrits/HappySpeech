@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - HSParallaxTile
 //
-// Step 9 / Diploma plan — `ViewModifier` that gives a tile a subtle
+// Step 9 / design plan — `ViewModifier` that gives a tile a subtle
 // Y-axis parallax offset based on its distance from the scroll-view's
 // vertical centre. Intended for WorldMap islands, Rewards animal cards,
 // AchievementWall trophies and similar gallery surfaces.

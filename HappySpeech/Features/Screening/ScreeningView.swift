@@ -43,7 +43,7 @@ struct ScreeningView: View {
 
             VStack(spacing: SpacingTokens.large) {
                 header
-                // Diploma fix v33 P1 — экран screening заполнял только верх
+                // Fix v33 P1 — экран screening заполнял только верх
                 // (карточка «собака / Звук С» вверху, 60% низа пусто). Добавляем
                 // Spacer сверху И снизу контентной карточки, чтобы она ехала к
                 // вертикальному центру safe area. SummaryView сам ScrollView,
@@ -406,7 +406,7 @@ private struct StageCard: View {
                         .multilineTextAlignment(.center)
                 }
 
-                // Diploma fix #16 — кнопки скрининга центрируются по карточке:
+                // Fix #16 — кнопки скрининга центрируются по карточке:
                 // HSButton прижимается к ширине card по `medium`-gap-у, recordButton
                 // справа, всё это через frame(maxWidth: .infinity, alignment: .center).
                 HStack(spacing: SpacingTokens.medium) {

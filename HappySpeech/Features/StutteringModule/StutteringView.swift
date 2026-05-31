@@ -224,7 +224,7 @@ struct StutteringView: View {
                             : MotionTokens.spring.delay(Double(idx) * 0.08),
                         value: scene.display.cards.count
                     )
-                    // Diploma fix v34 — Step 10 Batch G scrollTransition полностью
+                    // Fix v34 — Step 10 Batch G scrollTransition полностью
                     // убран: при .visible(0.3) карточки ниже фолда рендерились
                     // как стопка полупрозрачных призраков, а promotedный
                     // .visible(0) с opacity 0.85 всё равно давал «стеклянный»
@@ -232,7 +232,7 @@ struct StutteringView: View {
                     // всегда читаемы; staggered появление сохранено через
                     // .animation выше с delay по индексу.
                     //
-                    // Diploma fix v34 — `hsParallaxTile(factor: 0.25)` тоже убран.
+                    // Fix v34 — `hsParallaxTile(factor: 0.25)` тоже убран.
                     // Модификатор оборачивает каждую карточку в GeometryReader
                     // и применяет y-offset пропорционально расстоянию до центра
                     // экрана. В LazyVGrid это давало визуально «стопку призраков»
@@ -380,7 +380,7 @@ private struct InfoTile: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: SpacingTokens.sp3) {
-                // Diploma fix v33 P1 — иконка укрупнена и обведена tinted-кругом,
+                // Fix v33 P1 — иконка укрупнена и обведена tinted-кругом,
                 // чтобы стопка из 3 InfoTile считывалась как «3 разных карточки»,
                 // а не как «бледная мутная стопка» поверх mesh-фона .calm.
                 Image(systemName: symbol)
@@ -498,7 +498,7 @@ struct StutteringWelcomeSheet: View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer(minLength: 0)
 
-            // Diploma fix #12 — welcome sheet stuttering модуля использует
+            // Fix #12 — welcome sheet stuttering модуля использует
             // канонического маскота LyalyaMascotView в waving (как AR-зона),
             // а не «.idle» HSMascotView — единый бренд во всём приложении.
             LyalyaMascotView(state: .waving, size: 120)

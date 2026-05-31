@@ -195,7 +195,7 @@ struct OnboardingFlowView: View {
     // MARK: - Header
 
     private var progressHeader: some View {
-        // Diploma fix #2 — убран маленький Lyalya pointing над прогресс-баром
+        // Fix #2 — убран маленький Lyalya pointing над прогресс-баром
         // (на screenshots она выглядела «приклеенной» и зрительно отвлекала).
         // Освободившийся слот в центре оставлен пустым через Spacer'ы; счётчик
         // шагов («Шаг N из 10») переехал в левый угол на место back-кнопки на

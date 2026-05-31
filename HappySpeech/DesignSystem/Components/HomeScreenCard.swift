@@ -116,7 +116,7 @@ public struct HomeScreenCard: View {
     // MARK: - Streak badge
 
     private var streakBadge: some View {
-        // Diploma fix #1a — bird-icon в hero-row HomeScreenCard «съедал» ширину
+        // Fix #1a — bird-icon в hero-row HomeScreenCard «съедал» ширину
         // streak-чипа, поэтому строка «5 дней подряд» обрезалась («5…»).
         // Раздвигаем chip-капсулу (+24pt по горизонтали через sp3 vs tiny),
         // фиксируем lineLimit(1) + .minimumScaleFactor(0.7) на тексте, чтобы

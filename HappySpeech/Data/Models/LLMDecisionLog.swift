@@ -4,7 +4,7 @@ import RealmSwift
 // MARK: - LLMDecisionLog (Realm)
 // ==================================================================================
 // Persistent log of every LLM / rule-based decision the app makes.
-// Used by QA, diploma evaluation, and offline analytics dashboards.
+// Used by QA, analytics, and offline analytics dashboards.
 // ==================================================================================
 
 final class LLMDecisionLog: Object, @unchecked Sendable {

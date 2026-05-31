@@ -200,7 +200,7 @@ struct ChildHomeStreakBadge: View {
                     .hsSymbolEffect(.bounce, value: streak)
                     .accessibilityHidden(true)
 
-                // Diploma fix #3a — chip-капсула не должна резать двузначные
+                // Fix #3a — chip-капсула не должна резать двузначные
                 // streak ("12", "100"): lineLimit(1) + minimumScaleFactor чтобы
                 // цифра подстраивалась, а внутренние горизонтальные отступы +24
                 // расширены — chip перестаёт «жать» цифру визуально.

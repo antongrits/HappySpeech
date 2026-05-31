@@ -13,7 +13,7 @@ extension SettingsView {
         Section {
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
                 HStack(spacing: SpacingTokens.regular) {
-                    // Diploma fix #11 — Ляля в Settings приведена к каноническому
+                    // Fix #11 — Ляля в Settings приведена к каноническому
                     // состоянию AR-зоны: `.waving` (приветствует входящего родителя),
                     // размер увеличен 96 → 120 для весомости hero-блока. Все
                     // settings-экраны теперь визуально опознают одного маскота.

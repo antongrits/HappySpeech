@@ -47,7 +47,7 @@ struct RewardsView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "RewardsView")
 
-    /// Diploma fix #5a — screenshot-tour mode (true when launched with
+    /// Fix #5a — screenshot-tour mode (true when launched with
     /// `-HSStartRoute`). Заморозить анимированный mesh-фон, чтобы захват
     /// получил стабильный кадр.
     fileprivate static var isScreenshotMode: Bool {
@@ -72,7 +72,7 @@ struct RewardsView: View {
                 // становится полноценным фоновым слоем, а не лёгким softLight-
                 // оверлеем. iOS 18+ — MeshGradient, fallback iOS 17 — radial.
                 //
-                // Diploma fix #5a — анимация mesh-фазы отключается под
+                // Fix #5a — анимация mesh-фазы отключается под
                 // -HSStartRoute (скриншот-тур), иначе на захвате ловится
                 // волнистый артефакт переходного кадра.
                 HSMeshGradientBackground(palette: .rewards, animated: !Self.isScreenshotMode)
@@ -86,7 +86,7 @@ struct RewardsView: View {
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 
-                // Diploma fix v34 — мягкий gold radial overlay поверх
+                // Fix v34 — мягкий gold radial overlay поверх
                 // монохромного butter mesh заменяет старые gold/primaryLo
                 // mesh-точки. Radial gradient не даёт banding (на отличие от
                 // прямой MeshGradient интерполяции между точками разной
@@ -298,7 +298,7 @@ struct RewardsView: View {
                         interactor?.filterByCollection(.init(collection: tab.collection))
                     } label: {
                         HStack(spacing: 6) {
-                            // Diploma fix #7c — category icon-chip укрупнён до 18pt
+                            // Fix #7c — category icon-chip укрупнён до 18pt
                             // и переокрашен: при active state читается в onAccent
                             // (контраст на coral capsule), в idle — Brand.primary.
                             // HSContentSymbol поддерживает и SF Symbol (gift.fill),
@@ -327,14 +327,14 @@ struct RewardsView: View {
                                 )
                         }
                         .foregroundStyle(tab.isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
-                        // Diploma fix v34 — chip-padding с SpacingTokens.medium
+                        // Fix v34 — chip-padding с SpacingTokens.medium
                         // сжат до SpacingTokens.small: на iPhone 17 Pro
                         // (390pt safe area) три chip'а «Все 72», «Животные 12»,
                         // «Лес 6» теперь полностью помещаются без клиппинга.
                         .padding(.horizontal, SpacingTokens.small)
                         .padding(.vertical, SpacingTokens.tiny)
                         .frame(minHeight: 56)
-                        // Diploma fix v33 P1 — на золотом mesh-фоне inactive
+                        // Fix v33 P1 — на золотом mesh-фоне inactive
                         // capsule на ColorTokens.Kid.surface (off-white) сливался
                         // с butter mesh, третий чип «терялся». Двухслойная заливка:
                         // непрозрачная Kid.surface + чёткий border ColorTokens.Kid.line
@@ -413,7 +413,7 @@ struct RewardsView: View {
                             interactor?.claimReward(.init(id: cell.id))
                         }
                     }
-                    // Diploma fix v34 — `scrollTransition` + `hsParallaxTile`
+                    // Fix v34 — `scrollTransition` + `hsParallaxTile`
                     // убраны. Они давали «лестницу призрачных стикеров» на 3.10:
                     // каждый стикер получал собственный y-offset через
                     // GeometryReader в parallax-модификаторе, ломая сетку

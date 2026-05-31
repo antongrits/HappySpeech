@@ -124,7 +124,7 @@ final class StutteringInteractor: StutteringBusinessLogic {
                 mode: .metronome,
                 titleKey: "stuttering.exercise.metronome.title",
                 subtitleKey: "stuttering.exercise.metronome.subtitle",
-                // Diploma fix v33 P1 — слово «метроном» непонятно ребёнку 5–8
+                // Fix v33 P1 — слово «метроном» непонятно ребёнку 5–8
                 // лет, поэтому и иконка-метроном заменена на детский «будильник
                 // тик-так» (alarm.fill): держит метафору ритма часиков, но
                 // считывается дошкольником как «весёлые часики».

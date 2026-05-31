@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - HSScrollDrivenShape
 //
-// Step 9 / Diploma plan — `Shape` whose geometry morphs between two configs
+// Step 9 / design plan — `Shape` whose geometry morphs between two configs
 // (e.g. circle ↔ rounded rect) based on a scroll-driven `progress: CGFloat`
 // (0…1). The morph is achieved by sampling N control points on each path and
 // linearly interpolating between corresponding samples.

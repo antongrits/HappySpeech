@@ -180,7 +180,7 @@ struct SpeechVisualizationView: View {
     @ViewBuilder
     private var spectrogramSection: some View {
         // Reuse существующего компонента (referenceSpectrogram=nil → live-only).
-        // Diploma fix v35 (SE 3 overlap) — прежний `.frame(height: 180)` зажимал
+        // Fix v35 (SE 3 overlap) — прежний `.frame(height: 180)` зажимал
         // компонент, чья естественная высота ≈ 320pt (две панели по 100pt +
         // заголовки + divider + padding 16). SwiftUI центрирует контент в
         // зажатом фрейме БЕЗ клипа, и тёмная панель спектрограммы вылезала

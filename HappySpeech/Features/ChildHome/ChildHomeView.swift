@@ -88,7 +88,7 @@ struct ChildHomeView: View {
                     mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
 
-                    // Diploma fix #1c — «Новое достижение» и streak-баннер должны
+                    // Fix #1c — «Новое достижение» и streak-баннер должны
                     // отображаться с одинаковым ритмом отступов: оборачиваем оба
                     // в общий VStack(spacing: sp3) с единым screenEdge-паддингом,
                     // чтобы карточки выглядели одной группой, а не двумя случайно
@@ -334,7 +334,7 @@ struct ChildHomeView: View {
                 }
             }
         }
-        // Diploma fix v32-postreaudit — round FAB (56pt + screenEdge 24pt)
+        // Fix v32-postreaudit — round FAB (56pt + screenEdge 24pt)
         // занимает справа порядка 80pt. Раньше trailing был sp10=40pt и
         // FAB накладывался на streakBadge / mission ring («лишняя кнопка»
         // визуально). Увеличиваем до sp16=64pt + дополнительный sp4=16pt,
@@ -532,7 +532,7 @@ struct ChildHomeView: View {
                 }
                 .padding(.vertical, SpacingTokens.micro)
             }
-            // Diploma fix v35 (SE 3 asymmetric margins) — горизонтальный ряд
+            // Fix v35 (SE 3 asymmetric margins) — горизонтальный ряд
             // делаем full-bleed (counteract родительский screenEdge), затем
             // через .contentMargins даём симметричный screenEdge-инсет слева
             // и справа: первая карточка начинается ровно на уровне заголовка,
@@ -938,7 +938,7 @@ struct ChildHomeView: View {
                 }
                 .padding(.vertical, SpacingTokens.micro)
             }
-            // Diploma fix v35 — симметричный screenEdge-инсет (см. quickPlaySection).
+            // Fix v35 — симметричный screenEdge-инсет (см. quickPlaySection).
             .modifier(EdgeToEdgeScrollRow())
         }
     }
@@ -1310,7 +1310,7 @@ extension ChildHomeView {
     }
 }
 
-// MARK: - EdgeToEdgeScrollRow (Diploma fix v35)
+// MARK: - EdgeToEdgeScrollRow (Fix v35)
 //
 // Делает горизонтальный ScrollView, лежащий внутри VStack с
 // `.padding(.horizontal, screenEdge)`, full-bleed — и возвращает контенту

@@ -171,7 +171,7 @@ public enum ColorTokens {
 
     /// Used in game feedback overlays, tile borders, and result screens.
     ///
-    /// Diploma fix v34 — раньше `Feedback.*` ссылались на несуществующие
+    /// Fix v34 — раньше `Feedback.*` ссылались на несуществующие
     /// asset-катологи (`FeedbackCorrect`, `FeedbackIncorrect`, ...), из-за чего
     /// `Color(named:)` молча возвращал прозрачный fallback. На SessionComplete
     /// это давало невидимое кольцо счёта (track виден, fill — нет). Замапили

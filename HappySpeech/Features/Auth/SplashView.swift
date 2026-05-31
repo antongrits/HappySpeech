@@ -44,7 +44,7 @@ struct SplashView: View {
             // Decorative circles
             decorativeBackground
 
-            // Diploma fix #13 — единый центрированный VStack для маскота +
+            // Fix #13 — единый центрированный VStack для маскота +
             // заголовка + прогресс-бара (вместо тройной Spacer-mascot-Spacer-
             // Spacer-loading структуры, которая ломала вертикальную ось на
             // iPhone 17 Pro). Mascot всегда виден (через mascotScale), title

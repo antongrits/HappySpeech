@@ -42,7 +42,7 @@ struct BreathingTreeView: View {
     // MARK: - Subviews
 
     private var mascotHeader: some View {
-        // Diploma fix #9 — единый канонический маскот LyalyaMascotView.
+        // Fix #9 — единый канонический маскот LyalyaMascotView.
         let state: LyalyaState = interactor.display.mascotMood == .celebrating
             ? .celebrating
             : .idle

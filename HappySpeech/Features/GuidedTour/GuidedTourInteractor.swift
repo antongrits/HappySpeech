@@ -46,7 +46,7 @@ final class GuidedTourInteractor: GuidedTourBusinessLogic {
     }
 
     /// Минимум завершённых сессий, чтобы показать onboarding-тур.
-    /// 0 — всегда показывать (default для дипломной демо-версии). Можно
+    /// 0 — всегда показывать (default для демо-версии). Можно
     /// поднять до 2 в production, чтобы дети сначала попробовали игру.
     static let defaultGatingThreshold: Int = 0
 

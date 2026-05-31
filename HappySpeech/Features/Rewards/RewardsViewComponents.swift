@@ -176,7 +176,7 @@ struct StickerCellView: View {
     private var lockedCell: some View {
         VStack(spacing: SpacingTokens.tiny) {
             ZStack {
-                // Diploma fix v34 — locked-стикер на gold mesh-фоне всё ещё
+                // Fix v34 — locked-стикер на gold mesh-фоне всё ещё
                 // терялся: surfaceAlt круг сливался с butter-золотым mesh.
                 // Переходим на двухслойную «медаль»: непрозрачная Kid.surface
                 // (off-white) + двойной border (внешний line + внутренний

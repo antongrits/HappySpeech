@@ -186,7 +186,7 @@ struct WorldMapView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
-    // Diploma fix #4c — `streakBadge` удалён: streak отрисовывается ниже в
+    // Fix #4c — `streakBadge` удалён: streak отрисовывается ниже в
     // `stickyBottomPanel` (flame chip), отдельный шапочный chip создавал
     // визуальное дублирование на screenshots.
 
@@ -214,7 +214,7 @@ struct WorldMapView: View {
 
     private var zonesGrid: some View {
         let isCompact = hSizeClass == .compact
-        // Diploma fix #2b — adaptive grid (min 120) уменьшает пустые поля при
+        // Fix #2b — adaptive grid (min 120) уменьшает пустые поля при
         // 2 столбцах на iPhone SE 3 / при крупных Dynamic Type, и плотно
         // упаковывает плитки на iPad regular size class.
         let columns: [GridItem] = [

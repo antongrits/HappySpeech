@@ -7,7 +7,7 @@ import OSLog
 /// Режим синтеза речи для ``VoiceCloneService``.
 ///
 /// Честный контекст продукта: настоящее «клонирование голоса на лету» (zero-shot TTS
-/// вроде XTTS-v2) не входит в объём диплома и не выполняется on-device. Вместо этого
+/// вроде XTTS-v2) не входит в объём продукта и не выполняется on-device. Вместо этого
 /// сервис предоставляет реально работающий синтез/воспроизведение речи с трёхуровневым
 /// fallback. Apple Personal Voice поддерживает только en-US / zh-CN / es-MX и создаётся
 /// пользователем вручную в системных настройках, поэтому русский Personal Voice
@@ -41,7 +41,7 @@ public enum VoiceSynthesisMode: Sendable, Equatable {
 /// Несмотря на историческое имя «VoiceClone», в v1.0 это полнофункциональный TTS-сервис
 /// с трёхуровневым fallback (семейный голос → системный TTS → bundled-аудио), плюс
 /// опциональный Apple Personal Voice (только en-локали). Подлинное ML-клонирование голоса
-/// (zero-shot voice cloning) — за рамками диплома и сознательно не реализуется; метод
+/// (zero-shot voice cloning) — вне продуктового объёма и сознательно не реализуется; метод
 /// ``cloneVoice(text:speakerIndex:)`` маршрутизируется в системный TTS как разумный путь.
 ///
 /// ### Контуры использования
@@ -79,7 +79,7 @@ public protocol VoiceCloneService: Sendable {
     func loadReference(speakerIndex: Int) async throws -> URL
 
     /// «Клонирование» голоса по тексту. Подлинное zero-shot ML-клонирование не
-    /// реализуется on-device (вне объёма диплома); вместо немедленного отказа метод
+    /// реализуется on-device (вне продуктового объёма); вместо немедленного отказа метод
     /// маршрутизирует синтез в системный TTS (`.systemTTS`) как разумный рабочий путь.
     func cloneVoice(text: String, speakerIndex: Int) async throws -> Data
 

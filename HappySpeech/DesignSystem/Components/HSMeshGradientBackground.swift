@@ -59,7 +59,7 @@ public struct HSMeshGradientBackground: View {
                     ColorTokens.Brand.mint, ColorTokens.Kid.bg, ColorTokens.Brand.sky
                 ]
             case .rewards:
-                // Diploma fix v34 — диагональный «wave» banding в правом
+                // Fix v34 — диагональный «wave» banding в правом
                 // верхнем углу 3.10 / 3.18 устраняется минимизацией дельты
                 // между соседними mesh-точками: все 9 точек = butter без
                 // opacity-вариаций, чтобы MeshGradient не показывал перепадов

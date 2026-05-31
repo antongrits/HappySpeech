@@ -84,7 +84,7 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
         .padding(.vertical, SpacingTokens.tiny)
         .background(barBackground)
         .clipShape(Capsule(style: .continuous))
-        // Diploma fix v32-postreaudit — shadow radius уменьшен с 18 до 8 и
+        // Fix v32-postreaudit — shadow radius уменьшен с 18 до 8 и
         // вертикальный offset с 8 до 4, чтобы тень не читалась как «второй
         // дублирующий бар» под основным capsule на скриншот-туре.
         .shadow(color: ColorTokens.Overlay.shadowMedium.opacity(0.6), radius: 8, x: 0, y: 4)

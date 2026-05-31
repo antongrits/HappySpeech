@@ -20,7 +20,7 @@ struct SessionHUDView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        // Diploma fix #10a — единый sp3 (medium) gap между progress/timer/
+        // Fix #10a — единый sp3 (medium) gap между progress/timer/
         // hearts/pause, чтобы header HUD выглядел ровно на всех устройствах
         // (раньше использовался regular=16 — слишком воздушно на SE 3).
         HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
@@ -175,7 +175,7 @@ struct FeedbackOverlayView: View {
 
     private var feedbackBubble: some View {
         HStack(spacing: SpacingTokens.small) {
-            // Diploma fix #10/9 — единый канонический маскот LyalyaMascotView
+            // Fix #10/9 — единый канонический маскот LyalyaMascotView
             // вместо legacy HSMascotView (как в AR-зоне и StutteringView).
             LyalyaMascotView(state: lyalyaState(for: mascotState), size: 56)
                 .accessibilityHidden(true)
@@ -261,7 +261,7 @@ struct FeedbackOverlayView: View {
         }
     }
 
-    /// Diploma fix #9 — маппинг session mascot state → LyalyaState для
+    /// Fix #9 — маппинг session mascot state → LyalyaState для
     /// канонического LyalyaMascotView. Заменяет legacy HSMascotView/MascotMood
     /// pipeline в feedback overlay.
     private func lyalyaState(for state: SessionShellModels.MascotState) -> LyalyaState {

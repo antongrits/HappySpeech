@@ -115,7 +115,7 @@ public actor LiveVoiceCloneService: VoiceCloneService {
     }
 
     /// Подлинное zero-shot ML-клонирование голоса не реализуется on-device (вне объёма
-    /// диплома, NC-лицензии моделей). Метод маршрутизирует синтез в системный TTS —
+    /// продукта, NC-лицензии моделей). Метод маршрутизирует синтез в системный TTS —
     /// это даёт работающий результат вместо безусловного отказа.
     public func cloneVoice(text: String, speakerIndex: Int) async throws -> Data {
         guard speakerIndex >= 0, speakerIndex < VoiceCloneSpeaker.allCases.count else {

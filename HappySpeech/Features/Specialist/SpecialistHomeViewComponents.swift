@@ -244,7 +244,7 @@ struct SpecChildRow: View {
 
             Spacer(minLength: SpacingTokens.sp1)
 
-            // Diploma fix #9b — «Не отрабатывали» жалось вплотную к chevron
+            // Fix #9b — «Не отрабатывали» жалось вплотную к chevron
             // справа: добавлен trailing-padding `regular` (16pt) у внутреннего
             // VStack, благодаря которому между датой/статусом и иконкой-стрелкой
             // появляется dедающее «дышать» пространство.

@@ -825,7 +825,7 @@ public extension AppContainer {
 
     /// Creates a preview container with mock service implementations.
     /// Использует расширенный seed (`previewList` 2 детей + история сессий)
-    /// чтобы screenshot tour / диплом-демо не показывали пустые экраны на
+    /// чтобы screenshot tour / демо не показывали пустые экраны на
     /// Leaderboard, FamilyAchievements, SessionHistory, ComparisonDashboard и т.д.
     static func preview() -> AppContainer {
         let realmActor = RealmActor()

@@ -93,7 +93,7 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
     ///
     /// Manifest source: `HappySpeech/Content/word_manifest.json`, surfaced
     /// through `LessonContentMap.asset(for:)`. The local legacy dict was
-    /// removed in Task #69 (Diploma Step 9) — every word that used to live
+    /// removed in Task #69 (project Step 9) — every word that used to live
     /// there is now in the manifest.
     static func imageSymbol(for word: String) -> String {
         let normalized = word.lowercased()

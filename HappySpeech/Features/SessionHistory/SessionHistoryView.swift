@@ -33,7 +33,7 @@ struct SessionHistoryView: View {
     @State private var isFilterSheetOpen = false
     @State private var isExportSheetOpen = false
     @State private var path: [SessionDetailRoute] = []
-    /// Diploma fix #7c — выбранная дата на trend-чарте (драг по chart-области).
+    /// Fix #7c — выбранная дата на trend-чарте (драг по chart-области).
     /// Под выбранной точкой показывается overlay со значением точности.
     @State private var selectedChartDate: Date?
 
@@ -56,7 +56,7 @@ struct SessionHistoryView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
-                // Diploma fix v32-postreaudit — Color.clear для full-extent
+                // Fix v32-postreaudit — Color.clear для full-extent
                 // ZStack (профилактика overflow-проблем как в 3.18 / 3.6).
                 Color.clear
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -82,7 +82,7 @@ struct SessionHistoryView: View {
 
                 content
                     .refreshable { performRefresh() }
-                    // Diploma fix v32-postreaudit — маскот раньше налезал на toolbar
+                    // Fix v32-postreaudit — маскот раньше налезал на toolbar
                     // ("+" / фильтр / экспорт) и на цифру «144 минут» в summary-cards.
                     // Перепозиционируем в bottomTrailing с уменьшением до 36pt: Ляля
                     // остаётся видимой как декоративный hint, но не конфликтует с
@@ -188,7 +188,7 @@ struct SessionHistoryView: View {
         } else {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: SpacingTokens.regular, pinnedViews: []) {
-                    // Diploma fix #7b — inline-заголовок «История сессий» удалён:
+                    // Fix #7b — inline-заголовок «История сессий» удалён:
                     // navigationTitle(...) на NavigationStack уже отображает его
                     // в navbar (inline mode), и дублирование делало секцию
                     // визуально «толстой» в скриншот-туре.
@@ -322,7 +322,7 @@ struct SessionHistoryView: View {
 
                 trendChart
                     .frame(height: 160)
-                    // Diploma fix #7c — swipe-to-inspect: drag по чарту выбирает
+                    // Fix #7c — swipe-to-inspect: drag по чарту выбирает
                     // ближайшую дату, под чартом появляется текстовый overlay.
                     .chartXSelection(value: $selectedChartDate)
                     .accessibilityLabel(String(localized: "sessionHistory.a11y.chart"))
@@ -354,7 +354,7 @@ struct SessionHistoryView: View {
         }
     }
 
-    /// Diploma fix 3.13 — ближайшая к пальцу точка при drag по чарту.
+    /// Fix 3.13 — ближайшая к пальцу точка при drag по чарту.
     /// Используется для подвижной индикаторной линии (RuleMark) и подсветки точки.
     private var selectedChartPoint: SessionHistoryChartPoint? {
         guard let selected = selectedChartDate else { return nil }
@@ -399,7 +399,7 @@ struct SessionHistoryView: View {
             .foregroundStyle(ColorTokens.Parent.surface)
             .symbolSize(28)
 
-            // Diploma fix 3.13 — подвижная индикаторная линия + подсветка точки
+            // Fix 3.13 — подвижная индикаторная линия + подсветка точки
             // под пальцем при drag (chartXSelection). RuleMark «следует» за
             // выбранной датой, делая static-чарт интерактивным.
             if let highlighted, highlighted.id == point.id {
@@ -430,7 +430,7 @@ struct SessionHistoryView: View {
             }
         }
         .chartXAxis {
-            // Diploma fix #7d — desiredCount уменьшен, dates форматируются как
+            // Fix #7d — desiredCount уменьшен, dates форматируются как
             // «d MMM» с caption(11) + lineLimit(1) + minimumScaleFactor(0.7),
             // чтобы метки не обрезались на узком iPhone SE 3 и при Dynamic Type XL.
             AxisMarks(values: .automatic(desiredCount: 3)) { _ in
@@ -481,7 +481,7 @@ struct SessionHistoryView: View {
                                 .buttonStyle(.plain)
                                 // Block J v18 — hero zoom source (iOS 18+).
                                 .heroSource(id: row.id, namespace: heroNamespace)
-                                // Diploma fix v32-postreaudit — scrollTransition с
+                                // Fix v32-postreaudit — scrollTransition с
                                 // opacity 0.7 + tiltCarousel создавали серый scrim
                                 // поверх списка («выглядит как недорендеренный»).
                                 // Полностью убрано: список рендерится прозрачно,
@@ -661,7 +661,7 @@ struct SessionHistoryView: View {
         return formatter.string(from: date)
     }
 
-    /// Diploma fix #7c — короткий «d MMM» формат для capsule поверх trend-chart.
+    /// Fix #7c — короткий «d MMM» формат для capsule поверх trend-chart.
     private func formattedChartDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
