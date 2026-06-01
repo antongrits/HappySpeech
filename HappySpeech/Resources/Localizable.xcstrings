@@ -44040,6 +44040,28 @@
         }
       }
     },
+    "soundDictionary.detail.articulationProfile.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема: как поставить язык для звука %@"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationProfile.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема артикуляции"
+          }
+        }
+      }
+    },
     "soundDictionary.detail.cta.playAudio": {
       "extractionState": "manual",
       "localizations": {
