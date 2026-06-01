@@ -19,6 +19,7 @@ final class NarrativeQuestPresenterTests: XCTestCase {
         var startStageVM: NarrativeQuestModels.StartStage.ViewModel?
         var recordWordVM: NarrativeQuestModels.RecordWord.ViewModel?
         var evaluateWordVM: NarrativeQuestModels.EvaluateWord.ViewModel?
+        var noInputVM: NarrativeQuestModels.NoInput.ViewModel?
         var advanceStageVM: NarrativeQuestModels.AdvanceStage.ViewModel?
         var completeQuestVM: NarrativeQuestModels.CompleteQuest.ViewModel?
 
@@ -26,6 +27,7 @@ final class NarrativeQuestPresenterTests: XCTestCase {
         func displayStartStage(_ viewModel: NarrativeQuestModels.StartStage.ViewModel) { startStageVM = viewModel }
         func displayRecordWord(_ viewModel: NarrativeQuestModels.RecordWord.ViewModel) { recordWordVM = viewModel }
         func displayEvaluateWord(_ viewModel: NarrativeQuestModels.EvaluateWord.ViewModel) { evaluateWordVM = viewModel }
+        func displayNoInput(_ viewModel: NarrativeQuestModels.NoInput.ViewModel) { noInputVM = viewModel }
         func displayAdvanceStage(_ viewModel: NarrativeQuestModels.AdvanceStage.ViewModel) { advanceStageVM = viewModel }
         func displayCompleteQuest(_ viewModel: NarrativeQuestModels.CompleteQuest.ViewModel) { completeQuestVM = viewModel }
     }
@@ -172,6 +174,15 @@ final class NarrativeQuestPresenterTests: XCTestCase {
         XCTAssertFalse(spy.evaluateWordVM?.feedbackSuccess ?? true)
         XCTAssertFalse(spy.evaluateWordVM?.showSuccessOverlay ?? true)
         XCTAssertFalse(spy.evaluateWordVM?.feedbackText.isEmpty ?? true)
+    }
+
+    // MARK: - presentNoInput
+
+    func test_presentNoInput_messagePassedThrough() {
+        let (sut, spy) = makeSUT()
+        let response = NarrativeQuestModels.NoInput.Response(message: "Давай попробуем ещё раз!")
+        sut.presentNoInput(response)
+        XCTAssertEqual(spy.noInputVM?.message, "Давай попробуем ещё раз!")
     }
 
     // MARK: - presentAdvanceStage

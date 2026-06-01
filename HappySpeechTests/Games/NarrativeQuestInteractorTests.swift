@@ -11,11 +11,13 @@ private final class SpyNarrativePresenter: NarrativeQuestPresentationLogic {
     var evaluateWordCalled = false
     var advanceStageCalled = false
     var completeQuestCalled = false
+    var noInputCalled = false
 
     var lastLoadQuest: NarrativeQuestModels.LoadQuest.Response?
     var lastStartStage: NarrativeQuestModels.StartStage.Response?
     var lastEvaluate: NarrativeQuestModels.EvaluateWord.Response?
     var lastComplete: NarrativeQuestModels.CompleteQuest.Response?
+    var lastNoInput: NarrativeQuestModels.NoInput.Response?
 
     func presentLoadQuest(_ response: NarrativeQuestModels.LoadQuest.Response) {
         loadQuestCalled = true
@@ -31,6 +33,10 @@ private final class SpyNarrativePresenter: NarrativeQuestPresentationLogic {
     func presentEvaluateWord(_ response: NarrativeQuestModels.EvaluateWord.Response) {
         evaluateWordCalled = true
         lastEvaluate = response
+    }
+    func presentNoInput(_ response: NarrativeQuestModels.NoInput.Response) {
+        noInputCalled = true
+        lastNoInput = response
     }
     func presentAdvanceStage(_ response: NarrativeQuestModels.AdvanceStage.Response) {
         advanceStageCalled = true
@@ -263,6 +269,28 @@ final class NarrativeQuestInteractorTests: XCTestCase {
         sut.completeQuest(.init())
         XCTAssertEqual(spy.lastComplete?.collectedEmojis.count, 1)
     }
+
+    // MARK: - No-input path: балл не начисляется, этап не продвигается
+
+    func test_handleNoInput_presentsNoInput_withoutScoring() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.handleNoInput(.init(reason: .micDenied))
+        XCTAssertTrue(spy.noInputCalled)
+        XCTAssertFalse(spy.evaluateWordCalled)
+        XCTAssertFalse(spy.advanceStageCalled)
+        XCTAssertFalse((spy.lastNoInput?.message ?? "").isEmpty)
+    }
+
+    func test_handleNoInput_doesNotCollectEmoji() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.handleNoInput(.init(reason: .asrFailed))
+        sut.completeQuest(.init())
+        XCTAssertEqual(spy.lastComplete?.collectedEmojis.count, 0)
+    }
 }
 
 // MARK: - Record-spy presenter (batch 1)
@@ -281,6 +309,7 @@ private final class RecordSpyNarrativePresenter: NarrativeQuestPresentationLogic
         onRecord(response.isListening)
     }
     func presentEvaluateWord(_ response: NarrativeQuestModels.EvaluateWord.Response) {}
+    func presentNoInput(_ response: NarrativeQuestModels.NoInput.Response) {}
     func presentAdvanceStage(_ response: NarrativeQuestModels.AdvanceStage.Response) {}
     func presentCompleteQuest(_ response: NarrativeQuestModels.CompleteQuest.Response) {}
 }

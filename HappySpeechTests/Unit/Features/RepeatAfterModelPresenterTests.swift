@@ -18,6 +18,7 @@ final class RepeatAfterModelPresenterTests: XCTestCase {
         var startWordVM: RepeatAfterModelModels.StartWord.ViewModel?
         var recordAttemptVM: RepeatAfterModelModels.RecordAttempt.ViewModel?
         var evaluateAttemptVM: RepeatAfterModelModels.EvaluateAttempt.ViewModel?
+        var noInputVM: RepeatAfterModelModels.NoInput.ViewModel?
         var replayModelVM: RepeatAfterModelModels.ReplayModel.ViewModel?
         var hintVM: RepeatAfterModelModels.Hint.ViewModel?
         var sloMoVM: RepeatAfterModelModels.SloMo.ViewModel?
@@ -27,6 +28,7 @@ final class RepeatAfterModelPresenterTests: XCTestCase {
         func displayStartWord(_ viewModel: RepeatAfterModelModels.StartWord.ViewModel) { startWordVM = viewModel }
         func displayRecordAttempt(_ viewModel: RepeatAfterModelModels.RecordAttempt.ViewModel) { recordAttemptVM = viewModel }
         func displayEvaluateAttempt(_ viewModel: RepeatAfterModelModels.EvaluateAttempt.ViewModel) { evaluateAttemptVM = viewModel }
+        func displayNoInput(_ viewModel: RepeatAfterModelModels.NoInput.ViewModel) { noInputVM = viewModel }
         func displayReplayModel(_ viewModel: RepeatAfterModelModels.ReplayModel.ViewModel) { replayModelVM = viewModel }
         func displayHint(_ viewModel: RepeatAfterModelModels.Hint.ViewModel) { hintVM = viewModel }
         func displaySloMo(_ viewModel: RepeatAfterModelModels.SloMo.ViewModel) { sloMoVM = viewModel }
@@ -194,6 +196,19 @@ final class RepeatAfterModelPresenterTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.presentEvaluateAttempt(makeEvaluateResponse(diagnostic: .addition))
         XCTAssertNotNil(spy.evaluateAttemptVM?.diagnosticText)
+    }
+
+    // MARK: - presentNoInput
+
+    func test_presentNoInput_passesMessageAndAttempts() {
+        let (sut, spy) = makeSUT()
+        let response = RepeatAfterModelModels.NoInput.Response(
+            attemptsLeft: 2,
+            message: "Давай попробуем ещё раз!"
+        )
+        sut.presentNoInput(response)
+        XCTAssertEqual(spy.noInputVM?.attemptsLeft, 2)
+        XCTAssertEqual(spy.noInputVM?.message, "Давай попробуем ещё раз!")
     }
 
     // MARK: - presentReplayModel

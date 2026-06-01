@@ -4,9 +4,10 @@ import XCTest
 // MARK: - WordOfTheDayInteractorTests
 //
 // WordOfTheDayInteractor is a thin VIP MVP variant (@Observable). It exposes a
-// deterministic word-of-the-day card (rotated by day-of-year) and a simulated
-// recording flow that scores 2...3 stars after 1.5s. Tests cover the rotator,
-// the recording phase transitions and reset.
+// deterministic word-of-the-day card (rotated by day-of-year) and a real
+// recording flow. Without injected audio/scorer services (as in these tests)
+// it must NOT fabricate stars — it lands on a neutral `.tryAgain`. Tests cover
+// the rotator, the recording phase transitions and reset.
 
 @MainActor
 final class WordOfTheDayInteractorTests: XCTestCase {
@@ -84,14 +85,17 @@ final class WordOfTheDayInteractorTests: XCTestCase {
         XCTAssertEqual(sut.phase, .recording)
     }
 
-    func test_startRecording_scoresWithinRangeAfterDelay() async {
+    func test_startRecording_withoutServices_landsOnTryAgain_noFabricatedStars() async {
+        // Без инжектированных audio/scorer сервисов интерактор НЕ должен
+        // фабриковать звёзды — целостность данных произношения требует
+        // нейтрального исхода `.tryAgain` при отсутствии реального ввода.
         let sut = makeSUT()
         sut.startRecording()
-        try? await Task.sleep(for: .milliseconds(1800))
-        guard case let .scored(stars) = sut.phase else {
-            return XCTFail("Expected .scored phase, got \(sut.phase)")
+        try? await Task.sleep(for: .milliseconds(300))
+        XCTAssertEqual(sut.phase, .tryAgain)
+        if case .scored = sut.phase {
+            XCTFail("Звёзды не должны начисляться без реального ввода")
         }
-        XCTAssertTrue((2...3).contains(stars), "stars out of range: \(stars)")
     }
 
     // MARK: - reset

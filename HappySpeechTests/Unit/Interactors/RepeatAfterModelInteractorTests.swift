@@ -19,12 +19,14 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         var evaluateAttemptCalled = false
         var recordAttemptCalled = false
         var completeSessionCalled = false
+        var noInputCalled = false
 
         var lastLoadSession: RepeatAfterModelModels.LoadSession.Response?
         var lastStartWord: RepeatAfterModelModels.StartWord.Response?
         var lastEvaluateAttempt: RepeatAfterModelModels.EvaluateAttempt.Response?
         var lastRecordAttempt: RepeatAfterModelModels.RecordAttempt.Response?
         var lastCompleteSession: RepeatAfterModelModels.CompleteSession.Response?
+        var lastNoInput: RepeatAfterModelModels.NoInput.Response?
 
         func presentLoadSession(_ response: RepeatAfterModelModels.LoadSession.Response) {
             loadSessionCalled = true
@@ -45,6 +47,10 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         func presentCompleteSession(_ response: RepeatAfterModelModels.CompleteSession.Response) {
             completeSessionCalled = true
             lastCompleteSession = response
+        }
+        func presentNoInput(_ response: RepeatAfterModelModels.NoInput.Response) {
+            noInputCalled = true
+            lastNoInput = response
         }
         var lastReplayModel: RepeatAfterModelModels.ReplayModel.Response?
         var lastHint: RepeatAfterModelModels.Hint.Response?
@@ -319,5 +325,30 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         for group in ["whistling", "hissing", "sonants", "velar"] {
             XCTAssertFalse(TargetWordItem.words(for: group).isEmpty, "Группа \(group) пуста")
         }
+    }
+
+    // MARK: - No-input path: не списываем попытку, балл не начисляется
+
+    func test_handleNoInput_doesNotDecrementAttempts() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        let before = sut.attemptsLeft
+        sut.handleNoInput(.init(reason: .micDenied))
+        XCTAssertTrue(spy.noInputCalled)
+        XCTAssertFalse(spy.evaluateAttemptCalled)
+        XCTAssertEqual(sut.attemptsLeft, before, "Попытка не должна списываться без реального ввода")
+        XCTAssertEqual(spy.lastNoInput?.attemptsLeft, before)
+    }
+
+    func test_handleNoInput_stopsRecording() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.toggleRecording()
+        XCTAssertTrue(sut.isRecording)
+        sut.handleNoInput(.init(reason: .asrFailed))
+        XCTAssertFalse(sut.isRecording)
+        XCTAssertFalse((spy.lastNoInput?.message ?? "").isEmpty)
     }
 }

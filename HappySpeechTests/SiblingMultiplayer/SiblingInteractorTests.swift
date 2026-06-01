@@ -190,16 +190,23 @@ final class SiblingInteractorTests: XCTestCase {
         XCTAssertTrue(true, "invitePeer не должен крашить при отсутствии MCPeerID в реестре")
     }
 
-    // MARK: - 3. evaluateAttempt: score в диапазоне [0.4 ... 0.95]
+    // MARK: - 3. evaluateAttempt: без сервисов балл не фабрикуется, score остаётся в [0...1]
 
-    func test_evaluateAttempt_returnsScoreInRange0to1() {
+    func test_evaluateAttempt_returnsScoreInRange0to1() async {
         let (sut, spy, _) = makeGameSUT()
         sut.loadGame(childId: "child-001", peerDisplayName: "Маша", localDisplayName: "Петя")
 
-        // evaluateAttempt вызывает submitScore с mock-значением 0.4...0.95
-        // Вызываем несколько раз и проверяем что presenter получил scoreUpdate
-        for _ in 1...5 {
-            sut.evaluateAttempt()
+        // Без инжектированных audio/scorer сервисов evaluateAttempt НЕ фабрикует
+        // балл: recordAndScore возвращает nil, и presenter получает нейтральный
+        // scoreUpdate (раунд ждёт повторной попытки). evaluateAttempt — async
+        // (запускает Task для реальной записи), поэтому ждём завершения задачи.
+        sut.evaluateAttempt()
+
+        // Дать порождённой scoring-задаче выполниться (без сервисов она
+        // завершается синхронно после первого await).
+        for _ in 0..<20 where !spy.presentScoreUpdateCalled {
+            await Task.yield()
+            try? await Task.sleep(for: .milliseconds(10))
         }
 
         XCTAssertTrue(spy.presentScoreUpdateCalled, "presenter должен получить presentScoreUpdate")
