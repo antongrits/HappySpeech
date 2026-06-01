@@ -62,6 +62,16 @@ final class NarrativeQuestStoreBridge: NarrativeQuestDisplayLogic {
         display.phase = .stageFeedback
     }
 
+    func displayNoInput(_ viewModel: NarrativeQuestModels.NoInput.ViewModel) {
+        // Нет реального ввода: НЕ показываем успех/награду, остаёмся на этапе записи
+        // с мягким сообщением — ребёнок может попробовать снова. Балл не начислен.
+        display.isListening = false
+        display.showSuccessOverlay = false
+        display.feedbackSuccess = false
+        display.micLabel = viewModel.message
+        display.phase = .recording
+    }
+
     func displayAdvanceStage(_ viewModel: NarrativeQuestModels.AdvanceStage.ViewModel) {
         display.collectedEmojis = viewModel.collectedEmojis
         display.progressFraction = viewModel.progressFraction

@@ -24,6 +24,7 @@ struct SiblingGameView: View {
     @State private var showEndGame: Bool = false
 
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SiblingGame")
@@ -402,7 +403,11 @@ struct SiblingGameView: View {
 
     private func bootstrap() {
         guard interactor == nil else { return }
-        let createdInteractor = SiblingGameInteractor(mpcWorker: mpcWorker)
+        let createdInteractor = SiblingGameInteractor(
+            mpcWorker: mpcWorker,
+            audioService: container.audioService,
+            scorer: container.pronunciationService
+        )
         let presenter = SiblingGamePresenter(localPeerDisplayName: localDisplayName)
         createdInteractor.presenter = presenter
         let adapter = SiblingGameViewAdapter(

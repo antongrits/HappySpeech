@@ -298,6 +298,31 @@ enum RepeatAfterModelModels {
         }
     }
 
+    // MARK: NoInput
+    //
+    // Микрофон недоступен / ASR упал / реального аудио нет. НЕ начисляем балл и
+    // НЕ списываем попытку — мягко предлагаем повторить (целостность данных
+    // произношения: никаких сфабрикованных оценок без реального ввода).
+    enum NoInput {
+        struct Request: Sendable {
+            /// Почему нет ввода — для аналитики/логов (не показывается ребёнку).
+            enum Reason: String, Sendable {
+                case micDenied
+                case recordingFailed
+                case asrFailed
+            }
+            let reason: Reason
+        }
+        struct Response: Sendable {
+            let attemptsLeft: Int
+            let message: String
+        }
+        struct ViewModel: Sendable {
+            let attemptsLeft: Int
+            let message: String
+        }
+    }
+
     // MARK: CompleteSession
     enum CompleteSession {
         struct Request: Sendable {}

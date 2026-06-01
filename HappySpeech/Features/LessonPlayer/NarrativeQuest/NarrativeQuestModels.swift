@@ -89,6 +89,27 @@ enum NarrativeQuestModels {
         }
     }
 
+    // MARK: - NoInput
+    //
+    // Нет реального ввода (микрофон/ASR). Не оцениваем и не продвигаем —
+    // мягко просим повторить. Никаких сфабрикованных оценок.
+    enum NoInput {
+        struct Request: Sendable {
+            enum Reason: String, Sendable {
+                case micDenied
+                case recordingFailed
+                case asrFailed
+            }
+            let reason: Reason
+        }
+        struct Response: Sendable {
+            let message: String
+        }
+        struct ViewModel: Sendable {
+            let message: String
+        }
+    }
+
     // MARK: - AdvanceStage
 
     enum AdvanceStage {

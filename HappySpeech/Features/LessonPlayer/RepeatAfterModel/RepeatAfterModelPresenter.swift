@@ -8,6 +8,7 @@ protocol RepeatAfterModelPresentationLogic: AnyObject {
     func presentStartWord(_ response: RepeatAfterModelModels.StartWord.Response)
     func presentRecordAttempt(_ response: RepeatAfterModelModels.RecordAttempt.Response)
     func presentEvaluateAttempt(_ response: RepeatAfterModelModels.EvaluateAttempt.Response)
+    func presentNoInput(_ response: RepeatAfterModelModels.NoInput.Response)
     func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response)
     func presentHint(_ response: RepeatAfterModelModels.Hint.Response)
     func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response)
@@ -97,6 +98,16 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
             attemptsLeft: response.attemptsLeft
         )
         viewModel?.displayEvaluateAttempt(vm)
+    }
+
+    // MARK: - NoInput
+
+    func presentNoInput(_ response: RepeatAfterModelModels.NoInput.Response) {
+        let vm = RepeatAfterModelModels.NoInput.ViewModel(
+            attemptsLeft: response.attemptsLeft,
+            message: response.message
+        )
+        viewModel?.displayNoInput(vm)
     }
 
     private func buildDiagnosticText(_ diagnostic: PronunciationDiagnostic) -> String? {

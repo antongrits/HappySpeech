@@ -232,6 +232,8 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
     var router: (any SiblingRoutingLogic)?
 
     private let mpcWorker: SiblingMPCWorker
+    private let audioService: (any AudioService)?
+    private let scorer: (any PronunciationScorerService)?
     private var words: [String] = []
     private var currentRound: Int = 1
     private let totalRounds: Int = 5
@@ -245,6 +247,7 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
     private var localDisplayName: String = ""
     private var peerDisplayName: String = ""
     private var roundResultTask: Task<Void, Never>?
+    private var scoringTask: Task<Void, Never>?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SiblingGame")
 
     private static let defaultWords = [
@@ -252,8 +255,14 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
         "Лист", "Соль", "Зубр", "Роса", "Луч"
     ]
 
-    init(mpcWorker: SiblingMPCWorker) {
+    init(
+        mpcWorker: SiblingMPCWorker,
+        audioService: (any AudioService)? = nil,
+        scorer: (any PronunciationScorerService)? = nil
+    ) {
         self.mpcWorker = mpcWorker
+        self.audioService = audioService
+        self.scorer = scorer
     }
 
     func loadGame(childId: String, peerDisplayName: String, localDisplayName: String) {
@@ -291,10 +300,62 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
     }
 
     func evaluateAttempt() {
-        // Бизнес-логика оценки произношения.
-        // Пока mock через случайное значение; заменить на PronunciationScorer при интеграции.
-        let mockScore = Float.random(in: 0.4...0.95)
-        submitScore(mockScore)
+        // Реальная оценка произношения: запись с микрофона → on-device
+        // PronunciationScorer. Никаких случайных оценок. Если ввод недоступен —
+        // НЕ начисляем балл и НЕ отправляем score (раунд ждёт повторной попытки).
+        guard currentRound >= 1, currentRound <= words.count else { return }
+        let word = words[currentRound - 1]
+
+        scoringTask?.cancel()
+        scoringTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            if let score = await self.recordAndScore(word: word) {
+                self.submitScore(score)
+            } else {
+                // Нет реального ввода/оценки — мягко просим повторить, без фабрикации.
+                self.logger.info("SiblingGame: нет ввода для '\(word, privacy: .public)' — повтор без начисления")
+                self.presenter?.presentScoreUpdate(.init(
+                    ourRoundResult: self.ourRoundScore,
+                    peerRoundResult: self.peerRoundScore,
+                    ourTotalPoints: self.ourTotalPoints,
+                    peerTotalPoints: self.peerTotalPoints
+                ))
+            }
+        }
+    }
+
+    /// Записывает аудио ребёнка и оценивает on-device. `nil` — ввода/оценки нет.
+    private func recordAndScore(word: String) async -> Float? {
+        guard let audioService, let scorer else { return nil }
+        if !audioService.isPermissionGranted {
+            let granted = await audioService.requestPermission()
+            guard granted else { return nil }
+        }
+        do {
+            try await audioService.startRecording()
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled else { return nil }
+            let url = try await audioService.stopRecording()
+            let targetSound = Self.targetSound(for: word)
+            let score = try await scorer.score(audioURL: url, targetSound: targetSound)
+            guard score.isScored else { return nil }
+            // Множитель MPC-голосования требует строго > 0 (см. evaluateRoundIfReady).
+            return max(0.01, Float(score.value))
+        } catch {
+            logger.warning("SiblingGame: запись/скоринг упали — \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    /// Целевой звук слова = первая буква из поддержанной фонемной группы.
+    /// Используется для выбора нужной pronunciation-модели.
+    private static func targetSound(for word: String) -> String {
+        let supported: Set<Character> = ["С", "З", "Ц", "Ш", "Ж", "Ч", "Щ", "Р", "Л", "К", "Г", "Х"]
+        for ch in word.uppercased() where supported.contains(ch) {
+            return String(ch)
+        }
+        // Нет поддержанного звука — отдаём слово как есть (scorer вернёт notScored).
+        return word
     }
 
     func submitScore(_ score: Float) {
@@ -319,6 +380,7 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
 
     func exitGame() {
         roundResultTask?.cancel()
+        scoringTask?.cancel()
         mpcWorker.send(.disconnect)
         router?.routeBackToChildHome()
     }

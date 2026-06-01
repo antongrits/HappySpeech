@@ -140,6 +140,22 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
         display.phase = .feedback
     }
 
+    func displayNoInput(_ viewModel: RepeatAfterModelModels.NoInput.ViewModel) {
+        // Нет реального ввода: НЕ показываем звёзды/оценку, возвращаемся в готовность
+        // к повторной записи с мягким сообщением. Балл не начислен, попытка не списана.
+        display.attemptsLeft = viewModel.attemptsLeft
+        display.feedbackText = viewModel.message
+        display.micLabel = viewModel.message
+        display.score = 0
+        display.passed = false
+        display.canAdvance = false
+        display.roundStars = 0
+        display.isRecording = false
+        display.diagnosticText = nil
+        display.encouragement = nil
+        display.phase = .waiting
+    }
+
     func displayReplayModel(_ viewModel: RepeatAfterModelModels.ReplayModel.ViewModel) {
         display.replayLabel = viewModel.replayLabel
         display.replayLimitReached = viewModel.replayLimitReached

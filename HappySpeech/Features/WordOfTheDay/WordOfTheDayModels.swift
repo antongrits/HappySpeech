@@ -16,6 +16,8 @@ enum WordOfTheDayModels {
         case idle
         case recording
         case scored(Int) // 0...3 stars
+        /// Нет реального ввода/оценки — мягко предлагаем повторить, БЕЗ звёзд.
+        case tryAgain
     }
 
     /// Простой ротатор слов на основании дня года, чтобы было детерминированно.

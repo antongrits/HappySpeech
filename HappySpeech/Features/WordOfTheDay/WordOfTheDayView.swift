@@ -7,6 +7,7 @@ struct WordOfTheDayView: View {
     let childId: String
 
     @State private var interactor: WordOfTheDayInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +41,11 @@ struct WordOfTheDayView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = WordOfTheDayInteractor(childId: childId)
+                    interactor = WordOfTheDayInteractor(
+                        childId: childId,
+                        audioService: container.audioService,
+                        scorer: container.pronunciationService
+                    )
                 }
             }
         }
@@ -150,6 +155,16 @@ struct WordOfTheDayView: View {
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text("Оценка: \(stars) из 3"))
+        case .tryAgain:
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "arrow.counterclockwise.circle.fill")
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .font(.system(size: 24))
+                Text(String(localized: "Давай попробуем ещё раз!"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
+            .accessibilityElement(children: .combine)
         }
     }
 

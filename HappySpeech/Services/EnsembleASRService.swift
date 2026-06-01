@@ -240,10 +240,11 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
 
         // PhonemeClassifier — фонемное распознавание (с контекстом ожидаемого слова)
         async let phonemeTask = phonemeClassifier.analyze(audio: pcmData, expectedWord: expectedWord)
-        // PronunciationScorer — оценка произношения из audio URL (с целевым звуком)
-        async let scorerTask = pronunciationScorer.score(audioURL: url, targetSound: targetSound)
+        // PronunciationScorer — оценка произношения (изолирована: сбой/отсутствие модели
+        // не должны валить весь Tier A; nil → голос исключается из голосования).
+        async let scorerTask = scorerConfidence(url: url, targetSound: targetSound)
 
-        let (phonemeResult, scorerResult) = try await (phonemeTask, scorerTask)
+        let (phonemeResult, scorerConf) = try await (phonemeTask, scorerTask)
 
         // Собираем транскрипт из предсказанных фонем
         let phonemeTranscript = phonemeResult.predictedPhonemes
@@ -251,19 +252,24 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
             .map { $0.predictedIPA }
             .joined()
 
-        // Взвешенное голосование уверенности
+        // Взвешенное голосование уверенности. Если scorer не дал результат —
+        // перекладываем его вес на фонемный голос (re-normalize), а не штрафуем нулём.
         let phonemeConfidence = Float(phonemeResult.overallScore)
-        let scorerConfidence = Float(scorerResult.value)
-
-        let ensembleConfidence = Self.tierAPhonemeWeight * phonemeConfidence
-            + Self.tierAScorerWeight * scorerConfidence
+        let ensembleConfidence: Float
+        if let scorerConf {
+            ensembleConfidence = Self.tierAPhonemeWeight * phonemeConfidence
+                + Self.tierAScorerWeight * scorerConf
+        } else {
+            ensembleConfidence = phonemeConfidence
+        }
 
         let elapsed = Int(Date().timeIntervalSince(start) * 1000)
-        logger.info("EnsembleASR Tier A: confidence=\(ensembleConfidence), elapsed=\(elapsed)мс")
+        let scLog = scorerConf.map { String(format: "%.2f", $0) } ?? "—"
+        logger.info("EnsembleASR Tier A: ph=\(phonemeConfidence) sc=\(scLog) ens=\(ensembleConfidence) \(elapsed)мс")
 
         return EnsembleASRResult(
             transcript: phonemeTranscript,
-            phonemeAccuracy: scorerConfidence,
+            phonemeAccuracy: scorerConf ?? phonemeConfidence,
             confidence: ensembleConfidence,
             detectedTier: .a,
             processingTimeMs: elapsed
@@ -280,12 +286,13 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
     ) async throws -> EnsembleASRResult {
         let pcmData = try loadPCMData(from: url)
 
-        // Запускаем три обязательных голоса параллельно (с контекстом слова/звука)
+        // Запускаем три голоса параллельно (с контекстом слова/звука). Scorer изолирован:
+        // его сбой/отсутствие модели даёт nil и не валит весь Tier B.
         async let whisperTask = whisperASR.transcribe(url: url)
         async let phonemeTask = phonemeClassifier.analyze(audio: pcmData, expectedWord: expectedWord)
-        async let scorerTask = pronunciationScorer.score(audioURL: url, targetSound: targetSound)
+        async let scorerTask = scorerConfidence(url: url, targetSound: targetSound)
 
-        let (whisperResult, phonemeResult, scorerResult) = try await (whisperTask, phonemeTask, scorerTask)
+        let (whisperResult, phonemeResult, scorerConf) = try await (whisperTask, phonemeTask, scorerTask)
 
         // Четвёртый голос (Wav2Vec2 CTC) — только если зависимость подключена.
         // Tier B (parent/specialist) — тяжёлая модель допустима. Ошибка декодера
@@ -299,7 +306,9 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
 
         let whisperConfidence = Float(whisperResult.confidence)
         let phonemeConfidence = Float(phonemeResult.overallScore)
-        let scorerConfidence = Float(scorerResult.value)
+        // Если scorer не дал результат — подставляем фонемный голос на его место,
+        // чтобы вес не «обнулял» уверенность; фактический голос только из реальных моделей.
+        let scorerConfidence = scorerConf ?? phonemeConfidence
 
         let ensembleConfidence: Float
         if let ctcConfidence {
@@ -317,17 +326,33 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
 
         let elapsed = Int(Date().timeIntervalSince(start) * 1000)
         let ctcLog = ctcConfidence.map { String(format: "%.2f", $0) } ?? "—"
+        let scLog = scorerConf.map { String(format: "%.2f", $0) } ?? "—"
         logger.info(
-            "EnsembleASR B w:\(whisperConfidence) ph:\(phonemeConfidence) sc:\(scorerConfidence) ctc:\(ctcLog) ens:\(ensembleConfidence) \(elapsed)мс"
+            "EnsembleASR B w:\(whisperConfidence) ph:\(phonemeConfidence) sc:\(scLog) ctc:\(ctcLog) ens:\(ensembleConfidence) \(elapsed)мс"
         )
 
         return EnsembleASRResult(
             transcript: transcript,
-            phonemeAccuracy: scorerConfidence,
+            phonemeAccuracy: scorerConf ?? phonemeConfidence,
             confidence: ensembleConfidence,
             detectedTier: .b,
             processingTimeMs: elapsed
         )
+    }
+
+    /// Изолированный голос pronunciation-scorer.
+    /// Возвращает `nil`, если модель группы отсутствует, звук не поддержан
+    /// (`PronunciationScore.notScored`) или инференс упал — тогда голос исключается
+    /// из ансамбля, а не обрушивает весь recognize.
+    private func scorerConfidence(url: URL, targetSound: String) async -> Float? {
+        do {
+            let result = try await pronunciationScorer.score(audioURL: url, targetSound: targetSound)
+            guard result.isScored else { return nil }
+            return Float(result.value)
+        } catch {
+            logger.warning("EnsembleASR: PronunciationScorer недоступен (\(error.localizedDescription)) — голос исключён")
+            return nil
+        }
     }
 
     /// Запускает Wav2Vec2 CTC-декодер и возвращает среднюю уверенность фонем.

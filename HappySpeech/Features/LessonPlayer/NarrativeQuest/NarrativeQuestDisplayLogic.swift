@@ -12,6 +12,7 @@ protocol NarrativeQuestDisplayLogic: AnyObject {
     func displayStartStage(_ viewModel: NarrativeQuestModels.StartStage.ViewModel)
     func displayRecordWord(_ viewModel: NarrativeQuestModels.RecordWord.ViewModel)
     func displayEvaluateWord(_ viewModel: NarrativeQuestModels.EvaluateWord.ViewModel)
+    func displayNoInput(_ viewModel: NarrativeQuestModels.NoInput.ViewModel)
     func displayAdvanceStage(_ viewModel: NarrativeQuestModels.AdvanceStage.ViewModel)
     func displayCompleteQuest(_ viewModel: NarrativeQuestModels.CompleteQuest.ViewModel)
 }

@@ -8,6 +8,7 @@ protocol NarrativeQuestPresentationLogic: AnyObject {
     func presentStartStage(_ response: NarrativeQuestModels.StartStage.Response)
     func presentRecordWord(_ response: NarrativeQuestModels.RecordWord.Response)
     func presentEvaluateWord(_ response: NarrativeQuestModels.EvaluateWord.Response)
+    func presentNoInput(_ response: NarrativeQuestModels.NoInput.Response)
     func presentAdvanceStage(_ response: NarrativeQuestModels.AdvanceStage.Response)
     func presentCompleteQuest(_ response: NarrativeQuestModels.CompleteQuest.Response)
 }
@@ -83,6 +84,13 @@ final class NarrativeQuestPresenter: NarrativeQuestPresentationLogic {
             score: response.score
         )
         displayLogic?.displayEvaluateWord(vm)
+    }
+
+    // MARK: - NoInput
+
+    func presentNoInput(_ response: NarrativeQuestModels.NoInput.Response) {
+        let vm = NarrativeQuestModels.NoInput.ViewModel(message: response.message)
+        displayLogic?.displayNoInput(vm)
     }
 
     // MARK: - AdvanceStage

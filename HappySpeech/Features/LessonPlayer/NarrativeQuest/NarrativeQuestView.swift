@@ -526,7 +526,7 @@ struct NarrativeQuestView: View {
             if !audioService.isPermissionGranted {
                 let granted = await audioService.requestPermission()
                 if !granted {
-                    submitFallback()
+                    handleNoInput(reason: .micDenied)
                     return
                 }
             }
@@ -535,7 +535,7 @@ struct NarrativeQuestView: View {
                 scheduleAutoStop()
             } catch {
                 logger.error("NarrativeQuest startRecording failed: \(error.localizedDescription)")
-                submitFallback()
+                handleNoInput(reason: .recordingFailed)
             }
         }
     }
@@ -568,7 +568,7 @@ struct NarrativeQuestView: View {
                 )
             } catch {
                 logger.error("NarrativeQuest stopRecording/transcribe failed: \(error.localizedDescription)")
-                submitFallback()
+                handleNoInput(reason: .asrFailed)
             }
         }
     }
@@ -578,13 +578,11 @@ struct NarrativeQuestView: View {
         scheduleOverlayDismiss()
     }
 
-    /// Fallback, когда запись/ASR упал: отправляем пустой transcript
-    /// с умеренной confidence — скоринг даст мягкий пропуск, чтобы
-    /// не ломать прогресс ребёнка.
-    private func submitFallback() {
-        let confidence: Float = 0.7
-        interactor.evaluateWord(.init(transcript: "", confidence: confidence))
-        scheduleOverlayDismiss()
+    /// Нет реального аудио/транскрипта (отказ микрофона, сбой записи/ASR).
+    /// НЕ фабрикуем оценку: просим повторить через Interactor (балл/награда не
+    /// начисляются, этап не продвигается).
+    private func handleNoInput(reason: NarrativeQuestModels.NoInput.Request.Reason) {
+        interactor.handleNoInput(.init(reason: reason))
     }
 
     private func scheduleOverlayDismiss() {

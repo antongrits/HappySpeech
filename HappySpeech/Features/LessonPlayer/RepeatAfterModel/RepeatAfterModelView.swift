@@ -718,14 +718,14 @@ struct RepeatAfterModelView: View {
             if !audioService.isPermissionGranted {
                 let granted = await audioService.requestPermission()
                 if !granted {
-                    submitFallback()
+                    handleNoInput(reason: .micDenied)
                     return
                 }
             }
             do {
                 try await audioService.startRecording()
             } catch {
-                submitFallback()
+                handleNoInput(reason: .recordingFailed)
             }
         }
     }
@@ -751,17 +751,16 @@ struct RepeatAfterModelView: View {
                     confidence: Float(result.confidence)
                 ))
             } catch {
-                submitFallback()
+                handleNoInput(reason: .asrFailed)
             }
         }
     }
 
-    /// Fallback, если что-то пошло не так: генерим случайный
-    /// confidence в безопасном диапазоне и пустую транскрипцию — так
-    /// скоринг сведётся к confidence-тиру. Ребёнок не видит ошибок.
-    private func submitFallback() {
-        let confidence = Float.random(in: 0.55...0.9)
-        interactor.submitTranscript(.init(transcript: "", confidence: confidence))
+    /// Нет реального аудио/транскрипта (отказ микрофона, сбой записи или ASR).
+    /// НЕ фабрикуем оценку: просим повторить через Interactor (балл/звёзды не
+    /// начисляются, попытка не списывается, статистика не засоряется).
+    private func handleNoInput(reason: RepeatAfterModelModels.NoInput.Request.Reason) {
+        interactor.handleNoInput(.init(reason: reason))
     }
 
     // MARK: - Phase change handler (LetterHighlight + auto-progression)

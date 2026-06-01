@@ -9,6 +9,7 @@ protocol RepeatAfterModelBusinessLogic: AnyObject {
     func startWord(_ request: RepeatAfterModelModels.StartWord.Request)
     func toggleRecording()
     func submitTranscript(_ request: RepeatAfterModelModels.EvaluateAttempt.Request)
+    func handleNoInput(_ request: RepeatAfterModelModels.NoInput.Request)
     func submitMLScore(_ request: RepeatAfterModelModels.MLEvaluate.Request)
     func advanceWord()
     func completeSession()
@@ -317,6 +318,22 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
                 self.presenter?.presentEvaluateAttempt(updatedResponse)
             }
         }
+    }
+
+    // MARK: - handleNoInput
+
+    /// Реального аудио/транскрипта нет (отказ микрофона, сбой записи или ASR).
+    /// НЕ начисляем балл, НЕ трогаем историю/лучший результат, НЕ списываем попытку,
+    /// НЕ сбрасываем pendingMLScore — просто мягко просим повторить.
+    func handleNoInput(_ request: RepeatAfterModelModels.NoInput.Request) {
+        isRecording = false
+        pendingMLScore = nil
+        logger.info("repeat noInput reason=\(request.reason.rawValue, privacy: .public) word=\(self.currentIndex)")
+        let response = RepeatAfterModelModels.NoInput.Response(
+            attemptsLeft: attemptsLeft,
+            message: String(localized: "repeat.feedback.try_again")
+        )
+        presenter?.presentNoInput(response)
     }
 
     // MARK: - requestHint

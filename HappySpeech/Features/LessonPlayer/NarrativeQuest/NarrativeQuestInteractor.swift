@@ -9,6 +9,7 @@ protocol NarrativeQuestBusinessLogic: AnyObject {
     func startStage(_ request: NarrativeQuestModels.StartStage.Request)
     func recordWord(_ request: NarrativeQuestModels.RecordWord.Request)
     func evaluateWord(_ request: NarrativeQuestModels.EvaluateWord.Request)
+    func handleNoInput(_ request: NarrativeQuestModels.NoInput.Request)
     func advanceStage(_ request: NarrativeQuestModels.AdvanceStage.Request)
     func completeQuest(_ request: NarrativeQuestModels.CompleteQuest.Request)
     func cancel()
@@ -216,6 +217,18 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
         // Через feedbackDelay — либо следующий этап, либо завершение.
         scheduleAdvance()
+    }
+
+    // MARK: - handleNoInput
+
+    /// Реального аудио/транскрипта нет (отказ микрофона, сбой записи/ASR).
+    /// НЕ начисляем балл, НЕ собираем эмодзи-награду, НЕ продвигаем этап и НЕ
+    /// засоряем stageScores — просто прекращаем прослушивание и ждём повтор.
+    func handleNoInput(_ request: NarrativeQuestModels.NoInput.Request) {
+        isListening = false
+        logger.info("NarrativeQuest noInput reason=\(request.reason.rawValue, privacy: .public) stage=\(self.currentStageIndex)")
+        presenter?.presentRecordWord(.init(isListening: false))
+        presenter?.presentNoInput(.init(message: String(localized: "Давай попробуем ещё раз!")))
     }
 
     // MARK: - AdvanceStage

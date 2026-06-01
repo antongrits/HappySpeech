@@ -1,102 +1,116 @@
 import Accelerate
-import AVFoundation
+@preconcurrency import AVFoundation
 import CoreML
 import Foundation
 import OSLog
 
 // MARK: - LivePronunciationScorerService
 
-/// On-device pronunciation scorer using a CoreML model (.mlpackage).
-/// При отсутствии модели — бросает ошибку (нет silent fallback к energy heuristic).
+/// On-device pronunciation scorer (контракт ``PronunciationScorerService``),
+/// работающий поверх четырёх пофонемных Core ML моделей.
 ///
-/// Block B.8 v15: удалён heuristic RMS fallback (min(1.0, rms * 8.0)).
-/// Реальный вывод только через обученную Conv1D модель + RealMFCCExtractor.
+/// Block C v23: ранее этот сервис искал единый `PronunciationScorer.mlpackage`,
+/// которого в бандле НЕТ (есть только `PronunciationScorer_{whistling,hissing,sonants,velar}.mlpackage`),
+/// поэтому `loadModel()`/`score()` всегда бросали `mlModelNotFound` и on-device
+/// скоринг в проде не работал. Теперь сервис — тонкий адаптер поверх рабочего
+/// ``LivePronunciationScorer`` (actor, вход `mfcc[1,40,150]` → `output[1,2]` logits),
+/// который выбирает нужную модель по группе звука.
+///
+/// **Маппинг звука → модели:** `targetSound` (буква, напр. "С", "Рь") приводится к
+/// ``PronunciationPhonemeGroup``. Если для звука нет соответствующей группы/модели —
+/// возвращается ``PronunciationScore/notScored`` (graceful, без throw): один
+/// отсутствующий звук не должен валить весь распознающий пайплайн.
 public final class LivePronunciationScorerService: PronunciationScorerService, @unchecked Sendable {
 
-    nonisolated(unsafe) private var mlModel: MLModel?
+    private let scorer: LivePronunciationScorer
     nonisolated(unsafe) private var _isModelLoaded: Bool = false
-    private let mfccExtractor = RealMFCCExtractor()
+    private let loadedLock = NSLock()
 
-    public var isModelLoaded: Bool { _isModelLoaded }
+    public var isModelLoaded: Bool {
+        loadedLock.lock(); defer { loadedLock.unlock() }
+        return _isModelLoaded
+    }
 
-    public init() {}
+    public init() {
+        self.scorer = LivePronunciationScorer()
+    }
 
     // MARK: - Load Model
 
+    /// Прогрев: проверяет, что в бандле есть хотя бы одна из четырёх пофонемных
+    /// моделей. Бросает `mlModelNotFound` только если НИ ОДНОЙ модели нет
+    /// (полностью невалидный бандл). Отсутствие отдельной группы — не ошибка.
     public func loadModel() async throws {
-        let modelURL = Bundle.main.url(
-            forResource: "PronunciationScorer",
-            withExtension: "mlmodelc"
-        ) ?? Bundle.main.url(
-            forResource: "PronunciationScorer",
-            withExtension: "mlpackage"
-        )
-        guard let url = modelURL else {
-            _isModelLoaded = false
-            HSLogger.ml.error("PronunciationScorer model not found in bundle — inference unavailable")
-            throw AppError.mlModelNotFound("PronunciationScorer")
+        let available = PronunciationPhonemeGroup.allCases.filter { group in
+            Bundle.main.url(
+                forResource: "PronunciationScorer_\(group.rawValue)",
+                withExtension: "mlpackage"
+            ) != nil
         }
-        let config = MLModelConfiguration()
-        config.computeUnits = .cpuAndNeuralEngine
-        let model = try MLModel(contentsOf: url, configuration: config)
-        mlModel = model
-        _isModelLoaded = true
-        HSLogger.ml.info("PronunciationScorer loaded from \(url.lastPathComponent)")
+        guard !available.isEmpty else {
+            loadedLock.withLock { _isModelLoaded = false }
+            HSLogger.ml.error("PronunciationScorer: ни одной пофонемной модели нет в бандле — inference недоступен")
+            throw AppError.mlModelNotFound("PronunciationScorer_*")
+        }
+        loadedLock.withLock { _isModelLoaded = true }
+        HSLogger.ml.info("PronunciationScorer: доступно моделей по группам — \(available.map(\.rawValue).joined(separator: ", "))")
     }
 
     // MARK: - Score
 
     public func score(audioURL: URL, targetSound: String) async throws -> PronunciationScore {
-        guard let model = mlModel else {
-            HSLogger.ml.error("PronunciationScorer: модель не загружена, inference невозможен")
-            throw AppError.mlModelNotFound("PronunciationScorer")
+        // Звук без поддержанной группы (напр. гласные/мягкие знаки) — не оцениваем,
+        // но и не валим пайплайн: возвращаем notScored.
+        guard let group = Self.phonemeGroup(for: targetSound) else {
+            HSLogger.ml.debug("PronunciationScorer: для звука '\(targetSound, privacy: .public)' нет группы — notScored")
+            return .notScored
         }
-        return try await scoreWithModel(model: model, audioURL: audioURL, targetSound: targetSound)
+
+        // Если модель именно этой группы отсутствует в бандле — graceful notScored.
+        guard Bundle.main.url(
+            forResource: "PronunciationScorer_\(group.rawValue)",
+            withExtension: "mlpackage"
+        ) != nil else {
+            HSLogger.ml.warning("PronunciationScorer: модель группы '\(group.rawValue, privacy: .public)' отсутствует — notScored")
+            return .notScored
+        }
+
+        let buffer = try Self.loadBuffer(from: audioURL)
+        let result = try await scorer.score(audio: buffer, phonemeGroup: group)
+        return PronunciationScore(rawValue: Double(result.correctProbability))
     }
 
-    // MARK: - Private: ML Inference
+    // MARK: - Private: Sound → Group Mapping
 
-    private func scoreWithModel(model: MLModel, audioURL: URL, targetSound: String) async throws -> PronunciationScore {
-        let mfccData = try loadAudioData(from: audioURL)
-        let frames = try await mfccExtractor.extract(from: mfccData)
-        let flatFeatures = try framesToMLMultiArray(frames)
-        let input = try MLDictionaryFeatureProvider(dictionary: [
-            "mfcc_features": flatFeatures,
-            "target_sound": targetSound as NSString
-        ])
-        let output = try await model.prediction(from: input)
-        let scoreValue = output.featureValue(for: "pronunciation_score")?.doubleValue ?? 0.5
-        return PronunciationScore(rawValue: max(0, min(1, scoreValue)))
+    /// Сопоставляет целевой звук (буква русского алфавита, в любом регистре,
+    /// с мягким знаком или без) одной из четырёх обученных групп.
+    /// Возвращает `nil`, если звук не входит ни в одну группу (модели нет).
+    static func phonemeGroup(for targetSound: String) -> PronunciationPhonemeGroup? {
+        // Берём первую значимую букву (Рь/Ль → Р/Л), приводим к верхнему регистру.
+        let normalized = targetSound
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .uppercased()
+        guard let first = normalized.first else { return nil }
+        switch first {
+        case "С", "З", "Ц":           return .whistling
+        case "Ш", "Ж", "Ч", "Щ":      return .hissing
+        case "Р", "Л":                return .sonants
+        case "К", "Г", "Х":           return .velar
+        default:                       return nil
+        }
     }
 
     // MARK: - Private: Audio Loading
 
-    /// Загружает аудио файл как сырой Float32 PCM Data для RealMFCCExtractor.
-    private func loadAudioData(from url: URL) throws -> Data {
+    /// Загружает аудио-файл в `AVAudioPCMBuffer` (формат файла). Ресемплинг до 16 кГц
+    /// и нормализация длины выполняются внутри `MFCCExtractor.extract`.
+    static func loadBuffer(from url: URL) throws -> AVAudioPCMBuffer {
         let audioFile = try AVAudioFile(forReading: url)
         guard let buffer = AVAudioPCMBuffer(
             pcmFormat: audioFile.processingFormat,
             frameCapacity: AVAudioFrameCount(audioFile.length)
         ) else { throw AppError.audioFormatUnsupported }
         try audioFile.read(into: buffer)
-        guard let channelData = buffer.floatChannelData?[0] else {
-            throw AppError.audioFormatUnsupported
-        }
-        let length = Int(buffer.frameLength)
-        return Data(bytes: channelData, count: length * MemoryLayout<Float>.size)
-    }
-
-    /// Упаковывает [[Float]] фреймы в плоский MLMultiArray [nFrames * nCoeffs].
-    private func framesToMLMultiArray(_ frames: [[Float]]) throws -> MLMultiArray {
-        let nFrames = frames.count
-        let nCoeffs = frames.first?.count ?? 0
-        let total = nFrames * nCoeffs
-        let array = try MLMultiArray(shape: [NSNumber(value: total)], dataType: .float32)
-        for (t, frame) in frames.enumerated() {
-            for (c, val) in frame.enumerated() {
-                array[t * nCoeffs + c] = NSNumber(value: val)
-            }
-        }
-        return array
+        return buffer
     }
 }
