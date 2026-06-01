@@ -7,6 +7,7 @@ struct SoundJournalKidView: View {
     let childId: String
 
     @State private var interactor: SoundJournalKidInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -42,7 +43,12 @@ struct SoundJournalKidView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SoundJournalKidInteractor(childId: childId)
+                    let new = SoundJournalKidInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }
@@ -55,7 +61,11 @@ struct SoundJournalKidView: View {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero
-                    list(interactor: interactor)
+                    if interactor.state.isEmpty {
+                        emptyState
+                    } else {
+                        list(interactor: interactor)
+                    }
                     cta
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -84,6 +94,29 @@ struct SoundJournalKidView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    private var emptyState: some View {
+        HSCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "book.closed.fill")
+                    .font(.system(size: 44))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .accessibilityHidden(true)
+                Text(String(localized: "soundJournal.empty.title"))
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                Text(String(localized: "soundJournal.empty.subtitle"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp3)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private func list(interactor: SoundJournalKidInteractor) -> some View {
@@ -119,7 +152,7 @@ struct SoundJournalKidView: View {
                         Text("Звук «\(entry.sound)»")
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                        Text("Сегодня × \(entry.timesPracticed)")
+                        Text("Практик × \(entry.timesPracticed)")
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                     }

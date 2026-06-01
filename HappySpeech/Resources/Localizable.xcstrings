@@ -1221,6 +1221,26 @@
         }
       }
     },
+    "achievementCalendar.empty.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда ребёнок завершит занятие с хорошим результатом, день в календаре отметится достижением."
+          }
+        }
+      }
+    },
+    "achievementCalendar.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Достижений пока нет"
+          }
+        }
+      }
+    },
     "achievementCalendar.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -18758,6 +18778,414 @@
         }
       }
     },
+    "helpCenter.video.edu_breath.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длинный плавный выдох уносит пушинки."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One long smooth exhale carries the seeds away."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_breath.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дуем на одуванчик (дыхание)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blow the dandelion (breathing)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_k.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Капелька катится с горки — учим заднеязычные."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A droplet slides down — practising back sounds."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_k.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Горка язычка (звуки К-Г-Х)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue slide (K-G-H)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_l.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пароход плывёт и гудит — л-л-л."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A steamboat sails and hums — lll."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_l.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гудок парохода (звук Л)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Steamboat horn (sound L)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_r.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тигрёнок заводит машинку — р-р-р."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tiger starts a toy car — rrr."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_r.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Моторчик тигрёнка (звук Р)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tiger's motor (sound R)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_s.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля надувает шарик — слушай, как поёт насос: с-с-с."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyalya inflates a balloon — hear the pump: s-s-s."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_s.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Песенка насоса (звук С)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pump song (sound S)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_sh.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Змейка ползёт по травке — ш-ш-ш."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A snake glides through grass — shhh."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_sh.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Змейка шипит (звук Ш)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hissing snake (sound Sh)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_l.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Утёнок, зайка и бабочка на лужайке — звук Л."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A duckling, a bunny and a butterfly — sound L."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_l.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лужайка летом (звук Л)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Summer meadow (sound L)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_r.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дождик и радуга над рекой — звук Р."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rain and a rainbow over the river — sound R."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_r.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Радуга после грозы (звук Р)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rainbow after the rain (sound R)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_s.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добрая история про сад — звук С."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gentle garden story — sound S."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_s.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сонин сад (звук С)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonya's garden (sound S)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_sh.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Медвежонок и шишка — звук Ш."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A bear cub and a pine cone — sound Sh."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_sh.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лесная шишка (звук Ш)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The forest cone (sound Sh)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_z.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зайка прыгает по снегу — звук З."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A bunny hops in the snow — sound Z."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_story_z.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зимняя песенка (звук З)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Winter song (sound Z)"
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_zh.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жучок летает над цветком — ж-ж-ж."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A bug flies over a flower — zhzh."
+          }
+        }
+      }
+    },
+    "helpCenter.video.edu_zh.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жук жужжит (звук Ж)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buzzing bug (sound Zh)"
+          }
+        }
+      }
+    },
     "helpCenter.video.empty": {
       "extractionState": "manual",
       "localizations": {
@@ -31244,6 +31672,17 @@
         }
       }
     },
+    "progressDashboard.chart.monthPrefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мес"
+          }
+        }
+      }
+    },
     "progressDashboard.chart.week": {
       "extractionState": "manual",
       "localizations": {
@@ -31251,6 +31690,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Неделя"
+          }
+        }
+      }
+    },
+    "progressDashboard.chart.weekPrefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нед"
           }
         }
       }
@@ -31442,6 +31892,39 @@
         }
       }
     },
+    "progressDashboard.rec.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет занятий — начните первую игру, и здесь появятся рекомендации."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.focusPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уделите внимание звуку «%@» — он пока даётся труднее."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занимайтесь регулярно — это лучший способ закрепить результат."
+          }
+        }
+      }
+    },
     "progressDashboard.rec.month.1": {
       "extractionState": "manual",
       "localizations": {
@@ -31515,6 +31998,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Показать прогресс логопеду — обсудить следующий этап."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.reinforcePattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепите успех со звуком «%@» — отличный результат!"
           }
         }
       }
@@ -44313,6 +44807,26 @@
         }
       }
     },
+    "soundJournal.empty.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграй в любую игру со звуками — и здесь появятся твои достижения!"
+          }
+        }
+      }
+    },
+    "soundJournal.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дневник пока пустой"
+          }
+        }
+      }
+    },
     "soundJournal.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -51681,6 +52195,28 @@
         }
       }
     },
+    "weeklyRecap.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как только ребёнок начнёт заниматься, здесь появится недельный отчёт с реальной статистикой."
+          }
+        }
+      }
+    },
+    "weeklyRecap.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За эту неделю занятий пока нет"
+          }
+        }
+      }
+    },
     "weeklyRecap.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -51701,12 +52237,89 @@
         }
       }
     },
+    "weeklyRecap.kpi.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "weeklyRecap.kpi.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут"
+          }
+        }
+      }
+    },
+    "weeklyRecap.kpi.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятий"
+          }
+        }
+      }
+    },
+    "weeklyRecap.kpi.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия"
+          }
+        }
+      }
+    },
+    "weeklyRecap.kpi.streakValue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d дн"
+          }
+        }
+      }
+    },
     "weeklyRecap.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Итоги недели"
+          }
+        }
+      }
+    },
+    "weeklyRecap.share.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech — отчёт за неделю. %@."
+          }
+        }
+      }
+    },
+    "weeklyRecap.share.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech — за эту неделю занятий пока не было."
           }
         }
       }
@@ -60962,414 +61575,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_s.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Песенка насоса (звук С)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pump song (sound S)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_s.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ляля надувает шарик — слушай, как поёт насос: с-с-с."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lyalya inflates a balloon — hear the pump: s-s-s."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_r.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Моторчик тигрёнка (звук Р)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tiger's motor (sound R)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_r.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тигрёнок заводит машинку — р-р-р."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The tiger starts a toy car — rrr."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_l.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Гудок парохода (звук Л)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Steamboat horn (sound L)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_l.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пароход плывёт и гудит — л-л-л."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A steamboat sails and hums — lll."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_sh.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Змейка шипит (звук Ш)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hissing snake (sound Sh)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_sh.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Змейка ползёт по травке — ш-ш-ш."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A snake glides through grass — shhh."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_zh.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Жук жужжит (звук Ж)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Buzzing bug (sound Zh)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_zh.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Жучок летает над цветком — ж-ж-ж."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A bug flies over a flower — zhzh."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_k.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Горка язычка (звуки К-Г-Х)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue slide (K-G-H)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_k.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Капелька катится с горки — учим заднеязычные."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A droplet slides down — practising back sounds."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_breath.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дуем на одуванчик (дыхание)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Blow the dandelion (breathing)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_breath.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Длинный плавный выдох уносит пушинки."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "One long smooth exhale carries the seeds away."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_s.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сонин сад (звук С)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sonya's garden (sound S)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_s.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добрая история про сад — звук С."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A gentle garden story — sound S."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_sh.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лесная шишка (звук Ш)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The forest cone (sound Sh)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_sh.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Медвежонок и шишка — звук Ш."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A bear cub and a pine cone — sound Sh."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_r.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Радуга после грозы (звук Р)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rainbow after the rain (sound R)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_r.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дождик и радуга над рекой — звук Р."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rain and a rainbow over the river — sound R."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_l.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лужайка летом (звук Л)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Summer meadow (sound L)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_l.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Утёнок, зайка и бабочка на лужайке — звук Л."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A duckling, a bunny and a butterfly — sound L."
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_z.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зимняя песенка (звук З)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Winter song (sound Z)"
-          }
-        }
-      }
-    },
-    "helpCenter.video.edu_story_z.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зайка прыгает по снегу — звук З."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A bunny hops in the snow — sound Z."
           }
         }
       }

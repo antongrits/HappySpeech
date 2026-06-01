@@ -7,6 +7,7 @@ struct DailyMissionsHubView: View {
     let childId: String
 
     @State private var interactor: DailyMissionsHubInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -42,7 +43,12 @@ struct DailyMissionsHubView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = DailyMissionsHubInteractor(childId: childId)
+                    let new = DailyMissionsHubInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }

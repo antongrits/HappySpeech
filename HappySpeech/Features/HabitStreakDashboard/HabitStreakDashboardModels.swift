@@ -2,7 +2,8 @@ import Foundation
 
 // MARK: - HabitStreakDashboardModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Тепловая карта практики ребёнка за 12 недель. Минуты по дням берутся из
+/// реальной истории сессий (`HabitStreakDashboardInteractor.refresh()`).
 enum HabitStreakDashboardModels {
 
     /// Один день в heat-map календаре. `intensity` от 0 до 4
@@ -58,11 +59,23 @@ enum HabitStreakDashboardModels {
             days.reduce(0) { $0 + $1.minutes }
         }
 
+        /// Общее число ячеек сетки (12 × 7 = 84).
+        static var totalCells: Int { weeks * daysPerWeek }
+
+        /// Пустая карта (все дни по 0 минут) — честный baseline для загрузки
+        /// реальных данных.
+        static let empty: ViewState = {
+            let days = (0..<totalCells).map { offset in
+                Day(id: offset, intensity: 0, minutes: 0)
+            }
+            return ViewState(days: days, selected: nil)
+        }()
+
         static let initial: ViewState = {
             // Deterministic pseudo-random pattern using index seeding —
             // нужен предсказуемый preview без зависимостей от Calendar.
             var days: [Day] = []
-            for offset in 0..<(weeks * daysPerWeek) {
+            for offset in 0..<totalCells {
                 let seed = (offset * 7 + 3) % 23
                 let minutes: Int
                 switch seed {
@@ -80,5 +93,19 @@ enum HabitStreakDashboardModels {
             }
             return ViewState(days: days, selected: nil)
         }()
+
+        /// Строит карту из словаря «смещение дня → минуты».
+        /// `minutesByOffset` индексируется 0…(totalCells-1), где последний — сегодня.
+        static func make(minutesByOffset: [Int: Int]) -> ViewState {
+            let days = (0..<totalCells).map { offset -> Day in
+                let minutes = max(0, minutesByOffset[offset] ?? 0)
+                return Day(
+                    id: offset,
+                    intensity: Day.intensityForMinutes(minutes),
+                    minutes: minutes
+                )
+            }
+            return ViewState(days: days, selected: nil)
+        }
     }
 }

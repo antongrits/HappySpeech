@@ -2,7 +2,8 @@ import Foundation
 
 // MARK: - SoundExplorerMapModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Карта звуков ребёнка. Уровень освоения (`mastery`) каждого звука вычисляется
+/// из реальных данных: `progressSummary` профиля (per-sound rate) + история сессий.
 enum SoundExplorerMapModels {
 
     enum MasteryFilter: String, CaseIterable, Identifiable, Hashable {
@@ -51,18 +52,26 @@ enum SoundExplorerMapModels {
         }
     }
 
-    /// Базовый набор русских фонем (42 — упрощённая инвентаризация).
+    /// Инвентарь русских фонем с группами. Mastery по умолчанию `.untried` —
+    /// он перезаписывается реальными данными в `SoundExplorerMapInteractor`.
+    /// Гласные считаем освоенными (не корректируются методикой) — нейтральный
+    /// контекст для карты.
+    static let inventory: [(group: String, sounds: [String], defaultMastery: Mastery)] = [
+        ("Гласные", ["А", "О", "У", "Ы", "Э", "И", "Я", "Ё", "Ю", "Е"], .known),
+        ("Свистящие", ["С", "Сь", "З", "Зь", "Ц"], .untried),
+        ("Шипящие", ["Ш", "Ж", "Ч", "Щ"], .untried),
+        ("Соноры", ["Р", "Рь", "Л", "Ль", "М", "Мь", "Н", "Нь", "Й"], .untried),
+        ("Заднеязычные", ["К", "Кь", "Г", "Гь", "Х", "Хь"], .untried),
+        ("Губные", ["П", "Пь", "Б", "Бь", "Ф", "Фь", "В", "Вь"], .known)
+    ]
+
+    /// Базовый набор для preview/тестов (всё в дефолтном mastery).
     static let seedSounds: [SoundCell] = {
-        let groups: [(String, [String], Mastery)] = [
-            ("Гласные", ["А", "О", "У", "Ы", "Э", "И", "Я", "Ё", "Ю", "Е"], .known),
-            ("Свистящие", ["С", "Сь", "З", "Зь", "Ц"], .learning),
-            ("Шипящие", ["Ш", "Ж", "Ч", "Щ"], .learning),
-            ("Соноры", ["Р", "Рь", "Л", "Ль", "М", "Мь", "Н", "Нь", "Й"], .untried),
-            ("Заднеязычные", ["К", "Кь", "Г", "Гь", "Х", "Хь"], .known),
-            ("Губные", ["П", "Пь", "Б", "Бь", "Ф", "Фь", "В", "Вь"], .known)
-        ]
-        return groups.flatMap { group, sounds, m in
+        inventory.flatMap { group, sounds, m in
             sounds.map { SoundCell(id: $0, group: group, mastery: m) }
         }
     }()
+
+    /// Порог «освоено» по доле успешных попыток / progressSummary.
+    static let knownThreshold: Double = 0.80
 }

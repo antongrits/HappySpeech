@@ -7,6 +7,7 @@ struct GoalTrackerKidView: View {
     let childId: String
 
     @State private var interactor: GoalTrackerKidInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
@@ -38,7 +39,13 @@ struct GoalTrackerKidView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = GoalTrackerKidInteractor(childId: childId)
+                    let new = GoalTrackerKidInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository,
+                        childRepository: container.childRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }
@@ -93,7 +100,6 @@ struct GoalTrackerKidView: View {
             ForEach(Array(interactor.state.goals.enumerated()), id: \.element.id) { index, goal in
                 goalCard(goal) {
                     hapticService.impact(.light)
-                    interactor.bump(goal.id)
                 }
                 .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
                     content

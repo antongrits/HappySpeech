@@ -194,4 +194,109 @@ final class HabitStreakDashboardInteractorTests: XCTestCase {
         let expected = sut.state.days.reduce(0) { $0 + $1.minutes }
         XCTAssertEqual(sut.state.totalMinutes, expected)
     }
+
+    // MARK: - empty / make factories
+
+    func test_emptyState_allZeroMinutes() {
+        let state = ViewState.empty
+        XCTAssertEqual(state.days.count, ViewState.totalCells)
+        XCTAssertTrue(state.days.allSatisfy { $0.minutes == 0 && $0.intensity == 0 })
+        XCTAssertEqual(state.totalMinutes, 0)
+    }
+
+    func test_make_placesMinutesAtOffsets() {
+        let last = ViewState.totalCells - 1
+        let state = ViewState.make(minutesByOffset: [last: 12, last - 1: 6])
+        XCTAssertEqual(state.days[last].minutes, 12)
+        XCTAssertEqual(state.days[last].intensity, Day.intensityForMinutes(12))
+        XCTAssertEqual(state.days[last - 1].minutes, 6)
+    }
+
+    func test_make_missingOffsetsAreZero() {
+        let state = ViewState.make(minutesByOffset: [:])
+        XCTAssertTrue(state.days.allSatisfy { $0.minutes == 0 })
+    }
+
+    // MARK: - makeState aggregation from sessions
+
+    func test_makeState_todaySessionLandsOnLastCell() {
+        let cal = utcCalendar
+        let today = cal.startOfDay(for: Date())
+        let sut = HabitStreakDashboardInteractor(
+            childId: "c",
+            sessionRepository: MockSessionRepository(sessions: []),
+            calendar: cal
+        )
+        let sessions = [session(date: today.addingTimeInterval(3600), seconds: 600)] // 10 мин
+        let state = sut.makeState(from: sessions)
+        XCTAssertEqual(state.days[ViewState.totalCells - 1].minutes, 10)
+    }
+
+    func test_makeState_yesterdaySessionLandsOnPenultimateCell() {
+        let cal = utcCalendar
+        let today = cal.startOfDay(for: Date())
+        let yesterday = cal.date(byAdding: .day, value: -1, to: today)!
+        let sut = HabitStreakDashboardInteractor(
+            childId: "c",
+            sessionRepository: MockSessionRepository(sessions: []),
+            calendar: cal
+        )
+        let sessions = [session(date: yesterday.addingTimeInterval(3600), seconds: 300)] // 5 мин
+        let state = sut.makeState(from: sessions)
+        XCTAssertEqual(state.days[ViewState.totalCells - 2].minutes, 5)
+    }
+
+    func test_makeState_aggregatesMultipleSessionsSameDay() {
+        let cal = utcCalendar
+        let today = cal.startOfDay(for: Date())
+        let sut = HabitStreakDashboardInteractor(
+            childId: "c",
+            sessionRepository: MockSessionRepository(sessions: []),
+            calendar: cal
+        )
+        let sessions = [
+            session(date: today.addingTimeInterval(1000), seconds: 300), // 5
+            session(date: today.addingTimeInterval(5000), seconds: 180)  // 3
+        ]
+        let state = sut.makeState(from: sessions)
+        XCTAssertEqual(state.days[ViewState.totalCells - 1].minutes, 8)
+    }
+
+    func test_makeState_dropsSessionsOlderThanWindow() {
+        let cal = utcCalendar
+        let today = cal.startOfDay(for: Date())
+        let old = cal.date(byAdding: .day, value: -(ViewState.totalCells + 5), to: today)!
+        let sut = HabitStreakDashboardInteractor(
+            childId: "c",
+            sessionRepository: MockSessionRepository(sessions: []),
+            calendar: cal
+        )
+        let state = sut.makeState(from: [session(date: old, seconds: 600)])
+        XCTAssertEqual(state.totalMinutes, 0)
+    }
+
+    // MARK: - Helpers
+
+    private var utcCalendar: Calendar {
+        var c = Calendar(identifier: .gregorian)
+        c.timeZone = TimeZone(identifier: "UTC") ?? .current
+        return c
+    }
+
+    private func session(date: Date, seconds: Int) -> SessionDTO {
+        SessionDTO(
+            id: UUID().uuidString,
+            childId: "c",
+            date: date,
+            templateType: TemplateType.repeatAfterModel.rawValue,
+            targetSound: "Р",
+            stage: CorrectionStage.wordInit.rawValue,
+            durationSeconds: seconds,
+            totalAttempts: 5,
+            correctAttempts: 4,
+            fatigueDetected: false,
+            isSynced: false,
+            attempts: []
+        )
+    }
 }

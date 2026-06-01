@@ -3,7 +3,13 @@ import OSLog
 
 // MARK: - GoalTrackerKidInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Бизнес-логика «трекера целей» ребёнка.
+///
+/// При наличии репозиториев считает фактический прогресс по целям за сегодня:
+/// - минуты практики (сумма длительностей сегодняшних сессий);
+/// - число разных звуков, отработанных сегодня;
+/// - текущая серия активных дней.
+/// Без репозиториев (Preview/тесты) — остаётся на нулевом `.initial`.
 @MainActor
 @Observable
 final class GoalTrackerKidInteractor {
@@ -16,20 +22,111 @@ final class GoalTrackerKidInteractor {
     let childId: String
     var state: GoalTrackerKidModels.ViewState
 
-    init(childId: String) {
+    private let sessionRepository: (any SessionRepository)?
+    private let childRepository: (any ChildRepository)?
+    private let calendar: Calendar
+
+    init(
+        childId: String,
+        sessionRepository: (any SessionRepository)? = nil,
+        childRepository: (any ChildRepository)? = nil,
+        calendar: Calendar = .current
+    ) {
         self.childId = childId
+        self.sessionRepository = sessionRepository
+        self.childRepository = childRepository
+        self.calendar = calendar
         self.state = .initial
     }
 
-    func bump(_ kind: GoalTrackerKidModels.GoalKind) {
-        guard let index = state.goals.firstIndex(where: { $0.id == kind }) else { return }
-        let goal = state.goals[index]
-        guard goal.current < goal.target else { return }
-        state.goals[index].current += 1
-        Self.logger.info("bump \(kind.rawValue, privacy: .public) → \(self.state.goals[index].current)")
+    /// Пересобирает цели из реальных данных. Безопасно без репозиториев/childId.
+    func refresh() {
+        guard let sessionRepository, !childId.isEmpty else {
+            Self.logger.info("goals refresh skipped (no repository/childId)")
+            return
+        }
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let sessions = try await sessionRepository.fetchRecent(childId: self.childId, limit: 120)
+                let streak = await self.loadStreak(fallback: sessions)
+                self.state = self.makeState(from: sessions, streak: streak)
+                Self.logger.info("goals refreshed (overall=\(Int(self.state.overallProgress * 100), privacy: .public)%)")
+            } catch {
+                Self.logger.error("goals refresh failed: \(error.localizedDescription, privacy: .public)")
+            }
+        }
     }
 
     func reset() {
         state = .initial
+    }
+
+    // MARK: - Aggregation
+
+    /// Строит цели из сегодняшних сессий + серии дней.
+    func makeState(from sessions: [SessionDTO], streak: Int) -> GoalTrackerKidModels.ViewState {
+        let today = calendar.startOfDay(for: Date())
+        let todaySessions = sessions.filter { calendar.isDate($0.date, inSameDayAs: today) }
+
+        let todaySeconds = todaySessions.reduce(0) { $0 + $1.durationSeconds }
+        let minutes = max(0, Int((Double(todaySeconds) / 60.0).rounded()))
+        let distinctSounds = Set(todaySessions.map(\.targetSound).filter { !$0.isEmpty }).count
+
+        return GoalTrackerKidModels.ViewState(goals: [
+            GoalTrackerKidModels.Goal(
+                id: .minutesToday,
+                current: minutes,
+                target: GoalTrackerKidModels.ViewState.target(for: .minutesToday)
+            ),
+            GoalTrackerKidModels.Goal(
+                id: .newSounds,
+                current: distinctSounds,
+                target: GoalTrackerKidModels.ViewState.target(for: .newSounds)
+            ),
+            GoalTrackerKidModels.Goal(
+                id: .streakDays,
+                current: streak,
+                target: GoalTrackerKidModels.ViewState.target(for: .streakDays)
+            )
+        ])
+    }
+
+    /// Серия активных дней: берём из профиля (`currentStreak`), а если профиль
+    /// недоступен — считаем по сессиям как fallback.
+    private func loadStreak(fallback sessions: [SessionDTO]) async -> Int {
+        if let childRepository {
+            do {
+                let profile = try await childRepository.fetch(id: childId)
+                if profile.currentStreak > 0 { return profile.currentStreak }
+            } catch {
+                Self.logger.debug("goals: profile streak unavailable, computing from sessions")
+            }
+        }
+        return activeDayStreak(in: sessions)
+    }
+
+    /// Серия активных дней подряд, заканчивающаяся сегодня или вчера.
+    func activeDayStreak(in sessions: [SessionDTO]) -> Int {
+        let today = calendar.startOfDay(for: Date())
+        let activeDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        guard !activeDays.isEmpty else { return 0 }
+
+        var cursor = today
+        if !activeDays.contains(cursor) {
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor),
+                  activeDays.contains(yesterday) else {
+                return 0
+            }
+            cursor = yesterday
+        }
+
+        var streak = 0
+        while activeDays.contains(cursor) {
+            streak += 1
+            guard let previous = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = previous
+        }
+        return streak
     }
 }

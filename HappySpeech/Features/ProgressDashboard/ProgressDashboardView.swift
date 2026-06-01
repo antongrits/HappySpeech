@@ -619,11 +619,18 @@ struct ProgressDashboardView: View {
     }
 
     private func requestLLMSummary() {
+        // Сводка собирается из реальных display-карточек (источник — Interactor/Worker).
+        // Сам Interactor для LLM использует свои реальные агрегаты; здесь summary
+        // передаётся для совместимости контракта Request.
+        func cardValue(_ kind: SummaryCardViewModel.Kind) -> Int {
+            display.summaryCards.first(where: { $0.kind == kind })
+                .flatMap { Int($0.value.filter(\.isNumber)) } ?? 0
+        }
         let summaryDomain = DashboardSummary(
-            overallAccuracy: 0.78,
-            streakDays: 5,
-            totalMinutes: 127,
-            totalStars: 24
+            overallAccuracy: Float(cardValue(.accuracy)) / 100.0,
+            streakDays: cardValue(.streak),
+            totalMinutes: cardValue(.minutes),
+            totalStars: cardValue(.stars)
         )
         let topSound = display.soundCells.first.map { cell in
             SoundProgress(
@@ -647,7 +654,12 @@ struct ProgressDashboardView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
+        let worker = ProgressDashboardWorker(
+            sessionRepository: container.sessionRepository,
+            childRepository: container.childRepository
+        )
         let interactor = ProgressDashboardInteractor(
+            worker: worker,
             llmDecisionService: container.llmDecisionService
         )
         let presenter = ProgressDashboardPresenter()
@@ -671,7 +683,8 @@ struct ProgressDashboardView: View {
 // MARK: - Preview
 
 #Preview("ProgressDashboard – Parent") {
-    ProgressDashboardView()
+    // Сид-ребёнок с реальной историей сессий (MockSessionRepository.seeded()).
+    ProgressDashboardView(childId: "preview-child-1")
         .environment(AppContainer.preview())
         .environment(\.circuitContext, .parent)
 }

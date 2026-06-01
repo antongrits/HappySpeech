@@ -2,7 +2,9 @@ import Foundation
 
 // MARK: - AchievementCalendarModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Календарь достижений ребёнка за месяц. Заполняется реальной активностью
+/// из истории сессий (`AchievementCalendarInteractor.refresh()`): успешные
+/// сессии дают достижения, лучшая сессия дня даёт подпись.
 enum AchievementCalendarModels {
 
     struct DayEntry: Identifiable, Hashable {
@@ -21,24 +23,27 @@ enum AchievementCalendarModels {
             days.reduce(0) { $0 + $1.achievementCount }
         }
 
-        static let initial: ViewState = {
-            var days: [DayEntry] = []
-            for d in 1...30 {
-                let count: Int
-                let top: String?
-                switch d {
-                case 3:  count = 2; top = "Первый звук"
-                case 7:  count = 1; top = "Серия 5 дней"
-                case 12: count = 3; top = "Грамота-старт"
-                case 15: count = 1; top = "Утренний ритуал"
-                case 18: count = 2; top = "Скороговорка"
-                case 22: count = 1; top = "Дневник"
-                case 28: count = 4; top = "Месяц практики"
-                default: count = 0; top = nil
-                }
-                days.append(DayEntry(id: d, day: d, achievementCount: count, topAchievement: top))
+        var hasAnyAchievements: Bool { totalAchievements > 0 }
+
+        /// Пустой календарь текущего месяца (все дни по 0) — честный baseline.
+        static func empty(now: Date = Date(), calendar: Calendar = .current) -> ViewState {
+            let dayCount = calendar.range(of: .day, in: .month, for: now)?.count ?? 30
+            let days = (1...dayCount).map { d in
+                DayEntry(id: d, day: d, achievementCount: 0, topAchievement: nil)
             }
-            return ViewState(month: "Май 2026", days: days, selectedDay: nil)
-        }()
+            return ViewState(month: monthTitle(now, calendar: calendar), days: days, selectedDay: nil)
+        }
+
+        /// Стартовое состояние — пустой текущий месяц.
+        static let initial: ViewState = .empty()
+
+        /// Заголовок месяца на русском (например «Июнь 2026»).
+        static func monthTitle(_ date: Date, calendar: Calendar = .current) -> String {
+            let formatter = DateFormatter()
+            formatter.calendar = calendar
+            formatter.locale = Locale(identifier: "ru_RU")
+            formatter.dateFormat = "LLLL yyyy"
+            return formatter.string(from: date).capitalized
+        }
     }
 }

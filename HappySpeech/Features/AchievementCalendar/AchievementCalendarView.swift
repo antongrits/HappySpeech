@@ -7,6 +7,7 @@ struct AchievementCalendarView: View {
     let childId: String
 
     @State private var interactor: AchievementCalendarInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -42,7 +43,12 @@ struct AchievementCalendarView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = AchievementCalendarInteractor(childId: childId)
+                    let new = AchievementCalendarInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }
@@ -55,6 +61,9 @@ struct AchievementCalendarView: View {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero(state: interactor.state)
+                    if !interactor.state.hasAnyAchievements {
+                        emptyState
+                    }
                     calendarGrid(interactor: interactor)
                     if let entry = interactor.selectedEntry, entry.achievementCount > 0 {
                         selectedDayCard(entry)
@@ -95,6 +104,29 @@ struct AchievementCalendarView: View {
                 .padding(.top, 4)
             }
         }
+    }
+
+    private var emptyState: some View {
+        HSCard(style: .flat) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 36))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+                Text(String(localized: "achievementCalendar.empty.title"))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                Text(String(localized: "achievementCalendar.empty.subtitle"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp2)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private func calendarGrid(interactor: AchievementCalendarInteractor) -> some View {

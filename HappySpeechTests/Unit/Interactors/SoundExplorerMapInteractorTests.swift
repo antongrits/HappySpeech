@@ -97,4 +97,50 @@ final class SoundExplorerMapInteractorTests: XCTestCase {
         let sut = makeSUT(childId: "test-child-42")
         XCTAssertEqual(sut.childId, "test-child-42")
     }
+
+    // MARK: - makeCells (real-data mastery)
+
+    func test_makeCells_highProgress_isKnown() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: ["Р": 0.9], practicedSounds: [])
+        XCTAssertEqual(cells.first { $0.id == "Р" }?.mastery, .known)
+    }
+
+    func test_makeCells_lowProgress_isLearning() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: ["Ш": 0.4], practicedSounds: [])
+        XCTAssertEqual(cells.first { $0.id == "Ш" }?.mastery, .learning)
+    }
+
+    func test_makeCells_practicedButNoProgress_isLearning() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: [:], practicedSounds: ["Л"])
+        XCTAssertEqual(cells.first { $0.id == "Л" }?.mastery, .learning)
+    }
+
+    func test_makeCells_untriedSonant_keepsDefaultUntried() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: [:], practicedSounds: [])
+        // Соноры по умолчанию untried, без данных остаются untried.
+        XCTAssertEqual(cells.first { $0.id == "Р" }?.mastery, .untried)
+    }
+
+    func test_makeCells_softVariantMatchesBaseProgress() {
+        let sut = makeSUT()
+        // progressSummary хранит "Р", а в инвентаре есть "Рь" — должно матчиться.
+        let cells = sut.makeCells(progress: ["Р": 0.95], practicedSounds: [])
+        XCTAssertEqual(cells.first { $0.id == "Рь" }?.mastery, .known)
+    }
+
+    func test_makeCells_thresholdBoundary_isKnown() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: ["С": SoundExplorerMapModels.knownThreshold], practicedSounds: [])
+        XCTAssertEqual(cells.first { $0.id == "С" }?.mastery, .known)
+    }
+
+    func test_makeCells_coversFullInventory() {
+        let sut = makeSUT()
+        let cells = sut.makeCells(progress: [:], practicedSounds: [])
+        XCTAssertEqual(cells.count, SoundExplorerMapModels.seedSounds.count)
+    }
 }

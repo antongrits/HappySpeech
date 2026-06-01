@@ -7,6 +7,7 @@ struct SoundExplorerMapView: View {
     let childId: String
 
     @State private var interactor: SoundExplorerMapInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
@@ -44,7 +45,13 @@ struct SoundExplorerMapView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SoundExplorerMapInteractor(childId: childId)
+                    let new = SoundExplorerMapInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        sessionRepository: container.sessionRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }

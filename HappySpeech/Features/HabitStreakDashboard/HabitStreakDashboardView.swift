@@ -7,6 +7,7 @@ struct HabitStreakDashboardView: View {
     let childId: String
 
     @State private var interactor: HabitStreakDashboardInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +41,12 @@ struct HabitStreakDashboardView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = HabitStreakDashboardInteractor(childId: childId)
+                    let new = HabitStreakDashboardInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository
+                    )
+                    interactor = new
+                    new.refresh()
                 }
             }
         }

@@ -2,7 +2,9 @@ import Foundation
 
 // MARK: - DailyMissionsHubModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Хаб ежедневных миссий ребёнка. Выполнение миссий определяется реальной
+/// активностью за сегодня (история сессий по `templateType`) плюс явные
+/// отметки, сохраняемые на текущий день.
 enum DailyMissionsHubModels {
 
     enum Mission: String, CaseIterable, Identifiable, Hashable {
@@ -13,6 +15,30 @@ enum DailyMissionsHubModels {
         case story
 
         var id: String { rawValue }
+
+        /// `templateType` сессий, засчитывающих миссию как выполненную.
+        /// Если сегодня была сессия с одним из этих типов — миссия авто-выполнена.
+        var matchingTemplateTypes: Set<String> {
+            switch self {
+            case .warmup:
+                return [TemplateType.articulationImitation.rawValue]
+            case .soundOfDay:
+                return [
+                    TemplateType.repeatAfterModel.rawValue,
+                    TemplateType.listenAndChoose.rawValue,
+                    TemplateType.minimalPairs.rawValue
+                ]
+            case .bingo:
+                return [TemplateType.bingo.rawValue, TemplateType.memory.rawValue]
+            case .breathing:
+                return [TemplateType.breathing.rawValue, TemplateType.rhythm.rawValue]
+            case .story:
+                return [
+                    TemplateType.narrativeQuest.rawValue,
+                    TemplateType.storyCompletion.rawValue
+                ]
+            }
+        }
 
         var title: String {
             switch self {
@@ -50,6 +76,10 @@ enum DailyMissionsHubModels {
 
         var progress: Double {
             Double(completed.count) / Double(Mission.allCases.count)
+        }
+
+        var allDone: Bool {
+            completed.count >= Mission.allCases.count
         }
     }
 }

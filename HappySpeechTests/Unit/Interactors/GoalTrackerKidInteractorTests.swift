@@ -1,83 +1,158 @@
 @testable import HappySpeech
 import XCTest
 
+/// UTC-календарь для детерминированных дат (file-scope — нельзя `Self.` в
+/// default-аргументе из-за covariant Self).
+private let goalTrackerTestCalendar: Calendar = {
+    var c = Calendar(identifier: .gregorian)
+    c.timeZone = TimeZone(identifier: "UTC") ?? .current
+    return c
+}()
+
 // MARK: - GoalTrackerKidInteractorTests
 //
-// GoalTrackerKidInteractor is a thin VIP MVP variant (@Observable, no separate
-// Presenter/DisplayLogic). Tests verify bump() clamping, reset() and the
-// computed progress on Goal / ViewState.
+// GoalTrackerKidInteractor — thin VIP (@Observable). Цели теперь считаются из
+// реальных данных: минуты практики за сегодня, число разных звуков сегодня,
+// серия активных дней. Тесты покрывают: нулевой старт, агрегацию из сессий,
+// серию (из профиля и fallback по сессиям) и computed-прогресс.
 
 @MainActor
 final class GoalTrackerKidInteractorTests: XCTestCase {
 
-    private func makeSUT(childId: String = "child-1") -> GoalTrackerKidInteractor {
-        GoalTrackerKidInteractor(childId: childId)
+    private typealias Kind = GoalTrackerKidModels.GoalKind
+
+    private func makeSUT(
+        childId: String = "child-1",
+        sessions: [SessionDTO] = [],
+        child: ChildProfileDTO? = nil,
+        calendar: Calendar = goalTrackerTestCalendar
+    ) -> GoalTrackerKidInteractor {
+        let sessionRepo = MockSessionRepository(sessions: sessions)
+        let childRepo = child.map { MockChildRepository(children: [$0]) }
+        return GoalTrackerKidInteractor(
+            childId: childId,
+            sessionRepository: sessionRepo,
+            childRepository: childRepo,
+            calendar: calendar
+        )
     }
 
-    // MARK: - Initial state
+    // MARK: - Init / initial state
 
     func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-42")
+        let sut = GoalTrackerKidInteractor(childId: "kid-42")
         XCTAssertEqual(sut.childId, "kid-42")
     }
 
     func test_initialState_matchesInitialViewState() {
-        let sut = makeSUT()
+        let sut = GoalTrackerKidInteractor(childId: "c")
         XCTAssertEqual(sut.state, .initial)
     }
 
+    func test_initialState_allZeros() {
+        let sut = GoalTrackerKidInteractor(childId: "c")
+        XCTAssertTrue(sut.state.goals.allSatisfy { $0.current == 0 })
+    }
+
     func test_initialState_hasAllGoalKinds() {
-        let sut = makeSUT()
+        let sut = GoalTrackerKidInteractor(childId: "c")
         let kinds = Set(sut.state.goals.map(\.id))
-        XCTAssertEqual(kinds, Set(GoalTrackerKidModels.GoalKind.allCases))
+        XCTAssertEqual(kinds, Set(Kind.allCases))
     }
 
-    // MARK: - bump
+    // MARK: - reset
 
-    func test_bump_incrementsCurrentByOne() {
+    func test_reset_restoresInitialState() {
+        let sut = GoalTrackerKidInteractor(childId: "c")
+        sut.reset()
+        XCTAssertEqual(sut.state, .initial)
+    }
+
+    // MARK: - makeState aggregation
+
+    func test_makeState_minutesToday_sumsTodaySessionsOnly() {
+        let cal = goalTrackerTestCalendar
+        let today = cal.startOfDay(for: Date())
+        let sessions = [
+            session(date: today.addingTimeInterval(3600), seconds: 300, sound: "Р"),          // 5 мин сегодня
+            session(date: today.addingTimeInterval(7200), seconds: 180, sound: "Р"),          // 3 мин сегодня
+            session(date: today.addingTimeInterval(-2 * 86400), seconds: 600, sound: "С")     // не сегодня
+        ]
+        let sut = makeSUT(sessions: sessions, calendar: cal)
+        let state = sut.makeState(from: sessions, streak: 0)
+        let minutes = state.goals.first { $0.id == .minutesToday }?.current
+        XCTAssertEqual(minutes, 8) // 5 + 3
+    }
+
+    func test_makeState_newSounds_countsDistinctTodaySounds() {
+        let cal = goalTrackerTestCalendar
+        let today = cal.startOfDay(for: Date())
+        let sessions = [
+            session(date: today.addingTimeInterval(3600), seconds: 120, sound: "Р"),
+            session(date: today.addingTimeInterval(4000), seconds: 120, sound: "Р"),   // дубль звука
+            session(date: today.addingTimeInterval(5000), seconds: 120, sound: "Ш")
+        ]
+        let sut = makeSUT(sessions: sessions, calendar: cal)
+        let state = sut.makeState(from: sessions, streak: 0)
+        let sounds = state.goals.first { $0.id == .newSounds }?.current
+        XCTAssertEqual(sounds, 2) // Р, Ш
+    }
+
+    func test_makeState_streak_passedThrough() {
         let sut = makeSUT()
-        let before = currentValue(sut, for: .minutesToday)
-        sut.bump(.minutesToday)
-        XCTAssertEqual(currentValue(sut, for: .minutesToday), before + 1)
+        let state = sut.makeState(from: [], streak: 4)
+        XCTAssertEqual(state.goals.first { $0.id == .streakDays }?.current, 4)
     }
 
-    func test_bump_doesNotAffectOtherGoals() {
+    func test_makeState_targetsAreMethodicalDefaults() {
         let sut = makeSUT()
-        let otherBefore = currentValue(sut, for: .streakDays)
-        sut.bump(.newSounds)
-        XCTAssertEqual(currentValue(sut, for: .streakDays), otherBefore)
+        let state = sut.makeState(from: [], streak: 0)
+        XCTAssertEqual(state.goals.first { $0.id == .minutesToday }?.target, 10)
+        XCTAssertEqual(state.goals.first { $0.id == .newSounds }?.target, 3)
+        XCTAssertEqual(state.goals.first { $0.id == .streakDays }?.target, 7)
     }
 
-    func test_bump_stopsAtTarget() {
+    // MARK: - activeDayStreak fallback
+
+    func test_activeDayStreak_todayOnly_isOne() {
+        let cal = goalTrackerTestCalendar
+        let today = cal.startOfDay(for: Date())
+        let sut = makeSUT(calendar: cal)
+        let streak = sut.activeDayStreak(in: [session(date: today, seconds: 60, sound: "Р")])
+        XCTAssertEqual(streak, 1)
+    }
+
+    func test_activeDayStreak_threeConsecutiveDays_isThree() {
+        let cal = goalTrackerTestCalendar
+        let today = cal.startOfDay(for: Date())
+        let days = [0, 1, 2].map { offset in
+            session(date: cal.date(byAdding: .day, value: -offset, to: today)!, seconds: 60, sound: "Р")
+        }
+        let sut = makeSUT(calendar: cal)
+        XCTAssertEqual(sut.activeDayStreak(in: days), 3)
+    }
+
+    func test_activeDayStreak_gapBreaksStreak() {
+        let cal = goalTrackerTestCalendar
+        let today = cal.startOfDay(for: Date())
+        let days = [0, 2, 3].map { offset in
+            session(date: cal.date(byAdding: .day, value: -offset, to: today)!, seconds: 60, sound: "Р")
+        }
+        let sut = makeSUT(calendar: cal)
+        // Сегодня активен, вчера (1) пусто → серия = 1.
+        XCTAssertEqual(sut.activeDayStreak(in: days), 1)
+    }
+
+    func test_activeDayStreak_empty_isZero() {
         let sut = makeSUT()
-        // newSounds initial = 2, target = 3 → one bump reaches target, further bumps no-op.
-        sut.bump(.newSounds) // 3 == target
-        sut.bump(.newSounds) // should not exceed target
-        sut.bump(.newSounds)
-        let goal = goal(sut, for: .newSounds)
-        XCTAssertEqual(goal.current, goal.target)
-        XCTAssertTrue(goal.isReached)
+        XCTAssertEqual(sut.activeDayStreak(in: []), 0)
     }
 
-    func test_bump_reachingTarget_setsProgressToOne() {
-        let sut = makeSUT()
-        // minutesToday initial = 6, target = 10 → bump 4 times.
-        for _ in 0..<4 { sut.bump(.minutesToday) }
-        XCTAssertEqual(goal(sut, for: .minutesToday).progress, 1.0, accuracy: 0.0001)
-    }
-
-    // MARK: - progress computations
+    // MARK: - progress computations (model)
 
     func test_goalProgress_isFractionOfTarget() {
-        let sut = makeSUT()
-        // minutesToday = 6/10 = 0.6
-        XCTAssertEqual(goal(sut, for: .minutesToday).progress, 0.6, accuracy: 0.0001)
-    }
-
-    func test_overallProgress_isAverageOfGoalProgress() {
-        let sut = makeSUT()
-        let expected = sut.state.goals.map(\.progress).reduce(0, +) / Double(sut.state.goals.count)
-        XCTAssertEqual(sut.state.overallProgress, expected, accuracy: 0.0001)
+        let goal = GoalTrackerKidModels.Goal(id: .minutesToday, current: 6, target: 10)
+        XCTAssertEqual(goal.progress, 0.6, accuracy: 0.0001)
     }
 
     func test_goalProgress_zeroTarget_isZero() {
@@ -85,28 +160,42 @@ final class GoalTrackerKidInteractorTests: XCTestCase {
         XCTAssertEqual(goal.progress, 0)
     }
 
+    func test_goalProgress_clampedAtOne() {
+        let goal = GoalTrackerKidModels.Goal(id: .minutesToday, current: 50, target: 10)
+        XCTAssertEqual(goal.progress, 1.0, accuracy: 0.0001)
+        XCTAssertTrue(goal.isReached)
+    }
+
+    func test_overallProgress_isAverageOfGoalProgress() {
+        let state = GoalTrackerKidModels.ViewState(goals: [
+            .init(id: .minutesToday, current: 5, target: 10),  // 0.5
+            .init(id: .newSounds, current: 3, target: 3),       // 1.0
+            .init(id: .streakDays, current: 0, target: 7)       // 0.0
+        ])
+        XCTAssertEqual(state.overallProgress, 0.5, accuracy: 0.0001)
+    }
+
     func test_overallProgress_emptyGoals_isZero() {
         let state = GoalTrackerKidModels.ViewState(goals: [])
         XCTAssertEqual(state.overallProgress, 0)
     }
 
-    // MARK: - reset
-
-    func test_reset_restoresInitialState() {
-        let sut = makeSUT()
-        sut.bump(.minutesToday)
-        sut.bump(.newSounds)
-        sut.reset()
-        XCTAssertEqual(sut.state, .initial)
-    }
-
     // MARK: - Helpers
 
-    private func goal(_ sut: GoalTrackerKidInteractor, for kind: GoalTrackerKidModels.GoalKind) -> GoalTrackerKidModels.Goal {
-        sut.state.goals.first { $0.id == kind }!
-    }
-
-    private func currentValue(_ sut: GoalTrackerKidInteractor, for kind: GoalTrackerKidModels.GoalKind) -> Int {
-        goal(sut, for: kind).current
+    private func session(date: Date, seconds: Int, sound: String) -> SessionDTO {
+        SessionDTO(
+            id: UUID().uuidString,
+            childId: "child-1",
+            date: date,
+            templateType: TemplateType.repeatAfterModel.rawValue,
+            targetSound: sound,
+            stage: CorrectionStage.wordInit.rawValue,
+            durationSeconds: seconds,
+            totalAttempts: 5,
+            correctAttempts: 4,
+            fatigueDetected: false,
+            isSynced: false,
+            attempts: []
+        )
     }
 }

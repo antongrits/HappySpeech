@@ -1365,6 +1365,7 @@
 		A0D8D672FC60C8DB6983E7AB /* EntitlementGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D46E221857800DD4D6B112 /* EntitlementGateTests.swift */; };
 		A11170B3EA8F34259CA071A8 /* CustomWordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EF20272BC290EEEB63E672 /* CustomWordListView.swift */; };
 		A16F493A59647127EAAD5460 /* FourthExtraRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AF23AF14CC20F1851026DD /* FourthExtraRouter.swift */; };
+		A19089D5F8AFD1E97BEAFE14 /* ProgressDashboardWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CDA1032928AF4847D27CB1 /* ProgressDashboardWorker.swift */; };
 		A1BD026D7CC1766E5F39DA4E /* LetterPaintingFunModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E8B8FD27FA12038FB32EE19 /* LetterPaintingFunModels.swift */; };
 		A24BA392E5EAE38C70B77035 /* AchievementWallInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA9A806364FE64F0B9B63FD3 /* AchievementWallInteractorTests.swift */; };
 		A24BFC689C2CD89E6723D9A4 /* NarrativeQuestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE7F8DB07E91A8DB2905EB0 /* NarrativeQuestModels.swift */; };
@@ -4082,6 +4083,7 @@
 		F84F26206DAC0DB800FCEB95 /* SortingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingPresenter.swift; sourceTree = "<group>"; };
 		F876DB4E744FB21306B3A90B /* HSContentSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSContentSymbol.swift; sourceTree = "<group>"; };
 		F88DC6E7C48CE85BC2D9C843 /* SeasonalBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalBannerView.swift; sourceTree = "<group>"; };
+		F8CDA1032928AF4847D27CB1 /* ProgressDashboardWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDashboardWorker.swift; sourceTree = "<group>"; };
 		F8DD985EF4676F14BF5D560C /* ParentHomeDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeDisplayLogic.swift; sourceTree = "<group>"; };
 		F8F4786E5CDCEEA270BC0424 /* SignpostLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignpostLog.swift; sourceTree = "<group>"; };
 		F90F4EF55425C68B8FAF777E /* SoundExplorerMapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundExplorerMapInteractor.swift; sourceTree = "<group>"; };
@@ -4347,6 +4349,7 @@
 			isa = PBXGroup;
 			children = (
 				F7623A59598AB58EBB099C9C /* ParentInsightsWorker.swift */,
+				F8CDA1032928AF4847D27CB1 /* ProgressDashboardWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -11357,6 +11360,7 @@
 				7636EFD4BEC0492B18A2E770 /* ProgressDashboardView.swift in Sources */,
 				B042484BA85CE6DC18CD1E2C /* ProgressDashboardViewComponents.swift in Sources */,
 				91AFD1A5FB8C5A87C22B0A3D /* ProgressDashboardViewDetail.swift in Sources */,
+				A19089D5F8AFD1E97BEAFE14 /* ProgressDashboardWorker.swift in Sources */,
 				B16B4F3579B15740D7906092 /* PronunciationLeaderboardInteractor.swift in Sources */,
 				25942A4C44A8B7948C47144E /* PronunciationLeaderboardModels.swift in Sources */,
 				349D276390634E76286170C7 /* PronunciationLeaderboardPresenter.swift in Sources */,

@@ -5,6 +5,7 @@ import OSLog
 
 @MainActor
 protocol ProgressDashboardPresentationLogic: AnyObject {
+    func presentLoading(_ isLoading: Bool)
     func presentLoadDashboard(_ response: ProgressDashboardModels.LoadDashboard.Response)
     func presentLoadSoundDetail(_ response: ProgressDashboardModels.LoadSoundDetail.Response)
     func presentRequestLLMSummary(_ response: ProgressDashboardModels.RequestLLMSummary.Response)
@@ -24,6 +25,10 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ProgressDashboardPresenter")
 
     // MARK: - PresentationLogic
+
+    func presentLoading(_ isLoading: Bool) {
+        display?.displayLoading(isLoading)
+    }
 
     func presentLoadDashboard(_ response: ProgressDashboardModels.LoadDashboard.Response) {
         let summaryCards = makeSummaryCards(response.summary)

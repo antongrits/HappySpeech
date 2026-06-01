@@ -3,79 +3,116 @@ import XCTest
 
 // MARK: - WeeklyRecapInteractorTests
 //
-// WeeklyRecapInteractor is a thin VIP MVP variant (@Observable, no separate
-// Presenter/DisplayLogic). Tests verify state and share output directly.
+// WeeklyRecapInteractor — тонкий VIP (@Observable). Источник данных —
+// реальный недельный агрегат через ProgressDashboardWorker (здесь замокан).
+// По умолчанию состояние пустое (честное «пока нет занятий»), без фейк-KPI.
 
 @MainActor
 final class WeeklyRecapInteractorTests: XCTestCase {
 
-    // MARK: - share()
+    // MARK: - Stub Worker
 
-    func test_share_returnsNonEmptyString() {
-        let sut = WeeklyRecapInteractor()
-        let text = sut.share()
-        XCTAssertFalse(text.isEmpty)
-    }
-
-    func test_share_containsAllKPITitles() {
-        let sut = WeeklyRecapInteractor()
-        let text = sut.share()
-        for kpi in sut.state.kpis {
-            XCTAssertTrue(text.contains(kpi.title), "Expected share text to contain KPI title '\(kpi.title)'")
+    @MainActor
+    private final class StubWorker: ProgressDashboardAggregating {
+        var aggregate: DashboardAggregate
+        init(aggregate: DashboardAggregate) { self.aggregate = aggregate }
+        func aggregate(
+            childId: String,
+            period: ProgressDashboardModels.TimePeriod
+        ) async -> DashboardAggregate {
+            aggregate
         }
     }
 
-    func test_share_containsAllKPIValues() {
+    private func nonEmptyAggregate() -> DashboardAggregate {
+        let daily = [
+            DailyAccuracy(day: "Пн", accuracy: 0.6),
+            DailyAccuracy(day: "Вт", accuracy: 0.8)
+        ]
+        return DashboardAggregate(
+            summary: DashboardSummary(overallAccuracy: 0.7, streakDays: 5, totalMinutes: 57, totalStars: 18),
+            daily: daily,
+            weekly: [WeeklyAccuracy(weekIndex: 1, label: "Нед 1", accuracy: 0.7)],
+            sounds: [SoundProgress(sound: "Р", accuracy: 0.7, sessions: 2, trend: .up)],
+            soundHistory: ["Р": daily]
+        )
+    }
+
+    // MARK: - Default state is honest empty
+
+    func test_defaultState_isEmpty() {
         let sut = WeeklyRecapInteractor()
+        XCTAssertTrue(sut.state.isEmpty)
+        XCTAssertTrue(sut.state.kpis.isEmpty)
+    }
+
+    func test_share_emptyState_returnsNeutralText() {
+        let sut = WeeklyRecapInteractor()
+        let text = sut.share()
+        XCTAssertFalse(text.isEmpty)
+        XCTAssertFalse(text.contains("%"))
+    }
+
+    // MARK: - load() with real aggregate
+
+    func test_load_withData_populatesRealKPIs() async {
+        let sut = WeeklyRecapInteractor(worker: StubWorker(aggregate: nonEmptyAggregate()))
+        await sut.load(childId: "child-1")
+        XCTAssertFalse(sut.state.isEmpty)
+        XCTAssertEqual(sut.state.kpis.count, 4)
+        // Минуты приходят из реального агрегата (57).
+        XCTAssertTrue(sut.state.kpis.contains { $0.value == "57" })
+        // Точность 70%.
+        XCTAssertTrue(sut.state.kpis.contains { $0.value == "70%" })
+    }
+
+    func test_load_emptyChildId_keepsEmpty() async {
+        let sut = WeeklyRecapInteractor(worker: StubWorker(aggregate: nonEmptyAggregate()))
+        await sut.load(childId: "")
+        XCTAssertTrue(sut.state.isEmpty)
+    }
+
+    func test_load_emptyAggregate_keepsEmpty() async {
+        let sut = WeeklyRecapInteractor(worker: StubWorker(aggregate: .empty))
+        await sut.load(childId: "child-1")
+        XCTAssertTrue(sut.state.isEmpty)
+    }
+
+    func test_load_noWorker_keepsEmpty() async {
+        let sut = WeeklyRecapInteractor(worker: nil)
+        await sut.load(childId: "child-1")
+        XCTAssertTrue(sut.state.isEmpty)
+    }
+
+    // MARK: - share() with loaded data
+
+    func test_share_withData_containsKPIValues() async {
+        let sut = WeeklyRecapInteractor(worker: StubWorker(aggregate: nonEmptyAggregate()))
+        await sut.load(childId: "child-1")
         let text = sut.share()
         for kpi in sut.state.kpis {
             XCTAssertTrue(text.contains(kpi.value), "Expected share text to contain KPI value '\(kpi.value)'")
         }
     }
 
-    func test_share_containsAllKPITrends() {
-        let sut = WeeklyRecapInteractor()
-        let text = sut.share()
-        for kpi in sut.state.kpis {
-            XCTAssertTrue(text.contains(kpi.trend), "Expected share text to contain KPI trend '\(kpi.trend)'")
-        }
-    }
-
-    func test_share_withCustomState_reflectsCustomValues() {
-        let sut = WeeklyRecapInteractor()
-        sut.state = WeeklyRecapModels.ViewState(
-            kpis: [
-                .init(id: "min", title: "Минут", value: "99", trend: "+42", icon: "clock.fill")
-            ],
-            chartValues: [10, 20, 30]
-        )
-        let text = sut.share()
-        XCTAssertTrue(text.contains("99"))
-        XCTAssertTrue(text.contains("+42"))
-    }
-
-    // MARK: - state
-
-    func test_defaultState_kpisHaveFourEntries() {
-        let sut = WeeklyRecapInteractor()
-        XCTAssertEqual(sut.state.kpis.count, 4)
-    }
-
-    func test_defaultState_chartValuesHaveSevenPoints() {
-        let sut = WeeklyRecapInteractor()
-        XCTAssertEqual(sut.state.chartValues.count, 7)
-    }
-
-    func test_defaultState_kpiIdsAreUnique() {
-        let sut = WeeklyRecapInteractor()
-        let ids = sut.state.kpis.map(\.id)
-        XCTAssertEqual(Set(ids).count, ids.count)
-    }
-
-    func test_shareText_staticHelperMatchesInstanceShareText() {
-        let sut = WeeklyRecapInteractor()
+    func test_shareText_staticHelperMatchesInstanceShareText() async {
+        let sut = WeeklyRecapInteractor(worker: StubWorker(aggregate: nonEmptyAggregate()))
+        await sut.load(childId: "child-1")
         let fromHelper = WeeklyRecapModels.shareText(sut.state)
         let fromSut = sut.share()
         XCTAssertEqual(fromHelper, fromSut)
+    }
+
+    // MARK: - makeState mapping
+
+    func test_makeState_emptyAggregate_returnsEmpty() {
+        let state = WeeklyRecapModels.makeState(from: .empty)
+        XCTAssertTrue(state.isEmpty)
+    }
+
+    func test_makeState_kpiIdsAreUnique() {
+        let state = WeeklyRecapModels.makeState(from: nonEmptyAggregate())
+        let ids = state.kpis.map(\.id)
+        XCTAssertEqual(Set(ids).count, ids.count)
     }
 }

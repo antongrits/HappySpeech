@@ -4,7 +4,9 @@ import SwiftUI
 
 struct WeeklyRecapView: View {
 
+    @Environment(AppContainer.self) private var container
     @State private var interactor = WeeklyRecapInteractor()
+    @State private var bootstrapped = false
     @State private var shareItem: WeeklyRecapShareItem?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
@@ -37,20 +39,59 @@ struct WeeklyRecapView: View {
             }
         }
         .environment(\.circuitContext, .parent)
+        .task { await bootstrap() }
     }
 
+    @ViewBuilder
     private var content: some View {
-        ScrollView {
-            VStack(spacing: SpacingTokens.sp3) {
-                hero
-                kpiGrid
-                chartCard
-                cta
+        if interactor.state.isEmpty {
+            emptyState
+        } else {
+            ScrollView {
+                VStack(spacing: SpacingTokens.sp3) {
+                    hero
+                    kpiGrid
+                    chartCard
+                    cta
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.sp3)
+                .padding(.bottom, SpacingTokens.sp6)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp3)
-            .padding(.bottom, SpacingTokens.sp6)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: "calendar.badge.clock")
+                .font(.system(size: 56))
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .accessibilityHidden(true)
+            Text(String(localized: "weeklyRecap.empty.title"))
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .multilineTextAlignment(.center)
+            Text(String(localized: "weeklyRecap.empty.message"))
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+        }
+        .padding(.horizontal, SpacingTokens.sp5)
+        .accessibilityElement(children: .combine)
+    }
+
+    @MainActor
+    private func bootstrap() async {
+        guard !bootstrapped else { return }
+        bootstrapped = true
+        let worker = ProgressDashboardWorker(
+            sessionRepository: container.sessionRepository,
+            childRepository: container.childRepository
+        )
+        interactor = WeeklyRecapInteractor(worker: worker)
+        await interactor.load(childId: container.currentChildId)
     }
 
     private var hero: some View {
@@ -165,14 +206,18 @@ private struct WeeklyRecapShareSheet: UIViewControllerRepresentable {
 // MARK: - Preview
 
 #Preview("WeeklyRecap — Light") {
-    WeeklyRecapView()
+    let container = AppContainer.preview()
+    container.currentChildId = "preview-child-1"
+    return WeeklyRecapView()
         .environment(AppCoordinator())
-        .environment(AppContainer.preview())
+        .environment(container)
 }
 
 #Preview("WeeklyRecap — Dark") {
-    WeeklyRecapView()
+    let container = AppContainer.preview()
+    container.currentChildId = "preview-child-1"
+    return WeeklyRecapView()
         .environment(AppCoordinator())
-        .environment(AppContainer.preview())
+        .environment(container)
         .preferredColorScheme(.dark)
 }

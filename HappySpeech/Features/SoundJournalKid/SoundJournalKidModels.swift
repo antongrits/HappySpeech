@@ -2,7 +2,8 @@ import Foundation
 
 // MARK: - SoundJournalKidModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Детский «дневник звуков». Состояние строится из реальных сессий ребёнка:
+/// по каждому отрабатываемому звуку — сколько раз практиковался и последний балл.
 enum SoundJournalKidModels {
 
     struct Entry: Identifiable, Hashable {
@@ -17,12 +18,30 @@ enum SoundJournalKidModels {
         var entries: [Entry]
         var selectedEntryId: String?
 
-        static let initial = ViewState(entries: [
-            Entry(id: "e1", sound: "Р", timesPracticed: 7, lastScore: 82, emoji: "🦁"),
-            Entry(id: "e2", sound: "С", timesPracticed: 5, lastScore: 91, emoji: "🐍"),
-            Entry(id: "e3", sound: "Ш", timesPracticed: 4, lastScore: 78, emoji: "🌬"),
-            Entry(id: "e4", sound: "Л", timesPracticed: 3, lastScore: 65, emoji: "🛶"),
-            Entry(id: "e5", sound: "Ж", timesPracticed: 2, lastScore: 73, emoji: "🐝")
-        ], selectedEntryId: nil)
+        /// Нет ни одной сессии с попытками — показываем пустое состояние.
+        var isEmpty: Bool { entries.isEmpty }
+
+        /// Стартовое (загрузочное) состояние — пустое, без выдуманных записей.
+        /// Реальные записи приходят из `SoundJournalKidInteractor.refresh()`.
+        static let initial = ViewState(entries: [], selectedEntryId: nil)
+    }
+
+    /// Эмодзи-маскот для звука (детский UX). Соноры/свистящие/шипящие/заднеязычные.
+    static func emoji(for sound: String) -> String {
+        switch sound.uppercased() {
+        case "Р", "РЬ": return "🦁"
+        case "Л", "ЛЬ": return "🛶"
+        case "С", "СЬ": return "🐍"
+        case "З", "ЗЬ": return "🦓"
+        case "Ц":       return "🌼"
+        case "Ш":       return "🌬"
+        case "Ж":       return "🐝"
+        case "Ч":       return "🕰"
+        case "Щ":       return "🪥"
+        case "К":       return "🐸"
+        case "Г":       return "🦢"
+        case "Х":       return "🐹"
+        default:        return "🎈"
+        }
     }
 }
