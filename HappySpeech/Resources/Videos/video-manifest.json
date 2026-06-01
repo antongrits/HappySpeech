@@ -556,7 +556,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 1031951
+      "size_bytes": 850285
     },
     {
       "id": "demo_sound_r",
@@ -565,7 +565,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 1328401
+      "size_bytes": 1124251
     },
     {
       "id": "demo_sound_l",
@@ -574,7 +574,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 1829875
+      "size_bytes": 1645910
     },
     {
       "id": "demo_sound_sh",
@@ -583,7 +583,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 1386952
+      "size_bytes": 1219167
     },
     {
       "id": "demo_sound_zh",
@@ -592,7 +592,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 962224
+      "size_bytes": 772944
     },
     {
       "id": "demo_sound_k",
@@ -601,7 +601,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 951965
+      "size_bytes": 760336
     },
     {
       "id": "story_sad_na_s",
@@ -610,7 +610,7 @@
       "template": "educational-video",
       "variant": "story",
       "duration_sec": 8.0,
-      "size_bytes": 1896044
+      "size_bytes": 1706446
     },
     {
       "id": "story_lesnaya_shishka",
@@ -619,7 +619,7 @@
       "template": "educational-video",
       "variant": "story",
       "duration_sec": 8.0,
-      "size_bytes": 2791743
+      "size_bytes": 2602434
     },
     {
       "id": "story_raduga_r",
@@ -628,7 +628,7 @@
       "template": "educational-video",
       "variant": "story",
       "duration_sec": 8.0,
-      "size_bytes": 1808118
+      "size_bytes": 1609755
     },
     {
       "id": "story_luzhayka_l",
@@ -637,7 +637,7 @@
       "template": "educational-video",
       "variant": "story",
       "duration_sec": 8.0,
-      "size_bytes": 2313081
+      "size_bytes": 2114665
     },
     {
       "id": "demo_breath_dandelion",
@@ -646,7 +646,7 @@
       "template": "educational-video",
       "variant": "demo",
       "duration_sec": 8.0,
-      "size_bytes": 678748
+      "size_bytes": 493959
     },
     {
       "id": "story_zimnyaya_z",
@@ -655,7 +655,7 @@
       "template": "educational-video",
       "variant": "story",
       "duration_sec": 8.0,
-      "size_bytes": 3093107
+      "size_bytes": 2901395
     }
   ],
   "achievements": [
