@@ -2,7 +2,8 @@ import Foundation
 
 // MARK: - PhonemeFamilyMatcherModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели игры «Разложи по семьям звуков». Слова берутся из реального словаря
+/// (`PhonemeFamilyMatcherWorker` → `LessonContentMap`), не из статического seed.
 enum PhonemeFamilyMatcherModels {
 
     enum Family: String, CaseIterable, Hashable, Identifiable {
@@ -15,10 +16,10 @@ enum PhonemeFamilyMatcherModels {
 
         var title: String {
             switch self {
-            case .whistling: return "Свистящие"
-            case .hissing:   return "Шипящие"
-            case .sonorant:  return "Соноры"
-            case .velar:     return "Заднеязычные"
+            case .whistling: return String(localized: "soundGroup.whistling")
+            case .hissing:   return String(localized: "soundGroup.hissing")
+            case .sonorant:  return String(localized: "soundGroup.sonorant")
+            case .velar:     return String(localized: "soundGroup.velar")
             }
         }
 
@@ -28,6 +29,16 @@ enum PhonemeFamilyMatcherModels {
             case .hissing:   return "SoundHissingBg"
             case .sonorant:  return "SoundSonorantBg"
             case .velar:     return "SoundVelarBg"
+            }
+        }
+
+        /// Канонический звук-представитель группы (для записи прогресса).
+        var representativeSound: String {
+            switch self {
+            case .whistling: return "С"
+            case .hissing:   return "Ш"
+            case .sonorant:  return "Р"
+            case .velar:     return "К"
             }
         }
     }
@@ -41,24 +52,21 @@ enum PhonemeFamilyMatcherModels {
 
     struct ViewState: Equatable {
         var words: [Word]
+        var isLoaded: Bool
 
         var matchedCount: Int {
             words.filter { $0.assignedFamily == $0.family }.count
         }
 
-        static let initial = ViewState(words: [
-            Word(id: "w1", text: "Сова", family: .whistling, assignedFamily: nil),
-            Word(id: "w2", text: "Зебра", family: .whistling, assignedFamily: nil),
-            Word(id: "w3", text: "Цапля", family: .whistling, assignedFamily: nil),
-            Word(id: "w4", text: "Шапка", family: .hissing, assignedFamily: nil),
-            Word(id: "w5", text: "Жираф", family: .hissing, assignedFamily: nil),
-            Word(id: "w6", text: "Щётка", family: .hissing, assignedFamily: nil),
-            Word(id: "w7", text: "Рыба", family: .sonorant, assignedFamily: nil),
-            Word(id: "w8", text: "Луна", family: .sonorant, assignedFamily: nil),
-            Word(id: "w9", text: "Рак", family: .sonorant, assignedFamily: nil),
-            Word(id: "w10", text: "Кот", family: .velar, assignedFamily: nil),
-            Word(id: "w11", text: "Гуси", family: .velar, assignedFamily: nil),
-            Word(id: "w12", text: "Хлеб", family: .velar, assignedFamily: nil)
-        ])
+        var isEmpty: Bool {
+            isLoaded && words.isEmpty
+        }
+
+        /// Все слова разложены (правильно или нет).
+        var allAssigned: Bool {
+            !words.isEmpty && words.allSatisfy { $0.assignedFamily != nil }
+        }
+
+        static let initial = ViewState(words: [], isLoaded: false)
     }
 }

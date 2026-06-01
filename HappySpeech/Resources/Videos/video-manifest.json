@@ -656,6 +656,50 @@
       "variant": "story",
       "duration_sec": 8.0,
       "size_bytes": 2901395
+    },
+    {
+      "id": "story_journey_r",
+      "path": "lessons/edu/story_journey_r.mp4",
+      "title": "Путешествие за звуком Р",
+      "template": "educational-video",
+      "variant": "story-long",
+      "target_sound": "Р",
+      "duration_sec": 48.0,
+      "size_bytes": 9882549,
+      "has_audio": true
+    },
+    {
+      "id": "story_day_hisses",
+      "path": "lessons/edu/story_day_hisses.mp4",
+      "title": "День у Ляли: учим шипящие",
+      "template": "educational-video",
+      "variant": "story-long",
+      "target_sound": "Ш-Ж",
+      "duration_sec": 56.0,
+      "size_bytes": 12125623,
+      "has_audio": true
+    },
+    {
+      "id": "story_tale_l",
+      "path": "lessons/edu/story_tale_l.mp4",
+      "title": "Сказка про звук Л",
+      "template": "educational-video",
+      "variant": "story-long",
+      "target_sound": "Л",
+      "duration_sec": 48.0,
+      "size_bytes": 9638112,
+      "has_audio": true
+    },
+    {
+      "id": "story_tongue_gym",
+      "path": "lessons/edu/story_tongue_gym.mp4",
+      "title": "Зарядка для язычка",
+      "template": "educational-video",
+      "variant": "story-long",
+      "target_sound": "артикуляция",
+      "duration_sec": 48.0,
+      "size_bytes": 4432656,
+      "has_audio": true
     }
   ],
   "achievements": [

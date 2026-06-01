@@ -2,10 +2,11 @@ import Foundation
 
 // MARK: - SpecialistCaseNotesModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели «Заметки по случаю» специалиста. Заметки реально хранятся в
+/// `UserDefaults` (см. `SpecialistCaseNotesStore`) и переживают перезапуск.
 enum SpecialistCaseNotesModels {
 
-    struct Note: Identifiable, Hashable {
+    struct Note: Identifiable, Hashable, Codable {
         let id: UUID
         let date: Date
         let body: String
@@ -15,29 +16,17 @@ enum SpecialistCaseNotesModels {
         var notes: [Note]
         var isAddingNote: Bool
         var draftBody: String
+        var isLoaded: Bool
 
-        static let initial: ViewState = {
-            // Seed 3 заметки за последние дни.
-            let now = Date()
-            let calendar = Calendar.current
-            let notes: [Note] = [
-                Note(
-                    id: UUID(),
-                    date: calendar.date(byAdding: .day, value: -1, to: now) ?? now,
-                    body: "Чёткое улучшение Р. Произнесла «рыбка» 4/5 раз. Закрепляем на следующей сессии."
-                ),
-                Note(
-                    id: UUID(),
-                    date: calendar.date(byAdding: .day, value: -4, to: now) ?? now,
-                    body: "Усталость к концу занятия — снизили нагрузку на артикуляционную гимнастику с 5 до 3 повторений."
-                ),
-                Note(
-                    id: UUID(),
-                    date: calendar.date(byAdding: .day, value: -7, to: now) ?? now,
-                    body: "Начали работу над звуком Ш. Хорошее понимание инструкции, но язык в широком положении ещё не уверенно."
-                )
-            ]
-            return ViewState(notes: notes, isAddingNote: false, draftBody: "")
-        }()
+        var isEmpty: Bool {
+            isLoaded && notes.isEmpty
+        }
+
+        static let initial = ViewState(
+            notes: [],
+            isAddingNote: false,
+            draftBody: "",
+            isLoaded: false
+        )
     }
 }

@@ -3,117 +3,93 @@ import XCTest
 
 // MARK: - PhonemeFamilyMatcherInteractorTests
 //
-// PhonemeFamilyMatcherInteractor is a thin VIP MVP variant (@Observable).
-// assign() tags a word with a chosen family; matchedCount counts words whose
-// assignment equals their true family. Tests cover assignment, scoring,
-// reassignment, the unknown-id guard and reset().
+// PhonemeFamilyMatcherInteractor загружает слова из словаря через worker и
+// фиксирует результат сортировки. Тесты используют детерминированный
+// mock-worker.
 
 @MainActor
 final class PhonemeFamilyMatcherInteractorTests: XCTestCase {
 
+    private final class MockWorker: PhonemeFamilyMatcherWorkerProtocol {
+        let words: [PhonemeFamilyMatcherModels.Word]
+        init(words: [PhonemeFamilyMatcherModels.Word]) { self.words = words }
+        func buildWords(childId: String) async -> [PhonemeFamilyMatcherModels.Word] { words }
+    }
+
+    private func sampleWords() -> [PhonemeFamilyMatcherModels.Word] {
+        [
+            .init(id: "w1", text: "Сова", family: .whistling, assignedFamily: nil),
+            .init(id: "w2", text: "Шапка", family: .hissing, assignedFamily: nil),
+            .init(id: "w3", text: "Рыба", family: .sonorant, assignedFamily: nil),
+            .init(id: "w4", text: "Кот", family: .velar, assignedFamily: nil)
+        ]
+    }
+
     private func makeSUT(childId: String = "child-1") -> PhonemeFamilyMatcherInteractor {
-        PhonemeFamilyMatcherInteractor(childId: childId)
+        PhonemeFamilyMatcherInteractor(
+            childId: childId,
+            worker: MockWorker(words: sampleWords())
+        )
     }
-
-    private func word(_ sut: PhonemeFamilyMatcherInteractor, id: String) -> PhonemeFamilyMatcherModels.Word {
-        sut.state.words.first { $0.id == id }!
-    }
-
-    // MARK: - Initial state
 
     func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-phoneme")
-        XCTAssertEqual(sut.childId, "kid-phoneme")
+        let sut = PhonemeFamilyMatcherInteractor(childId: "kid-3")
+        XCTAssertEqual(sut.childId, "kid-3")
     }
 
-    func test_initialState_matchesInitial() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+    func test_load_withoutWorker_marksLoadedEmpty() async {
+        let sut = PhonemeFamilyMatcherInteractor(childId: "c")
+        await sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertTrue(sut.state.isEmpty)
     }
 
-    func test_initialState_nothingAssigned() {
+    func test_load_populatesWords() async {
         let sut = makeSUT()
-        XCTAssertTrue(sut.state.words.allSatisfy { $0.assignedFamily == nil })
-    }
-
-    func test_initialState_matchedCountZero() {
-        let sut = makeSUT()
+        await sut.load()
+        XCTAssertEqual(sut.state.words.count, 4)
         XCTAssertEqual(sut.state.matchedCount, 0)
     }
 
-    func test_initialState_hasTwelveWords() {
+    func test_assign_correct_incrementsMatched() async {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state.words.count, 12)
-    }
-
-    func test_initialState_coversAllFourFamilies() {
-        let sut = makeSUT()
-        let families = Set(sut.state.words.map(\.family))
-        XCTAssertEqual(families, Set(PhonemeFamilyMatcherModels.Family.allCases))
-    }
-
-    // MARK: - assign
-
-    func test_assign_setsAssignedFamily() {
-        let sut = makeSUT()
+        await sut.load()
         sut.assign("w1", to: .whistling)
-        XCTAssertEqual(word(sut, id: "w1").assignedFamily, .whistling)
-    }
-
-    func test_assign_correctFamily_incrementsMatchedCount() {
-        let sut = makeSUT()
-        let target = word(sut, id: "w1").family
-        sut.assign("w1", to: target)
         XCTAssertEqual(sut.state.matchedCount, 1)
     }
 
-    func test_assign_wrongFamily_doesNotCountAsMatch() {
+    func test_assign_wrong_doesNotCountAsMatched() async {
         let sut = makeSUT()
-        let actual = word(sut, id: "w1").family   // whistling
-        let wrong = PhonemeFamilyMatcherModels.Family.allCases.first { $0 != actual }!
-        sut.assign("w1", to: wrong)
+        await sut.load()
+        sut.assign("w1", to: .velar)
+        XCTAssertEqual(sut.state.matchedCount, 0)
+        XCTAssertEqual(sut.state.words.first { $0.id == "w1" }?.assignedFamily, .velar)
+    }
+
+    func test_assign_unknownId_noop() async {
+        let sut = makeSUT()
+        await sut.load()
+        sut.assign("nope", to: .whistling)
         XCTAssertEqual(sut.state.matchedCount, 0)
     }
 
-    func test_assign_reassign_overwritesPrevious() {
+    func test_allAssigned_whenEveryWordTagged() async {
         let sut = makeSUT()
-        sut.assign("w4", to: .whistling)   // wrong (w4 is hissing)
-        sut.assign("w4", to: .hissing)     // correct
-        XCTAssertEqual(word(sut, id: "w4").assignedFamily, .hissing)
-        XCTAssertEqual(sut.state.matchedCount, 1)
-    }
-
-    func test_assign_unknownId_noChange() {
-        let sut = makeSUT()
-        sut.assign("nope", to: .velar)
-        XCTAssertEqual(sut.state.matchedCount, 0)
-        XCTAssertTrue(sut.state.words.allSatisfy { $0.assignedFamily == nil })
-    }
-
-    func test_assign_allCorrect_matchedCountEqualsWordCount() {
-        let sut = makeSUT()
-        for w in sut.state.words {
-            sut.assign(w.id, to: w.family)
-        }
-        XCTAssertEqual(sut.state.matchedCount, sut.state.words.count)
-    }
-
-    func test_assign_doesNotAffectOtherWords() {
-        let sut = makeSUT()
+        await sut.load()
         sut.assign("w1", to: .whistling)
-        for w in sut.state.words where w.id != "w1" {
-            XCTAssertNil(w.assignedFamily, "Word \(w.id) should stay unassigned")
-        }
+        sut.assign("w2", to: .hissing)
+        sut.assign("w3", to: .sonorant)
+        sut.assign("w4", to: .velar)
+        XCTAssertTrue(sut.state.allAssigned)
+        XCTAssertEqual(sut.state.matchedCount, 4)
     }
 
-    // MARK: - reset
-
-    func test_reset_clearsAllAssignments() {
+    func test_reset_clearsAssignments() async {
         let sut = makeSUT()
+        await sut.load()
         sut.assign("w1", to: .whistling)
-        sut.assign("w7", to: .sonorant)
         sut.reset()
-        XCTAssertEqual(sut.state, .initial)
         XCTAssertEqual(sut.state.matchedCount, 0)
+        XCTAssertTrue(sut.state.words.allSatisfy { $0.assignedFamily == nil })
     }
 }

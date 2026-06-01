@@ -41,10 +41,12 @@ struct SpecialistCaseNotesView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SpecialistCaseNotesInteractor(
+                    let notes = SpecialistCaseNotesInteractor(
                         childId: childId,
                         specialistId: specialistId
                     )
+                    notes.load()
+                    interactor = notes
                 }
             }
             .sheet(isPresented: Binding(
@@ -97,7 +99,10 @@ struct SpecialistCaseNotesView: View {
                         .font(.system(size: 12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                         .hsSymbolEffect(.bounce, value: state.notes.count)
-                    Text("Всего заметок: \(state.notes.count)")
+                    Text(String(
+                        format: String(localized: "specialistNotes.total %lld"),
+                        state.notes.count
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
@@ -110,7 +115,7 @@ struct SpecialistCaseNotesView: View {
         VStack(spacing: SpacingTokens.sp2) {
             if interactor.state.notes.isEmpty {
                 HSCard(style: .flat) {
-                    Text("Заметок пока нет")
+                    Text(String(localized: "specialistNotes.empty"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -119,6 +124,16 @@ struct SpecialistCaseNotesView: View {
             } else {
                 ForEach(interactor.state.notes) { note in
                     noteCard(note)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                interactor.deleteNote(note.id)
+                            } label: {
+                                Label(
+                                    String(localized: "specialistNotes.delete"),
+                                    systemImage: "trash"
+                                )
+                            }
+                        }
                         .transition(.asymmetric(
                             insertion: .scale(scale: 0.92).combined(with: .opacity),
                             removal: .opacity

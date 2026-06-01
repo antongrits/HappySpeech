@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "lyalya_outfit_wizard.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

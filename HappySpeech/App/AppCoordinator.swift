@@ -262,7 +262,6 @@ enum AppRoute: Hashable {
     case achievementCalendar(childId: String)
     case specialistSchedule(specialistId: String)
     case specialistResourcesLibrary(specialistId: String)
-    case specialistReportPDFGen(childId: String, specialistId: String)
     case familyVoiceMessageHub
 }
 
@@ -1129,10 +1128,6 @@ struct AppCoordinatorView: View {
             SpecialistResourcesLibraryView(specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
 
-        case .specialistReportPDFGen(let childId, let specialistId):
-            SpecialistReportPDFGenView(childId: childId, specialistId: specialistId)
-                .environment(\.circuitContext, .specialist)
-
         case .familyVoiceMessageHub:
             FamilyVoiceMessageHubView()
                 .environment(\.circuitContext, .parent)
@@ -1691,7 +1686,8 @@ extension AppCoordinatorView {
         case "specialistResourcesLibrary", "resourcesLibrary", "library":
             return .specialistResourcesLibrary(specialistId: previewParent)
         case "specialistReportPDFGen", "reportPDFGen", "pdfReport":
-            return .specialistReportPDFGen(childId: previewChild, specialistId: previewParent)
+            // Real PDF/CSV export lives in the Specialist › Reports tab.
+            return .specialistHome
         case "familyVoiceMessageHub", "voiceMessageHub", "voiceHub":
             return .familyVoiceMessageHub
 

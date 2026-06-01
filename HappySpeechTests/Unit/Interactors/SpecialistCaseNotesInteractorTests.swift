@@ -3,134 +3,98 @@ import XCTest
 
 // MARK: - SpecialistCaseNotesInteractorTests
 //
-// SpecialistCaseNotesInteractor is a thin VIP MVP variant (@Observable). It keeps
-// a list of dated case notes plus a draft-editing flow: startAdding/cancelAdding
-// toggle the editing flag and clear the draft, while saveNote trims the draft,
-// guards against an empty/whitespace body, prepends the new note and exits editing.
-// Tests cover the seed, both editing transitions and the save (happy path + guards).
+// SpecialistCaseNotesInteractor реально персистит заметки в UserDefaults
+// (per specialist+child). Тесты используют изолированный suite, проверяют
+// сохранение, удаление и переживание перезапуска (новый интерактор на том же
+// suite читает ранее сохранённые заметки).
 
 @MainActor
 final class SpecialistCaseNotesInteractorTests: XCTestCase {
 
-    private func makeSUT() -> SpecialistCaseNotesInteractor {
-        SpecialistCaseNotesInteractor(childId: "child-1", specialistId: "spec-1")
+    private var suiteName: String!
+    private var defaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        suiteName = "caseNotes.tests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suiteName)
     }
 
-    // MARK: - Init / seed
-
-    func test_init_storesIdentifiers() {
-        let sut = SpecialistCaseNotesInteractor(childId: "c-42", specialistId: "s-7")
-        XCTAssertEqual(sut.childId, "c-42")
-        XCTAssertEqual(sut.specialistId, "s-7")
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults = nil
+        suiteName = nil
+        super.tearDown()
     }
 
-    func test_initialState_seedNotes() {
+    private func makeSUT(child: String = "c1", specialist: String = "s1") -> SpecialistCaseNotesInteractor {
+        SpecialistCaseNotesInteractor(childId: child, specialistId: specialist, defaults: defaults)
+    }
+
+    func test_load_emptyByDefault() {
         let sut = makeSUT()
-        XCTAssertFalse(sut.state.notes.isEmpty)
+        sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertTrue(sut.state.isEmpty)
+    }
+
+    func test_saveNote_addsAndPersists() {
+        let sut = makeSUT()
+        sut.load()
+        sut.startAdding()
+        sut.state.draftBody = "Хорошее улучшение Р"
+        sut.saveNote()
+        XCTAssertEqual(sut.state.notes.count, 1)
         XCTAssertFalse(sut.state.isAddingNote)
-        XCTAssertEqual(sut.state.draftBody, "")
-        for note in sut.state.notes {
-            XCTAssertFalse(note.body.isEmpty)
-        }
+
+        // Новый интерактор на том же suite — заметка пережила «перезапуск».
+        let reopened = makeSUT()
+        reopened.load()
+        XCTAssertEqual(reopened.state.notes.count, 1)
+        XCTAssertEqual(reopened.state.notes.first?.body, "Хорошее улучшение Р")
     }
 
-    func test_initialState_notesUniqueIds() {
+    func test_saveNote_blankIsIgnored() {
         let sut = makeSUT()
-        XCTAssertEqual(Set(sut.state.notes.map(\.id)).count, sut.state.notes.count)
-    }
-
-    // MARK: - startAdding / cancelAdding
-
-    func test_startAdding_enablesEditingAndClearsDraft() {
-        let sut = makeSUT()
-        sut.state.draftBody = "leftover"
+        sut.load()
         sut.startAdding()
-        XCTAssertTrue(sut.state.isAddingNote)
-        XCTAssertEqual(sut.state.draftBody, "")
+        sut.state.draftBody = "   \n  "
+        sut.saveNote()
+        XCTAssertEqual(sut.state.notes.count, 0)
     }
 
-    func test_cancelAdding_disablesEditingAndClearsDraft() {
+    func test_deleteNote_removesAndPersists() {
         let sut = makeSUT()
+        sut.load()
         sut.startAdding()
-        sut.state.draftBody = "half typed"
+        sut.state.draftBody = "Первая"
+        sut.saveNote()
+        let id = sut.state.notes[0].id
+        sut.deleteNote(id)
+        XCTAssertEqual(sut.state.notes.count, 0)
+
+        let reopened = makeSUT()
+        reopened.load()
+        XCTAssertEqual(reopened.state.notes.count, 0)
+    }
+
+    func test_notes_separatedPerChild() {
+        let a = makeSUT(child: "c1")
+        a.load()
+        a.startAdding(); a.state.draftBody = "Ребёнок А"; a.saveNote()
+
+        let b = makeSUT(child: "c2")
+        b.load()
+        XCTAssertEqual(b.state.notes.count, 0)
+    }
+
+    func test_cancelAdding_clearsDraft() {
+        let sut = makeSUT()
+        sut.load()
+        sut.startAdding()
+        sut.state.draftBody = "draft"
         sut.cancelAdding()
         XCTAssertFalse(sut.state.isAddingNote)
         XCTAssertEqual(sut.state.draftBody, "")
-    }
-
-    func test_cancelAdding_doesNotAddNote() {
-        let sut = makeSUT()
-        let before = sut.state.notes.count
-        sut.startAdding()
-        sut.state.draftBody = "не сохраняем"
-        sut.cancelAdding()
-        XCTAssertEqual(sut.state.notes.count, before)
-    }
-
-    // MARK: - saveNote happy path
-
-    func test_saveNote_prependsNote() {
-        let sut = makeSUT()
-        let before = sut.state.notes.count
-        sut.startAdding()
-        sut.state.draftBody = "Новая заметка о прогрессе"
-        sut.saveNote()
-        XCTAssertEqual(sut.state.notes.count, before + 1)
-        XCTAssertEqual(sut.state.notes.first?.body, "Новая заметка о прогрессе")
-    }
-
-    func test_saveNote_exitsEditingAndClearsDraft() {
-        let sut = makeSUT()
-        sut.startAdding()
-        sut.state.draftBody = "Заметка"
-        sut.saveNote()
-        XCTAssertFalse(sut.state.isAddingNote)
-        XCTAssertEqual(sut.state.draftBody, "")
-    }
-
-    func test_saveNote_trimsWhitespace() {
-        let sut = makeSUT()
-        sut.startAdding()
-        sut.state.draftBody = "   обрезаем края  \n"
-        sut.saveNote()
-        XCTAssertEqual(sut.state.notes.first?.body, "обрезаем края")
-    }
-
-    func test_saveNote_stampsRecentDate() {
-        let sut = makeSUT()
-        sut.startAdding()
-        sut.state.draftBody = "Заметка"
-        let before = Date()
-        sut.saveNote()
-        let saved = sut.state.notes.first!
-        XCTAssertGreaterThanOrEqual(saved.date, before)
-    }
-
-    // MARK: - saveNote guards
-
-    func test_saveNote_emptyDraft_noChange() {
-        let sut = makeSUT()
-        let before = sut.state.notes
-        sut.startAdding()
-        sut.saveNote()
-        XCTAssertEqual(sut.state.notes, before)
-    }
-
-    func test_saveNote_whitespaceOnly_noChange() {
-        let sut = makeSUT()
-        let before = sut.state.notes.count
-        sut.startAdding()
-        sut.state.draftBody = "   \n\t  "
-        sut.saveNote()
-        XCTAssertEqual(sut.state.notes.count, before)
-    }
-
-    func test_saveNote_whitespaceOnly_keepsEditingState() {
-        // Guard returns before mutating isAddingNote/draftBody.
-        let sut = makeSUT()
-        sut.startAdding()
-        sut.state.draftBody = "    "
-        sut.saveNote()
-        XCTAssertTrue(sut.state.isAddingNote)
     }
 }

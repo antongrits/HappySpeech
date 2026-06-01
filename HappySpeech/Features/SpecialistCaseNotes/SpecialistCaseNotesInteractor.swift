@@ -3,7 +3,12 @@ import OSLog
 
 // MARK: - SpecialistCaseNotesInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Бизнес-логика «Заметки по случаю» специалиста.
+///
+/// Заметки реально персистятся в `SpecialistCaseNotesStore` (UserDefaults,
+/// per specialist+child): добавленная заметка переживает перезапуск, удаление
+/// тоже сохраняется. Без идентификаторов (Preview/тесты) хранилище безопасно
+/// возвращает пустой список.
 @MainActor
 @Observable
 final class SpecialistCaseNotesInteractor {
@@ -15,12 +20,29 @@ final class SpecialistCaseNotesInteractor {
 
     let childId: String
     let specialistId: String
-    var state: SpecialistCaseNotesModels.ViewState
+    var state: SpecialistCaseNotesModels.ViewState = .initial
 
-    init(childId: String, specialistId: String) {
+    private let store: SpecialistCaseNotesStore
+
+    init(
+        childId: String,
+        specialistId: String,
+        defaults: UserDefaults = .standard
+    ) {
         self.childId = childId
         self.specialistId = specialistId
-        self.state = .initial
+        self.store = SpecialistCaseNotesStore(
+            defaults: defaults,
+            specialistId: specialistId,
+            childId: childId
+        )
+    }
+
+    /// Загружает сохранённые заметки из хранилища.
+    func load() {
+        state.notes = store.load()
+        state.isLoaded = true
+        Self.logger.info("loaded \(self.state.notes.count, privacy: .public) notes")
     }
 
     func startAdding() {
@@ -44,6 +66,13 @@ final class SpecialistCaseNotesInteractor {
         state.notes.insert(note, at: 0)
         state.draftBody = ""
         state.isAddingNote = false
+        store.save(state.notes)
         Self.logger.info("saveNote childId=\(self.childId, privacy: .private)")
+    }
+
+    func deleteNote(_ id: UUID) {
+        state.notes.removeAll { $0.id == id }
+        store.save(state.notes)
+        Self.logger.info("deleteNote childId=\(self.childId, privacy: .private)")
     }
 }

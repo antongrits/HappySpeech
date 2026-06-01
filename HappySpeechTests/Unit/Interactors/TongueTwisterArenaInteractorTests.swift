@@ -3,9 +3,9 @@ import XCTest
 
 // MARK: - TongueTwisterArenaInteractorTests
 //
-// TongueTwisterArenaInteractor is a thin VIP MVP variant (@Observable). Tests
-// cover select() (which also clears recording), back() (deselect + stop), and
-// toggleRecord() flipping the recording flag.
+// TongueTwisterArenaInteractor содержит реальный цикл записи (через сервисы) и
+// чистую оценку произношения по перекрытию слов. Юнит-тесты покрывают чистый
+// scoring, выбор/возврат и загрузку контента (без аудио-сервисов).
 
 @MainActor
 final class TongueTwisterArenaInteractorTests: XCTestCase {
@@ -14,106 +14,82 @@ final class TongueTwisterArenaInteractorTests: XCTestCase {
         TongueTwisterArenaInteractor(childId: childId)
     }
 
-    // MARK: - Initial state
+    // MARK: - Pure scoring
 
-    func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-arena")
-        XCTAssertEqual(sut.childId, "kid-arena")
+    func test_similarity_fullMatch_isOne() {
+        let s = TongueTwisterArenaInteractor.similarity(
+            transcript: "на дворе трава на траве дрова",
+            target: "На дворе трава, на траве дрова."
+        )
+        XCTAssertEqual(s, 1.0, accuracy: 0.0001)
     }
 
-    func test_initialState_matchesInitial() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+    func test_similarity_partial() {
+        let s = TongueTwisterArenaInteractor.similarity(
+            transcript: "на дворе трава",
+            target: "На дворе трава, на траве дрова."
+        )
+        // 3 уникальных целевых слова (длиной >= 2) совпали из 4 уникальных.
+        XCTAssertGreaterThan(s, 0.4)
+        XCTAssertLessThan(s, 1.0)
     }
 
-    func test_initialState_noSelection() {
-        let sut = makeSUT()
-        XCTAssertNil(sut.state.selected)
+    func test_similarity_empty_isZero() {
+        let s = TongueTwisterArenaInteractor.similarity(transcript: "", target: "Слон сидит")
+        XCTAssertEqual(s, 0.0, accuracy: 0.0001)
     }
 
-    func test_initialState_notRecording() {
-        let sut = makeSUT()
-        XCTAssertFalse(sut.state.isRecording)
+    func test_stars_thresholds() {
+        XCTAssertEqual(TongueTwisterArenaInteractor.stars(for: 0.1), 1)
+        XCTAssertEqual(TongueTwisterArenaInteractor.stars(for: 0.5), 2)
+        XCTAssertEqual(TongueTwisterArenaInteractor.stars(for: 0.9), 3)
     }
 
-    func test_initialState_hasEightTwisters() {
+    // MARK: - Selection / load
+
+    func test_load_populatesTwisters() async {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state.twisters.count, 8)
+        await sut.load()
+        XCTAssertEqual(sut.state.twisters.count, TongueTwisterContent.all.count)
     }
 
-    func test_initialState_twisterIdsAreUnique() {
+    func test_select_setsSelectedAndIdlePhase() async {
         let sut = makeSUT()
-        let ids = sut.state.twisters.map(\.id)
-        XCTAssertEqual(Set(ids).count, ids.count)
-    }
-
-    // MARK: - select
-
-    func test_select_setsSelectedTwister() {
-        let sut = makeSUT()
-        let twister = sut.state.twisters[3]
+        await sut.load()
+        let twister = sut.state.twisters[0]
         sut.select(twister)
         XCTAssertEqual(sut.state.selected, twister)
+        XCTAssertEqual(sut.state.phase, .idle)
     }
 
-    func test_select_clearsRecording() {
+    func test_back_clearsSelection() async {
         let sut = makeSUT()
-        sut.toggleRecord()
-        XCTAssertTrue(sut.state.isRecording)
+        await sut.load()
         sut.select(sut.state.twisters[0])
-        XCTAssertFalse(sut.state.isRecording)
-    }
-
-    func test_select_changingSelection_updatesTwister() {
-        let sut = makeSUT()
-        sut.select(sut.state.twisters[0])
-        sut.select(sut.state.twisters[1])
-        XCTAssertEqual(sut.state.selected, sut.state.twisters[1])
-    }
-
-    // MARK: - back
-
-    func test_back_clearsSelection() {
-        let sut = makeSUT()
-        sut.select(sut.state.twisters[2])
         sut.back()
         XCTAssertNil(sut.state.selected)
+        XCTAssertEqual(sut.state.phase, .idle)
     }
 
-    func test_back_stopsRecording() {
+    func test_canRecord_falseWithoutServices() {
         let sut = makeSUT()
+        XCTAssertFalse(sut.canRecord)
+    }
+
+    func test_toggleRecord_withoutServices_doesNotEnterRecording() async {
+        let sut = makeSUT()
+        await sut.load()
         sut.select(sut.state.twisters[0])
         sut.toggleRecord()
-        sut.back()
+        // Без audioService запись не стартует.
         XCTAssertFalse(sut.state.isRecording)
     }
 
-    func test_back_fromInitialState_noCrash() {
-        let sut = makeSUT()
-        sut.back()
-        XCTAssertNil(sut.state.selected)
-        XCTAssertFalse(sut.state.isRecording)
-    }
+    // MARK: - Content filtering
 
-    // MARK: - toggleRecord
-
-    func test_toggleRecord_startsRecording() {
-        let sut = makeSUT()
-        sut.toggleRecord()
-        XCTAssertTrue(sut.state.isRecording)
-    }
-
-    func test_toggleRecord_twice_stopsRecording() {
-        let sut = makeSUT()
-        sut.toggleRecord()
-        sut.toggleRecord()
-        XCTAssertFalse(sut.state.isRecording)
-    }
-
-    func test_toggleRecord_doesNotAffectSelection() {
-        let sut = makeSUT()
-        sut.select(sut.state.twisters[1])
-        sut.toggleRecord()
-        XCTAssertEqual(sut.state.selected, sut.state.twisters[1])
+    func test_content_filtersByTargetSounds() {
+        let filtered = TongueTwisterContent.twisters(forTargetSounds: ["Р"])
+        XCTAssertEqual(filtered.first?.targetSound.contains("Р"), true)
+        XCTAssertEqual(filtered.count, TongueTwisterContent.all.count)
     }
 }

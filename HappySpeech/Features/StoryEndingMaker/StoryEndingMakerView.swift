@@ -7,6 +7,7 @@ struct StoryEndingMakerView: View {
     let childId: String
 
     @State private var interactor: StoryEndingMakerInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -43,7 +44,14 @@ struct StoryEndingMakerView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = StoryEndingMakerInteractor(childId: childId)
+                    let maker = StoryEndingMakerInteractor(
+                        childId: childId,
+                        worker: StoryEndingMakerWorker(childRepository: container.childRepository),
+                        audioService: container.audioService,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = maker
+                    await maker.load()
                 }
             }
         }
@@ -53,22 +61,40 @@ struct StoryEndingMakerView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    cards(interactor: interactor)
-                    if interactor.state.phase == .saved {
-                        savedBanner
+            if !interactor.state.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        cards(interactor: interactor)
+                        if interactor.state.phase == .saved {
+                            savedBanner
+                        }
+                        cta(interactor: interactor)
                     }
-                    cta(interactor: interactor)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "storyEnding.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(state: StoryEndingMakerModels.ViewState) -> some View {
@@ -99,9 +125,10 @@ struct StoryEndingMakerView: View {
     private func phaseLabel(_ phase: StoryEndingMakerModels.Phase) -> some View {
         let text: String = {
             switch phase {
-            case .choosing:  return "Шаг 1 из 3: выбери картинку"
-            case .recording: return "Шаг 2 из 3: запиши голос"
-            case .saved:     return "Готово!"
+            case .choosing:  return String(localized: "storyEnding.step.choose")
+            case .recording: return String(localized: "storyEnding.step.record")
+            case .saving:    return String(localized: "storyEnding.step.saving")
+            case .saved:     return String(localized: "storyEnding.step.done")
             }
         }()
         Text(text)
@@ -136,8 +163,7 @@ struct StoryEndingMakerView: View {
     ) -> some View {
         Button(action: action) {
             VStack(spacing: SpacingTokens.sp2) {
-                Text(card.emoji)
-                    .font(.system(size: 56))
+                HSContentSymbol(card.asset ?? "sparkles", size: 56)
                 Text(card.label)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -170,7 +196,7 @@ struct StoryEndingMakerView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 48)
                     .accessibilityHidden(true)
-                Text("Концовка сохранена!")
+                Text(String(localized: "storyEnding.saved.banner"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 Spacer()
@@ -182,14 +208,16 @@ struct StoryEndingMakerView: View {
         let label: String = {
             switch interactor.state.phase {
             case .choosing:  return String(localized: "storyEnding.cta.action")
-            case .recording: return "Сохранить"
-            case .saved:     return "Начать заново"
+            case .recording: return String(localized: "storyEnding.cta.save")
+            case .saving:    return String(localized: "storyEnding.step.saving")
+            case .saved:     return String(localized: "storyEnding.cta.restart")
             }
         }()
         let icon: String = {
             switch interactor.state.phase {
             case .choosing:  return "hand.point.up.left.fill"
             case .recording: return "checkmark.circle.fill"
+            case .saving:    return "hourglass"
             case .saved:     return "arrow.counterclockwise"
             }
         }()
@@ -201,12 +229,15 @@ struct StoryEndingMakerView: View {
         ) {
             hapticService.notification(.success)
             switch interactor.state.phase {
-            case .choosing:  break // ждём выбора карточки
+            case .choosing, .saving:  break
             case .recording: interactor.save()
             case .saved:     interactor.reset()
             }
         }
-        .disabled(interactor.state.phase == .choosing && interactor.state.selectedId == nil)
+        .disabled(
+            (interactor.state.phase == .choosing && interactor.state.selectedId == nil)
+                || interactor.state.phase == .saving
+        )
         .opacity(
             interactor.state.phase == .choosing && interactor.state.selectedId == nil ? 0.5 : 1.0
         )

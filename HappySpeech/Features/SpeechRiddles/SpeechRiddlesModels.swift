@@ -2,12 +2,14 @@ import Foundation
 
 // MARK: - SpeechRiddlesModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели игры «Речевые загадки». Загадки строятся из реального словаря
+/// (`SpeechRiddlesWorker` → `LessonContentMap`), не из статического seed.
 enum SpeechRiddlesModels {
 
     struct Option: Identifiable, Hashable {
         let id: String
-        let emoji: String
+        /// Имя имейджсета (`word_*`), либо nil → плейсхолдер.
+        let asset: String?
         let label: String
         let startsWith: String
     }
@@ -31,6 +33,7 @@ enum SpeechRiddlesModels {
         var currentIndex: Int
         var feedback: Feedback
         var score: Int
+        var isLoaded: Bool
 
         var current: Riddle? {
             guard currentIndex < riddles.count else { return nil }
@@ -38,7 +41,11 @@ enum SpeechRiddlesModels {
         }
 
         var isComplete: Bool {
-            currentIndex >= riddles.count
+            isLoaded && currentIndex >= riddles.count && !riddles.isEmpty
+        }
+
+        var isEmpty: Bool {
+            isLoaded && riddles.isEmpty
         }
 
         var progress: Double {
@@ -47,47 +54,11 @@ enum SpeechRiddlesModels {
         }
 
         static let initial = ViewState(
-            riddles: [
-                Riddle(
-                    id: "r1",
-                    prompt: "Что начинается на «Р»?",
-                    targetLetter: "Р",
-                    options: [
-                        Option(id: "o1", emoji: "🌹", label: "Роза", startsWith: "Р"),
-                        Option(id: "o2", emoji: "🐱", label: "Кот", startsWith: "К"),
-                        Option(id: "o3", emoji: "🌳", label: "Дерево", startsWith: "Д"),
-                        Option(id: "o4", emoji: "🍎", label: "Яблоко", startsWith: "Я")
-                    ],
-                    correctOptionId: "o1"
-                ),
-                Riddle(
-                    id: "r2",
-                    prompt: "Что начинается на «С»?",
-                    targetLetter: "С",
-                    options: [
-                        Option(id: "o1", emoji: "🐘", label: "Слон", startsWith: "С"),
-                        Option(id: "o2", emoji: "🍌", label: "Банан", startsWith: "Б"),
-                        Option(id: "o3", emoji: "🦋", label: "Бабочка", startsWith: "Б"),
-                        Option(id: "o4", emoji: "🚗", label: "Машина", startsWith: "М")
-                    ],
-                    correctOptionId: "o1"
-                ),
-                Riddle(
-                    id: "r3",
-                    prompt: "Что начинается на «Л»?",
-                    targetLetter: "Л",
-                    options: [
-                        Option(id: "o1", emoji: "🐭", label: "Мышь", startsWith: "М"),
-                        Option(id: "o2", emoji: "🦁", label: "Лев", startsWith: "Л"),
-                        Option(id: "o3", emoji: "🐧", label: "Пингвин", startsWith: "П"),
-                        Option(id: "o4", emoji: "🐠", label: "Рыба", startsWith: "Р")
-                    ],
-                    correctOptionId: "o2"
-                )
-            ],
+            riddles: [],
             currentIndex: 0,
             feedback: .none,
-            score: 0
+            score: 0,
+            isLoaded: false
         )
     }
 }

@@ -119,6 +119,12 @@ struct OutfitCard: View {
         case .school:    return ColorTokens.Theme.schoolFrom
         case .birthday:  return ColorTokens.Theme.birthdayFrom
         case .space:     return ColorTokens.Theme.spaceFrom
+        // Новые наряды переиспользуют существующие пастельные градиенты-плейсхолдеры
+        // (плейсхолдер показывается только если иллюстрация отсутствует).
+        case .pajama, .doctor:    return ColorTokens.Theme.everydayFrom
+        case .raincoat, .gardener: return ColorTokens.Theme.beachFrom
+        case .chef, .musician:    return ColorTokens.Theme.birthdayFrom
+        case .superhero, .wizard: return ColorTokens.Theme.spaceFrom
         }
     }
 
@@ -130,6 +136,10 @@ struct OutfitCard: View {
         case .school:    return ColorTokens.Theme.schoolTo
         case .birthday:  return ColorTokens.Theme.birthdayTo
         case .space:     return ColorTokens.Theme.spaceTo
+        case .pajama, .doctor:    return ColorTokens.Theme.everydayTo
+        case .raincoat, .gardener: return ColorTokens.Theme.beachTo
+        case .chef, .musician:    return ColorTokens.Theme.birthdayTo
+        case .superhero, .wizard: return ColorTokens.Theme.spaceTo
         }
     }
 }

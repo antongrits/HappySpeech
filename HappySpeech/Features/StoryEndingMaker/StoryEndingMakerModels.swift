@@ -2,18 +2,21 @@ import Foundation
 
 // MARK: - StoryEndingMakerModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели игры «Придумай концовку». Картинки-концовки — реальные слова из
+/// словаря (`StoryEndingMakerWorker`); запись голоса реальная (через сервисы).
 enum StoryEndingMakerModels {
 
     struct PictureCard: Identifiable, Hashable {
         let id: String
-        let emoji: String
+        /// Имя имейджсета (`word_*`), либо nil → плейсхолдер.
+        let asset: String?
         let label: String
     }
 
     enum Phase: Hashable {
         case choosing
         case recording
+        case saving
         case saved
     }
 
@@ -21,15 +24,20 @@ enum StoryEndingMakerModels {
         var cards: [PictureCard]
         var selectedId: String?
         var phase: Phase
+        var isLoaded: Bool
+        /// Сколько концовок ребёнок сохранил всего (персистентно).
+        var savedCount: Int
+
+        var isEmpty: Bool {
+            isLoaded && cards.isEmpty
+        }
 
         static let initial = ViewState(
-            cards: [
-                PictureCard(id: "c1", emoji: "🦊", label: "Лиса убежала"),
-                PictureCard(id: "c2", emoji: "🐰", label: "Зайка спрятался"),
-                PictureCard(id: "c3", emoji: "🌳", label: "Все стали друзьями")
-            ],
+            cards: [],
             selectedId: nil,
-            phase: .choosing
+            phase: .choosing,
+            isLoaded: false,
+            savedCount: 0
         )
     }
 }

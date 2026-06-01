@@ -267,15 +267,6 @@ final class Wave4SnapshotTests: XCTestCase {
         try record(view, screen: "SpecialistQuickAssessmentView")
     }
 
-    // MARK: - 21. SpecialistReportPDFGenView (specialist, childId + specialistId)
-
-    func test_specialistReportPDFGen_rendersInBothThemes() throws {
-        let view = SpecialistReportPDFGenView(childId: "preview-child-1", specialistId: "preview-specialist-1")
-            .environment(AppCoordinator())
-            .environment(AppContainer.preview())
-        try record(view, screen: "SpecialistReportPDFGenView")
-    }
-
     // MARK: - 22. SpecialistResourcesLibraryView (specialist, specialistId)
 
     func test_specialistResourcesLibrary_rendersInBothThemes() throws {

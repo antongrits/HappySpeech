@@ -7,6 +7,7 @@ struct WordRhymeGameView: View {
     let childId: String
 
     @State private var interactor: WordRhymeGameInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -41,7 +42,13 @@ struct WordRhymeGameView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = WordRhymeGameInteractor(childId: childId)
+                    let game = WordRhymeGameInteractor(
+                        childId: childId,
+                        worker: WordRhymeGameWorker(childRepository: container.childRepository),
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = game
+                    await game.load()
                 }
             }
         }
@@ -51,24 +58,42 @@ struct WordRhymeGameView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    if let current = interactor.state.current {
-                        target(round: current)
-                        optionsRow(round: current, interactor: interactor)
-                    } else {
-                        completionCard(state: interactor.state)
+            if !interactor.state.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        if let current = interactor.state.current {
+                            target(round: current)
+                            optionsRow(round: current, interactor: interactor)
+                        } else {
+                            completionCard(state: interactor.state)
+                        }
+                        cta(interactor: interactor)
                     }
-                    cta(interactor: interactor)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "wordRhyme.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(state: WordRhymeGameModels.ViewState) -> some View {
@@ -101,11 +126,11 @@ struct WordRhymeGameView: View {
     private func target(round: WordRhymeGameModels.Round) -> some View {
         HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
             VStack(spacing: 6) {
-                Text(round.targetEmoji).font(.system(size: 60))
+                HSContentSymbol(round.targetAsset ?? "music.note", size: 60)
                 Text(round.targetWord)
                     .font(TypographyTokens.titleLarge(28).weight(.bold))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                Text("Найди слово, которое рифмуется")
+                Text(String(localized: "wordRhyme.target.hint"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
@@ -156,7 +181,7 @@ struct WordRhymeGameView: View {
         } label: {
             HSCard(style: backgroundStyle(isCorrect: isCorrect, isWrong: isWrong)) {
                 HStack(spacing: SpacingTokens.sp3) {
-                    Text(option.emoji).font(.system(size: 32))
+                    HSContentSymbol(option.asset ?? "music.note", size: 32)
                     Text(option.word)
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Kid.ink)
@@ -199,10 +224,13 @@ struct WordRhymeGameView: View {
                 LyalyaMascotView(state: .celebrating, size: 56)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Все рифмы найдены!")
+                    Text(String(localized: "wordRhyme.complete.title"))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Text("Счёт: \(state.score) из \(state.rounds.count)")
+                    Text(String(
+                        format: String(localized: "wordRhyme.complete.score %lld %lld"),
+                        state.score, state.rounds.count
+                    ))
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -214,7 +242,7 @@ struct WordRhymeGameView: View {
     private func cta(interactor: WordRhymeGameInteractor) -> some View {
         HSButton(
             interactor.state.isComplete
-                ? "Сыграть снова"
+                ? String(localized: "wordRhyme.cta.again")
                 : String(localized: "wordRhyme.cta.action"),
             style: .primary,
             size: .large,
@@ -222,7 +250,7 @@ struct WordRhymeGameView: View {
         ) {
             hapticService.notification(.success)
             if interactor.state.isComplete {
-                interactor.reset()
+                Task { await interactor.load() }
             } else if case .wrong = interactor.state.feedback {
                 interactor.advance()
             }

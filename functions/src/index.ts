@@ -58,7 +58,10 @@ import { runWeeklySummary } from "./sendWeeklySummary";
 export { scoreSpeechQuality } from "./speechQuality";
 export { generateNeurolinguistSummary } from "./neurolinguistSummary";
 export { sendFamilyInvite } from "./familyInvite";
+import { askMethodology } from "./methodologyAssistant";
 import type {
+  AskMethodologyRequest,
+  AskMethodologyResponse,
   CalculateProgressRequest,
   CalculateProgressResult,
   CreateFamilyInviteTokenRequest,
@@ -198,6 +201,27 @@ export const getUserStats = onCall<GetUserStatsRequest, Promise<UserStats>>(
       logger.error("getUserStats failed", { userId, error: String(error) });
       throw new HttpsError("internal", "Failed to compute stats");
     }
+  },
+);
+
+// ------------------------------------------------------------------
+// Callable: askMethodologyAssistant
+// Adult-only RAG over the speech-therapy methodology corpus
+// (Vertex AI Search / Discovery Engine). Behind parental gate on iOS.
+// App Check enforced. Text-only — no child audio / PII. PII-free logging.
+// ------------------------------------------------------------------
+
+export const askMethodologyAssistant = onCall<
+  AskMethodologyRequest,
+  Promise<AskMethodologyResponse>
+>(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 60, memory: "256MiB" },
+  async (request) => {
+    if (!request.auth || !request.auth.uid) {
+      throw new HttpsError("unauthenticated", "Требуется вход в аккаунт.");
+    }
+    const { question, sessionId } = request.data || {};
+    return askMethodology(request.auth.uid, question, sessionId);
   },
 );
 

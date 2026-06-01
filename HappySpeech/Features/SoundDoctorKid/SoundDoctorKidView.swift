@@ -7,6 +7,7 @@ struct SoundDoctorKidView: View {
     let childId: String
 
     @State private var interactor: SoundDoctorKidInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -41,7 +42,13 @@ struct SoundDoctorKidView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SoundDoctorKidInteractor(childId: childId)
+                    let doctor = SoundDoctorKidInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = doctor
+                    await doctor.load()
                 }
             }
         }
@@ -51,23 +58,41 @@ struct SoundDoctorKidView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    if let kase = interactor.state.currentCase {
-                        caseCard(kase, interactor: interactor)
-                    } else {
-                        completionCard(state: interactor.state)
+            if !interactor.state.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        if let kase = interactor.state.currentCase {
+                            caseCard(kase, interactor: interactor)
+                        } else {
+                            completionCard(state: interactor.state)
+                        }
+                        cta(interactor: interactor)
                     }
-                    cta(interactor: interactor)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "soundDoctor.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(state: SoundDoctorKidModels.ViewState) -> some View {
@@ -87,7 +112,10 @@ struct SoundDoctorKidView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
-                    Text("Вылечено: \(state.cured)")
+                    Text(String(
+                        format: String(localized: "soundDoctor.cured %lld"),
+                        state.cured
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
@@ -106,7 +134,10 @@ struct SoundDoctorKidView: View {
                     Image(systemName: "cross.case.fill")
                         .font(.system(size: 22))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                    Text("«\(kase.brokenSound)» болеет")
+                    Text(String(
+                        format: String(localized: "soundDoctor.case.title %@"),
+                        kase.brokenSound
+                    ))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
                 }
@@ -155,10 +186,13 @@ struct SoundDoctorKidView: View {
                     // Step 10 Batch E — Pattern 5: bounce при появлении
                     // completion screen.
                     .hsSymbolEffect(.bounce, value: state.cured)
-                Text("Все звуки здоровы!")
+                Text(String(localized: "soundDoctor.complete.title"))
                     .font(TypographyTokens.title(18))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                Text("Вылечено: \(state.cured) из \(state.cases.count)")
+                Text(String(
+                    format: String(localized: "soundDoctor.complete.score %lld %lld"),
+                    state.cured, state.cases.count
+                ))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }

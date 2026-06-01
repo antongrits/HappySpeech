@@ -8,6 +8,7 @@ struct PhonemeFamilyMatcherView: View {
 
     @State private var interactor: PhonemeFamilyMatcherInteractor?
     @State private var selectedFamily: PhonemeFamilyMatcherModels.Family = .whistling
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -47,7 +48,13 @@ struct PhonemeFamilyMatcherView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = PhonemeFamilyMatcherInteractor(childId: childId)
+                    let game = PhonemeFamilyMatcherInteractor(
+                        childId: childId,
+                        worker: PhonemeFamilyMatcherWorker(),
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = game
+                    await game.load()
                 }
             }
         }
@@ -57,20 +64,38 @@ struct PhonemeFamilyMatcherView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    familyPicker
-                    wordsGrid(interactor: interactor)
-                    cta(interactor: interactor)
+            if !interactor.state.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        familyPicker
+                        wordsGrid(interactor: interactor)
+                        cta(interactor: interactor)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "phonemeFamily.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(state: PhonemeFamilyMatcherModels.ViewState) -> some View {
@@ -87,7 +112,10 @@ struct PhonemeFamilyMatcherView: View {
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
-                Text("Правильно: \(state.matchedCount) из \(state.words.count)")
+                Text(String(
+                    format: String(localized: "phonemeFamily.progress %lld %lld"),
+                    state.matchedCount, state.words.count
+                ))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .padding(.top, 4)
@@ -179,7 +207,7 @@ struct PhonemeFamilyMatcherView: View {
             }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(Text("Слово \(word.text)"))
+        .accessibilityLabel(Text(String(format: String(localized: "phonemeFamily.word.a11y %@"), word.text)))
         .accessibilityAddTraits(.isButton)
     }
 

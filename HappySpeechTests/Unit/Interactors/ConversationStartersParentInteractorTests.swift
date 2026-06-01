@@ -3,85 +3,76 @@ import XCTest
 
 // MARK: - ConversationStartersParentInteractorTests
 //
-// ConversationStartersParentInteractor is a thin VIP MVP variant (@Observable). It
-// holds a fixed list of conversation-starter questions; toggleFavorite(_:) flips
-// the favourite flag on the matching question (ignoring unknown ids). Tests cover
-// the seed (well-formedness, the pre-favourited entries, category coverage) and
-// the toggle, including the unknown-id guard.
-// (Category.title/.color maps are purely presentational — intentionally skipped.)
+// ConversationStartersParentInteractor загружает курируемый контент и реально
+// персистит избранное в UserDefaults. Тесты на изолированном suite.
 
 @MainActor
 final class ConversationStartersParentInteractorTests: XCTestCase {
 
+    private var suiteName: String!
+    private var defaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        suiteName = "convStarters.tests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suiteName)
+    }
+
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults = nil
+        suiteName = nil
+        super.tearDown()
+    }
+
     private func makeSUT() -> ConversationStartersParentInteractor {
-        ConversationStartersParentInteractor()
+        ConversationStartersParentInteractor(defaults: defaults)
     }
 
-    // MARK: - Initial state
-
-    func test_initialState_matchesInitial() {
+    func test_load_populatesQuestionsFromContent() {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+        XCTAssertEqual(sut.state.questions.count, ConversationStartersContent.all.count)
+        XCTAssertGreaterThan(sut.state.questions.count, 0)
     }
 
-    func test_initialState_questionsWellFormed() {
+    func test_questionIds_areUnique() {
         let sut = makeSUT()
-        XCTAssertFalse(sut.state.questions.isEmpty)
         XCTAssertEqual(Set(sut.state.questions.map(\.id)).count, sut.state.questions.count)
-        for q in sut.state.questions {
-            XCTAssertFalse(q.text.isEmpty)
-        }
     }
 
-    func test_initialState_hasSomePreFavorited() {
+    func test_noFavoritesByDefault() {
         let sut = makeSUT()
-        XCTAssertTrue(sut.state.questions.contains { $0.isFavorite })
+        XCTAssertTrue(sut.state.favorites.isEmpty)
     }
 
-    func test_initialState_coversAllCategories() {
+    func test_toggleFavorite_setsFlag() {
         let sut = makeSUT()
-        let present = Set(sut.state.questions.map(\.category))
-        XCTAssertEqual(present, Set(ConversationStartersParentModels.Category.allCases))
+        let id = sut.state.questions[0].id
+        sut.toggleFavorite(id)
+        XCTAssertTrue(sut.state.questions.first { $0.id == id }?.isFavorite ?? false)
     }
 
-    // MARK: - toggleFavorite
-
-    func test_toggleFavorite_flipsFlag() {
+    func test_toggleFavorite_twice_clears() {
         let sut = makeSUT()
-        let target = sut.state.questions.first { !$0.isFavorite }!
-        sut.toggleFavorite(target.id)
-        XCTAssertEqual(sut.state.questions.first { $0.id == target.id }?.isFavorite, true)
+        let id = sut.state.questions[0].id
+        sut.toggleFavorite(id)
+        sut.toggleFavorite(id)
+        XCTAssertFalse(sut.state.questions.first { $0.id == id }?.isFavorite ?? true)
     }
 
-    func test_toggleFavorite_twice_restoresOriginal() {
+    func test_favorite_persistsAcrossInstances() {
         let sut = makeSUT()
-        let target = sut.state.questions[3]
-        let before = target.isFavorite
-        sut.toggleFavorite(target.id)
-        sut.toggleFavorite(target.id)
-        XCTAssertEqual(sut.state.questions.first { $0.id == target.id }?.isFavorite, before)
+        let id = sut.state.questions[2].id
+        sut.toggleFavorite(id)
+
+        let reopened = makeSUT()
+        XCTAssertTrue(reopened.state.questions.first { $0.id == id }?.isFavorite ?? false)
     }
 
-    func test_toggleFavorite_unfavorites() {
+    func test_toggleFavorite_unknownId_noop() {
         let sut = makeSUT()
-        let target = sut.state.questions.first { $0.isFavorite }!
-        sut.toggleFavorite(target.id)
-        XCTAssertEqual(sut.state.questions.first { $0.id == target.id }?.isFavorite, false)
-    }
-
-    func test_toggleFavorite_onlyAffectsTarget() {
-        let sut = makeSUT()
-        let target = sut.state.questions[5]
-        let othersBefore = sut.state.questions.filter { $0.id != target.id }
-        sut.toggleFavorite(target.id)
-        let othersAfter = sut.state.questions.filter { $0.id != target.id }
-        XCTAssertEqual(othersBefore, othersAfter)
-    }
-
-    func test_toggleFavorite_unknownId_noChange() {
-        let sut = makeSUT()
-        let before = sut.state.questions
-        sut.toggleFavorite("does-not-exist")
-        XCTAssertEqual(sut.state.questions, before)
+        let before = sut.state.favorites.count
+        sut.toggleFavorite("nonexistent")
+        XCTAssertEqual(sut.state.favorites.count, before)
     }
 }

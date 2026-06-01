@@ -173,8 +173,19 @@ final class HelpCenterInteractorTests: XCTestCase {
         XCTAssertNil(HelpCenterCorpus.entry(forId: "missing"))
     }
 
-    func test_corpus_hasFiveVideos() {
-        XCTAssertEqual(HelpCenterCorpus.videos.count, 5)
+    func test_corpus_hasBaseTutorialsAndEduVideos() {
+        // 5 базовых туториалов всегда присутствуют в корпусе.
+        let baseIDs = ["tut-how-to-play", "tut-articulation", "tut-breathing",
+                       "tut-ar-setup", "tut-progress"]
+        for id in baseIDs {
+            XCTAssertNotNil(HelpCenterCorpus.video(forId: id), "Нет туториала \(id)")
+        }
+        // Плюс обучающие видео-мультики (короткие edu + длинные склеенные).
+        XCTAssertGreaterThanOrEqual(HelpCenterCorpus.videos.count, baseIDs.count)
+        // Длинные мультики зарегистрированы в корпусе.
+        for id in ["movie-r", "movie-hisses", "movie-l", "movie-gym"] {
+            XCTAssertNotNil(HelpCenterCorpus.video(forId: id), "Нет мультика \(id)")
+        }
     }
 
     func test_faqCategory_keysNotEmpty() {

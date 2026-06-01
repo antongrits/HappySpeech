@@ -36,6 +36,14 @@ public enum LyalyaOutfit: String, CaseIterable, Identifiable, Sendable {
     case school      // школа
     case birthday    // день рождения
     case space       // космос
+    case pajama      // пижама
+    case raincoat    // дождевик
+    case chef        // повар
+    case doctor      // врач
+    case musician    // музыкант
+    case gardener    // садовник
+    case superhero   // супергерой
+    case wizard      // волшебник
 
     public var id: String { rawValue }
 
@@ -47,6 +55,14 @@ public enum LyalyaOutfit: String, CaseIterable, Identifiable, Sendable {
         case .school:    return String(localized: "customization.outfit.school")
         case .birthday:  return String(localized: "customization.outfit.birthday")
         case .space:     return String(localized: "customization.outfit.space")
+        case .pajama:    return String(localized: "customization.outfit.pajama")
+        case .raincoat:  return String(localized: "customization.outfit.raincoat")
+        case .chef:      return String(localized: "customization.outfit.chef")
+        case .doctor:    return String(localized: "customization.outfit.doctor")
+        case .musician:  return String(localized: "customization.outfit.musician")
+        case .gardener:  return String(localized: "customization.outfit.gardener")
+        case .superhero: return String(localized: "customization.outfit.superhero")
+        case .wizard:    return String(localized: "customization.outfit.wizard")
         }
     }
 
@@ -56,11 +72,19 @@ public enum LyalyaOutfit: String, CaseIterable, Identifiable, Sendable {
     public var starCost: Int {
         switch self {
         case .everyday: return 0
+        case .school:   return 5
         case .beach:    return 10
         case .winter:   return 15
-        case .school:   return 5
         case .birthday: return 20
         case .space:    return 30
+        case .pajama:   return 5
+        case .raincoat: return 8
+        case .chef:     return 12
+        case .doctor:   return 12
+        case .musician: return 18
+        case .gardener: return 14
+        case .superhero: return 25
+        case .wizard:   return 35
         }
     }
 
@@ -68,11 +92,19 @@ public enum LyalyaOutfit: String, CaseIterable, Identifiable, Sendable {
     public var requiredStreak: Int {
         switch self {
         case .everyday: return 0
+        case .school:   return 2
         case .beach:    return 3
         case .winter:   return 5
-        case .school:   return 2
         case .birthday: return 7
         case .space:    return 14
+        case .pajama:   return 1
+        case .raincoat: return 2
+        case .chef:     return 4
+        case .doctor:   return 4
+        case .musician: return 6
+        case .gardener: return 5
+        case .superhero: return 10
+        case .wizard:   return 16
         }
     }
 

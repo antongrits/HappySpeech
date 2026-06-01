@@ -52,7 +52,7 @@ struct WeeklyParentTipView: View {
     private var hero: some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
-                Text(interactor.state.tip.weekLabel)
+                Text(interactor.state.weekLabel)
                     .font(TypographyTokens.caption(12).weight(.semibold))
                     .foregroundStyle(ColorTokens.Parent.accent)
                 Text(String(localized: "weeklyTip.hero.title"))
@@ -90,7 +90,7 @@ struct WeeklyParentTipView: View {
     private var bulletsCard: some View {
         HSCard(style: .flat) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("3 простых упражнения на эту неделю")
+                Text(String(localized: "weeklyTip.exercises.heading"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .padding(.bottom, 2)

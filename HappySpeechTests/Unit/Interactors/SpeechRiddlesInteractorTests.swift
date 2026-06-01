@@ -3,168 +3,110 @@ import XCTest
 
 // MARK: - SpeechRiddlesInteractorTests
 //
-// SpeechRiddlesInteractor is a thin VIP MVP variant (@Observable). A correct
-// answer increments score, shows .correct feedback and auto-advances after a
-// ~700ms delay; a wrong answer shows .wrong(optionId) without advancing. Tests
-// cover scoring, feedback states, the async auto-advance, manual advance, the
-// progress/isComplete computeds and reset().
+// SpeechRiddlesInteractor загружает загадки из словаря через worker и
+// фиксирует результаты в AdaptivePlannerService. Тесты используют
+// детерминированный mock-worker.
 
 @MainActor
 final class SpeechRiddlesInteractorTests: XCTestCase {
 
-    private func makeSUT(childId: String = "child-1") -> SpeechRiddlesInteractor {
-        SpeechRiddlesInteractor(childId: childId)
+    private final class MockWorker: SpeechRiddlesWorkerProtocol {
+        let riddles: [SpeechRiddlesModels.Riddle]
+        var lastChildId: String?
+        init(riddles: [SpeechRiddlesModels.Riddle]) { self.riddles = riddles }
+        func buildRiddles(childId: String) async -> [SpeechRiddlesModels.Riddle] {
+            lastChildId = childId
+            return riddles
+        }
     }
 
-    private func correctId(_ sut: SpeechRiddlesInteractor) -> String {
-        sut.state.current!.correctOptionId
+    private func makeRiddle(id: String) -> SpeechRiddlesModels.Riddle {
+        SpeechRiddlesModels.Riddle(
+            id: id,
+            prompt: "Что начинается на «С»?",
+            targetLetter: "С",
+            options: [
+                SpeechRiddlesModels.Option(id: "ok", asset: "word_dog", label: "Слон", startsWith: "С"),
+                SpeechRiddlesModels.Option(id: "no", asset: nil, label: "Банан", startsWith: "Б")
+            ],
+            correctOptionId: "ok"
+        )
     }
 
-    private func wrongId(_ sut: SpeechRiddlesInteractor) -> String {
-        let current = sut.state.current!
-        return current.options.first { $0.id != current.correctOptionId }!.id
+    private func makeSUT(childId: String = "child-1") -> (SpeechRiddlesInteractor, MockWorker) {
+        let worker = MockWorker(riddles: [makeRiddle(id: "q1"), makeRiddle(id: "q2")])
+        let sut = SpeechRiddlesInteractor(childId: childId, worker: worker)
+        return (sut, worker)
     }
-
-    // MARK: - Initial state
 
     func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-riddle")
-        XCTAssertEqual(sut.childId, "kid-riddle")
+        let (sut, _) = makeSUT(childId: "kid-9")
+        XCTAssertEqual(sut.childId, "kid-9")
     }
 
-    func test_initialState_matchesInitial() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+    func test_load_withoutWorker_marksLoadedEmpty() async {
+        let sut = SpeechRiddlesInteractor(childId: "c")
+        await sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertTrue(sut.state.isEmpty)
     }
 
-    func test_initialState_zeroScore() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.score, 0)
+    func test_load_populatesRiddles() async {
+        let (sut, worker) = makeSUT()
+        await sut.load()
+        XCTAssertEqual(sut.state.riddles.count, 2)
+        XCTAssertEqual(sut.state.current?.id, "q1")
+        XCTAssertEqual(worker.lastChildId, "child-1")
     }
 
-    func test_initialState_feedbackNone() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.feedback, .none)
-    }
-
-    func test_initialState_currentIsFirstRiddle() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.current?.id, "r1")
-    }
-
-    func test_initialState_progressZero() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.progress, 0, accuracy: 0.0001)
-    }
-
-    func test_initialState_notComplete() {
-        let sut = makeSUT()
-        XCTAssertFalse(sut.state.isComplete)
-    }
-
-    // MARK: - wrong answer
-
-    func test_answer_wrong_setsWrongFeedback() {
-        let sut = makeSUT()
-        let wrong = wrongId(sut)
-        sut.answer(wrong)
-        XCTAssertEqual(sut.state.feedback, .wrong(wrong))
-    }
-
-    func test_answer_wrong_doesNotIncrementScore() {
-        let sut = makeSUT()
-        sut.answer(wrongId(sut))
-        XCTAssertEqual(sut.state.score, 0)
-    }
-
-    func test_answer_wrong_doesNotAdvance() {
-        let sut = makeSUT()
-        sut.answer(wrongId(sut))
-        XCTAssertEqual(sut.state.currentIndex, 0)
-    }
-
-    // MARK: - correct answer (immediate effects)
-
-    func test_answer_correct_incrementsScoreImmediately() {
-        let sut = makeSUT()
-        sut.answer(correctId(sut))
+    func test_answer_correct_incrementsScore() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
+        sut.answer("ok")
         XCTAssertEqual(sut.state.score, 1)
-    }
-
-    func test_answer_correct_setsCorrectFeedbackImmediately() {
-        let sut = makeSUT()
-        sut.answer(correctId(sut))
         XCTAssertEqual(sut.state.feedback, .correct)
     }
 
-    func test_answer_correct_doesNotAdvanceSynchronously() {
-        let sut = makeSUT()
-        sut.answer(correctId(sut))
-        // Advance happens after ~700ms; immediately it is still on the same riddle.
+    func test_answer_correct_autoAdvances() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
+        sut.answer("ok")
         XCTAssertEqual(sut.state.currentIndex, 0)
-    }
-
-    // MARK: - correct answer (async auto-advance)
-
-    func test_answer_correct_autoAdvancesAfterDelay() async {
-        let sut = makeSUT()
-        sut.answer(correctId(sut))
         try? await Task.sleep(for: .milliseconds(900))
         XCTAssertEqual(sut.state.currentIndex, 1)
-        XCTAssertEqual(sut.state.feedback, .none)
     }
 
-    func test_answer_correct_autoAdvanceKeepsScore() async {
-        let sut = makeSUT()
-        sut.answer(correctId(sut))
-        try? await Task.sleep(for: .milliseconds(900))
-        XCTAssertEqual(sut.state.score, 1)
+    func test_answer_wrong_setsFeedbackWithoutScore() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
+        sut.answer("no")
+        XCTAssertEqual(sut.state.feedback, .wrong("no"))
+        XCTAssertEqual(sut.state.score, 0)
     }
 
-    // MARK: - advance & completion
-
-    func test_advance_movesToNextRiddle() {
-        let sut = makeSUT()
-        sut.advance()
-        XCTAssertEqual(sut.state.currentIndex, 1)
-        XCTAssertEqual(sut.state.feedback, .none)
-    }
-
-    func test_advance_pastLastRiddle_marksComplete() {
-        let sut = makeSUT()
-        let count = sut.state.riddles.count
-        for _ in 0..<count { sut.advance() }
+    func test_advance_pastLast_marksComplete() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
+        for _ in 0..<sut.state.riddles.count { sut.advance() }
         XCTAssertTrue(sut.state.isComplete)
         XCTAssertNil(sut.state.current)
     }
 
-    func test_progress_isFractionOfRiddlesAnswered() {
-        let sut = makeSUT()
+    func test_progress_advancesProportionally() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
         sut.advance()
-        let expected = 1.0 / Double(sut.state.riddles.count)
-        XCTAssertEqual(sut.state.progress, expected, accuracy: 0.0001)
+        XCTAssertEqual(sut.state.progress, 1.0 / 2.0, accuracy: 0.0001)
     }
 
-    func test_progress_emptyRiddles_isZero() {
-        let state = SpeechRiddlesModels.ViewState(riddles: [], currentIndex: 0, feedback: .none, score: 0)
-        XCTAssertEqual(state.progress, 0)
-    }
-
-    // MARK: - reset
-
-    func test_reset_restoresInitialState() {
-        let sut = makeSUT()
+    func test_reset_keepsRiddlesResetsProgress() async {
+        let (sut, _) = makeSUT()
+        await sut.load()
+        sut.answer("ok")
         sut.advance()
-        sut.answer(correctId(sut))
         sut.reset()
-        XCTAssertEqual(sut.state, .initial)
-    }
-
-    // MARK: - Feedback equality
-
-    func test_feedback_wrongCarriesOptionId() {
-        XCTAssertEqual(SpeechRiddlesModels.Feedback.wrong("a"), .wrong("a"))
-        XCTAssertNotEqual(SpeechRiddlesModels.Feedback.wrong("a"), .wrong("b"))
-        XCTAssertNotEqual(SpeechRiddlesModels.Feedback.correct, .none)
+        XCTAssertEqual(sut.state.currentIndex, 0)
+        XCTAssertEqual(sut.state.score, 0)
+        XCTAssertEqual(sut.state.riddles.count, 2)
     }
 }

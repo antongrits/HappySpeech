@@ -7,6 +7,7 @@ struct TongueTwisterArenaView: View {
     let childId: String
 
     @State private var interactor: TongueTwisterArenaInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -41,7 +42,15 @@ struct TongueTwisterArenaView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = TongueTwisterArenaInteractor(childId: childId)
+                    let arena = TongueTwisterArenaInteractor(
+                        childId: childId,
+                        audioService: container.audioService,
+                        asrService: container.asrService,
+                        adaptivePlanner: container.adaptivePlannerService,
+                        childRepository: container.childRepository
+                    )
+                    interactor = arena
+                    await arena.load()
                 }
             }
         }
@@ -55,6 +64,9 @@ struct TongueTwisterArenaView: View {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
                         detail(twister: selected, interactor: interactor)
+                        if case .result(let stars, _) = interactor.state.phase {
+                            resultCard(stars: stars)
+                        }
                         recordCTA(interactor: interactor)
                         backCTA(interactor: interactor)
                     }
@@ -130,7 +142,10 @@ struct TongueTwisterArenaView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text("Скороговорка, \(twister.targetSound). \(twister.text)"))
+                .accessibilityLabel(Text(String(
+                    format: String(localized: "tongueTwister.row.a11y %@ %@"),
+                    twister.targetSound, twister.text
+                )))
                 .accessibilityAddTraits(.isButton)
                 // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
                 // + parallax drift на twister list rows.
@@ -162,23 +177,65 @@ struct TongueTwisterArenaView: View {
         }
     }
 
+    private func resultCard(stars: Int) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            VStack(spacing: SpacingTokens.sp2) {
+                HStack(spacing: 4) {
+                    ForEach(0..<3, id: \.self) { index in
+                        Image(systemName: index < stars ? "star.fill" : "star")
+                            .font(.system(size: 28))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                    }
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text(String(
+                    format: String(localized: "tongueTwister.result.a11y %lld"),
+                    stars
+                )))
+                Text(String(localized: "tongueTwister.result.caption"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    @ViewBuilder
     private func recordCTA(interactor: TongueTwisterArenaInteractor) -> some View {
-        HSButton(
-            interactor.state.isRecording
-                ? "Остановить запись"
-                : String(localized: "tongueTwister.cta.action"),
-            style: interactor.state.isRecording ? .danger : .primary,
-            size: .large,
-            icon: interactor.state.isRecording ? "stop.circle.fill" : "mic.fill"
-        ) {
-            hapticService.notification(.success)
-            interactor.toggleRecord()
+        if interactor.canRecord {
+            HSButton(
+                recordTitle(phase: interactor.state.phase),
+                style: interactor.state.isRecording ? .danger : .primary,
+                size: .large,
+                icon: recordIcon(phase: interactor.state.phase)
+            ) {
+                hapticService.notification(.success)
+                interactor.toggleRecord()
+            }
+            .disabled(interactor.state.isScoring)
+        }
+    }
+
+    private func recordTitle(phase: TongueTwisterArenaModels.AttemptPhase) -> String {
+        switch phase {
+        case .recording: return String(localized: "tongueTwister.cta.stop")
+        case .scoring:   return String(localized: "tongueTwister.cta.scoring")
+        case .result:    return String(localized: "tongueTwister.cta.again")
+        case .idle:      return String(localized: "tongueTwister.cta.action")
+        }
+    }
+
+    private func recordIcon(phase: TongueTwisterArenaModels.AttemptPhase) -> String {
+        switch phase {
+        case .recording: return "stop.circle.fill"
+        case .scoring:   return "hourglass"
+        default:         return "mic.fill"
         }
     }
 
     private func backCTA(interactor: TongueTwisterArenaInteractor) -> some View {
         HSButton(
-            "Назад к списку",
+            String(localized: "tongueTwister.cta.back"),
             style: .ghost,
             size: .medium,
             icon: "arrow.left"

@@ -3,100 +3,97 @@ import XCTest
 
 // MARK: - StoryEndingMakerInteractorTests
 //
-// StoryEndingMakerInteractor is a thin VIP MVP variant (@Observable). It drives a
-// three-phase flow: choosing → (select a card) → recording → (save) → saved, with
-// reset() returning to the start. Tests cover the phase transitions, selection
-// tracking and reset.
+// StoryEndingMakerInteractor грузит картинки-концовки из словаря через worker,
+// ведёт трёхфазный поток choosing → recording → saving → saved и персистит
+// счётчик сохранённых концовок. Тесты на mock-worker и изолированном suite.
 
 @MainActor
 final class StoryEndingMakerInteractorTests: XCTestCase {
 
+    private var suiteName: String!
+    private var defaults: UserDefaults!
+
+    override func setUp() {
+        super.setUp()
+        suiteName = "storyEnding.tests.\(UUID().uuidString)"
+        defaults = UserDefaults(suiteName: suiteName)
+    }
+
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults = nil
+        suiteName = nil
+        super.tearDown()
+    }
+
+    private final class MockWorker: StoryEndingMakerWorkerProtocol {
+        let cards: [StoryEndingMakerModels.PictureCard]
+        init(cards: [StoryEndingMakerModels.PictureCard]) { self.cards = cards }
+        func buildCards(childId: String) async -> [StoryEndingMakerModels.PictureCard] { cards }
+    }
+
     private func makeSUT(childId: String = "child-1") -> StoryEndingMakerInteractor {
-        StoryEndingMakerInteractor(childId: childId)
+        let worker = MockWorker(cards: [
+            .init(id: "c1", asset: "word_fox", label: "Лиса"),
+            .init(id: "c2", asset: nil, label: "Заяц"),
+            .init(id: "c3", asset: "word_tree", label: "Дерево")
+        ])
+        return StoryEndingMakerInteractor(childId: childId, worker: worker, defaults: defaults)
     }
 
-    // MARK: - Initial state
-
-    func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-story")
-        XCTAssertEqual(sut.childId, "kid-story")
-    }
-
-    func test_initialState_matchesInitial() {
+    func test_load_populatesCardsAndChoosing() async {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
-    }
-
-    func test_initialState_phaseChoosing() {
-        let sut = makeSUT()
+        await sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertEqual(sut.state.cards.count, 3)
         XCTAssertEqual(sut.state.phase, .choosing)
     }
 
-    func test_initialState_noSelection() {
-        let sut = makeSUT()
-        XCTAssertNil(sut.state.selectedId)
+    func test_load_withoutWorker_marksEmpty() async {
+        let sut = StoryEndingMakerInteractor(childId: "c", defaults: defaults)
+        await sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertTrue(sut.state.isEmpty)
     }
 
-    func test_initialState_cardsWellFormed() {
+    func test_select_movesToRecording() async {
         let sut = makeSUT()
-        XCTAssertFalse(sut.state.cards.isEmpty)
-        XCTAssertEqual(Set(sut.state.cards.map(\.id)).count, sut.state.cards.count)
-        for card in sut.state.cards {
-            XCTAssertFalse(card.label.isEmpty)
-            XCTAssertFalse(card.emoji.isEmpty)
-        }
-    }
-
-    // MARK: - select
-
-    func test_select_recordsSelectedId() {
-        let sut = makeSUT()
-        let id = sut.state.cards[1].id
-        sut.select(id)
-        XCTAssertEqual(sut.state.selectedId, id)
-    }
-
-    func test_select_movesToRecordingPhase() {
-        let sut = makeSUT()
-        sut.select(sut.state.cards[0].id)
+        await sut.load()
+        sut.select("c1")
+        XCTAssertEqual(sut.state.selectedId, "c1")
         XCTAssertEqual(sut.state.phase, .recording)
     }
 
-    func test_select_canChangeSelection() {
+    func test_save_incrementsAndPersistsCount() async {
         let sut = makeSUT()
-        sut.select(sut.state.cards[0].id)
-        let second = sut.state.cards[2].id
-        sut.select(second)
-        XCTAssertEqual(sut.state.selectedId, second)
-        XCTAssertEqual(sut.state.phase, .recording)
-    }
-
-    // MARK: - save
-
-    func test_save_movesToSavedPhase() {
-        let sut = makeSUT()
-        sut.select(sut.state.cards[0].id)
+        await sut.load()
+        sut.select("c1")
         sut.save()
+        // save() гоняет async-Task; ждём перехода в .saved.
+        try? await Task.sleep(for: .milliseconds(200))
         XCTAssertEqual(sut.state.phase, .saved)
+        XCTAssertEqual(sut.state.savedCount, 1)
+
+        // Новый интерактор на том же suite видит сохранённый счётчик.
+        let reopened = makeSUT()
+        await reopened.load()
+        XCTAssertEqual(reopened.state.savedCount, 1)
     }
 
-    func test_save_keepsSelection() {
+    func test_reset_returnsToChoosing() async {
         let sut = makeSUT()
-        let id = sut.state.cards[0].id
-        sut.select(id)
-        sut.save()
-        XCTAssertEqual(sut.state.selectedId, id)
-    }
-
-    // MARK: - reset
-
-    func test_reset_restoresInitialState() {
-        let sut = makeSUT()
-        sut.select(sut.state.cards[0].id)
-        sut.save()
+        await sut.load()
+        sut.select("c1")
         sut.reset()
-        XCTAssertEqual(sut.state, .initial)
         XCTAssertEqual(sut.state.phase, .choosing)
         XCTAssertNil(sut.state.selectedId)
+    }
+
+    func test_save_withoutRecordingPhase_noop() async {
+        let sut = makeSUT()
+        await sut.load()
+        sut.save() // phase == .choosing
+        XCTAssertEqual(sut.state.phase, .choosing)
+        XCTAssertEqual(sut.state.savedCount, 0)
     }
 }

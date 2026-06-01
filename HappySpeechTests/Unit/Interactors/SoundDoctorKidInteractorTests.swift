@@ -3,9 +3,9 @@ import XCTest
 
 // MARK: - SoundDoctorKidInteractorTests
 //
-// SoundDoctorKidInteractor is a thin VIP MVP variant (@Observable). Tests cover
-// choose() correctness scoring, case advancement (clamped at end), reset() and
-// the currentCase computed property edge-cases.
+// SoundDoctorKidInteractor загружает случаи из методического контента под
+// рабочие звуки ребёнка и считает «вылеченные» звуки. Без репозитория грузится
+// базовый набор; choose() корректно продвигает игру.
 
 @MainActor
 final class SoundDoctorKidInteractorTests: XCTestCase {
@@ -14,132 +14,92 @@ final class SoundDoctorKidInteractorTests: XCTestCase {
         SoundDoctorKidInteractor(childId: childId)
     }
 
-    // MARK: - Initial state
-
     func test_init_storesChildId() {
         let sut = makeSUT(childId: "kid-7")
         XCTAssertEqual(sut.childId, "kid-7")
     }
 
-    func test_initialState_matchesInitial() {
+    func test_load_populatesCases() async {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
-    }
-
-    func test_initialState_curedIsZero() {
-        let sut = makeSUT()
+        await sut.load()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertFalse(sut.state.cases.isEmpty)
+        XCTAssertEqual(sut.state.currentCaseIndex, 0)
         XCTAssertEqual(sut.state.cured, 0)
     }
 
-    func test_initialState_currentCaseIsFirst() {
+    func test_eachCaseHasExactlyOneCorrectOption() async {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state.currentCase?.id, 0)
-        XCTAssertEqual(sut.state.currentCase?.brokenSound, "Р")
-    }
-
-    func test_initialState_eachCaseHasExactlyOneCorrectOption() {
-        let sut = makeSUT()
+        await sut.load()
         for kase in sut.state.cases {
             XCTAssertEqual(kase.options.filter(\.isCorrect).count, 1,
                            "Case \(kase.id) must have exactly one correct option")
         }
     }
 
-    // MARK: - choose: correct
-
-    func test_choose_correctOption_returnsTrue() {
+    func test_choose_correct_incrementsCuredAndAdvances() async {
         let sut = makeSUT()
-        let correctId = sut.state.currentCase!.options.first(where: \.isCorrect)!.id
-        XCTAssertTrue(sut.choose(correctId))
-    }
-
-    func test_choose_correctOption_incrementsCured() {
-        let sut = makeSUT()
-        let correctId = sut.state.currentCase!.options.first(where: \.isCorrect)!.id
-        sut.choose(correctId)
+        await sut.load()
+        let kase = sut.state.currentCase!
+        let correct = kase.options.first { $0.isCorrect }!.id
+        let ok = sut.choose(correct)
+        XCTAssertTrue(ok)
         XCTAssertEqual(sut.state.cured, 1)
-    }
-
-    func test_choose_correctOption_advancesToNextCase() {
-        let sut = makeSUT()
-        let correctId = sut.state.currentCase!.options.first(where: \.isCorrect)!.id
-        sut.choose(correctId)
         XCTAssertEqual(sut.state.currentCaseIndex, 1)
-        XCTAssertEqual(sut.state.currentCase?.id, 1)
     }
 
-    // MARK: - choose: wrong
-
-    func test_choose_wrongOption_returnsFalse() {
+    func test_choose_wrong_advancesWithoutCuring() async {
         let sut = makeSUT()
-        let wrongId = sut.state.currentCase!.options.first(where: { !$0.isCorrect })!.id
-        XCTAssertFalse(sut.choose(wrongId))
-    }
-
-    func test_choose_wrongOption_doesNotIncrementCured() {
-        let sut = makeSUT()
-        let wrongId = sut.state.currentCase!.options.first(where: { !$0.isCorrect })!.id
-        sut.choose(wrongId)
+        await sut.load()
+        let kase = sut.state.currentCase!
+        let wrong = kase.options.first { !$0.isCorrect }!.id
+        let ok = sut.choose(wrong)
+        XCTAssertFalse(ok)
         XCTAssertEqual(sut.state.cured, 0)
-    }
-
-    func test_choose_wrongOption_stillAdvances() {
-        let sut = makeSUT()
-        let wrongId = sut.state.currentCase!.options.first(where: { !$0.isCorrect })!.id
-        sut.choose(wrongId)
         XCTAssertEqual(sut.state.currentCaseIndex, 1)
     }
 
-    // MARK: - choose: invalid
-
-    func test_choose_unknownOptionId_returnsFalseAndNoChange() {
+    func test_choose_unknownOption_noop() async {
         let sut = makeSUT()
+        await sut.load()
         XCTAssertFalse(sut.choose("does-not-exist"))
         XCTAssertEqual(sut.state.currentCaseIndex, 0)
         XCTAssertEqual(sut.state.cured, 0)
     }
 
-    func test_choose_pastLastCase_returnsFalseAndDoesNotOverflow() {
+    func test_playThrough_marksComplete() async {
         let sut = makeSUT()
-        let caseCount = sut.state.cases.count
-        // Advance through every case picking the correct option each time.
-        for _ in 0..<caseCount {
-            if let id = sut.state.currentCase?.options.first(where: \.isCorrect)?.id {
-                sut.choose(id)
-            }
+        await sut.load()
+        let total = sut.state.cases.count
+        for _ in 0..<total {
+            let correct = sut.state.currentCase!.options.first { $0.isCorrect }!.id
+            sut.choose(correct)
         }
+        XCTAssertTrue(sut.state.isComplete)
+        XCTAssertEqual(sut.state.cured, total)
         XCTAssertNil(sut.state.currentCase)
-        XCTAssertEqual(sut.state.currentCaseIndex, caseCount)
-        // One more choose with currentCase == nil is a no-op.
+        // Лишний choose после конца — no-op.
         XCTAssertFalse(sut.choose("anything"))
-        XCTAssertEqual(sut.state.currentCaseIndex, caseCount, "index must not exceed cases.count")
+        XCTAssertEqual(sut.state.currentCaseIndex, total)
     }
 
-    func test_choose_allCorrect_curesEveryCase() {
+    func test_reset_restartsGame() async {
         let sut = makeSUT()
-        let caseCount = sut.state.cases.count
-        for _ in 0..<caseCount {
-            if let id = sut.state.currentCase?.options.first(where: \.isCorrect)?.id {
-                sut.choose(id)
-            }
-        }
-        XCTAssertEqual(sut.state.cured, caseCount)
-    }
-
-    // MARK: - reset
-
-    func test_reset_restoresInitialState() {
-        let sut = makeSUT()
-        let correctId = sut.state.currentCase!.options.first(where: \.isCorrect)!.id
-        sut.choose(correctId)
+        await sut.load()
+        sut.choose(sut.state.currentCase!.options[0].id)
         sut.reset()
-        XCTAssertEqual(sut.state, .initial)
+        XCTAssertEqual(sut.state.currentCaseIndex, 0)
+        XCTAssertEqual(sut.state.cured, 0)
     }
 
-    // MARK: - currentCase edge-case
+    func test_content_filtersByTargetSound() {
+        let cases = SoundDoctorKidContent.cases(forTargetSounds: ["Ш"], limit: 4)
+        XCTAssertEqual(cases.first?.sound, "Ш")
+    }
 
     func test_currentCase_isNilWhenIndexOutOfBounds() {
         var state = SoundDoctorKidModels.ViewState.initial
+        state.cases = SoundDoctorKidContent.all
         state.currentCaseIndex = state.cases.count
         XCTAssertNil(state.currentCase)
     }

@@ -7,6 +7,7 @@ struct LyalyaPersonalCoachView: View {
     let childId: String
 
     @State private var interactor: LyalyaPersonalCoachInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -37,7 +38,13 @@ struct LyalyaPersonalCoachView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = LyalyaPersonalCoachInteractor(childId: childId)
+                    let coach = LyalyaPersonalCoachInteractor(
+                        childId: childId,
+                        worker: LyalyaPersonalCoachWorker(childRepository: container.childRepository),
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = coach
+                    await coach.load()
                 }
             }
         }
@@ -47,25 +54,43 @@ struct LyalyaPersonalCoachView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(interactor: interactor)
-                    if let round = interactor.current {
-                        questionCard(round, interactor: interactor)
-                        optionsGrid(round: round, interactor: interactor)
-                        reactionView(interactor: interactor)
-                    } else {
-                        summary(interactor: interactor)
+            if !interactor.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(interactor: interactor)
+                        if let round = interactor.current {
+                            questionCard(round, interactor: interactor)
+                            optionsGrid(round: round, interactor: interactor)
+                            reactionView(interactor: interactor)
+                        } else {
+                            summary(interactor: interactor)
+                        }
+                        cta(interactor: interactor)
                     }
-                    cta(interactor: interactor)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "coach.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(interactor: LyalyaPersonalCoachInteractor) -> some View {
@@ -84,7 +109,11 @@ struct LyalyaPersonalCoachView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
-                    Text("Раунд \(min(interactor.currentIndex + 1, interactor.rounds.count)) из \(interactor.rounds.count)")
+                    Text(String(
+                        format: String(localized: "coach.round %lld %lld"),
+                        min(interactor.currentIndex + 1, interactor.rounds.count),
+                        interactor.rounds.count
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .padding(.top, 2)
@@ -155,7 +184,7 @@ struct LyalyaPersonalCoachView: View {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(ColorTokens.Semantic.success)
                     .hsSymbolEffect(.bounce, value: interactor.correctCount)
-                Text("Точно! Молодец!")
+                Text(String(localized: "coach.reaction.correct"))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .font(TypographyTokens.body(15))
             }
@@ -164,7 +193,7 @@ struct LyalyaPersonalCoachView: View {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
                     .foregroundStyle(ColorTokens.Semantic.warning)
                     .hsSymbolEffect(.pulse, value: interactor.currentIndex)
-                Text("Попробуем ещё разок")
+                Text(String(localized: "coach.reaction.tryAgain"))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .font(TypographyTokens.body(15))
             }
@@ -178,7 +207,10 @@ struct LyalyaPersonalCoachView: View {
             VStack(spacing: SpacingTokens.sp2) {
                 LyalyaMascotView(state: .celebrating, size: 80)
                     .accessibilityHidden(true)
-                Text("Готово! Правильных ответов: \(interactor.correctCount) из \(interactor.rounds.count)")
+                Text(String(
+                    format: String(localized: "coach.summary %lld %lld"),
+                    interactor.correctCount, interactor.rounds.count
+                ))
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
@@ -192,17 +224,17 @@ struct LyalyaPersonalCoachView: View {
     private func cta(interactor: LyalyaPersonalCoachInteractor) -> some View {
         if interactor.isFinished {
             HSButton(
-                String(localized: "coach.cta.start"),
+                String(localized: "coach.cta.again"),
                 style: .secondary,
                 size: .large,
                 icon: "arrow.clockwise"
             ) {
                 hapticService.notification(.success)
-                dismiss()
+                Task { await interactor.restart() }
             }
         } else if interactor.reaction != .none {
             HSButton(
-                "Дальше",
+                String(localized: "coach.cta.next"),
                 style: .primary,
                 size: .large,
                 icon: "arrow.right"

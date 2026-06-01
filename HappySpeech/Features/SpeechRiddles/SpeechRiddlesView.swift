@@ -7,6 +7,7 @@ struct SpeechRiddlesView: View {
     let childId: String
 
     @State private var interactor: SpeechRiddlesInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -44,7 +45,13 @@ struct SpeechRiddlesView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SpeechRiddlesInteractor(childId: childId)
+                    let game = SpeechRiddlesInteractor(
+                        childId: childId,
+                        worker: SpeechRiddlesWorker(childRepository: container.childRepository),
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = game
+                    await game.load()
                 }
             }
         }
@@ -54,24 +61,42 @@ struct SpeechRiddlesView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    if let current = interactor.state.current {
-                        prompt(riddle: current)
-                        options(riddle: current, interactor: interactor)
-                    } else {
-                        completionCard(state: interactor.state)
+            if !interactor.state.isLoaded {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        if let current = interactor.state.current {
+                            prompt(riddle: current)
+                            options(riddle: current, interactor: interactor)
+                        } else {
+                            completionCard(state: interactor.state)
+                        }
+                        cta(interactor: interactor)
                     }
-                    cta(interactor: interactor)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
+            Text(String(localized: "speechRiddles.empty.title"))
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+        }
+        .padding(SpacingTokens.screenEdge)
     }
 
     private func hero(state: SpeechRiddlesModels.ViewState) -> some View {
@@ -157,7 +182,7 @@ struct SpeechRiddlesView: View {
             interactor.answer(option.id)
         } label: {
             VStack(spacing: 6) {
-                Text(option.emoji).font(.system(size: 52))
+                HSContentSymbol(option.asset ?? "questionmark.circle", size: 52)
                 Text(option.label)
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -201,10 +226,13 @@ struct SpeechRiddlesView: View {
                 LyalyaMascotView(state: .celebrating, size: 56)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Все загадки разгаданы!")
+                    Text(String(localized: "speechRiddles.complete.title"))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Text("Счёт: \(state.score) из \(state.riddles.count)")
+                    Text(String(
+                        format: String(localized: "speechRiddles.complete.score %lld %lld"),
+                        state.score, state.riddles.count
+                    ))
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -216,7 +244,7 @@ struct SpeechRiddlesView: View {
     private func cta(interactor: SpeechRiddlesInteractor) -> some View {
         HSButton(
             interactor.state.isComplete
-                ? "Сыграть снова"
+                ? String(localized: "speechRiddles.cta.again")
                 : String(localized: "speechRiddles.cta.action"),
             style: .primary,
             size: .large,
@@ -224,7 +252,7 @@ struct SpeechRiddlesView: View {
         ) {
             hapticService.notification(.success)
             if interactor.state.isComplete {
-                interactor.reset()
+                Task { await interactor.load() }
             } else if case .wrong = interactor.state.feedback {
                 interactor.advance()
             }

@@ -326,7 +326,22 @@ public enum HelpCenterCorpus {
               resourceName: "story_luzhayka_l", durationSeconds: 8, symbolName: "sun.max.fill"),
         .init(id: "edu-story-z", titleKey: "helpCenter.video.edu_story_z.title",
               descriptionKey: "helpCenter.video.edu_story_z.description",
-              resourceName: "story_zimnyaya_z", durationSeconds: 8, symbolName: "snowflake")
+              resourceName: "story_zimnyaya_z", durationSeconds: 8, symbolName: "snowflake"),
+
+        // Длинные обучающие мультики (Veo 3.1, склейка нескольких сцен + озвучка Ляли).
+        // Файлы в Videos/lessons/edu/. 1–5 минут, связный сюжет по методике.
+        .init(id: "movie-r", titleKey: "helpCenter.video.movie_r.title",
+              descriptionKey: "helpCenter.video.movie_r.description",
+              resourceName: "story_journey_r", durationSeconds: 48, symbolName: "map.fill"),
+        .init(id: "movie-hisses", titleKey: "helpCenter.video.movie_hisses.title",
+              descriptionKey: "helpCenter.video.movie_hisses.description",
+              resourceName: "story_day_hisses", durationSeconds: 56, symbolName: "house.fill"),
+        .init(id: "movie-l", titleKey: "helpCenter.video.movie_l.title",
+              descriptionKey: "helpCenter.video.movie_l.description",
+              resourceName: "story_tale_l", durationSeconds: 48, symbolName: "book.fill"),
+        .init(id: "movie-gym", titleKey: "helpCenter.video.movie_gym.title",
+              descriptionKey: "helpCenter.video.movie_gym.description",
+              resourceName: "story_tongue_gym", durationSeconds: 48, symbolName: "figure.flexibility")
     ]
 
     public static func video(forId id: String) -> TutorialVideo? {

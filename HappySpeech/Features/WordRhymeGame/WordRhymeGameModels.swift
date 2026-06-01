@@ -2,19 +2,21 @@ import Foundation
 
 // MARK: - WordRhymeGameModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели игры «Найди рифму». Контент строится из реального словаря
+/// (`WordRhymeGameWorker` → `LessonContentMap`), не из статического seed.
 enum WordRhymeGameModels {
 
     struct RhymeOption: Identifiable, Hashable {
         let id: String
         let word: String
-        let emoji: String
+        /// Имя имейджсета (`word_*`) для иллюстрации, либо nil → плейсхолдер.
+        let asset: String?
     }
 
     struct Round: Identifiable, Hashable {
         let id: String
         let targetWord: String
-        let targetEmoji: String
+        let targetAsset: String?
         let options: [RhymeOption]
         let correctOptionId: String
     }
@@ -30,6 +32,7 @@ enum WordRhymeGameModels {
         var index: Int
         var feedback: Feedback
         var score: Int
+        var isLoaded: Bool
 
         var current: Round? {
             guard index < rounds.count else { return nil }
@@ -37,7 +40,12 @@ enum WordRhymeGameModels {
         }
 
         var isComplete: Bool {
-            index >= rounds.count
+            isLoaded && index >= rounds.count && !rounds.isEmpty
+        }
+
+        /// Истинно пустой словарь (контент не загрузился) — для empty-state.
+        var isEmpty: Bool {
+            isLoaded && rounds.isEmpty
         }
 
         var progress: Double {
@@ -46,44 +54,11 @@ enum WordRhymeGameModels {
         }
 
         static let initial = ViewState(
-            rounds: [
-                Round(
-                    id: "r1",
-                    targetWord: "Кошка",
-                    targetEmoji: "🐱",
-                    options: [
-                        RhymeOption(id: "o1", word: "Мошка", emoji: "🪰"),
-                        RhymeOption(id: "o2", word: "Дом",   emoji: "🏠"),
-                        RhymeOption(id: "o3", word: "Лук",   emoji: "🧅")
-                    ],
-                    correctOptionId: "o1"
-                ),
-                Round(
-                    id: "r2",
-                    targetWord: "Мишка",
-                    targetEmoji: "🐻",
-                    options: [
-                        RhymeOption(id: "o1", word: "Стол",   emoji: "🪑"),
-                        RhymeOption(id: "o2", word: "Шишка",  emoji: "🌰"),
-                        RhymeOption(id: "o3", word: "Шар",    emoji: "🎈")
-                    ],
-                    correctOptionId: "o2"
-                ),
-                Round(
-                    id: "r3",
-                    targetWord: "Кот",
-                    targetEmoji: "🐈",
-                    options: [
-                        RhymeOption(id: "o1", word: "Стол",   emoji: "🪑"),
-                        RhymeOption(id: "o2", word: "Гном",   emoji: "🧙"),
-                        RhymeOption(id: "o3", word: "Бегемот", emoji: "🦛")
-                    ],
-                    correctOptionId: "o3"
-                )
-            ],
+            rounds: [],
             index: 0,
             feedback: .none,
-            score: 0
+            score: 0,
+            isLoaded: false
         )
     }
 }

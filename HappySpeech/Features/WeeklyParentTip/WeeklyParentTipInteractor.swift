@@ -3,7 +3,12 @@ import OSLog
 
 // MARK: - WeeklyParentTipInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Бизнес-логика «Совет недели» (родитель).
+///
+/// Совет берётся из курируемого контента (`WeeklyParentTipContent`) и
+/// выбирается по номеру календарной недели — поэтому он стабилен в течение
+/// недели и реально меняется на следующей. Календарь инжектится для
+/// тестируемости.
 @MainActor
 @Observable
 final class WeeklyParentTipInteractor {
@@ -15,16 +20,22 @@ final class WeeklyParentTipInteractor {
 
     var state: WeeklyParentTipModels.ViewState
 
-    init() {
-        self.state = .initial
+    init(calendar: Calendar = .current, now: Date = Date()) {
+        let week = calendar.component(.weekOfYear, from: now)
+        let tip = WeeklyParentTipContent.tip(forWeek: week)
+        self.state = WeeklyParentTipModels.ViewState(
+            tip: tip,
+            weekLabel: String(format: String(localized: "weeklyTip.weekLabel %lld"), week)
+        )
+        Self.logger.info("loaded tip \(tip.id, privacy: .public) for week \(week, privacy: .public)")
     }
 
     func recordShare() {
         Self.logger.info("share tip \(self.state.tip.id, privacy: .public)")
     }
 
-    /// Готовый текст для системного share-листа: заголовок, основной текст
-    /// и пронумерованные упражнения. Используется `UIActivityViewController`.
+    /// Готовый текст для системного share-листа: заголовок, основной текст и
+    /// пронумерованные упражнения. Используется `UIActivityViewController`.
     var shareText: String {
         let tip = state.tip
         var lines: [String] = [tip.title, ""]
