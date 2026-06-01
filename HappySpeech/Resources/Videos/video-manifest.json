@@ -1,20 +1,80 @@
 {
   "videos": [
-    {"id": "intro", "duration": 5.0, "description": "Вступление с Лялей"},
-    {"id": "trailer", "duration": 30.0, "description": "Трейлер приложения"},
-    {"id": "transition_correct", "duration": 1.5, "description": "Переход — верный ответ"},
-    {"id": "transition_wrong", "duration": 1.5, "description": "Переход — неверный ответ"},
-    {"id": "transition_levelup", "duration": 2.0, "description": "Повышение уровня"},
-    {"id": "transition_complete", "duration": 2.0, "description": "Завершение сессии"},
-    {"id": "celebrate_star1", "duration": 3.0, "description": "1 звезда"},
-    {"id": "celebrate_star2", "duration": 3.0, "description": "2 звезды"},
-    {"id": "celebrate_star3", "duration": 3.0, "description": "3 звезды"},
-    {"id": "celebrate_milestone", "duration": 3.0, "description": "Milestone"},
-    {"id": "celebrate_streak", "duration": 3.0, "description": "Серия"},
-    {"id": "celebrate_perfect", "duration": 3.0, "description": "Идеальный результат"},
-    {"id": "celebrate_firsttime", "duration": 3.0, "description": "Первый раз"},
-    {"id": "celebrate_weekly", "duration": 3.0, "description": "Неделя"},
-    {"id": "onboarding_hero", "duration": 7.0, "description": "Онбординг hero"}
+    {
+      "id": "intro",
+      "duration": 5.0,
+      "description": "Вступление с Лялей"
+    },
+    {
+      "id": "trailer",
+      "duration": 30.0,
+      "description": "Трейлер приложения"
+    },
+    {
+      "id": "transition_correct",
+      "duration": 1.5,
+      "description": "Переход — верный ответ"
+    },
+    {
+      "id": "transition_wrong",
+      "duration": 1.5,
+      "description": "Переход — неверный ответ"
+    },
+    {
+      "id": "transition_levelup",
+      "duration": 2.0,
+      "description": "Повышение уровня"
+    },
+    {
+      "id": "transition_complete",
+      "duration": 2.0,
+      "description": "Завершение сессии"
+    },
+    {
+      "id": "celebrate_star1",
+      "duration": 3.0,
+      "description": "1 звезда"
+    },
+    {
+      "id": "celebrate_star2",
+      "duration": 3.0,
+      "description": "2 звезды"
+    },
+    {
+      "id": "celebrate_star3",
+      "duration": 3.0,
+      "description": "3 звезды"
+    },
+    {
+      "id": "celebrate_milestone",
+      "duration": 3.0,
+      "description": "Milestone"
+    },
+    {
+      "id": "celebrate_streak",
+      "duration": 3.0,
+      "description": "Серия"
+    },
+    {
+      "id": "celebrate_perfect",
+      "duration": 3.0,
+      "description": "Идеальный результат"
+    },
+    {
+      "id": "celebrate_firsttime",
+      "duration": 3.0,
+      "description": "Первый раз"
+    },
+    {
+      "id": "celebrate_weekly",
+      "duration": 3.0,
+      "description": "Неделя"
+    },
+    {
+      "id": "onboarding_hero",
+      "duration": 7.0,
+      "description": "Онбординг hero"
+    }
   ],
   "stories": [
     {
@@ -182,7 +242,7 @@
       "path": "stories/yozhik-egor.mp4",
       "title": "Ёжик Егор",
       "target_sound": "Е",
-      "duration_sec": 20.00,
+      "duration_sec": 20.0,
       "size_bytes": 658432,
       "has_audio": true,
       "audio_file": "lyalya_story_17.m4a"
@@ -212,7 +272,7 @@
       "path": "stories/tigr-timur.mp4",
       "title": "Тигр Тимур",
       "target_sound": "Т",
-      "duration_sec": 20.00,
+      "duration_sec": 20.0,
       "size_bytes": 713728,
       "has_audio": true,
       "audio_file": "lyalya_story_20.m4a"
@@ -488,6 +548,114 @@
       "variant": "breathing",
       "duration_sec": 15.0,
       "size_bytes": 798745
+    },
+    {
+      "id": "demo_sound_s",
+      "path": "lessons/edu/demo_sound_s.mp4",
+      "title": "Песенка насоса (звук С)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 1031951
+    },
+    {
+      "id": "demo_sound_r",
+      "path": "lessons/edu/demo_sound_r.mp4",
+      "title": "Моторчик тигрёнка (звук Р)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 1328401
+    },
+    {
+      "id": "demo_sound_l",
+      "path": "lessons/edu/demo_sound_l.mp4",
+      "title": "Гудок парохода (звук Л)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 1829875
+    },
+    {
+      "id": "demo_sound_sh",
+      "path": "lessons/edu/demo_sound_sh.mp4",
+      "title": "Змейка шипит (звук Ш)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 1386952
+    },
+    {
+      "id": "demo_sound_zh",
+      "path": "lessons/edu/demo_sound_zh.mp4",
+      "title": "Жук жужжит (звук Ж)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 962224
+    },
+    {
+      "id": "demo_sound_k",
+      "path": "lessons/edu/demo_sound_k.mp4",
+      "title": "Горка язычка (К, Г, Х)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 951965
+    },
+    {
+      "id": "story_sad_na_s",
+      "path": "lessons/edu/story_sad_na_s.mp4",
+      "title": "Сонин сад (звук С)",
+      "template": "educational-video",
+      "variant": "story",
+      "duration_sec": 8.0,
+      "size_bytes": 1896044
+    },
+    {
+      "id": "story_lesnaya_shishka",
+      "path": "lessons/edu/story_lesnaya_shishka.mp4",
+      "title": "Лесная шишка (звук Ш)",
+      "template": "educational-video",
+      "variant": "story",
+      "duration_sec": 8.0,
+      "size_bytes": 2791743
+    },
+    {
+      "id": "story_raduga_r",
+      "path": "lessons/edu/story_raduga_r.mp4",
+      "title": "Радуга после грозы (звук Р)",
+      "template": "educational-video",
+      "variant": "story",
+      "duration_sec": 8.0,
+      "size_bytes": 1808118
+    },
+    {
+      "id": "story_luzhayka_l",
+      "path": "lessons/edu/story_luzhayka_l.mp4",
+      "title": "Лужайка летом (звук Л)",
+      "template": "educational-video",
+      "variant": "story",
+      "duration_sec": 8.0,
+      "size_bytes": 2313081
+    },
+    {
+      "id": "demo_breath_dandelion",
+      "path": "lessons/edu/demo_breath_dandelion.mp4",
+      "title": "Как дышит ветерок (дыхание)",
+      "template": "educational-video",
+      "variant": "demo",
+      "duration_sec": 8.0,
+      "size_bytes": 678748
+    },
+    {
+      "id": "story_zimnyaya_z",
+      "path": "lessons/edu/story_zimnyaya_z.mp4",
+      "title": "Зимняя песенка (звук З)",
+      "template": "educational-video",
+      "variant": "story",
+      "duration_sec": 8.0,
+      "size_bytes": 3093107
     }
   ],
   "achievements": [

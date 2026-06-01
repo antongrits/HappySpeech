@@ -446,12 +446,12 @@ private struct StageCard: View {
                 Text(String(localized: "screening.prompt.listen"))
                     .font(TypographyTokens.cta())
                     .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.7)
             } icon: {
                 Image(systemName: "speaker.wave.2.fill")
             }
             .foregroundStyle(ColorTokens.Brand.primary)
-            .padding(.horizontal, SpacingTokens.large)
+            .padding(.horizontal, SpacingTokens.medium)
             .frame(minHeight: 56)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)

@@ -41,12 +41,13 @@ final class FAQRepositoryWorker: FAQRepositoryWorkerProtocol {
     }
 
     func videoExists(_ resourceName: String) -> Bool {
-        // `Videos` подключён как folder-reference: в бандле сохраняется
-        // структура каталогов, туториалы лежат в `Videos/tutorials/<name>.mp4`.
+        // `Videos` подключён как folder-reference: в бандле сохраняется структура.
+        // Туториалы — в `Videos/tutorials/`, обучающие видео-мультики (Veo) —
+        // в `Videos/lessons/edu/`. Проверяем оба каталога.
         Bundle.main.url(
-            forResource: resourceName,
-            withExtension: "mp4",
-            subdirectory: "Videos/tutorials"
+            forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/tutorials"
+        ) != nil || Bundle.main.url(
+            forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/lessons/edu"
         ) != nil
     }
 }
