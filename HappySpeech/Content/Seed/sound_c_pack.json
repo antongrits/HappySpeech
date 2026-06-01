@@ -969,6 +969,33 @@
           "word": "сестрица",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wm-39.m4a"
+        },
+        {
+          "id": "c-wm-40",
+          "word": "гиацинт",
+          "imageAsset": "word_giatsint",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-wm-40.m4a"
+        },
+        {
+          "id": "c-wm-41",
+          "word": "гусеница",
+          "imageAsset": "word_gusenitsa",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-wm-41.m4a"
+        },
+        {
+          "id": "c-wm-42",
+          "word": "капустница",
+          "imageAsset": "word_kapustnitsa",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-wm-42.m4a"
         }
       ]
     },
@@ -1155,6 +1182,15 @@
           "word": "борец",
           "difficulty": 2,
           "audio_file": "Audio/Content/C/c-wf-29.m4a"
+        },
+        {
+          "id": "c-wf-30",
+          "word": "заяц",
+          "imageAsset": "word_zayats",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-wf-30.m4a"
         }
       ]
     },

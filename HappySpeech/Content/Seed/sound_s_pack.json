@@ -1138,6 +1138,33 @@
           "hint": "СМЕ+ЛОСТЬ — стечение СМ.",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wi-86.m4a"
+        },
+        {
+          "id": "s-wi-87",
+          "word": "санки",
+          "imageAsset": "word_sanki",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wi-87.m4a"
+        },
+        {
+          "id": "s-wi-88",
+          "word": "скамейка",
+          "imageAsset": "word_skameyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wi-88.m4a"
+        },
+        {
+          "id": "s-wi-89",
+          "word": "стог",
+          "imageAsset": "word_stog",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wi-89.m4a"
         }
       ]
     },
@@ -1584,6 +1611,78 @@
           "hint": "СТР+ЕЛЯ — трёх-согласное стечение.",
           "difficulty": 4,
           "audio_file": "Audio/Content/S/s-wm-69.m4a"
+        },
+        {
+          "id": "s-wm-70",
+          "word": "аист",
+          "imageAsset": "word_aist",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wm-70.m4a"
+        },
+        {
+          "id": "s-wm-71",
+          "word": "аистёнок",
+          "imageAsset": "word_aistyonok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-71.m4a"
+        },
+        {
+          "id": "s-wm-72",
+          "word": "гостиная",
+          "imageAsset": "word_gostinaya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-72.m4a"
+        },
+        {
+          "id": "s-wm-73",
+          "word": "гусак",
+          "imageAsset": "word_gusak",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wm-73.m4a"
+        },
+        {
+          "id": "s-wm-74",
+          "word": "гусыня",
+          "imageAsset": "word_gusynya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wm-74.m4a"
+        },
+        {
+          "id": "s-wm-75",
+          "word": "гусёнок",
+          "imageAsset": "word_gusyonok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wm-75.m4a"
+        },
+        {
+          "id": "s-wm-76",
+          "word": "капустка",
+          "imageAsset": "word_kapustka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wm-76.m4a"
+        },
+        {
+          "id": "s-wm-77",
+          "word": "кисть",
+          "imageAsset": "word_kist",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wm-77.m4a"
         }
       ]
     },
@@ -1830,6 +1929,15 @@
           "word": "вкусность",
           "difficulty": 4,
           "audio_file": "Audio/Content/S/s-wf-39.m4a"
+        },
+        {
+          "id": "s-wf-40",
+          "word": "кактус",
+          "imageAsset": "word_kaktus",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wf-40.m4a"
         }
       ]
     },

@@ -15257,6 +15257,50 @@
       "semanticCategory": "nature",
       "methodologySource": "Filicheva-Tumanova-2010",
       "soundFamily": "Ж"
+    },
+    {
+      "word": "блоха",
+      "asset": "word_blokha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "orphan-batch-1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "олень",
+      "asset": "word_olen",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "orphan-batch-1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "подсолнух",
+      "asset": "word_podsolnukh",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "orphan-batch-1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "магазин",
+      "asset": "word_magazin",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "orphan-batch-1",
+      "soundFamily": "З"
     }
   ],
   "totalWords": 1369,

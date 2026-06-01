@@ -958,6 +958,33 @@
           "hint": "ЗА+ВИ+ТОК — три слога.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-wi-74.m4a"
+        },
+        {
+          "id": "z-wi-75",
+          "word": "зайка",
+          "imageAsset": "word_zayka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-wi-75.m4a"
+        },
+        {
+          "id": "z-wi-76",
+          "word": "змейка",
+          "imageAsset": "word_zmeyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-wi-76.m4a"
+        },
+        {
+          "id": "z-wi-77",
+          "word": "зубик",
+          "imageAsset": "word_zubik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-wi-77.m4a"
         }
       ]
     },
@@ -1234,6 +1261,69 @@
           "word": "бузина",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-wm-44.m4a"
+        },
+        {
+          "id": "z-wm-45",
+          "word": "азбука",
+          "imageAsset": "word_azbuka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-wm-45.m4a"
+        },
+        {
+          "id": "z-wm-46",
+          "word": "гвоздика",
+          "imageAsset": "word_gvozdika",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-wm-46.m4a"
+        },
+        {
+          "id": "z-wm-47",
+          "word": "кинза",
+          "imageAsset": "word_kinza",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-wm-47.m4a"
+        },
+        {
+          "id": "z-wm-48",
+          "word": "магазин",
+          "imageAsset": "word_magazin",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-wm-48.m4a"
+        },
+        {
+          "id": "z-wm-49",
+          "word": "мозаика",
+          "imageAsset": "word_mozaika",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wm-49.m4a"
+        },
+        {
+          "id": "z-wm-50",
+          "word": "поезд",
+          "imageAsset": "word_poezd",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-wm-50.m4a"
+        },
+        {
+          "id": "z-wm-51",
+          "word": "вездеход",
+          "imageAsset": "word_vezdekhod",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-wm-51.m4a"
         }
       ]
     },

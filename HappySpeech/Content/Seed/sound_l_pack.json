@@ -1107,6 +1107,42 @@
           "hint": "ЛА+ПОТЬ — народная обувь.",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-84.m4a"
+        },
+        {
+          "id": "l-wi-85",
+          "word": "лайка",
+          "imageAsset": "word_layka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-85.m4a"
+        },
+        {
+          "id": "l-wi-86",
+          "word": "линейка",
+          "imageAsset": "word_lineyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-86.m4a"
+        },
+        {
+          "id": "l-wi-87",
+          "word": "листок",
+          "imageAsset": "word_listok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-87.m4a"
+        },
+        {
+          "id": "l-wi-88",
+          "word": "луг",
+          "imageAsset": "word_lug",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-88.m4a"
         }
       ]
     },
@@ -1542,6 +1578,348 @@
           "hint": "КУ+ЛАК — Л в середине.",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-64.m4a"
+        },
+        {
+          "id": "l-wm-65",
+          "word": "акула",
+          "imageAsset": "word_akula",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-65.m4a"
+        },
+        {
+          "id": "l-wm-66",
+          "word": "альбом",
+          "imageAsset": "word_albom",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-66.m4a"
+        },
+        {
+          "id": "l-wm-67",
+          "word": "балкон",
+          "imageAsset": "word_balkon",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-67.m4a"
+        },
+        {
+          "id": "l-wm-68",
+          "word": "бейсболка",
+          "imageAsset": "word_beysbolka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-68.m4a"
+        },
+        {
+          "id": "l-wm-69",
+          "word": "блоха",
+          "imageAsset": "word_blokha",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-69.m4a"
+        },
+        {
+          "id": "l-wm-70",
+          "word": "блокнот",
+          "imageAsset": "word_bloknot",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-70.m4a"
+        },
+        {
+          "id": "l-wm-71",
+          "word": "блузка",
+          "imageAsset": "word_bluzka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-71.m4a"
+        },
+        {
+          "id": "l-wm-72",
+          "word": "блюдо",
+          "imageAsset": "word_blyudo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-72.m4a"
+        },
+        {
+          "id": "l-wm-73",
+          "word": "бублик",
+          "imageAsset": "word_bublik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-73.m4a"
+        },
+        {
+          "id": "l-wm-74",
+          "word": "дедуля",
+          "imageAsset": "word_dedulya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-74.m4a"
+        },
+        {
+          "id": "l-wm-75",
+          "word": "дельфин",
+          "imageAsset": "word_delfin",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-75.m4a"
+        },
+        {
+          "id": "l-wm-76",
+          "word": "глаз",
+          "imageAsset": "word_glaz",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-76.m4a"
+        },
+        {
+          "id": "l-wm-77",
+          "word": "голубь",
+          "imageAsset": "word_golub",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-77.m4a"
+        },
+        {
+          "id": "l-wm-78",
+          "word": "игла",
+          "imageAsset": "word_igla",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-78.m4a"
+        },
+        {
+          "id": "l-wm-79",
+          "word": "кегли",
+          "imageAsset": "word_kegli",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-79.m4a"
+        },
+        {
+          "id": "l-wm-80",
+          "word": "кисель",
+          "imageAsset": "word_kisel",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-80.m4a"
+        },
+        {
+          "id": "l-wm-81",
+          "word": "кладовка",
+          "imageAsset": "word_kladovka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-81.m4a"
+        },
+        {
+          "id": "l-wm-82",
+          "word": "клоун",
+          "imageAsset": "word_kloun",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-82.m4a"
+        },
+        {
+          "id": "l-wm-83",
+          "word": "колодец",
+          "imageAsset": "word_kolodets",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-83.m4a"
+        },
+        {
+          "id": "l-wm-84",
+          "word": "масло",
+          "imageAsset": "word_maslo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-84.m4a"
+        },
+        {
+          "id": "l-wm-85",
+          "word": "мельница",
+          "imageAsset": "word_melnitsa",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-85.m4a"
+        },
+        {
+          "id": "l-wm-86",
+          "word": "олень",
+          "imageAsset": "word_olen",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-86.m4a"
+        },
+        {
+          "id": "l-wm-87",
+          "word": "подсолнух",
+          "imageAsset": "word_podsolnukh",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-87.m4a"
+        },
+        {
+          "id": "l-wm-88",
+          "word": "пугало",
+          "imageAsset": "word_pugalo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-88.m4a"
+        },
+        {
+          "id": "l-wm-89",
+          "word": "салат",
+          "imageAsset": "word_salat",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-89.m4a"
+        },
+        {
+          "id": "l-wm-90",
+          "word": "скала",
+          "imageAsset": "word_skala",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-90.m4a"
+        },
+        {
+          "id": "l-wm-91",
+          "word": "соловей",
+          "imageAsset": "word_solovey",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-91.m4a"
+        },
+        {
+          "id": "l-wm-92",
+          "word": "сосулька",
+          "imageAsset": "word_sosulka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-92.m4a"
+        },
+        {
+          "id": "l-wm-93",
+          "word": "цапля",
+          "imageAsset": "word_tsaplya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-93.m4a"
+        },
+        {
+          "id": "l-wm-94",
+          "word": "улей",
+          "imageAsset": "word_uley",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-94.m4a"
+        },
+        {
+          "id": "l-wm-95",
+          "word": "валенки",
+          "imageAsset": "word_valenki",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-95.m4a"
+        },
+        {
+          "id": "l-wm-96",
+          "word": "волна",
+          "imageAsset": "word_volna",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-96.m4a"
+        },
+        {
+          "id": "l-wm-97",
+          "word": "волосы",
+          "imageAsset": "word_volosy",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-97.m4a"
+        },
+        {
+          "id": "l-wm-98",
+          "word": "ёлка",
+          "imageAsset": "word_yolka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-98.m4a"
+        },
+        {
+          "id": "l-wm-99",
+          "word": "юла",
+          "imageAsset": "word_yula",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-99.m4a"
+        },
+        {
+          "id": "l-wm-100",
+          "word": "закладка",
+          "imageAsset": "word_zakladka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-100.m4a"
+        },
+        {
+          "id": "l-wm-101",
+          "word": "земля",
+          "imageAsset": "word_zemlya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-101.m4a"
+        },
+        {
+          "id": "l-wm-102",
+          "word": "золото",
+          "imageAsset": "word_zoloto",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-102.m4a"
         }
       ]
     },
@@ -1812,6 +2190,15 @@
           "hint": "Мягкий [Л'].",
           "difficulty": 4,
           "audio_file": "Audio/Content/L/l-wf-39.m4a"
+        },
+        {
+          "id": "l-wf-40",
+          "word": "бокал",
+          "imageAsset": "word_bokal",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-40.m4a"
         }
       ]
     },
