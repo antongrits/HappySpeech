@@ -7,6 +7,7 @@ struct WhisperGameView: View {
     let childId: String
 
     @State private var interactor: WhisperGameInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -41,9 +42,15 @@ struct WhisperGameView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = WhisperGameInteractor(childId: childId)
+                    let game = WhisperGameInteractor(
+                        childId: childId,
+                        audioService: container.audioService
+                    )
+                    interactor = game
+                    game.startListening()
                 }
             }
+            .onDisappear { interactor?.stopListening() }
         }
         .environment(\.circuitContext, .kid)
     }
@@ -55,7 +62,7 @@ struct WhisperGameView: View {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero
                     modeSelector(interactor: interactor)
-                    micMeter(state: interactor.state)
+                    micMeter(interactor: interactor)
                     cta(interactor: interactor)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -92,6 +99,7 @@ struct WhisperGameView: View {
                 modeChip(mode, isActive: interactor.state.mode == mode) {
                     hapticService.impact(.light)
                     interactor.setMode(mode)
+                    interactor.startListening()
                 }
                 // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
                 // + parallax drift на mode-chip tiles (даже в HStack scroll-aware).
@@ -134,10 +142,11 @@ struct WhisperGameView: View {
         .accessibilityAddTraits(isActive ? [.isButton, .isSelected] : .isButton)
     }
 
-    private func micMeter(state: WhisperGameModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+    private func micMeter(interactor: WhisperGameInteractor) -> some View {
+        let state = interactor.state
+        return HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp3) {
-                Text("Целевой уровень")
+                Text(String(localized: "whisperGame.meter.target"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 GeometryReader { geo in
@@ -154,14 +163,31 @@ struct WhisperGameView: View {
                     }
                 }
                 .frame(height: 22)
-                HStack {
-                    Text("Совпадение: \(Int(state.matchAccuracy * 100))%")
+                .accessibilityLabel(Text(String(localized: "whisperGame.meter.a11y")))
+                .accessibilityValue(Text("\(Int(state.currentLevel * 100))%"))
+                if interactor.isMicAvailable {
+                    HStack {
+                        Text(String(
+                            format: String(localized: "whisperGame.meter.match"),
+                            Int(state.matchAccuracy * 100)
+                        ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Spacer()
-                    Text("Раундов: \(state.roundsCompleted)")
+                        Spacer()
+                        Text(String(
+                            format: String(localized: "whisperGame.meter.rounds"),
+                            state.roundsCompleted
+                        ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                } else {
+                    // Честно: без доступа к микрофону уровень не измеряется.
+                    Text(String(localized: "whisperGame.meter.noMic"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
                 }
             }
         }

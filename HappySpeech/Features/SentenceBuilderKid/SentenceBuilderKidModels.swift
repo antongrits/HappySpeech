@@ -2,7 +2,11 @@ import Foundation
 
 // MARK: - SentenceBuilderKidModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели игры «Собери предложение».
+///
+/// Предложения берутся из контент-каталога (`SentenceBuilderKidContent`),
+/// насыщенного рабочим звуком ребёнка. Из перемешанных слов ребёнок собирает
+/// фразу в правильном порядке. Каждое решение идёт в outcome планировщика.
 enum SentenceBuilderKidModels {
 
     struct WordChip: Identifiable, Hashable {
@@ -14,9 +18,19 @@ enum SentenceBuilderKidModels {
     struct ViewState: Equatable {
         var available: [WordChip]
         var assembled: [WordChip]
+        /// Рабочий звук текущего предложения (для outcome).
+        var sound: String = "С"
+        /// Индекс текущего предложения в наборе раунда.
+        var sentenceIndex: Int = 0
+        /// Всего предложений в игре.
+        var totalSentences: Int = 1
+        var solvedCount: Int = 0
+        var attempts: Int = 0
+        var bestStars: Int = 0
+        var isLoaded: Bool = false
 
         var isCorrect: Bool {
-            guard assembled.count == correctCount else { return false }
+            guard assembled.count == correctCount, correctCount > 0 else { return false }
             for (idx, chip) in assembled.enumerated() where chip.order != idx {
                 return false
             }
@@ -24,26 +38,47 @@ enum SentenceBuilderKidModels {
         }
 
         var isFull: Bool {
-            assembled.count == correctCount
+            assembled.count == correctCount && correctCount > 0
         }
 
         var correctCount: Int {
             available.count + assembled.count
         }
 
-        static let correctSentence: [(text: String, order: Int)] = [
-            (text: "Лиса",    order: 0),
-            (text: "бежит",   order: 1),
-            (text: "по",      order: 2),
-            (text: "зелёному", order: 3),
-            (text: "лесу",    order: 4)
-        ]
+        var isGameComplete: Bool {
+            sentenceIndex >= totalSentences
+        }
 
+        var accuracy: Double {
+            attempts > 0 ? Double(solvedCount) / Double(attempts) : 0
+        }
+
+        var stars: Int {
+            guard attempts > 0 else { return 0 }
+            switch accuracy {
+            case 0.85...: return 3
+            case 0.6..<0.85: return 2
+            default: return 1
+            }
+        }
+
+        /// Базовое состояние (Preview / тесты).
         static let initial: ViewState = {
-            let chips = correctSentence.map { item in
-                WordChip(id: UUID(), text: item.text, order: item.order)
-            }.shuffled()
-            return ViewState(available: chips, assembled: [])
+            let sentences = SentenceBuilderKidContent.sentences(for: "С", count: 3)
+            var state = ViewState(available: [], assembled: [], sound: "С", isLoaded: true)
+            state.totalSentences = sentences.count
+            state.load(sentence: sentences.first ?? SentenceBuilderKidContent.fallback)
+            return state
         }()
+
+        /// Загружает в состояние конкретное предложение (перемешанные слова).
+        mutating func load(sentence: SentenceBuilderKidContent.Sentence) {
+            let chips = sentence.words.enumerated().map { idx, word in
+                WordChip(id: UUID(), text: word, order: idx)
+            }.shuffled()
+            available = chips
+            assembled = []
+            sound = sentence.sound
+        }
     }
 }

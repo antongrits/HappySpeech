@@ -61,7 +61,9 @@ struct SpeechVisualizationView: View {
     @State private var interactor: SpeechVisualizationInteractor?
     @State private var presenter: SpeechVisualizationPresenter?
     @State private var practiceStartTime: Date?
+    @State private var isRecordingPractice = false
 
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
@@ -259,13 +261,38 @@ struct SpeechVisualizationView: View {
         if practiceStartTime == nil {
             practiceStartTime = Date()
             holder.isPlaying = true
-            // Подсветка от слога к слогу (эмулируем real-time).
+            // Старт реальной записи речи ребёнка (для акустической оценки).
+            await startPracticeRecording()
+            // Подсветка от слога к слогу (визуальный гид во время записи).
             await playListen()
             holder.isPlaying = false
         } else {
             let duration = Date().timeIntervalSince(practiceStartTime ?? Date())
             practiceStartTime = nil
-            await interactor?.computeScore(request: .init(attemptDurationSeconds: duration))
+            if isRecordingPractice {
+                // Реальная акустическая оценка из записанного аудио.
+                isRecordingPractice = false
+                let url = try? await container.audioService.stopRecording()
+                await interactor?.computeScore(fromAudioURL: url)
+            } else {
+                // Запись недоступна — честная оценка только темпа по длительности.
+                await interactor?.computeScore(request: .init(attemptDurationSeconds: duration))
+            }
+        }
+    }
+
+    private func startPracticeRecording() async {
+        let audio = container.audioService
+        if !audio.isPermissionGranted {
+            let granted = await audio.requestPermission()
+            guard granted else { isRecordingPractice = false; return }
+        }
+        do {
+            try await audio.startRecording()
+            isRecordingPractice = true
+        } catch {
+            Self.logger.error("practice recording failed: \(error.localizedDescription, privacy: .public)")
+            isRecordingPractice = false
         }
     }
 

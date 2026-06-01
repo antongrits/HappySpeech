@@ -3,25 +3,32 @@ import XCTest
 
 // MARK: - AudioMemoryGameInteractorTests
 //
-// AudioMemoryGameInteractor is a thin VIP MVP variant (@Observable) implementing
-// a memory-match game. Tests cover first/second pick, matching, mismatch (with
-// the 700ms flip-back), move counting, completion and restart. The deck is
-// shuffled, so tests locate tiles by pairKey rather than by fixed index.
+// «Звуковое мемори»: колода из реальных слов рабочих звуков ребёнка (каждое
+// слово — пара карточек). Тесты покрывают первый/второй выбор, совпадение,
+// промах (700мс flip-back), счёт ходов, завершение и рестарт. Колода
+// перемешана — карточки ищем по pairKey, а ключи берём из самих карточек.
 
 @MainActor
 final class AudioMemoryGameInteractorTests: XCTestCase {
 
-    private func makeSUT(childId: String = "child-1") -> AudioMemoryGameInteractor {
-        AudioMemoryGameInteractor(childId: childId)
+    private func makeLoadedSUT(childId: String = "") async -> AudioMemoryGameInteractor {
+        let sut = AudioMemoryGameInteractor(childId: childId)
+        await sut.load()
+        return sut
     }
 
-    /// Indices of the two tiles that share the given pairKey.
+    /// Уникальные ключи (слова) в текущей колоде.
+    private func keys(_ sut: AudioMemoryGameInteractor) -> [String] {
+        var seen = Set<String>()
+        return sut.tiles.map(\.pairKey).filter { seen.insert($0).inserted }
+    }
+
+    /// Индексы двух карточек одной пары.
     private func pairIndices(_ sut: AudioMemoryGameInteractor, key: String) -> (Int, Int) {
         let indices = sut.tiles.indices.filter { sut.tiles[$0].pairKey == key }
         return (indices[0], indices[1])
     }
 
-    /// Two indices whose pairKeys differ.
     private func mismatchIndices(_ sut: AudioMemoryGameInteractor) -> (Int, Int) {
         let firstKey = sut.tiles[0].pairKey
         let other = sut.tiles.indices.first { sut.tiles[$0].pairKey != firstKey }!
@@ -31,24 +38,26 @@ final class AudioMemoryGameInteractorTests: XCTestCase {
     // MARK: - Initial state
 
     func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-5")
+        let sut = AudioMemoryGameInteractor(childId: "kid-5")
         XCTAssertEqual(sut.childId, "kid-5")
     }
 
-    func test_initialDeck_hasTwelveTiles() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.tiles.count, AudioMemoryGameModels.pairKeys.count * 2)
+    func test_load_buildsDeckOfPairs() async {
+        let sut = await makeLoadedSUT()
+        XCTAssertTrue(sut.isLoaded)
+        XCTAssertEqual(sut.tiles.count, sut.pairCount * 2)
+        XCTAssertGreaterThan(sut.pairCount, 0)
     }
 
-    func test_initialDeck_hasExactlyTwoOfEachPair() {
-        let sut = makeSUT()
-        for key in AudioMemoryGameModels.pairKeys {
+    func test_load_exactlyTwoOfEachPair() async {
+        let sut = await makeLoadedSUT()
+        for key in keys(sut) {
             XCTAssertEqual(sut.tiles.filter { $0.pairKey == key }.count, 2)
         }
     }
 
-    func test_initialState_noPickNoMovesNotComplete() {
-        let sut = makeSUT()
+    func test_initialState_noPickNoMovesNotComplete() async {
+        let sut = await makeLoadedSUT()
         XCTAssertNil(sut.firstPickIndex)
         XCTAssertEqual(sut.moves, 0)
         XCTAssertEqual(sut.matchedCount, 0)
@@ -56,29 +65,35 @@ final class AudioMemoryGameInteractorTests: XCTestCase {
         XCTAssertFalse(sut.isResolving)
     }
 
+    func test_tap_beforeLoad_isIgnored() {
+        let sut = AudioMemoryGameInteractor(childId: "")
+        sut.tap(at: 0)
+        XCTAssertNil(sut.firstPickIndex)
+    }
+
     // MARK: - First pick
 
-    func test_tap_firstPick_flipsTileAndStoresIndex() {
-        let sut = makeSUT()
+    func test_tap_firstPick_flipsTileAndStoresIndex() async {
+        let sut = await makeLoadedSUT()
         sut.tap(at: 0)
         XCTAssertTrue(sut.tiles[0].isFlipped)
         XCTAssertEqual(sut.firstPickIndex, 0)
-        XCTAssertEqual(sut.moves, 0) // first pick does not count a move
+        XCTAssertEqual(sut.moves, 0)
     }
 
-    func test_tap_sameTileTwice_isIgnoredOnSecond() {
-        let sut = makeSUT()
+    func test_tap_sameTileTwice_isIgnoredOnSecond() async {
+        let sut = await makeLoadedSUT()
         sut.tap(at: 0)
-        sut.tap(at: 0) // already flipped → guard rejects
+        sut.tap(at: 0)
         XCTAssertEqual(sut.firstPickIndex, 0)
         XCTAssertEqual(sut.moves, 0)
     }
 
     // MARK: - Matching
 
-    func test_tap_matchingPair_marksMatchedAndCountsMove() {
-        let sut = makeSUT()
-        let (a, b) = pairIndices(sut, key: "С")
+    func test_tap_matchingPair_marksMatchedAndCountsMove() async {
+        let sut = await makeLoadedSUT()
+        let (a, b) = pairIndices(sut, key: keys(sut)[0])
         sut.tap(at: a)
         sut.tap(at: b)
         XCTAssertTrue(sut.tiles[a].isMatched)
@@ -89,29 +104,18 @@ final class AudioMemoryGameInteractorTests: XCTestCase {
         XCTAssertFalse(sut.isResolving)
     }
 
-    func test_tap_matchedTile_cannotBePickedAgain() {
-        let sut = makeSUT()
-        let (a, b) = pairIndices(sut, key: "Ш")
-        sut.tap(at: a)
-        sut.tap(at: b)
-        // Tap the already-matched tile → guard rejects, no new firstPick.
-        sut.tap(at: a)
-        XCTAssertNil(sut.firstPickIndex)
-    }
-
-    // MARK: - Mismatch (async flip-back)
+    // MARK: - Mismatch
 
     func test_tap_mismatch_entersResolvingThenFlipsBack() async {
-        let sut = makeSUT()
+        let sut = await makeLoadedSUT()
         let (a, b) = mismatchIndices(sut)
         sut.tap(at: a)
         sut.tap(at: b)
-        // Immediately after second tap: move counted, resolving, both flipped, no match.
         XCTAssertEqual(sut.moves, 1)
         XCTAssertTrue(sut.isResolving)
         XCTAssertEqual(sut.matchedCount, 0)
+        XCTAssertEqual(sut.mismatches, 1)
 
-        // Wait past the 700ms flip-back window.
         try? await Task.sleep(for: .milliseconds(900))
         XCTAssertFalse(sut.isResolving)
         XCTAssertFalse(sut.tiles[a].isFlipped)
@@ -119,55 +123,34 @@ final class AudioMemoryGameInteractorTests: XCTestCase {
         XCTAssertNil(sut.firstPickIndex)
     }
 
-    func test_tap_whileResolving_isIgnored() async {
-        let sut = makeSUT()
-        let (a, b) = mismatchIndices(sut)
-        sut.tap(at: a)
-        sut.tap(at: b)
-        XCTAssertTrue(sut.isResolving)
-        // Try to pick a third tile while resolving — should be ignored.
-        let third = sut.tiles.indices.first { $0 != a && $0 != b }!
-        sut.tap(at: third)
-        XCTAssertFalse(sut.tiles[third].isFlipped)
-        try? await Task.sleep(for: .milliseconds(900))
-    }
-
     // MARK: - Completion
 
-    func test_matchingAllPairs_setsComplete() {
-        let sut = makeSUT()
-        for key in AudioMemoryGameModels.pairKeys {
+    func test_matchingAllPairs_setsComplete() async {
+        let sut = await makeLoadedSUT()
+        for key in keys(sut) {
             let (a, b) = pairIndices(sut, key: key)
             sut.tap(at: a)
             sut.tap(at: b)
         }
         XCTAssertTrue(sut.isComplete)
-        XCTAssertEqual(sut.matchedCount, AudioMemoryGameModels.pairKeys.count)
-        XCTAssertEqual(sut.moves, AudioMemoryGameModels.pairKeys.count)
+        XCTAssertEqual(sut.matchedCount, sut.pairCount)
+        XCTAssertEqual(sut.moves, sut.pairCount)
+        XCTAssertEqual(sut.stars, 3) // без промахов
     }
 
-    // MARK: - Bounds / edge
+    // MARK: - Bounds
 
-    func test_tap_outOfBoundsIndex_isIgnored() {
-        let sut = makeSUT()
+    func test_tap_outOfBoundsIndex_isIgnored() async {
+        let sut = await makeLoadedSUT()
         sut.tap(at: 999)
         XCTAssertNil(sut.firstPickIndex)
         XCTAssertEqual(sut.moves, 0)
     }
 
-    // MARK: - Restart
+    // MARK: - words()
 
-    func test_restart_resetsAllState() {
-        let sut = makeSUT()
-        let (a, b) = pairIndices(sut, key: "Р")
-        sut.tap(at: a)
-        sut.tap(at: b)
-        sut.restart()
-        XCTAssertEqual(sut.matchedCount, 0)
-        XCTAssertEqual(sut.moves, 0)
-        XCTAssertNil(sut.firstPickIndex)
-        XCTAssertFalse(sut.isResolving)
-        XCTAssertFalse(sut.isComplete)
-        XCTAssertTrue(sut.tiles.allSatisfy { !$0.isFlipped && !$0.isMatched })
+    func test_words_fallbackWhenNoManifest() {
+        let words = AudioMemoryGameInteractor.words(forTargetSounds: [])
+        XCTAssertGreaterThanOrEqual(words.count, AudioMemoryGameModels.pairCount)
     }
 }

@@ -83,7 +83,10 @@ struct ARFaceFilterView: View {
     @State private var interactor: ARFaceFilterInteractor?
     @State private var presenter: ARFaceFilterPresenter?
     @State private var renderer = FaceMaskRenderer()
+    @State private var asrLoop: Task<Void, Never>?
+    @State private var isListening = false
 
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -108,6 +111,7 @@ struct ARFaceFilterView: View {
         }
         .ignoresSafeArea()
         .task { await setupAndStart() }
+        .onDisappear { stopListening() }
     }
 
     // MARK: - AR Background
@@ -201,6 +205,28 @@ struct ARFaceFilterView: View {
                         .foregroundStyle(ColorTokens.Brand.gold)
                         .transition(.opacity)
                 }
+                if isListening {
+                    // Реальный речевой триггер активен: распознаём слово ребёнка.
+                    Label(String(localized: "facefilter.listening"), systemImage: "mic.fill")
+                        .font(.caption)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                } else {
+                    // ASR недоступен (нет разрешения / симулятор): честная ручная
+                    // кнопка-подтверждение — НЕ имитация распознавания речи.
+                    Button {
+                        Task {
+                            await interactor?.processTranscription(
+                                request: .init(recognizedText: viewModel.mask.triggerWord)
+                            )
+                        }
+                    } label: {
+                        Label(String(localized: "facefilter.iSaidIt"), systemImage: "checkmark.circle")
+                            .font(.callout.bold())
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(ColorTokens.Brand.primary)
+                    .accessibilityHint(Text(String(localized: "facefilter.iSaidIt.hint")))
+                }
             }
             .frame(maxWidth: .infinity)
         }
@@ -271,18 +297,64 @@ struct ARFaceFilterView: View {
         }
         await interactor?.setMask(request: .init(mask: .kitten))
 
-        // MVP: speech trigger через WhisperKit polling — отложено в Block Q.
-        // Сейчас просто принимаем tap по prompt-card как simulated trigger
-        // (см. comment в processTranscription). Реальный ASR-pipeline
-        // подключается позже.
+        // Реальный речевой триггер: периодически записываем короткий аудио-чанк
+        // и распознаём через ASRService (kid-safe tier). Результат подаётся в
+        // processTranscription. Если ASR/микрофон недоступны — остаётся честная
+        // ручная кнопка-подтверждение в prompt-карточке (без имитации речи).
+        await startListeningIfPossible()
+    }
+
+    private func startListeningIfPossible() async {
+        let audio = container.audioService
+        let asr = container.asrService
+        guard asr.isReady else {
+            isListening = false
+            return
+        }
+        if !audio.isPermissionGranted {
+            let granted = await audio.requestPermission()
+            guard granted else {
+                isListening = false
+                return
+            }
+        }
+        isListening = true
+        asrLoop?.cancel()
+        asrLoop = Task { @MainActor in
+            while !Task.isCancelled {
+                do {
+                    try await audio.startRecording()
+                    try? await Task.sleep(for: .milliseconds(1500))
+                    guard !Task.isCancelled else {
+                        if audio.isRecording { _ = try? await audio.stopRecording() }
+                        break
+                    }
+                    let url = try await audio.stopRecording()
+                    let result = try await asr.transcribe(url: url)
+                    await interactor?.processTranscription(request: .init(recognizedText: result.transcript))
+                } catch {
+                    Self.logger.error("ASR loop: \(error.localizedDescription, privacy: .public)")
+                    isListening = false
+                    break
+                }
+            }
+        }
+    }
+
+    private func stopListening() {
+        asrLoop?.cancel()
+        asrLoop = nil
+        isListening = false
+        let audio = container.audioService
+        if audio.isRecording {
+            Task { _ = try? await audio.stopRecording() }
+        }
     }
 }
-
-// NOTE deferred to Block Q (test coverage): WhisperKit polling integration test,
-// snapshot tests, fallback на устройствах без TrueDepth.
 
 #if DEBUG
 #Preview("ARFaceFilter / kitten") {
     ARFaceFilterView()
+        .environment(AppContainer.preview())
 }
 #endif

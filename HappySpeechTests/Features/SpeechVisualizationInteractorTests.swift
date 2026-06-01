@@ -147,6 +147,41 @@ final class SpeechVisualizationInteractorTests: XCTestCase {
         XCTAssertEqual(spy.lastScore?.overallAccuracy ?? -1, computed, accuracy: 0.0001)
     }
 
+    // MARK: - computeScore(fromAudioURL:) — реальная акустическая оценка
+
+    func test_computeScoreAudio_nilURL_noScore() async {
+        let (sut, spy) = makeSUT()
+        await sut.load(request: .init(word: "рыба", targetSound: "Р"))
+        await sut.computeScore(fromAudioURL: nil)
+        XCTAssertEqual(spy.scoreCallCount, 0, "Без записи балл не показывается (no-score, без фабрикации)")
+    }
+
+    func test_computeScoreAudio_missingFile_noScore() async {
+        let (sut, spy) = makeSUT()
+        await sut.load(request: .init(word: "рыба", targetSound: "Р"))
+        await sut.computeScore(fromAudioURL: URL(fileURLWithPath: "/tmp/none-\(UUID().uuidString).caf"))
+        XCTAssertEqual(spy.scoreCallCount, 0)
+    }
+
+    func test_perSyllableAccuracy_inRange_andCount() {
+        // Синтетическая мел-спектрограмма: 30 кадров по 40 бинов с возрастающей энергией.
+        let frames: [[Float]] = (0..<30).map { i in
+            Array(repeating: Float(i) / 30.0, count: 40)
+        }
+        let mel = MelSpectrogram(frames: frames, sampleRate: 16_000, duration: 0.3)
+        let acc = SpeechVisualizationInteractor.perSyllableAccuracy(mel: mel, syllableCount: 3)
+        XCTAssertEqual(acc.count, 3)
+        for value in acc {
+            XCTAssertGreaterThanOrEqual(value, 0.0)
+            XCTAssertLessThanOrEqual(value, 1.0)
+        }
+    }
+
+    func test_perSyllableAccuracy_emptyFrames_returnsEmpty() {
+        let mel = MelSpectrogram(frames: [], sampleRate: 16_000, duration: 0)
+        XCTAssertTrue(SpeechVisualizationInteractor.perSyllableAccuracy(mel: mel, syllableCount: 2).isEmpty)
+    }
+
     // MARK: - splitToSyllables (pure helper)
 
     func test_splitToSyllables_singleSyllableWord() {

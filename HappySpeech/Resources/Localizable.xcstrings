@@ -1585,12 +1585,108 @@
         }
       }
     },
+    "animalBingo.a11y.marked": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marked"
+          }
+        }
+      }
+    },
+    "animalBingo.a11y.unmarked": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не отмечено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not marked"
+          }
+        }
+      }
+    },
+    "animalBingo.bingo": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бинго!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bingo!"
+          }
+        }
+      }
+    },
+    "animalBingo.called.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди и отметь карточку!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find and mark the card!"
+          }
+        }
+      }
+    },
+    "animalBingo.called.question %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кто говорит «%@»?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who says “%@”?"
+          }
+        }
+      }
+    },
     "animalBingo.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Назвать звук"
+          }
+        }
+      }
+    },
+    "animalBingo.hero.progress %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечено: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marked: %1$lld of %2$lld"
           }
         }
       }
@@ -5533,12 +5629,76 @@
         }
       }
     },
+    "audioMemory.a11y.closed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрытая карточка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Closed card"
+          }
+        }
+      }
+    },
+    "audioMemory.complete": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все пары собраны!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All pairs found!"
+          }
+        }
+      }
+    },
+    "audioMemory.cta.shuffle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перемешать заново"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shuffle again"
+          }
+        }
+      }
+    },
     "audioMemory.cta.start": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Сыграть снова"
+          }
+        }
+      }
+    },
+    "audioMemory.hero.progress %lld %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ходы: %1$lld   Пары: %2$lld/%3$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Moves: %1$lld   Pairs: %2$lld/%3$lld"
           }
         }
       }
@@ -9414,12 +9574,60 @@
         }
       }
     },
+    "coach.cta.again": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть снова"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play again"
+          }
+        }
+      }
+    },
+    "coach.cta.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
     "coach.cta.start": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Сыграть ещё раз"
+          }
+        }
+      }
+    },
+    "coach.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задания скоро появятся — загляни позже!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tasks are coming soon — check back later!"
           }
         }
       }
@@ -9454,12 +9662,252 @@
         }
       }
     },
+    "coach.reaction.correct": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точно! Молодец!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exactly! Well done!"
+          }
+        }
+      }
+    },
+    "coach.reaction.tryAgain": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуем ещё разок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let's try once more"
+          }
+        }
+      }
+    },
+    "coach.round %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "coach.summary %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово! Правильных ответов: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done! Correct answers: %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "colorAndSound.a11y.notChosen": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не выбрано"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not chosen"
+          }
+        }
+      }
+    },
+    "colorAndSound.a11y.right": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correct"
+          }
+        }
+      }
+    },
+    "colorAndSound.a11y.wrong": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не этот звук"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not this sound"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.butter": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "жёлтый"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "yellow"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.coral": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "коралловый"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "coral"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.lilac": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "сиреневый"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lilac"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.mint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "мятный"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mint"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.rose": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "розовый"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rose"
+          }
+        }
+      }
+    },
+    "colorAndSound.color.sky": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "небесный"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sky"
+          }
+        }
+      }
+    },
+    "colorAndSound.complete": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки найдены!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All sounds found!"
+          }
+        }
+      }
+    },
     "colorAndSound.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Готово"
+          }
+        }
+      }
+    },
+    "colorAndSound.cta.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
           }
         }
       }
@@ -9490,6 +9938,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Цвет и звук"
+          }
+        }
+      }
+    },
+    "colorAndSound.prompt %@ %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди слова со звуком «%1$@» — %2$@ цвет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find words with the “%1$@” sound — %2$@ colour"
+          }
+        }
+      }
+    },
+    "colorAndSound.round %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round %1$lld of %2$lld"
           }
         }
       }
@@ -9751,6 +10231,70 @@
           "stringUnit": {
             "state": "translated",
             "value": "content_pack.error.not_found \\(id)"
+          }
+        }
+      }
+    },
+    "conversationStarters.cat.daily": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day"
+          }
+        }
+      }
+    },
+    "conversationStarters.cat.feelings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чувства"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feelings"
+          }
+        }
+      }
+    },
+    "conversationStarters.cat.imagination": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фантазия"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imagination"
+          }
+        }
+      }
+    },
+    "conversationStarters.cat.learning": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учёба"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Learning"
           }
         }
       }
@@ -14891,12 +15435,156 @@
         }
       }
     },
+    "evening.history.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прошлые вечера"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Past evenings"
+          }
+        }
+      }
+    },
+    "evening.mood.bright": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Светло"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bright"
+          }
+        }
+      }
+    },
+    "evening.mood.calm": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm"
+          }
+        }
+      }
+    },
+    "evening.mood.sad": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грустно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sad"
+          }
+        }
+      }
+    },
+    "evening.mood.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настроение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mood"
+          }
+        }
+      }
+    },
     "evening.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Вечер"
+          }
+        }
+      }
+    },
+    "evening.q.fun": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что было весёлого?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What was fun?"
+          }
+        }
+      }
+    },
+    "evening.q.fun.placeholder": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расскажи Ляле…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tell Lyalya…"
+          }
+        }
+      }
+    },
+    "evening.q.hard": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что было трудно?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What was hard?"
+          }
+        }
+      }
+    },
+    "evening.q.hard.placeholder": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это поможет нам"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This will help us"
           }
         }
       }
@@ -15062,6 +15750,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "AR не поддерживается"
+          }
+        }
+      }
+    },
+    "facefilter.iSaidIt": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я сказал!"
+          }
+        }
+      }
+    },
+    "facefilter.iSaidIt.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, когда произнесёшь слово"
+          }
+        }
+      }
+    },
+    "facefilter.listening": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
           }
         }
       }
@@ -19307,6 +20025,142 @@
         }
       }
     },
+    "helpCenter.video.movie_gym.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Весёлая артикуляционная зарядка с Лялей: часики, лошадка, чашечка и выдох."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A fun articulation warm-up with Lyalya: clock, horse, cup and breathing."
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_gym.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка для язычка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue warm-up"
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_hisses.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мультик про звуки Ш и Ж: мышка шуршит, жучки жужжат, ёжик и лесная шишка."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cartoon about sounds Sh and Zh: a rustling mouse, buzzing beetles, a hedgehog and a forest cone."
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_hisses.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День у Ляли: учим шипящие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A day with Lyalya: hissing sounds"
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_l.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёплая сказка на ночь: ласточка, лисёнок, пароход и луна — мягкий звук Л."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A warm bedtime tale: a swallow, a fox cub, a steamboat and the moon — the soft sound L."
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_l.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказка про звук Л"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tale about the sound L"
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_r.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длинный мультик с Лялей: моторчик, ракета, лягушонок и клад — учим звук Р."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A long cartoon with Lyalya: engine, rocket, frog and treasure — learning the sound R."
+          }
+        }
+      }
+    },
+    "helpCenter.video.movie_r.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Путешествие за звуком Р"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journey for the sound R"
+          }
+        }
+      }
+    },
     "helpCenter.video.progressTracking.description": {
       "extractionState": "manual",
       "localizations": {
@@ -20260,12 +21114,108 @@
         }
       }
     },
+    "imitationLab.a11y.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметить «получилось»"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as done"
+          }
+        }
+      }
+    },
+    "imitationLab.a11y.play": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать образец"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play sample"
+          }
+        }
+      }
+    },
+    "imitationLab.complete": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки отработаны!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All sounds practiced!"
+          }
+        }
+      }
+    },
     "imitationLab.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Записать"
+          }
+        }
+      }
+    },
+    "imitationLab.cta.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "imitationLab.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получилось"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "imitationLab.hero.progress %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отработано: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practiced: %1$lld of %2$lld"
           }
         }
       }
@@ -20883,12 +21833,316 @@
         }
       }
     },
+    "inspiration.q1.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каждая буква, которую малыш произнёс правильно, — это маленькая победа."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every letter the child pronounces correctly is a small victory."
+          }
+        }
+      }
+    },
+    "inspiration.q10.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушайте ребёнка с интересом — это лучшая мотивация говорить."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen to your child with interest — it is the best motivation to speak."
+          }
+        }
+      }
+    },
+    "inspiration.q2.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дети говорят так же, как с ними говорят родители. Будьте образцом."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children speak the way their parents speak to them. Be the model."
+          }
+        }
+      }
+    },
+    "inspiration.q3.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Терпение и ежедневная практика побеждают любой звук."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patience and daily practice conquer any sound."
+          }
+        }
+      }
+    },
+    "inspiration.q4.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика — это фундамент чистой речи."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulation exercises are the foundation of clear speech."
+          }
+        }
+      }
+    },
+    "inspiration.q5.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок учится через игру — превратите занятие в приключение."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A child learns through play — turn the lesson into an adventure."
+          }
+        }
+      }
+    },
+    "inspiration.q6.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хвалите за усилия, а не только за результат."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Praise the effort, not just the result."
+          }
+        }
+      }
+    },
+    "inspiration.q7.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие ежедневные занятия лучше долгих и редких."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short daily sessions beat long, rare ones."
+          }
+        }
+      }
+    },
+    "inspiration.q8.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорите медленно и чётко — ребёнок учится, подражая вам."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speak slowly and clearly — the child learns by imitating you."
+          }
+        }
+      }
+    },
+    "inspiration.q9.text": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развитие мелкой моторики помогает развитию речи."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developing fine motor skills supports speech development."
+          }
+        }
+      }
+    },
+    "inspiration.role.methodist": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "логопед-методист"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "speech therapist & methodologist"
+          }
+        }
+      }
+    },
+    "inspirationBoard.a11y.favorite": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В избранное"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to favourites"
+          }
+        }
+      }
+    },
+    "inspirationBoard.a11y.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующая цитата"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next quote"
+          }
+        }
+      }
+    },
+    "inspirationBoard.a11y.previous": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предыдущая цитата"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous quote"
+          }
+        }
+      }
+    },
+    "inspirationBoard.a11y.unfavorite": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из избранного"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from favourites"
+          }
+        }
+      }
+    },
     "inspirationBoard.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Готово"
+          }
+        }
+      }
+    },
+    "inspirationBoard.empty": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет избранных цитат. Нажми ♥, чтобы сохранить."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No favourite quotes yet. Tap ♥ to save one."
+          }
+        }
+      }
+    },
+    "inspirationBoard.favoritesCount %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В избранном: %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favourites: %lld"
+          }
+        }
+      }
+    },
+    "inspirationBoard.filter.all": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "inspirationBoard.filter.favorites": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Избранное"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favourites"
           }
         }
       }
@@ -21359,6 +22613,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пой вместе с Лялей"
+          }
+        }
+      }
+    },
+    "kidGame.bestStars %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекорд: %lld ★"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best: %lld ★"
+          }
+        }
+      }
+    },
+    "kidGame.restart": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать заново"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "kidGame.stars %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звёзды: %lld из 3 ★"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stars: %lld of 3 ★"
           }
         }
       }
@@ -23269,6 +24571,22 @@
         }
       }
     },
+    "lyalyaCoach.q.firstSound %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какой первый звук в слове «%@»?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What is the first sound in “%@”?"
+          }
+        }
+      }
+    },
     "metronome.result.excellent": {
       "extractionState": "manual",
       "localizations": {
@@ -23506,6 +24824,38 @@
         }
       }
     },
+    "morning.a11y.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "morning.a11y.todo": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
     "morning.cta.finish": {
       "localizations": {
         "ru": {
@@ -23556,12 +24906,300 @@
         }
       }
     },
+    "morning.step.articulation.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 коротких упражнений"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 short exercises"
+          }
+        }
+      }
+    },
+    "morning.step.articulation.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разминка для язычка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue warm-up"
+          }
+        }
+      }
+    },
+    "morning.step.breathing.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вдох носом, выдох ртом"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inhale through the nose, exhale through the mouth"
+          }
+        }
+      }
+    },
+    "morning.step.breathing.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подышим"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breathe"
+          }
+        }
+      }
+    },
+    "morning.step.smile.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покажи зубки в зеркало"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show your teeth in the mirror"
+          }
+        }
+      }
+    },
+    "morning.step.smile.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Широкая улыбка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Big smile"
+          }
+        }
+      }
+    },
+    "morning.step.syllables.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Са-са-са, шо-шо-шо"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sa-sa-sa, sho-sho-sho"
+          }
+        }
+      }
+    },
+    "morning.step.syllables.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Споём слоги"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sing syllables"
+          }
+        }
+      }
+    },
+    "morning.step.wash.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вода, мыло, улыбка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Water, soap, a smile"
+          }
+        }
+      }
+    },
+    "morning.step.wash.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умоемся"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wash up"
+          }
+        }
+      }
+    },
+    "morning.step.words.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори за Лялей"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat after Lyalya"
+          }
+        }
+      }
+    },
+    "morning.step.words.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 быстрых слова"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 quick words"
+          }
+        }
+      }
+    },
+    "musicalDrums.a11y.drum %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Барабан %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drum %@"
+          }
+        }
+      }
+    },
+    "musicalDrums.a11y.pattern %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ритм: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythm: %@"
+          }
+        }
+      }
+    },
     "musicalDrums.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "musicalDrums.drum.high": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Громко"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loud"
+          }
+        }
+      }
+    },
+    "musicalDrums.drum.low": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тихо"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet"
+          }
+        }
+      }
+    },
+    "musicalDrums.drum.mid": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средне"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medium"
+          }
+        }
+      }
+    },
+    "musicalDrums.gameDone": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все рисунки готовы!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All patterns done!"
           }
         }
       }
@@ -23592,6 +25230,70 @@
           "stringUnit": {
             "state": "translated",
             "value": "Барабаны"
+          }
+        }
+      }
+    },
+    "musicalDrums.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующий рисунок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next pattern"
+          }
+        }
+      }
+    },
+    "musicalDrums.repeatPrompt": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори ритм Ляли"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat Lyalya’s rhythm"
+          }
+        }
+      }
+    },
+    "musicalDrums.round %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рисунок %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "musicalDrums.roundDone": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рисунок повторён!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern repeated!"
           }
         }
       }
@@ -29690,6 +31392,22 @@
         }
       }
     },
+    "phonemeFamily.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова скоро появятся — загляни позже!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Words are coming soon — check back later!"
+          }
+        }
+      }
+    },
     "phonemeFamily.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -29720,12 +31438,54 @@
         }
       }
     },
+    "phonemeFamily.progress %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correct: %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "phonemeFamily.word.a11y %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word %@"
+          }
+        }
+      }
+    },
     "phonemeJourney.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "К карте мира"
+          }
+        }
+      }
+    },
+    "phonemeJourney.defaultSound": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "—"
           }
         }
       }
@@ -29756,6 +31516,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Путь звука"
+          }
+        }
+      }
+    },
+    "phonemeJourney.stage.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "phonemeJourney.stage.inProgress": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В работе"
           }
         }
       }
@@ -34095,12 +35875,492 @@
         }
       }
     },
+    "resources.r1.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полный гайд от Фомичёвой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complete guide by Fomicheva"
+          }
+        }
+      }
+    },
+    "resources.r1.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постановка звука Р"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setting the R sound"
+          }
+        }
+      }
+    },
+    "resources.r10.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комарова — слоги, слова, фразы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Komarova — syllables, words, phrases"
+          }
+        }
+      }
+    },
+    "resources.r10.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Альбом для автоматизации звуков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound-automation album"
+          }
+        }
+      }
+    },
+    "resources.r11.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игры на различение звуков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Games for distinguishing sounds"
+          }
+        }
+      }
+    },
+    "resources.r11.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонематический слух"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phonemic awareness"
+          }
+        }
+      }
+    },
+    "resources.r12.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новикова — основы для специалиста"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novikova — basics for the specialist"
+          }
+        }
+      }
+    },
+    "resources.r12.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Массаж и зондовый массаж"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Massage and probe massage"
+          }
+        }
+      }
+    },
+    "resources.r2.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео-уроки для родителей"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video lessons for parents"
+          }
+        }
+      }
+    },
+    "resources.r2.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulation exercises"
+          }
+        }
+      }
+    },
+    "resources.r3.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Методика Ткаченко"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tkachenko’s method"
+          }
+        }
+      }
+    },
+    "resources.r3.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дифференциация С/Ш"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Differentiating S/Sh"
+          }
+        }
+      }
+    },
+    "resources.r4.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "200+ упражнений по группам"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "200+ exercises by group"
+          }
+        }
+      }
+    },
+    "resources.r4.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картотека скороговорок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue-twister file"
+          }
+        }
+      }
+    },
+    "resources.r5.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картушина / Волкова — 10 уроков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kartushina / Volkova — 10 lessons"
+          }
+        }
+      }
+    },
+    "resources.r5.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логоритмика дома"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech rhythmics at home"
+          }
+        }
+      }
+    },
+    "resources.r6.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Глухов — пересказ и рассказ"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Glukhov — retelling and storytelling"
+          }
+        }
+      }
+    },
+    "resources.r6.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развитие связной речи"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developing connected speech"
+          }
+        }
+      }
+    },
+    "resources.r7.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цейтлин — два языка с рождения"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tseitlin — two languages from birth"
+          }
+        }
+      }
+    },
+    "resources.r7.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Билингвизм и логопедия"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilingualism and speech therapy"
+          }
+        }
+      }
+    },
+    "resources.r8.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стрельникова для детей"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strelnikova for children"
+          }
+        }
+      }
+    },
+    "resources.r8.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательная гимнастика"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breathing exercises"
+          }
+        }
+      }
+    },
+    "resources.r9.summary": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ш, Ж, Ч, Щ — поэтапно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sh, Zh, Ch, Shch — step by step"
+          }
+        }
+      }
+    },
+    "resources.r9.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постановка шипящих"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setting the hissing sounds"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.a11y.read": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметить прочитанным"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as read"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.a11y.save": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В избранное"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.a11y.unread": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снять отметку"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as unread"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.a11y.unsave": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из избранного"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unsave"
+          }
+        }
+      }
+    },
     "resourcesLibrary.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Добавить ресурс"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.cta.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.empty": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь пока пусто. Сохрани ресурс закладкой."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here yet. Bookmark a resource."
           }
         }
       }
@@ -34125,12 +36385,108 @@
         }
       }
     },
+    "resourcesLibrary.kind.all": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.kind.article": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статьи"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articles"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.kind.pdf": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.kind.saved": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Избранное"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.kind.video": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video"
+          }
+        }
+      }
+    },
     "resourcesLibrary.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Библиотека ресурсов"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.total %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего: %1$lld · прочитано: %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total: %1$lld · read: %2$lld"
           }
         }
       }
@@ -38634,6 +40990,70 @@
         }
       }
     },
+    "sentenceBuilder.a11y.add": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в предложение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to sentence"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.a11y.remove": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из предложения"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from sentence"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.allUsed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все слова использованы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All words used"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.availableWords": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступные слова:"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Available words:"
+          }
+        }
+      }
+    },
     "sentenceBuilder.card.a11y.prep": {
       "extractionState": "manual",
       "localizations": {
@@ -38684,6 +41104,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.cta.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новое предложение"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New sentence"
           }
         }
       }
@@ -38798,6 +41234,22 @@
         }
       }
     },
+    "sentenceBuilder.gameDone": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все предложения собраны!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All sentences built!"
+          }
+        }
+      }
+    },
     "sentenceBuilder.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -38879,6 +41331,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Собери из слов правильную фразу!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.result.correct": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Правильно собрал!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great! You got it right!"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.result.retry": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй другой порядок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a different order"
           }
         }
       }
@@ -38993,6 +41477,22 @@
         }
       }
     },
+    "sentenceBuilder.tapWords": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажимай на слова ниже"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the words below"
+          }
+        }
+      }
+    },
     "sentenceBuilder.title": {
       "extractionState": "manual",
       "localizations": {
@@ -39000,6 +41500,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Конструктор предложения"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.yourSentence": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твоё предложение:"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sentence:"
           }
         }
       }
@@ -44867,12 +47383,348 @@
         }
       }
     },
+    "soundDoctor.case.l.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка упирается в верхние зубы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tongue tip rests on the upper teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.l.opt1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик в верхние зубы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tip to the upper teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.l.opt2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык дрожит"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tongue trembles"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.l.opt3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зубы сжаты"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teeth clenched"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.r.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык дрожит за верхними зубами"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tongue trembles behind the upper teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.r.opt1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зубы сомкнуть, шипеть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close teeth, hiss"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.r.opt2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык вверх, вибрация"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue up, vibration"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.r.opt3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы трубочкой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lips like a tube"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.s.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воздух свистит между зубами"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Air whistles between the teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.s.opt1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык внизу, улыбка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue down, smile"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.s.opt2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык под нёбо"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue under the palate"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.s.opt3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зубы разомкнуть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.sh.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык чашечкой за верхними зубами"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue cupped behind the upper teeth"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.sh.opt1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык внизу"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue down"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.sh.opt2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы вытянуть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch the lips"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.sh.opt3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык чашечкой, губы трубочкой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue cupped, lips like a tube"
+          }
+        }
+      }
+    },
+    "soundDoctor.case.title %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«%@» болеет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is sick"
+          }
+        }
+      }
+    },
+    "soundDoctor.complete.score %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вылечено: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cured: %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "soundDoctor.complete.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки здоровы!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All sounds healthy!"
+          }
+        }
+      }
+    },
     "soundDoctor.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Начать заново"
+          }
+        }
+      }
+    },
+    "soundDoctor.cured %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вылечено: %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cured: %lld"
+          }
+        }
+      }
+    },
+    "soundDoctor.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Случаи скоро появятся — загляни позже!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cases are coming soon — check back later!"
           }
         }
       }
@@ -46409,6 +49261,38 @@
         }
       }
     },
+    "specialistNotes.delete": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "specialistNotes.empty": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заметок пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No notes yet"
+          }
+        }
+      }
+    },
     "specialistNotes.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -46435,6 +49319,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заметки по ребёнку"
+          }
+        }
+      }
+    },
+    "specialistNotes.total %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего заметок: %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notes total: %lld"
           }
         }
       }
@@ -47040,12 +49940,76 @@
         }
       }
     },
+    "speechRiddles.complete.score %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Счёт: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Score: %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "speechRiddles.complete.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все загадки разгаданы!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All riddles solved!"
+          }
+        }
+      }
+    },
     "speechRiddles.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Дальше"
+          }
+        }
+      }
+    },
+    "speechRiddles.cta.again": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть снова"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play again"
+          }
+        }
+      }
+    },
+    "speechRiddles.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадки скоро появятся — загляни позже!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riddles are coming soon — check back later!"
           }
         }
       }
@@ -47076,6 +50040,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Загадки"
+          }
+        }
+      }
+    },
+    "speechRiddles.prompt %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что начинается на «%@»?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What starts with “%@”?"
           }
         }
       }
@@ -47827,6 +50807,54 @@
         }
       }
     },
+    "storyEnding.cta.restart": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать заново"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "storyEnding.cta.save": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "storyEnding.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинки скоро появятся — загляни позже!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pictures are coming soon — check back later!"
+          }
+        }
+      }
+    },
     "storyEnding.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -47853,6 +50881,86 @@
           "stringUnit": {
             "state": "translated",
             "value": "Конец сказки"
+          }
+        }
+      }
+    },
+    "storyEnding.saved.banner": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Концовка сохранена!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ending saved!"
+          }
+        }
+      }
+    },
+    "storyEnding.step.choose": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаг 1 из 3: выбери картинку"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step 1 of 3: pick a picture"
+          }
+        }
+      }
+    },
+    "storyEnding.step.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done!"
+          }
+        }
+      }
+    },
+    "storyEnding.step.record": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаг 2 из 3: запиши голос"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step 2 of 3: record your voice"
+          }
+        }
+      }
+    },
+    "storyEnding.step.saving": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохраняю…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saving…"
           }
         }
       }
@@ -50489,6 +53597,70 @@
         }
       }
     },
+    "tongueTwister.cta.again": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать ещё раз"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record again"
+          }
+        }
+      }
+    },
+    "tongueTwister.cta.back": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назад к списку"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to list"
+          }
+        }
+      }
+    },
+    "tongueTwister.cta.scoring": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
+          }
+        }
+      }
+    },
+    "tongueTwister.cta.stop": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить запись"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop recording"
+          }
+        }
+      }
+    },
     "tongueTwister.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -50515,6 +53687,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Скороговорки"
+          }
+        }
+      }
+    },
+    "tongueTwister.result.a11y %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат: %lld из 3 звёзд"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Result: %lld of 3 stars"
+          }
+        }
+      }
+    },
+    "tongueTwister.result.caption": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Попробуй ещё разок!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Well done! Try once more!"
+          }
+        }
+      }
+    },
+    "tongueTwister.row.a11y %@ %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка, %1$@. %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue twister, %1$@. %2$@"
           }
         }
       }
@@ -51511,6 +54731,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Прочитать все"
+          }
+        }
+      }
+    },
+    "voiceMessageHub.empty.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь появятся записи от семьи, когда их запишут в разделе «Голос семьи»."
+          }
+        }
+      }
+    },
+    "voiceMessageHub.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет голосовых сообщений"
           }
         }
       }
@@ -52985,6 +56225,22 @@
         }
       }
     },
+    "weeklyTip.exercises.heading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 простых упражнения на эту неделю"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 simple exercises for this week"
+          }
+        }
+      }
+    },
     "weeklyTip.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -53025,6 +56281,22 @@
         }
       }
     },
+    "weeklyTip.weekLabel %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя %lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Week %lld"
+          }
+        }
+      }
+    },
     "whisperGame.cta.action": {
       "localizations": {
         "ru": {
@@ -53051,6 +56323,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "Меняй громкость"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Измеренный уровень голоса"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.match": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадение: %d%%"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.noMic": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Микрофон недоступен — уровень голоса не измеряется"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.rounds": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раундов: %d"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.target": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой уровень"
           }
         }
       }
@@ -61829,1118 +65151,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "speechRiddles.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Загадки скоро появятся — загляни позже!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Riddles are coming soon — check back later!"
-          }
-        }
-      }
-    },
-    "speechRiddles.prompt %@": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Что начинается на «%@»?"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What starts with “%@”?"
-          }
-        }
-      }
-    },
-    "speechRiddles.complete.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Все загадки разгаданы!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All riddles solved!"
-          }
-        }
-      }
-    },
-    "speechRiddles.complete.score %lld %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Счёт: %1$lld из %2$lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Score: %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "speechRiddles.cta.again": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сыграть снова"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Play again"
-          }
-        }
-      }
-    },
-    "phonemeFamily.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слова скоро появятся — загляни позже!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words are coming soon — check back later!"
-          }
-        }
-      }
-    },
-    "phonemeFamily.progress %lld %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Правильно: %1$lld из %2$lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Correct: %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "phonemeFamily.word.a11y %@": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слово %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Word %@"
-          }
-        }
-      }
-    },
-    "specialistNotes.total %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Всего заметок: %lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notes total: %lld"
-          }
-        }
-      }
-    },
-    "specialistNotes.empty": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заметок пока нет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No notes yet"
-          }
-        }
-      }
-    },
-    "specialistNotes.delete": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete"
-          }
-        }
-      }
-    },
-    "conversationStarters.cat.daily": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day"
-          }
-        }
-      }
-    },
-    "conversationStarters.cat.feelings": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чувства"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Feelings"
-          }
-        }
-      }
-    },
-    "conversationStarters.cat.imagination": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фантазия"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Imagination"
-          }
-        }
-      }
-    },
-    "conversationStarters.cat.learning": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Учёба"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Learning"
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_r.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Путешествие за звуком Р"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Journey for the sound R"
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_r.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Длинный мультик с Лялей: моторчик, ракета, лягушонок и клад — учим звук Р."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A long cartoon with Lyalya: engine, rocket, frog and treasure — learning the sound R."
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_hisses.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День у Ляли: учим шипящие"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A day with Lyalya: hissing sounds"
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_hisses.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Мультик про звуки Ш и Ж: мышка шуршит, жучки жужжат, ёжик и лесная шишка."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A cartoon about sounds Sh and Zh: a rustling mouse, buzzing beetles, a hedgehog and a forest cone."
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_l.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сказка про звук Л"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A tale about the sound L"
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_l.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тёплая сказка на ночь: ласточка, лисёнок, пароход и луна — мягкий звук Л."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A warm bedtime tale: a swallow, a fox cub, a steamboat and the moon — the soft sound L."
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_gym.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зарядка для язычка"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue warm-up"
-          }
-        }
-      }
-    },
-    "helpCenter.video.movie_gym.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Весёлая артикуляционная зарядка с Лялей: часики, лошадка, чашечка и выдох."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A fun articulation warm-up with Lyalya: clock, horse, cup and breathing."
-          }
-        }
-      }
-    },
-    "tongueTwister.row.a11y %@ %@": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Скороговорка, %1$@. %2$@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue twister, %1$@. %2$@"
-          }
-        }
-      }
-    },
-    "tongueTwister.cta.stop": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить запись"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop recording"
-          }
-        }
-      }
-    },
-    "tongueTwister.cta.scoring": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слушаю…"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listening…"
-          }
-        }
-      }
-    },
-    "tongueTwister.cta.again": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Записать ещё раз"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Record again"
-          }
-        }
-      }
-    },
-    "tongueTwister.cta.back": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Назад к списку"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Back to list"
-          }
-        }
-      }
-    },
-    "tongueTwister.result.a11y %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат: %lld из 3 звёзд"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Result: %lld of 3 stars"
-          }
-        }
-      }
-    },
-    "tongueTwister.result.caption": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец! Попробуй ещё разок!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Well done! Try once more!"
-          }
-        }
-      }
-    },
-    "soundDoctor.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Случаи скоро появятся — загляни позже!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cases are coming soon — check back later!"
-          }
-        }
-      }
-    },
-    "soundDoctor.cured %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вылечено: %lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cured: %lld"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.title %@": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» болеет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” is sick"
-          }
-        }
-      }
-    },
-    "soundDoctor.complete.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Все звуки здоровы!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All sounds healthy!"
-          }
-        }
-      }
-    },
-    "soundDoctor.complete.score %lld %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вылечено: %1$lld из %2$lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cured: %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.r.hint": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык дрожит за верхними зубами"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The tongue trembles behind the upper teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.r.opt1": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зубы сомкнуть, шипеть"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Close teeth, hiss"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.r.opt2": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык вверх, вибрация"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue up, vibration"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.r.opt3": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Губы трубочкой"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lips like a tube"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.s.hint": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Воздух свистит между зубами"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Air whistles between the teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.s.opt1": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык внизу, улыбка"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue down, smile"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.s.opt2": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык под нёбо"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue under the palate"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.s.opt3": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зубы разомкнуть"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open the teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.sh.hint": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык чашечкой за верхними зубами"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue cupped behind the upper teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.sh.opt1": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык внизу"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue down"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.sh.opt2": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Губы вытянуть"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stretch the lips"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.sh.opt3": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык чашечкой, губы трубочкой"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue cupped, lips like a tube"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.l.hint": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кончик языка упирается в верхние зубы"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The tongue tip rests on the upper teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.l.opt1": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кончик в верхние зубы"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tip to the upper teeth"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.l.opt2": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык дрожит"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The tongue trembles"
-          }
-        }
-      }
-    },
-    "soundDoctor.case.l.opt3": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зубы сжаты"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Teeth clenched"
-          }
-        }
-      }
-    },
-    "coach.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задания скоро появятся — загляни позже!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tasks are coming soon — check back later!"
-          }
-        }
-      }
-    },
-    "coach.round %lld %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Раунд %1$lld из %2$lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Round %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "coach.reaction.correct": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Точно! Молодец!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exactly! Well done!"
-          }
-        }
-      }
-    },
-    "coach.reaction.tryAgain": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробуем ещё разок"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Let's try once more"
-          }
-        }
-      }
-    },
-    "coach.summary %lld %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово! Правильных ответов: %1$lld из %2$lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done! Correct answers: %1$lld of %2$lld"
-          }
-        }
-      }
-    },
-    "coach.cta.again": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сыграть снова"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Play again"
-          }
-        }
-      }
-    },
-    "coach.cta.next": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дальше"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
-          }
-        }
-      }
-    },
-    "lyalyaCoach.q.firstSound %@": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Какой первый звук в слове «%@»?"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "What is the first sound in “%@”?"
-          }
-        }
-      }
-    },
-    "weeklyTip.weekLabel %lld": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неделя %lld"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Week %lld"
-          }
-        }
-      }
-    },
-    "weeklyTip.exercises.heading": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 простых упражнения на эту неделю"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "3 simple exercises for this week"
-          }
-        }
-      }
-    },
-    "storyEnding.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Картинки скоро появятся — загляни позже!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pictures are coming soon — check back later!"
-          }
-        }
-      }
-    },
-    "storyEnding.step.choose": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Шаг 1 из 3: выбери картинку"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Step 1 of 3: pick a picture"
-          }
-        }
-      }
-    },
-    "storyEnding.step.record": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Шаг 2 из 3: запиши голос"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Step 2 of 3: record your voice"
-          }
-        }
-      }
-    },
-    "storyEnding.step.saving": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сохраняю…"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Saving…"
-          }
-        }
-      }
-    },
-    "storyEnding.step.done": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done!"
-          }
-        }
-      }
-    },
-    "storyEnding.saved.banner": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Концовка сохранена!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ending saved!"
-          }
-        }
-      }
-    },
-    "storyEnding.cta.save": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сохранить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
-          }
-        }
-      }
-    },
-    "storyEnding.cta.restart": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начать заново"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start over"
           }
         }
       }

@@ -22,11 +22,13 @@ protocol PuzzleRevealBusinessLogic: AnyObject {
 //      и переводит фазу в .recording.
 //   3) `stopRecord` — останавливает запись, считает score:
 //       • с ASR: через ASRService.transcribe и overlap с target word;
-//       • fallback: Float.random(0.65...0.95) — детская мотивационная шкала.
+//       • без ASR / при ошибке ASR: плитка открывается БЕЗ балла (score=nil) —
+//         картинка собирается (мотивация), но в итоговые звёзды этот ход не
+//         попадает. Никакой фабрикации оценки случайным числом.
 //      Дальше вызывает revealTile.
 //   4) `revealTile(score:)` — открывает очередную (следующую закрытую) плитку,
 //      обновляет счётчик attemptNumber, а когда все 9 открыты — переводит
-//      фазу в .puzzleComplete.
+//      фазу в .puzzleComplete. Балл накапливается только если он реальный.
 //   5) `nextPuzzle` — инкрементит puzzleIndex, либо (если дошли до 5) вызывает
 //      complete.
 //   6) `complete` — считает averageScore по всем открытым плиткам всех пазлов,
@@ -214,10 +216,11 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
         let targetWord = currentWord()
 
         guard isASRAvailable else {
-            // Fallback — ребёнок всегда получает «хороший» score.
-            let score = Float.random(in: 0.65...0.95)
-            logger.info("stopRecord fallback score=\(score, privacy: .public)")
-            revealNextTile(score: score)
+            // Без ASR — плитка открывается без оценки (score=nil): картинка
+            // собирается ради мотивации, но звёзды считаются только по реальным
+            // оценкам. Никакого случайного балла.
+            logger.info("stopRecord no-ASR reveal without score")
+            revealNextTile(score: nil)
             return
         }
 
@@ -238,27 +241,34 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
                 self.revealNextTile(score: score)
             } catch {
                 self.logger.error("stopRecord asr failed: \(error.localizedDescription, privacy: .public)")
-                let score = Float.random(in: 0.65...0.95)
-                self.revealNextTile(score: score)
+                // Ошибка распознавания — открываем плитку без фабрикации балла.
+                self.revealNextTile(score: nil)
             }
         }
     }
 
     // MARK: - revealTile (internal)
 
-    private func revealNextTile(score: Float) {
+    /// Открывает следующую закрытую плитку. `score == nil` означает «без
+    /// реальной оценки» (нет/упал ASR): плитка открывается, но в звёзды этот ход
+    /// не идёт. Реальная оценка накапливается в `allRevealScores`.
+    private func revealNextTile(score: Float?) {
         // Индекс следующей закрытой плитки (линейно слева направо, сверху вниз).
         guard let targetIndex = currentTiles.firstIndex(where: { !$0.isRevealed }) else {
             return
         }
         currentTiles[targetIndex].isRevealed = true
-        currentTiles[targetIndex].revealScore = score
-        allRevealScores.append(score)
+        currentTiles[targetIndex].revealScore = score ?? 0
+        if let score {
+            allRevealScores.append(score)
+        }
 
         let allRevealed = currentTiles.allSatisfy { $0.isRevealed }
+        // Для UI: при отсутствии реальной оценки показываем нейтральный балл
+        // (только для подсказки-фидбэка), он НЕ влияет на итоговые звёзды.
         let response = PuzzleRevealModels.RevealTile.Response(
             tileIndex: currentTiles[targetIndex].index,
-            score: score,
+            score: score ?? -1,
             tiles: currentTiles,
             allRevealed: allRevealed,
             attemptNumber: attemptNumber
@@ -296,8 +306,16 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
     // MARK: - complete
 
     func complete(_ request: PuzzleRevealModels.Complete.Request) {
+        // Если ни одной реальной оценки не собрано (всю сессию ASR был недоступен),
+        // звёзды НЕ начисляем — нейтральный исход (0 звёзд), без фабрикации.
+        guard !allRevealScores.isEmpty else {
+            logger.info("complete: no real scores → neutral outcome (0 stars)")
+            presenter?.presentComplete(.init(averageScore: 0, starsEarned: 0))
+            return
+        }
+
         let total = allRevealScores.reduce(Float(0), +)
-        let avg = allRevealScores.isEmpty ? 0 : total / Float(allRevealScores.count)
+        let avg = total / Float(allRevealScores.count)
         let stars = Self.stars(for: avg)
 
         logger.info("complete avg=\(avg, privacy: .public) stars=\(stars, privacy: .public) attempts=\(self.allRevealScores.count, privacy: .public)")

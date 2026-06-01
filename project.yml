@@ -49,6 +49,9 @@ packages:
   WhisperKit:
     url: https://github.com/argmaxinc/WhisperKit
     from: "0.9.0"
+  FluidAudio:
+    url: https://github.com/FluidInference/FluidAudio
+    from: "0.14.0"
   SwiftTransformers:
     url: https://github.com/huggingface/swift-transformers
     from: "1.1.9"
@@ -220,6 +223,8 @@ targets:
         product: FirebaseDatabase
       - package: WhisperKit
         product: WhisperKit
+      - package: FluidAudio
+        product: FluidAudio
       - package: Lottie
         product: Lottie
       - package: GoogleSignIn

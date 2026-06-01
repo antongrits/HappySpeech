@@ -7,6 +7,7 @@ struct AudioMemoryGameView: View {
     let childId: String
 
     @State private var interactor: AudioMemoryGameInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -43,7 +44,13 @@ struct AudioMemoryGameView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = AudioMemoryGameInteractor(childId: childId)
+                    let new = AudioMemoryGameInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -52,7 +59,7 @@ struct AudioMemoryGameView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp3) {
                     hero(interactor: interactor)
@@ -88,10 +95,21 @@ struct AudioMemoryGameView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
-                    Text("Ходы: \(interactor.moves)   Пары: \(interactor.matchedCount)/\(AudioMemoryGameModels.pairKeys.count)")
+                    Text(String(
+                        format: String(localized: "audioMemory.hero.progress %lld %lld %lld"),
+                        interactor.moves, interactor.matchedCount, interactor.pairCount
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .padding(.top, 2)
+                    if interactor.bestStars > 0 {
+                        Text(String(
+                            format: String(localized: "kidGame.bestStars %lld"),
+                            interactor.bestStars
+                        ))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                    }
                 }
                 Spacer(minLength: 0)
             }
@@ -127,8 +145,12 @@ struct AudioMemoryGameView: View {
                     .fill(tileBackground(tile))
                 if tile.isFlipped || tile.isMatched {
                     Text(tile.pairKey)
-                        .font(TypographyTokens.titleLarge(30).weight(.bold))
+                        .font(TypographyTokens.headline(16).weight(.bold))
                         .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.6)
+                        .multilineTextAlignment(.center)
+                        .padding(2)
                 } else {
                     // Pattern 5: pulse при изменении состояния карточки.
                     Image(systemName: "speaker.wave.2.fill")
@@ -142,7 +164,8 @@ struct AudioMemoryGameView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(tile.isFlipped || tile.isMatched
-                                 ? "Звук \(tile.pairKey)" : "Закрытая карточка"))
+            ? tile.pairKey
+            : String(localized: "audioMemory.a11y.closed")))
         .accessibilityAddTraits(.isButton)
     }
 
@@ -157,7 +180,7 @@ struct AudioMemoryGameView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 56)
                     .accessibilityHidden(true)
-                Text("Все пары собраны!")
+                Text(String(localized: "audioMemory.complete"))
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 Spacer()
@@ -169,7 +192,7 @@ struct AudioMemoryGameView: View {
         HSButton(
             interactor.isComplete
                 ? String(localized: "audioMemory.cta.start")
-                : "Перемешать заново",
+                : String(localized: "audioMemory.cta.shuffle"),
             style: interactor.isComplete ? .primary : .secondary,
             size: .large,
             icon: "shuffle"

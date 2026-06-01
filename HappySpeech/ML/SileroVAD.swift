@@ -411,8 +411,45 @@ actor AmplitudeVAD: VADProtocol {
 /// `AmplitudeVAD` теперь использует **адаптивный порог по фоновому шуму**
 /// (running noise-floor tracker + гистерезис) — ~88–92% на чистой речи,
 /// ~75–85% в шуме, детерминированно и без модели.
+///
+/// **FluidAudio-канал.** Реальный Silero v6 на ANE доступен через
+/// ``FluidAudioVADService`` (Apache-2.0) — он держит state-threading внутри и снимает
+/// исходное ограничение. Дефолтный `makeVAD()` остаётся на `AmplitudeVAD` (нулевая
+/// задержка старта, без сети, детерминированность для тестов). Чтобы задействовать
+/// FluidAudio, вызывайте ``makeVAD(preferFluidAudio:threshold:)`` с `preferFluidAudio: true`
+/// — при недоступности модели (нет сети при первом старте) он мягко откатится на
+/// `AmplitudeVAD`. См. ADR-V33-FLUIDAUDIO-VAD.
 func makeVAD(threshold: Float = VADResult.Constants.defaultThreshold) async -> any VADProtocol {
     return AmplitudeVAD(energyThreshold: threshold * 0.02)
+}
+
+/// Создаёт on-device VAD с опциональным предпочтением реального Silero v6 (FluidAudio, ANE).
+///
+/// - Parameters:
+///   - preferFluidAudio: если `true` — пробуем поднять ``FluidAudioVADService`` (реальный
+///     Silero v6). При успехе он становится активным детектором; при сбое инициализации
+///     (модель не скачана и нет сети, окружение без ANE/HuggingFace) — **graceful fallback**
+///     на ``AmplitudeVAD`` без падения приложения. Если `false` — поведение идентично
+///     `makeVAD()` (всегда `AmplitudeVAD`).
+///   - threshold: порог classification речи (0…1), пробрасывается в выбранный детектор.
+/// - Returns: готовый к работе `VADProtocol`.
+func makeVAD(
+    preferFluidAudio: Bool,
+    threshold: Float = VADResult.Constants.defaultThreshold
+) async -> any VADProtocol {
+    guard preferFluidAudio else {
+        return AmplitudeVAD(energyThreshold: threshold * 0.02)
+    }
+    let fluid = FluidAudioVADService(threshold: threshold)
+    do {
+        try await fluid.prepare()
+        return fluid
+    } catch {
+        HSLogger.ml.warning(
+            "makeVAD(preferFluidAudio:): FluidAudio недоступен (\(error.localizedDescription, privacy: .public)) — fallback на AmplitudeVAD"
+        )
+        return AmplitudeVAD(energyThreshold: threshold * 0.02)
+    }
 }
 
 // MARK: - Mock Implementation

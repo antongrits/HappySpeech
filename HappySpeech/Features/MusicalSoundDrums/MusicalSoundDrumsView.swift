@@ -7,6 +7,7 @@ struct MusicalSoundDrumsView: View {
     let childId: String
 
     @State private var interactor: MusicalSoundDrumsInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +41,13 @@ struct MusicalSoundDrumsView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = MusicalSoundDrumsInteractor(childId: childId)
+                    let new = MusicalSoundDrumsInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -49,12 +56,18 @@ struct MusicalSoundDrumsView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero(state: interactor.state)
-                    rhythmCard(state: interactor.state)
-                    drums(interactor: interactor)
+                    rhythmCard(interactor: interactor)
+                    if interactor.isGameComplete {
+                        completeBanner(interactor: interactor)
+                    } else if interactor.state.roundComplete {
+                        roundDoneBanner(interactor: interactor)
+                    } else {
+                        drums(interactor: interactor)
+                    }
                     cta(interactor: interactor)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -84,24 +97,82 @@ struct MusicalSoundDrumsView: View {
         }
     }
 
-    private func rhythmCard(state: MusicalSoundDrumsModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+    private func rhythmCard(interactor: MusicalSoundDrumsInteractor) -> some View {
+        let state = interactor.state
+        return HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp2) {
-                Text(state.targetPhoneme)
-                    .font(TypographyTokens.title(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                HStack(spacing: SpacingTokens.sp2) {
-                    ForEach(Array(state.rhythmPattern.enumerated()), id: \.offset) { _, drum in
-                        Image(systemName: drum.icon)
-                            .font(.system(size: 20))
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                            // Step 10 Batch G — Pattern 5: pulse on rhythm pattern.
-                            .hsSymbolEffect(.pulse, value: state.beatsCount)
-                    }
-                }
-                Text("Ударов: \(state.beatsCount)")
+                Text(String(localized: "musicalDrums.repeatPrompt"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                HStack(spacing: SpacingTokens.sp2) {
+                    ForEach(Array(state.pattern.enumerated()), id: \.offset) { idx, syllable in
+                        let isDone = idx < state.progressIndex
+                        let isNext = idx == state.progressIndex && !state.roundComplete
+                        Text(syllable.text)
+                            .font(TypographyTokens.title(syllable.drum == .high ? 28 : 20))
+                            .foregroundStyle(isDone
+                                ? ColorTokens.Semantic.success
+                                : (isNext ? ColorTokens.Brand.primary : ColorTokens.Kid.inkSoft))
+                            .hsSymbolEffect(.bounce, value: state.progressIndex)
+                    }
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(Text(String(
+                    format: String(localized: "musicalDrums.a11y.pattern %@"),
+                    state.patternText
+                )))
+                Text(String(
+                    format: String(localized: "musicalDrums.round %lld %lld"),
+                    state.roundsPlayed + (interactor.isGameComplete ? 0 : 1),
+                    MusicalSoundDrumsInteractor.totalRounds
+                ))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
+        }
+    }
+
+    private func roundDoneBanner(interactor: MusicalSoundDrumsInteractor) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            VStack(spacing: SpacingTokens.sp2) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: .celebrating, size: 48)
+                        .accessibilityHidden(true)
+                    Text(String(localized: "musicalDrums.roundDone"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Spacer()
+                }
+                HSButton(
+                    String(localized: "musicalDrums.next"),
+                    style: .primary,
+                    size: .medium,
+                    icon: "arrow.right.circle.fill"
+                ) {
+                    hapticService.impact(.light)
+                    interactor.nextRound()
+                }
+            }
+        }
+    }
+
+    private func completeBanner(interactor: MusicalSoundDrumsInteractor) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .celebrating, size: 56)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(String(localized: "musicalDrums.gameDone"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(String(
+                        format: String(localized: "kidGame.stars %lld"),
+                        interactor.state.stars
+                    ))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                }
+                Spacer()
             }
         }
     }
@@ -148,7 +219,10 @@ struct MusicalSoundDrumsView: View {
             .animation(.spring(duration: 0.2), value: isActive)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(Text("Барабан \(drum.label)"))
+        .accessibilityLabel(Text(String(
+            format: String(localized: "musicalDrums.a11y.drum %@"),
+            drum.label
+        )))
         .accessibilityAddTraits(.isButton)
     }
 

@@ -2,10 +2,13 @@ import Foundation
 
 // MARK: - EveningReflectionModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели вечерней рефлексии.
+///
+/// Запись дня (что было весело/трудно + настроение) персистится в локальный
+/// дневник (`EveningReflectionStore`) и доступна в истории.
 enum EveningReflectionModels {
 
-    enum Mood: String, Hashable, CaseIterable, Identifiable {
+    enum Mood: String, Hashable, CaseIterable, Identifiable, Codable {
         case bright
         case calm
         case sad
@@ -22,14 +25,15 @@ enum EveningReflectionModels {
 
         var label: String {
             switch self {
-            case .bright: return "Светло"
-            case .calm:   return "Спокойно"
-            case .sad:    return "Грустно"
+            case .bright: return String(localized: "evening.mood.bright")
+            case .calm:   return String(localized: "evening.mood.calm")
+            case .sad:    return String(localized: "evening.mood.sad")
             }
         }
     }
 
-    struct Entry: Equatable {
+    struct Entry: Equatable, Codable, Identifiable {
+        var id: UUID = UUID()
         var fun: String = ""
         var hard: String = ""
         var mood: Mood?

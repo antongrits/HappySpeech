@@ -7,6 +7,7 @@ struct ImitationLabView: View {
     let childId: String
 
     @State private var interactor: ImitationLabInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -45,7 +46,13 @@ struct ImitationLabView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = ImitationLabInteractor(childId: childId)
+                    let new = ImitationLabInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -54,12 +61,15 @@ struct ImitationLabView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
-                    hero
+                    hero(interactor: interactor)
                     grid(interactor: interactor)
-                    cta
+                    if interactor.state.isComplete {
+                        completeBanner(interactor: interactor)
+                    }
+                    cta(interactor: interactor)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
@@ -70,7 +80,7 @@ struct ImitationLabView: View {
         }
     }
 
-    private var hero: some View {
+    private func hero(interactor: ImitationLabInteractor) -> some View {
         // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
         HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
@@ -84,6 +94,13 @@ struct ImitationLabView: View {
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
+                Text(String(
+                    format: String(localized: "imitationLab.hero.progress %lld %lld"),
+                    interactor.state.practicedCount, interactor.state.samples.count
+                ))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .padding(.top, 2)
             }
         }
     }
@@ -91,10 +108,18 @@ struct ImitationLabView: View {
     private func grid(interactor: ImitationLabInteractor) -> some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(interactor.state.samples) { sample in
-                sampleCard(sample, isActive: sample.id == interactor.state.currentSampleId) {
-                    hapticService.impact(.light)
-                    interactor.playSample(sample.id)
-                }
+                sampleCard(
+                    sample,
+                    isActive: sample.id == interactor.state.currentSampleId,
+                    onPlay: {
+                        hapticService.impact(.light)
+                        interactor.playSample(sample.id)
+                    },
+                    onPracticed: {
+                        hapticService.notification(.success)
+                        interactor.markPracticed(sample.id)
+                    }
+                )
                 // Step 10 Batch G — Pattern 3: scrollTransition stagger.
                 .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                     content
@@ -110,46 +135,96 @@ struct ImitationLabView: View {
     private func sampleCard(
         _ sample: ImitationLabModels.SoundSample,
         isActive: Bool,
-        action: @escaping () -> Void
+        onPlay: @escaping () -> Void,
+        onPracticed: @escaping () -> Void
     ) -> some View {
-        Button(action: action) {
-            HSCard(style: isActive ? .tinted(ColorTokens.Brand.mint.opacity(0.22)) : .elevated) {
-                VStack(spacing: 6) {
-                    Text(sample.emoji)
-                        .font(.system(size: 40))
-                    Text(sample.name)
-                        .font(TypographyTokens.headline(15))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(sample.onomatopoeia)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                    if sample.isPlayed {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 14))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            // Step 10 Batch G — Pattern 5: bounce on played check.
-                            .hsSymbolEffect(.bounce, value: sample.isPlayed)
+        HSCard(style: isActive
+            ? .tinted(ColorTokens.Brand.sky.opacity(0.22))
+            : (sample.isPracticed ? .tinted(ColorTokens.Semantic.successBg) : .elevated)) {
+            VStack(spacing: 6) {
+                Text(sample.emoji)
+                    .font(.system(size: 40))
+                Text(sample.name)
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                Text(sample.onomatopoeia)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                if sample.isPracticed {
+                    Label(
+                        String(localized: "imitationLab.done"),
+                        systemImage: "checkmark.circle.fill"
+                    )
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .hsSymbolEffect(.bounce, value: sample.isPracticed)
+                } else {
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Button(action: onPlay) {
+                            Image(systemName: "play.circle.fill")
+                                .font(.system(size: 26))
+                                .foregroundStyle(ColorTokens.Brand.primary)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text(String(localized: "imitationLab.a11y.play")))
+                        Button(action: onPracticed) {
+                            Image(systemName: "checkmark.circle")
+                                .font(.system(size: 26))
+                                .foregroundStyle(sample.isPlayed
+                                    ? ColorTokens.Semantic.success
+                                    : ColorTokens.Kid.inkSoft)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(!sample.isPlayed)
+                        .accessibilityLabel(Text(String(localized: "imitationLab.a11y.done")))
                     }
+                    .padding(.top, 2)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, SpacingTokens.sp2)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp2)
         }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("\(sample.name), \(sample.onomatopoeia)"))
-        .accessibilityAddTraits(.isButton)
     }
 
-    private var cta: some View {
+    private func completeBanner(interactor: ImitationLabInteractor) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .celebrating, size: 56)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(String(localized: "imitationLab.complete"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(String(
+                        format: String(localized: "kidGame.stars %lld"),
+                        interactor.state.stars
+                    ))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                }
+                Spacer()
+            }
+        }
+    }
+
+    private func cta(interactor: ImitationLabInteractor) -> some View {
         HSButton(
-            String(localized: "imitationLab.cta.action"),
-            style: .primary,
+            interactor.state.isComplete
+                ? String(localized: "imitationLab.cta.done")
+                : String(localized: "kidGame.restart"),
+            style: interactor.state.isComplete ? .primary : .ghost,
             size: .large,
-            icon: "mic.fill"
+            icon: interactor.state.isComplete ? "checkmark" : "arrow.counterclockwise"
         ) {
-            hapticService.notification(.success)
-            dismiss()
+            if interactor.state.isComplete {
+                hapticService.notification(.success)
+                dismiss()
+            } else {
+                hapticService.impact(.light)
+                interactor.reset()
+            }
         }
     }
 }

@@ -2,7 +2,10 @@ import Foundation
 
 // MARK: - SpecialistResourcesLibraryModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели библиотеки методических ресурсов специалиста.
+///
+/// Ресурсы берутся из `SpecialistResourcesLibraryContent`; «прочитано» и
+/// «избранное» персистятся через `SpecialistResourcesLibraryStore`.
 enum SpecialistResourcesLibraryModels {
 
     enum ResourceKind: String, CaseIterable, Hashable, Identifiable {
@@ -10,15 +13,17 @@ enum SpecialistResourcesLibraryModels {
         case pdf
         case video
         case article
+        case saved
 
         var id: String { rawValue }
 
         var title: String {
             switch self {
-            case .all:     return "Все"
-            case .pdf:     return "PDF"
-            case .video:   return "Видео"
-            case .article: return "Статьи"
+            case .all:     return String(localized: "resourcesLibrary.kind.all")
+            case .pdf:     return String(localized: "resourcesLibrary.kind.pdf")
+            case .video:   return String(localized: "resourcesLibrary.kind.video")
+            case .article: return String(localized: "resourcesLibrary.kind.article")
+            case .saved:   return String(localized: "resourcesLibrary.kind.saved")
             }
         }
 
@@ -28,6 +33,7 @@ enum SpecialistResourcesLibraryModels {
             case .pdf:     return "doc.text.fill"
             case .video:   return "play.rectangle.fill"
             case .article: return "newspaper.fill"
+            case .saved:   return "bookmark.fill"
             }
         }
     }
@@ -38,6 +44,8 @@ enum SpecialistResourcesLibraryModels {
         let summary: String
         let kind: ResourceKind
         let durationLabel: String
+        var isRead: Bool = false
+        var isSaved: Bool = false
     }
 
     struct ViewState: Equatable {
@@ -45,44 +53,18 @@ enum SpecialistResourcesLibraryModels {
         var filter: ResourceKind
 
         var filtered: [Resource] {
-            filter == .all ? resources : resources.filter { $0.kind == filter }
+            switch filter {
+            case .all:   return resources
+            case .saved: return resources.filter(\.isSaved)
+            default:     return resources.filter { $0.kind == filter }
+            }
         }
 
+        var readCount: Int { resources.filter(\.isRead).count }
+        var savedCount: Int { resources.filter(\.isSaved).count }
+
         static let initial = ViewState(
-            resources: [
-                Resource(id: "r1",
-                         title: "Постановка звука Р",
-                         summary: "Полный гайд от Фомичёвой",
-                         kind: .pdf, durationLabel: "12 стр"),
-                Resource(id: "r2",
-                         title: "Артикуляционная гимнастика",
-                         summary: "Видео-уроки для родителей",
-                         kind: .video, durationLabel: "8 мин"),
-                Resource(id: "r3",
-                         title: "Дифференциация С/Ш",
-                         summary: "Методика Ткаченко",
-                         kind: .article, durationLabel: "5 мин"),
-                Resource(id: "r4",
-                         title: "Картотека скороговорок",
-                         summary: "200+ упражнений по группам",
-                         kind: .pdf, durationLabel: "34 стр"),
-                Resource(id: "r5",
-                         title: "Логоритмика дома",
-                         summary: "Картушина / Волкова — 10 уроков",
-                         kind: .video, durationLabel: "20 мин"),
-                Resource(id: "r6",
-                         title: "Развитие связной речи",
-                         summary: "Глухов — пересказ + рассказ",
-                         kind: .article, durationLabel: "7 мин"),
-                Resource(id: "r7",
-                         title: "Билингвизм и логопедия",
-                         summary: "Цейтлин — два языка с рождения",
-                         kind: .article, durationLabel: "9 мин"),
-                Resource(id: "r8",
-                         title: "Дыхательная гимнастика",
-                         summary: "Стрельникова для детей",
-                         kind: .pdf, durationLabel: "6 стр")
-            ],
+            resources: SpecialistResourcesLibraryContent.resources,
             filter: .all
         )
     }

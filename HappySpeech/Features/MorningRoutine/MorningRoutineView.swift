@@ -36,7 +36,9 @@ struct MorningRoutineView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = MorningRoutineInteractor(childId: childId)
+                    let new = MorningRoutineInteractor(childId: childId)
+                    new.load()
+                    interactor = new
                 }
             }
         }
@@ -45,7 +47,7 @@ struct MorningRoutineView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero(state: interactor.state)
@@ -138,7 +140,9 @@ struct MorningRoutineView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(step.id.title))
-        .accessibilityValue(Text(step.isDone ? "Готово" : "Начать"))
+        .accessibilityValue(Text(step.isDone
+            ? String(localized: "morning.a11y.done")
+            : String(localized: "morning.a11y.todo")))
         .accessibilityAddTraits(.isButton)
     }
 

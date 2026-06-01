@@ -223,11 +223,13 @@ final class PuzzleRevealInteractorTests: XCTestCase {
         XCTAssertEqual(spy.lastLoadPuzzle?.puzzleIndex, 1)
     }
 
-    func test_complete_emptyScores_starsAtLeastOne() {
+    func test_complete_emptyScores_neutralZeroStars() {
         let (sut, spy) = makeSUT()
         sut.complete(.init())
-        // Пустой allRevealScores → avg 0 → 1 звезда (< 0.5)
-        XCTAssertGreaterThanOrEqual(spy.lastComplete?.starsEarned ?? 0, 1)
+        // Без единой реальной оценки звёзды НЕ начисляются (нейтральный исход),
+        // чтобы не фабриковать результат без реального произношения.
+        XCTAssertEqual(spy.lastComplete?.starsEarned, 0)
+        XCTAssertEqual(spy.lastComplete?.averageScore, 0)
     }
 
     func test_resolveSoundGroup_unknownFallback() {

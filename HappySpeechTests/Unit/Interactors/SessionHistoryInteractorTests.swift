@@ -49,10 +49,13 @@ final class SessionHistoryInteractorTests: XCTestCase {
         var lastFailureResponse: SessionHistoryModels.Failure.Response?
 
         var exportExpectation: XCTestExpectation?
+        var loadHistoryExpectation: XCTestExpectation?
 
         func presentLoadHistory(_ response: SessionHistoryModels.LoadHistory.Response) {
             loadHistoryCalled = true
             lastLoadHistoryResponse = response
+            loadHistoryExpectation?.fulfill()
+            loadHistoryExpectation = nil
         }
         func presentApplyFilter(_ response: SessionHistoryModels.ApplyFilter.Response) {
             applyFilterCalled = true
@@ -118,13 +121,49 @@ final class SessionHistoryInteractorTests: XCTestCase {
         }
     }
 
+    /// SUT с детерминированным preview-seed (без репозитория). Покрывает
+    /// фильтры/сортировку/поиск/заметки/экспорт/статистику над стабильным набором.
     private func makeSUT(
         audioPlayer: MockAudioFilePlayer = MockAudioFilePlayer(stubbedDuration: 3.0)
     ) -> (SessionHistoryInteractor, SpyPresenter, MockAudioFilePlayer) {
-        let sut = SessionHistoryInteractor(audioPlayer: audioPlayer)
+        let sut = SessionHistoryInteractor(previewSeed: true, audioPlayer: audioPlayer)
         let spy = SpyPresenter()
         sut.presenter = spy
         return (sut, spy, audioPlayer)
+    }
+
+    /// Создаёт реальный временный аудиофайл и worker-backed SUT, в котором
+    /// история собирается из `SessionRepository` (как в проде).
+    private func makeWorkerSUT(
+        childId: String,
+        sessions: [SessionDTO],
+        audioPlayer: MockAudioFilePlayer = MockAudioFilePlayer(stubbedDuration: 3.0)
+    ) async -> (SessionHistoryInteractor, SpyPresenter, MockAudioFilePlayer) {
+        let sessionRepo = MockSessionRepository(sessions: sessions)
+        let childRepo = MockChildRepository()
+        let worker = SessionHistoryWorker(sessionRepository: sessionRepo, childRepository: childRepo)
+        let sut = SessionHistoryInteractor(worker: worker, childId: childId, audioPlayer: audioPlayer)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        return (sut, spy, audioPlayer)
+    }
+
+    /// Дожидается асинхронной загрузки worker'ом (presentLoadHistory).
+    private func awaitLoad(_ sut: SessionHistoryInteractor, _ spy: SpyPresenter) async {
+        let exp = expectation(description: "loadHistory")
+        spy.loadHistoryExpectation = exp
+        sut.loadHistory(.init(forceReload: true))
+        await fulfillment(of: [exp], timeout: 5)
+    }
+
+    /// Создаёт реальный временный wav-файл, возвращает его путь.
+    private func makeTempAudioFile() -> String {
+        let dir = FileManager.default.temporaryDirectory
+            .appendingPathComponent("hs-test-audio", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let url = dir.appendingPathComponent("attempt-\(UUID().uuidString).caf")
+        FileManager.default.createFile(atPath: url.path, contents: Data([0x00, 0x01]))
+        return url.path
     }
 
     // MARK: - 1. loadHistory заполняет сессии из seed
@@ -394,40 +433,69 @@ final class SessionHistoryInteractorTests: XCTestCase {
         XCTAssertEqual(spy.lastSearchResponse?.sessions.count, count)
     }
 
-    // MARK: - 17. playAudio happy path
+    // MARK: - 17. playAudio happy path (реальные аудиофайлы попыток из репозитория)
 
-    func test_playAudio_existingFile_startsPlayback() {
-        let (sut, spy, player) = makeSUT()
-        sut.loadHistory(.init(forceReload: false))
-        // Seed: sess-1..sess-5 имеют аудио "/dev/null"
+    /// Строит DTO сессии с реальным локальным аудиофайлом в одной попытке.
+    private func sessionWithAudio(id: String, childId: String, audioPath: String) -> SessionDTO {
+        let attempt = AttemptDTO(
+            id: "\(id)-a1", word: "рыба", audioLocalPath: audioPath,
+            audioStoragePath: "", asrTranscript: "рыба", asrScore: 0.8,
+            pronunciationScore: 0.82, manualScore: 0, isCorrect: true, timestamp: Date()
+        )
+        return SessionDTO(
+            id: id, childId: childId, date: Date(),
+            templateType: TemplateType.repeatAfterModel.rawValue, targetSound: "Р",
+            stage: CorrectionStage.wordInit.rawValue, durationSeconds: 300,
+            totalAttempts: 10, correctAttempts: 8, fatigueDetected: false,
+            isSynced: false, attempts: [attempt]
+        )
+    }
+
+    func test_playAudio_existingFile_startsPlayback() async {
+        let path = makeTempAudioFile()
+        let s1 = sessionWithAudio(id: "sess-1", childId: "c1", audioPath: path)
+        let (sut, spy, player) = await makeWorkerSUT(childId: "c1", sessions: [s1])
+        await awaitLoad(sut, spy)
         sut.playAudio(.init(sessionId: "sess-1"))
         XCTAssertTrue(spy.audioStateCalled)
         XCTAssertEqual(spy.lastAudioStateResponse?.isPlaying, true)
         XCTAssertEqual(player.playCallCount, 1)
     }
 
-    func test_playAudio_noFile_callsFailure() {
-        let (sut, spy, _) = makeSUT()
-        sut.loadHistory(.init(forceReload: false))
-        sut.playAudio(.init(sessionId: "sess-99"))
+    func test_playAudio_noFile_callsFailure() async {
+        // Сессия без существующего аудиофайла → playAudio выдаёт failure.
+        let s1 = SessionDTO(
+            id: "sess-1", childId: "c1", date: Date(),
+            templateType: TemplateType.memory.rawValue, targetSound: "Ш",
+            stage: CorrectionStage.wordInit.rawValue, durationSeconds: 200,
+            totalAttempts: 5, correctAttempts: 4, fatigueDetected: false,
+            isSynced: false, attempts: []
+        )
+        let (sut, spy, _) = await makeWorkerSUT(childId: "c1", sessions: [s1])
+        await awaitLoad(sut, spy)
+        sut.playAudio(.init(sessionId: "sess-1"))
         XCTAssertTrue(spy.failureCalled)
         XCTAssertFalse(spy.audioStateCalled)
     }
 
-    func test_playAudio_playerThrows_callsFailure() {
+    func test_playAudio_playerThrows_callsFailure() async {
+        let path = makeTempAudioFile()
+        let s2 = sessionWithAudio(id: "sess-2", childId: "c1", audioPath: path)
         let player = MockAudioFilePlayer()
         player.shouldFailPlayback = true
-        let (sut, spy, _) = makeSUT(audioPlayer: player)
-        sut.loadHistory(.init(forceReload: false))
+        let (sut, spy, _) = await makeWorkerSUT(childId: "c1", sessions: [s2], audioPlayer: player)
+        await awaitLoad(sut, spy)
         sut.playAudio(.init(sessionId: "sess-2"))
         XCTAssertTrue(spy.failureCalled)
     }
 
     // MARK: - 18. stopAudio
 
-    func test_stopAudio_afterPlay_stopsPlayback() {
-        let (sut, spy, player) = makeSUT()
-        sut.loadHistory(.init(forceReload: false))
+    func test_stopAudio_afterPlay_stopsPlayback() async {
+        let path = makeTempAudioFile()
+        let s1 = sessionWithAudio(id: "sess-1", childId: "c1", audioPath: path)
+        let (sut, spy, player) = await makeWorkerSUT(childId: "c1", sessions: [s1])
+        await awaitLoad(sut, spy)
         sut.playAudio(.init(sessionId: "sess-1"))
         sut.stopAudio(.init(sessionId: "sess-1"))
         XCTAssertEqual(spy.lastAudioStateResponse?.isPlaying, false)
@@ -442,13 +510,42 @@ final class SessionHistoryInteractorTests: XCTestCase {
         XCTAssertFalse(spy.audioStateCalled)
     }
 
-    func test_playAudio_secondPlay_stopsPrevious() {
-        let (sut, _, player) = makeSUT()
-        sut.loadHistory(.init(forceReload: false))
+    func test_playAudio_secondPlay_stopsPrevious() async {
+        let p1 = makeTempAudioFile()
+        let p2 = makeTempAudioFile()
+        let s1 = sessionWithAudio(id: "sess-1", childId: "c1", audioPath: p1)
+        let s2 = sessionWithAudio(id: "sess-2", childId: "c1", audioPath: p2)
+        let (sut, spy, player) = await makeWorkerSUT(childId: "c1", sessions: [s1, s2])
+        await awaitLoad(sut, spy)
         sut.playAudio(.init(sessionId: "sess-1"))
         sut.playAudio(.init(sessionId: "sess-2"))
         XCTAssertGreaterThanOrEqual(player.stopCallCount, 1)
         XCTAssertEqual(player.playCallCount, 2)
+    }
+
+    // MARK: - 17b. Worker-backed: пустая история (нет сессий) → честное пусто
+
+    func test_loadHistory_noSessions_emptyState() async {
+        let (sut, spy, _) = await makeWorkerSUT(childId: "c-empty", sessions: [])
+        await awaitLoad(sut, spy)
+        XCTAssertTrue(spy.loadHistoryCalled)
+        XCTAssertTrue(spy.lastLoadHistoryResponse?.allSessions.isEmpty ?? false)
+    }
+
+    // MARK: - 17c. Worker-backed: реальный балл сессии = successRate (не random)
+
+    func test_loadHistory_realScore_equalsSuccessRate() async {
+        let s = SessionDTO(
+            id: "sess-real", childId: "c1", date: Date(),
+            templateType: TemplateType.bingo.rawValue, targetSound: "Л",
+            stage: CorrectionStage.wordInit.rawValue, durationSeconds: 240,
+            totalAttempts: 10, correctAttempts: 7, fatigueDetected: false,
+            isSynced: false, attempts: []
+        )
+        let (sut, spy, _) = await makeWorkerSUT(childId: "c1", sessions: [s])
+        await awaitLoad(sut, spy)
+        let record = spy.lastLoadHistoryResponse?.allSessions.first
+        XCTAssertEqual(record?.score ?? 0, 0.7, accuracy: 0.001)
     }
 
     // MARK: - 19. loadStatsSummary

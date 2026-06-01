@@ -3,7 +3,11 @@ import OSLog
 
 // MARK: - EveningReflectionInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Бизнес-логика вечерней рефлексии.
+///
+/// История восстанавливается из `EveningReflectionStore` (per child) и
+/// пополняется при сохранении записи — дневник переживает перезапуск. Без
+/// `childId` (Preview/тесты) работает на in-memory истории.
 @MainActor
 @Observable
 final class EveningReflectionInteractor {
@@ -16,17 +20,31 @@ final class EveningReflectionInteractor {
     let childId: String
     var entry: EveningReflectionModels.Entry = .init()
     var history: [EveningReflectionModels.Entry] = []
+    var isLoaded: Bool = false
 
-    init(childId: String) {
+    private let store: EveningReflectionStore
+
+    init(
+        childId: String,
+        defaults: UserDefaults = .standard
+    ) {
         self.childId = childId
+        self.store = EveningReflectionStore(defaults: defaults, childId: childId)
+    }
+
+    /// Восстанавливает историю дневника.
+    func load() {
+        history = store.loadHistory()
+        isLoaded = true
+        Self.logger.info("loaded \(self.history.count, privacy: .public) entries")
     }
 
     func submit() {
         guard entry.mood != nil else { return }
         var saved = entry
         saved.savedAt = Date()
-        history.insert(saved, at: 0)
-        Self.logger.info("Saved evening reflection for \(self.childId, privacy: .private)")
+        history = store.append(saved)
+        Self.logger.info("saved evening reflection for \(self.childId, privacy: .private)")
         entry = .init()
     }
 }

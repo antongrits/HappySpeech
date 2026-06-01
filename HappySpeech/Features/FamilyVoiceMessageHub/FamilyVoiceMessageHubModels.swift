@@ -46,22 +46,11 @@ enum FamilyVoiceMessageHubModels {
             messages.filter(\.isUnread).count
         }
 
-        static let initial = ViewState(messages: [
-            Message(id: "m1", sender: .mom, durationSeconds: 12,
-                    timeLabel: "Сегодня 09:14",
-                    preview: "Анечка, доброе утро!", isUnread: true),
-            Message(id: "m2", sender: .dad, durationSeconds: 8,
-                    timeLabel: "Сегодня 12:30",
-                    preview: "Ты молодец!", isUnread: true),
-            Message(id: "m3", sender: .grandma, durationSeconds: 22,
-                    timeLabel: "Вчера 18:45",
-                    preview: "Расскажи стишок", isUnread: false),
-            Message(id: "m4", sender: .kid, durationSeconds: 6,
-                    timeLabel: "Вчера 19:00",
-                    preview: "У меня получилось «Р»!", isUnread: false),
-            Message(id: "m5", sender: .mom, durationSeconds: 15,
-                    timeLabel: "2 дня назад",
-                    preview: "Перед сном — сказка", isUnread: false)
-        ])
+        var isEmpty: Bool { messages.isEmpty }
+
+        /// Стартовое состояние — пустое: реальных голосовых сообщений семьи нет,
+        /// пока они не записаны через основную фичу «Голос семьи». Никаких
+        /// выдуманных сообщений. Запись/доставка сообщений — в FamilyVoice.
+        static let initial = ViewState(messages: [])
     }
 }

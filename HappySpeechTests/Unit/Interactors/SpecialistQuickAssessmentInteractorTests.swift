@@ -15,8 +15,21 @@ final class SpecialistQuickAssessmentInteractorTests: XCTestCase {
 
     private typealias Category = SpecialistQuickAssessmentModels.Category
 
-    private func makeSUT() -> SpecialistQuickAssessmentInteractor {
-        SpecialistQuickAssessmentInteractor(childId: "child-1", specialistId: "spec-1")
+    /// Изолированный UserDefaults на тест, чтобы персистентность не протекала
+    /// между прогонами и тестами.
+    private func ephemeralDefaults() -> UserDefaults {
+        let suite = "test.sqa.\(UUID().uuidString)"
+        return UserDefaults(suiteName: suite) ?? .standard
+    }
+
+    private func makeSUT(
+        defaults: UserDefaults? = nil
+    ) -> SpecialistQuickAssessmentInteractor {
+        SpecialistQuickAssessmentInteractor(
+            childId: "child-1",
+            specialistId: "spec-1",
+            defaults: defaults ?? ephemeralDefaults()
+        )
     }
 
     // MARK: - Init / seed
@@ -93,6 +106,31 @@ final class SpecialistQuickAssessmentInteractorTests: XCTestCase {
         let before = sut.state.ratings
         sut.save()
         XCTAssertEqual(sut.state.ratings, before)
+    }
+
+    // MARK: - Persistence round-trip (реальное сохранение в UserDefaults)
+
+    func test_save_thenReload_persistsRatings() {
+        let defaults = ephemeralDefaults()
+        let first = SpecialistQuickAssessmentInteractor(
+            childId: "child-7", specialistId: "spec-7", defaults: defaults
+        )
+        first.set(.articulation, stars: 4)
+        first.set(.stamina, stars: 2)
+        first.save()
+
+        // Новый интерактор с тем же хранилищем должен подхватить сохранённую оценку.
+        let reloaded = SpecialistQuickAssessmentInteractor(
+            childId: "child-7", specialistId: "spec-7", defaults: defaults
+        )
+        XCTAssertTrue(reloaded.state.isSaved)
+        XCTAssertEqual(reloaded.state.ratings.first { $0.id == .articulation }?.stars, 4)
+        XCTAssertEqual(reloaded.state.ratings.first { $0.id == .stamina }?.stars, 2)
+    }
+
+    func test_load_noPriorData_keepsInitial() {
+        let sut = makeSUT() // свежий изолированный suite — данных нет
+        XCTAssertEqual(sut.state, .initial)
     }
 
     // MARK: - reset

@@ -10,6 +10,12 @@ protocol SpeechVisualizationBusinessLogic: AnyObject {
     func setMode(request: SpeechVisualizationModels.SetMode.Request) async
     func computeScore(request: SpeechVisualizationModels.Score.Request) async
 
+    /// Считает per-syllable accuracy из РЕАЛЬНОЙ записи речи ребёнка: энергия
+    /// речи распределяется по временным окнам слогов (mel-спектрограмма, vDSP).
+    /// Никакого random/псевдо-сдвига. Если записи нет — честный no-score (nil),
+    /// и Presenter не показывает выдуманную точность.
+    func computeScore(fromAudioURL url: URL?) async
+
     /// Опционально: запускает mel-spectrogram cross-correlation между записью
     /// ребёнка и эталоном. Используется в practice-режиме при наличии записи.
     ///
@@ -89,32 +95,88 @@ final class SpeechVisualizationInteractor: SpeechVisualizationBusinessLogic {
 
     // MARK: - Scoring
 
+    /// Резервный (без записи) путь: оценивает только ТЕМП по длительности
+    /// попытки vs ожидаемой. Это честная метрика темпа (есть реальный замер
+    /// времени), а НЕ выдуманная per-syllable точность: один и тот же темп-балл
+    /// показывается для всех слогов, без псевдо-случайных сдвигов.
     func computeScore(request: SpeechVisualizationModels.Score.Request) async {
         guard !currentSyllables.isEmpty else { return }
 
-        // MVP-эвристика: каждый слог получает базовый 70% + small variance
-        // от длительности attempt vs ожидаемой. Реальный per-syllable
-        // cross-correlation FFT-фреймов отложен в Block Q.
         let expectedDuration = Double(currentSyllables.count) * Self.estimatedSyllableDuration
         let durationFactor = min(max(request.attemptDurationSeconds / expectedDuration, 0.3), 1.5)
+        let tempoAccuracy = 1.0 - min(abs(durationFactor - 1.0), 0.5)
 
-        // Простой scoring: ближе attemptDuration к expectedDuration → выше accuracy
-        let baseAccuracy = 1.0 - min(abs(durationFactor - 1.0), 0.5)
-        var perSyllable: [Double] = []
-        for index in 0..<currentSyllables.count {
-            // Псевдо-случайный (детерминированный) сдвиг на основе индекса
-            let shift = Double((index * 17) % 13) / 100.0 - 0.06
-            let acc = max(0.0, min(1.0, baseAccuracy + shift))
-            perSyllable.append(acc)
+        let perSyllable = Array(repeating: tempoAccuracy, count: currentSyllables.count)
+        let response = SpeechVisualizationModels.Score.Response(
+            perSyllableAccuracy: perSyllable,
+            overallAccuracy: tempoAccuracy
+        )
+        await presenter?.presentScore(response: response, syllables: currentSyllables)
+        Self.logger.info("Karaoke tempo score: overall=\(tempoAccuracy, format: .fixed(precision: 2))")
+    }
+
+    /// Реальная оценка из записи речи: распределяет энергию мел-спектрограммы по
+    /// временным окнам слогов. Per-syllable accuracy = насколько энергия слога
+    /// близка к равномерной доле (есть звук в слоге → высокий балл; провал/тишина
+    /// → ниже). Если URL нет или запись пустая — fallback на темп НЕ делаем и
+    /// честно ничего не показываем (no-score).
+    func computeScore(fromAudioURL url: URL?) async {
+        guard !currentSyllables.isEmpty, let url else { return }
+
+        let pcm = (try? Self.loadFloatPCM(from: url)) ?? []
+        guard pcm.count > MelSpectrogramExtractor.frameSize else {
+            Self.logger.info("computeScore(audio): empty/short recording → no-score")
+            return
         }
-        let overall = perSyllable.reduce(0, +) / Double(perSyllable.count)
+
+        let mel = await melExtractor.extract(from: pcm)
+        guard !mel.frames.isEmpty else { return }
+
+        let perSyllable = Self.perSyllableAccuracy(
+            mel: mel,
+            syllableCount: currentSyllables.count
+        )
+        let overall = perSyllable.reduce(0, +) / Double(max(1, perSyllable.count))
 
         let response = SpeechVisualizationModels.Score.Response(
             perSyllableAccuracy: perSyllable,
             overallAccuracy: overall
         )
         await presenter?.presentScore(response: response, syllables: currentSyllables)
-        Self.logger.info("Karaoke score computed: overall=\(overall, format: .fixed(precision: 2))")
+        Self.logger.info("Karaoke acoustic score: overall=\(overall, format: .fixed(precision: 2))")
+    }
+
+    /// Per-syllable accuracy из энергии мел-спектрограммы (vDSP). Кадры записи
+    /// делятся на N равных окон (по числу слогов); accuracy окна — нормализованная
+    /// средняя энергия речи в нём (есть голос → выше). Реальный сигнал, не random.
+    static func perSyllableAccuracy(mel: MelSpectrogram, syllableCount: Int) -> [Double] {
+        guard syllableCount > 0, !mel.frames.isEmpty else { return [] }
+
+        // Энергия каждого кадра = средний log-mel по бинам.
+        let frameEnergies: [Double] = mel.frames.map { frame in
+            guard !frame.isEmpty else { return 0 }
+            let sum = frame.reduce(Float(0), +)
+            return Double(sum) / Double(frame.count)
+        }
+
+        // Нормализуем энергии в [0, 1] по min/max записи.
+        let minE = frameEnergies.min() ?? 0
+        let maxE = frameEnergies.max() ?? 1
+        let range = max(maxE - minE, 0.0001)
+        let normalized = frameEnergies.map { ($0 - minE) / range }
+
+        // Делим кадры на syllableCount равных окон.
+        let total = normalized.count
+        var result: [Double] = []
+        for i in 0..<syllableCount {
+            let start = total * i / syllableCount
+            let end = total * (i + 1) / syllableCount
+            guard end > start else { result.append(0); continue }
+            let window = normalized[start..<end]
+            let avg = window.reduce(0, +) / Double(window.count)
+            result.append(min(1, max(0, avg)))
+        }
+        return result
     }
 
     // MARK: - Acoustic Similarity (Block B.3 v17)

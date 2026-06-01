@@ -67,6 +67,10 @@ struct BreathingARView: View {
         self.interactor = interactor
         self.presenter = presenter
 
+        // Запускаем реальную запись микрофона: амплитуда выдоха берётся из
+        // живого аудио-потока (RMS буфера), а не из mock-значения.
+        await startMicCapture()
+
         if ARFaceTrackingConfiguration.isSupported {
             let live = LiveARSessionService()
             self.session = live
@@ -81,15 +85,27 @@ struct BreathingARView: View {
         interactor.startGame(.init(dandelionCount: 5))
     }
 
+    private func startMicCapture() async {
+        let audio = container.audioService
+        if !audio.isPermissionGranted {
+            _ = await audio.requestPermission()
+        }
+        try? await audio.startRecording()
+    }
+
     private func observe(service: any ARSessionService) {
         // SwiftUI View is a value type — capture the @State-backed interactor
         // directly. No weak self required (no retain cycle risk on structs).
         let capturedInteractor = interactor
+        let audio = container.audioService
         Task { @MainActor in
             for await frame in service.blendshapeStream {
                 guard capturedInteractor != nil else { break }
-                // Амплитуда микрофона подтягивается из AudioService; в M0 заменена mock-значением.
-                let mic = Float.random(in: 0.1...0.5) * (frame.cheekPuff > 0.2 ? 1.0 : 0.3)
+                // Реальная амплитуда выдоха: RMS живого микрофона, усиленный
+                // при реальном надувании щёк (ARKit cheekPuff blendshape).
+                let micRMS = Float(WhisperGameInteractor.rmsLevel(of: audio.amplitudeBuffer()))
+                let cheekGain: Float = frame.cheekPuff > 0.2 ? 1.0 : 0.6
+                let mic = min(1, micRMS * cheekGain)
                 capturedInteractor?.updateFrame(.init(blendshapes: frame, micAmplitude: mic))
             }
         }
@@ -98,6 +114,10 @@ struct BreathingARView: View {
     private func teardown() {
         session?.stopSession()
         mockSession?.stopSession()
+        let audio = container.audioService
+        if audio.isRecording {
+            Task { _ = try? await audio.stopRecording() }
+        }
     }
 }
 

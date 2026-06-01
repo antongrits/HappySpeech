@@ -3,115 +3,109 @@ import XCTest
 
 // MARK: - MusicalSoundDrumsInteractorTests
 //
-// MusicalSoundDrumsInteractor is a thin VIP MVP variant (@Observable). tap()
-// counts beats and records the last drum hit; reset() zeroes the counter and
-// clears the last drum. Tests cover counting, last-drum tracking and reset.
+// Логоритмическая игра «Звуковые барабаны»: Ляля показывает рисунок из слогов
+// рабочего звука, ребёнок повторяет, нажимая барабаны по громкости. Тесты
+// покрывают сборку рисунка, верный/неверный удар, прогресс по рисунку,
+// завершение раунда/игры и контент-генератор.
 
 @MainActor
 final class MusicalSoundDrumsInteractorTests: XCTestCase {
 
-    private func makeSUT(childId: String = "child-1") -> MusicalSoundDrumsInteractor {
-        MusicalSoundDrumsInteractor(childId: childId)
+    private func makeLoadedSUT(childId: String = "") async -> MusicalSoundDrumsInteractor {
+        let sut = MusicalSoundDrumsInteractor(childId: childId)
+        await sut.load()
+        return sut
     }
 
-    // MARK: - Initial state
+    // MARK: - Init / load
 
     func test_init_storesChildId() {
-        let sut = makeSUT(childId: "kid-drum")
+        let sut = MusicalSoundDrumsInteractor(childId: "kid-drum")
         XCTAssertEqual(sut.childId, "kid-drum")
     }
 
-    func test_initialState_matchesInitial() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+    func test_load_buildsPattern() async {
+        let sut = await makeLoadedSUT()
+        XCTAssertTrue(sut.state.isLoaded)
+        XCTAssertFalse(sut.state.pattern.isEmpty)
+        XCTAssertEqual(sut.state.progressIndex, 0)
+        XCTAssertFalse(sut.state.patternText.isEmpty)
     }
 
-    func test_initialState_zeroBeats() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.beatsCount, 0)
+    // MARK: - Content generator
+
+    func test_content_patternMatchesSound() {
+        let pattern = MusicalSoundDrumsContent.pattern(for: "С", length: 3)
+        XCTAssertEqual(pattern.count, 3)
+        XCTAssertTrue(pattern.allSatisfy { $0.text.uppercased().hasPrefix("С") })
     }
 
-    func test_initialState_noLastDrum() {
-        let sut = makeSUT()
-        XCTAssertNil(sut.state.lastDrumId)
-    }
-
-    func test_initialState_hasRhythmPattern() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state.rhythmPattern, [.low, .mid, .high])
-    }
-
-    func test_initialState_hasTargetPhoneme() {
-        let sut = makeSUT()
-        XCTAssertFalse(sut.state.targetPhoneme.isEmpty)
+    func test_content_lengthGrowsByRound() {
+        XCTAssertEqual(MusicalSoundDrumsContent.length(forRound: 0), 3)
+        XCTAssertEqual(MusicalSoundDrumsContent.length(forRound: 2), 4)
+        XCTAssertEqual(MusicalSoundDrumsContent.length(forRound: 3), 5)
     }
 
     // MARK: - tap
 
-    func test_tap_incrementsBeatCount() {
-        let sut = makeSUT()
-        sut.tap(.mid)
-        XCTAssertEqual(sut.state.beatsCount, 1)
+    func test_tap_correctDrum_advancesProgress() async {
+        let sut = await makeLoadedSUT()
+        let expected = sut.expectedSyllable!.drum
+        sut.tap(expected)
+        XCTAssertEqual(sut.state.progressIndex, 1)
+        XCTAssertEqual(sut.state.correctTaps, 1)
+        XCTAssertEqual(sut.state.lastDrumId, expected)
     }
 
-    func test_tap_recordsLastDrum() {
-        let sut = makeSUT()
-        sut.tap(.high)
-        XCTAssertEqual(sut.state.lastDrumId, .high)
+    func test_tap_wrongDrum_doesNotAdvance() async {
+        let sut = await makeLoadedSUT()
+        let expected = sut.expectedSyllable!.drum
+        let wrong = MusicalSoundDrumsModels.DrumId.allCases.first { $0 != expected }!
+        sut.tap(wrong)
+        XCTAssertEqual(sut.state.progressIndex, 0)
+        XCTAssertEqual(sut.state.correctTaps, 0)
+        XCTAssertEqual(sut.state.totalTaps, 1)
     }
 
-    func test_tap_multipleTimes_accumulates() {
-        let sut = makeSUT()
-        sut.tap(.low)
-        sut.tap(.mid)
-        sut.tap(.high)
-        XCTAssertEqual(sut.state.beatsCount, 3)
-    }
-
-    func test_tap_lastDrumReflectsMostRecent() {
-        let sut = makeSUT()
-        sut.tap(.low)
-        sut.tap(.high)
-        XCTAssertEqual(sut.state.lastDrumId, .high)
-    }
-
-    func test_tap_allDrumKinds_noCrash() {
-        let sut = makeSUT()
-        for drum in MusicalSoundDrumsModels.DrumId.allCases {
-            sut.tap(drum)
+    func test_tap_completesRound() async {
+        let sut = await makeLoadedSUT()
+        // Проходим весь рисунок верными ударами.
+        while let exp = sut.expectedSyllable {
+            sut.tap(exp.drum)
         }
-        XCTAssertEqual(sut.state.beatsCount, MusicalSoundDrumsModels.DrumId.allCases.count)
+        XCTAssertTrue(sut.state.roundComplete)
+        XCTAssertEqual(sut.state.roundsPlayed, 1)
     }
 
-    func test_tap_doesNotChangeTargetOrPattern() {
-        let sut = makeSUT()
-        sut.tap(.mid)
-        XCTAssertEqual(sut.state.targetPhoneme, MusicalSoundDrumsModels.ViewState.initial.targetPhoneme)
-        XCTAssertEqual(sut.state.rhythmPattern, MusicalSoundDrumsModels.ViewState.initial.rhythmPattern)
+    // MARK: - nextRound
+
+    func test_nextRound_loadsNewPattern() async {
+        let sut = await makeLoadedSUT()
+        while let exp = sut.expectedSyllable { sut.tap(exp.drum) }
+        sut.nextRound()
+        XCTAssertFalse(sut.state.roundComplete)
+        XCTAssertEqual(sut.state.progressIndex, 0)
+        XCTAssertFalse(sut.state.pattern.isEmpty)
+    }
+
+    func test_playingAllRounds_completesGame() async {
+        let sut = await makeLoadedSUT()
+        for _ in 0..<MusicalSoundDrumsInteractor.totalRounds {
+            while let exp = sut.expectedSyllable { sut.tap(exp.drum) }
+            if !sut.isGameComplete { sut.nextRound() }
+        }
+        XCTAssertTrue(sut.isGameComplete)
+        XCTAssertEqual(sut.state.roundsPlayed, MusicalSoundDrumsInteractor.totalRounds)
     }
 
     // MARK: - reset
 
-    func test_reset_zeroesBeatCount() {
-        let sut = makeSUT()
-        sut.tap(.low)
-        sut.tap(.mid)
+    func test_reset_restartsPattern() async {
+        let sut = await makeLoadedSUT()
+        sut.tap(sut.expectedSyllable!.drum)
         sut.reset()
-        XCTAssertEqual(sut.state.beatsCount, 0)
-    }
-
-    func test_reset_clearsLastDrum() {
-        let sut = makeSUT()
-        sut.tap(.high)
-        sut.reset()
-        XCTAssertNil(sut.state.lastDrumId)
-    }
-
-    func test_reset_keepsTargetAndPattern() {
-        let sut = makeSUT()
-        sut.tap(.low)
-        sut.reset()
-        XCTAssertEqual(sut.state.targetPhoneme, MusicalSoundDrumsModels.ViewState.initial.targetPhoneme)
-        XCTAssertEqual(sut.state.rhythmPattern, MusicalSoundDrumsModels.ViewState.initial.rhythmPattern)
+        XCTAssertEqual(sut.state.progressIndex, 0)
+        XCTAssertEqual(sut.state.roundsPlayed, 0)
+        XCTAssertEqual(sut.state.totalTaps, 0)
     }
 }

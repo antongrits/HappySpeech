@@ -63,15 +63,11 @@ enum PhonemeJourneyMapModels {
             return Double(done) / Double(stages.count)
         }
 
-        static let initial = ViewState(
-            targetSound: "Р",
-            stages: [
-                StageItem(id: .isolated, isComplete: true),
-                StageItem(id: .syllables, isComplete: true),
-                StageItem(id: .words, isComplete: false),
-                StageItem(id: .phrases, isComplete: false),
-                StageItem(id: .freeSpeech, isComplete: false)
-            ]
+        /// Пустое стартовое состояние: все этапы не завершены, пока не загружен
+        /// реальный прогресс из репозиториев. Никаких выдуманных «готовых» этапов.
+        static let empty = ViewState(
+            targetSound: "",
+            stages: Stage.allCases.map { StageItem(id: $0, isComplete: false) }
         )
     }
 }

@@ -7,6 +7,7 @@ struct ColorAndSoundView: View {
     let childId: String
 
     @State private var interactor: ColorAndSoundInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +41,13 @@ struct ColorAndSoundView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = ColorAndSoundInteractor(childId: childId)
+                    let new = ColorAndSoundInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -49,12 +56,18 @@ struct ColorAndSoundView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
-                    hero
-                    grid(interactor: interactor)
-                    cta
+                    hero(interactor: interactor)
+                    if interactor.state.isGameComplete {
+                        completeBanner(interactor: interactor)
+                    } else {
+                        grid(interactor: interactor)
+                        if interactor.state.roundComplete {
+                            nextButton(interactor: interactor)
+                        }
+                    }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
@@ -65,29 +78,46 @@ struct ColorAndSoundView: View {
         }
     }
 
-    private var hero: some View {
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "colorAndSound.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "colorAndSound.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
+    private func hero(interactor: ColorAndSoundInteractor) -> some View {
+        let state = interactor.state
+        return HSLiquidGlassCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Circle()
+                    .fill(state.soundColor.color)
+                    .frame(width: 64, height: 64)
+                    .overlay(
+                        Text(state.sound)
+                            .font(TypographyTokens.title(26).weight(.bold))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    )
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(String(
+                        format: String(localized: "colorAndSound.prompt %@ %@"),
+                        state.sound, state.soundColor.name
+                    ))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                    Text(String(
+                        format: String(localized: "colorAndSound.round %lld %lld"),
+                        min(state.roundIndex + 1, state.totalRounds), state.totalRounds
+                    ))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+                Spacer(minLength: 0)
             }
         }
     }
 
     private func grid(interactor: ColorAndSoundInteractor) -> some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(Array(interactor.state.pairs.enumerated()), id: \.element.id) { index, pair in
-                pairCard(pair) {
+            ForEach(Array(interactor.state.cards.enumerated()), id: \.element.id) { index, card in
+                wordCard(card, soundColor: interactor.state.soundColor) {
                     hapticService.impact(.light)
-                    interactor.toggle(pair.id)
+                    interactor.toggle(card.id)
                 }
                 .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
                     content
@@ -95,37 +125,41 @@ struct ColorAndSoundView: View {
                         .scaleEffect(phase.isIdentity ? 1 : 0.92)
                 }
                 .hsParallaxTile(factor: 0.2)
-                .zIndex(Double(interactor.state.pairs.count - index))
+                .zIndex(Double(interactor.state.cards.count - index))
             }
         }
     }
 
-    private func pairCard(
-        _ pair: ColorAndSoundModels.Pair,
+    private func wordCard(
+        _ card: ColorAndSoundModels.WordCard,
+        soundColor: ColorAndSoundModels.SoundColor,
         action: @escaping () -> Void
     ) -> some View {
-        Button(action: action) {
-            HSCard(style: pair.isMatched ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+        // После выбора: верное слово подсвечивается «своим цветом» (успех),
+        // неверное — мягко-нейтрально (errorless, без «красного»).
+        let style: HSCardStyle = card.isSelected
+            ? (card.belongs ? .tinted(soundColor.color.opacity(0.28)) : .tinted(ColorTokens.Kid.bgSoft))
+            : .elevated
+        return Button(action: action) {
+            HSCard(style: style) {
                 VStack(spacing: SpacingTokens.sp2) {
-                    Circle()
-                        .fill(pair.color)
-                        .frame(width: 56, height: 56)
-                        .overlay(
-                            Text(pair.sound)
-                                .font(TypographyTokens.title(22))
-                                .foregroundStyle(.white)
-                        )
-                    Text(pair.colorName)
-                        .font(TypographyTokens.headline(14))
+                    if let asset = card.asset {
+                        HSContentSymbol(asset, size: 48)
+                    } else {
+                        Image(systemName: "textformat.abc")
+                            .font(.system(size: 32))
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    }
+                    Text(card.text)
+                        .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(pair.example)
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    if pair.isMatched {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 14))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .hsSymbolEffect(.bounce, value: pair.isMatched)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                    if card.isSelected {
+                        Image(systemName: card.belongs ? "checkmark.circle.fill" : "minus.circle.fill")
+                            .font(.system(size: 16))
+                            .foregroundStyle(card.belongs ? ColorTokens.Semantic.success : ColorTokens.Kid.inkSoft)
+                            .hsSymbolEffect(.bounce, value: card.isSelected)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -133,20 +167,55 @@ struct ColorAndSoundView: View {
             }
         }
         .buttonStyle(.plain)
+        .disabled(card.isSelected)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Звук \(pair.sound), \(pair.colorName) цвет"))
+        .accessibilityLabel(Text(card.text))
+        .accessibilityValue(Text(card.isSelected
+            ? (card.belongs
+                ? String(localized: "colorAndSound.a11y.right")
+                : String(localized: "colorAndSound.a11y.wrong"))
+            : String(localized: "colorAndSound.a11y.notChosen")))
         .accessibilityAddTraits(.isButton)
     }
 
-    private var cta: some View {
+    private func nextButton(interactor: ColorAndSoundInteractor) -> some View {
         HSButton(
-            String(localized: "colorAndSound.cta.action"),
+            String(localized: "colorAndSound.cta.next"),
             style: .primary,
             size: .large,
-            icon: "checkmark"
+            icon: "arrow.right.circle.fill"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            interactor.next()
+        }
+    }
+
+    private func completeBanner(interactor: ColorAndSoundInteractor) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .celebrating, size: 56)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(String(localized: "colorAndSound.complete"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(String(
+                        format: String(localized: "kidGame.stars %lld"),
+                        interactor.state.stars
+                    ))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                }
+                Spacer()
+                HSButton(
+                    String(localized: "imitationLab.cta.done"),
+                    style: .ghost,
+                    size: .medium,
+                    icon: "checkmark"
+                ) {
+                    dismiss()
+                }
+            }
         }
     }
 }

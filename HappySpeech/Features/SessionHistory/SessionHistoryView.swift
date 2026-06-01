@@ -676,7 +676,14 @@ struct SessionHistoryView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
-        let interactor = SessionHistoryInteractor()
+        // Реальный источник данных: история сессий выбранного ребёнка из репозиториев.
+        // childId берём из явного параметра экрана → текущего ребёнка контейнера.
+        let resolvedChildId = childId ?? (container.currentChildId.isEmpty ? "" : container.currentChildId)
+        let worker = SessionHistoryWorker(
+            sessionRepository: container.sessionRepository,
+            childRepository: container.childRepository
+        )
+        let interactor = SessionHistoryInteractor(worker: worker, childId: resolvedChildId)
         let presenter = SessionHistoryPresenter()
         let router = SessionHistoryRouter()
 
@@ -694,7 +701,8 @@ struct SessionHistoryView: View {
 // MARK: - Preview
 
 #Preview("SessionHistory – Parent") {
-    SessionHistoryView()
+    // Реальная история сессий preview-ребёнка (MockSessionRepository.seeded()).
+    SessionHistoryView(childId: "preview-child-1")
         .environment(AppContainer.preview())
         .environment(\.circuitContext, .parent)
 }

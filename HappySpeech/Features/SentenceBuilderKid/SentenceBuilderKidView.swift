@@ -7,6 +7,7 @@ struct SentenceBuilderKidView: View {
     let childId: String
 
     @State private var interactor: SentenceBuilderKidInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -40,7 +41,13 @@ struct SentenceBuilderKidView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SentenceBuilderKidInteractor(childId: childId)
+                    let new = SentenceBuilderKidInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -49,7 +56,7 @@ struct SentenceBuilderKidView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero
@@ -95,11 +102,11 @@ struct SentenceBuilderKidView: View {
     private func assembledZone(interactor: SentenceBuilderKidInteractor) -> some View {
         HSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Твоё предложение:")
+                Text(String(localized: "sentenceBuilder.yourSentence"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 if interactor.state.assembled.isEmpty {
-                    Text("Нажимай на слова ниже")
+                    Text(String(localized: "sentenceBuilder.tapWords"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .padding(.vertical, SpacingTokens.sp2)
@@ -117,11 +124,11 @@ struct SentenceBuilderKidView: View {
     private func availableZone(interactor: SentenceBuilderKidInteractor) -> some View {
         HSCard(style: .tinted(ColorTokens.Kid.bgSoft)) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Доступные слова:")
+                Text(String(localized: "sentenceBuilder.availableWords"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 if interactor.state.available.isEmpty {
-                    Text("Все слова использованы")
+                    Text(String(localized: "sentenceBuilder.allUsed"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .padding(.vertical, SpacingTokens.sp2)
@@ -192,7 +199,9 @@ struct SentenceBuilderKidView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(chip.text))
-        .accessibilityHint(Text(isAssembled ? "Убрать из предложения" : "Добавить в предложение"))
+        .accessibilityHint(Text(isAssembled
+            ? String(localized: "sentenceBuilder.a11y.remove")
+            : String(localized: "sentenceBuilder.a11y.add")))
         .accessibilityAddTraits(.isButton)
     }
 
@@ -202,8 +211,8 @@ struct SentenceBuilderKidView: View {
                 LyalyaMascotView(state: state.isCorrect ? .celebrating : .thinking, size: 48)
                     .accessibilityHidden(true)
                 Text(state.isCorrect
-                     ? "Отлично! Правильно собрал!"
-                     : "Попробуй другой порядок")
+                     ? String(localized: "sentenceBuilder.result.correct")
+                     : String(localized: "sentenceBuilder.result.retry"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 Spacer()
@@ -216,17 +225,47 @@ struct SentenceBuilderKidView: View {
         }
     }
 
+    @ViewBuilder
     private func cta(interactor: SentenceBuilderKidInteractor) -> some View {
-        HSButton(
-            interactor.state.isCorrect
-                ? "Новое предложение"
-                : String(localized: "sentenceBuilder.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: interactor.state.isCorrect ? "arrow.right" : "arrow.counterclockwise"
-        ) {
-            hapticService.notification(.success)
-            interactor.reset()
+        if interactor.state.isGameComplete {
+            HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: .celebrating, size: 48)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "sentenceBuilder.gameDone"))
+                            .font(TypographyTokens.headline(15))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                        Text(String(
+                            format: String(localized: "kidGame.stars %lld"),
+                            interactor.state.stars
+                        ))
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Semantic.warning)
+                    }
+                    Spacer()
+                }
+            }
+        } else if interactor.state.isCorrect {
+            HSButton(
+                String(localized: "sentenceBuilder.cta.next"),
+                style: .primary,
+                size: .large,
+                icon: "arrow.right"
+            ) {
+                hapticService.notification(.success)
+                interactor.next()
+            }
+        } else {
+            HSButton(
+                String(localized: "sentenceBuilder.cta.action"),
+                style: .secondary,
+                size: .large,
+                icon: "arrow.counterclockwise"
+            ) {
+                hapticService.impact(.light)
+                interactor.reset()
+            }
         }
     }
 }

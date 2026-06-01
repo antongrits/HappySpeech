@@ -13,8 +13,10 @@ import OSLog
 /// ## Что прогревается
 /// - ``PronunciationScorerService`` — `loadModel()` (Conv1D, 0.18 MB на группу звуков).
 /// - ``ASRService`` — `loadModel(tier: .kidOnDevice)` (whisper-tiny, безопасный bundle path).
-/// - VAD — фабрика `makeVAD()` пробует загрузить `SileroVAD.mlpackage` или мягко падает
-///   в `AmplitudeVAD`. Сам факт первого вызова инициализирует CoreML actor.
+/// - VAD — фабрика `makeVAD(preferFluidAudio:)` пробует поднять реальный Silero v6
+///   на ANE через FluidAudio (`FluidAudioVADService`); при недоступности модели мягко
+///   падает в `AmplitudeVAD`. Прогрев инициализирует CoreML runtime и (при первом старте
+///   с сетью) кэширует модель Silero v6 локально для последующей offline-работы.
 ///
 /// Все три задачи выполняются параллельно через `async let`. Ошибки логируются
 /// и проглатываются — warm-up не блокирует онбординг.
@@ -110,11 +112,12 @@ public actor LiveMLModelWarmupService: MLModelWarmupServiceProtocol {
     }
 
     private func warmVAD() async {
-        // makeVAD() сам пробует CoreML, падает на AmplitudeVAD при отсутствии модели.
-        // Возвращаемый instance отбрасываем — VAD создаётся on-demand в каждом
-        // вызывающем сайте; цель warm-up — лишь инициализировать CoreML runtime.
-        _ = await makeVAD()
-        HSLogger.ml.info("MLModelWarmupService: VAD factory warm")
+        // Пробуем поднять реальный Silero v6 (FluidAudio, ANE). При недоступности модели
+        // фабрика сама откатится на AmplitudeVAD — warm-up не падает. Возвращаемый instance
+        // отбрасываем; цель warm-up — инициализировать CoreML runtime и (при первом старте
+        // с сетью) скэшировать модель локально для offline-работы.
+        let vad = await makeVAD(preferFluidAudio: true)
+        HSLogger.ml.info("MLModelWarmupService: VAD warm (\(String(describing: type(of: vad))))")
     }
 }
 

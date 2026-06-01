@@ -7,6 +7,7 @@ struct AnimalSoundsBingoView: View {
     let childId: String
 
     @State private var interactor: AnimalSoundsBingoInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -43,7 +44,13 @@ struct AnimalSoundsBingoView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = AnimalSoundsBingoInteractor(childId: childId)
+                    let new = AnimalSoundsBingoInteractor(
+                        childId: childId,
+                        childRepository: container.childRepository,
+                        adaptivePlanner: container.adaptivePlannerService
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -52,7 +59,7 @@ struct AnimalSoundsBingoView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero(state: interactor.state)
@@ -90,10 +97,21 @@ struct AnimalSoundsBingoView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
-                    Text("Отмечено: \(state.markedCount) из \(state.cells.count)")
+                    Text(String(
+                        format: String(localized: "animalBingo.hero.progress %lld %lld"),
+                        state.markedCount, state.cells.count
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .padding(.top, 2)
+                    if state.bestStars > 0 {
+                        Text(String(
+                            format: String(localized: "kidGame.bestStars %lld"),
+                            state.bestStars
+                        ))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                    }
                 }
                 Spacer(minLength: 0)
             }
@@ -108,10 +126,13 @@ struct AnimalSoundsBingoView: View {
                 HStack(spacing: SpacingTokens.sp3) {
                     Text(cell.emoji).font(.system(size: 36))
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Кто говорит «\(cell.soundDescription)»?")
+                        Text(String(
+                            format: String(localized: "animalBingo.called.question %@"),
+                            cell.soundDescription
+                        ))
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                        Text("Найди и отметь карточку!")
+                        Text(String(localized: "animalBingo.called.hint"))
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                     }
@@ -173,7 +194,9 @@ struct AnimalSoundsBingoView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(cell.label))
-        .accessibilityValue(Text(cell.isMarked ? "Отмечено" : "Не отмечено"))
+        .accessibilityValue(Text(cell.isMarked
+            ? String(localized: "animalBingo.a11y.marked")
+            : String(localized: "animalBingo.a11y.unmarked")))
         .accessibilityAddTraits(.isButton)
     }
 
@@ -182,7 +205,7 @@ struct AnimalSoundsBingoView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 48)
                     .accessibilityHidden(true)
-                Text("Бинго!")
+                Text(String(localized: "animalBingo.bingo"))
                     .font(TypographyTokens.titleLarge(26).weight(.bold))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 Spacer()
@@ -202,7 +225,7 @@ struct AnimalSoundsBingoView: View {
                 interactor.callRandom()
             }
             HSButton(
-                "Перезапустить",
+                String(localized: "kidGame.restart"),
                 style: .ghost,
                 size: .medium,
                 icon: "arrow.counterclockwise"

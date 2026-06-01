@@ -38,7 +38,9 @@ struct FamilyVoiceMessageHubView: View {
             VStack(spacing: SpacingTokens.sp4) {
                 hero
                 list
-                cta
+                if !interactor.state.isEmpty {
+                    cta
+                }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
@@ -69,7 +71,38 @@ struct FamilyVoiceMessageHubView: View {
         }
     }
 
+    @ViewBuilder
     private var list: some View {
+        if interactor.state.isEmpty {
+            emptyState
+        } else {
+            messageList
+        }
+    }
+
+    private var emptyState: some View {
+        HSCard(style: .flat) {
+            VStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "waveform.circle")
+                    .font(.system(size: 44))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+                Text(String(localized: "voiceMessageHub.empty.title"))
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                Text(String(localized: "voiceMessageHub.empty.body"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp3)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var messageList: some View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.state.messages.enumerated()), id: \.element.id) { index, message in
                 row(message) {

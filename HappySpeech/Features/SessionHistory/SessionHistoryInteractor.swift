@@ -27,7 +27,13 @@ protocol SessionHistoryBusinessLogic: AnyObject {
 
 /// Бизнес-логика экрана «История сессий».
 ///
-/// Источник данных — in-memory seed (17 сессий, 2 месяца).
+/// Источник данных — РЕАЛЬНАЯ история ребёнка из `SessionHistoryWorker`
+/// (`SessionRepository` + `ChildRepository`). Все занятия, длительности, баллы
+/// и per-attempt оценки берутся из накопленных сессий; аудио-воспроизведение —
+/// из реально существующих локальных файлов попыток. Если сессий нет (новый
+/// ребёнок / нет выбранного профиля) — список пуст, и Presenter показывает
+/// честное «пока нет занятий». Никакого seed и `Float.random` в прод-пути.
+///
 /// Реализует 12 фич: список + пагинация, фильтры (дата, звук, шаблон, score),
 /// сортировка, поиск, детальный просмотр, заметки родителя, аудио-воспроизведение,
 /// статистика-сводка, комментарий «Ляли», экспорт PDF/CSV/JSON.
@@ -50,6 +56,8 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionHistory")
     private let exportService: SpecialistExportServiceLive
     private let audioPlayer: any AudioFilePlaying
+    private let worker: (any SessionHistoryLoading)?
+    private let childId: String
 
     // MARK: - State
 
@@ -57,6 +65,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     private var attemptsBySession: [String: [SessionAttemptRecord]] = [:]
     private var audioFilesBySession: [String: String] = [:]
     private var notesBySession: [String: String] = [:]
+    private var resolvedChildName: String?
     private var activeFilter: SessionHistoryFilter = .empty
     private var activeSort: SessionHistorySort = .byDate
     private var searchQuery: String = ""
@@ -67,13 +76,32 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
 
     // MARK: - Init
 
-    init(audioPlayer: any AudioFilePlaying = LiveAudioFilePlayer()) {
+    /// Прод-инициализатор: данные загружаются из репозиториев через `worker`.
+    init(
+        worker: (any SessionHistoryLoading)?,
+        childId: String,
+        audioPlayer: any AudioFilePlaying = LiveAudioFilePlayer()
+    ) {
         self.exportService = SpecialistExportServiceLive()
         self.audioPlayer = audioPlayer
-        let seed = Self.makeSeedSessions()
-        self.allSessions = seed.sessions
-        self.attemptsBySession = seed.attempts
-        self.audioFilesBySession = seed.audioFiles
+        self.worker = worker
+        self.childId = childId
+    }
+
+    /// Preview/snapshot-инициализатор: подставляет детерминированный набор
+    /// сессий без обращения к репозиториям. Используется ТОЛЬКО в SwiftUI
+    /// Preview и snapshot-тестах — в прод-пути не вызывается.
+    init(previewSeed: Bool, audioPlayer: any AudioFilePlaying = LiveAudioFilePlayer()) {
+        self.exportService = SpecialistExportServiceLive()
+        self.audioPlayer = audioPlayer
+        self.worker = nil
+        self.childId = ""
+        if previewSeed {
+            let seed = Self.makeSeedSessions()
+            self.allSessions = seed.sessions
+            self.attemptsBySession = seed.attempts
+            self.audioFilesBySession = seed.audioFiles
+        }
     }
 
     // MARK: - Load History (с пагинацией)
@@ -81,15 +109,28 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     func loadHistory(_ request: SessionHistoryModels.LoadHistory.Request) {
         logger.info("loadHistory forceReload=\(request.forceReload, privacy: .public)")
 
-        if request.forceReload {
-            let seed = Self.makeSeedSessions()
-            allSessions = seed.sessions
-            attemptsBySession = seed.attempts
-            audioFilesBySession = seed.audioFiles
-            currentPage = 0
-            isLastPage = false
+        // Без worker'а (preview/snapshot) — данные уже в state, презентуем как есть.
+        guard let worker else {
+            presentLoaded(isFromCache: !request.forceReload)
+            return
         }
 
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let data = await worker.loadHistory(childId: self.childId)
+            self.allSessions = data.sessions
+            self.attemptsBySession = data.attempts
+            self.audioFilesBySession = data.audioFiles
+            self.resolvedChildName = await worker.childName(childId: self.childId)
+            self.currentPage = 0
+            self.isLastPage = false
+            self.presentLoaded(isFromCache: !request.forceReload)
+        }
+    }
+
+    /// Применяет текущие фильтр/сортировку/страницу к загруженным сессиям и
+    /// презентует первую страницу. Общий путь для prod и preview.
+    private func presentLoaded(isFromCache: Bool) {
         let filtered = applyFilterAndSearch(allSessions)
         let sorted = applySortOrder(filtered)
         let pageSlice = pageOf(sessions: sorted, page: currentPage)
@@ -102,7 +143,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
             activeSort: activeSort,
             currentPage: currentPage,
             isLastPage: isLastPage,
-            isFromCache: !request.forceReload
+            isFromCache: isFromCache
         )
         presenter?.presentLoadHistory(response)
     }
@@ -260,7 +301,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     // MARK: - Export PDF
 
     func exportPDF(_ request: SessionHistoryModels.ExportPDF.Request) {
-        let childId = request.childId.isEmpty ? "child" : request.childId
+        let childId = resolveExportChildId(request.childId)
         let sessionDTOs = allSessions.map { buildSessionDTO(from: $0) }
         logger.info("exportPDF childId=\(childId, privacy: .public) count=\(sessionDTOs.count, privacy: .public)")
 
@@ -290,7 +331,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     // MARK: - Export CSV
 
     func exportCSV(_ request: SessionHistoryModels.ExportCSV.Request) {
-        let childId = request.childId.isEmpty ? "child" : request.childId
+        let childId = resolveExportChildId(request.childId)
         let sessionDTOs = allSessions.map { buildSessionDTO(from: $0) }
         logger.info("exportCSV childId=\(childId, privacy: .public) count=\(sessionDTOs.count, privacy: .public)")
 
@@ -320,7 +361,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     // MARK: - Export JSON
 
     func exportJSON(_ request: SessionHistoryModels.ExportJSON.Request) {
-        let childId = request.childId.isEmpty ? "child" : request.childId
+        let childId = resolveExportChildId(request.childId)
         let sessionCount = allSessions.count
         logger.info("exportJSON childId=\(childId, privacy: .public) count=\(sessionCount, privacy: .public)")
 
@@ -415,7 +456,15 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
     func loadLyalyaComment(_ request: SessionHistoryModels.LoadLyalyaComment.Request) {
         let weekCount = countSessionsThisWeek(allSessions)
         let avgScore = averageScore(allSessions)
-        let childName = request.childName.isEmpty ? String(localized: "sessionHistory.lyalya.defaultName") : request.childName
+        // Имя берём из запроса → реального профиля (worker) → дефолта.
+        let childName: String
+        if !request.childName.isEmpty {
+            childName = request.childName
+        } else if let resolved = resolvedChildName, !resolved.isEmpty {
+            childName = resolved
+        } else {
+            childName = String(localized: "sessionHistory.lyalya.defaultName")
+        }
 
         let comment = buildLyalyaComment(
             childName: childName,
@@ -667,6 +716,13 @@ private extension SessionHistoryInteractor {
 
 private extension SessionHistoryInteractor {
 
+    /// Итоговый childId для экспорта: явный из запроса → реальный из интерактора → дефолт.
+    func resolveExportChildId(_ requested: String) -> String {
+        if !requested.isEmpty { return requested }
+        if !childId.isEmpty { return childId }
+        return "child"
+    }
+
     /// Конвертирует `SessionRecord` (in-memory VIP тип) в `SessionDTO` (Data layer тип).
     /// Необходимо для передачи в `SpecialistExportService`.
     func buildSessionDTO(from record: SessionRecord) -> SessionDTO {
@@ -686,7 +742,7 @@ private extension SessionHistoryInteractor {
         }
         return SessionDTO(
             id: record.id,
-            childId: "history-child",
+            childId: childId.isEmpty ? "child" : childId,
             date: record.date,
             templateType: record.gameType.rawValue,
             targetSound: record.soundTarget,
@@ -874,7 +930,10 @@ private extension SessionHistoryInteractor {
 
             var attemptList: [SessionAttemptRecord] = []
             for (wordIndex, word) in row.words.enumerated() {
-                let baseScore = max(0.30, min(0.97, row.score + Float.random(in: -0.18...0.18)))
+                // Детерминированный per-attempt сдвиг (preview/snapshot стабильность,
+                // без Float.random): треугольная вариация ±0.12 от балла сессии.
+                let shift = Float((wordIndex * 37) % 25 - 12) / 100.0
+                let baseScore = max(0.30, min(0.97, row.score + shift))
                 let isCorrect = baseScore >= 0.65
                 attemptList.append(
                     SessionAttemptRecord(
@@ -887,11 +946,6 @@ private extension SessionHistoryInteractor {
                 )
             }
             attempts[sessionId] = attemptList
-
-            // Только первые 5 сессий «имеют» аудио (симуляция).
-            if index < 5 {
-                audioFiles[sessionId] = "/dev/null"
-            }
         }
 
         return (sessions.sorted { $0.date > $1.date }, attempts, audioFiles)

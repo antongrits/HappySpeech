@@ -108,7 +108,10 @@ final class PuzzleRevealPresenter: PuzzleRevealPresentationLogic {
     // MARK: - Helpers
 
     private static func feedbackText(for score: Float) -> String {
-        if score >= 0.85 {
+        if score < 0 {
+            // Плитка открыта без реальной оценки (нет/упал ASR) — нейтральная похвала.
+            return String(localized: "Открыли кусочек пазла!")
+        } else if score >= 0.85 {
             return String(localized: "Отлично!")
         } else if score >= 0.6 {
             return String(localized: "Хорошо!")

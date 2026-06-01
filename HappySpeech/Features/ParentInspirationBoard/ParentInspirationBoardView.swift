@@ -37,15 +37,63 @@ struct ParentInspirationBoardView: View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp4) {
                 hero
+                filterToggle
                 if let quote = interactor.state.current {
                     quoteCard(quote)
+                    navControls
+                } else {
+                    emptyFavorites
                 }
-                navControls
                 cta
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
+        }
+    }
+
+    private var filterToggle: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Button {
+                hapticService.impact(.light)
+                interactor.toggleFavoritesFilter()
+            } label: {
+                Label(
+                    interactor.state.favoritesOnly
+                        ? String(localized: "inspirationBoard.filter.all")
+                        : String(localized: "inspirationBoard.filter.favorites"),
+                    systemImage: interactor.state.favoritesOnly ? "rectangle.stack" : "heart.fill"
+                )
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .padding(.horizontal, SpacingTokens.sp3)
+                .padding(.vertical, SpacingTokens.sp1)
+                .background(Capsule().fill(ColorTokens.Parent.surface))
+            }
+            .buttonStyle(.plain)
+            Spacer()
+            Text(String(
+                format: String(localized: "inspirationBoard.favoritesCount %lld"),
+                interactor.state.favoritesCount
+            ))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+        }
+    }
+
+    private var emptyFavorites: some View {
+        HSCard(style: .flat) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "heart.slash")
+                    .font(.system(size: 32))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                Text(String(localized: "inspirationBoard.empty"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp3)
         }
     }
 
@@ -101,7 +149,9 @@ struct ParentInspirationBoardView: View {
                             .frame(width: 36, height: 36)
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel(Text(quote.isFavorite ? "Убрать из избранного" : "В избранное"))
+                    .accessibilityLabel(Text(quote.isFavorite
+                        ? String(localized: "inspirationBoard.a11y.unfavorite")
+                        : String(localized: "inspirationBoard.a11y.favorite")))
                 }
             }
         }
@@ -122,9 +172,9 @@ struct ParentInspirationBoardView: View {
                     )
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(Text("Предыдущая цитата"))
+            .accessibilityLabel(Text(String(localized: "inspirationBoard.a11y.previous")))
 
-            Text("\(interactor.state.currentIndex + 1) / \(interactor.state.quotes.count)")
+            Text("\(interactor.state.currentIndex + 1) / \(interactor.state.visibleQuotes.count)")
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .frame(maxWidth: .infinity)
@@ -142,7 +192,7 @@ struct ParentInspirationBoardView: View {
                     )
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(Text("Следующая цитата"))
+            .accessibilityLabel(Text(String(localized: "inspirationBoard.a11y.next")))
         }
     }
 

@@ -77,7 +77,10 @@ struct SpecialistResourcesLibraryView: View {
                         .font(.system(size: 12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                         .hsSymbolEffect(.bounce, value: state.resources.count)
-                    Text("Всего: \(state.resources.count)")
+                    Text(String(
+                        format: String(localized: "resourcesLibrary.total %lld %lld"),
+                        state.resources.count, state.readCount
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
@@ -124,13 +127,17 @@ struct SpecialistResourcesLibraryView: View {
 
     private func list(interactor: SpecialistResourcesLibraryInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.filtered) { resource in
-                row(resource)
-                    .hsParallaxTile(factor: 0.3)
-                    .transition(.asymmetric(
-                        insertion: .scale(scale: 0.92).combined(with: .opacity),
-                        removal: .opacity
-                    ))
+            if interactor.state.filtered.isEmpty {
+                emptyState
+            } else {
+                ForEach(interactor.state.filtered) { resource in
+                    row(resource, interactor: interactor)
+                        .hsParallaxTile(factor: 0.3)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                }
             }
         }
         .animation(
@@ -139,8 +146,27 @@ struct SpecialistResourcesLibraryView: View {
         )
     }
 
-    private func row(_ resource: SpecialistResourcesLibraryModels.Resource) -> some View {
+    private var emptyState: some View {
         HSCard(style: .flat) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "bookmark.slash")
+                    .font(.system(size: 30))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                Text(String(localized: "resourcesLibrary.empty"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp3)
+        }
+    }
+
+    private func row(
+        _ resource: SpecialistResourcesLibraryModels.Resource,
+        interactor: SpecialistResourcesLibraryInteractor
+    ) -> some View {
+        HSCard(style: resource.isRead ? .tinted(ColorTokens.Spec.surface) : .flat) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: resource.kind.icon)
                     .font(.system(size: 22))
@@ -156,21 +182,49 @@ struct SpecialistResourcesLibraryView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .lineLimit(2)
+                    Text(resource.durationLabel)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .padding(.top, 1)
                 }
                 Spacer()
-                Text(resource.durationLabel)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                VStack(spacing: SpacingTokens.sp2) {
+                    Button {
+                        hapticService.impact(.light)
+                        interactor.toggleSaved(resource.id)
+                    } label: {
+                        Image(systemName: resource.isSaved ? "bookmark.fill" : "bookmark")
+                            .font(.system(size: 18))
+                            .foregroundStyle(resource.isSaved ? ColorTokens.Spec.accent : ColorTokens.Spec.inkMuted)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(resource.isSaved
+                        ? String(localized: "resourcesLibrary.a11y.unsave")
+                        : String(localized: "resourcesLibrary.a11y.save")))
+                    Button {
+                        hapticService.impact(.light)
+                        interactor.toggleRead(resource.id)
+                    } label: {
+                        Image(systemName: resource.isRead ? "checkmark.circle.fill" : "circle")
+                            .font(.system(size: 18))
+                            .foregroundStyle(resource.isRead ? ColorTokens.Semantic.success : ColorTokens.Spec.inkMuted)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(resource.isRead
+                        ? String(localized: "resourcesLibrary.a11y.unread")
+                        : String(localized: "resourcesLibrary.a11y.read")))
+                }
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var cta: some View {
         HSButton(
-            String(localized: "resourcesLibrary.cta.action"),
+            String(localized: "resourcesLibrary.cta.done"),
             style: .primary,
             size: .large,
-            icon: "plus"
+            icon: "checkmark"
         ) {
             hapticService.notification(.success)
             dismiss()

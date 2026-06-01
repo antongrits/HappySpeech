@@ -7,6 +7,7 @@ struct PhonemeJourneyMapView: View {
     let childId: String
 
     @State private var interactor: PhonemeJourneyMapInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -42,7 +43,13 @@ struct PhonemeJourneyMapView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = PhonemeJourneyMapInteractor(childId: childId)
+                    let worker = PhonemeJourneyMapWorker(
+                        sessionRepository: container.sessionRepository,
+                        childRepository: container.childRepository
+                    )
+                    let new = PhonemeJourneyMapInteractor(childId: childId, worker: worker)
+                    interactor = new
+                    new.load()
                 }
             }
         }
@@ -109,10 +116,7 @@ struct PhonemeJourneyMapView: View {
                     item: item,
                     index: idx,
                     isLast: idx == interactor.state.stages.count - 1
-                ) {
-                    hapticService.impact(.light)
-                    interactor.toggle(item.id)
-                }
+                )
                 // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
                 // fade+scale + parallax drift на roadmap stages.
                 .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
@@ -128,8 +132,7 @@ struct PhonemeJourneyMapView: View {
     private func stageRow(
         item: PhonemeJourneyMapModels.StageItem,
         index: Int,
-        isLast: Bool,
-        action: @escaping () -> Void
+        isLast: Bool
     ) -> some View {
         HStack(alignment: .top, spacing: SpacingTokens.sp3) {
             VStack(spacing: 0) {
@@ -150,27 +153,27 @@ struct PhonemeJourneyMapView: View {
                         .frame(width: 3, height: 44)
                 }
             }
-            Button(action: action) {
-                HSCard(style: item.isComplete ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(item.id.title)
-                            .font(TypographyTokens.headline(15))
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
-                        Text(item.id.caption)
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.85)
-                    }
+            // Read-only отражение реального прогресса — не интерактивный toggle.
+            HSCard(style: item.isComplete ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.id.title)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(item.id.caption)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .buttonStyle(.plain)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text(item.id.title))
-            .accessibilityValue(Text(item.isComplete ? "Готово" : "В работе"))
-            .accessibilityAddTraits(.isButton)
+            .accessibilityValue(Text(item.isComplete
+                ? String(localized: "phonemeJourney.stage.done")
+                : String(localized: "phonemeJourney.stage.inProgress")))
         }
         .padding(.bottom, isLast ? 0 : SpacingTokens.sp2)
     }

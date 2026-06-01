@@ -35,7 +35,9 @@ struct EveningReflectionView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = EveningReflectionInteractor(childId: childId)
+                    let new = EveningReflectionInteractor(childId: childId)
+                    new.load()
+                    interactor = new
                 }
             }
         }
@@ -44,7 +46,7 @@ struct EveningReflectionView: View {
 
     @ViewBuilder
     private var content: some View {
-        if let interactor {
+        if let interactor, interactor.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
                     hero
@@ -52,6 +54,9 @@ struct EveningReflectionView: View {
                     hardQuestion(interactor: interactor)
                     moodPicker(interactor: interactor)
                     cta(interactor: interactor)
+                    if !interactor.history.isEmpty {
+                        historySection(interactor: interactor)
+                    }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
@@ -59,6 +64,44 @@ struct EveningReflectionView: View {
             }
         } else {
             ProgressView().controlSize(.large)
+        }
+    }
+
+    private func historySection(interactor: EveningReflectionInteractor) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            Text(String(localized: "evening.history.title"))
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .padding(.leading, 2)
+            ForEach(interactor.history.prefix(7)) { entry in
+                HSCard(style: .flat) {
+                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                        Text(entry.mood?.emoji ?? "🌙")
+                            .font(.system(size: 28))
+                        VStack(alignment: .leading, spacing: 2) {
+                            if let date = entry.savedAt {
+                                Text(date.formatted(date: .abbreviated, time: .omitted))
+                                    .font(TypographyTokens.caption(11))
+                                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                            }
+                            if !entry.fun.isEmpty {
+                                Text(entry.fun)
+                                    .font(TypographyTokens.body(13))
+                                    .foregroundStyle(ColorTokens.Kid.ink)
+                                    .lineLimit(2)
+                            }
+                            if !entry.hard.isEmpty {
+                                Text(entry.hard)
+                                    .font(TypographyTokens.body(13))
+                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                    .lineLimit(2)
+                            }
+                        }
+                        Spacer(minLength: 0)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+            }
         }
     }
 
@@ -87,10 +130,10 @@ struct EveningReflectionView: View {
     private func funQuestion(interactor: EveningReflectionInteractor) -> some View {
         HSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Что было весёлого?")
+                Text(String(localized: "evening.q.fun"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                TextField("Расскажи Ляле…", text: Binding(
+                TextField(String(localized: "evening.q.fun.placeholder"), text: Binding(
                     get: { interactor.entry.fun },
                     set: { interactor.entry.fun = $0 }
                 ), axis: .vertical)
@@ -107,10 +150,10 @@ struct EveningReflectionView: View {
     private func hardQuestion(interactor: EveningReflectionInteractor) -> some View {
         HSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Что было трудно?")
+                Text(String(localized: "evening.q.hard"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                TextField("Это поможет нам", text: Binding(
+                TextField(String(localized: "evening.q.hard.placeholder"), text: Binding(
                     get: { interactor.entry.hard },
                     set: { interactor.entry.hard = $0 }
                 ), axis: .vertical)
@@ -127,7 +170,7 @@ struct EveningReflectionView: View {
     private func moodPicker(interactor: EveningReflectionInteractor) -> some View {
         HSCard(style: .flat) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Настроение")
+                Text(String(localized: "evening.mood.title"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 HStack(spacing: SpacingTokens.sp2) {

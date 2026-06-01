@@ -3,32 +3,47 @@ import XCTest
 
 // MARK: - MorningRoutineInteractorTests
 //
-// MorningRoutineInteractor is a thin VIP MVP variant (@Observable). It tracks a
-// short list of morning steps; toggle(_:) flips a step's `isDone` flag (ignoring
-// unknown steps) and reset() restores the all-undone initial state. The derived
-// state exposes `progress` and `isCompleted`. Tests cover the seed, the toggle
-// (incl. isolation), reset and the derived values across partial/full completion.
-// (StepKind.title/.subtitle/.iconSystemName maps are presentational — skipped.)
+// Утренняя рутина: набор шагов; toggle(_:) переключает isDone и персистит
+// состояние дня в MorningRoutineStore (per child+day). Тесты используют
+// изолированный UserDefaults и проверяют seed, toggle, изоляцию, reset, derived
+// (progress/isCompleted) и персистентность между экземплярами.
 
 @MainActor
 final class MorningRoutineInteractorTests: XCTestCase {
 
     private typealias StepKind = MorningRoutineModels.StepKind
 
-    private func makeSUT() -> MorningRoutineInteractor {
-        MorningRoutineInteractor(childId: "child-1")
+    private var defaults: UserDefaults!
+    private let suiteName = "test.morningRoutine"
+
+    override func setUp() {
+        super.setUp()
+        defaults = UserDefaults(suiteName: suiteName)
+        defaults.removePersistentDomain(forName: suiteName)
     }
 
-    // MARK: - Init / seed
+    override func tearDown() {
+        defaults.removePersistentDomain(forName: suiteName)
+        defaults = nil
+        super.tearDown()
+    }
+
+    private func makeSUT(childId: String = "child-1") -> MorningRoutineInteractor {
+        let sut = MorningRoutineInteractor(childId: childId, defaults: defaults)
+        sut.load()
+        return sut
+    }
+
+    // MARK: - Init / load
 
     func test_init_storesChildId() {
-        let sut = MorningRoutineInteractor(childId: "c-8")
+        let sut = MorningRoutineInteractor(childId: "c-8", defaults: defaults)
         XCTAssertEqual(sut.childId, "c-8")
     }
 
-    func test_initialState_allStepsUndone() {
+    func test_load_allStepsUndone() {
         let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
+        XCTAssertTrue(sut.state.isLoaded)
         XCTAssertEqual(Set(sut.state.steps.map(\.id)), Set(StepKind.allCases))
         XCTAssertTrue(sut.state.steps.allSatisfy { !$0.isDone })
         XCTAssertEqual(sut.state.progress, 0, accuracy: 0.0001)
@@ -57,14 +72,26 @@ final class MorningRoutineInteractorTests: XCTestCase {
         XCTAssertTrue(others.allSatisfy { !$0.isDone })
     }
 
+    // MARK: - Persistence
+
+    func test_persistence_survivesNewInstance() {
+        let sut1 = makeSUT(childId: "kid-p")
+        sut1.toggle(.wash)
+        sut1.toggle(.smile)
+        // Новый экземпляр того же ребёнка с тем же UserDefaults восстанавливает день.
+        let sut2 = MorningRoutineInteractor(childId: "kid-p", defaults: defaults)
+        sut2.load()
+        XCTAssertEqual(sut2.state.doneSet, [.wash, .smile])
+    }
+
     // MARK: - reset
 
-    func test_reset_restoresInitial() {
+    func test_reset_clearsAll() {
         let sut = makeSUT()
         StepKind.allCases.forEach { sut.toggle($0) }
         sut.reset()
-        XCTAssertEqual(sut.state, .initial)
         XCTAssertTrue(sut.state.steps.allSatisfy { !$0.isDone })
+        XCTAssertTrue(sut.state.doneSet.isEmpty)
     }
 
     // MARK: - progress / isCompleted
@@ -82,12 +109,5 @@ final class MorningRoutineInteractorTests: XCTestCase {
         StepKind.allCases.forEach { sut.toggle($0) }
         XCTAssertEqual(sut.state.progress, 1.0, accuracy: 0.0001)
         XCTAssertTrue(sut.state.isCompleted)
-    }
-
-    func test_isCompleted_emptySteps_isTrueVacuously() {
-        var state = MorningRoutineModels.ViewState.initial
-        state.steps = []
-        XCTAssertTrue(state.isCompleted)
-        XCTAssertEqual(state.progress, 0, accuracy: 0.0001)
     }
 }

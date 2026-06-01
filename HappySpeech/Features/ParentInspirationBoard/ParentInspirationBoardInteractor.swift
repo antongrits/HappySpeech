@@ -3,7 +3,12 @@ import OSLog
 
 // MARK: - ParentInspirationBoardInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Бизнес-логика «Доски вдохновения».
+///
+/// Цитаты берутся из `ParentInspirationBoardContent`; избранное
+/// восстанавливается из `ParentInspirationBoardStore` при старте и сохраняется
+/// при каждом изменении (переживает перезапуск). Поддерживает фильтр «только
+/// избранное».
 @MainActor
 @Observable
 final class ParentInspirationBoardInteractor {
@@ -15,17 +20,31 @@ final class ParentInspirationBoardInteractor {
 
     var state: ParentInspirationBoardModels.ViewState
 
-    init() {
-        self.state = .initial
+    private let store: ParentInspirationBoardStore
+
+    init(defaults: UserDefaults = .standard) {
+        self.store = ParentInspirationBoardStore(defaults: defaults)
+        var initial = ParentInspirationBoardModels.ViewState.initial
+        let favorites = store.loadFavorites()
+        initial.quotes = initial.quotes.map { quote in
+            var copy = quote
+            copy.isFavorite = favorites.contains(quote.id)
+            return copy
+        }
+        self.state = initial
     }
 
     func next() {
-        state.currentIndex = (state.currentIndex + 1) % state.quotes.count
+        let count = state.visibleQuotes.count
+        guard count > 0 else { return }
+        state.currentIndex = (state.currentIndex + 1) % count
         Self.logger.info("next → index=\(self.state.currentIndex)")
     }
 
     func previous() {
-        state.currentIndex = (state.currentIndex - 1 + state.quotes.count) % state.quotes.count
+        let count = state.visibleQuotes.count
+        guard count > 0 else { return }
+        state.currentIndex = (state.currentIndex - 1 + count) % count
         Self.logger.info("previous → index=\(self.state.currentIndex)")
     }
 
@@ -34,6 +53,23 @@ final class ParentInspirationBoardInteractor {
               let idx = state.quotes.firstIndex(where: { $0.id == current.id })
         else { return }
         state.quotes[idx].isFavorite.toggle()
+        persistFavorites()
+        // Если включён фильтр и цитата ушла из избранного — не выходим за границы.
+        if state.favoritesOnly && state.current == nil {
+            state.currentIndex = max(0, state.visibleQuotes.count - 1)
+        }
         Self.logger.info("toggleFavorite → \(self.state.quotes[idx].isFavorite)")
+    }
+
+    /// Переключает фильтр «только избранное» (сбрасывает индекс в начало).
+    func toggleFavoritesFilter() {
+        state.favoritesOnly.toggle()
+        state.currentIndex = 0
+        Self.logger.info("favoritesOnly → \(self.state.favoritesOnly)")
+    }
+
+    private func persistFavorites() {
+        let ids = Set(state.quotes.filter(\.isFavorite).map(\.id))
+        store.save(favorites: ids)
     }
 }

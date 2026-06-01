@@ -138,6 +138,24 @@ public final class AppContainer {
         _voiceCloneService = service
     }
 
+    // Personal Voice (опциональный приватный TTS «голосом родителя») — lazy.
+    // Live: LivePersonalVoiceService (AVSpeechSynthesizer + Apple Personal Voice,
+    // graceful fallback на системный ru-RU TTS). Preview/Test: MockPersonalVoiceService.
+    // Контур: ТОЛЬКО parent / specialist за ParentalGate (COPPA). См. ADR-V33-PERSONAL-VOICE.
+    private var _personalVoiceService: (any PersonalVoiceServicing)?
+    public var personalVoiceService: any PersonalVoiceServicing {
+        if let existing = _personalVoiceService { return existing }
+        let new: any PersonalVoiceServicing = LivePersonalVoiceService()
+        _personalVoiceService = new
+        return new
+    }
+
+    /// Подмена ``personalVoiceService`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `personalVoiceService`.
+    public func overridePersonalVoiceService(_ service: any PersonalVoiceServicing) {
+        _personalVoiceService = service
+    }
+
     // StoreKit 2 монетизация — lazy. Live: LiveStoreService (реальный StoreKit 2,
     // слушатель Transaction.updates запускается в init). Preview/Test: MockStoreService.
     // Контур: только parent / specialist за ParentalGate (Kids Category compliant).
@@ -915,6 +933,8 @@ public extension AppContainer {
         container.overrideStoreService(MockStoreService())
         // Block M (v12): VoiceClone — mock без AVSpeechSynthesizer/файлов в preview/tests.
         container.overrideVoiceCloneService(MockVoiceCloneService())
+        // Personal Voice — mock без AVSpeechSynthesizer в preview/tests.
+        container.overridePersonalVoiceService(MockPersonalVoiceService())
         // Block R.2 (v32): ChatRepository — seeded mock с подключённым логопедом и
         // переписки, чтобы preview / snapshot чата не показывали пустой экран.
         container.overrideChatRepository(MockChatRepository.previewSeeded())
