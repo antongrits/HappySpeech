@@ -814,6 +814,222 @@
           "word": "кувшин",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wi-57.m4a"
+        },
+        {
+          "id": "k-wi-58",
+          "word": "капель",
+          "imageAsset": "word_kapel",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-58.m4a"
+        },
+        {
+          "id": "k-wi-59",
+          "word": "куст",
+          "imageAsset": "word_kust",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-59.m4a"
+        },
+        {
+          "id": "k-wi-60",
+          "word": "кета",
+          "imageAsset": "word_keta",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-60.m4a"
+        },
+        {
+          "id": "k-wi-61",
+          "word": "класс",
+          "imageAsset": "word_klass",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-61.m4a"
+        },
+        {
+          "id": "k-wi-62",
+          "word": "карамбола",
+          "imageAsset": "word_karambola",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-62.m4a"
+        },
+        {
+          "id": "k-wi-63",
+          "word": "киви",
+          "imageAsset": "word_kivi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-63.m4a"
+        },
+        {
+          "id": "k-wi-64",
+          "word": "картофель",
+          "imageAsset": "word_kartofel",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-64.m4a"
+        },
+        {
+          "id": "k-wi-65",
+          "word": "камин",
+          "imageAsset": "word_kamin",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-65.m4a"
+        },
+        {
+          "id": "k-wi-66",
+          "word": "крыса",
+          "imageAsset": "word_krysa",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-66.m4a"
+        },
+        {
+          "id": "k-wi-67",
+          "word": "козёл",
+          "imageAsset": "word_kozyol",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-67.m4a"
+        },
+        {
+          "id": "k-wi-68",
+          "word": "колокол",
+          "imageAsset": "word_kolokol",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-68.m4a"
+        },
+        {
+          "id": "k-wi-69",
+          "word": "какао",
+          "imageAsset": "word_kakao",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-69.m4a"
+        },
+        {
+          "id": "k-wi-70",
+          "word": "карась",
+          "imageAsset": "word_karas",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-70.m4a"
+        },
+        {
+          "id": "k-wi-71",
+          "word": "камбала",
+          "imageAsset": "word_kambala",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-71.m4a"
+        },
+        {
+          "id": "k-wi-72",
+          "word": "кипарис",
+          "imageAsset": "word_kiparis",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-72.m4a"
+        },
+        {
+          "id": "k-wi-73",
+          "word": "качалка",
+          "imageAsset": "word_kachalka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-73.m4a"
+        },
+        {
+          "id": "k-wi-74",
+          "word": "катамаран",
+          "imageAsset": "word_katamaran",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-74.m4a"
+        },
+        {
+          "id": "k-wi-75",
+          "word": "каноэ",
+          "imageAsset": "word_kanoe",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-75.m4a"
+        },
+        {
+          "id": "k-wi-76",
+          "word": "камелия",
+          "imageAsset": "word_kameliya",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-76.m4a"
+        },
+        {
+          "id": "k-wi-77",
+          "word": "кора",
+          "imageAsset": "word_kora",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-77.m4a"
+        },
+        {
+          "id": "k-wi-78",
+          "word": "кабан",
+          "imageAsset": "word_kaban",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-78.m4a"
+        },
+        {
+          "id": "k-wi-79",
+          "word": "кусок",
+          "imageAsset": "word_kusok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-79.m4a"
+        },
+        {
+          "id": "k-wi-80",
+          "word": "кокос",
+          "imageAsset": "word_kokos",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-80.m4a"
+        },
+        {
+          "id": "k-wi-81",
+          "word": "каблук",
+          "imageAsset": "word_kabluk",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-81.m4a"
+        },
+        {
+          "id": "k-wi-82",
+          "word": "кость",
+          "imageAsset": "word_kost",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-82.m4a"
+        },
+        {
+          "id": "k-wi-83",
+          "word": "коляска",
+          "imageAsset": "word_kolyaska",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-83.m4a"
+        },
+        {
+          "id": "k-wi-84",
+          "word": "какаду",
+          "imageAsset": "word_kakadu",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-84.m4a"
         }
       ]
     },
@@ -1037,6 +1253,174 @@
           "word": "белка",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-35.m4a"
+        },
+        {
+          "id": "k-wm-36",
+          "word": "шпилька",
+          "imageAsset": "word_shpilka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-36.m4a"
+        },
+        {
+          "id": "k-wm-37",
+          "word": "барракуда",
+          "imageAsset": "word_barrakuda",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-37.m4a"
+        },
+        {
+          "id": "k-wm-38",
+          "word": "доска",
+          "imageAsset": "word_doska",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-38.m4a"
+        },
+        {
+          "id": "k-wm-39",
+          "word": "лесенка",
+          "imageAsset": "word_lesenka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-39.m4a"
+        },
+        {
+          "id": "k-wm-40",
+          "word": "ласка",
+          "imageAsset": "word_laska",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-40.m4a"
+        },
+        {
+          "id": "k-wm-41",
+          "word": "реактор",
+          "imageAsset": "word_reaktor",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-41.m4a"
+        },
+        {
+          "id": "k-wm-42",
+          "word": "плакат",
+          "imageAsset": "word_plakat",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-42.m4a"
+        },
+        {
+          "id": "k-wm-43",
+          "word": "икринка",
+          "imageAsset": "word_ikrinka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-43.m4a"
+        },
+        {
+          "id": "k-wm-44",
+          "word": "хохлатка",
+          "imageAsset": "word_khokhlatka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-44.m4a"
+        },
+        {
+          "id": "k-wm-45",
+          "word": "блокнотик",
+          "imageAsset": "word_bloknotik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-45.m4a"
+        },
+        {
+          "id": "k-wm-46",
+          "word": "пилотка",
+          "imageAsset": "word_pilotka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-46.m4a"
+        },
+        {
+          "id": "k-wm-47",
+          "word": "банкетка",
+          "imageAsset": "word_banketka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-47.m4a"
+        },
+        {
+          "id": "k-wm-48",
+          "word": "сетка",
+          "imageAsset": "word_setka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-48.m4a"
+        },
+        {
+          "id": "k-wm-49",
+          "word": "сумка",
+          "imageAsset": "word_bag",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-49.m4a"
+        },
+        {
+          "id": "k-wm-50",
+          "word": "снежинка",
+          "imageAsset": "word_snowflake",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-50.m4a"
+        },
+        {
+          "id": "k-wm-51",
+          "word": "люлька",
+          "imageAsset": "word_lyulka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-51.m4a"
+        },
+        {
+          "id": "k-wm-52",
+          "word": "носки",
+          "imageAsset": "word_nosok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-52.m4a"
+        },
+        {
+          "id": "k-wm-53",
+          "word": "дайкон",
+          "imageAsset": "word_daykon",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-53.m4a"
+        },
+        {
+          "id": "k-wm-54",
+          "word": "раковина",
+          "imageAsset": "word_rakovina",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-54.m4a"
+        },
+        {
+          "id": "k-wm-55",
+          "word": "автокран",
+          "imageAsset": "word_avtokran",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-55.m4a"
+        },
+        {
+          "id": "k-wm-56",
+          "word": "беседка",
+          "imageAsset": "word_besedka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-56.m4a"
         }
       ]
     },

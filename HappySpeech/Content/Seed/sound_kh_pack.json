@@ -642,6 +642,14 @@
           "word": "хулить",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wi-39.m4a"
+        },
+        {
+          "id": "kh-wi-40",
+          "word": "хищник",
+          "imageAsset": "word_khishchnik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wi-40.m4a"
         }
       ]
     },
@@ -888,6 +896,86 @@
           "word": "трухлявый",
           "difficulty": 4,
           "audio_file": "Audio/Content/KH/kh-wm-39.m4a"
+        },
+        {
+          "id": "kh-wm-40",
+          "word": "каланхоэ",
+          "imageAsset": "word_kalankhoe",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-40.m4a"
+        },
+        {
+          "id": "kh-wm-41",
+          "word": "яхта",
+          "imageAsset": "word_yakhta",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-41.m4a"
+        },
+        {
+          "id": "kh-wm-42",
+          "word": "духовка",
+          "imageAsset": "word_dukhovka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-42.m4a"
+        },
+        {
+          "id": "kh-wm-43",
+          "word": "засуха",
+          "imageAsset": "word_zasukha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-43.m4a"
+        },
+        {
+          "id": "kh-wm-44",
+          "word": "чихать",
+          "imageAsset": "word_chikhat",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-44.m4a"
+        },
+        {
+          "id": "kh-wm-45",
+          "word": "архар",
+          "imageAsset": "word_arkhar",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-45.m4a"
+        },
+        {
+          "id": "kh-wm-46",
+          "word": "бархатец",
+          "imageAsset": "word_barkhatets",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-46.m4a"
+        },
+        {
+          "id": "kh-wm-47",
+          "word": "луноход",
+          "imageAsset": "word_lunokhod",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-47.m4a"
+        },
+        {
+          "id": "kh-wm-48",
+          "word": "ехидна",
+          "imageAsset": "word_ekhidna",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-48.m4a"
+        },
+        {
+          "id": "kh-wm-49",
+          "word": "шхуна",
+          "imageAsset": "word_shkhuna",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wm-49.m4a"
         }
       ]
     },
@@ -1075,6 +1163,14 @@
           "word": "плохо",
           "difficulty": 1,
           "audio_file": "Audio/Content/KH/kh-wf-29.m4a"
+        },
+        {
+          "id": "kh-wf-30",
+          "word": "чертополох",
+          "imageAsset": "word_chertopolokh",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/KH/kh-wf-30.m4a"
         }
       ]
     },

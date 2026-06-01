@@ -1078,6 +1078,30 @@
           "hint": "ЧЕ+ЧЕ+ВИ+ЦА — бобовое растение, Ч дважды.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Ch/ch-wi-79.m4a"
+        },
+        {
+          "id": "ch-wi-80",
+          "word": "часики",
+          "imageAsset": "word_clock",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wi-80.m4a"
+        },
+        {
+          "id": "ch-wi-81",
+          "word": "чашечка",
+          "imageAsset": "word_chashechka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wi-81.m4a"
+        },
+        {
+          "id": "ch-wi-82",
+          "word": "чеснок",
+          "imageAsset": "word_chesnok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wi-82.m4a"
         }
       ]
     },
@@ -1540,6 +1564,374 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/CH/ch-wm-56.m4a"
+        },
+        {
+          "id": "ch-wm-57",
+          "word": "собачка",
+          "imageAsset": "word_sobachka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-57.m4a"
+        },
+        {
+          "id": "ch-wm-58",
+          "word": "ленточка",
+          "imageAsset": "word_lentochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-58.m4a"
+        },
+        {
+          "id": "ch-wm-59",
+          "word": "волчок",
+          "imageAsset": "word_volchok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-59.m4a"
+        },
+        {
+          "id": "ch-wm-60",
+          "word": "гусёночек",
+          "imageAsset": "word_gusyonochek",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-60.m4a"
+        },
+        {
+          "id": "ch-wm-61",
+          "word": "вилочка",
+          "imageAsset": "word_vilochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-61.m4a"
+        },
+        {
+          "id": "ch-wm-62",
+          "word": "бельчонок",
+          "imageAsset": "word_belchonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-62.m4a"
+        },
+        {
+          "id": "ch-wm-63",
+          "word": "баклажанчик",
+          "imageAsset": "word_baklazhanchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-63.m4a"
+        },
+        {
+          "id": "ch-wm-64",
+          "word": "кабачок",
+          "imageAsset": "word_kabachok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-64.m4a"
+        },
+        {
+          "id": "ch-wm-65",
+          "word": "пальчик",
+          "imageAsset": "word_palchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-65.m4a"
+        },
+        {
+          "id": "ch-wm-66",
+          "word": "веточка",
+          "imageAsset": "word_vetochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-66.m4a"
+        },
+        {
+          "id": "ch-wm-67",
+          "word": "бокальчик",
+          "imageAsset": "word_bokalchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-67.m4a"
+        },
+        {
+          "id": "ch-wm-68",
+          "word": "ручеёк",
+          "imageAsset": "word_rucheyok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-68.m4a"
+        },
+        {
+          "id": "ch-wm-69",
+          "word": "гусеничка",
+          "imageAsset": "word_gusenichka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-69.m4a"
+        },
+        {
+          "id": "ch-wm-70",
+          "word": "блузочка",
+          "imageAsset": "word_bluzochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-70.m4a"
+        },
+        {
+          "id": "ch-wm-71",
+          "word": "асфальтоукладчик",
+          "imageAsset": "word_asfaltoukladchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-71.m4a"
+        },
+        {
+          "id": "ch-wm-72",
+          "word": "рыночек",
+          "imageAsset": "word_rynochek",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-72.m4a"
+        },
+        {
+          "id": "ch-wm-73",
+          "word": "рачки",
+          "imageAsset": "word_rachki",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-73.m4a"
+        },
+        {
+          "id": "ch-wm-74",
+          "word": "волчонок",
+          "imageAsset": "word_volchonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-74.m4a"
+        },
+        {
+          "id": "ch-wm-75",
+          "word": "кисточка",
+          "imageAsset": "word_kistochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-75.m4a"
+        },
+        {
+          "id": "ch-wm-76",
+          "word": "кузнечик",
+          "imageAsset": "word_kuznechik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-76.m4a"
+        },
+        {
+          "id": "ch-wm-77",
+          "word": "блинчик",
+          "imageAsset": "word_blinchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-77.m4a"
+        },
+        {
+          "id": "ch-wm-78",
+          "word": "мешочек",
+          "imageAsset": "word_meshochek",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-78.m4a"
+        },
+        {
+          "id": "ch-wm-79",
+          "word": "дудочка",
+          "imageAsset": "word_dudochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-79.m4a"
+        },
+        {
+          "id": "ch-wm-80",
+          "word": "диванчик",
+          "imageAsset": "word_divanchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-80.m4a"
+        },
+        {
+          "id": "ch-wm-81",
+          "word": "рюкзачок",
+          "imageAsset": "word_ryukzachok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-81.m4a"
+        },
+        {
+          "id": "ch-wm-82",
+          "word": "карточки",
+          "imageAsset": "word_kartochki",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-82.m4a"
+        },
+        {
+          "id": "ch-wm-83",
+          "word": "звёздочка",
+          "imageAsset": "word_zvyozdochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-83.m4a"
+        },
+        {
+          "id": "ch-wm-84",
+          "word": "блюдечко",
+          "imageAsset": "word_blyudechko",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-84.m4a"
+        },
+        {
+          "id": "ch-wm-85",
+          "word": "бычок",
+          "imageAsset": "word_bychok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-85.m4a"
+        },
+        {
+          "id": "ch-wm-86",
+          "word": "вазочка",
+          "imageAsset": "word_vazochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-86.m4a"
+        },
+        {
+          "id": "ch-wm-87",
+          "word": "бутончик",
+          "imageAsset": "word_butonchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-87.m4a"
+        },
+        {
+          "id": "ch-wm-88",
+          "word": "ботиночки",
+          "imageAsset": "word_botinochki",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-88.m4a"
+        },
+        {
+          "id": "ch-wm-89",
+          "word": "зайчонок",
+          "imageAsset": "word_zaychonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-89.m4a"
+        },
+        {
+          "id": "ch-wm-90",
+          "word": "птичка",
+          "imageAsset": "word_ptichka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-90.m4a"
+        },
+        {
+          "id": "ch-wm-91",
+          "word": "ласточка",
+          "imageAsset": "word_lastochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-91.m4a"
+        },
+        {
+          "id": "ch-wm-92",
+          "word": "свеча",
+          "imageAsset": "word_svecha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-92.m4a"
+        },
+        {
+          "id": "ch-wm-93",
+          "word": "кочка",
+          "imageAsset": "word_kochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-93.m4a"
+        },
+        {
+          "id": "ch-wm-94",
+          "word": "автопогрузчик",
+          "imageAsset": "word_avtopogruzchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-94.m4a"
+        },
+        {
+          "id": "ch-wm-95",
+          "word": "апельсинчик",
+          "imageAsset": "word_apelsinchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-95.m4a"
+        },
+        {
+          "id": "ch-wm-96",
+          "word": "барабанчик",
+          "imageAsset": "word_barabanchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-96.m4a"
+        },
+        {
+          "id": "ch-wm-97",
+          "word": "грачонок",
+          "imageAsset": "word_grachonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-97.m4a"
+        },
+        {
+          "id": "ch-wm-98",
+          "word": "лесочек",
+          "imageAsset": "word_lesochek",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-98.m4a"
+        },
+        {
+          "id": "ch-wm-99",
+          "word": "рюмочка",
+          "imageAsset": "word_ryumochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-99.m4a"
+        },
+        {
+          "id": "ch-wm-100",
+          "word": "лавочка",
+          "imageAsset": "word_lavochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-100.m4a"
+        },
+        {
+          "id": "ch-wm-101",
+          "word": "грядочка",
+          "imageAsset": "word_gryadochka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-101.m4a"
+        },
+        {
+          "id": "ch-wm-102",
+          "word": "ложочек",
+          "imageAsset": "word_lozhochek",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-102.m4a"
         }
       ]
     },
@@ -1866,6 +2258,22 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wf-39.m4a"
+        },
+        {
+          "id": "ch-wf-40",
+          "word": "бородач",
+          "imageAsset": "word_borodach",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wf-40.m4a"
+        },
+        {
+          "id": "ch-wf-41",
+          "word": "грач",
+          "imageAsset": "word_grach",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wf-41.m4a"
         }
       ]
     },

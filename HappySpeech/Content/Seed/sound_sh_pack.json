@@ -1188,6 +1188,14 @@
           "hint": "ШПИ+ЛЬ — острый верх башни.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Sh/sh-wi-80.m4a"
+        },
+        {
+          "id": "sh-wi-81",
+          "word": "шлем",
+          "imageAsset": "word_shlem",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-81.m4a"
         }
       ]
     },
@@ -1664,6 +1672,174 @@
           "hint": "ЖД — звонкий + звонкий.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Sh/sh-wm-59.m4a"
+        },
+        {
+          "id": "sh-wm-60",
+          "word": "башмак",
+          "imageAsset": "word_bashmak",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-60.m4a"
+        },
+        {
+          "id": "sh-wm-61",
+          "word": "ловушка",
+          "imageAsset": "word_lovushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-61.m4a"
+        },
+        {
+          "id": "sh-wm-62",
+          "word": "вишня",
+          "imageAsset": "word_vishnya",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-62.m4a"
+        },
+        {
+          "id": "sh-wm-63",
+          "word": "вешалка",
+          "imageAsset": "word_veshalka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-63.m4a"
+        },
+        {
+          "id": "sh-wm-64",
+          "word": "солнышко",
+          "imageAsset": "word_solnyshko",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-64.m4a"
+        },
+        {
+          "id": "sh-wm-65",
+          "word": "рикша",
+          "imageAsset": "word_riksha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-65.m4a"
+        },
+        {
+          "id": "sh-wm-66",
+          "word": "каштан",
+          "imageAsset": "word_kashtan",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-66.m4a"
+        },
+        {
+          "id": "sh-wm-67",
+          "word": "грушка",
+          "imageAsset": "word_grushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-67.m4a"
+        },
+        {
+          "id": "sh-wm-68",
+          "word": "индюшонок",
+          "imageAsset": "word_indyushonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-68.m4a"
+        },
+        {
+          "id": "sh-wm-69",
+          "word": "индюшка",
+          "imageAsset": "word_indyushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-69.m4a"
+        },
+        {
+          "id": "sh-wm-70",
+          "word": "горбуша",
+          "imageAsset": "word_gorbusha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-70.m4a"
+        },
+        {
+          "id": "sh-wm-71",
+          "word": "галоши",
+          "imageAsset": "word_galoshi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-71.m4a"
+        },
+        {
+          "id": "sh-wm-72",
+          "word": "избушка",
+          "imageAsset": "word_izbushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-72.m4a"
+        },
+        {
+          "id": "sh-wm-73",
+          "word": "ракушка",
+          "imageAsset": "word_rakushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-73.m4a"
+        },
+        {
+          "id": "sh-wm-74",
+          "word": "боярышник",
+          "imageAsset": "word_boyaryshnik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-74.m4a"
+        },
+        {
+          "id": "sh-wm-75",
+          "word": "лягушонок",
+          "imageAsset": "word_lyagushonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-75.m4a"
+        },
+        {
+          "id": "sh-wm-76",
+          "word": "уши",
+          "imageAsset": "word_ushi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-76.m4a"
+        },
+        {
+          "id": "sh-wm-77",
+          "word": "вишенка",
+          "imageAsset": "word_vishenka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-77.m4a"
+        },
+        {
+          "id": "sh-wm-78",
+          "word": "кувшин",
+          "imageAsset": "word_kuvshin",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-78.m4a"
+        },
+        {
+          "id": "sh-wm-79",
+          "word": "галоша",
+          "imageAsset": "word_galosha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-79.m4a"
+        },
+        {
+          "id": "sh-wm-80",
+          "word": "крыша",
+          "imageAsset": "word_krysha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-80.m4a"
         }
       ]
     },
@@ -1950,6 +2126,14 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wf-34.m4a"
+        },
+        {
+          "id": "sh-wf-35",
+          "word": "гуляш",
+          "imageAsset": "word_gulyash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-35.m4a"
         }
       ]
     },

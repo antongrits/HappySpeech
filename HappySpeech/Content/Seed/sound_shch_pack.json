@@ -858,6 +858,14 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wi-49.m4a"
+        },
+        {
+          "id": "shch-wi-50",
+          "word": "щепотка",
+          "imageAsset": "word_shchepotka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-wi-50.m4a"
         }
       ]
     },
@@ -1264,6 +1272,14 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-49.m4a"
+        },
+        {
+          "id": "shch-wm-50",
+          "word": "чудовище",
+          "imageAsset": "word_chudovishche",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-wm-50.m4a"
         }
       ]
     },

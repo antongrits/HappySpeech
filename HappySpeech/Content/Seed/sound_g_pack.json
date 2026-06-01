@@ -659,6 +659,158 @@
           "word": "гуляние",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wi-57.m4a"
+        },
+        {
+          "id": "g-wi-58",
+          "word": "гольфы",
+          "imageAsset": "word_golfy",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-58.m4a"
+        },
+        {
+          "id": "g-wi-59",
+          "word": "гроздь",
+          "imageAsset": "word_grozd",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-59.m4a"
+        },
+        {
+          "id": "g-wi-60",
+          "word": "гайка",
+          "imageAsset": "word_gayka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-60.m4a"
+        },
+        {
+          "id": "g-wi-61",
+          "word": "гранатик",
+          "imageAsset": "word_granatik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-61.m4a"
+        },
+        {
+          "id": "g-wi-62",
+          "word": "губа",
+          "imageAsset": "word_guba",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-62.m4a"
+        },
+        {
+          "id": "g-wi-63",
+          "word": "георгин",
+          "imageAsset": "word_georgin",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-63.m4a"
+        },
+        {
+          "id": "g-wi-64",
+          "word": "горностай",
+          "imageAsset": "word_gornostay",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-64.m4a"
+        },
+        {
+          "id": "g-wi-65",
+          "word": "глазик",
+          "imageAsset": "word_glazik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-65.m4a"
+        },
+        {
+          "id": "g-wi-66",
+          "word": "гуделка",
+          "imageAsset": "word_gudelka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-66.m4a"
+        },
+        {
+          "id": "g-wi-67",
+          "word": "грейпфрут",
+          "imageAsset": "word_greypfrut",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-67.m4a"
+        },
+        {
+          "id": "g-wi-68",
+          "word": "герань",
+          "imageAsset": "word_geran",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-68.m4a"
+        },
+        {
+          "id": "g-wi-69",
+          "word": "гироскутер",
+          "imageAsset": "word_giroskuter",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-69.m4a"
+        },
+        {
+          "id": "g-wi-70",
+          "word": "гриф",
+          "imageAsset": "word_grif",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-70.m4a"
+        },
+        {
+          "id": "g-wi-71",
+          "word": "газель",
+          "imageAsset": "word_gazel",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-71.m4a"
+        },
+        {
+          "id": "g-wi-72",
+          "word": "грязь",
+          "imageAsset": "word_gryaz",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-72.m4a"
+        },
+        {
+          "id": "g-wi-73",
+          "word": "голубика",
+          "imageAsset": "word_golubika",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-73.m4a"
+        },
+        {
+          "id": "g-wi-74",
+          "word": "город",
+          "imageAsset": "word_gorod",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-74.m4a"
+        },
+        {
+          "id": "g-wi-75",
+          "word": "гиена",
+          "imageAsset": "word_giena",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-75.m4a"
+        },
+        {
+          "id": "g-wi-76",
+          "word": "гуава",
+          "imageAsset": "word_guava",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-76.m4a"
         }
       ]
     },
@@ -905,6 +1057,110 @@
           "word": "могила",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-39.m4a"
+        },
+        {
+          "id": "g-wm-40",
+          "word": "динго",
+          "imageAsset": "word_dingo",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-40.m4a"
+        },
+        {
+          "id": "g-wm-41",
+          "word": "белуга",
+          "imageAsset": "word_beluga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-41.m4a"
+        },
+        {
+          "id": "g-wm-42",
+          "word": "богомол",
+          "imageAsset": "word_bogomol",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-42.m4a"
+        },
+        {
+          "id": "g-wm-43",
+          "word": "штанга",
+          "imageAsset": "word_shtanga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-43.m4a"
+        },
+        {
+          "id": "g-wm-44",
+          "word": "радуга",
+          "imageAsset": "word_raduga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-44.m4a"
+        },
+        {
+          "id": "g-wm-45",
+          "word": "ягнёнок",
+          "imageAsset": "word_yagnyonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-45.m4a"
+        },
+        {
+          "id": "g-wm-46",
+          "word": "игуана",
+          "imageAsset": "word_iguana",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-46.m4a"
+        },
+        {
+          "id": "g-wm-47",
+          "word": "бергамот",
+          "imageAsset": "word_bergamot",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-47.m4a"
+        },
+        {
+          "id": "g-wm-48",
+          "word": "кардиган",
+          "imageAsset": "word_kardigan",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-48.m4a"
+        },
+        {
+          "id": "g-wm-49",
+          "word": "виноградинка",
+          "imageAsset": "word_vinogradinka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-49.m4a"
+        },
+        {
+          "id": "g-wm-50",
+          "word": "иволга",
+          "imageAsset": "word_ivolga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-50.m4a"
+        },
+        {
+          "id": "g-wm-51",
+          "word": "автогрейдер",
+          "imageAsset": "word_avtogreyder",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-51.m4a"
+        },
+        {
+          "id": "g-wm-52",
+          "word": "деньги",
+          "imageAsset": "word_dengi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-52.m4a"
         }
       ]
     },
@@ -1051,6 +1307,14 @@
           "hint": "Лог — овраг, низина.",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wf-19.m4a"
+        },
+        {
+          "id": "g-wf-20",
+          "word": "боулинг",
+          "imageAsset": "word_bouling",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-20.m4a"
         }
       ]
     },
