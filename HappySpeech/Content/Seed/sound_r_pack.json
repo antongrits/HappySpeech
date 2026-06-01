@@ -1437,6 +1437,105 @@
           "hint": "РЫ+БО+ЛОВ — тот, кто ловит рыбу.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-109.m4a"
+        },
+        {
+          "id": "r-wi-110",
+          "word": "робот",
+          "imageAsset": "word_robot",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-110.m4a"
+        },
+        {
+          "id": "r-wi-111",
+          "word": "рубин",
+          "imageAsset": "word_rubin",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-111.m4a"
+        },
+        {
+          "id": "r-wi-112",
+          "word": "рулон",
+          "imageAsset": "word_rulon",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-112.m4a"
+        },
+        {
+          "id": "r-wi-113",
+          "word": "рябчик",
+          "imageAsset": "word_ryabchik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-113.m4a"
+        },
+        {
+          "id": "r-wi-114",
+          "word": "рыбалка",
+          "imageAsset": "word_rybalka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wi-114.m4a"
+        },
+        {
+          "id": "r-wi-115",
+          "word": "рычаг",
+          "imageAsset": "word_rychag",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-115.m4a"
+        },
+        {
+          "id": "r-wi-116",
+          "word": "рынок",
+          "imageAsset": "word_rynok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-116.m4a"
+        },
+        {
+          "id": "r-wi-117",
+          "word": "рожок",
+          "imageAsset": "word_rozhok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-117.m4a"
+        },
+        {
+          "id": "r-wi-118",
+          "word": "редька",
+          "imageAsset": "word_redka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-118.m4a"
+        },
+        {
+          "id": "r-wi-119",
+          "word": "речка",
+          "imageAsset": "word_rechka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-119.m4a"
+        },
+        {
+          "id": "r-wi-120",
+          "word": "рама",
+          "imageAsset": "word_rama",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wi-120.m4a"
         }
       ]
     },
@@ -2131,6 +2230,672 @@
           "hint": "ПЕ+РЕ+РЫВ — Р дважды.",
           "difficulty": 4,
           "audio_file": "Audio/Content/R/r-wm-104.m4a"
+        },
+        {
+          "id": "r-wm-105",
+          "word": "зеркало",
+          "imageAsset": "word_zerkalo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-105.m4a"
+        },
+        {
+          "id": "r-wm-106",
+          "word": "абрикос",
+          "imageAsset": "word_abrikos",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-106.m4a"
+        },
+        {
+          "id": "r-wm-107",
+          "word": "аэропорт",
+          "imageAsset": "word_aeroport",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-107.m4a"
+        },
+        {
+          "id": "r-wm-108",
+          "word": "баран",
+          "imageAsset": "word_baran",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-108.m4a"
+        },
+        {
+          "id": "r-wm-109",
+          "word": "барсук",
+          "imageAsset": "word_barsuk",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-109.m4a"
+        },
+        {
+          "id": "r-wm-110",
+          "word": "берет",
+          "imageAsset": "word_beret",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-110.m4a"
+        },
+        {
+          "id": "r-wm-111",
+          "word": "брюки",
+          "imageAsset": "word_bryuki",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-111.m4a"
+        },
+        {
+          "id": "r-wm-112",
+          "word": "бурундук",
+          "imageAsset": "word_burunduk",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-112.m4a"
+        },
+        {
+          "id": "r-wm-113",
+          "word": "черепаха",
+          "imageAsset": "word_cherepakha",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-113.m4a"
+        },
+        {
+          "id": "r-wm-114",
+          "word": "дикобраз",
+          "imageAsset": "word_dikobraz",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-114.m4a"
+        },
+        {
+          "id": "r-wm-115",
+          "word": "дорога",
+          "imageAsset": "word_doroga",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-115.m4a"
+        },
+        {
+          "id": "r-wm-116",
+          "word": "дрозд",
+          "imageAsset": "word_drozd",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-116.m4a"
+        },
+        {
+          "id": "r-wm-117",
+          "word": "дворец",
+          "imageAsset": "word_dvorets",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-117.m4a"
+        },
+        {
+          "id": "r-wm-118",
+          "word": "гардероб",
+          "imageAsset": "word_garderob",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-118.m4a"
+        },
+        {
+          "id": "r-wm-119",
+          "word": "гепард",
+          "imageAsset": "word_gepard",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-119.m4a"
+        },
+        {
+          "id": "r-wm-120",
+          "word": "гирлянда",
+          "imageAsset": "word_girlyanda",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-120.m4a"
+        },
+        {
+          "id": "r-wm-121",
+          "word": "гиря",
+          "imageAsset": "word_girya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-121.m4a"
+        },
+        {
+          "id": "r-wm-122",
+          "word": "гитара",
+          "imageAsset": "word_gitara",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-122.m4a"
+        },
+        {
+          "id": "r-wm-123",
+          "word": "горилла",
+          "imageAsset": "word_gorilla",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-123.m4a"
+        },
+        {
+          "id": "r-wm-124",
+          "word": "горка",
+          "imageAsset": "word_gorka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-124.m4a"
+        },
+        {
+          "id": "r-wm-125",
+          "word": "горошек",
+          "imageAsset": "word_goroshek",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-125.m4a"
+        },
+        {
+          "id": "r-wm-126",
+          "word": "горшок",
+          "imageAsset": "word_gorshok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-126.m4a"
+        },
+        {
+          "id": "r-wm-127",
+          "word": "горы",
+          "imageAsset": "word_gory",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-127.m4a"
+        },
+        {
+          "id": "r-wm-128",
+          "word": "графин",
+          "imageAsset": "word_grafin",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-128.m4a"
+        },
+        {
+          "id": "r-wm-129",
+          "word": "грядка",
+          "imageAsset": "word_gryadka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-129.m4a"
+        },
+        {
+          "id": "r-wm-130",
+          "word": "канарейка",
+          "imageAsset": "word_kanareyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-130.m4a"
+        },
+        {
+          "id": "r-wm-131",
+          "word": "карандашик",
+          "imageAsset": "word_karandashik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-131.m4a"
+        },
+        {
+          "id": "r-wm-132",
+          "word": "карман",
+          "imageAsset": "word_karman",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-132.m4a"
+        },
+        {
+          "id": "r-wm-133",
+          "word": "карп",
+          "imageAsset": "word_karp",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-133.m4a"
+        },
+        {
+          "id": "r-wm-134",
+          "word": "карта",
+          "imageAsset": "word_karta",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-134.m4a"
+        },
+        {
+          "id": "r-wm-135",
+          "word": "кенгуру",
+          "imageAsset": "word_kenguru",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-135.m4a"
+        },
+        {
+          "id": "r-wm-136",
+          "word": "храм",
+          "imageAsset": "word_khram",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-136.m4a"
+        },
+        {
+          "id": "r-wm-137",
+          "word": "корабль",
+          "imageAsset": "word_korabl",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-137.m4a"
+        },
+        {
+          "id": "r-wm-138",
+          "word": "кормушка",
+          "imageAsset": "word_kormushka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-138.m4a"
+        },
+        {
+          "id": "r-wm-139",
+          "word": "корзина",
+          "imageAsset": "word_korzina",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-139.m4a"
+        },
+        {
+          "id": "r-wm-140",
+          "word": "козырёк",
+          "imageAsset": "word_kozyryok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-140.m4a"
+        },
+        {
+          "id": "r-wm-141",
+          "word": "кролик",
+          "imageAsset": "word_krolik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-141.m4a"
+        },
+        {
+          "id": "r-wm-142",
+          "word": "крыло",
+          "imageAsset": "word_krylo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-142.m4a"
+        },
+        {
+          "id": "r-wm-143",
+          "word": "крышка",
+          "imageAsset": "word_kryshka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-143.m4a"
+        },
+        {
+          "id": "r-wm-144",
+          "word": "кукуруза",
+          "imageAsset": "word_kukuruza",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-144.m4a"
+        },
+        {
+          "id": "r-wm-145",
+          "word": "курятник",
+          "imageAsset": "word_kuryatnik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-145.m4a"
+        },
+        {
+          "id": "r-wm-146",
+          "word": "квадрат",
+          "imageAsset": "word_kvadrat",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-146.m4a"
+        },
+        {
+          "id": "r-wm-147",
+          "word": "сарафан",
+          "imageAsset": "word_sarafan",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-147.m4a"
+        },
+        {
+          "id": "r-wm-148",
+          "word": "сарай",
+          "imageAsset": "word_saray",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-148.m4a"
+        },
+        {
+          "id": "r-wm-149",
+          "word": "серп",
+          "imageAsset": "word_serp",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-149.m4a"
+        },
+        {
+          "id": "r-wm-150",
+          "word": "скворечник",
+          "imageAsset": "word_skvorechnik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-150.m4a"
+        },
+        {
+          "id": "r-wm-151",
+          "word": "страус",
+          "imageAsset": "word_straus",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-151.m4a"
+        },
+        {
+          "id": "r-wm-152",
+          "word": "стрекоза",
+          "imageAsset": "word_strekoza",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-152.m4a"
+        },
+        {
+          "id": "r-wm-153",
+          "word": "стрела",
+          "imageAsset": "word_strela",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-153.m4a"
+        },
+        {
+          "id": "r-wm-154",
+          "word": "термос",
+          "imageAsset": "word_termos",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-154.m4a"
+        },
+        {
+          "id": "r-wm-155",
+          "word": "тетрадь",
+          "imageAsset": "word_tetrad",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-155.m4a"
+        },
+        {
+          "id": "r-wm-156",
+          "word": "тигрица",
+          "imageAsset": "word_tigritsa",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-156.m4a"
+        },
+        {
+          "id": "r-wm-157",
+          "word": "тройка",
+          "imageAsset": "word_troyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-157.m4a"
+        },
+        {
+          "id": "r-wm-158",
+          "word": "урожай",
+          "imageAsset": "word_urozhay",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-158.m4a"
+        },
+        {
+          "id": "r-wm-159",
+          "word": "варежка",
+          "imageAsset": "word_varezhka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-159.m4a"
+        },
+        {
+          "id": "r-wm-160",
+          "word": "верблюд",
+          "imageAsset": "word_verblyud",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-160.m4a"
+        },
+        {
+          "id": "r-wm-161",
+          "word": "вертолёт",
+          "imageAsset": "word_vertolyot",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-161.m4a"
+        },
+        {
+          "id": "r-wm-162",
+          "word": "вертушка",
+          "imageAsset": "word_vertushka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-162.m4a"
+        },
+        {
+          "id": "r-wm-163",
+          "word": "виноград",
+          "imageAsset": "word_vinograd",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-163.m4a"
+        },
+        {
+          "id": "r-wm-164",
+          "word": "воробушек",
+          "imageAsset": "word_vorobushek",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-164.m4a"
+        },
+        {
+          "id": "r-wm-165",
+          "word": "ворон",
+          "imageAsset": "word_voron",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-165.m4a"
+        },
+        {
+          "id": "r-wm-166",
+          "word": "заборчик",
+          "imageAsset": "word_zaborchik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-166.m4a"
+        },
+        {
+          "id": "r-wm-167",
+          "word": "заварник",
+          "imageAsset": "word_zavarnik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-167.m4a"
+        },
+        {
+          "id": "r-wm-168",
+          "word": "зверёк",
+          "imageAsset": "word_zveryok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-168.m4a"
+        },
+        {
+          "id": "r-wm-169",
+          "word": "кабриолет",
+          "imageAsset": "word_kabriolet",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-169.m4a"
+        },
+        {
+          "id": "r-wm-170",
+          "word": "кастрюлька",
+          "imageAsset": "word_kastryulka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-170.m4a"
+        },
+        {
+          "id": "r-wm-171",
+          "word": "квадроцикл",
+          "imageAsset": "word_kvadrotsikl",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-171.m4a"
+        },
+        {
+          "id": "r-wm-172",
+          "word": "шнурки",
+          "imageAsset": "word_shnurki",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-172.m4a"
+        },
+        {
+          "id": "r-wm-173",
+          "word": "штора",
+          "imageAsset": "word_shtora",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-173.m4a"
+        },
+        {
+          "id": "r-wm-174",
+          "word": "сюрприз",
+          "imageAsset": "word_syurpriz",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-174.m4a"
+        },
+        {
+          "id": "r-wm-175",
+          "word": "ястреб",
+          "imageAsset": "word_yastreb",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-175.m4a"
+        },
+        {
+          "id": "r-wm-176",
+          "word": "ёршик",
+          "imageAsset": "word_yorshik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-176.m4a"
+        },
+        {
+          "id": "r-wm-177",
+          "word": "юрта",
+          "imageAsset": "word_yurta",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-177.m4a"
+        },
+        {
+          "id": "r-wm-178",
+          "word": "паспорт",
+          "imageAsset": "word_pasport",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wm-178.m4a"
         }
       ]
     },
@@ -2719,6 +3484,132 @@
           "hint": "ГЕР + Ь — мягкий финальный Р.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-89.m4a"
+        },
+        {
+          "id": "r-wf-90",
+          "word": "аллигатор",
+          "imageAsset": "word_alligator",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-90.m4a"
+        },
+        {
+          "id": "r-wf-91",
+          "word": "бобр",
+          "imageAsset": "word_bobr",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-91.m4a"
+        },
+        {
+          "id": "r-wf-92",
+          "word": "бульдозер",
+          "imageAsset": "word_buldozer",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-92.m4a"
+        },
+        {
+          "id": "r-wf-93",
+          "word": "глухарь",
+          "imageAsset": "word_glukhar",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-93.m4a"
+        },
+        {
+          "id": "r-wf-94",
+          "word": "кальмар",
+          "imageAsset": "word_kalmar",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-94.m4a"
+        },
+        {
+          "id": "r-wf-95",
+          "word": "катер",
+          "imageAsset": "word_kater",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-95.m4a"
+        },
+        {
+          "id": "r-wf-96",
+          "word": "кедр",
+          "imageAsset": "word_kedr",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-96.m4a"
+        },
+        {
+          "id": "r-wf-97",
+          "word": "коридор",
+          "imageAsset": "word_koridor",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-97.m4a"
+        },
+        {
+          "id": "r-wf-98",
+          "word": "костёр",
+          "imageAsset": "word_kostyor",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-98.m4a"
+        },
+        {
+          "id": "r-wf-99",
+          "word": "самовар",
+          "imageAsset": "word_samovar",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-99.m4a"
+        },
+        {
+          "id": "r-wf-100",
+          "word": "светофор",
+          "imageAsset": "word_svetofor",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-100.m4a"
+        },
+        {
+          "id": "r-wf-101",
+          "word": "зубр",
+          "imageAsset": "word_zubr",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-101.m4a"
+        },
+        {
+          "id": "r-wf-102",
+          "word": "шнур",
+          "imageAsset": "word_shnur",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-wf-102.m4a"
+        },
+        {
+          "id": "r-wf-103",
+          "word": "ягуар",
+          "imageAsset": "word_yaguar",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-103.m4a"
         }
       ]
     },
