@@ -17,6 +17,7 @@ import SwiftUI
 struct SpecialistReportsView: View {
 
     @Environment(AppContainer.self) private var container
+    @Environment(AppCoordinator.self) private var coordinator
     @State private var viewModel = ReportsViewModelHolder()
 
     @State private var range: ReportRange = .last30
@@ -38,6 +39,7 @@ struct SpecialistReportsView: View {
                         rangePicker
                         filterChips
                         customWordListEntryCard
+                        methodologyAssistantEntryCard
 
                         if viewModel.isLoading {
                             loadingView
@@ -169,6 +171,51 @@ struct SpecialistReportsView: View {
         )
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("customWordList.entryCard")
+    }
+
+    // MARK: - Methodology assistant entry (Cad-task-1: Vertex AI Search)
+
+    private var methodologyAssistantEntryCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Spec.accent.opacity(0.14))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "graduationcap.fill")
+                        .font(TypographyTokens.subtitle(20))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "methodologyAssistant.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "methodologyAssistant.entry.hint"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(2)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp3)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            coordinator.navigate(to: .methodologyAssistant)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "methodologyAssistant.entry.title") + ". " +
+            String(localized: "methodologyAssistant.entry.hint")
+        )
+        .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("methodologyAssistant.entryCard")
     }
 
     // MARK: - Loading

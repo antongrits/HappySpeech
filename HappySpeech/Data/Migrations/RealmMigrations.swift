@@ -76,6 +76,12 @@ enum RealmMigrations {
             // Хранит метаданные локальных .m4a записей дневника голоса.
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 14 {
+            // v14: CustomizationObject.outfit / .background — новые свойства
+            // (выбранный наряд + фоновая сцена). Realm подставляет дефолты из
+            // модели (everyday / meadow) для существующих записей —
+            // enumerateObjects не требуется.
+        }
     }
 }
 

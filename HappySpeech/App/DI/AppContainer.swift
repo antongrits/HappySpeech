@@ -71,6 +71,12 @@ public final class AppContainer {
     // COPPA: только родительский/специалистский контур.
     private var _chatRepository: (any ChatRepository)?
 
+    // MethodologyAssistantClient — Cloud Function `askMethodologyAssistant`
+    // (Vertex AI Search). Lazy. Live: LiveMethodologyAssistantClient.
+    // Preview/Test: MockMethodologyAssistantClient. COPPA: только
+    // parent / specialist контур за parental gate — НИКОГДА из kid-контекста.
+    private var _methodologyAssistantClient: (any MethodologyAssistantClientProtocol)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -541,6 +547,26 @@ public final class AppContainer {
         _chatRepository = repository
     }
 
+    // MARK: - MethodologyAssistantClient (Vertex AI Search)
+
+    /// Клиент помощника по методике логопедии (Cloud Function
+    /// `askMethodologyAssistant`, Vertex AI Search / Discovery Engine).
+    ///
+    /// Только parent / specialist контур за parental gate (COPPA). Детский
+    /// контур НИКОГДА не должен обращаться к этому клиенту.
+    public var methodologyAssistantClient: any MethodologyAssistantClientProtocol {
+        if let existing = _methodologyAssistantClient { return existing }
+        let new: any MethodologyAssistantClientProtocol = LiveMethodologyAssistantClient()
+        _methodologyAssistantClient = new
+        return new
+    }
+
+    /// Подмена ``methodologyAssistantClient`` для preview / тестов. Должна
+    /// вызываться до первого обращения к `methodologyAssistantClient`.
+    public func overrideMethodologyAssistantClient(_ client: any MethodologyAssistantClientProtocol) {
+        _methodologyAssistantClient = client
+    }
+
     public var soundService: any SoundServiceProtocol {
         if let existing = _soundService { return existing }
         let new = LiveSoundService()
@@ -938,6 +964,8 @@ public extension AppContainer {
         // Block R.2 (v32): ChatRepository — seeded mock с подключённым логопедом и
         // переписки, чтобы preview / snapshot чата не показывали пустой экран.
         container.overrideChatRepository(MockChatRepository.previewSeeded())
+        // MethodologyAssistant — mock без сети в preview/tests.
+        container.overrideMethodologyAssistantClient(MockMethodologyAssistantClient())
         return container
     }
 }

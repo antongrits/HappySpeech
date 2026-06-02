@@ -11278,6 +11278,22 @@
         }
       }
     },
+    "customization.background.meadow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Луг"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meadow"
+          }
+        }
+      }
+    },
     "customization.background.ocean": {
       "localizations": {
         "ru": {
@@ -11288,12 +11304,76 @@
         }
       }
     },
+    "customization.background.rainbow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Радуга"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rainbow"
+          }
+        }
+      }
+    },
+    "customization.background.room": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комната"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Room"
+          }
+        }
+      }
+    },
     "customization.background.school": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Школа"
+          }
+        }
+      }
+    },
+    "customization.background.sea": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Море"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sea"
+          }
+        }
+      }
+    },
+    "customization.background.space": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Космос"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Space"
           }
         }
       }
@@ -24452,6 +24532,22 @@
         }
       }
     },
+    "lyalya.hero.outfit.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля в наряде: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyalya wearing: %@"
+          }
+        }
+      }
+    },
     "lyalya.mail.nav.title": {
       "extractionState": "manual",
       "localizations": {
@@ -24695,6 +24791,390 @@
           "stringUnit": {
             "state": "translated",
             "value": "What is the first sound in “%@”?"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.a11y.source": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источник"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.a11y.yourQuestion": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваш вопрос"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your question"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.answer.label": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ответ помощника"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assistant's answer"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.empty.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задайте вопрос о постановке звуков, этапах работы, упражнениях. Ответ опирается на методический корпус."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask about sound production, stages of work, exercises. Answers are grounded in the methodology corpus."
+          }
+        }
+      }
+    },
+    "methodologyAssistant.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спросите о методике"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask about methodology"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.empty.tryAsking": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Например, спросите:"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For example, ask:"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.entry.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вопросы о методике логопедии — с опорой на корпус"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech therapy methodology questions — grounded in the corpus"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.entry.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помощник по методике"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methodology Assistant"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.error.generic": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось получить ответ. Попробуйте ещё раз."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't get an answer. Please try again."
+          }
+        }
+      }
+    },
+    "methodologyAssistant.error.tooLong": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вопрос слишком длинный. Сократите его."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your question is too long. Please shorten it."
+          }
+        }
+      }
+    },
+    "methodologyAssistant.error.tooShort": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вопрос слишком короткий. Сформулируйте подробнее."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your question is too short. Please add more detail."
+          }
+        }
+      }
+    },
+    "methodologyAssistant.gate.cta": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я взрослый"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I'm an adult"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.gate.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помощник по методике — инструмент для родителя или логопеда. Подтвердите, что вы взрослый."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The methodology assistant is a tool for a parent or speech therapist. Please confirm you are an adult."
+          }
+        }
+      }
+    },
+    "methodologyAssistant.gate.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раздел для взрослого"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adults only"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.input.placeholder": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваш вопрос…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your question…"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.loading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ищу в методике…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searching the methodology…"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.nav.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помощник по методике"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Methodology Assistant"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.reset": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать заново"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start over"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.send": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.sources.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источники"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sources"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.suggestion.1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как поставить звук Р?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How do I produce the R sound?"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.suggestion.2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие этапы автоматизации звука?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What are the stages of sound automation?"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.suggestion.3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнения для свистящих звуков"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exercises for whistling sounds"
+          }
+        }
+      }
+    },
+    "methodologyAssistant.suggestion.a11yHint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задать этот вопрос помощнику"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ask the assistant this question"
           }
         }
       }

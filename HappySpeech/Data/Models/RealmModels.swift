@@ -537,6 +537,8 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
 
 /// Current Realm schema version. Increment with each migration.
 /// v13: VoiceJournalEntryRealm (VoiceJournal — дневник голоса ребёнка).
+/// v14: CustomizationObject.outfit / .background — выбор наряда и фоновой
+///      сцены теперь персистится (отражается на всех экранах героя).
 enum RealmSchemaVersion {
-    static let current: UInt64 = 13
+    static let current: UInt64 = 14
 }

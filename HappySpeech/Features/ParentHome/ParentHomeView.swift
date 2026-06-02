@@ -353,6 +353,10 @@ private struct ParentDashboardTab: View {
                     parentGuideCard
                         .hsScrollEffect(.scaleFade)
 
+                    // Cad-task-1 — «Помощник по методике» (Vertex AI Search).
+                    methodologyAssistantCard
+                        .hsScrollEffect(.scaleFade)
+
                     // v31 Волна A Ф.10 — «Что должно быть в возрасте»: справочник речевых норм.
                     speechNormsEncyclopediaCard
                         .hsScrollEffect(.scaleFade)
@@ -1251,6 +1255,43 @@ private extension ParentDashboardTab {
         .accessibilityLabel(
             String(localized: "parentGuide.entry.title") + ". " +
             String(localized: "parentGuide.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // Cad-task-1 — «Помощник по методике» (Vertex AI Search). За parental gate
+    // (открывается внутри самого экрана), доступен только взрослому.
+    var methodologyAssistantCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("graduationcap.circle.fill", tint: ColorTokens.Brand.sky)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "methodologyAssistant.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "methodologyAssistant.entry.hint"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .methodologyAssistant)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "methodologyAssistant.entry.title") + ". " +
+            String(localized: "methodologyAssistant.entry.hint")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)

@@ -246,52 +246,64 @@ public enum LyalyaAccessory: String, CaseIterable, Identifiable, Sendable {
 // MARK: - LyalyaBackground
 
 /// Фоновые сцены для детского контура.
+///
+/// Каждой сцене соответствует реальный иллюстративный ассет `bg_<rawValue>`
+/// (мягкие пастельные фоны, сгенерированы под маскота — пустой центр).
+/// `previewGradient` остаётся как мягкий fallback / тонировка.
 public enum LyalyaBackground: String, CaseIterable, Identifiable, Sendable {
-    case bedroom   // спальня
-    case garden    // сад
-    case school    // школа
-    case ocean     // океан
+    case meadow    // луг
     case forest    // лес
+    case sea       // море
+    case space     // космос
+    case room      // комната
+    case rainbow   // радуга
 
     public var id: String { rawValue }
 
     public var localizedName: String {
         switch self {
-        case .bedroom: return String(localized: "customization.background.bedroom")
-        case .garden:  return String(localized: "customization.background.garden")
-        case .school:  return String(localized: "customization.background.school")
-        case .ocean:   return String(localized: "customization.background.ocean")
+        case .meadow:  return String(localized: "customization.background.meadow")
         case .forest:  return String(localized: "customization.background.forest")
+        case .sea:     return String(localized: "customization.background.sea")
+        case .space:   return String(localized: "customization.background.space")
+        case .room:    return String(localized: "customization.background.room")
+        case .rainbow: return String(localized: "customization.background.rainbow")
         }
     }
 
+    /// Имя реального иллюстративного ассета (`bg_meadow`, `bg_space`, …).
     public var illustrationName: String { "bg_\(rawValue)" }
 
     public var previewGradient: LinearGradient {
         switch self {
-        case .bedroom:
-            return LinearGradient(
-                colors: [ColorTokens.Theme.bedroomFrom, ColorTokens.Theme.bedroomTo],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        case .garden:
+        case .meadow:
             return LinearGradient(
                 colors: [ColorTokens.Theme.gardenFrom, ColorTokens.Theme.gardenTo],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        case .school:
-            return LinearGradient(
-                colors: [ColorTokens.Theme.schoolBgFrom, ColorTokens.Theme.schoolBgTo],
-                startPoint: .topLeading, endPoint: .bottomTrailing
-            )
-        case .ocean:
-            return LinearGradient(
-                colors: [ColorTokens.Theme.oceanFrom, ColorTokens.Theme.oceanTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         case .forest:
             return LinearGradient(
                 colors: [ColorTokens.Theme.forestFrom, ColorTokens.Theme.forestTo],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+        case .sea:
+            return LinearGradient(
+                colors: [ColorTokens.Theme.oceanFrom, ColorTokens.Theme.oceanTo],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+        case .space:
+            return LinearGradient(
+                colors: [ColorTokens.Theme.bedroomFrom, ColorTokens.Theme.bedroomTo],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+        case .room:
+            return LinearGradient(
+                colors: [ColorTokens.Theme.schoolBgFrom, ColorTokens.Theme.schoolBgTo],
+                startPoint: .topLeading, endPoint: .bottomTrailing
+            )
+        case .rainbow:
+            return LinearGradient(
+                colors: [ColorTokens.Theme.coolFrom, ColorTokens.Theme.warmFrom],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         }
@@ -447,7 +459,7 @@ public struct CustomizationViewModel: Sendable {
         selectedEyeColor: LyalyaEyeColor = .blue,
         selectedSkinTone: LyalyaSkinTone = .light,
         enabledAccessories: Set<LyalyaAccessory> = [],
-        selectedBackground: LyalyaBackground = .bedroom,
+        selectedBackground: LyalyaBackground = .meadow,
         outfitItems: [OutfitItemViewModel] = [],
         accessoryItems: [AccessoryItemViewModel] = [],
         backgroundItems: [BackgroundItemViewModel] = [],
@@ -514,7 +526,7 @@ public enum Customization {
             eyeColor: LyalyaEyeColor = .blue,
             skinTone: LyalyaSkinTone = .light,
             enabledAccessories: Set<LyalyaAccessory> = [],
-            background: LyalyaBackground = .bedroom
+            background: LyalyaBackground = .meadow
         ) {
             self.skin = skin
             self.color = color
@@ -606,7 +618,7 @@ public enum Customization {
             eyeColor: LyalyaEyeColor = .blue,
             skinTone: LyalyaSkinTone = .light,
             enabledAccessories: Set<LyalyaAccessory> = [],
-            background: LyalyaBackground = .bedroom,
+            background: LyalyaBackground = .meadow,
             childStreakDays: Int = 0,
             unlockedAchievements: Set<String> = []
         ) {

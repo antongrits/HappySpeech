@@ -37,7 +37,7 @@ final class CustomizationPresenterTests: XCTestCase {
         color: LyalyaColorVariant = .warm,
         voice: LyalyaVoice = .classic,
         outfit: LyalyaOutfit = .everyday,
-        background: LyalyaBackground = .bedroom
+        background: LyalyaBackground = .meadow
     ) -> Customization.LoadResponse {
         Customization.LoadResponse(
             skin: skin,
@@ -165,7 +165,7 @@ final class CustomizationPresenterTests: XCTestCase {
 
     func test_presentBackgroundSelected_backgroundUpdated() {
         let (sut, spy) = makeSUT()
-        sut.presentLoadedCustomization(response: makeLoadResponse(background: .bedroom), outfitItems: [], accessoryItems: [], backgroundItems: [])
+        sut.presentLoadedCustomization(response: makeLoadResponse(background: .meadow), outfitItems: [], accessoryItems: [], backgroundItems: [])
         sut.presentBackgroundSelected(background: .forest, backgroundItems: [])
         XCTAssertEqual(spy.selectionChangedVM?.selectedBackground, .forest)
     }

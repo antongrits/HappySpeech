@@ -43,7 +43,7 @@ final class CustomizationInteractor {
     private var currentEyeColor: LyalyaEyeColor = .blue
     private var currentSkinTone: LyalyaSkinTone = .light
     private var currentAccessories: Set<LyalyaAccessory> = []
-    private var currentBackground: LyalyaBackground = .bedroom
+    private var currentBackground: LyalyaBackground = .meadow
 
     // MARK: - Original saved state (для отслеживания изменений)
 
@@ -55,7 +55,7 @@ final class CustomizationInteractor {
     private var originalEyeColor: LyalyaEyeColor = .blue
     private var originalSkinTone: LyalyaSkinTone = .light
     private var originalAccessories: Set<LyalyaAccessory> = []
-    private var originalBackground: LyalyaBackground = .bedroom
+    private var originalBackground: LyalyaBackground = .meadow
 
     // MARK: - Unlock context
 
@@ -323,7 +323,7 @@ final class CustomizationInteractor {
         currentEyeColor = .blue
         currentSkinTone = .light
         currentAccessories = []
-        currentBackground = .bedroom
+        currentBackground = .meadow
 
         presenter?.presentSavingStarted()
 
@@ -408,7 +408,7 @@ final class CustomizationInteractor {
                 presenter?.presentCloudSyncedToast()
             }
 
-            logger.info("CustomizationInteractor: saved skin=\(dto.skin) outfit=\(dto.colorVariant)")
+            logger.info("CustomizationInteractor: saved skin=\(dto.skin) outfit=\(dto.outfit) bg=\(dto.background)")
         } catch {
             logger.error("CustomizationInteractor: save failed: \(error)")
             let response = Customization.SaveResponse(
@@ -496,6 +496,8 @@ final class CustomizationInteractor {
             skin: currentSkin.rawValue,
             colorVariant: currentColor.rawValue,
             voice: currentVoice.rawValue,
+            outfit: currentOutfit.rawValue,
+            background: currentBackground.rawValue,
             updatedAt: Date()
         )
     }
@@ -504,18 +506,20 @@ final class CustomizationInteractor {
         currentSkin = dto.skinEnum
         currentColor = dto.colorEnum
         currentVoice = dto.voiceEnum
+        currentOutfit = dto.outfitEnum
+        currentBackground = dto.backgroundEnum
     }
 
     private func applyDTOToOriginalState(_ dto: CustomizationDTO) {
         originalSkin = dto.skinEnum
         originalColor = dto.colorEnum
         originalVoice = dto.voiceEnum
-        originalOutfit = currentOutfit
+        originalOutfit = dto.outfitEnum
         originalHairColor = currentHairColor
         originalEyeColor = currentEyeColor
         originalSkinTone = currentSkinTone
         originalAccessories = currentAccessories
-        originalBackground = currentBackground
+        originalBackground = dto.backgroundEnum
     }
 
     // MARK: - Private: achievement notifications

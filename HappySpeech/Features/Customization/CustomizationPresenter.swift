@@ -26,7 +26,7 @@ final class CustomizationPresenter {
     private var currentEyeColor: LyalyaEyeColor = .blue
     private var currentSkinTone: LyalyaSkinTone = .light
     private var currentAccessories: Set<LyalyaAccessory> = []
-    private var currentBackground: LyalyaBackground = .bedroom
+    private var currentBackground: LyalyaBackground = .meadow
 
     private var originalSkin: LyalyaSkin = .classic
     private var originalColor: LyalyaColorVariant = .warm
@@ -36,7 +36,7 @@ final class CustomizationPresenter {
     private var originalEyeColor: LyalyaEyeColor = .blue
     private var originalSkinTone: LyalyaSkinTone = .light
     private var originalAccessories: Set<LyalyaAccessory> = []
-    private var originalBackground: LyalyaBackground = .bedroom
+    private var originalBackground: LyalyaBackground = .meadow
 
     private var currentOutfitItems: [OutfitItemViewModel] = []
     private var currentAccessoryItems: [AccessoryItemViewModel] = []

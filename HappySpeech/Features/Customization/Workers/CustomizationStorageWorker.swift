@@ -65,6 +65,8 @@ actor CustomizationStorageWorker {
             obj.skin = dto.skin
             obj.colorVariant = dto.colorVariant
             obj.voice = dto.voice
+            obj.outfit = dto.outfit
+            obj.background = dto.background
             obj.updatedAt = dto.updatedAt
             realm.add(obj, update: .modified)
         }

@@ -136,6 +136,8 @@ struct CustomizationView: View {
         let (gradFrom, gradTo) = viewModel.selectedColor.gradientColors
         return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
             ZStack {
+                // Слой 1: реальный фон сцены (bg_<id>) за героем + цветовая
+                // тонировка-градиент сверху. Фон меняется при выборе вкладки «Фон».
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(
                         LinearGradient(
@@ -145,16 +147,43 @@ struct CustomizationView: View {
                         )
                     )
                     .frame(width: 240, height: 240)
+                    .overlay(
+                        Image(viewModel.selectedBackground.illustrationName)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 240, height: 240)
+                            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+                            .id(viewModel.selectedBackground.rawValue)
+                            .transition(reduceMotion ? .opacity : .opacity)
+                            .accessibilityHidden(true)
+                    )
                     .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                                value: viewModel.selectedColor)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3),
+                               value: viewModel.selectedBackground)
 
-                LyalyaMascotView(state: lyalyaState, size: mascotSize)
-                    .id(viewModel.selectedSkin.rawValue)
-                    .transition(reduceMotion
-                        ? .opacity
-                        : .scale(scale: 0.85).combined(with: .opacity))
-                    .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
-                               value: viewModel.selectedSkin)
+                // Слой 2: герой. При выбранном наряде ≠ повседневный показываем
+                // статичный lyalya_outfit_<id> (видимая смена одежды); иначе —
+                // живой анимированный канон.
+                Group {
+                    if viewModel.selectedOutfit != .everyday {
+                        Image(viewModel.selectedOutfit.illustrationName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: mascotSize, height: mascotSize)
+                            .id("outfit-\(viewModel.selectedOutfit.rawValue)")
+                    } else {
+                        LyalyaMascotView(state: lyalyaState, size: mascotSize)
+                            .id("skin-\(viewModel.selectedSkin.rawValue)")
+                    }
+                }
+                .transition(reduceMotion
+                    ? .opacity
+                    : .scale(scale: 0.85).combined(with: .opacity))
+                .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
+                           value: viewModel.selectedSkin)
+                .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
+                           value: viewModel.selectedOutfit)
             }
         }
         .frame(maxWidth: .infinity)

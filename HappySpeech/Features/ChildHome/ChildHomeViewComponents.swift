@@ -119,7 +119,9 @@ struct ChildHomeReactiveMascot: View {
         // D-3 v27: hero-маскот на главном экране ребёнка через единый 2D-канон
         // Ляли (LyalyaHeroView → LyalyaMascotView, иллюстрация mascot_lyalya_*,
         // согласованная с AppIcon). Size 160pt — заметный hero на 320pt SE.
-        LyalyaHeroView(state: mood.lyalyaState, size: 160)
+        // Cad-task-2: LyalyaOutfitHeroView показывает статичный lyalya_outfit_<id>
+        // когда выбран наряд ≠ повседневный — смена одежды видимо меняет героя.
+        LyalyaOutfitHeroView(state: mood.lyalyaState, size: 160)
         .offset(y: bobOffset)
         .onAppear { startBobbing() }
         .onChange(of: mood) { _, _ in startBobbing() }

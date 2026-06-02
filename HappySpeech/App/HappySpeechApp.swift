@@ -153,6 +153,9 @@ struct HappySpeechApp: App {
                 .environment(container.themeManager)
                 .environment(coordinator)
                 .environment(container)
+                // Облик Ляли (скин/цвет/наряд/фон) — единый shared-стор, чтобы
+                // выбранный наряд видимо отражался на маскоте на всех экранах.
+                .environment(LyalyaCustomizationStorage.shared)
                 .environment(\.mascotLipSyncState, container.mascotLipSyncState)
                 .environment(\.mascotEyeContactState, container.mascotEyeContactState)
                 .preferredColorScheme(Self.resolvedColorScheme(from: container.themeManager))

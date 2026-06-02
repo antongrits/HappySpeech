@@ -263,6 +263,13 @@ enum AppRoute: Hashable {
     case specialistSchedule(specialistId: String)
     case specialistResourcesLibrary(specialistId: String)
     case familyVoiceMessageHub
+
+    // MARK: - Cad-task-1: Methodology Assistant (Vertex AI Search)
+
+    /// Помощник по методике логопедии (parent / specialist за parental gate).
+    /// Текстовые методические вопросы взрослого → обоснованный ответ + источники.
+    /// COPPA: НИКОГДА из детского контура.
+    case methodologyAssistant
 }
 
 enum PermissionType: Hashable {
@@ -1131,6 +1138,12 @@ struct AppCoordinatorView: View {
         case .familyVoiceMessageHub:
             FamilyVoiceMessageHubView()
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - Cad-task-1: Methodology Assistant
+
+        case .methodologyAssistant:
+            MethodologyAssistantView()
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -1690,6 +1703,10 @@ extension AppCoordinatorView {
             return .specialistHome
         case "familyVoiceMessageHub", "voiceMessageHub", "voiceHub":
             return .familyVoiceMessageHub
+
+        // MARK: Cad-task-1: Methodology Assistant
+        case "methodologyAssistant", "methodology", "assistant":
+            return .methodologyAssistant
 
         default:
             return .auth

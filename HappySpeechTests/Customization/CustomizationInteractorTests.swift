@@ -337,7 +337,7 @@ final class CustomizationInteractorTests: XCTestCase {
 
     func test_selectBackground_updatesViewModel() {
         let (sut, display, _, _) = makeSUT()
-        sut.selectBackground(.init(background: .garden))
+        sut.selectBackground(.init(background: .forest))
         XCTAssertTrue(display.displaySelectionChangedCalled)
     }
 
