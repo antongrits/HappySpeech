@@ -53,10 +53,12 @@ public struct HSMeshGradientBackground: View {
                     ColorTokens.Kid.bgDeep, ColorTokens.Brand.primary.opacity(0.22), ColorTokens.Brand.rose.opacity(0.20)
                 ]
             case .kidCool:
+                // Тёплая палитра приложения (без голубого sky / зелёного mint) —
+                // мягкий лилово-розовый акцент вместо «зелёного с голубым».
                 return [
-                    ColorTokens.Brand.sky, ColorTokens.Brand.lilac, ColorTokens.Brand.mint,
-                    ColorTokens.Kid.bgSoft, ColorTokens.Brand.sky.opacity(0.5), ColorTokens.Brand.lilac.opacity(0.5),
-                    ColorTokens.Brand.mint, ColorTokens.Kid.bg, ColorTokens.Brand.sky
+                    ColorTokens.Brand.lilac, ColorTokens.Brand.rose, ColorTokens.Brand.butter,
+                    ColorTokens.Kid.bgSoft, ColorTokens.Brand.lilac.opacity(0.5), ColorTokens.Brand.rose.opacity(0.5),
+                    ColorTokens.Brand.butter, ColorTokens.Kid.bg, ColorTokens.Brand.lilac
                 ]
             case .rewards:
                 // Fix v34 — диагональный «wave» banding в правом
@@ -68,10 +70,11 @@ public struct HSMeshGradientBackground: View {
                 // backgroundLayer), а не через mesh-палитру.
                 return Array(repeating: ColorTokens.Brand.butter, count: 9)
             case .calm:
+                // Спокойная, но в тёплых тонах приложения (без mint/sky).
                 return [
-                    ColorTokens.Brand.mint, ColorTokens.Brand.sky.opacity(0.5), ColorTokens.Brand.mint.opacity(0.6),
-                    ColorTokens.Brand.lilac.opacity(0.4), ColorTokens.Kid.bgSofter, ColorTokens.Brand.mint,
-                    ColorTokens.Brand.sky.opacity(0.4), ColorTokens.Brand.mint, ColorTokens.Brand.lilac.opacity(0.3)
+                    ColorTokens.Brand.butter, ColorTokens.Brand.rose.opacity(0.5), ColorTokens.Brand.butter.opacity(0.6),
+                    ColorTokens.Brand.lilac.opacity(0.4), ColorTokens.Kid.bgSofter, ColorTokens.Brand.butter,
+                    ColorTokens.Brand.rose.opacity(0.4), ColorTokens.Brand.butter, ColorTokens.Brand.lilac.opacity(0.3)
                 ]
             }
         }
@@ -81,8 +84,6 @@ public struct HSMeshGradientBackground: View {
 
     public let palette: Palette
     public let animated: Bool
-
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(palette: Palette = .kidWarm, animated: Bool = true) {
         self.palette = palette
@@ -103,44 +104,15 @@ public struct HSMeshGradientBackground: View {
 
     // MARK: - iOS 18 Mesh
     //
-    // Control points drift organically along independent sine paths with
-    // prime-ratio periods, so the loop never visibly repeats (~18s feel).
-    // `TimelineView` drives a continuous phase; Reduce Motion freezes it.
+    // Статичный mesh-градиент с фиксированными контрольными точками — без
+    // движущихся волн (анимация дрейфа убрана по требованию владельца).
 
     @available(iOS 18.0, *)
     @ViewBuilder
     private var meshLayer: some View {
-        if animated && !reduceMotion {
-            TimelineView(.animation) { timeline in
-                let phase = timeline.date.timeIntervalSinceReferenceDate
-                MeshGradient(
-                    width: 3, height: 3,
-                    points: driftingPoints(phase: phase),
-                    colors: palette.colors
-                )
-            }
-        } else {
-            MeshGradient(width: 3, height: 3, points: staticPoints, colors: palette.colors)
-        }
-    }
-
-    /// Nine mesh control points; the four edge-midpoints and the centre drift
-    /// on independent slow sine paths. Corners stay pinned for clean edges.
-    @available(iOS 18.0, *)
-    private func driftingPoints(phase: Double) -> [SIMD2<Float>] {
-        func drift(_ period: Double, _ amp: Float, _ seed: Double) -> Float {
-            Float(sin(phase / period + seed)) * amp
-        }
-        let tMid = SIMD2<Float>(0.5 + drift(7.3, 0.10, 0), drift(9.1, 0.05, 1.2))
-        let lMid = SIMD2<Float>(drift(8.7, 0.04, 2.0), 0.5 + drift(6.5, 0.11, 0.4))
-        let rMid = SIMD2<Float>(1 + drift(8.1, 0.04, 3.1), 0.5 + drift(7.7, 0.10, 2.6))
-        let bMid = SIMD2<Float>(0.5 + drift(9.5, 0.09, 1.8), 1 + drift(6.9, 0.05, 0.9))
-        let centre = SIMD2<Float>(0.5 + drift(11.0, 0.08, 0.6), 0.5 + drift(10.3, 0.08, 3.4))
-        return [
-            SIMD2(0, 0),  tMid,    SIMD2(1, 0),
-            lMid,         centre,  rMid,
-            SIMD2(0, 1),  bMid,    SIMD2(1, 1)
-        ]
+        // Wave-drift motion removed by request — фон статичный, без «движущихся волн».
+        // `animated` сохранён для совместимости API/исходников, но больше не запускает движение.
+        MeshGradient(width: 3, height: 3, points: staticPoints, colors: palette.colors)
     }
 
     @available(iOS 18.0, *)
