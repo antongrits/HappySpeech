@@ -35,7 +35,6 @@ final class FamilyHomeInteractor {
 
     // MARK: - Constants
 
-    private let maxChildrenCount = 3
     private let parentNameKey    = "parentDisplayName"
     private let activeChildIdKey = "activeChildId"
 
@@ -119,18 +118,8 @@ final class FamilyHomeInteractor {
     // MARK: - Add child
 
     func addChild(_ request: FamilyHome.AddChildRequest) async {
-        // Проверяем лимит.
-        guard loadedChildren.count < maxChildrenCount else {
-            let msg = String(
-                format: String(localized: "family.home.error.max_children"),
-                maxChildrenCount
-            )
-            presenter?.presentAddChildResult(
-                FamilyHome.AddChildResponse(canAdd: false, errorMessage: msg)
-            )
-            logger.warning("FamilyHomeInteractor: max children limit reached (\(self.maxChildrenCount))")
-            return
-        }
+        // Без лимита: профили детей доступны всем без ограничений (приложение
+        // полностью бесплатное).
         presenter?.presentAddChildResult(
             FamilyHome.AddChildResponse(canAdd: true, errorMessage: nil)
         )

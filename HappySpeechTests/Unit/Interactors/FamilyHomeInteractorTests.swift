@@ -98,7 +98,8 @@ final class FamilyHomeInteractorTests: XCTestCase {
         XCTAssertNil(c.viewModel.errorMessage)
     }
 
-    func test_addChild_atMaxLimit_doesNotCrash() async {
+    func test_addChild_withManyChildren_stillAllowed() async {
+        // Приложение полностью бесплатное — лимита на число профилей детей нет.
         let children = [
             TestDataBuilder.childProfile(id: "c1", name: "А"),
             TestDataBuilder.childProfile(id: "c2", name: "Б"),
@@ -107,7 +108,7 @@ final class FamilyHomeInteractorTests: XCTestCase {
         let c = makeSUT(children: children)
         await c.sut.load(FamilyHome.LoadRequest())
         await c.sut.addChild(FamilyHome.AddChildRequest())
-        // No crash is success
+        XCTAssertNil(c.viewModel.errorMessage)
     }
 
     // MARK: - deleteChild

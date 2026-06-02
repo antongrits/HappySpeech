@@ -315,15 +315,6 @@ final class Wave3SnapshotTests: XCTestCase {
         try record(view, screen: "ParentMoodCheckInView")
     }
 
-    // MARK: - 19. PaywallView (free user, no args)
-
-    func test_paywall_rendersInBothThemes() throws {
-        let view = PaywallView()
-            .environment(AppCoordinator())
-            .environment(AppContainer.preview())
-        try record(view, screen: "PaywallView")
-    }
-
     // MARK: - 20. PhonemeJourneyMapView (kid, childId)
 
     func test_phonemeJourneyMap_rendersInBothThemes() throws {

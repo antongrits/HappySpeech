@@ -42,9 +42,6 @@ struct SettingsView: View {
     @State private var showParentalGate = false
     @State private var parentalGatePendingURL: URL?
     @State private var showChangelog = false
-    /// Монетизация: gate → paywall (Kids Category — ребёнок не достигает paywall).
-    @State var showPremiumGate = false
-    @State var showPaywall = false
     /// Block R.1 v18 — sheet для DialectAdaptationView (Settings → Profile → Dialect).
     @State var showDialectAdaptationSheet = false
 
@@ -60,7 +57,6 @@ struct SettingsView: View {
 
                 List {
                     settingsHeaderSection
-                    premiumSection
                     appearanceSection
                     lyalyaCustomizationSection
                     profileSection
@@ -231,19 +227,6 @@ struct SettingsView: View {
                         parentalGatePendingURL = nil
                     }
                 }
-            }
-            // Монетизация: ParentalGate перед Paywall (Kids Category). Ребёнок не
-            // достигает paywall — вход только из родительских Настроек через gate.
-            .sheet(isPresented: $showPremiumGate) {
-                ParentalGate(isPresented: $showPremiumGate) {
-                    showPaywall = true
-                }
-                .environment(container)
-            }
-            .sheet(isPresented: $showPaywall) {
-                PaywallView()
-                    .environment(container)
-                    .environment(\.circuitContext, .parent)
             }
             // Block R.1 v18 — DialectAdaptation sheet.
             .sheet(isPresented: $showDialectAdaptationSheet) {

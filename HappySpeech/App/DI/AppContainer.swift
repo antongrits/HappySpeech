@@ -162,23 +162,6 @@ public final class AppContainer {
         _personalVoiceService = service
     }
 
-    // StoreKit 2 монетизация — lazy. Live: LiveStoreService (реальный StoreKit 2,
-    // слушатель Transaction.updates запускается в init). Preview/Test: MockStoreService.
-    // Контур: только parent / specialist за ParentalGate (Kids Category compliant).
-    private var _storeService: (any StoreService)?
-    public var storeService: any StoreService {
-        if let existing = _storeService { return existing }
-        let new: any StoreService = LiveStoreService(analytics: analyticsService)
-        _storeService = new
-        return new
-    }
-
-    /// Подмена ``storeService`` для preview / тестов. Должна вызываться до
-    /// первого обращения к `storeService`.
-    public func overrideStoreService(_ service: any StoreService) {
-        _storeService = service
-    }
-
     // Block V (v21): MLModelWarmupService — параллельный прогрев Pronunciation + ASR + VAD
     // во время онбординга для быстрого старта первой сессии.
     private var _mlWarmupService: (any MLModelWarmupServiceProtocol)?
@@ -955,8 +938,6 @@ public extension AppContainer {
         container.overrideSpeechAnalyzerService(MockSpeechAnalyzerService())
         // v31 Wave F F-05: DailyUsageTracker — mock в preview/tests (без UIApplication).
         container.overrideDailyUsageTracker(MockDailyUsageTracker())
-        // StoreKit 2: MockStoreService — без реального магазина в preview/tests.
-        container.overrideStoreService(MockStoreService())
         // Block M (v12): VoiceClone — mock без AVSpeechSynthesizer/файлов в preview/tests.
         container.overrideVoiceCloneService(MockVoiceCloneService())
         // Personal Voice — mock без AVSpeechSynthesizer в preview/tests.

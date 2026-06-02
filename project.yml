@@ -109,7 +109,6 @@ targets:
           - Audio/**
           - ARAssets/**
           - Videos/**
-          - "*.storekit"
         type: group
         buildPhase: resources
       - path: HappySpeech/Resources/PrivacyInfo.xcprivacy
@@ -133,9 +132,6 @@ targets:
       - path: HappySpeech/Resources/Videos
         type: folder
         buildPhase: resources
-      - path: HappySpeech/Resources/StoreKitConfig.storekit
-        type: file
-        buildPhase: none
       - path: HappySpeech/Content/Seed/seasonal
         type: folder
         buildPhase: resources
