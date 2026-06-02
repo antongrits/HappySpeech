@@ -47,10 +47,14 @@ final class GrammarContentLoaderWorker {
 
     private func buildPluralRound(item: GrammarPackItem, difficulty: GrammarDifficulty) -> GrammarRound {
         let parts = item.word.components(separatedBy: " — ")
+        // Полная фраза с родо-согласованным числительным из данных («одно ухо»,
+        // «одна книга», «один кот»), чтобы вопрос был грамматически корректным;
+        // голое существительное — для генерации дистракторов и картинки.
+        let singularPhrase = parts.first?.trimmingCharacters(in: .whitespaces) ?? item.word
         let singular = parts.first.map { Self.extractNoun(from: $0) } ?? item.word
         let plural = parts.last.map { Self.extractNoun(from: $0) } ?? item.word
 
-        let questionText = String(format: String(localized: "grammar.game.plural.question"), singular)
+        let questionText = String(format: String(localized: "grammar.game.plural.question"), singularPhrase)
         let distractors = Self.pluralDistractors(for: singular, correct: plural, count: difficulty.choiceCount - 1)
         var allChoices = [GrammarChoice(id: "correct", text: plural, imageName: nil)]
         allChoices += distractors.enumerated().map { idx, d in
@@ -290,20 +294,21 @@ final class GrammarContentLoaderWorker {
     // MARK: - Fallback rounds (если JSON недоступен)
 
     static func fallbackRounds(mode: GrammarGameMode, difficulty: GrammarDifficulty) -> [GrammarRound] {
-        let fallbackWords: [(singular: String, plural: String)] = [
-            ("кот", "коты"), ("дом", "дома"), ("мяч", "мячи"),
-            ("книга", "книги"), ("машина", "машины")
+        // Фраза с родо-согласованным числительным (женский род книга/машина → «одна»).
+        let fallbackWords: [(phrase: String, singular: String, plural: String)] = [
+            ("один кот", "кот", "коты"), ("один дом", "дом", "дома"), ("один мяч", "мяч", "мячи"),
+            ("одна книга", "книга", "книги"), ("одна машина", "машина", "машины")
         ]
         let count = min(fallbackWords.count, difficulty.totalRounds)
         return fallbackWords.prefix(count).enumerated().map { idx, pair in
             let item = GrammarPackItem(
                 id: "fallback-\(idx)",
-                word: "один \(pair.singular) — много \(pair.plural)",
+                word: "\(pair.phrase) — много \(pair.plural)",
                 hint: "\(pair.singular) → \(pair.plural)",
                 difficulty: 1,
                 audioFile: ""
             )
-            let question = String(format: String(localized: "grammar.game.plural.question"), pair.singular)
+            let question = String(format: String(localized: "grammar.game.plural.question"), pair.phrase)
             let distractors = pluralDistractors(
                 for: pair.singular,
                 correct: pair.plural,

@@ -294,7 +294,7 @@ struct GrammarGameView: View {
                         .accessibilityLabel(questionText)
 
                     // Трансформация: 1 предмет → много
-                    HStack(spacing: SpacingTokens.large) {
+                    HStack(spacing: SpacingTokens.small) {
                         singularImageTile
 
                         Image(systemName: "arrow.right.circle.fill")
@@ -334,8 +334,18 @@ struct GrammarGameView: View {
         }
     }
 
+    /// Адаптивный размер плитки пары «1 → много»: две плитки + стрелка + отступы
+    /// должны влезать в карточку на любой ширине (SE 375pt включительно, где
+    /// фиксированные 160pt давали обрезку правой плитки за краем экрана).
+    private var heroTileSize: CGFloat {
+        let inner = screenWidth - 2 * SpacingTokens.screenEdge - 2 * SpacingTokens.regular
+        let arrowAndGaps: CGFloat = 40 + 2 * SpacingTokens.small
+        let maxTile = ((inner - arrowAndGaps) / 2).rounded(.down)
+        return min(160, max(96, maxTile))
+    }
+
     private var singularImageTile: some View {
-        let tileSize: CGFloat = isSmallDevice ? 120 : 160
+        let tileSize = heroTileSize
         return HSPictTile(
             symbol: "questionmark.circle",
             label: String(localized: "grammar.game.accessibility.one_item", bundle: .main),
@@ -345,7 +355,7 @@ struct GrammarGameView: View {
     }
 
     private var pluralResultArea: some View {
-        let tileSize: CGFloat = isSmallDevice ? 120 : 160
+        let tileSize = heroTileSize
         return ZStack {
             if let selected = selectedChoiceId,
                selected == correctChoiceId {

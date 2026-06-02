@@ -158,8 +158,10 @@ struct SoundExplorerMapView: View {
     private func soundCell(_ cell: SoundExplorerMapModels.SoundCell) -> some View {
         let tint: Color = {
             switch cell.mastery {
-            case .known:    return ColorTokens.Semantic.successBg
-            case .learning: return ColorTokens.Semantic.warningBg
+            // Тёплая палитра приложения вместо зелёного success: освоено = мягкий
+            // коралл (как чип «Знаю»), учу = жёлтый butter, не пробовал = кремовый.
+            case .known:    return ColorTokens.Brand.primaryLo
+            case .learning: return ColorTokens.Brand.butter
             case .untried:  return ColorTokens.Kid.bgSoft
             }
         }()

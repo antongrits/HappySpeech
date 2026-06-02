@@ -130,7 +130,7 @@
         },
         {
           "id": "gr-pl-17",
-          "word": "один яблоко — много яблок",
+          "word": "одно яблоко — много яблок",
           "hint": "Яблоко → яблоки → много яблок. Без окончания!",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-pl-17.m4a"
@@ -151,42 +151,42 @@
         },
         {
           "id": "gr-pl-20",
-          "word": "лист — листья",
+          "word": "один лист — листья",
           "difficulty": 1,
           "audio_file": "Audio/Content/Grammar/gr-pl-20.m4a",
           "hint": "Слова-исключения с чередованием."
         },
         {
           "id": "gr-pl-21",
-          "word": "стул — стулья",
+          "word": "один стул — стулья",
           "difficulty": 1,
           "audio_file": "Audio/Content/Grammar/gr-pl-21.m4a",
           "hint": "Чередование Л—ЛЬЯ."
         },
         {
           "id": "gr-pl-22",
-          "word": "друг — друзья",
+          "word": "один друг — друзья",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-pl-22.m4a",
           "hint": "Чередование Г—ЗЬЯ."
         },
         {
           "id": "gr-pl-23",
-          "word": "брат — братья",
+          "word": "один брат — братья",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-pl-23.m4a",
           "hint": "Мягкое множественное."
         },
         {
           "id": "gr-pl-24",
-          "word": "дерево — деревья",
+          "word": "одно дерево — деревья",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-pl-24.m4a",
           "hint": "Чередование О—ЬЯ."
         },
         {
           "id": "gr-pl-25",
-          "word": "перо — перья",
+          "word": "одно перо — перья",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-pl-25.m4a",
           "hint": "Чередование О—ЬЯ."
