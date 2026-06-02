@@ -47,6 +47,10 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private let contentService: any ContentService
     private let adaptivePlannerService: any AdaptivePlannerService
     private let sessionRepository: any SessionRepository
+    /// Offline-first персистентность + постановка сессии в очередь синка. Опционален —
+    /// при `nil` (legacy preview/test) сессия не сохраняется (как было раньше).
+    /// В `.live()` подключён `LiveSessionPersistenceCoordinator`.
+    private let sessionPersistence: (any SessionPersistenceCoordinating)?
     private let hapticService: any HapticService
     /// Опциональное обнаружение эмоций (on-device, COPPA). Если подключено, голос
     /// ребёнка анализируется после попытки и frustrated/sad ускоряет предложение
@@ -57,6 +61,12 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private var activities: [SessionActivity] = []
     private var currentIndex: Int = 0
     private var sessionStartTime: Date = Date()
+    /// Метаданные текущей сессии для построения `SessionDTO` при сохранении.
+    private var sessionChildId: String = ""
+    private var sessionTargetSound: String = ""
+    /// Гард от двойного сохранения: `completeActivity`→`saveSession` и
+    /// `onDisappear`→`endSessionEarly`→`saveSession` могут сработать оба.
+    private var didSaveSession: Bool = false
     private var errorCount: Int = 0
     private var consecutiveErrors: Int = 0
     private var isPaused: Bool = false
@@ -89,13 +99,15 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         adaptivePlannerService: any AdaptivePlannerService,
         sessionRepository: any SessionRepository,
         hapticService: any HapticService,
-        emotionDetectionService: (any EmotionDetectionServiceProtocol)? = nil
+        emotionDetectionService: (any EmotionDetectionServiceProtocol)? = nil,
+        sessionPersistence: (any SessionPersistenceCoordinating)? = nil
     ) {
         self.contentService = contentService
         self.adaptivePlannerService = adaptivePlannerService
         self.sessionRepository = sessionRepository
         self.hapticService = hapticService
         self.emotionDetectionService = emotionDetectionService
+        self.sessionPersistence = sessionPersistence
     }
 
     // MARK: - SessionShellBusinessLogic
@@ -109,6 +121,9 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         isPaused = false
         fatigueHearts = initialHearts
         consecutiveNegativeEmotions = 0
+        didSaveSession = false
+        sessionChildId = request.childId
+        sessionTargetSound = request.targetSoundId
 
         let activities = await loadActivities(for: request)
         self.activities = activities
@@ -390,12 +405,75 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     }
 
     private func saveSession() async {
-        let totalCompleted = activities.filter { $0.isCompleted }.count
+        // Гард: сохраняем сессию ровно один раз (completeActivity и endSessionEarly
+        // оба ведут сюда). Без него возможна двойная запись + двойной enqueue синка.
+        guard !didSaveSession else { return }
+        didSaveSession = true
+
+        let completed = activities.filter { $0.isCompleted }
+        let totalCompleted = completed.count
         let avgScore = avgScoreValue()
-        logger.info(
-            "Session saved: \(totalCompleted)/\(self.activities.count) avg=\(avgScore, format: .fixed(precision: 2))"
+        // Каждый завершённый шаг = одна «попытка» сессии; correct = score >= 0.5.
+        let totalAttempts = max(totalCompleted, 0)
+        let correctAttempts = completed.filter { ($0.score ?? 0) >= 0.5 }.count
+
+        let dto = SessionDTO(
+            id: UUID().uuidString,
+            childId: sessionChildId,
+            date: Date(),
+            templateType: Self.representativeTemplateType(for: activities),
+            targetSound: sessionTargetSound,
+            stage: CorrectionStage.wordInit.rawValue,
+            durationSeconds: Int(activeElapsedSeconds),
+            totalAttempts: totalAttempts,
+            correctAttempts: correctAttempts,
+            fatigueDetected: detectFatigue(),
+            isSynced: false,
+            attempts: []
         )
-        // Production persistence via sessionRepository goes here (Sprint 12 follow-up).
+
+        logger.info("Session saving: \(totalCompleted)/\(self.activities.count) avg=\(avgScore, format: .fixed(precision: 2))")
+        logger.info("Session attempts=\(totalAttempts) correct=\(correctAttempts)")
+
+        guard let sessionPersistence else {
+            logger.debug("Session not persisted — no SessionPersistenceCoordinator wired (preview/test)")
+            return
+        }
+        await sessionPersistence.persistAndSync(dto)
+    }
+
+    /// Представительный `TemplateType.rawValue` сессии — берём первый завершённый
+    /// шаг (или первый шаг), мапим `GameType` → `TemplateType`. Сессия может быть
+    /// мультишаблонной, но `SessionDTO` хранит один тип (как и AR-персист).
+    private static func representativeTemplateType(for activities: [SessionActivity]) -> String {
+        let representative = activities.first(where: { $0.isCompleted }) ?? activities.first
+        guard let gameType = representative?.gameType else {
+            return TemplateType.listenAndChoose.rawValue
+        }
+        return templateType(from: gameType).rawValue
+    }
+
+    private static func templateType(from gameType: GameType) -> TemplateType {
+        switch gameType {
+        case .listenAndChoose:       return .listenAndChoose
+        case .repeatAfterModel:      return .repeatAfterModel
+        case .minimalPairs:          return .minimalPairs
+        case .dragAndMatch:          return .dragAndMatch
+        case .memory:                return .memory
+        case .bingo:                 return .bingo
+        case .breathing:             return .breathing
+        case .rhythm:                return .rhythm
+        case .sorting:               return .sorting
+        case .puzzleReveal:          return .puzzleReveal
+        case .soundHunter:           return .soundHunter
+        case .narrativeQuest:        return .narrativeQuest
+        case .visualAcoustic:        return .visualAcoustic
+        case .storyCompletion:       return .storyCompletion
+        case .articulationImitation: return .articulationImitation
+        case .arActivity:            return .arActivity
+        case .objectHunt:            return .objectHunt
+        case .letterTracing:         return .letterTracing
+        }
     }
 
     private func avgScoreValue() -> Float {

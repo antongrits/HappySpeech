@@ -58,10 +58,29 @@ final class ParentDailyDigestInteractorTests: XCTestCase {
         }
     }
 
-    func test_initialState_photoMomentPopulated() {
+    func test_initialState_photoMomentEmpty() {
+        // «Момент дня» стартово пуст — раньше был зашит «Аня впервые произнесла Р».
         let sut = makeSUT()
         XCTAssertFalse(sut.state.photoMomentEmoji.isEmpty)
-        XCTAssertFalse(sut.state.photoMomentCaption.isEmpty)
+        XCTAssertTrue(sut.state.photoMomentCaption.isEmpty)
+        XCTAssertFalse(sut.state.hasPhotoMoment)
+    }
+
+    func test_makeState_photoMomentFromRealBestSession() {
+        let sut = makeSUT()
+        let sessions = [
+            makeSession(daysAgo: 0, totalAttempts: 10, correctAttempts: 9)
+        ]
+        let state = sut.makeState(from: sessions)
+        // Реальный момент дня формируется из лучшей сессии (непустой).
+        XCTAssertTrue(state.hasPhotoMoment)
+        XCTAssertFalse(state.photoMomentCaption.isEmpty)
+    }
+
+    func test_makeState_noSessions_emptyPhotoMoment() {
+        let sut = makeSUT()
+        let state = sut.makeState(from: [])
+        XCTAssertFalse(state.hasPhotoMoment)
     }
 
     func test_initialState_tipPopulated() {

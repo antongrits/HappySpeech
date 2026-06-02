@@ -350,6 +350,68 @@ struct CustomWordListData: Sendable, Identifiable, Equatable {
     let updatedAt: Date
 }
 
+// MARK: - FamilyChallengeObject (v15 — еженедельный семейный челлендж)
+//
+// Хранит цель/тип недельного семейного челленджа и недели, за которые
+// награда уже получена. Вклады участников НЕ хранятся здесь — они считаются
+// из реальных сессий детей (ChildProfile + Session) при загрузке экрана.
+// Полностью offline / on-device, parent-контур.
+
+final class FamilyChallengeObject: Object, @unchecked Sendable {
+    /// Primary key — parentId (один активный челлендж на семью).
+    @Persisted(primaryKey: true) var parentId: String = ""
+    /// ChallengeType.rawValue — тип цели (минуты / звуки / игры / дневник).
+    @Persisted var type: String = "totalMinutes"
+    /// Целевое значение в единицах типа челленджа.
+    @Persisted var goal: Int = 300
+    /// Понедельник 00:00 недели, к которой относится текущий челлендж.
+    @Persisted var weekStart: Date = Date()
+    /// Понедельники недель, за которые награда уже получена (claim) — для
+    /// streakWeeks и идемпотентности claimReward.
+    @Persisted var claimedWeekStarts: List<Date>
+}
+
+// MARK: - FamilyChallengeData (Sendable DTO)
+
+struct FamilyChallengeData: Sendable, Equatable {
+    let parentId: String
+    let type: String
+    let goal: Int
+    let weekStart: Date
+    let claimedWeekStarts: [Date]
+}
+
+// MARK: - LyalyaLetterObject (v15 — персистентные «письма от Ляли»)
+//
+// Письма маскота ребёнку (мотивация / поздравление / напоминание). Раньше
+// хранились в in-memory singleton и терялись при перезапуске. Теперь —
+// локальный Realm-объект. Полностью offline / on-device, kid-контур.
+
+final class LyalyaLetterObject: Object, @unchecked Sendable {
+    /// Primary key — стабильный id письма (детерминированный по триггеру+childId).
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var kind: String = "welcome"            // LetterKind.rawValue
+    @Persisted var title: String = ""
+    @Persisted var body: String = ""
+    @Persisted var date: Date = Date()
+    @Persisted var isRead: Bool = false
+    @Persisted var audioFileName: String = ""          // "" = нет аудио
+}
+
+// MARK: - LyalyaLetterData (Sendable DTO)
+
+struct LyalyaLetterData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let kind: String
+    let title: String
+    let body: String
+    let date: Date
+    let isRead: Bool
+    let audioFileName: String?
+}
+
 // MARK: - LexicalItemReviewObject (v11 — v31 Волна D Ф.2 «FSRS-6 spaced repetition»)
 //
 // Per-word review state по алгоритму FSRS-6 (open-spaced-repetition, MIT).
@@ -539,6 +601,9 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
 /// v13: VoiceJournalEntryRealm (VoiceJournal — дневник голоса ребёнка).
 /// v14: CustomizationObject.outfit / .background — выбор наряда и фоновой
 ///      сцены теперь персистится (отражается на всех экранах героя).
+/// v15: FamilyChallengeObject (тип/цель/claimed-недели семейного челленджа) +
+///      LyalyaLetterObject (персистентные «письма от Ляли»). Новые объекты —
+///      Realm создаёт схему автоматически, дефолты заданы в моделях.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 14
+    static let current: UInt64 = 15
 }

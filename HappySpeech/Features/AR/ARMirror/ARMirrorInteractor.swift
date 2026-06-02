@@ -52,7 +52,7 @@ final class ARMirrorInteractor: ARMirrorBusinessLogic {
 
     var presenter: (any ARMirrorPresentationLogic)?
 
-    private let classifier: TonguePostureClassifier
+    private let classifier: any ArticulationConfidenceProviding
     private var exercises: [ARMirrorModels.Exercise] = ARMirrorModels.Exercise.allCases
     private var currentIndex: Int = 0
     private var sustainedStart: Date?
@@ -64,7 +64,10 @@ final class ARMirrorInteractor: ARMirrorBusinessLogic {
     /// Сколько секунд нужно удерживать, чтобы засчитать упражнение.
     private let sustainDuration: TimeInterval = 3.0
 
-    init(classifier: TonguePostureClassifier = TonguePostureClassifier()) {
+    /// По умолчанию — Core ML классификатор поз (``TonguePostureClassifierML``) как
+    /// основной канал; он сам мягко откатывается на rule-based при отсутствии модели
+    /// или низкой уверенности. Тесты/preview могут передать `TonguePostureClassifier`.
+    init(classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()) {
         self.classifier = classifier
     }
 

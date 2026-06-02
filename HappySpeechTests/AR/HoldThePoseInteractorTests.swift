@@ -42,7 +42,9 @@ private final class SpyHoldThePosePresenter: HoldThePosePresentationLogic {
 final class HoldThePoseInteractorTests: XCTestCase {
 
     private func makeSUT() -> (HoldThePoseInteractor, SpyHoldThePosePresenter) {
-        let sut = HoldThePoseInteractor()
+        // Rule-based явно: тест опирается на детерминированные confidence-фикстуры
+        // (прод-дефолт интерактора — Core ML классификатор).
+        let sut = HoldThePoseInteractor(classifier: TonguePostureClassifier())
         let spy = SpyHoldThePosePresenter()
         sut.presenter = spy
         return (sut, spy)

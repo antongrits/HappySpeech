@@ -57,7 +57,7 @@ public struct TonguePostureMLResult: Sendable {
 /// к синтетике. При низкой уверенности — fallback на rule-based.
 ///
 /// Если модель не загружена → автоматический fallback на rule-based `TonguePostureClassifier`.
-public final class TonguePostureClassifierML: @unchecked Sendable {
+public final class TonguePostureClassifierML: ArticulationConfidenceProviding, @unchecked Sendable {
 
     // MARK: - Private state
 
@@ -155,6 +155,36 @@ public final class TonguePostureClassifierML: @unchecked Sendable {
     public func classify(blendshapes: FaceBlendshapes) -> TonguePostureMLResult {
         let features = extractFeatureVector(blendshapes: blendshapes)
         return classify(features: features)
+    }
+
+    // MARK: - ArticulationConfidenceProviding
+
+    /// Минимальная ML-уверенность, ниже которой доверяемся rule-based эвристике.
+    /// Модель обучена на синтетике и не валидирована на детях — поэтому при слабом
+    /// сигнале (или позе вне её 9-классового словаря) детерминированный rule-based
+    /// надёжнее «уверенного» шумного ML-выхода.
+    private static let mlConfidenceFloor: Float = 0.55
+
+    /// 0…1 уверенность, что кадр соответствует `posture`. **ML — основной канал**:
+    /// берём вероятность нужной позы из CoreML-распределения. Rule-based включается
+    /// как fallback, если: модель не загружена; поза отсутствует в ML-словаре
+    /// (`.smile` / `.pucker` нет среди 9 ML-классов); ML-уверенность ниже порога.
+    public func confidence(_ blendshapes: FaceBlendshapes, for posture: ArticulationPosture) -> Float {
+        let ruleBased = fallback.confidence(blendshapes, for: posture)
+
+        // Поза вне ML-словаря → только rule-based (без шумной экстраполяции).
+        guard let mlPosture = TonguePostureML(rawValue: posture.rawValue) else {
+            return ruleBased
+        }
+
+        let result = classify(blendshapes: blendshapes)
+        // `classify` сам отдаёт rule-based-результат при отсутствии модели — тогда
+        // probabilities содержат единственную (предсказанную) позу. Если нужной позы
+        // в карте нет или общая уверенность мала — доверяемся rule-based.
+        guard let mlProb = result.probabilities[mlPosture], result.confidence >= Self.mlConfidenceFloor else {
+            return ruleBased
+        }
+        return mlProb
     }
 
     // MARK: - Feature extraction

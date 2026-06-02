@@ -370,9 +370,11 @@ struct WorldMapView: View {
         let presenter = WorldMapPresenter()
         let router = WorldMapRouter()
 
-        // v32 P2 — даём интерактору доступ к childRepository, чтобы
-        // smart-unlock считал прогресс реального ребёнка, а не из seed.
+        // Даём интерактору доступ к реальным репозиториям: childRepository —
+        // источник progressSummary (прогресс зон), sessionRepository — источник
+        // серии активных дней. Без них карта остаётся честно пустой.
         interactor.childRepository = container.childRepository
+        interactor.sessionRepository = container.sessionRepository
         interactor.presenter = presenter
         presenter.display = display
         router.onDismiss = onDismiss

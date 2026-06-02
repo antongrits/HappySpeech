@@ -57,8 +57,9 @@ final class ParentDailyDigestInteractor {
     // MARK: - Aggregation
 
     /// Строит `ViewState` из реальных сессий: минуты и точность за сегодня,
-    /// серия активных дней подряд. Текстовый момент дня и совет берутся из seed
-    /// (контент-движок советов — отдельная фича), KPI обновляются по фактам.
+    /// серия активных дней подряд. «Момент дня» формируется из реальной лучшей
+    /// сессии сегодня (или пуст, если занятий не было) — никакого зашитого
+    /// «Аня впервые произнесла Р». Совет — курируемый методический контент.
     func makeState(from sessions: [SessionDTO]) -> ParentDailyDigestModels.ViewState {
         let today = calendar.startOfDay(for: Date())
         let todaySessions = sessions.filter { calendar.isDate($0.date, inSameDayAs: today) }
@@ -75,6 +76,7 @@ final class ParentDailyDigestInteractor {
         let streak = activeDayStreak(in: sessions, today: today)
 
         var newState = ParentDailyDigestModels.ViewState.initial
+        newState.photoMomentCaption = makePhotoMoment(from: todaySessions)
         newState.kpis = [
             ParentDailyDigestModels.KPI(
                 id: "min",
@@ -108,6 +110,23 @@ final class ParentDailyDigestInteractor {
             )
         ]
         return newState
+    }
+
+    /// Формирует «момент дня» из реальной лучшей сессии сегодня. Если занятий
+    /// не было — пустая строка (карточка скрывается). Никакой фабрикации имён.
+    func makePhotoMoment(from todaySessions: [SessionDTO]) -> String {
+        guard let best = todaySessions
+            .filter({ $0.totalAttempts > 0 })
+            .max(by: { $0.successRate < $1.successRate }),
+            !best.targetSound.isEmpty else {
+            return ""
+        }
+        let percent = Int((best.successRate * 100).rounded())
+        return String(
+            format: String(localized: "parentDigest.moment.bestSound %@ %lld"),
+            best.targetSound,
+            percent
+        )
     }
 
     /// Считает серию активных дней подряд, заканчивающуюся сегодня или вчера.

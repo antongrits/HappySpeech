@@ -12,8 +12,11 @@ import XCTest
 @MainActor
 final class ParentMoodCheckInInteractorTests: XCTestCase {
 
+    /// Изолированный UserDefaults на каждый SUT — история чек-инов персистится,
+    /// не должна протекать между тестами / на устройство.
     private func makeSUT() -> ParentMoodCheckInInteractor {
-        ParentMoodCheckInInteractor()
+        let suite = UserDefaults(suiteName: "test.parentMood.\(UUID().uuidString)")!
+        return ParentMoodCheckInInteractor(defaults: suite)
     }
 
     // MARK: - Initial state
@@ -81,6 +84,30 @@ final class ParentMoodCheckInInteractorTests: XCTestCase {
         if let first, let second = sut.lastSavedAt {
             XCTAssertGreaterThanOrEqual(second, first)
         }
+    }
+
+    // MARK: - Persistence
+
+    func test_save_appendsToHistory() {
+        let sut = makeSUT()
+        sut.entry.mood = .tired
+        sut.entry.note = "устал"
+        sut.save()
+        XCTAssertEqual(sut.history.count, 1)
+        XCTAssertEqual(sut.history.first?.mood, ParentMoodCheckInModels.Mood.tired.rawValue)
+        XCTAssertEqual(sut.history.first?.note, "устал")
+    }
+
+    func test_save_persistsAcrossInstances() {
+        let suite = UserDefaults(suiteName: "test.parentMood.persist.\(UUID().uuidString)")!
+        let sut1 = ParentMoodCheckInInteractor(defaults: suite)
+        sut1.entry.mood = .energised
+        sut1.save()
+        // Новый интерактор читает сохранённую историю.
+        let sut2 = ParentMoodCheckInInteractor(defaults: suite)
+        XCTAssertEqual(sut2.history.count, 1)
+        XCTAssertEqual(sut2.history.first?.mood, ParentMoodCheckInModels.Mood.energised.rawValue)
+        XCTAssertNotNil(sut2.lastSavedAt)
     }
 
     // MARK: - Mood model

@@ -10,57 +10,23 @@ protocol LyalyaMailBusinessLogic: AnyObject {
     func delete(_ request: LyalyaMailModels.Delete.Request) async
 }
 
-// MARK: - LyalyaMailStore (in-memory persistence)
-
-/// Хранилище писем — простой in-memory dictionary, attached to AppContainer'у
-/// в будущем. Сейчас singleton-actor, чтобы между разными view-инстансами
-/// сохранялись «прочитано» и «удалено» в рамках одной сессии.
-///
-/// Будущее: заменить на `LyalyaLetterRealm` (RealmActor extension) без
-/// изменения публичного контракта store'а.
-actor LyalyaMailStore {
-
-    static let shared = LyalyaMailStore()
-
-    private var lettersByChild: [String: [LyalyaLetterDTO]] = [:]
-
-    func letters(for childId: String) -> [LyalyaLetterDTO] {
-        if let existing = lettersByChild[childId] {
-            return existing.sorted { $0.date > $1.date }
-        }
-        let seeded = LyalyaMailSeed.seedLetters(for: childId)
-        lettersByChild[childId] = seeded
-        return seeded.sorted { $0.date > $1.date }
-    }
-
-    func markRead(letterId: UUID, childId: String) -> LyalyaLetterDTO? {
-        guard var arr = lettersByChild[childId],
-              let idx = arr.firstIndex(where: { $0.id == letterId })
-        else { return nil }
-        arr[idx].isRead = true
-        lettersByChild[childId] = arr
-        return arr[idx]
-    }
-
-    func remove(letterId: UUID, childId: String) {
-        guard var arr = lettersByChild[childId] else { return }
-        arr.removeAll { $0.id == letterId }
-        lettersByChild[childId] = arr
-    }
-}
-
 // MARK: - LyalyaMailInteractor
 
-/// VIP-Interactor для «Письма от Ляли». Загружает список писем из in-memory
-/// store, отмечает прочитанные, удаляет. Сидирует 5 стартовых писем при
-/// первом запросе по `childId`.
+/// VIP-Interactor для «Письма от Ляли».
+///
+/// Письма персистятся в Realm (`LyalyaLetterObject`) — «прочитано»/«удалено»
+/// больше не теряются при перезапуске. Письма генерируются по РЕАЛЬНЫМ событиям
+/// ребёнка (приветствие при старте, серия N дней, первый чистый звук), а не из
+/// статичного фейк-seed. Генерация идемпотентна (стабильные id по триггеру).
 @MainActor
 final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
 
     var presenter: (any LyalyaMailPresentationLogic)?
 
     private let childId: String
-    private let store: LyalyaMailStore
+    private let realmActor: RealmActor?
+    private let childRepository: (any ChildRepository)?
+    private let sessionRepository: (any SessionRepository)?
 
     private let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -69,17 +35,27 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
 
     init(
         childId: String,
-        store: LyalyaMailStore = .shared
+        realmActor: RealmActor? = nil,
+        childRepository: (any ChildRepository)? = nil,
+        sessionRepository: (any SessionRepository)? = nil
     ) {
         self.childId = childId
-        self.store = store
+        self.realmActor = realmActor
+        self.childRepository = childRepository
+        self.sessionRepository = sessionRepository
     }
 
     // MARK: - Load
 
     func loadMail(_ request: LyalyaMailModels.LoadMail.Request) async {
         logger.info("loadMail childId=\(request.childId, privacy: .private)")
-        let letters = await store.letters(for: request.childId)
+
+        // 1. По реальным событиям ребёнка генерируем и идемпотентно сохраняем
+        //    новые письма (приветствие / серия / первый чистый звук).
+        await generateEventLetters(childId: request.childId)
+
+        // 2. Читаем письма из Realm. Если репозитория нет (preview) — пусто.
+        let letters = await fetchLetters(childId: request.childId)
         await presenter?.presentLetters(
             response: .init(childId: request.childId, letters: letters)
         )
@@ -89,10 +65,11 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
 
     func openLetter(_ request: LyalyaMailModels.OpenLetter.Request) async {
         logger.info("openLetter id=\(request.letterId, privacy: .public)")
-        guard let updated = await store.markRead(letterId: request.letterId, childId: childId) else {
+        guard let realmActor else { return }
+        guard let updated = await realmActor.markLyalyaLetterRead(letterId: request.letterId.uuidString) else {
             return
         }
-        await presenter?.presentOpenedLetter(response: .init(letter: updated))
+        await presenter?.presentOpenedLetter(response: .init(letter: updated.asDTO))
         // Перезагружаем список — счётчик непрочитанных обновится.
         await loadMail(.init(childId: childId))
     }
@@ -101,106 +78,121 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
 
     func delete(_ request: LyalyaMailModels.Delete.Request) async {
         logger.info("delete letter id=\(request.letterId, privacy: .public)")
-        await store.remove(letterId: request.letterId, childId: childId)
+        if let realmActor {
+            _ = await realmActor.deleteLyalyaLetter(letterId: request.letterId.uuidString)
+        }
         await presenter?.presentDeleted(response: .init(removedId: request.letterId))
         await loadMail(.init(childId: childId))
     }
-}
 
-// MARK: - LyalyaMailSeed
+    // MARK: - Private
 
-/// 5 стартовых seed-писем — без зависимости на дату, тёплый детский тон.
-enum LyalyaMailSeed {
-
-    /// Используем фиксированный namespace UUID per-childId, чтобы id писем
-    /// были стабильны между запусками preview и не плодились дубликаты при
-    /// hot reload.
-    static func seedLetters(for childId: String) -> [LyalyaLetterDTO] {
-        let now = Date()
-        let calendar = Calendar.current
-        func date(daysAgo: Int) -> Date {
-            calendar.date(byAdding: .day, value: -daysAgo, to: now) ?? now
-        }
-        return [
-            LyalyaLetterDTO(
-                id: stableUUID("welcome", childId: childId),
-                childId: childId,
-                kind: .welcome,
-                title: "Привет, мой друг!",
-                body: """
-                Я так рада, что мы будем играть вместе! Со мной ты научишься говорить \
-                красиво и чётко. Ты — настоящий герой звуков. Жду тебя завтра!
-                """,
-                date: date(daysAgo: 0),
-                isRead: false,
-                audioFileName: nil
-            ),
-            LyalyaLetterDTO(
-                id: stableUUID("streak3", childId: childId),
-                childId: childId,
-                kind: .streak,
-                title: "Ура! Три дня подряд!",
-                body: """
-                Ты занимался со мной уже три дня! Это очень круто. Маленькие шажки \
-                каждый день — и звуки слушаются всё лучше. Я тобой горжусь!
-                """,
-                date: date(daysAgo: 1),
-                isRead: false,
-                audioFileName: nil
-            ),
-            LyalyaLetterDTO(
-                id: stableUUID("firstSound", childId: childId),
-                childId: childId,
-                kind: .firstSound,
-                title: "Звук получился!",
-                body: """
-                Сегодня у тебя впервые получился чистый звук. Я слышала и хлопала \
-                в ладоши! Завтра попробуем ещё — и будет ещё чище.
-                """,
-                date: date(daysAgo: 2),
-                isRead: true,
-                audioFileName: nil
-            ),
-            LyalyaLetterDTO(
-                id: stableUUID("sharedFamily", childId: childId),
-                childId: childId,
-                kind: .family,
-                title: "Покажи маме и папе",
-                body: """
-                Расскажи маме или папе свой любимый звук! Им будет так приятно \
-                услышать твой голос. А мне — посмотреть, как вы вместе радуетесь.
-                """,
-                date: date(daysAgo: 3),
-                isRead: true,
-                audioFileName: nil
-            ),
-            LyalyaLetterDTO(
-                id: stableUUID("weekendReminder", childId: childId),
-                childId: childId,
-                kind: .weekendReminder,
-                title: "Выходные — время историй",
-                body: """
-                Сегодня выходной! Давай вместе сочиним коротенькую историю. \
-                Зайди в раздел игр — там тебя ждёт новое задание.
-                """,
-                date: date(daysAgo: 4),
-                isRead: true,
-                audioFileName: nil
-            )
-        ]
+    private func fetchLetters(childId: String) async -> [LyalyaLetterDTO] {
+        guard let realmActor else { return [] }
+        let data = await realmActor.fetchLyalyaLetters(childId: childId)
+        return data.map { $0.asDTO }.sorted { $0.date > $1.date }
     }
 
-    /// Детерминированный UUID на основе тэга письма + childId.
-    /// Используем простой hash — он стабилен внутри одной версии Swift,
-    /// этого достаточно для seed данных.
-    private static func stableUUID(_ tag: String, childId: String) -> UUID {
-        let combined = "lyalya.\(tag).\(childId)"
+    /// Генерирует письма по реальным событиям и идемпотентно сохраняет их.
+    /// Каждое письмо имеет стабильный id (триггер + childId) — повторная
+    /// генерация не плодит дубликаты и не сбрасывает «прочитано».
+    private func generateEventLetters(childId: String) async {
+        guard let realmActor else { return }
+
+        // Приветственное письмо — всегда (первый вход в почту).
+        await realmActor.insertLyalyaLetterIfAbsent(
+            LyalyaMailLetters.welcome(childId: childId)
+        )
+
+        // Письма по реальным данным ребёнка.
+        let profile = try? await childRepository?.fetch(id: childId)
+        let sessions = (try? await sessionRepository?.fetchAll(childId: childId)) ?? []
+
+        // Серия N дней подряд — письмо на достигнутых рубежах.
+        let streak = profile?.currentStreak ?? 0
+        for milestone in [3, 7, 14, 30] where streak >= milestone {
+            await realmActor.insertLyalyaLetterIfAbsent(
+                LyalyaMailLetters.streak(childId: childId, days: milestone)
+            )
+        }
+
+        // Первый «чистый» звук — успешная сессия (successRate ≥ 0.85).
+        if sessions.contains(where: { $0.totalAttempts > 0 && $0.successRate >= 0.85 }) {
+            await realmActor.insertLyalyaLetterIfAbsent(
+                LyalyaMailLetters.firstSound(childId: childId)
+            )
+        }
+    }
+}
+
+// MARK: - LyalyaLetterData → DTO
+
+private extension LyalyaLetterData {
+    var asDTO: LyalyaLetterDTO {
+        LyalyaLetterDTO(
+            id: UUID(uuidString: id) ?? UUID(),
+            childId: childId,
+            kind: LetterKind(rawValue: kind) ?? .welcome,
+            title: title,
+            body: body,
+            date: date,
+            isRead: isRead,
+            audioFileName: audioFileName
+        )
+    }
+}
+
+// MARK: - LyalyaMailLetters (event-driven content)
+
+/// Фабрика писем по реальным событиям. Тёплый детский тон, без сложных оборотов.
+/// id стабильны (детерминированы по триггеру + childId) — идемпотентность.
+enum LyalyaMailLetters {
+
+    static func welcome(childId: String) -> LyalyaLetterData {
+        LyalyaLetterData(
+            id: stableId("welcome", childId: childId),
+            childId: childId,
+            kind: LetterKind.welcome.rawValue,
+            title: String(localized: "lyalyaMail.welcome.title"),
+            body: String(localized: "lyalyaMail.welcome.body"),
+            date: Date(),
+            isRead: false,
+            audioFileName: nil
+        )
+    }
+
+    static func streak(childId: String, days: Int) -> LyalyaLetterData {
+        LyalyaLetterData(
+            id: stableId("streak\(days)", childId: childId),
+            childId: childId,
+            kind: LetterKind.streak.rawValue,
+            title: String(format: String(localized: "lyalyaMail.streak.title %lld"), days),
+            body: String(format: String(localized: "lyalyaMail.streak.body %lld"), days),
+            date: Date(),
+            isRead: false,
+            audioFileName: nil
+        )
+    }
+
+    static func firstSound(childId: String) -> LyalyaLetterData {
+        LyalyaLetterData(
+            id: stableId("firstSound", childId: childId),
+            childId: childId,
+            kind: LetterKind.firstSound.rawValue,
+            title: String(localized: "lyalyaMail.firstSound.title"),
+            body: String(localized: "lyalyaMail.firstSound.body"),
+            date: Date(),
+            isRead: false,
+            audioFileName: nil
+        )
+    }
+
+    /// Детерминированный строковый id (UUID-форма) по триггеру + childId.
+    private static func stableId(_ tag: String, childId: String) -> String {
+        let combined = "lyalya.letter.\(tag).\(childId)"
         var hasher = Hasher()
         hasher.combine(combined)
         let hash = UInt64(bitPattern: Int64(hasher.finalize()))
-        // Делим хэш на два 64-битных значения для UUID-конструктора.
-        let lo = UInt8.random(in: 0...255)
-        _ = lo // unused — мы хотим стабильность.
         let bytes: [UInt8] = (0..<16).map { i in
             UInt8((hash >> UInt64((i % 8) * 8)) & 0xFF)
         }
@@ -209,6 +201,6 @@ enum LyalyaMailSeed {
             bytes[4], bytes[5], bytes[6], bytes[7],
             bytes[8], bytes[9], bytes[10], bytes[11],
             bytes[12], bytes[13], bytes[14], bytes[15]
-        ))
+        )).uuidString
     }
 }

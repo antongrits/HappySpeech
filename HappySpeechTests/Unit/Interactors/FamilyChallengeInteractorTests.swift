@@ -36,6 +36,7 @@ final class FamilyChallengeInteractorTests: XCTestCase {
 
     private var spy: SpyFamilyChallengePresenter!
     private var childRepo: SpyChildRepository!
+    private var sessionRepo: SpySessionRepository!
 
     override func setUp() async throws {
         try await super.setUp()
@@ -44,11 +45,17 @@ final class FamilyChallengeInteractorTests: XCTestCase {
             TestDataBuilder.childProfile(id: "child-1", name: "Миша", parentId: "parent-1"),
             TestDataBuilder.childProfile(id: "child-2", name: "Соня", parentId: "parent-1")
         ])
+        // Реальные сессии текущей недели: child-1 = 10 мин (600s), child-2 = 5 мин.
+        sessionRepo = SpySessionRepository(sessions: [
+            TestDataBuilder.session(childId: "child-1", date: Date(), durationSeconds: 600),
+            TestDataBuilder.session(childId: "child-2", date: Date(), durationSeconds: 300)
+        ])
     }
 
     override func tearDown() async throws {
         spy = nil
         childRepo = nil
+        sessionRepo = nil
         try await super.tearDown()
     }
 
@@ -56,6 +63,7 @@ final class FamilyChallengeInteractorTests: XCTestCase {
         let sut = FamilyChallengeInteractor(
             realmActor: RealmActor(),
             childRepository: childRepo,
+            sessionRepository: sessionRepo,
             isKidContext: isKidContext
         )
         sut.presenter = spy
@@ -98,13 +106,37 @@ final class FamilyChallengeInteractorTests: XCTestCase {
         let sut = makeSUT()
         await sut.loadChallenge(.init(parentId: "parent-1"))
         let contribs = spy.lastChallengeResponse?.challenge.contributions ?? []
-        XCTAssertFalse(contribs.isEmpty)
+        // Реальные дети семьи (Миша + Соня), без dummy-вкладов.
+        XCTAssertEqual(contribs.count, 2)
+        XCTAssertTrue(contribs.allSatisfy(\.isChild))
+        XCTAssertEqual(Set(contribs.map(\.memberName)), ["Миша", "Соня"])
     }
 
-    func test_loadChallenge_streakWeeksIsThree() async {
+    func test_loadChallenge_contributionsReflectRealWeeklyMinutes() async {
         let sut = makeSUT()
         await sut.loadChallenge(.init(parentId: "parent-1"))
-        XCTAssertEqual(spy.lastChallengeResponse?.challenge.streakWeeks, 3)
+        let contribs = spy.lastChallengeResponse?.challenge.contributions ?? []
+        // child-1 = 600s → 10 мин, child-2 = 300s → 5 мин.
+        XCTAssertEqual(contribs.first(where: { $0.id == "child-1" })?.value, 10)
+        XCTAssertEqual(contribs.first(where: { $0.id == "child-2" })?.value, 5)
+        // current = сумма реальных вкладов.
+        XCTAssertEqual(spy.lastChallengeResponse?.challenge.current, 15)
+    }
+
+    func test_loadChallenge_noChildren_emptyContributions() async {
+        childRepo = SpyChildRepository(children: [])
+        let sut = makeSUT()
+        await sut.loadChallenge(.init(parentId: "parent-1"))
+        // Честное пустое состояние: нет детей → нет вкладов, прогресс 0.
+        XCTAssertTrue(spy.lastChallengeResponse?.challenge.contributions.isEmpty ?? false)
+        XCTAssertEqual(spy.lastChallengeResponse?.challenge.current, 0)
+    }
+
+    func test_loadChallenge_streakWeeksIsZeroForFreshChallenge() async {
+        // Свежий челлендж без закрытых недель → серия 0 (раньше был зашит 3).
+        let sut = makeSUT()
+        await sut.loadChallenge(.init(parentId: "parent-1"))
+        XCTAssertEqual(spy.lastChallengeResponse?.challenge.streakWeeks, 0)
     }
 
     // MARK: - claimReward

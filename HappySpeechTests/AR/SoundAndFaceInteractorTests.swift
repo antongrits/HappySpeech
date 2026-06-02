@@ -40,7 +40,9 @@ private final class SpySoundAndFacePresenter: SoundAndFacePresentationLogic {
 final class SoundAndFaceInteractorTests: XCTestCase {
 
     private func makeSUT() -> (SoundAndFaceInteractor, SpySoundAndFacePresenter) {
-        let sut = SoundAndFaceInteractor()
+        // Rule-based явно: тест опирается на детерминированные confidence-фикстуры
+        // (прод-дефолт интерактора — Core ML классификатор).
+        let sut = SoundAndFaceInteractor(classifier: TonguePostureClassifier())
         let spy = SpySoundAndFacePresenter()
         sut.presenter = spy
         return (sut, spy)

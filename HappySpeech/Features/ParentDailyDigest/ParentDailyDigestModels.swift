@@ -23,15 +23,22 @@ enum ParentDailyDigestModels {
         var photoMomentCaption: String
         var tip: Tip
 
+        /// Есть ли непустой «момент дня» (показывать карточку только тогда).
+        var hasPhotoMoment: Bool { !photoMomentCaption.isEmpty }
+
+        /// Стартовое состояние с НУЛЕВЫМИ KPI (без зашитых «8 мин»/«82%»/«5 дн»).
+        /// Реальные KPI и «момент дня» подставляет `Interactor.makeState(from:)`
+        /// из фактических сессий. `tip` — курируемый методический совет
+        /// (легитимный контент, не фабрикация статистики).
         static let initial = ViewState(
             kpis: [
-                KPI(id: "min", icon: "clock.fill", value: "8 мин", label: "Сегодня"),
-                KPI(id: "score", icon: "star.fill", value: "82%", label: "Точность"),
-                KPI(id: "streak", icon: "flame.fill", value: "5 дн", label: "Серия"),
-                KPI(id: "stickers", icon: "rosette", value: "3", label: "Наклейки")
+                KPI(id: "min", icon: "clock.fill", value: "—", label: "Сегодня"),
+                KPI(id: "score", icon: "star.fill", value: "—", label: "Точность"),
+                KPI(id: "streak", icon: "flame.fill", value: "—", label: "Серия"),
+                KPI(id: "sessions", icon: "checkmark.seal.fill", value: "—", label: "Занятий")
             ],
             photoMomentEmoji: "🌟",
-            photoMomentCaption: "Аня впервые произнесла «Р» в слове «рак»",
+            photoMomentCaption: "",
             tip: Tip(
                 text: "Хвалите ребёнка за усилия, а не за результат — это поддерживает мотивацию.",
                 author: "Ольга Логопед"

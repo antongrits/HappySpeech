@@ -85,11 +85,48 @@ final class RewardsInteractorTests: XCTestCase {
         }
     }
 
-    private func makeSUT() -> (RewardsInteractor, SpyPresenter) {
-        let sut = RewardsInteractor()
+    /// Снимок-фикстура: полный каталог стикеров с парой разблокированных
+    /// (animals.dog — новый, animals.cat — уже заявлен), достижения и серия 7.
+    private func makeSnapshot(streak: Int = 7) -> RewardsSnapshot {
+        var stickers = RewardsCatalog.lockedStickers()
+        if let i = stickers.firstIndex(where: { $0.id == "animals.dog" }) {
+            var s = stickers[i]
+            s.isUnlocked = true
+            s.isNew = true
+            stickers[i] = s
+        }
+        if let i = stickers.firstIndex(where: { $0.id == "animals.cat" }) {
+            var s = stickers[i]
+            s.isUnlocked = true
+            s.isNew = false
+            stickers[i] = s
+        }
+        return RewardsSnapshot(
+            stickers: stickers,
+            achievements: RewardsCatalog.lockedAchievements(),
+            wallet: StarsWallet(totalEarned: 40, totalSpent: 0),
+            currentStreak: streak
+        )
+    }
+
+    private func makeSUT(streak: Int = 7) -> (RewardsInteractor, SpyPresenter) {
+        let repo = MockRewardsRepository(snapshot: makeSnapshot(streak: streak))
+        let sut = RewardsInteractor(repository: repo)
         let spy = SpyPresenter()
         sut.presenter = spy
         return (sut, spy)
+    }
+
+    /// Загружает награды и дожидается применения async-снимка из репозитория.
+    private func loadAndSettle(
+        _ sut: RewardsInteractor,
+        childId: String = "child-1",
+        forceReload: Bool = false
+    ) async {
+        sut.loadRewards(.init(childId: childId, forceReload: forceReload))
+        // Снимок применяется в отдельном Task — даём ему отработать.
+        await Task.yield()
+        await Task.yield()
     }
 
     // MARK: - 1. loadRewards вызывает presenter со стикерами
@@ -162,10 +199,10 @@ final class RewardsInteractorTests: XCTestCase {
 
     // MARK: - 8. claimReward снимает флаг isNew
 
-    func test_claimReward_clearsIsNew() {
+    func test_claimReward_clearsIsNew() async {
         let (sut, spy) = makeSUT()
-        sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        // star.first и animal.cat помечены isNew: true в seed
+        await loadAndSettle(sut)
+        // animals.dog помечен isNew: true в снимке репозитория
         sut.claimReward(.init(id: "animals.dog"))
         XCTAssertTrue(spy.claimRewardCalled)
         XCTAssertFalse(spy.lastClaimReward?.sticker.isNew ?? true)
@@ -183,10 +220,10 @@ final class RewardsInteractorTests: XCTestCase {
 
     // MARK: - 10. claimReward уже заявленного стикера → presentOpenSticker
 
-    func test_claimReward_alreadyClaimed_presentsOpenSticker() {
+    func test_claimReward_alreadyClaimed_presentsOpenSticker() async {
         let (sut, spy) = makeSUT()
-        sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        // animals.cat — isNew: false в seed
+        await loadAndSettle(sut)
+        // animals.cat — isNew: false в снимке
         sut.claimReward(.init(id: "animals.cat"))
         XCTAssertTrue(spy.openStickerCalled)
         XCTAssertFalse(spy.claimRewardCalled)
@@ -285,22 +322,22 @@ final class RewardsInteractorTests: XCTestCase {
 
     // MARK: - 16. claimStreakReward
 
-    func test_claimStreakReward_validStreak_succeeds() {
+    func test_claimStreakReward_validStreak_succeeds() async {
         // Свежий suite чтобы не было ранее заявленных streak
         UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
-        let (sut, spy) = makeSUT()
-        sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        // currentStreak = 7 в init → можно заявить 7 дней
+        let (sut, spy) = makeSUT(streak: 7)
+        await loadAndSettle(sut)
+        // currentStreak = 7 из снимка → можно заявить 7 дней
         sut.claimStreakReward(.init(streakDays: 7))
         XCTAssertTrue(spy.claimStreakRewardCalled)
         XCTAssertEqual(spy.lastClaimStreakReward?.reward.streakDays, 7)
         UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
     }
 
-    func test_claimStreakReward_insufficientStreak_callsFailure() {
+    func test_claimStreakReward_insufficientStreak_callsFailure() async {
         UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
-        let (sut, spy) = makeSUT()
-        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        let (sut, spy) = makeSUT(streak: 7)
+        await loadAndSettle(sut)
         // currentStreak = 7 < 30 → недостаточно
         sut.claimStreakReward(.init(streakDays: 30))
         XCTAssertTrue(spy.failureCalled)
@@ -308,10 +345,10 @@ final class RewardsInteractorTests: XCTestCase {
         UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
     }
 
-    func test_claimStreakReward_alreadyClaimed_callsFailure() {
+    func test_claimStreakReward_alreadyClaimed_callsFailure() async {
         UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
-        let (sut, spy) = makeSUT()
-        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        let (sut, spy) = makeSUT(streak: 7)
+        await loadAndSettle(sut)
         sut.claimStreakReward(.init(streakDays: 7))
         spy.failureCalled = false
         spy.claimStreakRewardCalled = false

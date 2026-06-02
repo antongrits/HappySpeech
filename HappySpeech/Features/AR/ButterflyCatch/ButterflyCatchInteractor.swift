@@ -46,9 +46,15 @@ final class ButterflyCatchInteractor: ButterflyCatchBusinessLogic {
 
     var presenter: (any ButterflyCatchPresentationLogic)?
 
-    private let classifier = TonguePostureClassifier()
+    /// Core ML классификатор поз как основной канал (graceful fallback на rule-based).
+    private let classifier: any ArticulationConfidenceProviding
     private var totalCaught = 0
     private var activeButterflies: [UUID: ButterflyCatchModels.Butterfly] = [:]
+
+    /// Прод-дефолт — Core ML классификатор; тесты/preview передают rule-based для детерминизма.
+    init(classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()) {
+        self.classifier = classifier
+    }
 
     func startGame(_ request: ButterflyCatchModels.StartGame.Request) {
         totalCaught = 0

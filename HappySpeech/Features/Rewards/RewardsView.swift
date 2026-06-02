@@ -437,7 +437,10 @@ struct RewardsView: View {
 
         let presenter = RewardsPresenter()
         presenter.display = display
-        let interactor = RewardsInteractor()
+        let interactor = RewardsInteractor(
+            repository: container.rewardsRepository,
+            realmActor: container.realmActor
+        )
         interactor.presenter = presenter
         let router = RewardsRouter()
         router.onDismiss = { dismiss() }

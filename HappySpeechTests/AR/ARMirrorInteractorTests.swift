@@ -41,7 +41,9 @@ private final class SpyARMirrorPresenter: ARMirrorPresentationLogic {
 final class ARMirrorInteractorTests: XCTestCase {
 
     private func makeSUT() -> (ARMirrorInteractor, SpyARMirrorPresenter) {
-        let sut = ARMirrorInteractor()
+        // Явно rule-based: тест опирается на детерминированные confidence по
+        // FaceBlendshapes-фикстурам. Прод-дефолт интерактора — Core ML классификатор.
+        let sut = ARMirrorInteractor(classifier: TonguePostureClassifier())
         let spy = SpyARMirrorPresenter()
         sut.presenter = spy
         return (sut, spy)

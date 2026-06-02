@@ -8,9 +8,9 @@ import Foundation
 //
 // Контур: kid. Все письма — на русском, тёплый тон, без сложных оборотов.
 //
-// Persistence: in-memory store (`LyalyaMailStore`). Realm-схема
-// `LyalyaLetterRealm` будет добавлена в следующей итерации без изменения
-// сигнатур Interactor'а.
+// Persistence: Realm (`LyalyaLetterObject` через RealmActor). «Прочитано»/
+// «удалено» сохраняются между запусками. Письма генерируются по реальным
+// событиям ребёнка (см. LyalyaMailLetters в Interactor).
 
 enum LyalyaMailModels {
 

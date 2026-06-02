@@ -47,7 +47,9 @@ private final class SpyMimicLyalyaPresenter: MimicLyalyaPresentationLogic {
 final class MimicLyalyaInteractorTests: XCTestCase {
 
     private func makeSUT() -> (MimicLyalyaInteractor, SpyMimicLyalyaPresenter) {
-        let sut = MimicLyalyaInteractor()
+        // Rule-based явно: тест опирается на детерминированные confidence-фикстуры
+        // (прод-дефолт интерактора — Core ML классификатор).
+        let sut = MimicLyalyaInteractor(classifier: TonguePostureClassifier())
         let spy = SpyMimicLyalyaPresenter()
         sut.presenter = spy
         return (sut, spy)

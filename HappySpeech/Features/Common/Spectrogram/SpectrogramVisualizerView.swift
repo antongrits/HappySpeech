@@ -190,7 +190,7 @@ public struct SpectrogramVisualizerView: View {
     private var recordingIndicator: some View {
         HStack(spacing: 4) {
             Circle()
-                .fill(.red)
+                .fill(ColorTokens.Brand.primary)
                 .frame(width: 6, height: 6)
                 .opacity(isRecording ? 1.0 : 0.0)
 

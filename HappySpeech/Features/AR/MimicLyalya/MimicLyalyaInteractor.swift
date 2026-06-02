@@ -49,7 +49,10 @@ protocol MimicLyalyaBusinessLogic: AnyObject {
 final class MimicLyalyaInteractor: MimicLyalyaBusinessLogic {
 
     var presenter: (any MimicLyalyaPresentationLogic)?
-    private let classifier = TonguePostureClassifier()
+    /// Core ML классификатор поз как основной канал (graceful fallback на rule-based).
+    /// MimicLyalya использует .smile/.pucker — их нет в ML-словаре, классификатор
+    /// сам отдаёт rule-based для этих поз.
+    private let classifier: any ArticulationConfidenceProviding
     private let postureCycle: [ArticulationPosture] = [.smile, .pucker, .cupShape, .tongueUp, .mushroom]
     private var currentRound: Int = 0
     private var totalRounds: Int = 5
@@ -58,6 +61,11 @@ final class MimicLyalyaInteractor: MimicLyalyaBusinessLogic {
     private var currentHandTarget: HandPose? = nil
     // Порядок чередования: чётные раунды — лицевые, нечётные — жестовые
     private let handPoseCycle: [HandPose] = [.openPalm, .point, .fist, .wave, .thumbsUp]
+
+    /// Прод-дефолт — Core ML классификатор; тесты/preview передают rule-based для детерминизма.
+    init(classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()) {
+        self.classifier = classifier
+    }
 
     func startGame(_ request: MimicLyalyaModels.StartGame.Request) {
         totalRounds = request.rounds

@@ -300,7 +300,12 @@ struct LyalyaMailView: View {
         guard !didBootstrap else { return }
         didBootstrap = true
         let presenter = LyalyaMailPresenter(displayLogic: holder)
-        let interactor = LyalyaMailInteractor(childId: childId)
+        let interactor = LyalyaMailInteractor(
+            childId: childId,
+            realmActor: container.realmActor,
+            childRepository: container.childRepository,
+            sessionRepository: container.sessionRepository
+        )
         interactor.presenter = presenter
         let router = LyalyaMailRouter()
         router.coordinator = coordinator

@@ -323,24 +323,12 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
         return Self.defaultItems(for: sound)
     }
 
+    /// Каноничный id пака для звука. Делегирует единому ``SoundRomanizer`` — он
+    /// гарантирует, что Ц→`sound_c_v1`, Х→`sound_kh_v1`, Й→`sound_y_v1` резолвятся в
+    /// реально существующие файлы `Content/Seed/`. Ранее локальный switch строил
+    /// `sound_ts_v1`/`sound_h_v1` (нет файлов) → контент Ц/Х падал в узкий fallback.
     private static func canonicalPackId(for sound: String) -> String {
-        let latin: String
-        switch sound.lowercased() {
-        case "с", "s":  latin = "s"
-        case "з", "z":  latin = "z"
-        case "ц", "c":  latin = "ts"
-        case "ш", "sh": latin = "sh"
-        case "ж", "zh": latin = "zh"
-        case "ч", "ch": latin = "ch"
-        case "щ", "shch": latin = "shch"
-        case "р", "r":  latin = "r"
-        case "л", "l":  latin = "l"
-        case "к", "k":  latin = "k"
-        case "г", "g":  latin = "g"
-        case "х", "h":  latin = "h"
-        default:        latin = "s"
-        }
-        return "sound_\(latin)_v1"
+        SoundRomanizer.canonicalPackId(for: sound)
     }
 
     /// Maps a raw sound code to one of the 4 therapy groups the scoring models use.

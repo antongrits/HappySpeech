@@ -15,7 +15,7 @@ public struct HSErrorStateView: View {
         VStack(spacing: SpacingTokens.large) {
             Image(systemName: "exclamationmark.triangle.fill")
                 .font(.system(size: 48))
-                .foregroundStyle(.orange)
+                .foregroundStyle(ColorTokens.Semantic.warning)
             VStack(spacing: SpacingTokens.small) {
                 Text("Что-то пошло не так")
                     .font(TypographyTokens.headline())

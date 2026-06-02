@@ -5,6 +5,8 @@ import SwiftUI
 struct ChildLanguageMilestonesView: View {
 
     @State private var interactor = ChildLanguageMilestonesInteractor()
+    @State private var didBindChild = false
+    @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -33,6 +35,15 @@ struct ChildLanguageMilestonesView: View {
             }
         }
         .environment(\.circuitContext, .parent)
+        .onAppear {
+            // Привязываем интерактор к реальному ребёнку, чтобы отметки
+            // персистились per-child. Один раз за жизненный цикл view.
+            guard !didBindChild else { return }
+            didBindChild = true
+            if !container.currentChildId.isEmpty {
+                interactor = ChildLanguageMilestonesInteractor(childId: container.currentChildId)
+            }
+        }
     }
 
     private var content: some View {

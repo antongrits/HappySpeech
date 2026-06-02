@@ -82,6 +82,12 @@ enum RealmMigrations {
             // модели (everyday / meadow) для существующих записей —
             // enumerateObjects не требуется.
         }
+        if oldSchemaVersion < 15 {
+            // v15: FamilyChallengeObject (семейный челлендж: тип/цель/claimed-
+            // недели) + LyalyaLetterObject (персистентные «письма от Ляли»).
+            // Оба объекта новые — Realm создаёт схему автоматически, дефолты
+            // заданы в моделях.
+        }
     }
 }
 
@@ -839,6 +845,157 @@ public extension RealmActor {
                 ofType: VoiceJournalEntryRealm.self,
                 forPrimaryKey: id
               )
+        else { return false }
+        try? realmInstance.write { realmInstance.delete(obj) }
+        return true
+    }
+
+    // MARK: - v15: Family challenge (семейный челлендж)
+
+    /// Возвращает сохранённый челлендж семьи как Sendable DTO (nil, если нет).
+    internal func fetchFamilyChallenge(parentId: String) async -> FamilyChallengeData? {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(
+                ofType: FamilyChallengeObject.self,
+                forPrimaryKey: parentId
+              )
+        else { return nil }
+        return FamilyChallengeData(
+            parentId: obj.parentId,
+            type: obj.type,
+            goal: obj.goal,
+            weekStart: obj.weekStart,
+            claimedWeekStarts: Array(obj.claimedWeekStarts)
+        )
+    }
+
+    /// Возвращает существующий челлендж или создаёт новый с дефолтами на
+    /// текущую неделю. Идемпотентно: повторный вызов не плодит записи.
+    internal func fetchOrCreateFamilyChallenge(
+        parentId: String,
+        defaultType: String,
+        defaultGoal: Int,
+        weekStart: Date
+    ) async -> FamilyChallengeData {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else {
+            return FamilyChallengeData(
+                parentId: parentId,
+                type: defaultType,
+                goal: defaultGoal,
+                weekStart: weekStart,
+                claimedWeekStarts: []
+            )
+        }
+        if let obj = realmInstance.object(ofType: FamilyChallengeObject.self, forPrimaryKey: parentId) {
+            return FamilyChallengeData(
+                parentId: obj.parentId,
+                type: obj.type,
+                goal: obj.goal,
+                weekStart: obj.weekStart,
+                claimedWeekStarts: Array(obj.claimedWeekStarts)
+            )
+        }
+        let obj = FamilyChallengeObject()
+        obj.parentId = parentId
+        obj.type = defaultType
+        obj.goal = defaultGoal
+        obj.weekStart = weekStart
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        return FamilyChallengeData(
+            parentId: parentId,
+            type: defaultType,
+            goal: defaultGoal,
+            weekStart: weekStart,
+            claimedWeekStarts: []
+        )
+    }
+
+    /// Помечает неделю как «награда получена». Идемпотентно (повтор — noop).
+    /// Возвращает обновлённое число закрытых недель подряд.
+    @discardableResult
+    internal func claimFamilyChallengeWeek(parentId: String, weekStart: Date) async -> Int {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(ofType: FamilyChallengeObject.self, forPrimaryKey: parentId)
+        else { return 0 }
+        try? realmInstance.write {
+            if !obj.claimedWeekStarts.contains(weekStart) {
+                obj.claimedWeekStarts.append(weekStart)
+            }
+        }
+        return obj.claimedWeekStarts.count
+    }
+
+    // MARK: - v15: Lyalya letters (письма от Ляли)
+
+    /// Возвращает письма ребёнка как Sendable DTO, отсортированные по дате desc.
+    internal func fetchLyalyaLetters(childId: String) async -> [LyalyaLetterData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(LyalyaLetterObject.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "date", ascending: false)
+        ).map { obj in
+            LyalyaLetterData(
+                id: obj.id,
+                childId: obj.childId,
+                kind: obj.kind,
+                title: obj.title,
+                body: obj.body,
+                date: obj.date,
+                isRead: obj.isRead,
+                audioFileName: obj.audioFileName.isEmpty ? nil : obj.audioFileName
+            )
+        }
+    }
+
+    /// Вставляет письмо, если письма с таким id ещё нет (идемпотентно по id).
+    internal func insertLyalyaLetterIfAbsent(_ data: LyalyaLetterData) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        guard realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: data.id) == nil else {
+            return
+        }
+        let obj = LyalyaLetterObject()
+        obj.id = data.id
+        obj.childId = data.childId
+        obj.kind = data.kind
+        obj.title = data.title
+        obj.body = data.body
+        obj.date = data.date
+        obj.isRead = data.isRead
+        obj.audioFileName = data.audioFileName ?? ""
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+    }
+
+    /// Отмечает письмо прочитанным. Возвращает обновлённое письмо (nil, если нет).
+    internal func markLyalyaLetterRead(letterId: String) async -> LyalyaLetterData? {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId)
+        else { return nil }
+        try? realmInstance.write { obj.isRead = true }
+        return LyalyaLetterData(
+            id: obj.id,
+            childId: obj.childId,
+            kind: obj.kind,
+            title: obj.title,
+            body: obj.body,
+            date: obj.date,
+            isRead: obj.isRead,
+            audioFileName: obj.audioFileName.isEmpty ? nil : obj.audioFileName
+        )
+    }
+
+    /// Удаляет письмо по id (возвращает true, если оно существовало).
+    @discardableResult
+    internal func deleteLyalyaLetter(letterId: String) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId)
         else { return false }
         try? realmInstance.write { realmInstance.delete(obj) }
         return true

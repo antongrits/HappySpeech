@@ -151,7 +151,7 @@ public struct MouthBubbleOverlay: View {
                 VStack(spacing: 8) {
                     ZStack {
                         Circle()
-                            .fill(Color.orange.opacity(0.15))
+                            .fill(ColorTokens.Brand.primary.opacity(0.15))
                             .frame(width: 60, height: 60)
                         MouthBubbleOverlay(openValue: openValue, viseme: viseme, mascotSize: 120)
                     }

@@ -21,6 +21,9 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     nonisolated(unsafe) private var whisper: WhisperKit?
     nonisolated(unsafe) private var _isReady: Bool = false
     nonisolated(unsafe) private var _activeTier: ASRTier = .kidOnDevice
+    /// Опциональная пред-проверка (реальный VAD + SoundClassifier). При наличии —
+    /// коротит ASR на уверенной тишине (см. ``SpeechPreflightGating``). nil → как раньше.
+    nonisolated(unsafe) private var preflightGate: (any SpeechPreflightGating)?
 
     public var isReady: Bool { _isReady }
     public var activeTier: ASRTier { _activeTier }
@@ -69,6 +72,12 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     // MARK: - Init
 
     public init() {}
+
+    /// Подключает пред-проверку речи (реальный VAD + SoundClassifier). Вызывается из
+    /// DI после создания сервиса. Без неё транскрипция работает как прежде.
+    public func setPreflightGate(_ gate: any SpeechPreflightGating) {
+        preflightGate = gate
+    }
 
     // MARK: - Load
 
@@ -128,6 +137,14 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     public func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult {
         guard let whisper, _isReady else {
             throw AppError.asrModelNotLoaded
+        }
+
+        // Пред-проверка речи (реальный VAD + SoundClassifier): коротим дорогой проход
+        // WhisperKit только на уверенной тишине. Консервативно — искажённая/тихая
+        // детская речь всегда проходит дальше (gate возвращает .proceed при сомнении).
+        if let preflightGate, await preflightGate.evaluate(url: url) == .likelySilent {
+            HSLogger.asr.info("ASRService: preflight detected silence — returning empty transcript")
+            return ASRResult(transcript: "", confidence: 0.0, wordTimestamps: [])
         }
 
         // --- Word-list biasing: токенизируем ожидаемое слово + возрастной prompt ---

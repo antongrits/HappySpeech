@@ -340,8 +340,9 @@ struct ARActivityView: View {
 
         let interactor = ARActivityInteractor(
             adaptivePlanner: container.adaptivePlannerService,
-            sessionRepository: nil,
-            hapticService: container.hapticService
+            sessionRepository: container.sessionRepository,
+            hapticService: container.hapticService,
+            sessionPersistence: container.sessionPersistenceCoordinator
         )
         let presenter = ARActivityPresenter()
         let router = ARActivityRouter()

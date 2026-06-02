@@ -135,7 +135,8 @@ struct SessionShellHost: View {
                 adaptivePlannerService: container.adaptivePlannerService,
                 sessionRepository: container.sessionRepository,
                 hapticService: container.hapticService,
-                emotionDetectionService: container.emotionDetectionService
+                emotionDetectionService: container.emotionDetectionService,
+                sessionPersistence: container.sessionPersistenceCoordinator
             )
             let adapter = SessionShellDisplayAdapter(state: $shellState)
             interactorInstance.presenter = presenterInstance

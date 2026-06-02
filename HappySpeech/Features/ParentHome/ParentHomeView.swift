@@ -600,7 +600,7 @@ private struct ParentDashboardTab: View {
             value: "\(viewModel.currentStreak)",
             label: String(localized: "Дней подряд"),
             icon: "flame.fill",
-            color: .orange
+            color: ColorTokens.Brand.gold
         )
         ParentStatCard(
             value: "\(viewModel.totalSessionMinutes)",

@@ -33,6 +33,23 @@ public final class AppContainer {
         return new
     }
 
+    // Rewards repository — реальные данные альбома (стикеры/достижения/кошелёк/
+    // серия) из сессий, профиля и Realm-инвентаря. Lazy. Может быть переопределён
+    // на mock в preview/тестах через `rewardsRepositoryOverride`.
+    var rewardsRepositoryOverride: (any RewardsRepository)?
+    private var _rewardsRepository: (any RewardsRepository)?
+    public var rewardsRepository: any RewardsRepository {
+        if let override = rewardsRepositoryOverride { return override }
+        if let existing = _rewardsRepository { return existing }
+        let new = LiveRewardsRepository(
+            realmActor: realmActor,
+            childRepository: childRepository,
+            sessionRepository: sessionRepository
+        )
+        _rewardsRepository = new
+        return new
+    }
+
     // Services (lazy-init via closures to avoid startup latency)
     private var _audioService: (any AudioService)?
     private var _asrService: (any ASRService)?
@@ -53,6 +70,9 @@ public final class AppContainer {
     private var _networkClient: NetworkClient?
     private var _remoteLLMClient: (any RemoteLLMClientProtocol)?
     private var _offlineQueueManager: OfflineQueueManager?
+    /// Offline-first персистентность завершённых сессий + постановка в очередь синка.
+    /// Закрывает аудит #2 (сессии не уходили в Firestore). Lazy.
+    private var _sessionPersistenceCoordinator: (any SessionPersistenceCoordinating)?
     // Block D: Firebase full services
     private var _remoteConfigService: (any RemoteConfigService)?
     private var _fcmService: (any FCMService)?
@@ -420,6 +440,25 @@ public final class AppContainer {
         let new = offlineQueueManagerFactory()
         _offlineQueueManager = new
         return new
+    }
+
+    /// Координатор персистентности сессий (сохранение + offline-first синк).
+    /// Собирается из уже-сконфигурированных `sessionRepository` / `syncService` /
+    /// `authService`. Анонимные аккаунты не синкаются (см. координатор).
+    public var sessionPersistenceCoordinator: any SessionPersistenceCoordinating {
+        if let existing = _sessionPersistenceCoordinator { return existing }
+        let new = LiveSessionPersistenceCoordinator(
+            sessionRepository: sessionRepository,
+            syncService: syncService,
+            authService: authService
+        )
+        _sessionPersistenceCoordinator = new
+        return new
+    }
+
+    /// Подмена ``sessionPersistenceCoordinator`` для preview / тестов.
+    public func overrideSessionPersistenceCoordinator(_ coordinator: any SessionPersistenceCoordinating) {
+        _sessionPersistenceCoordinator = coordinator
     }
 
     // MARK: - Block D: Firebase Full Services
@@ -801,7 +840,13 @@ public extension AppContainer {
             themeManager: theme,
             authService: LiveAuthService(),
             audioServiceFactory: { LiveAudioService() },
-            asrServiceFactory: { LiveASRService() },
+            asrServiceFactory: {
+                let asr = LiveASRService()
+                // Подключаем пред-проверку речи (реальный VAD Silero v6 + SoundClassifier):
+                // коротит WhisperKit только на уверенной тишине, искажённую речь не теряет.
+                asr.setPreflightGate(LiveSpeechPreflightGate())
+                return asr
+            },
             syncServiceFactory: { sharedSyncService },
             analyticsServiceFactory: { LocalAnalyticsService() },
             hapticServiceFactory: {

@@ -182,24 +182,53 @@ struct FamilyChallengeView: View {
 
     // MARK: - Contributions
 
+    @ViewBuilder
     private func contributionsSection(
         _ vm: FamilyChallengeModels.LoadChallenge.ViewModel
     ) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text("Вклад каждого")
+            Text(String(localized: "family.challenge.contributions.title"))
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
-            ForEach(Array(vm.contributions.enumerated()), id: \.element.id) { index, row in
-                contributionRow(row)
-                    .hsParallaxTile(factor: 0.3)
-                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
-                        content
-                            .opacity(phase.isIdentity ? 1 : 0)
-                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
-                    }
-                    .zIndex(Double(vm.contributions.count - index))
+            if vm.contributions.isEmpty {
+                // Честное пустое состояние: у семьи ещё нет детей-участников.
+                emptyContributionsCard
+            } else {
+                ForEach(Array(vm.contributions.enumerated()), id: \.element.id) { index, row in
+                    contributionRow(row)
+                        .hsParallaxTile(factor: 0.3)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .zIndex(Double(vm.contributions.count - index))
+                }
             }
         }
+    }
+
+    private var emptyContributionsCard: some View {
+        HSCard(style: .flat) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "person.2.badge.plus")
+                        .font(.system(size: 20))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                    Text(String(localized: "family.challenge.empty.title"))
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                }
+                Text(String(localized: "family.challenge.empty.message"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private func contributionRow(_ row: ContributionRowViewModel) -> some View {
@@ -331,6 +360,7 @@ struct FamilyChallengeView: View {
         let interactor = FamilyChallengeInteractor(
             realmActor: container.realmActor,
             childRepository: container.childRepository,
+            sessionRepository: container.sessionRepository,
             isKidContext: false
         )
         interactor.presenter = presenter

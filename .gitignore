@@ -110,3 +110,6 @@ sounds/
 # ---------- Misc ----------
 *~
 .envrc
+
+# Dev/gen scripts — local-only tooling, not part of the iOS app.
+scripts/

@@ -39,7 +39,7 @@ final class ChildHomeInteractorTests: XCTestCase {
     func test_fetchChildData_firesPresentFetch() async {
         let (sut, spy) = makeSUT()
         await sut.fetchChildData(.init(childId: "preview-child-1"))
-        // P0.3 v19: fetchChildData делает два presentFetch — сначала seed-ответ
+        // fetchChildData делает два presentFetch — сначала честный пустой ответ
         // мгновенно (экран не пустой пока идёт async Realm-запрос), затем
         // реальные данные. Оба вызова — ожидаемое поведение.
         XCTAssertEqual(spy.fetchResponses.count, 2)
@@ -106,7 +106,7 @@ final class ChildHomeInteractorTests: XCTestCase {
 
     // MARK: - Fetch fallback (repository error)
 
-    func test_fetchChildData_repositoryError_fallsBackToSeed() async {
+    func test_fetchChildData_repositoryError_fallsBackToEmpty() async {
         let interactor = ChildHomeInteractor(
             childRepository: FailingChildRepository(),
             sessionRepository: MockSessionRepository()
@@ -114,11 +114,14 @@ final class ChildHomeInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         interactor.presenter = spy
         await interactor.fetchChildData(.init(childId: "nonexistent"))
-        // Должен вернуть seed-данные без crash: первый presentFetch — seed (мгновенно),
-        // второй — seed-fallback после ошибки репозитория.
+        // Честное пустое состояние без crash: первый presentFetch — пустой ответ
+        // (мгновенно), второй — снова пустой после ошибки репозитория.
         XCTAssertEqual(spy.fetchResponses.count, 2)
         XCTAssertFalse(spy.fetchResponses.first?.childName.isEmpty ?? true)
         XCTAssertFalse(spy.fetchResponses.last?.childName.isEmpty ?? true)
+        // Никаких фейк-сессий/наград в пустом состоянии.
+        XCTAssertTrue(spy.fetchResponses.last?.recentSessions.isEmpty ?? false)
+        XCTAssertTrue(spy.fetchResponses.last?.recentRewards.isEmpty ?? false)
     }
 
     // MARK: - Helpers

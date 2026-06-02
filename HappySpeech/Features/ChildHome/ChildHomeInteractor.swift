@@ -56,9 +56,10 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
     func fetchChildData(_ request: ChildHomeModels.Fetch.Request) async {
         lastChildId = request.childId
 
-        // P0.3 fix v19: show seed content immediately so the screen is never empty
-        // while the async Realm fetch is in flight. Real data overwrites it when ready.
-        presenter?.presentFetch(buildSeedResponse())
+        // Показываем честное пустое состояние немедленно, чтобы экран не мигал
+        // во время async-загрузки из Realm. Никаких фейк-сессий/наград/серии —
+        // реальные данные перетирают его, когда готовы.
+        presenter?.presentFetch(buildEmptyResponse())
 
         // Реальные данные из Realm — основной путь.
         do {
@@ -73,10 +74,9 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             // Синхронизируем виджет: анонимные данные, без имени ребёнка (COPPA-safe)
             await syncMissionWidget(response: response, streak: profile.currentStreak)
         } catch {
-            logger.error("ChildHome fetch failed, fallback to seed: \(error.localizedDescription, privacy: .public)")
-            // Fallback на seed-данные (M8.7) — гарантирует, что у ребёнка всегда есть что показать.
-            let response = buildSeedResponse()
-            presenter?.presentFetch(response)
+            logger.error("ChildHome fetch failed: \(error.localizedDescription, privacy: .public)")
+            // Профиль не загрузился — честное пустое состояние, без фабрикации.
+            presenter?.presentFetch(buildEmptyResponse())
         }
     }
 
@@ -149,7 +149,8 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             recentRewards: Self.makeRewardsForSection(from: recent),
             hasOverdueTask: hasOverdueTask,
             todayWords: Self.buildTodayWords(sound: dailySound),
-            homeTasks: Self.seedHomeTasks()
+            // Реальных назначений ДЗ нет в этом источнике → честно пусто.
+            homeTasks: []
         )
     }
 
@@ -166,11 +167,12 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         }
     }
 
-    /// Собирает recent-sessions data; fallback на seed если пусто.
+    /// Собирает recent-sessions data из реальных сессий. Пусто → честно пусто
+    /// (никаких seed-сессий новому ребёнку).
     private static func makeRecentForSection(
         from recent: [SessionDTO]
     ) -> [ChildHomeModels.RecentSessionData] {
-        let mapped = recent.map {
+        recent.map {
             ChildHomeModels.RecentSessionData(
                 id: $0.id,
                 date: $0.date,
@@ -179,41 +181,36 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 score: $0.successRate
             )
         }
-        return mapped.isEmpty ? seedRecentSessions() : mapped
     }
 
-    /// B13: recentRewards собираем из «успешных» сессий (≥ 0.85). Fallback на seed.
+    /// B13: recentRewards из «успешных» сессий (≥ 0.85). Пусто → честно пусто.
     private static func makeRewardsForSection(
         from recent: [SessionDTO]
     ) -> [ChildHomeModels.RecentRewardData] {
-        let rewards = buildRecentRewards(from: recent)
-        return rewards.isEmpty ? seedRecentRewards() : rewards
+        buildRecentRewards(from: recent)
     }
 
-    /// Seed-fallback: используется только если Realm-репозиторий упал.
-    private func buildSeedResponse() -> ChildHomeModels.Fetch.Response {
+    /// Честное пустое состояние: показывается мгновенно во время загрузки и
+    /// при ошибке загрузки профиля. Никаких фейк-сессий/наград/серии/заданий —
+    /// нулевой прогресс и приветственный маскот-CTA для онбординга.
+    private func buildEmptyResponse() -> ChildHomeModels.Fetch.Response {
         let dailySound = "Р"
-        let completedReps = 2
         let requiredReps = 5
-        let hasOverdueTask = Self.computeOverdue(
-            completedReps: completedReps,
-            requiredReps: requiredReps
-        )
+        let childName = String(localized: "child.default.name")
         return ChildHomeModels.Fetch.Response(
-            childName: Self.seedChildName,
-            currentStreak: Self.seedStreak,
-            mascotMood: Self.mascotMood(
-                for: Self.seedStreak,
-                hasOverdueTask: hasOverdueTask
-            ),
-            mascotPhrase: Self.mascotPhrase(name: Self.seedChildName, sound: dailySound),
+            childName: childName,
+            currentStreak: 0,
+            mascotMood: Self.mascotMood(for: 0, hasOverdueTask: false),
+            mascotPhrase: Self.mascotPhrase(name: childName, sound: dailySound),
             dailyTargetSound: dailySound,
-            dailyStage: Self.humanStage(for: 0.4),
-            dailyProgress: 0.4,
-            soundProgress: Self.seedSoundProgress(),
+            dailyStage: Self.humanStage(for: 0.0),
+            dailyProgress: 0.0,
+            soundProgress: [],
             quickPlay: Self.seedQuickPlay(),
-            worldZones: Self.seedWorldZones(),
-            recentSessions: Self.seedRecentSessions(),
+            worldZones: [],
+            recentSessions: [],
+            // Приветственная ачивка-онбординг (не фабрикация статистики):
+            // показываем «первый урок впереди», пока ребёнок не скрыл её.
             achievement: dismissedAchievementIds.contains("seed-first-session")
                 ? nil
                 : ChildHomeModels.AchievementData(
@@ -230,12 +227,12 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 targetSound: dailySound,
                 templateType: TemplateType.repeatAfterModel.rawValue,
                 requiredReps: requiredReps,
-                completedReps: completedReps
+                completedReps: 0
             ),
-            recentRewards: Self.seedRecentRewards(),
-            hasOverdueTask: hasOverdueTask,
+            recentRewards: [],
+            hasOverdueTask: false,
             todayWords: Self.buildTodayWords(sound: dailySound),
-            homeTasks: Self.seedHomeTasks()
+            homeTasks: []
         )
     }
 
@@ -287,8 +284,8 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         return String.localizedStringWithFormat(format, displayName, sound)
     }
 
-    /// Подсчитываем, сколько раз сегодня ребёнок уже произнёс целевой звук —
-    /// прокси-метрика «выполнено повторений миссии». Для M10 заменим на реальный счётчик.
+    /// Сколько раз сегодня ребёнок уже корректно произнёс целевой звук
+    /// (из реальных сессий) — прогресс дневной миссии, ограничен 5.
     private static func completedReps(for sessions: [SessionDTO], sound: String) -> Int {
         let calendar = Calendar.current
         let today = sessions.filter {
@@ -353,17 +350,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         }
     }
 
-    // MARK: - Seed data (fallback only)
-
-    private static let seedChildName = String(localized: "child.default.name")
-    private static let seedStreak = 5
-
-    private static func seedSoundProgress() -> [ChildHomeModels.SoundProgressData] {
-        [
-            .init(sound: "Р", stageName: humanStage(for: 0.4), rate: 0.4),
-            .init(sound: "Ш", stageName: humanStage(for: 0.6), rate: 0.6)
-        ]
-    }
+    // MARK: - Curated quick-play tiles (legitimate content, not fabricated stats)
 
     private static func seedQuickPlay() -> [ChildHomeModels.QuickPlayData] {
         // B13: difficulty 1…3 — рисуется звёздочками в карточке.
@@ -447,76 +434,14 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         }
     }
 
-    private static func seedRecentRewards() -> [ChildHomeModels.RecentRewardData] {
-        let now = Date()
-        return [
-            .init(
-                id: "seed-reward-1",
-                emoji: "trophy.fill",
-                titleKey: "child.home.rewards.gold",
-                earnedAt: now.addingTimeInterval(-3600)
-            ),
-            .init(
-                id: "seed-reward-2",
-                emoji: "medal.fill",
-                titleKey: "child.home.rewards.silver",
-                earnedAt: now.addingTimeInterval(-86_400)
-            ),
-            .init(
-                id: "seed-reward-3",
-                emoji: "sparkles",
-                titleKey: "child.home.rewards.streak",
-                earnedAt: now.addingTimeInterval(-172_800)
-            )
-        ]
-    }
-
-    // Block D v16: emoji-поле теперь хранит SF Symbol name (UI chrome).
-    private static func seedWorldZones() -> [ChildHomeModels.WorldZoneData] {
-        [
-            .init(id: "zone-С", sound: "С", emoji: "water.waves",     progress: 0.7, family: .whistling),
-            .init(id: "zone-Ш", sound: "Ш", emoji: "leaf.fill",       progress: 0.5, family: .hissing),
-            .init(id: "zone-Р", sound: "Р", emoji: "flame.fill",      progress: 0.4, family: .sonorant),
-            .init(id: "zone-Л", sound: "Л", emoji: "moon.fill",       progress: 0.3, family: .sonorant),
-            .init(id: "zone-К", sound: "К", emoji: "mountain.2.fill", progress: 0.2, family: .velar)
-        ]
-    }
-
-    private static func seedRecentSessions() -> [ChildHomeModels.RecentSessionData] {
-        let now = Date()
-        return [
-            .init(
-                id: "seed-rs-1",
-                date: now.addingTimeInterval(-3600),
-                templateType: TemplateType.repeatAfterModel.rawValue,
-                targetSound: "Р",
-                score: 0.92
-            ),
-            .init(
-                id: "seed-rs-2",
-                date: now.addingTimeInterval(-86_400),
-                templateType: TemplateType.soundHunter.rawValue,
-                targetSound: "Ш",
-                score: 0.78
-            ),
-            .init(
-                id: "seed-rs-3",
-                date: now.addingTimeInterval(-172_800),
-                templateType: TemplateType.memory.rawValue,
-                targetSound: "С",
-                score: 0.65
-            )
-        ]
-    }
-
     private static var dayOfYear: Int {
         Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
     }
 
-    // MARK: - TodayWords seed (M8.7 v6)
+    // MARK: - TodayWords (curated word set per sound)
 
-    /// Формирует список слов дня из известного набора для целевого звука.
-    /// В M10 этот метод будет заменён вызовом ContentEngine.dailyWords(for:).
+    /// Формирует список слов дня из курируемого методического набора для
+    /// целевого звука (легитимный контент, не фабрикация статистики).
     private static func buildTodayWords(
         sound: String
     ) -> [ChildHomeModels.TodayWordData] {
@@ -561,30 +486,6 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 successRate: nil
             )
         }
-    }
-
-    // MARK: - HomeTasks seed (M8.7 v6)
-
-    private static func seedHomeTasks() -> [ChildHomeModels.HomeTaskPreviewData] {
-        let now = Date()
-        return [
-            .init(
-                id: "ht-seed-1",
-                titleKey: "child.home.hometasks.count",
-                taskCount: 2,
-                targetSound: "Р",
-                dueDate: now.addingTimeInterval(86_400),
-                isCompleted: false
-            ),
-            .init(
-                id: "ht-seed-2",
-                titleKey: "child.home.hometasks.count",
-                taskCount: 3,
-                targetSound: "Ш",
-                dueDate: now.addingTimeInterval(172_800),
-                isCompleted: true
-            )
-        ]
     }
 
     // MARK: - Widget Sync

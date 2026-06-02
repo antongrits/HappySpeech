@@ -353,7 +353,7 @@ struct ComparisonDashboardView: View {
                         Label("\(child.currentStreak) \(String(localized: "streak.days.short"))",
                               systemImage: "flame.fill")
                             .font(TypographyTokens.caption(12))
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                             .lineLimit(1)
                             .minimumScaleFactor(0.85)
 

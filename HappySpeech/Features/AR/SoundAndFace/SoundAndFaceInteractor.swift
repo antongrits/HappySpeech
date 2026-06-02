@@ -45,10 +45,16 @@ protocol SoundAndFaceBusinessLogic: AnyObject {
 final class SoundAndFaceInteractor: SoundAndFaceBusinessLogic {
 
     var presenter: (any SoundAndFacePresentationLogic)?
-    private let classifier = TonguePostureClassifier()
+    /// Core ML классификатор поз как основной канал (graceful fallback на rule-based).
+    private let classifier: any ArticulationConfidenceProviding
     private var target: SoundAndFaceModels.Target?
     private var sum: Float = 0
     private var count: Int = 0
+
+    /// Прод-дефолт — Core ML классификатор; тесты/preview передают rule-based для детерминизма.
+    init(classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()) {
+        self.classifier = classifier
+    }
 
     func startGame(_ request: SoundAndFaceModels.StartGame.Request) {
         let posture = Self.posture(forSound: request.targetSound)

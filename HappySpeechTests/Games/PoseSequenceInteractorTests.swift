@@ -51,7 +51,9 @@ private final class SpyPoseSequencePresenter: PoseSequencePresentationLogic {
 final class PoseSequenceInteractorTests: XCTestCase {
 
     private func makeSUT() -> (PoseSequenceInteractor, SpyPoseSequencePresenter) {
-        let sut = PoseSequenceInteractor()
+        // Rule-based явно: face-mode тест опирается на детерминированные confidence-фикстуры
+        // (прод-дефолт интерактора — Core ML классификатор).
+        let sut = PoseSequenceInteractor(classifier: TonguePostureClassifier())
         let spy = SpyPoseSequencePresenter()
         sut.presenter = spy
         return (sut, spy)

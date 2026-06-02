@@ -13,13 +13,17 @@ protocol FamilyChallengeBusinessLogic: AnyObject {
 // MARK: - FamilyChallengeInteractor
 
 /// Управляет загрузкой активного семейного челленджа, claim-награды и
-/// шерингом прогресса. Сейчас Realm-схемы для `FamilyChallengeObject` нет —
-/// возвращается mock из `defaultMockChallenge(parentId:)`. Это позволяет
-/// демонстрировать экран без блокирующей зависимости на миграцию схемы.
+/// шерингом прогресса.
 ///
-/// Следующая итерация: добавить `FamilyChallengeObject` в Realm + метод
-/// `realmActor.fetchActiveFamilyChallenge(parentId:)`, заменить mock на
-/// реальное чтение. Сигнатура `loadChallenge(_:)` останется без изменений.
+/// Данные реальные:
+/// - Тип/цель/закрытые недели челленджа персистятся в `FamilyChallengeObject`
+///   (Realm) через `RealmActor`.
+/// - Вклады участников считаются из реальных сессий детей семьи: для каждого
+///   ребёнка с этим `parentId` суммируются минуты практики за текущую неделю
+///   (`SessionRepository`). Никаких dummy «Миша/Соня/Папа».
+/// - `claimReward` персистит закрытие недели (идемпотентно).
+/// - Если у родителя нет детей — отдаётся честное пустое состояние (нулевой
+///   прогресс, пустой список вкладов), View показывает CTA «добавьте детей».
 @MainActor
 final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
 
@@ -27,6 +31,7 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
 
     private let realmActor: RealmActor
     private let childRepository: any ChildRepository
+    private let sessionRepository: any SessionRepository
     private let isKidContext: Bool
 
     private let logger = Logger(
@@ -39,10 +44,12 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
     init(
         realmActor: RealmActor,
         childRepository: any ChildRepository,
+        sessionRepository: any SessionRepository,
         isKidContext: Bool = false
     ) {
         self.realmActor = realmActor
         self.childRepository = childRepository
+        self.sessionRepository = sessionRepository
         self.isKidContext = isKidContext
     }
 
@@ -59,9 +66,20 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
     // MARK: - Claim
 
     func claimReward(_ request: FamilyChallengeModels.ClaimReward.Request) async {
-        logger.info("claimReward challengeId=\(request.challengeId, privacy: .public)")
-        // В Realm пока не пишем — следующая итерация. Сейчас просто
-        // презентуем тост-конфетти.
+        logger.info("claimReward parentId=\(request.challengeId, privacy: .public)")
+        // request.challengeId здесь — parentId (см. View.claimTapped).
+        let weekStart = weekStart(for: Date())
+        // Гарантируем, что объект челленджа существует, затем персистим claim.
+        _ = await realmActor.fetchOrCreateFamilyChallenge(
+            parentId: request.challengeId,
+            defaultType: ChallengeType.totalMinutes.rawValue,
+            defaultGoal: Self.defaultGoalMinutes,
+            weekStart: weekStart
+        )
+        _ = await realmActor.claimFamilyChallengeWeek(
+            parentId: request.challengeId,
+            weekStart: weekStart
+        )
         await presenter?.presentClaimedReward(
             response: .init(challengeId: request.challengeId, confettiShown: true)
         )
@@ -70,8 +88,9 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
     // MARK: - Share
 
     func shareProgress(_ request: FamilyChallengeModels.ShareProgress.Request) async {
-        logger.info("shareProgress challengeId=\(request.challengeId, privacy: .public)")
-        let shareText = buildShareText()
+        logger.info("shareProgress parentId=\(request.challengeId, privacy: .public)")
+        let challenge = await fetchActiveFamilyChallenge(parentId: request.challengeId)
+        let shareText = buildShareText(challenge: challenge)
         await presenter?.presentShareProgress(
             response: .init(shareText: shareText)
         )
@@ -79,37 +98,63 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
 
     // MARK: - Private
 
-    /// Возвращает активный челлендж семьи. Если Realm-объекта нет — отдаёт
-    /// детерминированный mock. Аргумент `parentId` идёт в DTO, чтобы View
-    /// показывал корректный заголовок при смене profile.
+    private static let defaultGoalMinutes = 300
+
+    /// Собирает активный челлендж семьи из реальных данных: тип/цель/серия из
+    /// `FamilyChallengeObject`, вклады — из недельных минут реальных детей.
     private func fetchActiveFamilyChallenge(parentId: String) async -> FamilyChallengeDTO {
-        // Будущее: await realmActor.fetchActiveFamilyChallenge(parentId:).
-        // Сейчас mock с детерминированной структурой.
-        let mockContribs = await buildMockContributions(parentId: parentId)
-        let totalCurrent = mockContribs.reduce(0) { $0 + $1.value }
+        let weekStart = weekStart(for: Date())
+        let stored = await realmActor.fetchOrCreateFamilyChallenge(
+            parentId: parentId,
+            defaultType: ChallengeType.totalMinutes.rawValue,
+            defaultGoal: Self.defaultGoalMinutes,
+            weekStart: weekStart
+        )
+        let type = ChallengeType(rawValue: stored.type) ?? .totalMinutes
+
+        let contributions = await buildContributions(
+            parentId: parentId,
+            type: type,
+            weekStart: weekStart
+        )
+        let totalCurrent = contributions.reduce(0) { $0 + $1.value }
+        // streakWeeks — число закрытых недель подряд, заканчивающееся текущей
+        // или предыдущей неделей.
+        let streakWeeks = consecutiveClaimedWeeks(
+            claimed: stored.claimedWeekStarts,
+            currentWeekStart: weekStart
+        )
+
         return FamilyChallengeDTO(
             id: UUID(uuidString: "00000000-0000-0000-0000-00000000C001") ?? UUID(),
             parentId: parentId,
-            type: .totalMinutes,
-            goal: 300,
+            type: type,
+            goal: stored.goal,
             current: totalCurrent,
-            weekStart: weekStart(for: Date()),
-            contributions: mockContribs,
-            streakWeeks: 3
+            weekStart: weekStart,
+            contributions: contributions,
+            streakWeeks: streakWeeks
         )
     }
 
-    /// Собирает mock-вклады. Если у родителя есть дети в Realm — добавляет
-    /// их имена с детерминированными минутами. Плюс один взрослый-контрибьютор.
-    private func buildMockContributions(parentId: String) async -> [Contribution] {
-        var contribs: [Contribution] = []
+    /// Реальные вклады: для каждого ребёнка семьи — сумма единиц челленджа за
+    /// текущую неделю. Пусто, если детей нет (честное пустое состояние).
+    private func buildContributions(
+        parentId: String,
+        type: ChallengeType,
+        weekStart: Date
+    ) async -> [Contribution] {
         let children = (try? await childRepository.fetchAll()) ?? []
-        // Берём первых двух детей с parentId.
-        let filtered = children.filter { $0.parentId == parentId }.prefix(2)
-        for (index, child) in filtered.enumerated() {
-            // Детерминированные минуты: 95 / 70 — соответствует ТЗ.
-            let value = index == 0 ? 95 : 70
-            contribs.append(
+        let familyChildren = children.filter { $0.parentId == parentId }
+        guard !familyChildren.isEmpty else { return [] }
+
+        let weekEnd = Calendar.current.date(byAdding: .day, value: 7, to: weekStart) ?? Date()
+        var result: [Contribution] = []
+        for child in familyChildren {
+            let sessions = (try? await sessionRepository.fetchAll(childId: child.id)) ?? []
+            let weekSessions = sessions.filter { $0.date >= weekStart && $0.date < weekEnd }
+            let value = contributionValue(type: type, sessions: weekSessions)
+            result.append(
                 Contribution(
                     id: child.id,
                     memberName: child.name,
@@ -119,20 +164,53 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
                 )
             )
         }
-        // Если детей нет — добавим dummy «Миша» и «Соня».
-        if contribs.isEmpty {
-            contribs.append(Contribution(id: "kid-1", memberName: "Миша", memberEmoji: "🌟", value: 95, isChild: true))
-            contribs.append(Contribution(id: "kid-2", memberName: "Соня", memberEmoji: "🌟", value: 70, isChild: true))
-        }
-        // Взрослый-контрибьютор.
-        contribs.append(
-            Contribution(id: "adult-1", memberName: "Папа", memberEmoji: "🎯", value: 30, isChild: false)
-        )
-        return contribs
+        return result
     }
 
-    private func buildShareText() -> String {
-        "Наша семья прошла 195 из 300 минут речевой практики на этой неделе! 🏆"
+    /// Считает вклад ребёнка в единицах конкретного типа челленджа за неделю.
+    private func contributionValue(type: ChallengeType, sessions: [SessionDTO]) -> Int {
+        switch type {
+        case .totalMinutes:
+            let seconds = sessions.reduce(0) { $0 + $1.durationSeconds }
+            return max(0, Int((Double(seconds) / 60.0).rounded()))
+        case .newSounds:
+            return Set(sessions.map(\.targetSound)).count
+        case .coPlaySessions, .fluencyDiaryEntries:
+            return sessions.count
+        }
+    }
+
+    /// Число закрытых недель подряд (claim), оканчивающееся текущей или
+    /// прошлой неделей.
+    private func consecutiveClaimedWeeks(claimed: [Date], currentWeekStart: Date) -> Int {
+        guard !claimed.isEmpty else { return 0 }
+        let calendar = Calendar(identifier: .iso8601)
+        let claimedDays = Set(claimed.map { calendar.startOfDay(for: $0) })
+
+        var cursor = calendar.startOfDay(for: currentWeekStart)
+        if !claimedDays.contains(cursor) {
+            guard let prevWeek = calendar.date(byAdding: .day, value: -7, to: cursor),
+                  claimedDays.contains(prevWeek) else {
+                return 0
+            }
+            cursor = prevWeek
+        }
+        var streak = 0
+        while claimedDays.contains(cursor) {
+            streak += 1
+            guard let prev = calendar.date(byAdding: .day, value: -7, to: cursor) else { break }
+            cursor = prev
+        }
+        return streak
+    }
+
+    private func buildShareText(challenge: FamilyChallengeDTO) -> String {
+        String(
+            format: String(localized: "family.challenge.share.text %lld %lld %@"),
+            challenge.current,
+            challenge.goal,
+            challenge.type.unitLabel
+        )
     }
 
     /// Понедельник 00:00 текущей недели.

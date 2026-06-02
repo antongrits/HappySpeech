@@ -264,7 +264,21 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
         PackDescriptor(id: "pack_diff_s_sh_v1",     fileName: "pack_diff_s_sh_pack",     soundTarget: "С–Ш",                 templateType: .minimalPairs),
         PackDescriptor(id: "pack_diff_r_l_v1",      fileName: "pack_diff_r_l_pack",      soundTarget: "Р–Л",                 templateType: .minimalPairs),
         PackDescriptor(id: "pack_diff_paronyms_v1", fileName: "pack_diff_paronyms_pack", soundTarget: "З–Ж/Ш–Ж/С–З/Ч–Щ",     templateType: .minimalPairs),
-        PackDescriptor(id: "pack_diff_voicing_v1",  fileName: "pack_diff_voicing_pack",  soundTarget: "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш", templateType: .minimalPairs)
+        PackDescriptor(id: "pack_diff_voicing_v1",  fileName: "pack_diff_voicing_pack",  soundTarget: "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш", templateType: .minimalPairs),
+        // Звуковые паки Ц/Х/Й — реальный контент (~290 слов на пак). Доступны и через
+        // `SoundRomanizer` (sound_c/kh/y), но регистрируем явно, чтобы они попадали в
+        // `bundledPacks()` / `allPacks()` (каталог контента для родителя/специалиста).
+        PackDescriptor(id: "sound_c_v1",  fileName: "sound_c_pack",  soundTarget: "Ц", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_kh_v1", fileName: "sound_kh_pack", soundTarget: "Х", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_y_v1",  fileName: "sound_y_pack",  soundTarget: "Й", templateType: .listenAndChoose),
+        // Паки-сироты с реальным контентом, чьи id не кодируют один звук-букву и потому
+        // не резолвились legacy-путём `sound_<letter>_pack`. Регистрируем явно.
+        PackDescriptor(id: "sound_diffrl_v1",               fileName: "sound_diff_rl_pack",          soundTarget: "Р/Л",         templateType: .minimalPairs),
+        PackDescriptor(id: "pack_diff_whistling_hissing_v1", fileName: "pack_diff_whistling_hissing", soundTarget: "С-Ш/З-Ж/Ц-Ч", templateType: .minimalPairs),
+        PackDescriptor(id: "pack_general_phonemic_v1",      fileName: "pack_general_phonemic",       soundTarget: "Фонематика",  templateType: .soundHunter),
+        PackDescriptor(id: "pack_narrative_v1",             fileName: "pack_narrative",              soundTarget: "Рассказ",     templateType: .narrativeQuest),
+        PackDescriptor(id: "sound_br_v1",                   fileName: "pack_breathing",              soundTarget: "Дыхание",     templateType: .breathing),
+        PackDescriptor(id: "sound_ag_v1", fileName: "pack_articulation_gymnastics", soundTarget: "Артикуляция", templateType: .articulationImitation)
         // NB: pack_lexical (575 слов словаря) НЕ регистрируется как playable-пак, пока
         // не закрыты ~152 картинко-пробела (Image отсутствующего ассета рендерит пусто).
         // +50 свежих слов уже отдают пользу глобально через word_manifest (резолв картинок
@@ -288,30 +302,16 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
 
     private static func extractSoundLetter(from id: String) -> String {
         // Accepts "С-wordInit-listen-and-choose-v1" or "sound_s_v1".
+        // Через `SoundRomanizer` нормализуем уже-латинский токен тоже (например,
+        // legacy `sound_ts_v1` → `c`, `sound_h_v1` → `kh`), чтобы старые id
+        // продолжали резолвиться в реальные файлы `sound_<code>_pack.json`.
         if id.hasPrefix("sound_") {
             let parts = id.split(separator: "_")
-            return parts.count >= 2 ? String(parts[1]) : "s"
+            guard parts.count >= 2 else { return "s" }
+            return SoundRomanizer.latinCode(for: String(parts[1]))
         }
         guard let first = id.split(separator: "-").first else { return "s" }
-        return romanize(first)
-    }
-
-    private static func romanize(_ cyrillic: Substring) -> String {
-        switch cyrillic.lowercased() {
-        case "с": return "s"
-        case "ш": return "sh"
-        case "р": return "r"
-        case "л": return "l"
-        case "к": return "k"
-        case "з": return "z"
-        case "ц": return "ts"
-        case "ж": return "zh"
-        case "ч": return "ch"
-        case "щ": return "sch"
-        case "г": return "g"
-        case "х": return "h"
-        default: return String(cyrillic)
-        }
+        return SoundRomanizer.latinCode(for: String(first))
     }
 
     private static func resolveResourceURL(fileName: String, ext: String) -> URL? {

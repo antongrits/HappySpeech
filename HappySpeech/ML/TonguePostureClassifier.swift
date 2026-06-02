@@ -36,11 +36,29 @@ public enum ArticulationPosture: String, Sendable, CaseIterable, Hashable {
     }
 }
 
+// MARK: - ArticulationConfidenceProviding
+
+/// Единый контракт «насколько кадр blendshapes подтверждает целевую позу».
+///
+/// Реализуют оба классификатора:
+///   * ``TonguePostureClassifier`` — rule-based эвристика (fallback / тесты / preview);
+///   * ``TonguePostureClassifierML`` — Core ML CNN как основной канал, с graceful
+///     fallback на rule-based при отсутствии модели или низкой уверенности.
+///
+/// AR-интеракторы (зеркало, ловля бабочки, удержание позы и т.д.) зависят только
+/// от этого протокола, поэтому ML-канал подключается через DI без правок их логики.
+/// `Sendable` — оба классификатора потокобезопасны (`@unchecked Sendable`,
+/// внутренняя синхронизация), вызовы возможны и вне main actor.
+public protocol ArticulationConfidenceProviding: AnyObject, Sendable {
+    /// 0…1 уверенность, что текущий кадр `blendshapes` соответствует `posture`.
+    func confidence(_ blendshapes: FaceBlendshapes, for posture: ArticulationPosture) -> Float
+}
+
 // MARK: - TonguePostureClassifier
 
 /// Rule-based классификатор поз на основе ARKit blendshapes.
-/// Этот класс — контракт для будущей Core ML модели в M4.
-public final class TonguePostureClassifier: @unchecked Sendable {
+/// Используется как fallback для ``TonguePostureClassifierML`` и в тестах/preview.
+public final class TonguePostureClassifier: ArticulationConfidenceProviding, @unchecked Sendable {
 
     public init() {}
 

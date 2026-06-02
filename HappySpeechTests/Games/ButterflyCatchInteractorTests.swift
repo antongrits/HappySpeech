@@ -33,7 +33,9 @@ private final class SpyButterflyCatchPresenter: ButterflyCatchPresentationLogic 
 final class ButterflyCatchInteractorTests: XCTestCase {
 
     private func makeSUT() -> (ButterflyCatchInteractor, SpyButterflyCatchPresenter) {
-        let sut = ButterflyCatchInteractor()
+        // Rule-based явно: тест опирается на детерминированные confidence-фикстуры
+        // (прод-дефолт интерактора — Core ML классификатор).
+        let sut = ButterflyCatchInteractor(classifier: TonguePostureClassifier())
         let spy = SpyButterflyCatchPresenter()
         sut.presenter = spy
         return (sut, spy)

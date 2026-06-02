@@ -45,13 +45,19 @@ protocol HoldThePoseBusinessLogic: AnyObject {
 final class HoldThePoseInteractor: HoldThePoseBusinessLogic {
 
     var presenter: (any HoldThePosePresentationLogic)?
-    private let classifier = TonguePostureClassifier()
+    /// Core ML классификатор поз как основной канал (graceful fallback на rule-based).
+    private let classifier: any ArticulationConfidenceProviding
 
     private var targetPosture: ArticulationPosture = .smile
     private var holdTarget: TimeInterval = 5
     private var holdStart: Date?
     private var confidenceSum: Float = 0
     private var confidenceCount: Int = 0
+
+    /// Прод-дефолт — Core ML классификатор; тесты/preview передают rule-based для детерминизма.
+    init(classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()) {
+        self.classifier = classifier
+    }
 
     func startGame(_ request: HoldThePoseModels.StartGame.Request) {
         targetPosture = request.targetPosture

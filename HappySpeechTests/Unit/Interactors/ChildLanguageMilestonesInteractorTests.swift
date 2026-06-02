@@ -13,8 +13,11 @@ import XCTest
 @MainActor
 final class ChildLanguageMilestonesInteractorTests: XCTestCase {
 
+    /// Изолированный UserDefaults на каждый SUT, чтобы персистентные отметки
+    /// не протекали между тестами.
     private func makeSUT() -> ChildLanguageMilestonesInteractor {
-        ChildLanguageMilestonesInteractor()
+        let suite = UserDefaults(suiteName: "test.milestones.\(UUID().uuidString)")!
+        return ChildLanguageMilestonesInteractor(childId: "test-child", defaults: suite)
     }
 
     // MARK: - Initial state
@@ -64,9 +67,33 @@ final class ChildLanguageMilestonesInteractorTests: XCTestCase {
 
     func test_toggle_unachievesAchievedItem() {
         let sut = makeSUT()
-        let target = sut.state.items.first { $0.isAchieved }!
+        // Стартово все вехи НЕ отмечены — сначала отмечаем, затем снимаем.
+        let target = sut.state.items[0]
+        sut.toggle(target.id)
+        XCTAssertEqual(sut.state.items.first { $0.id == target.id }?.isAchieved, true)
         sut.toggle(target.id)
         XCTAssertEqual(sut.state.items.first { $0.id == target.id }?.isAchieved, false)
+    }
+
+    // MARK: - Persistence
+
+    func test_initialState_allUnachieved() {
+        // Чек-лист стартует пустым: отметки ставит родитель, не данные.
+        let sut = makeSUT()
+        XCTAssertTrue(sut.state.items.allSatisfy { !$0.isAchieved })
+        XCTAssertEqual(sut.state.overallProgress, 0)
+    }
+
+    func test_toggle_persistsAcrossInstances() {
+        let suite = UserDefaults(suiteName: "test.milestones.persist.\(UUID().uuidString)")!
+        let sut1 = ChildLanguageMilestonesInteractor(childId: "child-x", defaults: suite)
+        sut1.toggle("c1")
+        sut1.toggle("s2")
+        // Новый интерактор того же ребёнка читает сохранённые отметки.
+        let sut2 = ChildLanguageMilestonesInteractor(childId: "child-x", defaults: suite)
+        XCTAssertEqual(sut2.state.items.first { $0.id == "c1" }?.isAchieved, true)
+        XCTAssertEqual(sut2.state.items.first { $0.id == "s2" }?.isAchieved, true)
+        XCTAssertEqual(sut2.state.items.first { $0.id == "c2" }?.isAchieved, false)
     }
 
     func test_toggle_onlyAffectsTarget() {

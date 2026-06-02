@@ -9,8 +9,11 @@ import XCTest
 @MainActor
 final class SpeechHomeworkPlannerInteractorTests: XCTestCase {
 
+    /// Изолированный UserDefaults на каждый SUT — отметки персистятся, не
+    /// должны протекать между тестами / на устройство.
     private func makeSUT() -> SpeechHomeworkPlannerInteractor {
-        SpeechHomeworkPlannerInteractor()
+        let suite = UserDefaults(suiteName: "test.homework.\(UUID().uuidString)")!
+        return SpeechHomeworkPlannerInteractor(defaults: suite)
     }
 
     // MARK: - Initial state
@@ -56,8 +59,21 @@ final class SpeechHomeworkPlannerInteractorTests: XCTestCase {
 
     func test_toggle_unknownId_isNoOp() {
         let sut = makeSUT()
-        sut.toggle(UUID())
+        sut.toggle("does-not-exist")
         XCTAssertEqual(sut.doneCount, 0)
+    }
+
+    // MARK: - Persistence
+
+    func test_toggle_persistsAcrossInstances() {
+        let suite = UserDefaults(suiteName: "test.homework.persist.\(UUID().uuidString)")!
+        let sut1 = SpeechHomeworkPlannerInteractor(defaults: suite)
+        let id = sut1.items[0].id
+        sut1.toggle(id)
+        // Новый интерактор читает сохранённые отметки.
+        let sut2 = SpeechHomeworkPlannerInteractor(defaults: suite)
+        XCTAssertTrue(sut2.items.first { $0.id == id }?.isDone ?? false)
+        XCTAssertEqual(sut2.doneCount, 1)
     }
 
     func test_toggle_allItems_progressIsOne() {

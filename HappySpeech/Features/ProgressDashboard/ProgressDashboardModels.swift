@@ -5,8 +5,9 @@ import Foundation
 // Доменные модели + transport-слои Request / Response / ViewModel.
 // Контур: parent. Дашборд прогресса ребёнка с summary-карточками,
 // графиками (bar + line через Apple Charts), AI-сводкой от LLM и сеткой
-// звуков с трендами. Источник данных в M7.2 — in-memory seed; на M8 будет
-// агрегация из `SessionRepository` и `LLMDecisionService.generateParentSummary`.
+// звуков с трендами. Источник данных — реальная агрегация из
+// `SessionRepository` через `ProgressDashboardWorker` и
+// `LLMDecisionService.generateParentSummary` (см. ProgressDashboardInteractor).
 
 enum ProgressDashboardModels {
 

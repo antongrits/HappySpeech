@@ -54,7 +54,10 @@ struct ParentDailyDigestView: View {
             VStack(spacing: SpacingTokens.sp4) {
                 hero
                 kpiGrid(state: interactor.state)
-                momentCard(state: interactor.state)
+                // «Момент дня» показываем только при реальном событии сегодня.
+                if interactor.state.hasPhotoMoment {
+                    momentCard(state: interactor.state)
+                }
                 tipCard(state: interactor.state)
                 cta
             }

@@ -16106,6 +16106,50 @@
         }
       }
     },
+    "family.challenge.contributions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вклад каждого"
+          }
+        }
+      }
+    },
+    "family.challenge.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте профиль ребёнка, и здесь появится недельный вклад каждого члена семьи."
+          }
+        }
+      }
+    },
+    "family.challenge.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет участников"
+          }
+        }
+      }
+    },
+    "family.challenge.share.text %lld %lld %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наша семья прошла %1$lld из %2$lld %3$@ речевой практики на этой неделе! 🏆"
+          }
+        }
+      }
+    },
     "family.home.add_child": {
       "localizations": {
         "ru": {
@@ -24548,6 +24592,72 @@
         }
       }
     },
+    "lyalyaMail.welcome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет, мой друг!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.welcome.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я так рада, что мы будем играть вместе! Со мной ты научишься говорить красиво и чётко. Ты — настоящий герой звуков. Жду тебя на занятии!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.streak.title %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ура! %lld дней подряд!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.streak.body %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты занимаешься со мной уже %lld дней подряд! Маленькие шажки каждый день — и звуки слушаются всё лучше. Я тобой горжусь!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.firstSound.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук получился!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.firstSound.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У тебя получился чистый звук! Я слышала и хлопала в ладоши! Завтра попробуем ещё — и будет ещё чище."
+          }
+        }
+      }
+    },
     "lyalya.mail.unread.format": {
       "extractionState": "manual",
       "localizations": {
@@ -28617,6 +28727,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "parentDigest.moment.bestSound %@ %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня звук «%1$@» получался на %2$lld%%"
           }
         }
       }

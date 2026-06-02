@@ -28,10 +28,13 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
     // MARK: - Collaborators
 
     var presenter: (any WorldMapPresentationLogic)?
-    /// v32 P2 — опциональный репозиторий ребёнка нужен для smart-unlock зон
-    /// на основе `progressSummary[sound] >= 0.5`. nil — fallback на legacy
-    /// логику (всё как раньше), чтобы preview / standalone не падали.
+    /// Опциональный репозиторий ребёнка — источник реального `progressSummary`
+    /// и `currentStreak`. nil (preview / standalone) → зоны остаются на нулевом
+    /// прогрессе (честное пустое состояние), без фабрикации.
     var childRepository: (any ChildRepository)?
+    /// Опциональный репозиторий сессий — источник реальной серии активных дней
+    /// (`dailyStreak`). nil → серия берётся из `ChildProfileDTO.currentStreak`.
+    var sessionRepository: (any SessionRepository)?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "WorldMap")
 
@@ -59,21 +62,24 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
 
         islands = Self.makeIslands()
         collectibles = Self.makeCollectibles()
-        zones = Self.makeSeedZones()
-        totalStars = zones.reduce(0) { $0 + $1.completedLessons }
-        dailyStreak = 4
+        // Зоны начинаются с НУЛЕВОГО прогресса — карта прогресса наполняется
+        // только реальными данными ребёнка (см. applyProgressSummaryUnlock).
+        // Никаких зашитых 65%/30%/10%: новый ребёнок видит честную пустую карту.
+        zones = Self.makeBaseZones()
+        totalStars = 0
+        dailyStreak = 0
         childAge = request.childAge ?? 6
 
-        // v32 — сначала синхронно отдаём seed-зоны через presenter, чтобы UI
-        // (и unit-тест) увидели данные немедленно. Async-обновление по
-        // progressSummary происходит вторым вызовом presenter ниже.
+        // Сначала синхронно отдаём базовые зоны через presenter, чтобы UI
+        // (и unit-тест) увидели структуру немедленно. Async-обновление по
+        // реальному progressSummary / серии происходит вторым вызовом ниже.
         Task { @MainActor in
             await finishLoadMap(highlightedSound: request.highlightedSound)
         }
 
-        // v32 P2 — асинхронно подгружаем progressSummary и применяем умный
-        // unlock к зонам. Если репозитория нет (preview / unit-test) или
-        // загрузка падает — оставляем seed-состояние «как есть».
+        // Асинхронно подгружаем реальный progressSummary + серию и
+        // пересчитываем прогресс/разблокировку зон. Если репозитория нет
+        // (preview / unit-test) или загрузка падает — зоны остаются на нуле.
         Task { [weak self] in
             guard let self,
                   let repo = self.childRepository,
@@ -82,15 +88,57 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
             }
             do {
                 let profile = try await repo.fetch(id: request.childId)
+                let streak = await self.resolveDailyStreak(
+                    childId: request.childId,
+                    profileStreak: profile.currentStreak
+                )
                 await MainActor.run {
                     self.progressSummary = profile.progressSummary
+                    self.dailyStreak = streak
                     self.applyProgressSummaryUnlock()
+                    self.totalStars = self.zones.reduce(0) { $0 + $1.completedLessons }
                 }
                 await self.finishLoadMap(highlightedSound: request.highlightedSound)
             } catch {
                 self.logger.notice("loadMap progressSummary fetch failed: \(error.localizedDescription)")
             }
         }
+    }
+
+    /// Реальная серия активных дней подряд. Если есть `sessionRepository` —
+    /// считаем по фактическим датам сессий; иначе берём `currentStreak` профиля.
+    private func resolveDailyStreak(childId: String, profileStreak: Int) async -> Int {
+        guard let sessionRepo = sessionRepository else { return profileStreak }
+        guard let sessions = try? await sessionRepo.fetchRecent(childId: childId, limit: 120),
+              !sessions.isEmpty else {
+            return profileStreak
+        }
+        return Self.activeDayStreak(in: sessions)
+    }
+
+    /// Серия активных дней подряд, заканчивающаяся сегодня или вчера.
+    /// «Активный день» — день, в который есть хотя бы одна сессия.
+    private static func activeDayStreak(in sessions: [SessionDTO]) -> Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let activeDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        guard !activeDays.isEmpty else { return 0 }
+
+        var cursor = today
+        if !activeDays.contains(cursor) {
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor),
+                  activeDays.contains(yesterday) else {
+                return 0
+            }
+            cursor = yesterday
+        }
+        var streak = 0
+        while activeDays.contains(cursor) {
+            streak += 1
+            guard let previous = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = previous
+        }
+        return streak
     }
 
     /// Финализирует loadMap-ответ после (опциональной) подгрузки прогресса.
@@ -118,19 +166,33 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
         presenter?.presentLoadMap(response)
     }
 
-    /// v32 P2 — smart unlock: если все звуки prerequisite-зоны имеют
-    /// `progressSummary[sound] >= 0.5`, остров и зона разблокируются и
-    /// получают подходящий progress (как минимум 0.05, чтобы не казалось
-    /// «пусто»). Vowels всегда открыты как стартовая зона.
+    /// Пересчитывает прогресс и разблокировку зон из РЕАЛЬНОГО `progressSummary`
+    /// ребёнка. Для каждой зоны:
+    ///   • `progress` = среднее `progressSummary[sound]` по звукам зоны (0 если
+    ///     данных нет) — зоны без звуков (грамматика) остаются на нуле до
+    ///     отдельного источника;
+    ///   • `completedLessons` = round(progress · totalLessons);
+    ///   • `isLocked` = false для корневой зоны; для остальных — если ≥ 50%
+    ///     звуков prerequisite-зоны освоены (`progressSummary[sound] >= 0.5`).
+    /// Стартовая зона (vowels, без prerequisite) всегда открыта.
     private func applyProgressSummaryUnlock() {
         zones = zones.map { zone in
             var copy = zone
-            // Корневая зона (без prerequisite) всегда доступна.
+
+            // 1. Реальный прогресс зоны из среднего освоения её звуков.
+            let zoneProgress = averageMastery(for: zone.sounds)
+            copy.progress = Float(zoneProgress)
+            copy.completedLessons = min(
+                zone.totalLessons,
+                Int((zoneProgress * Double(zone.totalLessons)).rounded())
+            )
+
+            // 2. Разблокировка.
             guard let prereqId = zone.prerequisiteZoneId else {
+                // Корневая зона (без prerequisite) всегда доступна.
                 copy.isLocked = false
                 return copy
             }
-            // Звуки prerequisite-зоны должны быть в среднем освоены ≥ 0.5.
             guard let prereq = zones.first(where: { $0.id == prereqId }) else {
                 return copy
             }
@@ -143,22 +205,61 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
                 acc + ((progressSummary[sound] ?? 0) >= 0.5 ? 1 : 0)
             }
             // Разблокируем, если ≥ 50% prerequisite-звуков освоены.
-            let shouldUnlock = Double(masteredCount) / Double(prereqSounds.count) >= 0.5
-            if shouldUnlock {
-                copy.isLocked = false
-            }
+            copy.isLocked = Double(masteredCount) / Double(prereqSounds.count) < 0.5
             return copy
         }
 
-        // Зеркалим разблокировку зон в острова — иначе locked-флаг у MapIsland
-        // не совпадёт с зоной и WorldZoneTile покажет «Заблокировано» по старому.
+        // Зеркалим прогресс и разблокировку зон в острова + пересчитываем
+        // завершённость уровней из реального прогресса зоны.
         islands = islands.map { island in
             var copy = island
             if let matchingZone = zones.first(where: { $0.id == island.zoneId }) {
                 copy.isLocked = matchingZone.isLocked
+                copy.completionFraction = Double(matchingZone.progress)
+                copy.isCompleted = matchingZone.progress >= 1.0
+                copy.levels = Self.applyLevelProgress(
+                    to: island.levels,
+                    zoneProgress: Double(matchingZone.progress)
+                )
             }
             return copy
         }
+    }
+
+    /// Пересчитывает завершённость 5 стадий-уровней из реального прогресса зоны
+    /// (0…1). Завершено `floor(progress · 5)` уровней; следующий открыт.
+    /// Без зашитых successRate/stars — звёзды выставляются 3 за завершённый
+    /// уровень (детерминированно, не random).
+    private static func applyLevelProgress(
+        to levels: [MapLevel],
+        zoneProgress: Double
+    ) -> [MapLevel] {
+        guard !levels.isEmpty else { return levels }
+        let completedCount = min(levels.count, Int((zoneProgress * Double(levels.count)).rounded(.down)))
+        return levels.enumerated().map { index, level in
+            var copy = level
+            if index < completedCount {
+                copy.isCompleted = true
+                copy.isLocked = false
+                copy.successRate = 1.0
+                copy.stars = 3
+            } else {
+                copy.isCompleted = false
+                // Открыт первый незавершённый уровень (точка входа).
+                copy.isLocked = index != completedCount
+                copy.successRate = 0.0
+                copy.stars = 0
+            }
+            return copy
+        }
+    }
+
+    /// Среднее освоение набора звуков из реального `progressSummary` (0…1).
+    /// Пустой набор или отсутствие данных → 0 (честное пустое состояние).
+    private func averageMastery(for sounds: [String]) -> Double {
+        guard !sounds.isEmpty else { return 0 }
+        let total = sounds.reduce(0.0) { $0 + (progressSummary[$1] ?? 0) }
+        return min(1.0, total / Double(sounds.count))
     }
 
     func selectZone(_ request: WorldMapModels.SelectZone.Request) {
@@ -211,17 +312,11 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
     func refreshProgress(_ request: WorldMapModels.RefreshProgress.Request) {
         logger.info("refreshProgress childId=\(request.childId, privacy: .private(mask: .hash))")
 
-        zones = zones.map { zone in
-            var copy = zone
-            if zone.isCurrentLocation && copy.completedLessons < copy.totalLessons {
-                copy.completedLessons += 1
-                copy.progress = Float(copy.completedLessons) / Float(copy.totalLessons)
-            }
-            return copy
-        }
-
+        // Пересчитываем зоны из уже закешированного реального progressSummary —
+        // никакой фабрикации (раньше искусственно инкрементировался прогресс
+        // текущей зоны). Свежие данные подтягиваются ниже асинхронно.
+        applyProgressSummaryUnlock()
         totalStars = zones.reduce(0) { $0 + $1.completedLessons }
-        updateIslandStatesFromZones()
         computeAdaptiveRecommendation()
 
         presenter?.presentRefreshProgress(.init(
@@ -229,6 +324,34 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
             totalStars: totalStars,
             dailyStreak: dailyStreak
         ))
+
+        // Асинхронно подтягиваем актуальный progressSummary / серию из Realm,
+        // если репозитории доступны, и повторно отдаём пересчитанный прогресс.
+        guard let repo = childRepository, !request.childId.isEmpty else { return }
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let profile = try await repo.fetch(id: request.childId)
+                let streak = await self.resolveDailyStreak(
+                    childId: request.childId,
+                    profileStreak: profile.currentStreak
+                )
+                await MainActor.run {
+                    self.progressSummary = profile.progressSummary
+                    self.dailyStreak = streak
+                    self.applyProgressSummaryUnlock()
+                    self.totalStars = self.zones.reduce(0) { $0 + $1.completedLessons }
+                    self.computeAdaptiveRecommendation()
+                    self.presenter?.presentRefreshProgress(.init(
+                        zones: self.zones,
+                        totalStars: self.totalStars,
+                        dailyStreak: self.dailyStreak
+                    ))
+                }
+            } catch {
+                self.logger.notice("refreshProgress fetch failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     func tapLyalya(_ request: WorldMapModels.TapLyalya.Request) {
@@ -426,15 +549,6 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
         }
     }
 
-    private func updateIslandStatesFromZones() {
-        zones.forEach { zone in
-            if let idx = islands.firstIndex(where: { $0.zoneId == zone.id }) {
-                islands[idx].completionFraction = Double(zone.progress)
-                islands[idx].isCompleted = zone.progress >= 1.0
-            }
-        }
-    }
-
     private func syncZonesFromIslands() {
         zones = zones.map { zone in
             guard let island = islands.first(where: { $0.zoneId == zone.id }) else { return zone }
@@ -520,9 +634,9 @@ private extension WorldMapInteractor {
                 icon: "music.note",
                 position: CGPoint(x: 0.18, y: 0.88),
                 isLocked: false,
-                isCompleted: true,
+                isCompleted: false,
                 isCurrentLocation: false,
-                completionFraction: 1.0,
+                completionFraction: 0.0,
                 levels: makeVowelLevels()
             ),
             MapIsland(
@@ -535,7 +649,7 @@ private extension WorldMapInteractor {
                 isLocked: false,
                 isCompleted: false,
                 isCurrentLocation: false,
-                completionFraction: 0.65,
+                completionFraction: 0.0,
                 levels: makeWhistlingLevels()
             ),
             MapIsland(
@@ -548,7 +662,7 @@ private extension WorldMapInteractor {
                 isLocked: false,
                 isCompleted: false,
                 isCurrentLocation: true,
-                completionFraction: 0.30,
+                completionFraction: 0.0,
                 levels: makeHissingLevels()
             )
         ]
@@ -582,7 +696,7 @@ private extension WorldMapInteractor {
                 isLocked: false,
                 isCompleted: false,
                 isCurrentLocation: false,
-                completionFraction: 0.10,
+                completionFraction: 0.0,
                 levels: makeSonorantLevels()
             ),
             MapIsland(
@@ -632,61 +746,36 @@ private extension WorldMapInteractor {
     // MARK: Level Builders
 
     static func makeVowelLevels() -> [MapLevel] {
-        [
-            MapLevel(id: "vowel-l1", name: String(localized: "worldMap.level.isolated"),
-                     stage: .isolated, isLocked: false, isCompleted: true, successRate: 1.0, stars: 3),
-            MapLevel(id: "vowel-l2", name: String(localized: "worldMap.level.syllable"),
-                     stage: .syllable, isLocked: false, isCompleted: true, successRate: 0.95, stars: 3),
-            MapLevel(id: "vowel-l3", name: String(localized: "worldMap.level.wordInit"),
-                     stage: .wordInit, isLocked: false, isCompleted: true, successRate: 0.92, stars: 3),
-            MapLevel(id: "vowel-l4", name: String(localized: "worldMap.level.phrase"),
-                     stage: .phrase, isLocked: false, isCompleted: true, successRate: 0.88, stars: 2),
-            MapLevel(id: "vowel-l5", name: String(localized: "worldMap.level.story"),
-                     stage: .story, isLocked: false, isCompleted: true, successRate: 0.90, stars: 3)
-        ]
+        baseLevels(prefix: "vowel")
     }
 
     static func makeWhistlingLevels() -> [MapLevel] {
-        [
-            MapLevel(id: "whistle-l1", name: String(localized: "worldMap.level.isolated"),
-                     stage: .isolated, isLocked: false, isCompleted: true, successRate: 0.85, stars: 3),
-            MapLevel(id: "whistle-l2", name: String(localized: "worldMap.level.syllable"),
-                     stage: .syllable, isLocked: false, isCompleted: true, successRate: 0.80, stars: 2),
-            MapLevel(id: "whistle-l3", name: String(localized: "worldMap.level.wordInit"),
-                     stage: .wordInit, isLocked: false, isCompleted: false, successRate: 0.60, stars: 1),
-            MapLevel(id: "whistle-l4", name: String(localized: "worldMap.level.phrase"),
-                     stage: .phrase, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "whistle-l5", name: String(localized: "worldMap.level.story"),
-                     stage: .story, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0)
-        ]
+        baseLevels(prefix: "whistle")
     }
 
     static func makeHissingLevels() -> [MapLevel] {
-        [
-            MapLevel(id: "hiss-l1", name: String(localized: "worldMap.level.isolated"),
-                     stage: .isolated, isLocked: false, isCompleted: true, successRate: 0.75, stars: 2),
-            MapLevel(id: "hiss-l2", name: String(localized: "worldMap.level.syllable"),
-                     stage: .syllable, isLocked: false, isCompleted: false, successRate: 0.45, stars: 1),
-            MapLevel(id: "hiss-l3", name: String(localized: "worldMap.level.wordInit"),
-                     stage: .wordInit, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "hiss-l4", name: String(localized: "worldMap.level.phrase"),
-                     stage: .phrase, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "hiss-l5", name: String(localized: "worldMap.level.story"),
-                     stage: .story, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0)
-        ]
+        baseLevels(prefix: "hiss")
     }
 
     static func makeSonorantLevels() -> [MapLevel] {
+        baseLevels(prefix: "sono")
+    }
+
+    /// Пять стадий-уровней с НУЛЕВЫМ прогрессом. Только первый уровень открыт
+    /// (точка входа), остальные открываются по мере реального прохождения.
+    /// Реальная завершённость пересчитывается из `progress` зоны в
+    /// `applyLevelProgress`. Никаких зашитых successRate/stars.
+    static func baseLevels(prefix: String) -> [MapLevel] {
         [
-            MapLevel(id: "sono-l1", name: String(localized: "worldMap.level.isolated"),
-                     stage: .isolated, isLocked: false, isCompleted: false, successRate: 0.30, stars: 0),
-            MapLevel(id: "sono-l2", name: String(localized: "worldMap.level.syllable"),
+            MapLevel(id: "\(prefix)-l1", name: String(localized: "worldMap.level.isolated"),
+                     stage: .isolated, isLocked: false, isCompleted: false, successRate: 0.0, stars: 0),
+            MapLevel(id: "\(prefix)-l2", name: String(localized: "worldMap.level.syllable"),
                      stage: .syllable, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "sono-l3", name: String(localized: "worldMap.level.wordInit"),
+            MapLevel(id: "\(prefix)-l3", name: String(localized: "worldMap.level.wordInit"),
                      stage: .wordInit, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "sono-l4", name: String(localized: "worldMap.level.phrase"),
+            MapLevel(id: "\(prefix)-l4", name: String(localized: "worldMap.level.phrase"),
                      stage: .phrase, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
-            MapLevel(id: "sono-l5", name: String(localized: "worldMap.level.story"),
+            MapLevel(id: "\(prefix)-l5", name: String(localized: "worldMap.level.story"),
                      stage: .story, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0)
         ]
     }
@@ -738,21 +827,25 @@ private extension WorldMapInteractor {
         ]
     }
 
-    // MARK: Zones (legacy, kept for Presenter compatibility)
+    // MARK: Zones
 
-    static func makeSeedZones() -> [WorldZone] {
-        makeSeedZonesPartOne() + makeSeedZonesPartTwo()
+    /// Базовые зоны карты с НУЛЕВЫМ прогрессом. Реальный `progress` и
+    /// `completedLessons` пересчитываются из `progressSummary` ребёнка в
+    /// `applyProgressSummaryUnlock`. Никаких зашитых процентов — карта честно
+    /// пустая, пока у ребёнка нет сессий.
+    static func makeBaseZones() -> [WorldZone] {
+        makeBaseZonesPartOne() + makeBaseZonesPartTwo()
     }
 
-    private static func makeSeedZonesPartOne() -> [WorldZone] {
+    private static func makeBaseZonesPartOne() -> [WorldZone] {
         [
             WorldZone(
                 id: "zone-vowels",
                 name: String(localized: "worldMap.zone.vowels"),
                 icon: "music.note",
                 sounds: ["А", "О", "У", "И", "Э", "Ы"],
-                progress: 1.0,
-                completedLessons: 10,
+                progress: 0.0,
+                completedLessons: 0,
                 totalLessons: 10,
                 colorName: "sky",
                 isLocked: false,
@@ -768,8 +861,8 @@ private extension WorldMapInteractor {
                 name: String(localized: "worldMap.zone.whistling"),
                 icon: "leaf.fill",
                 sounds: ["С", "Сь", "З", "Зь", "Ц"],
-                progress: 0.65,
-                completedLessons: 13,
+                progress: 0.0,
+                completedLessons: 0,
                 totalLessons: 20,
                 colorName: "mint",
                 isLocked: false,
@@ -788,8 +881,8 @@ private extension WorldMapInteractor {
                 name: String(localized: "worldMap.zone.hissing"),
                 icon: "ant.fill",
                 sounds: ["Ш", "Ж"],
-                progress: 0.30,
-                completedLessons: 6,
+                progress: 0.0,
+                completedLessons: 0,
                 totalLessons: 20,
                 colorName: "butter",
                 isLocked: false,
@@ -803,7 +896,7 @@ private extension WorldMapInteractor {
         ]
     }
 
-    private static func makeSeedZonesPartTwo() -> [WorldZone] {
+    private static func makeBaseZonesPartTwo() -> [WorldZone] {
         [
             // v32 P2 — Аффрикаты (Ч, Щ) как отдельная категория звуков.
             // По умолчанию заблокированы; разблокировка считается из
@@ -830,8 +923,8 @@ private extension WorldMapInteractor {
                 name: String(localized: "worldMap.zone.sonorant"),
                 icon: "flame.fill",
                 sounds: ["Р", "Рь", "Л", "Ль"],
-                progress: 0.10,
-                completedLessons: 2,
+                progress: 0.0,
+                completedLessons: 0,
                 totalLessons: 20,
                 colorName: "lilac",
                 isLocked: false,

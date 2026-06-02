@@ -55,7 +55,8 @@ final class PoseSequenceInteractor: PoseSequenceBusinessLogic {
 
     // MARK: Face-mode state
 
-    private let classifier = TonguePostureClassifier()
+    /// Core ML классификатор поз как основной канал (graceful fallback на rule-based).
+    private let classifier: any ArticulationConfidenceProviding
     private var postures: [ArticulationPosture] = []
     private var holdFrames: Int = 0
     private let holdFramesRequired = 20
@@ -82,8 +83,12 @@ final class PoseSequenceInteractor: PoseSequenceBusinessLogic {
 
     // MARK: - Init
 
-    init(bodyTrackingSupported: Bool = ARBodyTrackingConfiguration.isSupported) {
+    init(
+        bodyTrackingSupported: Bool = ARBodyTrackingConfiguration.isSupported,
+        classifier: any ArticulationConfidenceProviding = TonguePostureClassifierML()
+    ) {
         self.bodyTrackingSupported = bodyTrackingSupported
+        self.classifier = classifier
     }
 
     // MARK: - StartGame

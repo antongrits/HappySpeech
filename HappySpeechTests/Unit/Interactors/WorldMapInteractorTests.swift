@@ -143,7 +143,7 @@ final class WorldMapInteractorTests: XCTestCase {
         await Task.yield()
         // Seed должен содержать заблокированные зоны — если нет, это регрессия
         guard let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) else {
-            XCTFail("Seed должен содержать хотя бы одну заблокированную зону; отсутствие locked зон — регрессия WorldMapInteractor.makeSeedZones()")
+            XCTFail("Базовые зоны должны содержать хотя бы одну заблокированную зону; отсутствие locked зон — регрессия WorldMapInteractor.makeBaseZones()")
             return
         }
         sut.selectZone(.init(zoneId: locked.id))

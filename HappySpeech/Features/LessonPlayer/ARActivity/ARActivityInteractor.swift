@@ -40,6 +40,9 @@ final class ARActivityInteractor: ARActivityBusinessLogic {
 
     private let adaptivePlanner: (any AdaptivePlannerService)?
     private let sessionRepository: (any SessionRepository)?
+    /// Offline-first персистентность + постановка AR-сессии в очередь синка.
+    /// При наличии — основной путь сохранения (заменяет прямой `sessionRepository.save`).
+    private let sessionPersistence: (any SessionPersistenceCoordinating)?
     private let hapticService: (any HapticService)?
 
     // MARK: - State
@@ -63,11 +66,13 @@ final class ARActivityInteractor: ARActivityBusinessLogic {
     init(
         adaptivePlanner: (any AdaptivePlannerService)? = nil,
         sessionRepository: (any SessionRepository)? = nil,
-        hapticService: (any HapticService)? = nil
+        hapticService: (any HapticService)? = nil,
+        sessionPersistence: (any SessionPersistenceCoordinating)? = nil
     ) {
         self.adaptivePlanner = adaptivePlanner
         self.sessionRepository = sessionRepository
         self.hapticService = hapticService
+        self.sessionPersistence = sessionPersistence
     }
 
     // MARK: - loadActivity
@@ -471,7 +476,8 @@ final class ARActivityInteractor: ARActivityBusinessLogic {
     }
 
     private func persistARSession(_ record: ARSessionRecord) async {
-        guard let sessionRepository else { return }
+        // Нечего сохранять, если не подключён ни координатор, ни прямой репозиторий.
+        guard sessionPersistence != nil || sessionRepository != nil else { return }
 
         let kindRaw = record.gameKind?.rawValue ?? ARGameKind.arMirror.rawValue
         let corrAtt = Int((record.score * Float(max(record.attempts, 1))).rounded())
@@ -490,10 +496,21 @@ final class ARActivityInteractor: ARActivityBusinessLogic {
             attempts: []
         )
 
+        // Предпочитаем координатор (сохранение + offline-first синк для аутент. родителя).
+        if let sessionPersistence {
+            await sessionPersistence.persistAndSync(dto)
+            HSLogger.ar.info(
+                "ARActivity persisted+synced: game=\(kindRaw, privacy: .public) score=\(record.score) dur=\(record.durationSec)s"
+            )
+            return
+        }
+
+        // Fallback: прямое сохранение без синка (legacy/тестовый путь).
+        guard let sessionRepository else { return }
         do {
             try await sessionRepository.save(dto)
             HSLogger.ar.info(
-                "ARActivity persisted: game=\(kindRaw, privacy: .public) score=\(record.score) dur=\(record.durationSec)s"
+                "ARActivity persisted (local-only): game=\(kindRaw, privacy: .public) score=\(record.score) dur=\(record.durationSec)s"
             )
         } catch {
             HSLogger.ar.error(

@@ -42,7 +42,7 @@ public struct HSRewardBurst: View {
             let distance = Double.random(in: 60...120)
             return BurstParticle(
                 id: i,
-                color: [color, color.opacity(0.7), .yellow, .pink][i % 4],
+                color: [color, color.opacity(0.7), ColorTokens.Brand.butter, ColorTokens.Brand.rose][i % 4],
                 size: CGFloat.random(in: 6...14),
                 x: cos(angle) * distance,
                 y: sin(angle) * distance,
