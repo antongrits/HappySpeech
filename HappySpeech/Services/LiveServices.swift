@@ -264,10 +264,11 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
         PackDescriptor(id: "pack_diff_s_sh_v1",     fileName: "pack_diff_s_sh_pack",     soundTarget: "С–Ш",                 templateType: .minimalPairs),
         PackDescriptor(id: "pack_diff_r_l_v1",      fileName: "pack_diff_r_l_pack",      soundTarget: "Р–Л",                 templateType: .minimalPairs),
         PackDescriptor(id: "pack_diff_paronyms_v1", fileName: "pack_diff_paronyms_pack", soundTarget: "З–Ж/Ш–Ж/С–З/Ч–Щ",     templateType: .minimalPairs),
-        PackDescriptor(id: "pack_diff_voicing_v1",  fileName: "pack_diff_voicing_pack",  soundTarget: "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш", templateType: .minimalPairs),
-        // Лексический пак: словарь по 17 темам (197 слов с верифицированными
-        // картинками word_* — резолв через word_manifest). listenAndChoose-словарь.
-        PackDescriptor(id: "pack_lexical_v1", fileName: "pack_lexical", soundTarget: "Лексика", templateType: .listenAndChoose)
+        PackDescriptor(id: "pack_diff_voicing_v1",  fileName: "pack_diff_voicing_pack",  soundTarget: "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш", templateType: .minimalPairs)
+        // NB: pack_lexical (575 слов словаря) НЕ регистрируется как playable-пак, пока
+        // не закрыты ~152 картинко-пробела (Image отсутствующего ассета рендерит пусто).
+        // +50 свежих слов уже отдают пользу глобально через word_manifest (резолв картинок
+        // для любого пака). Регистрировать только после доукомплектации картинками.
     ]
 
     /// Quick lookup id → fileName for the registry.
