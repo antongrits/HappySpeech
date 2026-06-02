@@ -2,8 +2,8 @@
   "id": "pack_lexical_v1",
   "soundTarget": "lexical",
   "group": "лексика",
-  "version": 2,
-  "description": "Лексические и грамматические упражнения по темам детского словаря 5–8 лет. Развитие словарного запаса, антонимов, синонимов, обобщений, словоизменения. v2: +147 предметных слов с верифицированными картинками (12 тем).",
+  "version": 3,
+  "description": "Лексические и грамматические упражнения по темам детского словаря 5–8 лет. Развитие словарного запаса, антонимов, синонимов, обобщений, словоизменения. v2: +147 предметных слов с верифицированными картинками (12 тем). v3: +50 слов (профессии, времена года, погода, эмоции, муз. инструменты) с верифицированными картинками.",
   "stages": {
     "animals_wild": {
       "stageId": "animals_wild",
@@ -7436,6 +7436,386 @@
           "hint": "Ляля: «Привет! Как тебя зовут?» Ты: «Меня зовут...»",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-dl-24.m4a"
+        }
+      ]
+    },
+    "professii": {
+      "stageId": "professii",
+      "note": "Профессии — кто кем работает.",
+      "items": [
+        {
+          "id": "lex-prof-0",
+          "word": "повар",
+          "hint": "Повар вкусно готовит еду.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-0.m4a"
+        },
+        {
+          "id": "lex-prof-1",
+          "word": "врач",
+          "hint": "Врач лечит людей.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-1.m4a"
+        },
+        {
+          "id": "lex-prof-2",
+          "word": "учитель",
+          "hint": "Учитель учит детей в школе.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-2.m4a"
+        },
+        {
+          "id": "lex-prof-3",
+          "word": "пожарный",
+          "hint": "Пожарный тушит огонь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-3.m4a"
+        },
+        {
+          "id": "lex-prof-4",
+          "word": "пилот",
+          "hint": "Пилот водит самолёт.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-4.m4a"
+        },
+        {
+          "id": "lex-prof-5",
+          "word": "строитель",
+          "hint": "Строитель строит дома.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-5.m4a"
+        },
+        {
+          "id": "lex-prof-6",
+          "word": "художник",
+          "hint": "Художник рисует картины.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-6.m4a"
+        },
+        {
+          "id": "lex-prof-7",
+          "word": "музыкант",
+          "hint": "Музыкант играет музыку.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-7.m4a"
+        },
+        {
+          "id": "lex-prof-8",
+          "word": "рыбак",
+          "hint": "Рыбак ловит рыбу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-8.m4a"
+        },
+        {
+          "id": "lex-prof-9",
+          "word": "садовник",
+          "hint": "Садовник ухаживает за растениями.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-prof-9.m4a"
+        }
+      ]
+    },
+    "vremena_goda": {
+      "stageId": "vremena_goda",
+      "note": "Времена года и месяцы.",
+      "items": [
+        {
+          "id": "lex-sea-0",
+          "word": "весна",
+          "hint": "Весной тает снег и растут цветы.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-0.m4a"
+        },
+        {
+          "id": "lex-sea-1",
+          "word": "лето",
+          "hint": "Летом тепло и светит солнце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-1.m4a"
+        },
+        {
+          "id": "lex-sea-2",
+          "word": "осень",
+          "hint": "Осенью падают жёлтые листья.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-2.m4a"
+        },
+        {
+          "id": "lex-sea-3",
+          "word": "зима",
+          "hint": "Зимой холодно и идёт снег.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-3.m4a"
+        },
+        {
+          "id": "lex-sea-4",
+          "word": "март",
+          "hint": "Март — первый месяц весны.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-4.m4a"
+        },
+        {
+          "id": "lex-sea-5",
+          "word": "июль",
+          "hint": "Июль — тёплый летний месяц.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-5.m4a"
+        },
+        {
+          "id": "lex-sea-6",
+          "word": "октябрь",
+          "hint": "Октябрь — осенний месяц.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-6.m4a"
+        },
+        {
+          "id": "lex-sea-7",
+          "word": "январь",
+          "hint": "Январь — первый месяц зимы.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-7.m4a"
+        },
+        {
+          "id": "lex-sea-8",
+          "word": "апрель",
+          "hint": "Апрель — весенний месяц.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-8.m4a"
+        },
+        {
+          "id": "lex-sea-9",
+          "word": "сезон",
+          "hint": "Сезон — это время года.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sea-9.m4a"
+        }
+      ]
+    },
+    "pogoda": {
+      "stageId": "pogoda",
+      "note": "Погода и природные явления.",
+      "items": [
+        {
+          "id": "lex-pog-0",
+          "word": "солнце",
+          "hint": "Солнце светит и греет.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-0.m4a"
+        },
+        {
+          "id": "lex-pog-1",
+          "word": "дождь",
+          "hint": "Дождь капает из тучи.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-1.m4a"
+        },
+        {
+          "id": "lex-pog-2",
+          "word": "снег",
+          "hint": "Снег белый и холодный.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-2.m4a"
+        },
+        {
+          "id": "lex-pog-3",
+          "word": "ветер",
+          "hint": "Ветер качает деревья.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-3.m4a"
+        },
+        {
+          "id": "lex-pog-4",
+          "word": "гроза",
+          "hint": "В грозу гремит гром.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-4.m4a"
+        },
+        {
+          "id": "lex-pog-5",
+          "word": "туман",
+          "hint": "В туман плохо видно вдали.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-5.m4a"
+        },
+        {
+          "id": "lex-pog-6",
+          "word": "радуга",
+          "hint": "Радуга разноцветная после дождя.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-6.m4a"
+        },
+        {
+          "id": "lex-pog-7",
+          "word": "облако",
+          "hint": "Облако плывёт по небу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-7.m4a"
+        },
+        {
+          "id": "lex-pog-8",
+          "word": "мороз",
+          "hint": "Мороз — это сильный холод.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-8.m4a"
+        },
+        {
+          "id": "lex-pog-9",
+          "word": "жара",
+          "hint": "Жара — это сильное тепло.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-pog-9.m4a"
+        }
+      ]
+    },
+    "emotsii": {
+      "stageId": "emotsii",
+      "note": "Эмоции и настроение.",
+      "items": [
+        {
+          "id": "lex-emo-0",
+          "word": "радость",
+          "hint": "Радость — когда весело и хорошо.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-0.m4a"
+        },
+        {
+          "id": "lex-emo-1",
+          "word": "грусть",
+          "hint": "Грусть — когда грустно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-1.m4a"
+        },
+        {
+          "id": "lex-emo-2",
+          "word": "страх",
+          "hint": "Страх — когда страшно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-2.m4a"
+        },
+        {
+          "id": "lex-emo-3",
+          "word": "злость",
+          "hint": "Злость — когда сердишься.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-3.m4a"
+        },
+        {
+          "id": "lex-emo-4",
+          "word": "удивление",
+          "hint": "Удивление — когда чему-то удивлён.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-4.m4a"
+        },
+        {
+          "id": "lex-emo-5",
+          "word": "смех",
+          "hint": "Смех — когда смешно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-5.m4a"
+        },
+        {
+          "id": "lex-emo-6",
+          "word": "любовь",
+          "hint": "Любовь — когда кого-то любишь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-6.m4a"
+        },
+        {
+          "id": "lex-emo-7",
+          "word": "скука",
+          "hint": "Скука — когда скучно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-7.m4a"
+        },
+        {
+          "id": "lex-emo-8",
+          "word": "обида",
+          "hint": "Обида — когда обидно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-8.m4a"
+        },
+        {
+          "id": "lex-emo-9",
+          "word": "спокойствие",
+          "hint": "Спокойствие — когда спокойно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-emo-9.m4a"
+        }
+      ]
+    },
+    "muzykalnie_instrumenty": {
+      "stageId": "muzykalnie_instrumenty",
+      "note": "Музыкальные инструменты.",
+      "items": [
+        {
+          "id": "lex-inst-0",
+          "word": "барабан",
+          "hint": "Барабан громко стучит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-0.m4a"
+        },
+        {
+          "id": "lex-inst-1",
+          "word": "гитара",
+          "hint": "У гитары есть струны.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-1.m4a"
+        },
+        {
+          "id": "lex-inst-2",
+          "word": "пианино",
+          "hint": "У пианино белые и чёрные клавиши.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-2.m4a"
+        },
+        {
+          "id": "lex-inst-3",
+          "word": "скрипка",
+          "hint": "На скрипке играют смычком.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-3.m4a"
+        },
+        {
+          "id": "lex-inst-4",
+          "word": "труба",
+          "hint": "Труба громко поёт.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-4.m4a"
+        },
+        {
+          "id": "lex-inst-5",
+          "word": "флейта",
+          "hint": "Флейта тонко свистит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-5.m4a"
+        },
+        {
+          "id": "lex-inst-6",
+          "word": "балалайка",
+          "hint": "У балалайки три струны.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-6.m4a"
+        },
+        {
+          "id": "lex-inst-7",
+          "word": "аккордеон",
+          "hint": "Аккордеон растягивают руками.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-7.m4a"
+        },
+        {
+          "id": "lex-inst-8",
+          "word": "бубен",
+          "hint": "Бубен звенит и стучит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-8.m4a"
+        },
+        {
+          "id": "lex-inst-9",
+          "word": "арфа",
+          "hint": "У арфы много струн.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-inst-9.m4a"
         }
       ]
     }

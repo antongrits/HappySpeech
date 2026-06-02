@@ -15301,9 +15301,262 @@
       "semanticCategory": "objects",
       "methodologySource": "orphan-batch-1",
       "soundFamily": "З"
+    },
+    {
+      "word": "учитель",
+      "asset": "word_uchitel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "пожарный",
+      "asset": "word_pozharny",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "пилот",
+      "asset": "word_pilot",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "строитель",
+      "asset": "word_stroitel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "музыкант",
+      "asset": "word_muzykant",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "садовник",
+      "asset": "word_sadovnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "profession",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "лето",
+      "asset": "word_leto",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "season",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "март",
+      "asset": "word_mart",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "season",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "октябрь",
+      "asset": "word_oktyabr",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "season",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "сезон",
+      "asset": "word_sezon",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "season",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "туман",
+      "asset": "word_tuman",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "weather",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "страх",
+      "asset": "word_strakh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "удивление",
+      "asset": "word_udivlenie",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "любовь",
+      "asset": "word_lyubov",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "скука",
+      "asset": "word_skuka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "обида",
+      "asset": "word_obida",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "спокойствие",
+      "asset": "word_spokoystvie",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "emotion",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "пианино",
+      "asset": "word_pianino",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "труба",
+      "asset": "word_truba_inst",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "флейта",
+      "asset": "word_fleyta",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "балалайка",
+      "asset": "word_balalajka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "аккордеон",
+      "asset": "word_akkordeon",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
+    },
+    {
+      "word": "арфа",
+      "asset": "word_arfa",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "simple",
+      "semanticCategory": "music",
+      "methodologySource": "HappySpeech-lexical-v3",
+      "soundFamily": null
     }
   ],
-  "totalWords": 1369,
+  "totalWords": 1374,
   "generatedAt": "2026-05-24",
   "entries": [
     {
