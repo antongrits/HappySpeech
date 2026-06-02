@@ -2,8 +2,8 @@
   "id": "pack_lexical_v1",
   "soundTarget": "lexical",
   "group": "лексика",
-  "version": 1,
-  "description": "Лексические и грамматические упражнения по темам детского словаря 5–8 лет. Развитие словарного запаса, антонимов, синонимов, обобщений, словоизменения.",
+  "version": 2,
+  "description": "Лексические и грамматические упражнения по темам детского словаря 5–8 лет. Развитие словарного запаса, антонимов, синонимов, обобщений, словоизменения. v2: +147 предметных слов с верифицированными картинками (12 тем).",
   "stages": {
     "animals_wild": {
       "stageId": "animals_wild",
@@ -183,6 +183,188 @@
           "hint": "Нашёл больного зайца — позвони в зоопарк или лесникам.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-aw-24.m4a"
+        },
+        {
+          "id": "lex-aw-25",
+          "word": "бобр",
+          "hint": "Бобр трудолюбивый. Строит плотину на реке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-25.m4a"
+        },
+        {
+          "id": "lex-aw-26",
+          "word": "выдра",
+          "hint": "Выдра ловкая. Плавает и ловит рыбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-26.m4a"
+        },
+        {
+          "id": "lex-aw-27",
+          "word": "горностай",
+          "hint": "Горностай маленький и белый зимой. Быстрый зверёк.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-27.m4a"
+        },
+        {
+          "id": "lex-aw-28",
+          "word": "дикобраз",
+          "hint": "Дикобраз колючий. У него длинные иголки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-28.m4a"
+        },
+        {
+          "id": "lex-aw-29",
+          "word": "енот",
+          "hint": "Енот любопытный. Полощет еду в воде.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-29.m4a"
+        },
+        {
+          "id": "lex-aw-30",
+          "word": "зебра",
+          "hint": "Зебра полосатая. Чёрно-белая, как тельняшка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-30.m4a"
+        },
+        {
+          "id": "lex-aw-31",
+          "word": "жираф",
+          "hint": "Жираф высокий. У него длинная шея.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-31.m4a"
+        },
+        {
+          "id": "lex-aw-32",
+          "word": "слон",
+          "hint": "Слон огромный. У него длинный хобот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-32.m4a"
+        },
+        {
+          "id": "lex-aw-33",
+          "word": "тигр",
+          "hint": "Тигр полосатый и сильный. Рычит грозно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-33.m4a"
+        },
+        {
+          "id": "lex-aw-34",
+          "word": "лев",
+          "hint": "Лев большой. У него пушистая грива.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-34.m4a"
+        },
+        {
+          "id": "lex-aw-35",
+          "word": "крокодил",
+          "hint": "Крокодил зубастый. Живёт в реке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-35.m4a"
+        },
+        {
+          "id": "lex-aw-36",
+          "word": "черепаха",
+          "hint": "Черепаха медленная. У неё крепкий панцирь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-36.m4a"
+        },
+        {
+          "id": "lex-aw-37",
+          "word": "ящерица",
+          "hint": "Ящерица юркая. Греется на солнышке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-37.m4a"
+        },
+        {
+          "id": "lex-aw-38",
+          "word": "обезьяна",
+          "hint": "Обезьяна весёлая. Прыгает по деревьям.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-38.m4a"
+        },
+        {
+          "id": "lex-aw-39",
+          "word": "бегемот",
+          "hint": "Бегемот толстый. Любит сидеть в воде.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-39.m4a"
+        },
+        {
+          "id": "lex-aw-40",
+          "word": "гепард",
+          "hint": "Гепард пятнистый. Бегает очень быстро.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-40.m4a"
+        },
+        {
+          "id": "lex-aw-41",
+          "word": "горилла",
+          "hint": "Горилла большая и сильная. Бьёт себя в грудь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-41.m4a"
+        },
+        {
+          "id": "lex-aw-42",
+          "word": "кенгуру",
+          "hint": "Кенгуру прыгучий. Носит малыша в сумке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-aw-42.m4a"
+        },
+        {
+          "id": "lex-aw-43",
+          "word": "верблюд",
+          "hint": "Верблюд с горбами. Живёт в пустыне.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-43.m4a"
+        },
+        {
+          "id": "lex-aw-44",
+          "word": "буйвол",
+          "hint": "Буйвол сильный. У него большие рога.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-aw-44.m4a"
+        },
+        {
+          "id": "lex-aw-45",
+          "word": "ягуар",
+          "hint": "Ягуар пятнистый. Хорошо лазает по деревьям.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-45.m4a"
+        },
+        {
+          "id": "lex-aw-46",
+          "word": "газель",
+          "hint": "Газель быстрая и стройная. Легко прыгает.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-46.m4a"
+        },
+        {
+          "id": "lex-aw-47",
+          "word": "импала",
+          "hint": "Импала ловкая. Высоко прыгает в саванне.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-47.m4a"
+        },
+        {
+          "id": "lex-aw-48",
+          "word": "ехидна",
+          "hint": "Ехидна колючая. Любит муравьёв.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-48.m4a"
+        },
+        {
+          "id": "lex-aw-49",
+          "word": "динго",
+          "hint": "Динго дикая собака. Живёт в Австралии.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-49.m4a"
+        },
+        {
+          "id": "lex-aw-50",
+          "word": "гиена",
+          "hint": "Гиена пятнистая. Смешно «смеётся».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-aw-50.m4a"
         }
       ]
     },
@@ -364,6 +546,62 @@
           "hint": "Котёнок маленький котик. Щенок маленькая собачка.",
           "difficulty": 1,
           "audio_file": "Audio/Content/Lexical/lex-ad-24.m4a"
+        },
+        {
+          "id": "lex-ad-25",
+          "word": "коза",
+          "hint": "Коза рогатая. Даёт молоко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-ad-25.m4a"
+        },
+        {
+          "id": "lex-ad-26",
+          "word": "петух",
+          "hint": "Петух гордый. Поёт по утрам: ку-ка-ре-ку!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-ad-26.m4a"
+        },
+        {
+          "id": "lex-ad-27",
+          "word": "баран",
+          "hint": "Баран кудрявый. У него закрученные рога.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ad-27.m4a"
+        },
+        {
+          "id": "lex-ad-28",
+          "word": "хомяк",
+          "hint": "Хомяк маленький. Прячет еду за щёки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-ad-28.m4a"
+        },
+        {
+          "id": "lex-ad-29",
+          "word": "ягнёнок",
+          "hint": "Ягнёнок — детёныш овцы. Мягкий и кудрявый.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ad-29.m4a"
+        },
+        {
+          "id": "lex-ad-30",
+          "word": "индюшка",
+          "hint": "Индюшка важная. Распускает хвост веером.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ad-30.m4a"
+        },
+        {
+          "id": "lex-ad-31",
+          "word": "гусыня",
+          "hint": "Гусыня белая. Ведёт за собой гусят.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ad-31.m4a"
+        },
+        {
+          "id": "lex-ad-32",
+          "word": "бычок",
+          "hint": "Бычок маленький. У него ещё короткие рожки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ad-32.m4a"
         }
       ]
     },
@@ -545,6 +783,104 @@
           "hint": "Зимующие: синица, снегирь, воробей. Перелётные: ласточка, соловей.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-bi-24.m4a"
+        },
+        {
+          "id": "lex-bi-25",
+          "word": "скворец",
+          "hint": "Скворец певчий. Живёт в скворечнике.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-25.m4a"
+        },
+        {
+          "id": "lex-bi-26",
+          "word": "грач",
+          "hint": "Грач чёрный. Прилетает ранней весной.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-26.m4a"
+        },
+        {
+          "id": "lex-bi-27",
+          "word": "дрозд",
+          "hint": "Дрозд певчий. Любит ягоды рябины.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-27.m4a"
+        },
+        {
+          "id": "lex-bi-28",
+          "word": "зяблик",
+          "hint": "Зяблик маленький. Звонко поёт в лесу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-bi-28.m4a"
+        },
+        {
+          "id": "lex-bi-29",
+          "word": "иволга",
+          "hint": "Иволга жёлтая. Красиво свистит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-bi-29.m4a"
+        },
+        {
+          "id": "lex-bi-30",
+          "word": "жаворонок",
+          "hint": "Жаворонок поёт высоко в небе. Любит поля.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-30.m4a"
+        },
+        {
+          "id": "lex-bi-31",
+          "word": "попугай",
+          "hint": "Попугай яркий. Умеет говорить слова.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-bi-31.m4a"
+        },
+        {
+          "id": "lex-bi-32",
+          "word": "чайка",
+          "hint": "Чайка белая. Летает над морем.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-bi-32.m4a"
+        },
+        {
+          "id": "lex-bi-33",
+          "word": "цапля",
+          "hint": "Цапля длинноногая. Стоит в воде на одной ноге.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-33.m4a"
+        },
+        {
+          "id": "lex-bi-34",
+          "word": "рябчик",
+          "hint": "Рябчик пёстрый. Живёт в лесу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-bi-34.m4a"
+        },
+        {
+          "id": "lex-bi-35",
+          "word": "ястреб",
+          "hint": "Ястреб хищный. Зорко высматривает добычу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-35.m4a"
+        },
+        {
+          "id": "lex-bi-36",
+          "word": "ворон",
+          "hint": "Ворон большой и чёрный. Громко каркает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-36.m4a"
+        },
+        {
+          "id": "lex-bi-37",
+          "word": "лебедь",
+          "hint": "Лебедь белый. У него длинная красивая шея.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-bi-37.m4a"
+        },
+        {
+          "id": "lex-bi-38",
+          "word": "канарейка",
+          "hint": "Канарейка жёлтая. Звонко поёт в клетке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-bi-38.m4a"
         }
       ]
     },
@@ -726,6 +1062,118 @@
           "hint": "Лимон кислый. Арбуз сладкий. Перец острый. Лук горький.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-vf-24.m4a"
+        },
+        {
+          "id": "lex-vf-25",
+          "word": "баклажан",
+          "hint": "Баклажан фиолетовый. Растёт на грядке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-25.m4a"
+        },
+        {
+          "id": "lex-vf-26",
+          "word": "кабачок",
+          "hint": "Кабачок длинный и зелёный. Растёт в огороде.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-26.m4a"
+        },
+        {
+          "id": "lex-vf-27",
+          "word": "брокколи",
+          "hint": "Брокколи зелёная. Похожа на маленькое дерево.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-27.m4a"
+        },
+        {
+          "id": "lex-vf-28",
+          "word": "редька",
+          "hint": "Редька круглая. Горькая на вкус.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-28.m4a"
+        },
+        {
+          "id": "lex-vf-29",
+          "word": "репа",
+          "hint": "Репа жёлтая. Сладкая и круглая.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-29.m4a"
+        },
+        {
+          "id": "lex-vf-30",
+          "word": "фасоль",
+          "hint": "Фасоль в стручке. Бывает разноцветная.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-30.m4a"
+        },
+        {
+          "id": "lex-vf-31",
+          "word": "кукуруза",
+          "hint": "Кукуруза жёлтая. Растёт початком.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-31.m4a"
+        },
+        {
+          "id": "lex-vf-32",
+          "word": "чеснок",
+          "hint": "Чеснок белый. Острый и пахучий.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-32.m4a"
+        },
+        {
+          "id": "lex-vf-33",
+          "word": "петрушка",
+          "hint": "Петрушка зелёная. Душистая травка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-33.m4a"
+        },
+        {
+          "id": "lex-vf-34",
+          "word": "абрикос",
+          "hint": "Абрикос оранжевый. Сладкий и сочный.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-34.m4a"
+        },
+        {
+          "id": "lex-vf-35",
+          "word": "слива",
+          "hint": "Слива синяя. Сладкая и мягкая.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-35.m4a"
+        },
+        {
+          "id": "lex-vf-36",
+          "word": "ананас",
+          "hint": "Ананас колючий снаружи. Сладкий внутри.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-36.m4a"
+        },
+        {
+          "id": "lex-vf-37",
+          "word": "киви",
+          "hint": "Киви мохнатый. Зелёный внутри.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-37.m4a"
+        },
+        {
+          "id": "lex-vf-38",
+          "word": "гранат",
+          "hint": "Гранат красный. Внутри много сочных зёрнышек.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-vf-38.m4a"
+        },
+        {
+          "id": "lex-vf-39",
+          "word": "инжир",
+          "hint": "Инжир сладкий. Мягкий и сочный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-vf-39.m4a"
+        },
+        {
+          "id": "lex-vf-40",
+          "word": "черешня",
+          "hint": "Черешня красная. Растёт на черешке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-vf-40.m4a"
         }
       ]
     },
@@ -907,6 +1355,132 @@
           "hint": "Рубашка, платье — одежда. Сапоги, туфли — обувь.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-cl-24.m4a"
+        },
+        {
+          "id": "lex-cl-25",
+          "word": "сарафан",
+          "hint": "Сарафан лёгкий. Носят летом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-25.m4a"
+        },
+        {
+          "id": "lex-cl-26",
+          "word": "рубаха",
+          "hint": "Рубаха с пуговицами. Носят на каждый день.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-26.m4a"
+        },
+        {
+          "id": "lex-cl-27",
+          "word": "рукавица",
+          "hint": "Рукавица тёплая. Греет руку зимой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-27.m4a"
+        },
+        {
+          "id": "lex-cl-28",
+          "word": "ремень",
+          "hint": "Ремень держит брюки. У него есть пряжка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-28.m4a"
+        },
+        {
+          "id": "lex-cl-29",
+          "word": "жилет",
+          "hint": "Жилет без рукавов. Греет спину.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-29.m4a"
+        },
+        {
+          "id": "lex-cl-30",
+          "word": "блузка",
+          "hint": "Блузка лёгкая. Нарядная кофточка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-30.m4a"
+        },
+        {
+          "id": "lex-cl-31",
+          "word": "кардиган",
+          "hint": "Кардиган тёплый. Застёгивается на пуговицы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-cl-31.m4a"
+        },
+        {
+          "id": "lex-cl-32",
+          "word": "шорты",
+          "hint": "Шорты короткие. Носят в жару.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-32.m4a"
+        },
+        {
+          "id": "lex-cl-33",
+          "word": "юбка",
+          "hint": "Юбка пышная. Кружится при ходьбе.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-33.m4a"
+        },
+        {
+          "id": "lex-cl-34",
+          "word": "плащ",
+          "hint": "Плащ от дождя. Не промокает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-34.m4a"
+        },
+        {
+          "id": "lex-cl-35",
+          "word": "анорак",
+          "hint": "Анорак с капюшоном. Защищает от ветра.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-cl-35.m4a"
+        },
+        {
+          "id": "lex-cl-36",
+          "word": "берет",
+          "hint": "Берет круглый. Мягкая шапочка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-36.m4a"
+        },
+        {
+          "id": "lex-cl-37",
+          "word": "бейсболка",
+          "hint": "Бейсболка с козырьком. Прячет от солнца.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-cl-37.m4a"
+        },
+        {
+          "id": "lex-cl-38",
+          "word": "кепка",
+          "hint": "Кепка с козырьком. Лёгкая шапочка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-38.m4a"
+        },
+        {
+          "id": "lex-cl-39",
+          "word": "ботинки",
+          "hint": "Ботинки крепкие. Зашнуровываются.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-39.m4a"
+        },
+        {
+          "id": "lex-cl-40",
+          "word": "кеды",
+          "hint": "Кеды лёгкие. В них удобно бегать.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-40.m4a"
+        },
+        {
+          "id": "lex-cl-41",
+          "word": "халат",
+          "hint": "Халат мягкий. Носят дома.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-41.m4a"
+        },
+        {
+          "id": "lex-cl-42",
+          "word": "пижама",
+          "hint": "Пижама уютная. В ней спят.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-cl-42.m4a"
         }
       ]
     },
@@ -1088,6 +1662,83 @@
           "hint": "Самолёт быстрее машины. Велосипед медленнее поезда.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-tr-24.m4a"
+        },
+        {
+          "id": "lex-tr-25",
+          "word": "лодка",
+          "hint": "Лодка плывёт по воде. Её ведут вёслами.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tr-25.m4a"
+        },
+        {
+          "id": "lex-tr-26",
+          "word": "катер",
+          "hint": "Катер быстрый. Мчится по воде.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tr-26.m4a"
+        },
+        {
+          "id": "lex-tr-27",
+          "word": "яхта",
+          "hint": "Яхта с парусом. Её гонит ветер.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tr-27.m4a"
+        },
+        {
+          "id": "lex-tr-28",
+          "word": "трактор",
+          "hint": "Трактор сильный. Пашет поле.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tr-28.m4a"
+        },
+        {
+          "id": "lex-tr-29",
+          "word": "бульдозер",
+          "hint": "Бульдозер мощный. Двигает землю.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tr-29.m4a"
+        },
+        {
+          "id": "lex-tr-30",
+          "word": "автокран",
+          "hint": "Автокран высокий. Поднимает тяжёлые грузы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tr-30.m4a"
+        },
+        {
+          "id": "lex-tr-31",
+          "word": "дирижабль",
+          "hint": "Дирижабль летит по небу. Похож на большой шар.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-tr-31.m4a"
+        },
+        {
+          "id": "lex-tr-32",
+          "word": "катамаран",
+          "hint": "Катамаран на двух поплавках. Плывёт по воде.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-tr-32.m4a"
+        },
+        {
+          "id": "lex-tr-33",
+          "word": "байдарка",
+          "hint": "Байдарка узкая. Гребут веслом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-tr-33.m4a"
+        },
+        {
+          "id": "lex-tr-34",
+          "word": "каноэ",
+          "hint": "Каноэ лёгкое. Плывёт по реке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-tr-34.m4a"
+        },
+        {
+          "id": "lex-tr-35",
+          "word": "баржа",
+          "hint": "Баржа большая. Возит грузы по реке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tr-35.m4a"
         }
       ]
     },
@@ -2591,6 +3242,55 @@
           "hint": "На кухне готовят еду и едят за столом.",
           "difficulty": 1,
           "audio_file": "Audio/Content/Lexical/lex-hf-24.m4a"
+        },
+        {
+          "id": "lex-hf-25",
+          "word": "буфет",
+          "hint": "Буфет — шкаф для посуды. У него полки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-hf-25.m4a"
+        },
+        {
+          "id": "lex-hf-26",
+          "word": "вешалка",
+          "hint": "Вешалка для одежды. На неё вешают вещи.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-hf-26.m4a"
+        },
+        {
+          "id": "lex-hf-27",
+          "word": "штора",
+          "hint": "Штора закрывает окно. Бывает яркой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-hf-27.m4a"
+        },
+        {
+          "id": "lex-hf-28",
+          "word": "часы",
+          "hint": "Часы показывают время. Они тикают.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-hf-28.m4a"
+        },
+        {
+          "id": "lex-hf-29",
+          "word": "ваза",
+          "hint": "Ваза для цветов. Стоит на столе.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-hf-29.m4a"
+        },
+        {
+          "id": "lex-hf-30",
+          "word": "духовка",
+          "hint": "Духовка горячая. В ней пекут пироги.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-hf-30.m4a"
+        },
+        {
+          "id": "lex-hf-31",
+          "word": "камин",
+          "hint": "Камин тёплый. В нём горит огонь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-hf-31.m4a"
         }
       ]
     },
@@ -3128,6 +3828,76 @@
           "hint": "Я люблю играть в ... Мне нравится ...",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-tp-24.m4a"
+        },
+        {
+          "id": "lex-tp-25",
+          "word": "юла",
+          "hint": "Юла крутится. Жужжит и вертится.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-25.m4a"
+        },
+        {
+          "id": "lex-tp-26",
+          "word": "барабан",
+          "hint": "Барабан гремит. По нему стучат палочками.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-26.m4a"
+        },
+        {
+          "id": "lex-tp-27",
+          "word": "матрёшка",
+          "hint": "Матрёшка деревянная. В ней прячутся куколки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-27.m4a"
+        },
+        {
+          "id": "lex-tp-28",
+          "word": "кубик",
+          "hint": "Кубик с гранями. Из кубиков строят башню.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-28.m4a"
+        },
+        {
+          "id": "lex-tp-29",
+          "word": "обруч",
+          "hint": "Обруч круглый. Его крутят на поясе.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-29.m4a"
+        },
+        {
+          "id": "lex-tp-30",
+          "word": "домино",
+          "hint": "Домино с точками. Костяшки складывают в ряд.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tp-30.m4a"
+        },
+        {
+          "id": "lex-tp-31",
+          "word": "мозаика",
+          "hint": "Мозаика из деталей. Из неё собирают картинку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-tp-31.m4a"
+        },
+        {
+          "id": "lex-tp-32",
+          "word": "лошадка",
+          "hint": "Лошадка-качалка. На ней качаются.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-32.m4a"
+        },
+        {
+          "id": "lex-tp-33",
+          "word": "свисток",
+          "hint": "Свисток свистит. Громко пищит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-33.m4a"
+        },
+        {
+          "id": "lex-tp-34",
+          "word": "воздушный шар",
+          "hint": "Воздушный шар лёгкий. Летит вверх.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-tp-34.m4a"
         }
       ]
     },
@@ -3309,6 +4079,90 @@
           "hint": "Осенью в лесу: листья жёлтые, грибы, прохладно, красиво.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-np-24.m4a"
+        },
+        {
+          "id": "lex-np-25",
+          "word": "рябина",
+          "hint": "Рябина с красными ягодами. Её любят птицы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-25.m4a"
+        },
+        {
+          "id": "lex-np-26",
+          "word": "осина",
+          "hint": "Осина дрожит листьями. Растёт в лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-26.m4a"
+        },
+        {
+          "id": "lex-np-27",
+          "word": "каштан",
+          "hint": "Каштан в колючей кожуре. Падает осенью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-27.m4a"
+        },
+        {
+          "id": "lex-np-28",
+          "word": "одуванчик",
+          "hint": "Одуванчик жёлтый. Потом становится пушистым.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-np-28.m4a"
+        },
+        {
+          "id": "lex-np-29",
+          "word": "ландыш",
+          "hint": "Ландыш белый. Душистые колокольчики.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-29.m4a"
+        },
+        {
+          "id": "lex-np-30",
+          "word": "мак",
+          "hint": "Мак красный. Яркий полевой цветок.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-np-30.m4a"
+        },
+        {
+          "id": "lex-np-31",
+          "word": "сирень",
+          "hint": "Сирень пышная. Душистые цветы весной.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-31.m4a"
+        },
+        {
+          "id": "lex-np-32",
+          "word": "гвоздика",
+          "hint": "Гвоздика красная. Нарядный цветок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-32.m4a"
+        },
+        {
+          "id": "lex-np-33",
+          "word": "астра",
+          "hint": "Астра пышная. Цветёт осенью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-33.m4a"
+        },
+        {
+          "id": "lex-np-34",
+          "word": "ирис",
+          "hint": "Ирис фиолетовый. Красивый садовый цветок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-np-34.m4a"
+        },
+        {
+          "id": "lex-np-35",
+          "word": "георгин",
+          "hint": "Георгин крупный. Яркий осенний цветок.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-np-35.m4a"
+        },
+        {
+          "id": "lex-np-36",
+          "word": "кактус",
+          "hint": "Кактус колючий. Растёт в горшке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-np-36.m4a"
         }
       ]
     },
@@ -3490,6 +4344,97 @@
           "hint": "Моя любимая еда — ... Она ...",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-fe-24.m4a"
+        },
+        {
+          "id": "lex-fe-25",
+          "word": "борщ",
+          "hint": "Борщ красный. Вкусный горячий суп.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-25.m4a"
+        },
+        {
+          "id": "lex-fe-26",
+          "word": "торт",
+          "hint": "Торт сладкий. Его украшают свечками.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-26.m4a"
+        },
+        {
+          "id": "lex-fe-27",
+          "word": "бублик",
+          "hint": "Бублик круглый. С дыркой посередине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-27.m4a"
+        },
+        {
+          "id": "lex-fe-28",
+          "word": "сметана",
+          "hint": "Сметана белая. Густая и вкусная.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-fe-28.m4a"
+        },
+        {
+          "id": "lex-fe-29",
+          "word": "творог",
+          "hint": "Творог белый. Полезный и нежный.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-fe-29.m4a"
+        },
+        {
+          "id": "lex-fe-30",
+          "word": "варенье",
+          "hint": "Варенье сладкое. Из ягод и фруктов.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-30.m4a"
+        },
+        {
+          "id": "lex-fe-31",
+          "word": "джем",
+          "hint": "Джем густой. Намазывают на хлеб.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-fe-31.m4a"
+        },
+        {
+          "id": "lex-fe-32",
+          "word": "чай",
+          "hint": "Чай горячий. Пьют из чашки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-32.m4a"
+        },
+        {
+          "id": "lex-fe-33",
+          "word": "кисель",
+          "hint": "Кисель густой. Сладкий ягодный напиток.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-fe-33.m4a"
+        },
+        {
+          "id": "lex-fe-34",
+          "word": "сосиска",
+          "hint": "Сосиска розовая. Вкусная и сытная.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-34.m4a"
+        },
+        {
+          "id": "lex-fe-35",
+          "word": "салат",
+          "hint": "Салат из овощей. Свежий и полезный.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-35.m4a"
+        },
+        {
+          "id": "lex-fe-36",
+          "word": "шоколад",
+          "hint": "Шоколад сладкий. Тает во рту.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-fe-36.m4a"
+        },
+        {
+          "id": "lex-fe-37",
+          "word": "зефир",
+          "hint": "Зефир воздушный. Мягкий и сладкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-fe-37.m4a"
         }
       ]
     },
@@ -3852,6 +4797,48 @@
           "hint": "В школу идут в 6-7 лет. Там учатся читать и считать.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-si-24.m4a"
+        },
+        {
+          "id": "lex-si-25",
+          "word": "кисточка",
+          "hint": "Кисточка мягкая. Ею рисуют красками.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-si-25.m4a"
+        },
+        {
+          "id": "lex-si-26",
+          "word": "рюкзак",
+          "hint": "Рюкзак за спиной. В нём носят учебники.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-si-26.m4a"
+        },
+        {
+          "id": "lex-si-27",
+          "word": "ножницы",
+          "hint": "Ножницы острые. Ими режут бумагу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-si-27.m4a"
+        },
+        {
+          "id": "lex-si-28",
+          "word": "букварь",
+          "hint": "Букварь — первая книга. По ней учат буквы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-si-28.m4a"
+        },
+        {
+          "id": "lex-si-29",
+          "word": "закладка",
+          "hint": "Закладка тонкая. Отмечает страницу в книге.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-si-29.m4a"
+        },
+        {
+          "id": "lex-si-30",
+          "word": "блокнот",
+          "hint": "Блокнот с листами. В нём рисуют и пишут.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-si-30.m4a"
         }
       ]
     },
@@ -4033,6 +5020,48 @@
           "hint": "Летом насекомых много. Зимой они прячутся и спят.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-ins-24.m4a"
+        },
+        {
+          "id": "lex-ins-25",
+          "word": "оса",
+          "hint": "Оса полосатая. У неё есть жало.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-ins-25.m4a"
+        },
+        {
+          "id": "lex-ins-26",
+          "word": "богомол",
+          "hint": "Богомол зелёный. Складывает лапки, как будто молится.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-ins-26.m4a"
+        },
+        {
+          "id": "lex-ins-27",
+          "word": "жужелица",
+          "hint": "Жужелица — жук. Быстро бегает по земле.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-ins-27.m4a"
+        },
+        {
+          "id": "lex-ins-28",
+          "word": "водомерка",
+          "hint": "Водомерка лёгкая. Бегает прямо по воде.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-ins-28.m4a"
+        },
+        {
+          "id": "lex-ins-29",
+          "word": "клещ",
+          "hint": "Клещ маленький. Живёт в траве.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ins-29.m4a"
+        },
+        {
+          "id": "lex-ins-30",
+          "word": "блоха",
+          "hint": "Блоха крошечная. Высоко прыгает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ins-30.m4a"
         }
       ]
     },
