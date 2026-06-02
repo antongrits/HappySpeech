@@ -7,8 +7,10 @@ import OSLog
 
 /// Обёртка над CoreML моделью `RussianPhonemeClassifier.mlpackage`.
 ///
-/// **Модель:** v30 — 49 IPA фонем, Conv1d-BiLSTM (780K params), 2.75 MB,
-/// held-out test accuracy 97.0% (per-frame, synthetic dataset).
+/// **Модель:** v30 — 49 IPA фонем, Conv1d-BiLSTM (780K params), 2.75 MB.
+/// Обучено на СИНТЕТИЧЕСКОМ датасете; **не валидировано на реальной детской речи**.
+/// Метрика held-out test accuracy 97.0% (per-frame) измерена на синтетике —
+/// сравнительная метрика, а не точность на живых детских голосах.
 /// **Вход:** `mfcc [1, 39, 150]` — 39 MFCC коэффициентов, 150 фреймов (1.5 сек при 16kHz).
 /// **Выход:** `phoneme_logits [1, 150, 49]` — логиты для 49 фонем на каждом фрейме.
 ///

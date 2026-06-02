@@ -1,6 +1,7 @@
 import FirebaseCore
 import FirebaseFirestore
 import Foundation
+import os
 
 // MARK: - FirebaseTestSupport
 //
@@ -66,15 +67,17 @@ enum FirebaseTestSupport {
         var request = URLRequest(url: url)
         request.timeoutInterval = 2
         let semaphore = DispatchSemaphore(value: 0)
-        var reachable = false
+        // OSAllocatedUnfairLock — Sendable-safe контейнер для записи из
+        // concurrently-executing URLSession-коллбэка (Swift 6 strict concurrency).
+        let reachable = OSAllocatedUnfairLock<Bool>(initialState: false)
         URLSession.shared.dataTask(with: request) { _, response, _ in
             if let code = (response as? HTTPURLResponse)?.statusCode, code < 500 {
-                reachable = true
+                reachable.withLock { $0 = true }
             }
             semaphore.signal()
         }.resume()
         _ = semaphore.wait(timeout: .now() + 3.0)
-        return reachable
+        return reachable.withLock { $0 }
     }
 
     private static let configureOnce: Void = {

@@ -909,7 +909,7 @@ private extension SessionHistoryInteractor {
 
         var sessions: [SessionRecord] = []
         var attempts: [String: [SessionAttemptRecord]] = [:]
-        var audioFiles: [String: String] = [:]
+        let audioFiles: [String: String] = [:]
 
         for (index, row) in rows.enumerated() {
             let sessionId = "sess-\(index + 1)"

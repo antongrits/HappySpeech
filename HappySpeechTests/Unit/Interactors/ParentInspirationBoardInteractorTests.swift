@@ -14,16 +14,16 @@ final class ParentInspirationBoardInteractorTests: XCTestCase {
     private var defaults: UserDefaults!
     private let suiteName = "test.parentInspiration"
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         defaults = UserDefaults(suiteName: suiteName)
         defaults.removePersistentDomain(forName: suiteName)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         defaults.removePersistentDomain(forName: suiteName)
         defaults = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT() -> ParentInspirationBoardInteractor {

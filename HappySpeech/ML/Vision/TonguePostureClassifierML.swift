@@ -52,7 +52,9 @@ public struct TonguePostureMLResult: Sendable {
 ///
 /// Модель: `TonguePostureClassifier.mlpackage` (~2 MB, INT8 квантизация)
 /// Архитектура: Linear(50→64) + ReLU + Dropout → Linear(64→64) + ReLU → Linear(64→9)
-/// Обучена на синтетических данных (M5.3 prototype): 9 классов, 200 примеров/класс.
+/// Обучена на СИНТЕТИЧЕСКИХ данных (M5.3 prototype): 9 классов, 200 примеров/класс.
+/// **Не валидирована на реальной детской артикуляции** — любые метрики относятся
+/// к синтетике. При низкой уверенности — fallback на rule-based.
 ///
 /// Если модель не загружена → автоматический fallback на rule-based `TonguePostureClassifier`.
 public final class TonguePostureClassifierML: @unchecked Sendable {

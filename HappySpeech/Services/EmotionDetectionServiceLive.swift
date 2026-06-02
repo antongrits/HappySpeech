@@ -96,7 +96,10 @@ public protocol EmotionDetectionServiceProtocol: Sendable {
 /// Входной тензор: `[1, 40, 150]` — 40 MFCC коэффициентов, 150 фреймов (1.5 сек, 16kHz)
 /// Выходной тензор: `[1, 4]` — logits для [happy, sad, frustrated, neutral]
 ///
-/// **Block B v15:** val accuracy 94.2% на тестовой выборке детской речи.
+/// **Block B v15:** обучено на СИНТЕТИЧЕСКИХ данных; **не валидировано на реальной
+/// детской речи**. Метрика val accuracy 94.2% получена на held-out синтетической
+/// выборке, а не на живых детских голосах. Используется только для мягкой адаптации
+/// UI, не для диагностики.
 public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
 
     // MARK: - Constants
