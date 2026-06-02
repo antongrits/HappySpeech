@@ -4,9 +4,10 @@ import XCTest
 // MARK: - ImitationLabInteractorTests
 //
 // «Лаборатория подражания» (articulation-imitation): образцы отбираются под
-// рабочие звуки ребёнка (ImitationLabContent). Цикл «послушать → повторить →
-// отметить». Тесты покрывают сборку набора, проигрывание, отметку «получилось»,
-// завершение и сброс.
+// рабочие звуки ребёнка (ImitationLabContent). Цикл «послушать образец →
+// повторить вслух → реальная оценка произношения». Тесты покрывают сборку
+// набора, проигрывание, фиксацию РЕАЛЬНОГО результата (recordResult — seam без
+// живого микрофона), пороги звёзд по среднему баллу, завершение и сброс.
 
 @MainActor
 final class ImitationLabInteractorTests: XCTestCase {
@@ -65,29 +66,65 @@ final class ImitationLabInteractorTests: XCTestCase {
         XCTAssertTrue(sut.state.samples.allSatisfy { !$0.isPlayed })
     }
 
-    // MARK: - markPracticed
+    // MARK: - recordResult (реальная оценка)
 
-    func test_markPracticed_marksSample() async {
+    func test_recordResult_passingScore_marksPracticedAndPassed() async {
         let sut = await makeLoadedSUT()
         let id = sut.state.samples[0].id
-        sut.markPracticed(id)
-        XCTAssertEqual(sut.state.samples.first { $0.id == id }?.isPracticed, true)
+        sut.recordResult(id: id, score: 0.85)
+        let sample = sut.state.samples.first { $0.id == id }
+        XCTAssertEqual(sample?.isPracticed, true)
+        XCTAssertEqual(sample?.didPass, true)
+        XCTAssertEqual(sample?.score, 0.85)
         XCTAssertEqual(sut.state.practicedCount, 1)
+        XCTAssertEqual(sut.state.passedCount, 1)
     }
 
-    func test_markPracticed_twice_idempotent() async {
+    func test_recordResult_lowScore_practicedButNotPassed() async {
         let sut = await makeLoadedSUT()
         let id = sut.state.samples[0].id
-        sut.markPracticed(id)
-        sut.markPracticed(id)
-        XCTAssertEqual(sut.state.practicedCount, 1)
+        sut.recordResult(id: id, score: 0.30)
+        let sample = sut.state.samples.first { $0.id == id }
+        XCTAssertEqual(sample?.isPracticed, true)
+        XCTAssertEqual(sample?.didPass, false)
+        XCTAssertEqual(sut.state.passedCount, 0)
     }
 
-    func test_practicingAll_completesAndStars() async {
+    func test_recordResult_twice_idempotent() async {
         let sut = await makeLoadedSUT()
-        for sample in sut.state.samples { sut.markPracticed(sample.id) }
+        let id = sut.state.samples[0].id
+        sut.recordResult(id: id, score: 0.9)
+        sut.recordResult(id: id, score: 0.1) // повтор игнорируется
+        XCTAssertEqual(sut.state.practicedCount, 1)
+        XCTAssertEqual(sut.state.samples.first { $0.id == id }?.score, 0.9)
+    }
+
+    // MARK: - Stars по реальному среднему баллу
+
+    func test_stars_threeForHighAverage() async {
+        let sut = await makeLoadedSUT()
+        for sample in sut.state.samples { sut.recordResult(id: sample.id, score: 0.95) }
         XCTAssertTrue(sut.state.isComplete)
         XCTAssertEqual(sut.state.stars, 3)
+    }
+
+    func test_stars_oneForLowAverage() async {
+        let sut = await makeLoadedSUT()
+        for sample in sut.state.samples { sut.recordResult(id: sample.id, score: 0.45) }
+        XCTAssertTrue(sut.state.isComplete)
+        XCTAssertEqual(sut.state.stars, 1)
+    }
+
+    func test_stars_zeroWhenNoScoredAttempts() async {
+        let sut = await makeLoadedSUT()
+        // Ничего не отработано (нет входного сигнала) → 0 звёзд, без фабрикации.
+        XCTAssertEqual(sut.state.stars, 0)
+    }
+
+    func test_recordResult_unknownId_noMutation() async {
+        let sut = await makeLoadedSUT()
+        sut.recordResult(id: "nope", score: 0.9)
+        XCTAssertEqual(sut.state.practicedCount, 0)
     }
 
     // MARK: - reset
@@ -96,10 +133,13 @@ final class ImitationLabInteractorTests: XCTestCase {
         let sut = await makeLoadedSUT()
         let id = sut.state.samples[0].id
         sut.playSample(id)
-        sut.markPracticed(id)
+        sut.recordResult(id: id, score: 0.8)
         sut.reset()
         XCTAssertNil(sut.state.currentSampleId)
         XCTAssertEqual(sut.state.practicedCount, 0)
-        XCTAssertTrue(sut.state.samples.allSatisfy { !$0.isPlayed && !$0.isPracticed })
+        XCTAssertEqual(sut.state.passedCount, 0)
+        XCTAssertTrue(sut.state.samples.allSatisfy {
+            !$0.isPlayed && !$0.isPracticed && $0.score == nil && !$0.didPass
+        })
     }
 }

@@ -2,7 +2,9 @@ import Foundation
 
 // MARK: - FamilyVoiceMessageHubModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Модели хаба семейных голосовых сообщений (thin VIP: Interactor `@Observable` +
+/// View). Запись и доставка сообщений живут в фиче «Голос семьи» (FamilyVoice);
+/// хаб отображает входящие и помечает прочитанными.
 enum FamilyVoiceMessageHubModels {
 
     enum SenderRole: String, Hashable {
@@ -13,10 +15,10 @@ enum FamilyVoiceMessageHubModels {
 
         var title: String {
             switch self {
-            case .mom:     return "Мама"
-            case .dad:     return "Папа"
-            case .kid:     return "Ребёнок"
-            case .grandma: return "Бабушка"
+            case .mom:     return String(localized: "familyVoiceHub.role.mom")
+            case .dad:     return String(localized: "familyVoiceHub.role.dad")
+            case .kid:     return String(localized: "familyVoiceHub.role.kid")
+            case .grandma: return String(localized: "familyVoiceHub.role.grandma")
             }
         }
 

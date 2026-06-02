@@ -49,7 +49,9 @@ struct ImitationLabView: View {
                     let new = ImitationLabInteractor(
                         childId: childId,
                         childRepository: container.childRepository,
-                        adaptivePlanner: container.adaptivePlannerService
+                        adaptivePlanner: container.adaptivePlannerService,
+                        audioService: container.audioService,
+                        scorer: container.pronunciationService
                     )
                     interactor = new
                     await new.load()
@@ -111,13 +113,14 @@ struct ImitationLabView: View {
                 sampleCard(
                     sample,
                     isActive: sample.id == interactor.state.currentSampleId,
+                    isRecording: sample.id == interactor.recordingSampleId,
                     onPlay: {
                         hapticService.impact(.light)
                         interactor.playSample(sample.id)
                     },
                     onPracticed: {
-                        hapticService.notification(.success)
-                        interactor.markPracticed(sample.id)
+                        hapticService.impact(.medium)
+                        interactor.practice(sample.id)
                     }
                 )
                 // Step 10 Batch G — Pattern 3: scrollTransition stagger.
@@ -135,12 +138,15 @@ struct ImitationLabView: View {
     private func sampleCard(
         _ sample: ImitationLabModels.SoundSample,
         isActive: Bool,
+        isRecording: Bool,
         onPlay: @escaping () -> Void,
         onPracticed: @escaping () -> Void
     ) -> some View {
         HSCard(style: isActive
             ? .tinted(ColorTokens.Brand.sky.opacity(0.22))
-            : (sample.isPracticed ? .tinted(ColorTokens.Semantic.successBg) : .elevated)) {
+            : (sample.isPracticed
+                ? .tinted(sample.didPass ? ColorTokens.Semantic.successBg : ColorTokens.Kid.surface)
+                : .elevated)) {
             VStack(spacing: 6) {
                 Text(sample.emoji)
                     .font(.system(size: 40))
@@ -150,13 +156,23 @@ struct ImitationLabView: View {
                 Text(sample.onomatopoeia)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                if sample.isPracticed {
+                if isRecording {
                     Label(
-                        String(localized: "imitationLab.done"),
-                        systemImage: "checkmark.circle.fill"
+                        String(localized: "imitationLab.listening"),
+                        systemImage: "mic.fill"
                     )
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.pulse, value: isRecording)
+                } else if sample.isPracticed {
+                    Label(
+                        sample.didPass
+                            ? String(localized: "imitationLab.done")
+                            : String(localized: "imitationLab.almost"),
+                        systemImage: sample.didPass ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill"
+                    )
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(sample.didPass ? ColorTokens.Semantic.success : ColorTokens.Brand.sky)
                     .hsSymbolEffect(.bounce, value: sample.isPracticed)
                 } else {
                     HStack(spacing: SpacingTokens.sp1) {
@@ -168,15 +184,15 @@ struct ImitationLabView: View {
                         .buttonStyle(.plain)
                         .accessibilityLabel(Text(String(localized: "imitationLab.a11y.play")))
                         Button(action: onPracticed) {
-                            Image(systemName: "checkmark.circle")
+                            Image(systemName: "mic.circle")
                                 .font(.system(size: 26))
                                 .foregroundStyle(sample.isPlayed
-                                    ? ColorTokens.Semantic.success
+                                    ? ColorTokens.Brand.primary
                                     : ColorTokens.Kid.inkSoft)
                         }
                         .buttonStyle(.plain)
                         .disabled(!sample.isPlayed)
-                        .accessibilityLabel(Text(String(localized: "imitationLab.a11y.done")))
+                        .accessibilityLabel(Text(String(localized: "imitationLab.a11y.repeat")))
                     }
                     .padding(.top, 2)
                 }

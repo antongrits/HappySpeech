@@ -83,6 +83,10 @@ final class MusicalSoundDrumsInteractor {
         if hit {
             state.correctTaps += 1
             state.progressIndex += 1
+            // Логоритмика: на верный удар реально звучит слог рисунка голосом
+            // Ляли (`LessonVoiceWorker`). Громкий слог (high) — нормальный темп,
+            // тихий (low) — чуть медленнее: ритм слышен, не только тактилен.
+            playBeat(expected)
         } else {
             // Промах не блокирует игру: остаёмся на том же слоге (errorless).
             Self.logger.info("miss expected=\(expected.drum.rawValue, privacy: .public)")
@@ -93,13 +97,25 @@ final class MusicalSoundDrumsInteractor {
         }
     }
 
+    /// Озвучивает слог удара голосом Ляли. Темп зависит от громкости слога.
+    private func playBeat(_ syllable: MusicalSoundDrumsModels.Syllable) {
+        let rate: Float
+        switch syllable.drum {
+        case .high: rate = 1.0
+        case .mid:  rate = 0.92
+        case .low:  rate = 0.85
+        }
+        Task { @MainActor in
+            await LessonVoiceWorker.shared.speak(syllable.text, lessonType: "musical_drums", rate: rate)
+        }
+    }
+
     /// Завершить текущий рисунок и перейти к следующему раунду.
     private func completeRound() {
         state.roundComplete = true
         state.roundsPlayed += 1
-        // Раунд «удачный», если повторён без промахов в этом раунде —
-        // оцениваем через долю верных ударов раунда (см. accuracy итогово).
-        state.roundsCorrect += 1
+        // Точность раунда учитывается итогово через accuracy (correctTaps /
+        // totalTaps); отдельный счётчик «удачных раундов» не нужен.
         recordOutcome(correct: true)
 
         if isGameComplete {

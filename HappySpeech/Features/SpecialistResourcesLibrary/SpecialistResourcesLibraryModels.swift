@@ -42,6 +42,8 @@ enum SpecialistResourcesLibraryModels {
         let id: String
         let title: String
         let summary: String
+        /// Реальный методический текст ресурса — открывается в ридере.
+        let body: String
         let kind: ResourceKind
         let durationLabel: String
         var isRead: Bool = false
@@ -51,6 +53,8 @@ enum SpecialistResourcesLibraryModels {
     struct ViewState: Equatable {
         var resources: [Resource]
         var filter: ResourceKind
+        /// Открытый в ридере ресурс (`nil` — ридер закрыт).
+        var openedResource: Resource?
 
         var filtered: [Resource] {
             switch filter {

@@ -36,8 +36,23 @@ struct SpecialistResourcesLibraryView: View {
                     interactor = SpecialistResourcesLibraryInteractor(specialistId: specialistId)
                 }
             }
+            .sheet(isPresented: readerBinding) {
+                if let resource = interactor?.state.openedResource {
+                    ResourceReaderView(resource: resource)
+                }
+            }
         }
         .environment(\.circuitContext, .specialist)
+    }
+
+    /// Биндинг видимости ридера к `openedResource` интерактора.
+    private var readerBinding: Binding<Bool> {
+        Binding(
+            get: { interactor?.state.openedResource != nil },
+            set: { isPresented in
+                if !isPresented { interactor?.closeReader() }
+            }
+        )
     }
 
     @ViewBuilder
@@ -114,7 +129,7 @@ struct SpecialistResourcesLibraryView: View {
                 Text(kind.title)
                     .font(TypographyTokens.caption(12))
             }
-            .foregroundStyle(isActive ? .white : ColorTokens.Spec.ink)
+            .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Spec.ink)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, 8)
             .background(
@@ -168,26 +183,36 @@ struct SpecialistResourcesLibraryView: View {
     ) -> some View {
         HSCard(style: resource.isRead ? .tinted(ColorTokens.Spec.surface) : .flat) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: resource.kind.icon)
-                    .font(.system(size: 22))
-                    .foregroundStyle(ColorTokens.Spec.accent)
-                    .frame(width: 36, height: 36)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(resource.title)
-                        .font(TypographyTokens.headline(15))
-                        .foregroundStyle(ColorTokens.Spec.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Text(resource.summary)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                        .lineLimit(2)
-                    Text(resource.durationLabel)
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                        .padding(.top, 1)
+                Button {
+                    hapticService.impact(.light)
+                    interactor.open(resource.id)
+                } label: {
+                    HStack(spacing: SpacingTokens.sp3) {
+                        Image(systemName: resource.kind.icon)
+                            .font(.system(size: 22))
+                            .foregroundStyle(ColorTokens.Spec.accent)
+                            .frame(width: 36, height: 36)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(resource.title)
+                                .font(TypographyTokens.headline(15))
+                                .foregroundStyle(ColorTokens.Spec.ink)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.85)
+                            Text(resource.summary)
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                                .lineLimit(2)
+                            Text(resource.durationLabel)
+                                .font(TypographyTokens.caption(11))
+                                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                                .padding(.top, 1)
+                        }
+                        Spacer(minLength: 0)
+                    }
+                    .contentShape(Rectangle())
                 }
-                Spacer()
+                .buttonStyle(.plain)
+                .accessibilityHint(Text(String(localized: "resourcesLibrary.a11y.open")))
                 VStack(spacing: SpacingTokens.sp2) {
                     Button {
                         hapticService.impact(.light)
@@ -229,6 +254,71 @@ struct SpecialistResourcesLibraryView: View {
             hapticService.notification(.success)
             dismiss()
         }
+    }
+}
+
+// MARK: - ResourceReaderView
+
+/// Ридер методического ресурса: показывает реальный текст материала.
+private struct ResourceReaderView: View {
+
+    let resource: SpecialistResourcesLibraryModels.Resource
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                    HStack(spacing: SpacingTokens.sp3) {
+                        Image(systemName: resource.kind.icon)
+                            .font(.system(size: 28))
+                            .foregroundStyle(ColorTokens.Spec.accent)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(resource.kind.title)
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Spec.accent)
+                            Text(resource.durationLabel)
+                                .font(TypographyTokens.caption(11))
+                                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        }
+                        Spacer()
+                    }
+
+                    Text(resource.summary)
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.9)
+
+                    Divider()
+
+                    Text(resource.body)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(nil)
+                        .lineSpacing(4)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.vertical, SpacingTokens.sp4)
+            }
+            .background(ColorTokens.Spec.bg.ignoresSafeArea())
+            .navigationTitle(Text(resource.title))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    }
+                    .accessibilityLabel(Text(String(localized: "action.close")))
+                }
+            }
+        }
+        .environment(\.circuitContext, .specialist)
     }
 }
 

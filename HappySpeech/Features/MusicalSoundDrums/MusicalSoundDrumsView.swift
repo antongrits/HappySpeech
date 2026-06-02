@@ -205,10 +205,10 @@ struct MusicalSoundDrumsView: View {
             VStack(spacing: 8) {
                 Image(systemName: drum.icon)
                     .font(.system(size: 44, weight: .bold))
-                    .foregroundStyle(isActive ? .white : ColorTokens.Brand.primary)
+                    .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary)
                 Text(drum.label)
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(isActive ? .white : ColorTokens.Kid.ink)
+                    .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
             }
             .frame(maxWidth: .infinity, minHeight: 120)
             .background(

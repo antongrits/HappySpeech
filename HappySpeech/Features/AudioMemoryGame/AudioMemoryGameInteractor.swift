@@ -103,6 +103,11 @@ final class AudioMemoryGameInteractor {
 
         tiles[index].isFlipped = true
 
+        // Звуковое мемори: при открытии карточки реально проигрываем слово
+        // голосом Ляли (`LessonVoiceWorker` — семейная запись → m4a). Игра «на
+        // слух»: ребёнок ищет пару по услышанному слову, а не только по тексту.
+        playCardAudio(tiles[index].pairKey)
+
         if let first = firstPickIndex {
             moves += 1
             if tiles[first].pairKey == tiles[index].pairKey {
@@ -135,6 +140,14 @@ final class AudioMemoryGameInteractor {
 
     func restart() {
         Task { [weak self] in await self?.load() }
+    }
+
+    /// Проигрывает слово карточки голосом Ляли (реальный аудио-эталон).
+    private func playCardAudio(_ word: String) {
+        guard !word.isEmpty else { return }
+        Task { @MainActor in
+            await LessonVoiceWorker.shared.speak(word, lessonType: "audio_memory")
+        }
     }
 
     // MARK: - Persistence

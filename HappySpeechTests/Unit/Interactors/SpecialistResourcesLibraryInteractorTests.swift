@@ -51,9 +51,44 @@ final class SpecialistResourcesLibraryInteractorTests: XCTestCase {
         XCTAssertEqual(Set(sut.state.resources.map(\.id)).count, sut.state.resources.count)
         for resource in sut.state.resources {
             XCTAssertFalse(resource.title.isEmpty)
+            // Каждый ресурс имеет реальный методический текст для открытия.
+            XCTAssertFalse(resource.body.isEmpty)
             XCTAssertNotEqual(resource.kind, .all)
             XCTAssertNotEqual(resource.kind, .saved)
         }
+    }
+
+    // MARK: - open / reader
+
+    func test_open_setsOpenedResourceAndMarksRead() {
+        let sut = makeSUT()
+        let id = sut.state.resources[0].id
+        sut.open(id)
+        XCTAssertEqual(sut.state.openedResource?.id, id)
+        XCTAssertEqual(sut.state.resources.first { $0.id == id }?.isRead, true)
+        XCTAssertEqual(sut.state.readCount, 1)
+    }
+
+    func test_open_readPersistsAcrossInstances() {
+        let sut1 = makeSUT(specialistId: "spec-open")
+        let id = sut1.state.resources[0].id
+        sut1.open(id)
+        let sut2 = makeSUT(specialistId: "spec-open")
+        XCTAssertEqual(sut2.state.resources.first { $0.id == id }?.isRead, true)
+    }
+
+    func test_closeReader_clearsOpenedResource() {
+        let sut = makeSUT()
+        sut.open(sut.state.resources[0].id)
+        sut.closeReader()
+        XCTAssertNil(sut.state.openedResource)
+    }
+
+    func test_open_unknownId_noMutation() {
+        let sut = makeSUT()
+        sut.open("does-not-exist")
+        XCTAssertNil(sut.state.openedResource)
+        XCTAssertEqual(sut.state.readCount, 0)
     }
 
     func test_initialState_coversConcreteKinds() {

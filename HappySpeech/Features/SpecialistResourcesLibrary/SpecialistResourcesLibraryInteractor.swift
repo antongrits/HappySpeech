@@ -43,6 +43,23 @@ final class SpecialistResourcesLibraryInteractor {
         Self.logger.info("setFilter \(kind.rawValue, privacy: .public)")
     }
 
+    /// Открыть ресурс в ридере (показ методического текста) и пометить
+    /// прочитанным — открытие = чтение.
+    func open(_ id: String) {
+        guard let idx = state.resources.firstIndex(where: { $0.id == id }) else { return }
+        if !state.resources[idx].isRead {
+            state.resources[idx].isRead = true
+            persistRead()
+        }
+        state.openedResource = state.resources[idx]
+        Self.logger.info("open \(id, privacy: .public)")
+    }
+
+    /// Закрыть ридер.
+    func closeReader() {
+        state.openedResource = nil
+    }
+
     /// Отметить/снять «прочитано» для ресурса.
     func toggleRead(_ id: String) {
         guard let idx = state.resources.firstIndex(where: { $0.id == id }) else { return }

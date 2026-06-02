@@ -19,8 +19,13 @@ enum ImitationLabModels {
         let soundFamily: String
         /// Прослушан ли образец.
         var isPlayed: Bool
-        /// Отмечен ли как «повторил / получилось».
+        /// Отработан ли образец (ребёнок повторил вслух и попытка засчитана).
         var isPracticed: Bool
+        /// Реальная оценка произношения попытки `[0...1]` (ML-скорер + ASR).
+        /// `nil`, пока образец не отработан или не было входного сигнала.
+        var score: Float?
+        /// Засчитан ли образец как удачный (произношение прошло порог).
+        var didPass: Bool = false
     }
 
     struct ViewState: Equatable {
@@ -31,19 +36,25 @@ enum ImitationLabModels {
 
         var practicedCount: Int { samples.filter(\.isPracticed).count }
 
+        /// Образцы, произношение которых реально прошло порог.
+        var passedCount: Int { samples.filter(\.didPass).count }
+
         var isComplete: Bool {
             !samples.isEmpty && samples.allSatisfy(\.isPracticed)
         }
 
-        /// Звёзды по доле отработанных образцов (мягко: завершение = максимум).
+        /// Звёзды по реальному среднему баллу произношения отработанных образцов.
+        /// Если ни одной засчитанной попытки с баллом нет — 0 (никаких звёзд за
+        /// молчание / отказ микрофона).
         var stars: Int {
-            guard !samples.isEmpty else { return 0 }
-            let ratio = Double(practicedCount) / Double(samples.count)
-            switch ratio {
-            case 1.0: return 3
-            case 0.66..<1.0: return 2
-            case 0.33..<0.66: return 1
-            default: return 0
+            let scored = samples.compactMap(\.score)
+            guard !scored.isEmpty else { return 0 }
+            let average = scored.reduce(0, +) / Float(scored.count)
+            switch average {
+            case 0.8...:      return 3
+            case 0.6..<0.8:   return 2
+            case 0.4..<0.6:   return 1
+            default:          return 0
             }
         }
 

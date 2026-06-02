@@ -48,9 +48,8 @@ enum MusicalSoundDrumsModels {
         var progressIndex: Int
         /// Последний нажатый барабан (для подсветки).
         var lastDrumId: DrumId?
-        /// Завершённые раунды и удачные раунды (для звёзд/точности).
+        /// Завершённые раунды (для прогресса игры).
         var roundsPlayed: Int
-        var roundsCorrect: Int
         var totalTaps: Int
         var correctTaps: Int
         var bestStars: Int
@@ -82,7 +81,6 @@ enum MusicalSoundDrumsModels {
             progressIndex: 0,
             lastDrumId: nil,
             roundsPlayed: 0,
-            roundsCorrect: 0,
             totalTaps: 0,
             correctTaps: 0,
             bestStars: 0,

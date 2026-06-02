@@ -180,7 +180,7 @@ struct SentenceBuilderKidView: View {
             Text(chip.text)
                 .font(TypographyTokens.headline(16).weight(.semibold))
                 .foregroundStyle(
-                    isAssembled ? Color.white : ColorTokens.Kid.ink
+                    isAssembled ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink
                 )
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp2)

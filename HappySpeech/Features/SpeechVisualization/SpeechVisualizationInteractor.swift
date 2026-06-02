@@ -29,14 +29,17 @@ protocol SpeechVisualizationBusinessLogic: AnyObject {
 
 // MARK: - SpeechVisualizationInteractor (Clean Swift: Interactor)
 //
-// Block S.3 v16 — обработка слова, разбивка на слоги, подсчёт accuracy.
+// Обработка слова, разбивка на слоги, подсчёт per-syllable accuracy.
 //
 // Алгоритм:
 //   1. Слова в русском разбиваются по гласным (a, я, у, ю, э, е, и, ё, о, ы).
-//   2. Каждый слог получает равную долю длительности (упрощение, MVP).
-//   3. После записи — comparator вычисляет per-syllable accuracy
-//      (heuristic: 0.7 + random ±0.15 из диапазона placeholder; реальный
-//      cross-correlation отложен в Block Q).
+//   2. Каждый слог получает равную долю длительности записи.
+//   3. После записи per-syllable accuracy считается из РЕАЛЬНОЙ записи речи
+//      ребёнка: энергия речи распределяется по временным окнам слогов через
+//      mel-спектрограмму (vDSP) — см. `computeScore(fromAudioURL:)`. Опционально
+//      доступна mel-spectrogram cross-correlation с эталоном
+//      (`computeAcousticSimilarity`). Никакого random/псевдо-сдвига; при
+//      отсутствии записи — честный no-score.
 
 @MainActor
 final class SpeechVisualizationInteractor: SpeechVisualizationBusinessLogic {

@@ -16844,6 +16844,70 @@
         }
       }
     },
+    "familyVoiceHub.role.dad": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Папа"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dad"
+          }
+        }
+      }
+    },
+    "familyVoiceHub.role.grandma": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бабушка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grandma"
+          }
+        }
+      }
+    },
+    "familyVoiceHub.role.kid": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Child"
+          }
+        }
+      }
+    },
+    "familyVoiceHub.role.mom": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мама"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mom"
+          }
+        }
+      }
+    },
     "family_calendar.a11y.calendar_cell": {
       "extractionState": "manual",
       "localizations": {
@@ -21146,6 +21210,38 @@
         }
       }
     },
+    "imitationLab.a11y.repeat": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить вслух — запись голоса"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat aloud — voice recording"
+          }
+        }
+      }
+    },
+    "imitationLab.almost": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Ещё разок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almost! One more"
+          }
+        }
+      }
+    },
     "imitationLab.complete": {
       "localizations": {
         "ru": {
@@ -21236,6 +21332,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Имитируй звуки мира"
+          }
+        }
+      }
+    },
+    "imitationLab.listening": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
           }
         }
       }
@@ -35875,6 +35987,22 @@
         }
       }
     },
+    "resources.r1.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постановка звука [Р] по Т. Б. Фомичёвой.\n\nПодготовительный этап. Упражнения «Маляр», «Грибок», «Лошадка», «Барабанщик» — вырабатываем подъём языка к альвеолам и подвижный кончик.\n\nПостановка от опорных звуков. Чаще всего — от [Д] при многократном «д-д-д» с поднятым языком, затем переход к «дынь-дынь» и механической вибрации шпателем/зондом. Альтернатива — от сочетания «тж» при сильном выдохе.\n\nПолучение вибрации. Когда появилось проторное «р», добавляем сильную струю воздуха на кончик языка, постепенно убирая механическую помощь.\n\nАвтоматизация. Изолированно → в открытых слогах (ра-ро-ру-ры) → в закрытых → в словах по позициям → во фразах. Параллельно ведём дифференциацию [Р]–[Л].\n\nТипичные ошибки: горловое (велярное/увулярное) [Р], одноударное, замена на [Л]/[Й]. При горловом — сначала проторный звук, вибрацию ставим только от переднеязычной артикуляции."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliciting the [R] sound (after T. B. Fomicheva).\n\nPreparatory stage. Exercises “Painter”, “Mushroom”, “Horse”, “Drummer” develop tongue elevation to the alveolar ridge and a mobile tip.\n\nEliciting from anchor sounds. Most often from [D] with repeated “d-d-d” and a raised tongue, then “dyn-dyn” plus mechanical vibration with a spatula/probe. Alternative — from a “tzh” blend with a strong exhale.\n\nGetting the trill. Once a fricative “r” appears, add a strong air stream to the tongue tip, gradually removing the mechanical aid.\n\nAutomation. In isolation → open syllables (ra-ro-ru-ry) → closed → words by position → phrases. In parallel, work on [R]–[L] differentiation.\n\nCommon errors: guttural (velar/uvular) [R], single-tap, substitution with [L]/[Y]. For a guttural [R], start with a fricative sound; the trill must be built only from front-lingual articulation."
+          }
+        }
+      }
+    },
     "resources.r1.summary": {
       "localizations": {
         "ru": {
@@ -35903,6 +36031,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Setting the R sound"
+          }
+        }
+      }
+    },
+    "resources.r10.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Альбом для автоматизации звуков (Л. А. Комарова): слоги — слова — фразы.\n\nПринцип: один звук — последовательная отработка по нарастающей сложности с опорой на картинки.\n\nМаршрут автоматизации одного звука:\n1) изолированно (звукоподражание);\n2) в прямых слогах (СА, СО, СУ, СЫ);\n3) в обратных слогах (АС, ОС, УС);\n4) в интервокальной позиции (АСА, ОСО);\n5) в словах: звук в начале → в середине → в конце;\n6) в словах со стечением согласных (СТ, СК, СН);\n7) в словосочетаниях и предложениях;\n8) в чистоговорках, стихах и связной речи.\n\nПереход к следующему шагу — только при чистом и устойчивом звуке."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An album for sound automation (L. A. Komarova): syllables — words — phrases.\n\nPrinciple: one sound — consistent practice of increasing difficulty supported by pictures.\n\nAutomation route for one sound:\n1) in isolation (onomatopoeia);\n2) in forward syllables;\n3) in reverse syllables;\n4) in an intervocalic position;\n5) in words: sound at the start → middle → end;\n6) in words with consonant clusters;\n7) in phrases and sentences;\n8) in tongue-twisters, poems and connected speech.\n\nMove to the next step only with a clean, stable sound."
           }
         }
       }
@@ -35939,6 +36083,22 @@
         }
       }
     },
+    "resources.r11.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развитие фонематического слуха: игры на различение звуков.\n\nФонематический слух — основа правильного звукопроизношения и грамотного письма. Развиваем до и параллельно с постановкой.\n\nЭтапы:\n1) узнавание неречевых звуков («Что звучало?»);\n2) различение высоты/силы/тембра голоса («Кто позвал?»);\n3) различение слов, близких по звучанию (мишка-миска, коза-коса);\n4) различение слогов («Поймай лишний слог»: па-па-ба);\n5) различение фонем (выдели заданный звук среди других);\n6) элементы звукового анализа (первый/последний звук, место звука, количество звуков).\n\nИгры: «Поймай звук» (хлопни на [С]), «Светофор» (фишка на позицию звука), «Цепочка слов». Без развитого фонематического слуха автоматизация и дифференциация неустойчивы."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developing phonemic hearing: sound-discrimination games.\n\nPhonemic hearing is the basis of correct articulation and literate writing. Develop it before and alongside elicitation.\n\nStages:\n1) recognising non-speech sounds (“What made the sound?”);\n2) discriminating pitch/loudness/timbre (“Who called?”);\n3) discriminating similar-sounding words (minimal pairs);\n4) discriminating syllables (“Catch the odd syllable”);\n5) discriminating phonemes (pick out a given sound among others);\n6) elements of sound analysis (first/last sound, the sound’s place, the count of sounds).\n\nGames: “Catch the sound” (clap on [S]), “Traffic light” (a chip on the sound’s position), “Word chain”. Without developed phonemic hearing, automation and differentiation are unstable."
+          }
+        }
+      }
+    },
     "resources.r11.summary": {
       "localizations": {
         "ru": {
@@ -35967,6 +36127,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Phonemic awareness"
+          }
+        }
+      }
+    },
+    "resources.r12.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Основы логопедического и зондового массажа (Е. В. Новикова) — для специалиста.\n\nВнимание: массаж проводит только подготовленный специалист, с учётом противопоказаний и согласия родителей. Это не материал для самостоятельного применения родителями.\n\nВиды: расслабляющий (при гипертонусе — поглаживание, лёгкая вибрация) и активизирующий (при гипотонусе — разминание, пощипывание, постукивание). Зоны: лицо, губы, язык, мягкое нёбо.\n\nЗондовый массаж языка — комплекс специальными зондами для нормализации тонуса мышц языка при дизартрии. Курс — 10–20 сеансов, дозированно, с контролем реакции ребёнка.\n\nМассаж сочетают с артикуляционной гимнастикой и постановкой звуков; он создаёт физиологическую базу, но не заменяет логопедическую работу."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Foundations of speech-therapy and probe massage (E. V. Novikova) — for the specialist.\n\nNote: massage is performed only by a trained specialist, considering contraindications and parental consent. This is not material for parents to apply on their own.\n\nTypes: relaxing (for hypertonia — stroking, light vibration) and activating (for hypotonia — kneading, pinching, tapping). Zones: face, lips, tongue, soft palate.\n\nProbe tongue massage — a set of special probes to normalise tongue-muscle tone in dysarthria. Course — 10–20 sessions, dosed, monitoring the child’s reaction.\n\nMassage is combined with articulatory gymnastics and sound elicitation; it builds a physiological base but does not replace speech-therapy work."
           }
         }
       }
@@ -36003,6 +36179,22 @@
         }
       }
     },
+    "resources.r2.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика для родителей.\n\nПроводите 2 раза в день по 5–7 минут перед зеркалом, в форме игры. Каждое упражнение — по 5–8 повторов, удержание позы под счёт до 5.\n\nБазовый комплекс: «Окошко» (рот открыт-закрыт), «Заборчик»/«Трубочка» (для губ), «Лопаточка» (широкий расслабленный язык на нижней губе), «Иголочка» (узкий язык), «Чашечка» (для шипящих), «Качели» (язык вверх-вниз), «Часики» (язык вправо-влево), «Лошадка» и «Грибок» (для соноров).\n\nПравила: следим за симметрией, без напряжения и спешки; язык — не зубы и не губы — главный исполнитель. Если ребёнок устал — прекращаем. Гимнастика готовит органы артикуляции, но не заменяет постановку звука у специалиста."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulatory gymnastics for parents.\n\nDo it twice a day for 5–7 minutes in front of a mirror, as a game. Each exercise — 5–8 repetitions, holding the pose to a count of 5.\n\nCore set: “Window” (open-close mouth), “Fence”/“Tube” (for lips), “Spatula” (wide relaxed tongue on the lower lip), “Needle” (narrow tongue), “Cup” (for sibilants), “Swing” (tongue up-down), “Clock” (tongue left-right), “Horse” and “Mushroom” (for sonorants).\n\nRules: keep it symmetrical, without strain or rush; the tongue — not teeth or lips — is the main performer. Stop if the child is tired. Gymnastics prepares the articulators but does not replace sound elicitation by a specialist."
+          }
+        }
+      }
+    },
     "resources.r2.summary": {
       "localizations": {
         "ru": {
@@ -36031,6 +36223,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Articulation exercises"
+          }
+        }
+      }
+    },
+    "resources.r3.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дифференциация [С]–[Ш] по методике Т. А. Ткаченко.\n\nЭтап нужен, когда оба звука уже поставлены и автоматизированы изолированно, но смешиваются в речи.\n\nСравнение артикуляции. [С] — язык внизу, «улыбка», холодная узкая струя («песенка водички»); [Ш] — язык «чашечкой» вверху, губы округлены, тёплая широкая струя («песенка ветра»). Привязываем к символам-картинкам и жестам руки.\n\nПоследовательность: различение изолированных звуков → слогов (са-ша, со-шо) → слов (каска-кашка, миска-мишка) → словосочетаний → предложений и чистоговорок. Используем минимальные пары и игры «Поймай звук».\n\nКонтроль: слуховой, зрительный (положение губ/языка), тактильный (характер струи на ладони)."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Differentiating [S]–[SH] (T. A. Tkachenko method).\n\nThis stage is needed when both sounds are already elicited and automated in isolation but are mixed up in speech.\n\nComparing articulation. [S] — tongue low, “smile”, cold narrow stream (“the water’s song”); [SH] — tongue “cupped” up, lips rounded, warm wide stream (“the wind’s song”). Link to picture symbols and hand gestures.\n\nSequence: discriminating isolated sounds → syllables (sa-sha, so-sho) → words (minimal pairs) → phrases → sentences and tongue-twisters. Use minimal pairs and “Catch the sound” games.\n\nControl: auditory, visual (lip/tongue position), tactile (the character of the stream on the palm)."
           }
         }
       }
@@ -36067,6 +36275,22 @@
         }
       }
     },
+    "resources.r4.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картотека скороговорок и чистоговорок по группам звуков.\n\nМатериал для этапа автоматизации и дифференциации. Подбирайте по текущему звуку и позиции.\n\nСвистящие: «Са-са-са — прилетела к нам оса», «У Сони и Сани в сетях сом с усами».\nШипящие: «Ши-ши-ши — что-то шепчут камыши», «Шесть мышат в шалаше шуршат».\nСоноры [Р]: «Ра-ра-ра — высокая гора», «На горе Арарат растёт крупный виноград».\nСоноры [Л]: «Ла-ла-ла — у меня юла», «Мила мыла пол, Лана ела ананас».\nЗаднеязычные: «Ко-ко-ко — не ходите далеко», «Гена гогочет, как гусь».\n\nПравила работы: сначала медленно и утрированно, добиваясь чистого звука, затем ускоряем темп; следим, чтобы целевой звук не «терялся» при разгоне. К скороговоркам переходим только после автоматизации звука в словах и фразах."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A card index of tongue-twisters by sound groups.\n\nMaterial for the automation and differentiation stage. Choose by the current sound and position.\n\nSibilants, hissing, sonorants [R] and [L], and velar sounds — each group has chants and tongue-twisters in Russian where the target sound recurs by position.\n\nWorking rules: first slow and exaggerated, achieving a clean sound, then speed up; make sure the target sound is not “lost” as the pace rises. Move on to tongue-twisters only after the sound is automated in words and phrases."
+          }
+        }
+      }
+    },
     "resources.r4.summary": {
       "localizations": {
         "ru": {
@@ -36095,6 +36319,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tongue-twister file"
+          }
+        }
+      }
+    },
+    "resources.r5.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логоритмика дома (М. Ю. Картушина, Г. А. Волкова).\n\nЛогопедическая ритмика — это движение + речь + музыка. Развивает чувство ритма, дыхание, темп речи и переключаемость, что помогает автоматизации звуков.\n\nСтруктура занятия (10–15 минут): ходьба и маршировка под счёт → дыхательное упражнение → пальчиковая гимнастика с проговариванием → речь с движением (слоги/слова на хлопки и шаги) → подвижная игра с речевым сопровождением → спокойное завершение.\n\nПринципы: ритмический рисунок задаём хлопками/притопами, ребёнок повторяет и проговаривает слоги целевого звука (СА-са-СО). Громкий слог — сильное движение, тихий — слабое. Заниматься регулярно, в игровой форме, с эмоциональным подъёмом."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech rhythmics at home (M. Yu. Kartushina, G. A. Volkova).\n\nLogorhythmics is movement + speech + music. It develops a sense of rhythm, breathing, speech tempo and switching, which supports sound automation.\n\nLesson structure (10–15 minutes): walking and marching to a count → a breathing exercise → finger gymnastics with speaking → speech with movement (syllables/words on claps and steps) → an active game with speech → a calm finish.\n\nPrinciples: set the rhythm pattern with claps/stamps; the child repeats and pronounces the target-sound syllables (SA-sa-SO). A loud syllable — a strong movement, a quiet one — weak. Practice regularly, playfully, with an emotional lift."
           }
         }
       }
@@ -36131,6 +36371,22 @@
         }
       }
     },
+    "resources.r6.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развитие связной речи (В. П. Глухов).\n\nРабота ведётся параллельно со звукопроизношением и направлена на пересказ и составление рассказов.\n\nПоследовательность: пересказ по вопросам → пересказ с опорой на серию картинок → пересказ по одной сюжетной картине → рассказ-описание предмета по плану-схеме → рассказ по серии картин → творческий рассказ.\n\nПриёмы: моделирование и наглядные схемы (мнемотаблицы), план в виде символов, совместное рассказывание «цепочкой». Следим за развёрнутостью фразы, связностью и точностью словаря.\n\nКритерии оценки рассказа: целостность, связность, объём, грамматическое оформление, самостоятельность."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developing connected speech (V. P. Glukhov).\n\nThis work runs in parallel with sound production and targets retelling and composing stories.\n\nSequence: retelling by questions → retelling with a picture series → retelling from a single scene picture → a description story from a plan → a story from a picture series → a creative story.\n\nTechniques: modelling and visual schemes (mnemonic tables), a symbol-based plan, joint “chain” storytelling. Watch for elaborated phrasing, coherence and vocabulary precision.\n\nStory assessment criteria: integrity, coherence, length, grammar, independence."
+          }
+        }
+      }
+    },
     "resources.r6.summary": {
       "localizations": {
         "ru": {
@@ -36159,6 +36415,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Developing connected speech"
+          }
+        }
+      }
+    },
+    "resources.r7.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Билингвизм и логопедия (С. Н. Цейтлин).\n\nУ детей-билингвов важно отличать особенности двуязычного развития от речевого нарушения. Интерференция (перенос норм одного языка в другой) — это норма билингвизма, а не дефект.\n\nЧто считать нарушением: трудности проявляются в ОБОИХ языках, отстают от сверстников-билингвов, системно затрагивают фонематический слух, слоговую структуру, грамматику.\n\nРекомендации семье: «один родитель — один язык» или «язык — ситуация», достаточный объём речевого ввода на каждом языке, не смешивать языки в одной фразе. Диагностику и коррекцию по возможности вести на доминантном языке ребёнка.\n\nВ приложении контент русскоязычный; для билингва он — поддержка русского как одного из языков."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilingualism and speech therapy (S. N. Tseitlin).\n\nWith bilingual children it is important to tell features of dual-language development from a speech disorder. Interference (transferring one language’s norms into another) is normal for bilingualism, not a defect.\n\nWhat counts as a disorder: difficulties appear in BOTH languages, lag behind bilingual peers, and systematically affect phonemic hearing, syllabic structure and grammar.\n\nFamily recommendations: “one parent — one language” or “language — situation”, enough speech input in each language, do not mix languages within one phrase. Assess and treat in the child’s dominant language when possible.\n\nThe app’s content is Russian; for a bilingual child it supports Russian as one of the languages."
           }
         }
       }
@@ -36195,6 +36467,22 @@
         }
       }
     },
+    "resources.r8.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательная гимнастика для детей (адаптация для логопедии).\n\nЦель — выработать сильный, длительный, направленный ротовой выдох, необходимый для свистящих, шипящих и соноров.\n\nПравила безопасности: не более 3–5 минут, не доводить до головокружения, плечи не поднимаем, вдох спокойный носом, выдох плавный ртом.\n\nИгровые упражнения: «Задуй свечу», «Футбол» (дуем на ватный шарик в ворота), «Буря в стакане» (через трубочку), «Подуй на снежинку», «Кораблики». Для длительности тянем на одном выдохе «с-с-с», «ш-ш-ш».\n\nКонтроль: щёки не надуваются, струя идёт по центру языка, выдох ровный и долгий. Дыхательные упражнения предваряют постановку и автоматизацию."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breathing gymnastics for children (adapted for speech therapy).\n\nGoal — to build a strong, long, directed oral exhale needed for sibilants, hissing sounds and sonorants.\n\nSafety rules: no more than 3–5 minutes, do not induce dizziness, do not raise the shoulders, calm inhale through the nose, smooth exhale through the mouth.\n\nGame exercises: “Blow out the candle”, “Football” (blow a cotton ball into a goal), “Storm in a glass” (through a straw), “Blow on a snowflake”, “Little boats”. For duration, hold “s-s-s”, “sh-sh-sh” on one exhale.\n\nControl: cheeks do not puff, the stream goes along the centre of the tongue, the exhale is even and long. Breathing exercises precede elicitation and automation."
+          }
+        }
+      }
+    },
     "resources.r8.summary": {
       "localizations": {
         "ru": {
@@ -36227,6 +36515,22 @@
         }
       }
     },
+    "resources.r9.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постановка шипящих [Ш], [Ж], [Ч], [Щ] поэтапно.\n\nБазовый звук группы — [Ш]; остальные ставятся от него.\n\n[Ш]: язык «чашечкой» поднят к нёбу за альвеолы, губы округлены, тёплая широкая струя. Постановка от [С] с подъёмом языка вверх (зондом/шпателем).\n[Ж]: тот же уклад, что [Ш], + голос. Ставим от [Ш] подключением голоса или от [З].\n[Щ]: язык продвинут вперёд, напряжён, звук долгий мягкий. Ставим от [Ш] с продвижением вперёд и улыбкой, либо от [Сь].\n[Ч]: смычно-щелевой, = быстрое слитное [Ть]+[Щ]. Ставим от мягкого [Ть] при поднятом языке с сильным выдохом «ать-ачь».\n\nАвтоматизация — по общей схеме: слог → слово → фраза, с обязательной дифференциацией [Ш]–[С], [Ж]–[З], [Ч]–[Ть], [Щ]–[Сь]."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliciting the hissing sounds [SH], [ZH], [CH], [SHCH] step by step.\n\nThe group’s base sound is [SH]; the others are built from it.\n\n[SH]: tongue “cupped” up behind the alveoli, lips rounded, a warm wide stream. Elicit from [S] by raising the tongue (probe/spatula).\n[ZH]: same posture as [SH] + voice. Build from [SH] by adding voice, or from [Z].\n[SHCH]: tongue advanced, tense, a long soft sound. Build from [SH] by advancing the tongue with a smile, or from soft [S].\n[CH]: a stop-fricative, = a fast blend of soft [T] + [SHCH]. Build from soft [T] with a raised tongue and a strong exhale.\n\nAutomation follows the general scheme: syllable → word → phrase, with mandatory differentiation [SH]–[S], [ZH]–[Z], [CH]–soft[T], [SHCH]–soft[S]."
+          }
+        }
+      }
+    },
     "resources.r9.summary": {
       "localizations": {
         "ru": {
@@ -36255,6 +36559,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Setting the hissing sounds"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.a11y.open": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть материал"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open material"
           }
         }
       }
