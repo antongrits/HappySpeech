@@ -153,6 +153,14 @@ struct ChildHomeView: View {
                     Spacer(minLength: SpacingTokens.sp16)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
+                // Fix (SE 3 asymmetric margins) — пиним ширину контентного VStack
+                // ровно по ширине ScrollView. Без этого full-bleed горизонтальные
+                // ряды (EdgeToEdgeScrollRow с отрицательным padding) раздували
+                // VStack шире вьюпорта: левое поле screenEdge рендерилось, а правое
+                // уезжало за правый край экрана → весь контент прижимался вправо
+                // (на узком iPhone SE слева 24pt, справа 0pt). Фикс. ширина
+                // гарантирует симметричные поля: левое == правое.
+                .containerRelativeFrame(.horizontal)
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.hasAchievement)
             }
