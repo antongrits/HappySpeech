@@ -36,7 +36,10 @@ struct RoleSelectView: View {
             title: String(localized: "Ребёнок"),
             subtitle: String(localized: "Продолжить занятия"),
             icon: "star.fill",
-            color: ColorTokens.Brand.mint,
+            // Детский контур всюду тёплый (коралл/butter) — карточка ребёнка должна
+            // совпадать с ним, а не быть зелёной (mint). Взрослые роли (родитель/логопед)
+            // остаются прохладными sky/lilac как осознанный «взрослый» акцент.
+            color: ColorTokens.Brand.primary,
             route: .childHome(childId: "preview-child-1")
         )
     ]
