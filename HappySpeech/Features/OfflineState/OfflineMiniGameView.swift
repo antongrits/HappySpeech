@@ -330,7 +330,7 @@ private struct DragCloudsGameView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Brand.sky.opacity(0.15).ignoresSafeArea()
+            ColorTokens.Kid.bgSoft.ignoresSafeArea()
 
             if isFinished {
                 dragResultView
