@@ -125,9 +125,8 @@ struct Cutscene: Identifiable, Sendable, Equatable {
 /// 2 майлстоуна). Compile-time гарантия имён (паттерн `HelpCenterCorpus`).
 /// JSON-зеркало — `Content/Seed/cutscenes.json` (для будущей удалённой конфы).
 ///
-/// `videoReady: true` стоит только у 3 пилот-роликов (пролог + интро/триумф
-/// Свистящих). У остальных 13 видео ещё не сгенерировано — плеер их корректно
-/// фолбэчит на постер/субтитр или пропускает.
+/// `videoReady: true` — у всех 16 роликов после полной генерации. Плеер
+/// корректно фолбэчит на постер/субтитр если видеофайл отсутствует в бандле.
 enum CutsceneCatalog {
 
     static let all: [Cutscene] = prologue + islands + finaleAndMilestones
@@ -242,7 +241,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_velar_in",
             posterAssetName: "cutscene_poster_velar_in",
             voiceoverKey: "cutscene.cs-isl-velar-in.subtitle",
-            mapNode: .velar
+            mapNode: .velar,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-isl-velar-out",
@@ -251,7 +251,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_velar_out",
             posterAssetName: "cutscene_poster_velar_out",
             voiceoverKey: "cutscene.cs-isl-velar-out.subtitle",
-            mapNode: .velar
+            mapNode: .velar,
+            videoReady: true
         ),
         // Грамматика.
         Cutscene(
@@ -261,7 +262,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_grammar_in",
             posterAssetName: "cutscene_poster_grammar_in",
             voiceoverKey: "cutscene.cs-isl-grammar-in.subtitle",
-            mapNode: .special
+            mapNode: .special,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-isl-grammar-out",
@@ -270,7 +272,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_grammar_out",
             posterAssetName: "cutscene_poster_grammar_out",
             voiceoverKey: "cutscene.cs-isl-grammar-out.subtitle",
-            mapNode: .special
+            mapNode: .special,
+            videoReady: true
         )
     ]
 
@@ -284,7 +287,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_finale",
             posterAssetName: "cutscene_poster_finale",
             voiceoverKey: "cutscene.cs-finale.subtitle",
-            mapNode: nil
+            mapNode: nil,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-streak-7",
@@ -293,7 +297,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_streak_7",
             posterAssetName: "cutscene_poster_streak_7",
             voiceoverKey: "cutscene.cs-streak-7.subtitle",
-            mapNode: nil
+            mapNode: nil,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-streak-30",
@@ -302,7 +307,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_streak_30",
             posterAssetName: "cutscene_poster_streak_30",
             voiceoverKey: "cutscene.cs-streak-30.subtitle",
-            mapNode: nil
+            mapNode: nil,
+            videoReady: true
         )
     ]
 

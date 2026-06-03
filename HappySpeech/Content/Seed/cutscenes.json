@@ -149,7 +149,7 @@
       "mapNode": "velar",
       "priority": 60,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-velar-out",
@@ -164,7 +164,7 @@
       "mapNode": "velar",
       "priority": 80,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-grammar-in",
@@ -179,7 +179,7 @@
       "mapNode": "special",
       "priority": 60,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-grammar-out",
@@ -194,7 +194,7 @@
       "mapNode": "special",
       "priority": 80,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-finale",
@@ -208,7 +208,7 @@
       "mapNode": null,
       "priority": 100,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-streak-7",
@@ -223,7 +223,7 @@
       "mapNode": null,
       "priority": 40,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-streak-30",
@@ -238,7 +238,7 @@
       "mapNode": null,
       "priority": 40,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     }
   ]
 }

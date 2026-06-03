@@ -372,9 +372,9 @@ public enum HelpCenterCorpus {
         "cs-isl-hissing-in": 22, "cs-isl-hissing-out": 6,
         "cs-isl-affr-in": 11, "cs-isl-affr-out": 14,
         "cs-isl-sonor-in": 14, "cs-isl-sonor-out": 21,
-        "cs-isl-velar-in": 32, "cs-isl-velar-out": 24,
-        "cs-isl-grammar-in": 32, "cs-isl-grammar-out": 24,
-        "cs-finale": 56, "cs-streak-7": 16, "cs-streak-30": 16
+        "cs-isl-velar-in": 22, "cs-isl-velar-out": 14,
+        "cs-isl-grammar-in": 14, "cs-isl-grammar-out": 14,
+        "cs-finale": 9, "cs-streak-7": 6, "cs-streak-30": 6
     ]
 
     public static func video(forId id: String) -> TutorialVideo? {

@@ -842,7 +842,7 @@
       "cutscene_id": "cs-isl-hissing-in",
       "kind": "islandIntro",
       "duration_sec": 22.0,
-      "size_bytes": 9903932,
+      "size_bytes": 7981614,
       "video_ready": true,
       "has_audio": true
     },
@@ -853,7 +853,7 @@
       "cutscene_id": "cs-isl-hissing-out",
       "kind": "islandTriumph",
       "duration_sec": 6.0,
-      "size_bytes": 15729246,
+      "size_bytes": 2698455,
       "video_ready": true,
       "has_audio": true
     },
@@ -864,7 +864,8 @@
       "cutscene_id": "cs-isl-affr-in",
       "kind": "islandIntro",
       "duration_sec": 11.0,
-      "video_ready": true
+      "video_ready": true,
+      "size_bytes": 4386910
     },
     {
       "id": "cs_isl_affr_out",
@@ -873,7 +874,8 @@
       "cutscene_id": "cs-isl-affr-out",
       "kind": "islandTriumph",
       "duration_sec": 14.0,
-      "video_ready": true
+      "video_ready": true,
+      "size_bytes": 12721255
     },
     {
       "id": "cs_isl_sonor_in",
@@ -882,7 +884,7 @@
       "cutscene_id": "cs-isl-sonor-in",
       "kind": "islandIntro",
       "duration_sec": 14.0,
-      "size_bytes": 13187456,
+      "size_bytes": 4436992,
       "video_ready": true,
       "has_audio": true
     },
@@ -893,7 +895,7 @@
       "cutscene_id": "cs-isl-sonor-out",
       "kind": "islandTriumph",
       "duration_sec": 21.0,
-      "size_bytes": 24143440,
+      "size_bytes": 12721714,
       "video_ready": true,
       "has_audio": true
     },
@@ -903,8 +905,9 @@
       "title": "Остров Заднеязычных спит",
       "cutscene_id": "cs-isl-velar-in",
       "kind": "islandIntro",
-      "duration_sec": 32.0,
-      "video_ready": false
+      "duration_sec": 21.9,
+      "video_ready": true,
+      "size_bytes": 5222962
     },
     {
       "id": "cs_isl_velar_out",
@@ -912,8 +915,9 @@
       "title": "Остров Заднеязычных ожил",
       "cutscene_id": "cs-isl-velar-out",
       "kind": "islandTriumph",
-      "duration_sec": 24.0,
-      "video_ready": false
+      "duration_sec": 14.0,
+      "video_ready": true,
+      "size_bytes": 7774816
     },
     {
       "id": "cs_isl_grammar_in",
@@ -921,8 +925,9 @@
       "title": "Остров Грамматики спит",
       "cutscene_id": "cs-isl-grammar-in",
       "kind": "islandIntro",
-      "duration_sec": 32.0,
-      "video_ready": false
+      "duration_sec": 13.7,
+      "video_ready": true,
+      "size_bytes": 6596659
     },
     {
       "id": "cs_isl_grammar_out",
@@ -930,8 +935,9 @@
       "title": "Остров Грамматики ожил",
       "cutscene_id": "cs-isl-grammar-out",
       "kind": "islandTriumph",
-      "duration_sec": 24.0,
-      "video_ready": false
+      "duration_sec": 14.0,
+      "video_ready": true,
+      "size_bytes": 8681778
     },
     {
       "id": "cs_finale",
@@ -939,8 +945,9 @@
       "title": "Страна Звуков поёт",
       "cutscene_id": "cs-finale",
       "kind": "finale",
-      "duration_sec": 56.0,
-      "video_ready": false
+      "duration_sec": 8.6,
+      "video_ready": true,
+      "size_bytes": 6493477
     },
     {
       "id": "cs_streak_7",
@@ -948,8 +955,9 @@
       "title": "Неделя занятий с Лялей",
       "cutscene_id": "cs-streak-7",
       "kind": "milestone",
-      "duration_sec": 16.0,
-      "video_ready": false
+      "duration_sec": 5.9,
+      "video_ready": true,
+      "size_bytes": 2128317
     },
     {
       "id": "cs_streak_30",
@@ -957,8 +965,9 @@
       "title": "Месяц занятий с Лялей",
       "cutscene_id": "cs-streak-30",
       "kind": "milestone",
-      "duration_sec": 16.0,
-      "video_ready": false
+      "duration_sec": 5.9,
+      "video_ready": true,
+      "size_bytes": 5136698
     }
   ]
 }
