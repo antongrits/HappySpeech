@@ -184,6 +184,75 @@ final class LyalyaMailInteractorTests: XCTestCase {
         }
         await sut.delete(.init(letterId: target.id))
         let remaining = spy.lastLettersResponse?.letters ?? []
+        // После soft-delete письмо не отображается в списке.
         XCTAssertFalse(remaining.contains(where: { $0.id == target.id }))
+    }
+
+    // MARK: - PROD-BUG-001: event-письмо не воскресает после удаления
+
+    /// Регрессионный тест PROD-BUG-001.
+    ///
+    /// Сценарий: пользователь удаляет event-письмо (welcome/streak/firstSound).
+    /// Следующий вызов `loadMail` вызывает `generateEventLetters`, которая
+    /// пытается вставить письмо с тем же детерминированным id. До фикса:
+    /// физическое удаление → `insertLyalyaLetterIfAbsent` находила nil →
+    /// пересоздавала письмо → письмо «воскресало».
+    /// После фикса: soft-delete → объект в Realm существует (isDeleted=true) →
+    /// вставка пропускается → письмо остаётся удалённым.
+    func test_delete_eventLetter_doesNotRessurectAfterReload() async throws {
+        let sut = try await makeSUT()
+
+        // Первая загрузка — генерируются event-письма.
+        await sut.loadMail(.init(childId: "unit-test-child"))
+        let lettersBeforeDelete = spy.lastLettersResponse?.letters ?? []
+        XCTAssertFalse(lettersBeforeDelete.isEmpty, "Ожидаем хотя бы одно event-письмо")
+
+        // Удаляем все event-письма по очереди.
+        for letter in lettersBeforeDelete {
+            await sut.delete(.init(letterId: letter.id))
+        }
+
+        // Сбрасываем счётчик presenter перед повторной загрузкой.
+        spy.lettersCallCount = 0
+
+        // Повторная загрузка — generateEventLetters вызывается снова.
+        await sut.loadMail(.init(childId: "unit-test-child"))
+        let lettersAfterReload = spy.lastLettersResponse?.letters ?? []
+
+        // Ни одно из ранее удалённых писем не должно появиться снова.
+        let deletedIds = Set(lettersBeforeDelete.map { $0.id })
+        let resurrected = lettersAfterReload.filter { deletedIds.contains($0.id) }
+        XCTAssertTrue(
+            resurrected.isEmpty,
+            "Event-письма не должны воскресать: воскресшие = \(resurrected.map { $0.kind.rawValue })"
+        )
+    }
+
+    /// Удаление одного конкретного event-письма (welcome) не влияет на остальные.
+    func test_delete_oneEventLetter_othersRemainVisible() async throws {
+        let sut = try await makeSUT()
+        await sut.loadMail(.init(childId: "unit-test-child"))
+        let allLetters = spy.lastLettersResponse?.letters ?? []
+        guard let welcome = allLetters.first(where: { $0.kind == .welcome }) else {
+            XCTFail("Welcome letter not generated"); return
+        }
+        let otherIds = allLetters.filter { $0.kind != .welcome }.map { $0.id }
+
+        await sut.delete(.init(letterId: welcome.id))
+
+        // После удаления welcome — остальные письма остаются видимыми.
+        let remaining = spy.lastLettersResponse?.letters ?? []
+        XCTAssertFalse(remaining.contains(where: { $0.id == welcome.id }),
+                       "Welcome письмо должно быть скрыто")
+        for otherId in otherIds {
+            XCTAssertTrue(remaining.contains(where: { $0.id == otherId }),
+                          "Остальные письма должны остаться видимыми")
+        }
+
+        // Повторная загрузка не воскрешает welcome.
+        await sut.loadMail(.init(childId: "unit-test-child"))
+        let afterReload = spy.lastLettersResponse?.letters ?? []
+        XCTAssertFalse(afterReload.contains(where: { $0.id == welcome.id }),
+                       "Welcome письмо не должно воскресать после loadMail")
     }
 }

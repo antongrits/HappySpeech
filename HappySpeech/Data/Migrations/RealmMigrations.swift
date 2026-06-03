@@ -88,6 +88,12 @@ enum RealmMigrations {
             // Оба объекта новые — Realm создаёт схему автоматически, дефолты
             // заданы в моделях.
         }
+        if oldSchemaVersion < 16 {
+            // v16: LyalyaLetterObject.isDeleted (Bool) — новое поле soft-delete.
+            // Realm проставит дефолт false для всех существующих записей
+            // автоматически (значение объявлено в модели). Никаких enumerateObjects
+            // не требуется — нужно только зафиксировать версию.
+        }
     }
 }
 
@@ -928,15 +934,16 @@ public extension RealmActor {
         return obj.claimedWeekStarts.count
     }
 
-    // MARK: - v15: Lyalya letters (письма от Ляли)
+    // MARK: - v15/v16: Lyalya letters (письма от Ляли)
 
     /// Возвращает письма ребёнка как Sendable DTO, отсортированные по дате desc.
+    /// Письма с `isDeleted = true` (soft-delete, v16) исключаются из результата.
     internal func fetchLyalyaLetters(childId: String) async -> [LyalyaLetterData] {
         let realmInstance = try? await Realm(actor: self)
         guard let realmInstance else { return [] }
         return Array(
             realmInstance.objects(LyalyaLetterObject.self)
-                .filter("childId == %@", childId)
+                .filter("childId == %@ AND isDeleted == false", childId)
                 .sorted(byKeyPath: "date", ascending: false)
         ).map { obj in
             LyalyaLetterData(
@@ -990,14 +997,23 @@ public extension RealmActor {
         )
     }
 
-    /// Удаляет письмо по id (возвращает true, если оно существовало).
+    /// Удаляет письмо по id.
+    ///
+    /// Все письма используют soft-delete (`isDeleted = true`) — физическое
+    /// удаление из Realm не применяется. Это гарантирует, что
+    /// `insertLyalyaLetterIfAbsent` не воскресит письмо при следующем
+    /// вызове `loadMail`: объект с данным id уже существует → вставка
+    /// пропускается. `fetchLyalyaLetters` фильтрует `isDeleted = true`.
+    ///
+    /// Возвращает `true`, если объект существовал и был помечен удалённым.
     @discardableResult
     internal func deleteLyalyaLetter(letterId: String) async -> Bool {
         let realmInstance = try? await Realm(actor: self)
         guard let realmInstance,
-              let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId)
+              let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId),
+              !obj.isDeleted
         else { return false }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        try? realmInstance.write { obj.isDeleted = true }
         return true
     }
 }

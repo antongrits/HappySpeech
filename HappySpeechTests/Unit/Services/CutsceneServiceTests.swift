@@ -56,9 +56,19 @@ final class CutsceneServiceTests: XCTestCase {
         XCTAssertEqual(CutsceneCatalog.all.count, 16)
     }
 
-    func testCatalog_pilotThreeAreVideoReady() {
-        let ready = CutsceneCatalog.all.filter { $0.videoReady }.map(\.id)
-        XCTAssertEqual(Set(ready), ["cs-prologue", "cs-isl-whistling-in", "cs-isl-whistling-out"])
+    func testCatalog_videoReadyCutscenes_matchCatalog() {
+        // После волны Veo 3.1 (Sprint 12) готовы 9 кат-сцен:
+        // пролог + 4 острова (whistling/hissing/affr/sonor) × in+out.
+        // Тест синхронизирован с CutsceneModels.swift (videoReady: true).
+        let ready = Set(CutsceneCatalog.all.filter { $0.videoReady }.map(\.id))
+        let expected: Set<String> = [
+            "cs-prologue",
+            "cs-isl-whistling-in", "cs-isl-whistling-out",
+            "cs-isl-hissing-in",   "cs-isl-hissing-out",
+            "cs-isl-affr-in",      "cs-isl-affr-out",
+            "cs-isl-sonor-in",     "cs-isl-sonor-out"
+        ]
+        XCTAssertEqual(ready, expected)
     }
 
     // MARK: - 2. Маппинг триггер → сцена

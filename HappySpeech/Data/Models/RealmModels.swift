@@ -381,11 +381,18 @@ struct FamilyChallengeData: Sendable, Equatable {
     let claimedWeekStarts: [Date]
 }
 
-// MARK: - LyalyaLetterObject (v15 — персистентные «письма от Ляли»)
+// MARK: - LyalyaLetterObject (v15 — персистентные «письма от Ляли», v16 — soft-delete)
 //
 // Письма маскота ребёнку (мотивация / поздравление / напоминание). Раньше
 // хранились в in-memory singleton и терялись при перезапуске. Теперь —
 // локальный Realm-объект. Полностью offline / on-device, kid-контур.
+//
+// v16: добавлен флаг `isDeleted` (soft-delete). Event-письма (welcome/streak/
+// firstSound) с детерминированными id не удаляются физически — иначе
+// `insertLyalyaLetterIfAbsent` пересоздаёт их при следующей загрузке.
+// Мягкое удаление гарантирует, что объект существует в Realm (вставка
+// пропускается), но фильтруется при чтении. НЕ-event письма (.custom kind)
+// удаляются физически, как раньше.
 
 final class LyalyaLetterObject: Object, @unchecked Sendable {
     /// Primary key — стабильный id письма (детерминированный по триггеру+childId).
@@ -397,6 +404,10 @@ final class LyalyaLetterObject: Object, @unchecked Sendable {
     @Persisted var date: Date = Date()
     @Persisted var isRead: Bool = false
     @Persisted var audioFileName: String = ""          // "" = нет аудио
+    /// Soft-delete флаг (v16). Для event-писем используется вместо физического
+    /// удаления из Realm, чтобы идемпотентный `insertLyalyaLetterIfAbsent`
+    /// не пересоздавал письмо повторно. Дефолт = false.
+    @Persisted var isDeleted: Bool = false
 }
 
 // MARK: - LyalyaLetterData (Sendable DTO)
@@ -604,6 +615,8 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
 /// v15: FamilyChallengeObject (тип/цель/claimed-недели семейного челленджа) +
 ///      LyalyaLetterObject (персистентные «письма от Ляли»). Новые объекты —
 ///      Realm создаёт схему автоматически, дефолты заданы в моделях.
+/// v16: LyalyaLetterObject.isDeleted (Bool, default false) — soft-delete флаг
+///      для event-писем, чтобы идемпотентная вставка не воскрешала удалённые.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 15
+    static let current: UInt64 = 16
 }
