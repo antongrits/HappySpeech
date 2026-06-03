@@ -81,6 +81,84 @@ final class GrammarContentLoaderWorkerTests: XCTestCase {
         XCTAssertTrue(distractors.isEmpty, "При count=0 должен вернуться пустой массив")
     }
 
+    /// P1-7: для слов-исключений дистракторы — курируемые правдоподобные детские
+    /// ошибки, а НЕ механическая склейка («ухоов», «ребёноков»).
+    func test_pluralDistractors_irregularEar_avoidsAbsurdGlue() {
+        let distractors = GrammarContentLoaderWorker.pluralDistractors(
+            for: "ухо",
+            correct: "ушей",
+            count: 3
+        )
+        XCTAssertFalse(distractors.contains("ухоов"), "Не должно быть абсурдной склейки «ухоов»")
+        XCTAssertFalse(distractors.contains("ухоей"), "Не должно быть абсурдной склейки «ухоей»")
+        // Должны быть правдоподобные ошибки из курируемого набора.
+        XCTAssertTrue(distractors.allSatisfy { ["ухи", "ухов", "много ухо"].contains($0) })
+    }
+
+    func test_pluralDistractors_irregularChild_avoidsAbsurdGlue() {
+        let distractors = GrammarContentLoaderWorker.pluralDistractors(
+            for: "ребёнок",
+            correct: "детей",
+            count: 2
+        )
+        XCTAssertFalse(distractors.contains("ребёноков"), "Не должно быть «ребёноков»")
+        XCTAssertFalse(distractors.contains("ребёнокей"), "Не должно быть «ребёнокей»")
+    }
+
+    // MARK: - In-code case catalogs (P0-3)
+
+    func test_caseObjectItems_dative_areCleanNouns() {
+        let items = GrammarContentLoaderWorker.caseObjectItems(prefix: "dat", difficulty: .medium)
+        XCTAssertFalse(items.isEmpty)
+        for item in items {
+            // Слова каталога — чистые существительные (без инструкций/двоеточий/
+            // предложений). Если manifest доступен в test-бандле, ассет — word_*,
+            // но никогда не несуществующий illus_*.
+            XCTAssertFalse(item.word.contains(":"), "Слово не должно содержать инструкцию: \(item.word)")
+            XCTAssertFalse(item.word.contains(" "), "Слово должно быть одиночным: \(item.word)")
+            if let asset = LessonContentMap.asset(for: item.word) {
+                XCTAssertFalse(asset.hasPrefix("illus_"), "Ассет не должен быть illus_*: \(asset)")
+            }
+        }
+    }
+
+    func test_instrumentalItems_parsePairs_fullInstrumentalForm() {
+        let items = GrammarContentLoaderWorker.instrumentalItems(difficulty: .easy)
+        XCTAssertFalse(items.isEmpty)
+        for item in items {
+            let parts = item.word.components(separatedBy: " — ")
+            XCTAssertEqual(parts.count, 2, "Пара должна иметь формат «именит. — творит.»")
+            // Творит. форма — фраза «с …», не голый предлог «с».
+            let instrumental = parts[1].trimmingCharacters(in: .whitespaces)
+            XCTAssertTrue(instrumental.hasPrefix("с "), "Творит. форма: \(instrumental)")
+            XCTAssertGreaterThan(instrumental.count, 2, "Не должно быть просто «с»")
+        }
+    }
+
+    /// P0-3: падежные раунды не содержат мусорного correctAnswer/вопроса,
+    /// извлечённого из инструкций («именительный:», «иду»).
+    func test_loadRounds_dative_meaningfulQuestionAndAnswer() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .dative, difficulty: .medium)
+        for round in rounds {
+            XCTAssertFalse(round.questionText.contains(":"),
+                           "Вопрос не должен содержать инструкцию-двоеточие: \(round.questionText)")
+            XCTAssertFalse(round.correctAnswer.isEmpty)
+            XCTAssertFalse(round.imageName.hasPrefix("illus_"),
+                           "Картинка не должна резолвиться через несуществующий illus_*")
+        }
+    }
+
+    func test_loadRounds_instrumental_correctAnswerIsFullForm() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .instrumental, difficulty: .easy)
+        for round in rounds {
+            XCTAssertNotEqual(round.correctAnswer, "с",
+                              "correctAnswer не должен быть голым предлогом")
+            XCTAssertFalse(round.correctAnswer.isEmpty)
+        }
+    }
+
     // MARK: - instrumentalDistractors
 
     func test_instrumentalDistractors_countMatchesRequest() {

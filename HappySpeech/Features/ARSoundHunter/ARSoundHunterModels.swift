@@ -55,8 +55,9 @@ enum ARSoundHunterModels {
         struct Response {
             let targetSound: String
             let mode: Mode
-            /// Слова-подсказки с целевым звуком (для фото-карточек и подсказок).
-            let huntableWords: [SoundHunterMapping.Match]
+            /// Сетка фото-карточек для фоллбэк-режима: целевые (со звуком) +
+            /// дистракторы (без звука). Пусто в camera-режиме.
+            let gridCards: [SoundHunterMapping.GridCard]
             let childAge: Int
         }
         struct ViewModel {
@@ -94,12 +95,28 @@ enum ARSoundHunterModels {
 
     // MARK: - SelectCard (фоллбэк)
     //
-    // Ребёнок выбрал фото-карточку предмета — переходим к называнию.
+    // Ребёнок выбрал фото-карточку предмета. Целевая (со звуком) → переходим к
+    // называнию. Дистрактор (без звука) → мягкий фидбэк без звезды/штрафа, можно
+    // продолжить выбирать.
 
     enum SelectCard {
         struct Request { let cardId: String }
-        struct Response { let word: String }
-        struct ViewModel { let word: String; let prompt: String }
+        struct Response {
+            let word: String
+            /// Содержит ли выбранное слово целевой звук.
+            let isTarget: Bool
+            /// Целевой звук — для текста фидбэка дистрактора.
+            let targetSound: String
+        }
+        struct ViewModel {
+            /// Целевая карточка → промпт «Назови предмет: …»; nil для дистрактора.
+            let word: String?
+            let prompt: String?
+            /// Дистрактор → мягкий фидбэк «В этом слове нет звука Х»; nil для цели.
+            let distractorFeedback: String?
+            /// Какую карточку подсветить как «не подходит» (id == word).
+            let distractorCardId: String?
+        }
     }
 
     // MARK: - ScoreNaming
@@ -144,6 +161,10 @@ enum ARSoundHunterModels {
         /// Имя имейджсета (`word_*`) если есть в каталоге контента, иначе nil →
         /// View рендерит SF Symbol-плейсхолдер.
         let assetName: String?
+        /// Содержит ли слово целевой звук. View сам по себе НЕ выдаёт это
+        /// визуально (иначе задание тривиально) — флаг используется Interactor'ом
+        /// при выборе. По умолчанию `false`, чтобы не раскрывать ответ.
+        let isTarget: Bool
     }
 }
 

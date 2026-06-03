@@ -53,15 +53,17 @@ final class ARSoundHunterPresenter: ARSoundHunterPresentationLogic {
         let cards: [ARSoundHunterModels.Card]
         switch response.mode {
         case .photoCards:
-            cards = response.huntableWords
-                .prefix(6)
-                .map { match in
-                    ARSoundHunterModels.Card(
-                        id: match.word,
-                        word: match.word.capitalizedFirstLetter,
-                        assetName: Self.assetName(for: match.word)
-                    )
-                }
+            // Сетка = целевые (со звуком) + дистракторы (без звука). Признак
+            // `isTarget` НЕ отражается в визуале карточки (иначе задание
+            // тривиально) — он нужен Interactor'у при выборе.
+            cards = response.gridCards.map { card in
+                ARSoundHunterModels.Card(
+                    id: card.match.word,
+                    word: card.match.word.capitalizedFirstLetter,
+                    assetName: Self.assetName(for: card.match.word),
+                    isTarget: card.isTarget
+                )
+            }
         case .camera:
             cards = []
         }
@@ -83,13 +85,31 @@ final class ARSoundHunterPresenter: ARSoundHunterPresentationLogic {
     }
 
     func presentSelectCard(_ response: ARSoundHunterModels.SelectCard.Response) {
+        let word = response.word.capitalizedFirstLetter
+        guard response.isTarget else {
+            // Дистрактор: мягкий фидбэк «В этом слове нет звука Х», подсветка
+            // карточки. Без звезды и без штрафа — положительное подкрепление.
+            let feedback = String(
+                format: String(localized: "arSoundHunter.feedback.noSound"),
+                response.targetSound
+            )
+            display?.displaySelectCard(.init(
+                word: nil,
+                prompt: nil,
+                distractorFeedback: feedback,
+                distractorCardId: response.word
+            ))
+            return
+        }
         let prompt = String(
             format: String(localized: "arSoundHunter.prompt.nameIt"),
-            response.word
+            word
         )
         display?.displaySelectCard(.init(
-            word: response.word.capitalizedFirstLetter,
-            prompt: prompt
+            word: word,
+            prompt: prompt,
+            distractorFeedback: nil,
+            distractorCardId: nil
         ))
     }
 

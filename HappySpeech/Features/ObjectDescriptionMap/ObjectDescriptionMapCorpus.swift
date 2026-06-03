@@ -82,7 +82,7 @@ struct ObjectDescriptionMapPackLoader {
                     id: dto.id,
                     title: dto.title,
                     category: dto.category,
-                    symbol: dto.symbol,
+                    symbol: Self.correctedSymbol(id: dto.id, symbol: dto.symbol),
                     plan: dto.plan.map { itemDTO in
                         DescriptionPlanItem(
                             slot: itemDTO.slot,
@@ -100,6 +100,22 @@ struct ObjectDescriptionMapPackLoader {
             Self.logger.error("Decode failed: \(error.localizedDescription) — fallback corpus")
             self.objects = Self.fallback()
             self.categoriesInOrder = ["животные", "еда", "транспорт", "игрушки"]
+        }
+    }
+
+    // MARK: - Symbol correction
+
+    /// Исправляет заведомо неверные/приблизительные SF Symbols в паке: ребёнок
+    /// описывает объект, а видел не его (лиса → рыба, груша → лист, хлеб → торт).
+    /// Применяется поверх данных пака (контентный JSON не правится из кода).
+    /// Для лисы нет специального SF Symbol — берём нейтральный `pawprint.fill`
+    /// (зверь); еда → `fork.knife` (нейтральная еда, не торт/лист).
+    private static func correctedSymbol(id: String, symbol: String) -> String {
+        switch id {
+        case "obj_fox":   return "pawprint.fill"
+        case "obj_pear":  return "fork.knife"
+        case "obj_bread": return "fork.knife"
+        default:          return symbol
         }
     }
 
@@ -161,7 +177,7 @@ struct ObjectDescriptionMapPackLoader {
                 id: "fb_pear",
                 title: "Груша",
                 category: "еда",
-                symbol: "leaf.fill",
+                symbol: "fork.knife",
                 plan: [
                     DescriptionPlanItem(
                         slot: "color",

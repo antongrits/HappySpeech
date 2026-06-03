@@ -171,12 +171,51 @@ final class ARSoundHunterInteractorTests: XCTestCase {
         XCTAssertLessThan(spy.lastFrame?.lockProgress ?? 1, progressBeforeDecay)
     }
 
-    // MARK: - selectCard (fallback)
+    // MARK: - selectCard (fallback — target vs distractor)
 
-    func test_selectCard_emitsWordAndAllowsScoring() {
+    /// Поднимает фоллбэк-сетку (photoCards) с целевым звуком и возвращает,
+    /// какие слова попали в сетку как целевые/дистракторы.
+    private func startPhotoCardGame(
+        sut: ARSoundHunterInteractor,
+        spy: SpyARSoundHunterPresenter,
+        sound: String
+    ) async -> [SoundHunterMapping.GridCard] {
+        sut.startGame(.init(childId: "", targetSoundOverride: sound, cameraAvailable: false))
+        await waitFor { spy.startGameCallCount == 1 }
+        return spy.lastStartGame?.gridCards ?? []
+    }
+
+    func test_selectCard_targetCard_proceedsToNaming() async {
         let (sut, spy, _) = makeSUT()
-        sut.selectCard(.init(cardId: "шарф"))
-        XCTAssertEqual(spy.lastSelectCard?.word, "шарф")
+        let grid = await startPhotoCardGame(sut: sut, spy: spy, sound: "Ш")
+        guard let target = grid.first(where: { $0.isTarget }) else {
+            return XCTFail("В сетке не оказалось целевой карточки")
+        }
+        sut.selectCard(.init(cardId: target.match.word))
+        XCTAssertNotNil(spy.lastSelectCard)
+        XCTAssertTrue(spy.lastSelectCard?.isTarget ?? false)
+        XCTAssertEqual(spy.lastSelectCard?.word, target.match.word)
+    }
+
+    func test_selectCard_distractorCard_softFeedbackNoStar() async {
+        let (sut, spy, _) = makeSUT()
+        let grid = await startPhotoCardGame(sut: sut, spy: spy, sound: "Ш")
+        guard let distractor = grid.first(where: { !$0.isTarget }) else {
+            return XCTFail("В сетке не оказалось дистрактора")
+        }
+        sut.selectCard(.init(cardId: distractor.match.word))
+        // Дистрактор → isTarget=false, целевой звук передан для фидбэка, без
+        // перехода к скорингу (звезда не присуждается).
+        XCTAssertFalse(spy.lastSelectCard?.isTarget ?? true)
+        XCTAssertEqual(spy.lastSelectCard?.targetSound, "Ш")
+        XCTAssertEqual(spy.scoreCallCount, 0)
+    }
+
+    func test_startGame_photoCards_gridHasTargetsAndDistractors() async {
+        let (sut, spy, _) = makeSUT()
+        let grid = await startPhotoCardGame(sut: sut, spy: spy, sound: "Ш")
+        XCTAssertGreaterThanOrEqual(grid.filter { $0.isTarget }.count, 1)
+        XCTAssertGreaterThanOrEqual(grid.filter { !$0.isTarget }.count, 2)
     }
 
     // MARK: - scoreNaming

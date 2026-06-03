@@ -3911,6 +3911,17 @@
         }
       }
     },
+    "arSoundHunter.feedback.noSound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В этом слове нет звука «%@». Послушай ещё раз!"
+          }
+        }
+      }
+    },
     "arSoundHunter.feedback.tryAgain": {
       "extractionState": "manual",
       "localizations": {
@@ -19828,6 +19839,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Почти! Попробуй ещё"
+          }
+        }
+      }
+    },
+    "grammar.game.instrumental.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С кем подружиться? Это %@."
           }
         }
       }

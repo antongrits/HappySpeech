@@ -1,2901 +1,2609 @@
 {
-  "id": "sound_zh_v1",
-  "soundTarget": "Ж",
-  "group": "шипящие",
-  "version": 1,
-  "description": "Коррекция звука [Ж] — артикуляционная подготовка, изолированный звук, слоги, слова по позициям, фразы, предложения, дифференциация Ж-Ш и Ж-З.",
-  "stages": {
-    "prep": {
-      "stageId": "prep",
-      "note": "Артикуляционная гимнастика для Ж — те же позиции что для Ш, плюс подключение голоса.",
-      "items": [
-        {
-          "id": "zh-prep-0",
-          "word": "чашечка",
-          "hint": "Широкий язык — края вверх, как чашечка.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-prep-0.m4a"
-        },
-        {
-          "id": "zh-prep-1",
-          "word": "блинчик",
-          "hint": "Плоский язык на нижней губе — лопатка.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-prep-1.m4a"
-        },
-        {
-          "id": "zh-prep-2",
-          "word": "грибок",
-          "hint": "Язык присасывается к нёбу — держим.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-2.m4a"
-        },
-        {
-          "id": "zh-prep-3",
-          "word": "маляр",
-          "hint": "Кистью-языком красим нёбо вперёд-назад.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-3.m4a"
-        },
-        {
-          "id": "zh-prep-4",
-          "word": "лошадка",
-          "hint": "Цокаем языком — лошадка скачет!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-4.m4a"
-        },
-        {
-          "id": "zh-prep-5",
-          "word": "вкусное-варенье",
-          "hint": "Лижем верхнюю губу — вкусно!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-prep-5.m4a"
-        },
-        {
-          "id": "zh-prep-6",
-          "word": "чашечка-в-рот",
-          "hint": "Убираем чашечку за верхние зубы.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-6.m4a"
-        },
-        {
-          "id": "zh-prep-7",
-          "word": "горлышко-поёт",
-          "hint": "Кладём руку на горло — чувствуем вибрацию.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-7.m4a"
-        },
-        {
-          "id": "zh-prep-8",
-          "word": "моторчик",
-          "hint": "Делаем ррр — горлышко дрожит как мотор.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-prep-8.m4a"
-        },
-        {
-          "id": "zh-prep-9",
-          "word": "самолёт",
-          "hint": "Самолёт летит: ш-ш-ш, мотор гудит: ж-ж-ж.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-9.m4a"
-        },
-        {
-          "id": "zh-prep-10",
-          "word": "гармошка",
-          "hint": "Язык у нёба — двигаем нижней челюстью.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-prep-10.m4a"
-        },
-        {
-          "id": "zh-prep-11",
-          "word": "качели",
-          "hint": "Язык вверх к носу — вниз к подбородку.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-11.m4a"
-        },
-        {
-          "id": "zh-prep-12",
-          "word": "трубочка",
-          "hint": "Губы трубочкой — тянем вперёд.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-prep-12.m4a"
-        },
-        {
-          "id": "zh-prep-13",
-          "word": "фокус",
-          "hint": "Дуем на ватку — она летит вверх.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-13.m4a"
-        },
-        {
-          "id": "zh-prep-14",
-          "word": "большая-чашечка",
-          "hint": "Чашечка как можно шире — 5 секунд.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-14.m4a"
-        },
-        {
-          "id": "zh-prep-15",
-          "word": "часики",
-          "hint": "Язык влево-вправо как маятник.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-prep-15.m4a"
-        }
-      ]
+ "id": "sound_zh_v1",
+ "soundTarget": "Ж",
+ "group": "шипящие",
+ "version": 1,
+ "description": "Коррекция звука [Ж] — артикуляционная подготовка, изолированный звук, слоги, слова по позициям, фразы, предложения, дифференциация Ж-Ш и Ж-З.",
+ "stages": {
+  "prep": {
+   "stageId": "prep",
+   "note": "Артикуляционная гимнастика для Ж — те же позиции что для Ш, плюс подключение голоса.",
+   "items": [
+    {
+     "id": "zh-prep-0",
+     "word": "чашечка",
+     "hint": "Широкий язык — края вверх, как чашечка.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-prep-0.m4a"
     },
-    "isolated": {
-      "stageId": "isolated",
-      "note": "Изолированный звук [Ж] через игровые образы.",
-      "items": [
-        {
-          "id": "zh-iso-0",
-          "word": "жж-жук",
-          "hint": "Жук жужжит в траве: жжжж.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-iso-0.m4a"
-        },
-        {
-          "id": "zh-iso-1",
-          "word": "жж-шмель",
-          "hint": "Шмель летит к цветку: жжжж.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-iso-1.m4a"
-        },
-        {
-          "id": "zh-iso-2",
-          "word": "жж-мотор",
-          "hint": "Машина заводится: жжж — гудит!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-iso-2.m4a"
-        },
-        {
-          "id": "zh-iso-3",
-          "word": "жж-пила",
-          "hint": "Пила пилит дерево: жжж.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-3.m4a"
-        },
-        {
-          "id": "zh-iso-4",
-          "word": "жж-электричка",
-          "hint": "Электричка едет: жжжж — быстро!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-4.m4a"
-        },
-        {
-          "id": "zh-iso-5",
-          "word": "жж-долго",
-          "hint": "Тянем жжж на одном выдохе — долго.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-5.m4a"
-        },
-        {
-          "id": "zh-iso-6",
-          "word": "жж-тихо-громко",
-          "hint": "Тихо жжж — громко ЖЖЖ!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-6.m4a"
-        },
-        {
-          "id": "zh-iso-7",
-          "word": "жж-прерывисто",
-          "hint": "Ж-Ж-Ж отдельными толчками.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-iso-7.m4a"
-        },
-        {
-          "id": "zh-iso-8",
-          "word": "жж-оса",
-          "hint": "Оса сердитая: ж-ж-ж — не трогай!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-8.m4a"
-        },
-        {
-          "id": "zh-iso-9",
-          "word": "жж-волна",
-          "hint": "Жжж тихо — ЖЖЖ громко — жжж тихо.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-iso-9.m4a"
-        },
-        {
-          "id": "zh-iso-10",
-          "word": "жж-пчела",
-          "hint": "Пчёлка у улья: жжжж — занята!",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-10.m4a"
-        },
-        {
-          "id": "zh-iso-11",
-          "word": "жж-стрекоза",
-          "hint": "Стрекоза над водой: жжжж.",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-iso-11.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-1",
+     "word": "блинчик",
+     "hint": "Плоский язык на нижней губе — лопатка.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-prep-1.m4a"
     },
-    "syllable": {
-      "stageId": "syllable",
-      "note": "Прямые, обратные, со стечением слоги с [Ж].",
-      "items": [
-        {
-          "id": "zh-syl-0",
-          "word": "жа",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-0.m4a"
-        },
-        {
-          "id": "zh-syl-1",
-          "word": "жо",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-1.m4a"
-        },
-        {
-          "id": "zh-syl-2",
-          "word": "жу",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-2.m4a"
-        },
-        {
-          "id": "zh-syl-3",
-          "word": "жи",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-3.m4a"
-        },
-        {
-          "id": "zh-syl-4",
-          "word": "же",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-4.m4a"
-        },
-        {
-          "id": "zh-syl-5",
-          "word": "аж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-5.m4a"
-        },
-        {
-          "id": "zh-syl-6",
-          "word": "ож",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-6.m4a"
-        },
-        {
-          "id": "zh-syl-7",
-          "word": "уж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-7.m4a"
-        },
-        {
-          "id": "zh-syl-8",
-          "word": "иж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-8.m4a"
-        },
-        {
-          "id": "zh-syl-9",
-          "word": "еж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-9.m4a"
-        },
-        {
-          "id": "zh-syl-10",
-          "word": "жа-жа",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-10.m4a"
-        },
-        {
-          "id": "zh-syl-11",
-          "word": "жо-жо",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-11.m4a"
-        },
-        {
-          "id": "zh-syl-12",
-          "word": "жу-жу",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-12.m4a"
-        },
-        {
-          "id": "zh-syl-13",
-          "word": "ажа",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-13.m4a"
-        },
-        {
-          "id": "zh-syl-14",
-          "word": "ожа",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-14.m4a"
-        },
-        {
-          "id": "zh-syl-15",
-          "word": "ужа",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-15.m4a"
-        },
-        {
-          "id": "zh-syl-16",
-          "word": "ажо",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-16.m4a"
-        },
-        {
-          "id": "zh-syl-17",
-          "word": "ажу",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-17.m4a"
-        },
-        {
-          "id": "zh-syl-18",
-          "word": "жда",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-18.m4a"
-        },
-        {
-          "id": "zh-syl-19",
-          "word": "жна",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-19.m4a"
-        },
-        {
-          "id": "zh-syl-20",
-          "word": "жва",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-20.m4a"
-        },
-        {
-          "id": "zh-syl-21",
-          "word": "жка",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-21.m4a"
-        },
-        {
-          "id": "zh-syl-22",
-          "word": "жа-жо-жу",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-22.m4a"
-        },
-        {
-          "id": "zh-syl-23",
-          "word": "аж-ож-уж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-23.m4a"
-        },
-        {
-          "id": "zh-syl-24",
-          "word": "ажа-ожа-ужа",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-24.m4a"
-        },
-        {
-          "id": "zh-syl-25",
-          "word": "жда-ждо-жду",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-25.m4a"
-        },
-        {
-          "id": "zh-syl-26",
-          "word": "жка-жко-жку",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-syl-26.m4a"
-        },
-        {
-          "id": "zh-syl-27",
-          "word": "аж-аж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-27.m4a"
-        },
-        {
-          "id": "zh-syl-28",
-          "word": "уж-уж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-syl-28.m4a"
-        },
-        {
-          "id": "zh-syl-29",
-          "word": "жи-жи",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-syl-29.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-2",
+     "word": "грибок",
+     "hint": "Язык присасывается к нёбу — держим.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-2.m4a"
     },
-    "wordInit": {
-      "stageId": "wordInit",
-      "note": "[Ж] в начале слова — от простых к сложным.",
-      "items": [
-        {
-          "id": "zh-wi-0",
-          "word": "жук",
-          "imageAsset": "word_zhuk",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wi-0.m4a"
-        },
-        {
-          "id": "zh-wi-1",
-          "word": "жаба",
-          "imageAsset": "word_zhaba",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wi-1.m4a"
-        },
-        {
-          "id": "zh-wi-2",
-          "word": "жара",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wi-2.m4a"
-        },
-        {
-          "id": "zh-wi-3",
-          "word": "жало",
-          "imageAsset": "word_zhalo",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wi-3.m4a"
-        },
-        {
-          "id": "zh-wi-4",
-          "word": "желе",
-          "imageAsset": "word_zhele",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wi-4.m4a"
-        },
-        {
-          "id": "zh-wi-5",
-          "word": "жилет",
-          "imageAsset": "word_zhilet",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-5.m4a"
-        },
-        {
-          "id": "zh-wi-6",
-          "word": "живот",
-          "imageAsset": "word_zhivot",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-6.m4a"
-        },
-        {
-          "id": "zh-wi-7",
-          "word": "жизнь",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-7.m4a"
-        },
-        {
-          "id": "zh-wi-8",
-          "word": "жираф",
-          "imageAsset": "word_zhiraf",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-8.m4a"
-        },
-        {
-          "id": "zh-wi-9",
-          "word": "журнал",
-          "imageAsset": "word_zhurnal",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-9.m4a"
-        },
-        {
-          "id": "zh-wi-10",
-          "word": "журавль",
-          "imageAsset": "word_zhuravl",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-10.m4a"
-        },
-        {
-          "id": "zh-wi-11",
-          "word": "жёлудь",
-          "imageAsset": "word_zholudj",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-11.m4a"
-        },
-        {
-          "id": "zh-wi-12",
-          "word": "желток",
-          "imageAsset": "word_zheltok",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-12.m4a"
-        },
-        {
-          "id": "zh-wi-13",
-          "word": "жираф",
-          "imageAsset": "word_giraffe",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-13.m4a"
-        },
-        {
-          "id": "zh-wi-14",
-          "word": "жёлтый",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-14.m4a"
-        },
-        {
-          "id": "zh-wi-15",
-          "word": "жасмин",
-          "imageAsset": "word_zhasmin",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-15.m4a"
-        },
-        {
-          "id": "zh-wi-16",
-          "word": "жажда",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-16.m4a"
-        },
-        {
-          "id": "zh-wi-17",
-          "word": "жадный",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-17.m4a"
-        },
-        {
-          "id": "zh-wi-18",
-          "word": "жатва",
-          "imageAsset": "word_zhatva",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-18.m4a"
-        },
-        {
-          "id": "zh-wi-19",
-          "word": "женщина",
-          "imageAsset": "word_zhenshina",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-19.m4a"
-        },
-        {
-          "id": "zh-wi-20",
-          "word": "жемчуг",
-          "imageAsset": "word_zhemchug",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-20.m4a"
-        },
-        {
-          "id": "zh-wi-21",
-          "word": "желание",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-21.m4a"
-        },
-        {
-          "id": "zh-wi-22",
-          "word": "жёрнов",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-22.m4a"
-        },
-        {
-          "id": "zh-wi-23",
-          "word": "жеребёнок",
-          "imageAsset": "word_zherebyonok",
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-23.m4a"
-        },
-        {
-          "id": "zh-wi-24",
-          "word": "жилище",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-24.m4a"
-        },
-        {
-          "id": "zh-wi-25",
-          "word": "жимолость",
-          "imageAsset": "word_zhimolost",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-25.m4a"
-        },
-        {
-          "id": "zh-wi-26",
-          "word": "жонглёр",
-          "imageAsset": "word_zhonglyor",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-26.m4a"
-        },
-        {
-          "id": "zh-wi-27",
-          "word": "живопись",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-27.m4a"
-        },
-        {
-          "id": "zh-wi-28",
-          "word": "жестокий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-28.m4a"
-        },
-        {
-          "id": "zh-wi-29",
-          "word": "жительница",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-29.m4a"
-        },
-        {
-          "id": "zh-wi-30",
-          "word": "жуткий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-30.m4a"
-        },
-        {
-          "id": "zh-wi-31",
-          "word": "жуликоватый",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-31.m4a"
-        },
-        {
-          "id": "zh-wi-32",
-          "word": "жёсткий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-32.m4a"
-        },
-        {
-          "id": "zh-wi-33",
-          "word": "жираф",
-          "imageAsset": "word_giraffe",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-33.m4a"
-        },
-        {
-          "id": "zh-wi-34",
-          "word": "жалость",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-34.m4a"
-        },
-        {
-          "id": "zh-wi-35",
-          "word": "жарко",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-35.m4a"
-        },
-        {
-          "id": "zh-wi-36",
-          "word": "жучок",
-          "imageAsset": "word_zhuchok",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-36.m4a"
-        },
-        {
-          "id": "zh-wi-37",
-          "word": "жёлоб",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-37.m4a"
-        },
-        {
-          "id": "zh-wi-38",
-          "word": "жабры",
-          "imageAsset": "word_zhabry",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-38.m4a"
-        },
-        {
-          "id": "zh-wi-39",
-          "word": "жокей",
-          "imageAsset": "word_zhokei",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-39.m4a"
-        },
-        {
-          "id": "zh-wi-40",
-          "word": "жаворонок",
-          "imageAsset": "word_zhavoronok",
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-40.m4a"
-        },
-        {
-          "id": "zh-wi-41",
-          "word": "жёлобок",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-41.m4a"
-        },
-        {
-          "id": "zh-wi-42",
-          "word": "жутковато",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-42.m4a"
-        },
-        {
-          "id": "zh-wi-43",
-          "word": "жалеть",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-43.m4a"
-        },
-        {
-          "id": "zh-wi-44",
-          "word": "жилой",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-44.m4a"
-        },
-        {
-          "id": "zh-wi-45",
-          "word": "жениться",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-45.m4a"
-        },
-        {
-          "id": "zh-wi-46",
-          "word": "желудок",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-46.m4a"
-        },
-        {
-          "id": "zh-wi-47",
-          "word": "жеребец",
-          "imageAsset": "word_zherebyec",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wi-47.m4a"
-        },
-        {
-          "id": "zh-wi-48",
-          "word": "жирный",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-48.m4a"
-        },
-        {
-          "id": "zh-wi-49",
-          "word": "жюри",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-49.m4a"
-        },
-        {
-          "id": "zh-wi-50",
-          "word": "жгучий",
-          "hint": "ЖГ — звонкий + глухой в начале.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-wi-50.m4a"
-        },
-        {
-          "id": "zh-wi-51",
-          "word": "жмурки",
-          "hint": "ЖМ — Ж + носовой.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-51.m4a"
-        },
-        {
-          "id": "zh-wi-52",
-          "word": "жрать",
-          "hint": "ЖР — два шумных в начале.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-wi-52.m4a"
-        },
-        {
-          "id": "zh-wi-53",
-          "word": "жнец",
-          "hint": "ЖН — Ж + носовой.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-53.m4a"
-        },
-        {
-          "id": "zh-wi-54",
-          "word": "жёваный",
-          "hint": "ЖЁ — ударный вариант.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-54.m4a"
-        },
-        {
-          "id": "zh-wi-55",
-          "word": "жуткий",
-          "hint": "ЖУТ — Ж в ударном слоге.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-55.m4a"
-        },
-        {
-          "id": "zh-wi-56",
-          "word": "жесть",
-          "hint": "ЖЕС + ТЬ — Ж + согласный кластер.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-56.m4a"
-        },
-        {
-          "id": "zh-wi-57",
-          "word": "жнивьё",
-          "hint": "ЖН + ВЬЁ — сложная фонема.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-wi-57.m4a"
-        },
-        {
-          "id": "zh-wi-58",
-          "word": "жирный",
-          "hint": "ЖИ + РН — Ж с сонорным.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-58.m4a"
-        },
-        {
-          "id": "zh-wi-59",
-          "word": "желать",
-          "hint": "ЖЕ — мягкий контекст для Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-59.m4a"
-        },
-        {
-          "id": "zh-wi-60",
-          "word": "жаровня",
-          "hint": "ЖА+РО+ВНЯ — посуда для жарки.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-60.m4a"
-        },
-        {
-          "id": "zh-wi-61",
-          "word": "жираф",
-          "hint": "ЖЕ+ЛЕ+ЗО — металл.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-wi-61.m4a"
-        },
-        {
-          "id": "zh-wi-62",
-          "word": "жонглёр",
-          "hint": "ЖОН+ГЛЁР — цирковой артист.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-62.m4a"
-        },
-        {
-          "id": "zh-wi-63",
-          "word": "жеребёнок",
-          "hint": "ЖЕ+РЕ+БЁ+НОК — детёныш лошади.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-63.m4a"
-        },
-        {
-          "id": "zh-wi-64",
-          "word": "жимолость",
-          "hint": "ЖИ+МО+ЛОСТЬ — лесная ягода.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-64.m4a"
-        },
-        {
-          "id": "zh-wi-65",
-          "word": "жизнерадостный",
-          "hint": "ЖИЗ+НЕ+РА+ДОС+ТНЫ — длинное слово с Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-wi-65.m4a"
-        },
-        {
-          "id": "zh-wi-66",
-          "word": "железнодорожный",
-          "hint": "ЖЕ+ЛЕЗ+НО+ДО+РО+ЖНЫ — Ж дважды.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-wi-66.m4a"
-        },
-        {
-          "id": "zh-wi-67",
-          "word": "жалованье",
-          "hint": "ЖА+ЛО+ВА+НЬЕ — зарплата.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-wi-67.m4a"
-        },
-        {
-          "id": "zh-wi-68",
-          "word": "жадность",
-          "hint": "ЖА+ДНОСТЬ — черта характера.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-68.m4a"
-        },
-        {
-          "id": "zh-wi-69",
-          "word": "жилище",
-          "hint": "ЖИ+ЛИ+ЩЕ — место проживания.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-wi-69.m4a"
-        },
-        {
-          "id": "zh-wi-70",
-          "word": "животное",
-          "imageAsset": "word_zhivotnoe",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-70.m4a"
-        },
-        {
-          "id": "zh-wi-71",
-          "word": "жужжать",
-          "imageAsset": "word_zhuzhzhat",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-71.m4a"
-        },
-        {
-          "id": "zh-wi-72",
-          "word": "жар",
-          "imageAsset": "word_zhar",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-72.m4a"
-        },
-        {
-          "id": "zh-wi-73",
-          "word": "жужелица",
-          "imageAsset": "word_zhuzhelitsa",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-73.m4a"
-        },
-        {
-          "id": "zh-wi-74",
-          "word": "железо",
-          "imageAsset": "word_zhelezo",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-74.m4a"
-        },
-        {
-          "id": "zh-wi-75",
-          "word": "животик",
-          "imageAsset": "word_zhivotik",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-75.m4a"
-        },
-        {
-          "id": "zh-wi-76",
-          "word": "жилетка",
-          "imageAsset": "word_zhiletka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wi-76.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-3",
+     "word": "маляр",
+     "hint": "Кистью-языком красим нёбо вперёд-назад.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-3.m4a"
     },
-    "wordMed": {
-      "stageId": "wordMed",
-      "note": "[Ж] в середине слова.",
-      "items": [
-        {
-          "id": "zh-wm-0",
-          "word": "ежи",
-          "imageAsset": "word_ezhi",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-0.m4a"
-        },
-        {
-          "id": "zh-wm-1",
-          "word": "ужин",
-          "imageAsset": "word_uzhin",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-1.m4a"
-        },
-        {
-          "id": "zh-wm-2",
-          "word": "лыжи",
-          "imageAsset": "word_lyzhi",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-2.m4a"
-        },
-        {
-          "id": "zh-wm-3",
-          "word": "ножи",
-          "imageAsset": "word_nozhi",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-3.m4a"
-        },
-        {
-          "id": "zh-wm-4",
-          "word": "кожа",
-          "imageAsset": "word_kozha",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-4.m4a"
-        },
-        {
-          "id": "zh-wm-5",
-          "word": "ножи",
-          "imageAsset": "word_nozhi",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-5.m4a"
-        },
-        {
-          "id": "zh-wm-6",
-          "word": "ложка",
-          "imageAsset": "word_lozhka",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wm-6.m4a"
-        },
-        {
-          "id": "zh-wm-7",
-          "word": "снежок",
-          "imageAsset": "word_snezhok",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-7.m4a"
-        },
-        {
-          "id": "zh-wm-8",
-          "word": "лежать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-8.m4a"
-        },
-        {
-          "id": "zh-wm-9",
-          "word": "бежать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-9.m4a"
-        },
-        {
-          "id": "zh-wm-10",
-          "word": "нежный",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-10.m4a"
-        },
-        {
-          "id": "zh-wm-11",
-          "word": "пижама",
-          "imageAsset": "word_pizhama",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-11.m4a"
-        },
-        {
-          "id": "zh-wm-12",
-          "word": "художник",
-          "imageAsset": "word_hudozhnik",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-12.m4a"
-        },
-        {
-          "id": "zh-wm-13",
-          "word": "ножи",
-          "imageAsset": "word_nozhi",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-13.m4a"
-        },
-        {
-          "id": "zh-wm-14",
-          "word": "дорожка",
-          "imageAsset": "word_dorozhka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-14.m4a"
-        },
-        {
-          "id": "zh-wm-15",
-          "word": "одежда",
-          "imageAsset": "word_odezhda",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-15.m4a"
-        },
-        {
-          "id": "zh-wm-16",
-          "word": "наряжать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-16.m4a"
-        },
-        {
-          "id": "zh-wm-17",
-          "word": "рог",
-          "imageAsset": "word_rog",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-17.m4a"
-        },
-        {
-          "id": "zh-wm-18",
-          "word": "мороженое",
-          "imageAsset": "word_morozhenoe",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-18.m4a"
-        },
-        {
-          "id": "zh-wm-19",
-          "word": "ножницы",
-          "imageAsset": "word_nozhnicy",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-19.m4a"
-        },
-        {
-          "id": "zh-wm-20",
-          "word": "вожак",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-20.m4a"
-        },
-        {
-          "id": "zh-wm-21",
-          "word": "сажа",
-          "imageAsset": "word_sazha",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-21.m4a"
-        },
-        {
-          "id": "zh-wm-22",
-          "word": "кожура",
-          "imageAsset": "word_kozhura",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-22.m4a"
-        },
-        {
-          "id": "zh-wm-23",
-          "word": "пожар",
-          "imageAsset": "word_pozhar",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-23.m4a"
-        },
-        {
-          "id": "zh-wm-24",
-          "word": "рыжий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-24.m4a"
-        },
-        {
-          "id": "zh-wm-25",
-          "word": "дружба",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-25.m4a"
-        },
-        {
-          "id": "zh-wm-26",
-          "word": "служба",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-26.m4a"
-        },
-        {
-          "id": "zh-wm-27",
-          "word": "бумажный",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-27.m4a"
-        },
-        {
-          "id": "zh-wm-28",
-          "word": "кружить",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-28.m4a"
-        },
-        {
-          "id": "zh-wm-29",
-          "word": "тужить",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-29.m4a"
-        },
-        {
-          "id": "zh-wm-30",
-          "word": "ужас",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-30.m4a"
-        },
-        {
-          "id": "zh-wm-31",
-          "word": "сажать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-31.m4a"
-        },
-        {
-          "id": "zh-wm-32",
-          "word": "дождик",
-          "imageAsset": "word_dozhdik",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-32.m4a"
-        },
-        {
-          "id": "zh-wm-33",
-          "word": "вождение",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wm-33.m4a"
-        },
-        {
-          "id": "zh-wm-34",
-          "word": "уважение",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wm-34.m4a"
-        },
-        {
-          "id": "zh-wm-35",
-          "word": "оружие",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wm-35.m4a"
-        },
-        {
-          "id": "zh-wm-36",
-          "word": "прыжок",
-          "imageAsset": "word_pryzhok",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-36.m4a"
-        },
-        {
-          "id": "zh-wm-37",
-          "word": "кружка",
-          "imageAsset": "word_kruzhka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-37.m4a"
-        },
-        {
-          "id": "zh-wm-38",
-          "word": "пружина",
-          "imageAsset": "word_pruzhina",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-38.m4a"
-        },
-        {
-          "id": "zh-wm-39",
-          "word": "мешать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-39.m4a"
-        },
-        {
-          "id": "zh-wm-40",
-          "word": "бежевый",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-40.m4a"
-        },
-        {
-          "id": "zh-wm-41",
-          "word": "дружить",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-41.m4a"
-        },
-        {
-          "id": "zh-wm-42",
-          "word": "ужинать",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-42.m4a"
-        },
-        {
-          "id": "zh-wm-43",
-          "word": "лужайка",
-          "imageAsset": "word_luzhajka",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-43.m4a"
-        },
-        {
-          "id": "zh-wm-44",
-          "word": "снежинка",
-          "imageAsset": "word_snezhinka",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-44.m4a"
-        },
-        {
-          "id": "zh-wm-45",
-          "word": "варежки",
-          "imageAsset": "word_varezhki",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-45.m4a"
-        },
-        {
-          "id": "zh-wm-46",
-          "word": "джинсы",
-          "imageAsset": "word_dzhinsy",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-46.m4a"
-        },
-        {
-          "id": "zh-wm-47",
-          "word": "ножка",
-          "imageAsset": "word_nozhka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-47.m4a"
-        },
-        {
-          "id": "zh-wm-48",
-          "word": "дождливо",
-          "imageAsset": "word_dozhdlivo",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-48.m4a"
-        },
-        {
-          "id": "zh-wm-49",
-          "word": "баклажан",
-          "imageAsset": "word_baklazhan",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-49.m4a"
-        },
-        {
-          "id": "zh-wm-50",
-          "word": "застёжка",
-          "imageAsset": "word_zastyozhka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-50.m4a"
-        },
-        {
-          "id": "zh-wm-51",
-          "word": "ножовка",
-          "imageAsset": "word_nozhovka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-51.m4a"
-        },
-        {
-          "id": "zh-wm-52",
-          "word": "джип",
-          "imageAsset": "word_dzhip",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-52.m4a"
-        },
-        {
-          "id": "zh-wm-53",
-          "word": "джем",
-          "imageAsset": "word_dzhem",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-53.m4a"
-        },
-        {
-          "id": "zh-wm-54",
-          "word": "ежевика",
-          "imageAsset": "word_ezhevika",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-54.m4a"
-        },
-        {
-          "id": "zh-wm-55",
-          "word": "рукопожатие",
-          "imageAsset": "word_rukopozhatie",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-55.m4a"
-        },
-        {
-          "id": "zh-wm-56",
-          "word": "ряженка",
-          "imageAsset": "word_ryazhenka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-56.m4a"
-        },
-        {
-          "id": "zh-wm-57",
-          "word": "инжир",
-          "imageAsset": "word_inzhir",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-57.m4a"
-        },
-        {
-          "id": "zh-wm-58",
-          "word": "внедорожник",
-          "imageAsset": "word_vnedorozhnik",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-58.m4a"
-        },
-        {
-          "id": "zh-wm-59",
-          "word": "баржа",
-          "imageAsset": "word_barzha",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-59.m4a"
-        },
-        {
-          "id": "zh-wm-60",
-          "word": "дирижабль",
-          "imageAsset": "word_dirizhabl",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-60.m4a"
-        },
-        {
-          "id": "zh-wm-61",
-          "word": "джекфрут",
-          "imageAsset": "word_dzhekfrut",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-61.m4a"
-        },
-        {
-          "id": "zh-wm-62",
-          "word": "ежонок",
-          "imageAsset": "word_ezhonok",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-62.m4a"
-        },
-        {
-          "id": "zh-wm-63",
-          "word": "дождь",
-          "imageAsset": "word_dozhd",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-63.m4a"
-        },
-        {
-          "id": "zh-wm-64",
-          "word": "хижина",
-          "imageAsset": "word_khizhina",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-64.m4a"
-        },
-        {
-          "id": "zh-wm-65",
-          "word": "ружьё",
-          "imageAsset": "word_ruzhyo",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-65.m4a"
-        },
-        {
-          "id": "zh-wm-66",
-          "word": "джейран",
-          "imageAsset": "word_dzheyran",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-66.m4a"
-        },
-        {
-          "id": "zh-wm-67",
-          "word": "джунгарик",
-          "imageAsset": "word_dzhungarik",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-67.m4a"
-        },
-        {
-          "id": "zh-wm-68",
-          "word": "рыжеволосый",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wm-68.m4a",
-          "hint": "ЖВ — звонкий вариант стечения."
-        },
-        {
-          "id": "zh-wm-69",
-          "word": "дожди",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wm-69.m4a",
-          "hint": "ЖД — звонкий + звонкий."
-        },
-        {
-          "id": "zh-wm-70",
-          "word": "коврижка",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wm-70.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-4",
+     "word": "лошадка",
+     "hint": "Цокаем языком — лошадка скачет!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-4.m4a"
     },
-    "wordFinal": {
-      "stageId": "wordFinal",
-      "note": "[Ж] в конце слова (позиция оглушения — произносится как [Ш]).",
-      "items": [
-        {
-          "id": "zh-wf-0",
-          "word": "уж",
-          "imageAsset": "word_uzh",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wf-0.m4a"
-        },
-        {
-          "id": "zh-wf-1",
-          "word": "нож",
-          "imageAsset": "word_nozh",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wf-1.m4a"
-        },
-        {
-          "id": "zh-wf-2",
-          "word": "нож",
-          "imageAsset": "word_nozh",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wf-2.m4a"
-        },
-        {
-          "id": "zh-wf-3",
-          "word": "чиж",
-          "imageAsset": "word_chizh",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wf-3.m4a"
-        },
-        {
-          "id": "zh-wf-4",
-          "word": "морж",
-          "imageAsset": "word_morzh",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-wf-4.m4a"
-        },
-        {
-          "id": "zh-wf-5",
-          "word": "стриж",
-          "imageAsset": "word_strizh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-5.m4a"
-        },
-        {
-          "id": "zh-wf-6",
-          "word": "кряж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-6.m4a"
-        },
-        {
-          "id": "zh-wf-7",
-          "word": "гараж",
-          "imageAsset": "word_garazh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-7.m4a"
-        },
-        {
-          "id": "zh-wf-8",
-          "word": "багаж",
-          "imageAsset": "word_bagazh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-8.m4a"
-        },
-        {
-          "id": "zh-wf-9",
-          "word": "пейзаж",
-          "imageAsset": "word_peyzazh2",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-9.m4a"
-        },
-        {
-          "id": "zh-wf-10",
-          "word": "монтаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-10.m4a"
-        },
-        {
-          "id": "zh-wf-11",
-          "word": "этаж",
-          "imageAsset": "word_etazh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-11.m4a"
-        },
-        {
-          "id": "zh-wf-12",
-          "word": "экипаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-12.m4a"
-        },
-        {
-          "id": "zh-wf-13",
-          "word": "тираж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-13.m4a"
-        },
-        {
-          "id": "zh-wf-14",
-          "word": "вираж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-14.m4a"
-        },
-        {
-          "id": "zh-wf-15",
-          "word": "блиндаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-15.m4a"
-        },
-        {
-          "id": "zh-wf-16",
-          "word": "гараж",
-          "imageAsset": "word_garazh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-16.m4a"
-        },
-        {
-          "id": "zh-wf-17",
-          "word": "персонаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-17.m4a"
-        },
-        {
-          "id": "zh-wf-18",
-          "word": "трикотаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wf-18.m4a"
-        },
-        {
-          "id": "zh-wf-19",
-          "word": "мираж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-19.m4a"
-        },
-        {
-          "id": "zh-wf-20",
-          "word": "дренаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wf-20.m4a"
-        },
-        {
-          "id": "zh-wf-21",
-          "word": "массаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-21.m4a"
-        },
-        {
-          "id": "zh-wf-22",
-          "word": "саботаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wf-22.m4a"
-        },
-        {
-          "id": "zh-wf-23",
-          "word": "пассаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wf-23.m4a"
-        },
-        {
-          "id": "zh-wf-24",
-          "word": "мятеж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-24.m4a"
-        },
-        {
-          "id": "zh-wf-25",
-          "word": "рубеж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-25.m4a"
-        },
-        {
-          "id": "zh-wf-26",
-          "word": "мякиш",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-26.m4a"
-        },
-        {
-          "id": "zh-wf-27",
-          "word": "вояж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-27.m4a"
-        },
-        {
-          "id": "zh-wf-28",
-          "word": "пилёж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-wf-28.m4a"
-        },
-        {
-          "id": "zh-wf-29",
-          "word": "кортеж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wf-29.m4a"
-        },
-        {
-          "id": "zh-wf-30",
-          "word": "ёж",
-          "imageAsset": "word_yozh_y",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-30.m4a"
-        },
-        {
-          "id": "zh-wf-31",
-          "word": "рожь",
-          "imageAsset": "word_rozh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wf-31.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-5",
+     "word": "вкусное-варенье",
+     "hint": "Лижем верхнюю губу — вкусно!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-prep-5.m4a"
     },
-    "phrase": {
-      "stageId": "phrase",
-      "note": "Словосочетания и фразы со звуком [Ж].",
-      "items": [
-        {
-          "id": "zh-ph-0",
-          "word": "жук на жёлуде",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-0.m4a"
-        },
-        {
-          "id": "zh-ph-1",
-          "word": "живой ёжик",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-1.m4a"
-        },
-        {
-          "id": "zh-ph-2",
-          "word": "жёлтый жираф",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-2.m4a"
-        },
-        {
-          "id": "zh-ph-3",
-          "word": "большой журнал",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-3.m4a"
-        },
-        {
-          "id": "zh-ph-4",
-          "word": "жужжит жук",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/ZH/zh-ph-4.m4a"
-        },
-        {
-          "id": "zh-ph-5",
-          "word": "лыжная прогулка",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-5.m4a"
-        },
-        {
-          "id": "zh-ph-6",
-          "word": "нежный ежонок",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-6.m4a"
-        },
-        {
-          "id": "zh-ph-7",
-          "word": "ужин готов",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-7.m4a"
-        },
-        {
-          "id": "zh-ph-8",
-          "word": "рыжий кот",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-8.m4a"
-        },
-        {
-          "id": "zh-ph-9",
-          "word": "мороженое тает",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-9.m4a"
-        },
-        {
-          "id": "zh-ph-10",
-          "word": "снежинка падает",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-10.m4a"
-        },
-        {
-          "id": "zh-ph-11",
-          "word": "дружная семья",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-11.m4a"
-        },
-        {
-          "id": "zh-ph-12",
-          "word": "нож на столе",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-12.m4a"
-        },
-        {
-          "id": "zh-ph-13",
-          "word": "журавль летит",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-13.m4a"
-        },
-        {
-          "id": "zh-ph-14",
-          "word": "жареная рыба",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-14.m4a"
-        },
-        {
-          "id": "zh-ph-15",
-          "word": "ужасный жук",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-15.m4a"
-        },
-        {
-          "id": "zh-ph-16",
-          "word": "лужайка зелёная",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-16.m4a"
-        },
-        {
-          "id": "zh-ph-17",
-          "word": "пижама в полоску",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-17.m4a"
-        },
-        {
-          "id": "zh-ph-18",
-          "word": "прыжок в воду",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-18.m4a"
-        },
-        {
-          "id": "zh-ph-19",
-          "word": "художник рисует",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-19.m4a"
-        },
-        {
-          "id": "zh-ph-20",
-          "word": "кожаный портфель",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-20.m4a"
-        },
-        {
-          "id": "zh-ph-21",
-          "word": "жилой дом",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-21.m4a"
-        },
-        {
-          "id": "zh-ph-22",
-          "word": "жирный кот",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-22.m4a"
-        },
-        {
-          "id": "zh-ph-23",
-          "word": "снежный ком",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-23.m4a"
-        },
-        {
-          "id": "zh-ph-24",
-          "word": "жевать морковку",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-24.m4a"
-        },
-        {
-          "id": "zh-ph-25",
-          "word": "ёж под листьями",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-25.m4a"
-        },
-        {
-          "id": "zh-ph-26",
-          "word": "жаркое лето",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-26.m4a"
-        },
-        {
-          "id": "zh-ph-27",
-          "word": "новый этаж",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-27.m4a"
-        },
-        {
-          "id": "zh-ph-28",
-          "word": "дождик идёт",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-28.m4a"
-        },
-        {
-          "id": "zh-ph-29",
-          "word": "жилет тёплый",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-29.m4a"
-        },
-        {
-          "id": "zh-ph-30",
-          "word": "пожарная машина",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-30.m4a"
-        },
-        {
-          "id": "zh-ph-31",
-          "word": "кружка чая",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-31.m4a"
-        },
-        {
-          "id": "zh-ph-32",
-          "word": "ужин с семьёй",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-32.m4a"
-        },
-        {
-          "id": "zh-ph-33",
-          "word": "железная дорога",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-33.m4a"
-        },
-        {
-          "id": "zh-ph-34",
-          "word": "жёлтый желток",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-ph-34.m4a"
-        },
-        {
-          "id": "zh-ph-35",
-          "word": "живая природа",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-35.m4a"
-        },
-        {
-          "id": "zh-ph-36",
-          "word": "жёсткая щётка",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-36.m4a"
-        },
-        {
-          "id": "zh-ph-37",
-          "word": "кружиться на льду",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-ph-37.m4a"
-        },
-        {
-          "id": "zh-ph-38",
-          "word": "уважать старших",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-ph-38.m4a"
-        },
-        {
-          "id": "zh-ph-39",
-          "word": "жара в июле",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-ph-39.m4a"
-        },
-        {
-          "id": "zh-ph-40",
-          "word": "жук жужжит у жасмина",
-          "hint": "ЖУ + ЖУ + ЖЖ + ЖА — четыре Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-ph-40.m4a"
-        },
-        {
-          "id": "zh-ph-41",
-          "word": "желтая рожь",
-          "hint": "ЖЕ + ЖЬ — Ж в начале и конце.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-41.m4a"
-        },
-        {
-          "id": "zh-ph-42",
-          "word": "жмурки в саду",
-          "hint": "ЖМ + РКИ — сложный ритм.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-42.m4a"
-        },
-        {
-          "id": "zh-ph-43",
-          "word": "жирный еж",
-          "hint": "ЖИ + ЖЬ — твёрдый + мягкий Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-ph-43.m4a"
-        },
-        {
-          "id": "zh-ph-44",
-          "word": "жаркий южный берег",
-          "hint": "ЖА + ЮЖ + БЕ — Ж в двух позициях.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-44.m4a"
-        },
-        {
-          "id": "zh-ph-45",
-          "word": "жёлтый журавль",
-          "hint": "ЖЁ + ЖУ — два Ж в фразе.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-45.m4a"
-        },
-        {
-          "id": "zh-ph-46",
-          "word": "дождь прошёл над лужей",
-          "hint": "ЖД + ЖЁ + ЖЕ — три Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-ph-46.m4a"
-        },
-        {
-          "id": "zh-ph-47",
-          "word": "жестокий мороз",
-          "hint": "ЖЕС + МО — Ж + мороз.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-47.m4a"
-        },
-        {
-          "id": "zh-ph-48",
-          "word": "кожаный жилет",
-          "hint": "КО + ЖА + ЖИ — Ж в двух позициях.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-48.m4a"
-        },
-        {
-          "id": "zh-ph-49",
-          "word": "уже жарко снаружи",
-          "hint": "УЖЕ + ЖА + РУ + ЖИ — четыре Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-ph-49.m4a"
-        },
-        {
-          "id": "zh-ph-50",
-          "word": "жёлтый жираф у воды",
-          "hint": "ЖЁЛ+ЖИ — два Ж-слова подряд.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-ph-50.m4a"
-        },
-        {
-          "id": "zh-ph-51",
-          "word": "жужжание жука над лугом",
-          "hint": "ЖУ+ЖА+ЖУ — три Ж подряд.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-ph-51.m4a"
-        },
-        {
-          "id": "zh-ph-52",
-          "word": "ежи живут в можжевельнике",
-          "hint": "ЖИ+ЖИ+МО+ЖЖЕ — насыщенная Ж-фраза.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-ph-52.m4a"
-        },
-        {
-          "id": "zh-ph-53",
-          "word": "уже жарче снаружи сада",
-          "hint": "УЖЕ+ЖА+НА+РУ+ЖИ — четыре Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-ph-53.m4a"
-        },
-        {
-          "id": "zh-ph-54",
-          "word": "железная ограда вокруг дома",
-          "hint": "ЖЕ+ЛЕЗ — Ж в середине слова.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-ph-54.m4a"
-        },
-        {
-          "id": "zh-ph-55",
-          "word": "жёлтые жёлуди на земле",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-55.m4a"
-        },
-        {
-          "id": "zh-ph-56",
-          "word": "живая изгородь у дома",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-56.m4a"
-        },
-        {
-          "id": "zh-ph-57",
-          "word": "жаркое лето в деревне",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-57.m4a"
-        },
-        {
-          "id": "zh-ph-58",
-          "word": "ежи ежатся в листве",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-58.m4a"
-        },
-        {
-          "id": "zh-ph-59",
-          "word": "жук жужжал над цветком",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-59.m4a"
-        },
-        {
-          "id": "zh-ph-60",
-          "word": "журнал лежал на столе",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-ph-60.m4a"
-        },
-        {
-          "id": "zh-ph-61",
-          "word": "жирная лужа после дождя",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-61.m4a"
-        },
-        {
-          "id": "zh-ph-62",
-          "word": "медведь дружит с медвежатами",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-62.m4a"
-        },
-        {
-          "id": "zh-ph-63",
-          "word": "жираф вытянул шею вверх",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-63.m4a"
-        },
-        {
-          "id": "zh-ph-64",
-          "word": "уже наступает рассвет",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-ph-64.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-6",
+     "word": "чашечка-в-рот",
+     "hint": "Убираем чашечку за верхние зубы.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-6.m4a"
     },
-    "sentence": {
-      "stageId": "sentence",
-      "note": "Предложения со звуком [Ж].",
-      "items": [
-        {
-          "id": "zh-sen-0",
-          "word": "Жук жужжит над цветком.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-0.m4a"
-        },
-        {
-          "id": "zh-sen-1",
-          "word": "Ёж прячется под листьями.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-1.m4a"
-        },
-        {
-          "id": "zh-sen-2",
-          "word": "Жираф жуёт листья.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-2.m4a"
-        },
-        {
-          "id": "zh-sen-3",
-          "word": "Мама готовит ужин.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-3.m4a"
-        },
-        {
-          "id": "zh-sen-4",
-          "word": "Рыжий кот лежит на кровати.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-4.m4a"
-        },
-        {
-          "id": "zh-sen-5",
-          "word": "Лыжи стоят у двери.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-sen-5.m4a"
-        },
-        {
-          "id": "zh-sen-6",
-          "word": "Снежинки падают на землю.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-6.m4a"
-        },
-        {
-          "id": "zh-sen-7",
-          "word": "Художник рисует жёлтые цветы.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-7.m4a"
-        },
-        {
-          "id": "zh-sen-8",
-          "word": "Мороженое тает на жаре.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-8.m4a"
-        },
-        {
-          "id": "zh-sen-9",
-          "word": "Дождик идёт, мы дружно бежим.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-9.m4a"
-        },
-        {
-          "id": "zh-sen-10",
-          "word": "У ежонка острые иголки.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-10.m4a"
-        },
-        {
-          "id": "zh-sen-11",
-          "word": "Журавль летит над лугом.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-11.m4a"
-        },
-        {
-          "id": "zh-sen-12",
-          "word": "Жёлтый жук сидит на жёлуде.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-12.m4a"
-        },
-        {
-          "id": "zh-sen-13",
-          "word": "Пижама лежит на кровати.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-13.m4a"
-        },
-        {
-          "id": "zh-sen-14",
-          "word": "Пожарная машина едет на пожар.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-14.m4a"
-        },
-        {
-          "id": "zh-sen-15",
-          "word": "Мы живём на пятом этаже.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-15.m4a"
-        },
-        {
-          "id": "zh-sen-16",
-          "word": "Жаба сидит у лужи.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-16.m4a"
-        },
-        {
-          "id": "zh-sen-17",
-          "word": "В жару хочется мороженого.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-sen-17.m4a"
-        },
-        {
-          "id": "zh-sen-18",
-          "word": "Дружные ребята помогают друг другу.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-sen-18.m4a"
-        },
-        {
-          "id": "zh-sen-19",
-          "word": "Стрижи летят над рекой.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-19.m4a"
-        },
-        {
-          "id": "zh-sen-20",
-          "word": "Железная дорога ведёт в город.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-sen-20.m4a"
-        },
-        {
-          "id": "zh-sen-21",
-          "word": "Ножницы лежат на столе художника.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-sen-21.m4a"
-        },
-        {
-          "id": "zh-sen-22",
-          "word": "Снежный ком катится с горки.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-22.m4a"
-        },
-        {
-          "id": "zh-sen-23",
-          "word": "Кожаный портфель тяжёлый.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-sen-23.m4a"
-        },
-        {
-          "id": "zh-sen-24",
-          "word": "Жасмин цветёт в саду.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-sen-24.m4a"
-        },
-        {
-          "id": "zh-sen-25",
-          "word": "Жук жужжал и кружил над лужей.",
-          "hint": "ЖУ + ЖУЖ + КРУ + ЛУ — насыщенный Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-25.m4a"
-        },
-        {
-          "id": "zh-sen-26",
-          "word": "Жираф живёт в жарких странах.",
-          "hint": "ЖИ + ЖИ + ЖА — три Ж.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-sen-26.m4a"
-        },
-        {
-          "id": "zh-sen-27",
-          "word": "Желтеющая рожь шумела на ветру.",
-          "hint": "ЖЕЛ + ЖЬ — образный нарратив.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-27.m4a"
-        },
-        {
-          "id": "zh-sen-28",
-          "word": "Ёж нашёл ягоды у дорожки.",
-          "hint": "ЁЖ + НА + ШЁ + ДО + РО + ЖКИ — Ж три раза.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-28.m4a"
-        },
-        {
-          "id": "zh-sen-29",
-          "word": "Жёлтые листья кружились вокруг берёзы.",
-          "hint": "ЖЁ + КРУ + ЖИ + РЁ — Ж в нарративе.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-29.m4a"
-        },
-        {
-          "id": "zh-sen-30",
-          "word": "Дождь прошёл ночью и освежил воздух.",
-          "hint": "ЖД + ШЁ + ЖИЛ — связный нарратив.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-30.m4a"
-        },
-        {
-          "id": "zh-sen-31",
-          "word": "Бабушка жарила пирожки уже до обеда.",
-          "hint": "ЖА + РИ + ЖКИ + УЖЕ — три Ж.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-sen-31.m4a"
-        },
-        {
-          "id": "zh-sen-32",
-          "word": "Жираф и ежи — друзья из зоопарка.",
-          "hint": "ЖИ + ЕЖИ — Ж в двух словах.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-sen-32.m4a"
-        },
-        {
-          "id": "zh-sen-33",
-          "word": "Каждое утро живая изгородь дрожит от росы.",
-          "hint": "ЖДО + ЖИ + ЖО + ДРОЖИТ — насыщенный Ж.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-33.m4a"
-        },
-        {
-          "id": "zh-sen-34",
-          "word": "Жадный ёжик прятал ягоды под листьями.",
-          "hint": "ЖА + ЁЖИ + ЯГО + ЛИС + ЬЯ — нарратив.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-34.m4a"
-        },
-        {
-          "id": "zh-sen-35",
-          "word": "Жора дружил с жирафом из соседнего зоопарка.",
-          "hint": "ЖО+ДРУ+ЖИ+ЖИ — Ж в разных позициях.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-35.m4a"
-        },
-        {
-          "id": "zh-sen-36",
-          "word": "Железные ножи лежали у повара на столе.",
-          "hint": "ЖЕ+НО+ЖИ — Ж в трёх словах.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Zh/zh-sen-36.m4a"
-        },
-        {
-          "id": "zh-sen-37",
-          "word": "Ежата нашли ежевику между дорожками сада.",
-          "hint": "ЖА+ЖЕ+ЖИ+ДО+РО — насыщенный Ж-нарратив.",
-          "difficulty": 5,
-          "audio_file": "Audio/Content/Zh/zh-sen-37.m4a"
-        },
-        {
-          "id": "zh-sen-38",
-          "word": "Ежата дружно бежали за мамой-ежихой.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-38.m4a"
-        },
-        {
-          "id": "zh-sen-39",
-          "word": "Жадная сорока утащила блестящее кольцо.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-39.m4a"
-        },
-        {
-          "id": "zh-sen-40",
-          "word": "Ужин уже стоял на столе.",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-sen-40.m4a"
-        },
-        {
-          "id": "zh-sen-41",
-          "word": "Жираф жевал листья у высокого дерева.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-41.m4a"
-        },
-        {
-          "id": "zh-sen-42",
-          "word": "Журчала вода в каждом овражке.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-sen-42.m4a"
-        },
-        {
-          "id": "zh-sen-43",
-          "word": "Животные жили дружно в большом лесу.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-43.m4a"
-        },
-        {
-          "id": "zh-sen-44",
-          "word": "Жёлтые жёлуди упали на дорожку.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-44.m4a"
-        },
-        {
-          "id": "zh-sen-45",
-          "word": "Ножи лежали у повара в ящике.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-sen-45.m4a"
-        },
-        {
-          "id": "zh-sen-46",
-          "word": "Живой ёжик нашёл грибок под можжевельником.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-sen-46.m4a"
-        },
-        {
-          "id": "zh-sen-47",
-          "word": "Женя ждал поезд на железной дороге.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Zh/zh-sen-47.m4a"
-        }
-      ]
+    {
+     "id": "zh-prep-7",
+     "word": "горлышко-поёт",
+     "hint": "Кладём руку на горло — чувствуем вибрацию.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-7.m4a"
     },
-    "diff": {
-      "stageId": "diff",
-      "note": "Дифференциация Ж — Ш, Ж — З.",
-      "items": [
-        {
-          "id": "zh-df-0",
-          "word": "жить — шить",
-          "hint": "Ж звонкий, Ш тихий.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-0.m4a"
-        },
-        {
-          "id": "zh-df-1",
-          "word": "жар — шар",
-          "hint": "Ж или Ш в начале?",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-1.m4a"
-        },
-        {
-          "id": "zh-df-2",
-          "word": "жук — шук",
-          "hint": "Только жук — настоящее слово.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-2.m4a"
-        },
-        {
-          "id": "zh-df-3",
-          "word": "кожа — коша",
-          "hint": "Середина: Ж или Ш?",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-3.m4a"
-        },
-        {
-          "id": "zh-df-4",
-          "word": "лежать — лешать",
-          "hint": "Правильно — лежать.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-4.m4a"
-        },
-        {
-          "id": "zh-df-5",
-          "word": "нож — нош",
-          "hint": "Конец: Ж или Ш?",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-5.m4a"
-        },
-        {
-          "id": "zh-df-6",
-          "word": "жало — шало",
-          "hint": "Жало — только с Ж.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-6.m4a"
-        },
-        {
-          "id": "zh-df-7",
-          "word": "ёж — ёш",
-          "hint": "Ёж — с Ж.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-7.m4a"
-        },
-        {
-          "id": "zh-df-8",
-          "word": "жираф — шираф",
-          "hint": "Жираф — с Ж.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-8.m4a"
-        },
-        {
-          "id": "zh-df-9",
-          "word": "жук — зук",
-          "hint": "Ж или З в начале?",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-9.m4a"
-        },
-        {
-          "id": "zh-df-10",
-          "word": "жить — зить",
-          "hint": "Ж или З — разные звуки.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-10.m4a"
-        },
-        {
-          "id": "zh-df-11",
-          "word": "журнал — зурнал",
-          "hint": "Правильно — журнал.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-11.m4a"
-        },
-        {
-          "id": "zh-df-12",
-          "word": "жаба — заба",
-          "hint": "Ж или З — слушаем.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-12.m4a"
-        },
-        {
-          "id": "zh-df-13",
-          "word": "лыжи — лызи",
-          "hint": "Лыжи — с Ж.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-df-13.m4a"
-        },
-        {
-          "id": "zh-df-14",
-          "word": "ужин — узин",
-          "hint": "Ужин — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-14.m4a"
-        },
-        {
-          "id": "zh-df-15",
-          "word": "дружба — друзба",
-          "hint": "Дружба — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-15.m4a"
-        },
-        {
-          "id": "zh-df-16",
-          "word": "снежок — снезок",
-          "hint": "Снежок — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-16.m4a"
-        },
-        {
-          "id": "zh-df-17",
-          "word": "жёлтый — зёлтый",
-          "hint": "Жёлтый — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-17.m4a"
-        },
-        {
-          "id": "zh-df-18",
-          "word": "пожар — позар",
-          "hint": "Пожар — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-18.m4a"
-        },
-        {
-          "id": "zh-df-19",
-          "word": "кружка — круска",
-          "hint": "Кружка — с Ж.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/ZH/zh-df-19.m4a"
-        },
-        {
-          "id": "zh-df-20",
-          "word": "жук — зук",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-20.m4a",
-          "hint": "Ж шипящий звонкий, З свистящий звонкий."
-        },
-        {
-          "id": "zh-df-21",
-          "word": "жать — зать",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-21.m4a",
-          "hint": "Ж—З в начале."
-        },
-        {
-          "id": "zh-df-22",
-          "word": "жар — шар",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-22.m4a",
-          "hint": "Ж звонкий, Ш глухой."
-        },
-        {
-          "id": "zh-df-23",
-          "word": "жить — шить",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-23.m4a",
-          "hint": "Ж—Ш в начале мягкого слога."
-        },
-        {
-          "id": "zh-df-24",
-          "word": "лужа — луша",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-24.m4a",
-          "hint": "В середине: Ж—Ш."
-        },
-        {
-          "id": "zh-df-25",
-          "word": "рожи — роши",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-df-25.m4a",
-          "hint": "Ж—Ш в середине."
-        },
-        {
-          "id": "zh-df-26",
-          "word": "жить — зить",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-26.m4a",
-          "hint": "Мягкое Ж—З."
-        },
-        {
-          "id": "zh-df-27",
-          "word": "уже — узе",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Zh/zh-df-27.m4a",
-          "hint": "Ж—З в позиции после гласной."
-        },
-        {
-          "id": "zh-df-28",
-          "word": "жало — зало",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-28.m4a",
-          "hint": "Ж—З начало слова."
-        },
-        {
-          "id": "zh-df-29",
-          "word": "ежи — ези",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/Zh/zh-df-29.m4a",
-          "hint": "Ж—З в середине после Е."
-        }
-      ]
+    {
+     "id": "zh-prep-8",
+     "word": "моторчик",
+     "hint": "Делаем ррр — горлышко дрожит как мотор.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-prep-8.m4a"
+    },
+    {
+     "id": "zh-prep-9",
+     "word": "самолёт",
+     "hint": "Самолёт летит: ш-ш-ш, мотор гудит: ж-ж-ж.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-9.m4a"
+    },
+    {
+     "id": "zh-prep-10",
+     "word": "гармошка",
+     "hint": "Язык у нёба — двигаем нижней челюстью.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-prep-10.m4a"
+    },
+    {
+     "id": "zh-prep-11",
+     "word": "качели",
+     "hint": "Язык вверх к носу — вниз к подбородку.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-11.m4a"
+    },
+    {
+     "id": "zh-prep-12",
+     "word": "трубочка",
+     "hint": "Губы трубочкой — тянем вперёд.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-prep-12.m4a"
+    },
+    {
+     "id": "zh-prep-13",
+     "word": "фокус",
+     "hint": "Дуем на ватку — она летит вверх.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-13.m4a"
+    },
+    {
+     "id": "zh-prep-14",
+     "word": "большая-чашечка",
+     "hint": "Чашечка как можно шире — 5 секунд.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-14.m4a"
+    },
+    {
+     "id": "zh-prep-15",
+     "word": "часики",
+     "hint": "Язык влево-вправо как маятник.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-prep-15.m4a"
     }
+   ]
   },
-  "templateCompatibility": {
-    "prep": [
-      "articulation-imitation",
-      "breathing",
-      "rhythm",
-      "ar-activity"
-    ],
-    "isolated": [
-      "repeat-after-model",
-      "listen-and-choose",
-      "ar-activity"
-    ],
-    "syllable": [
-      "listen-and-choose",
-      "repeat-after-model",
-      "bingo",
-      "rhythm"
-    ],
-    "wordInit": [
-      "listen-and-choose",
-      "repeat-after-model",
-      "drag-and-match",
-      "memory",
-      "bingo",
-      "sound-hunter",
-      "puzzle-reveal",
-      "minimal-pairs"
-    ],
-    "wordMed": [
-      "listen-and-choose",
-      "repeat-after-model",
-      "drag-and-match",
-      "memory",
-      "bingo",
-      "sound-hunter",
-      "puzzle-reveal",
-      "minimal-pairs"
-    ],
-    "wordFinal": [
-      "listen-and-choose",
-      "repeat-after-model",
-      "drag-and-match",
-      "memory",
-      "bingo",
-      "sound-hunter",
-      "puzzle-reveal",
-      "minimal-pairs"
-    ],
-    "phrase": [
-      "story-completion",
-      "drag-and-match",
-      "repeat-after-model",
-      "sorting",
-      "minimal-pairs"
-    ],
-    "sentence": [
-      "story-completion",
-      "drag-and-match",
-      "repeat-after-model",
-      "sorting",
-      "minimal-pairs"
-    ],
-    "diff": [
-      "minimal-pairs",
-      "sorting",
-      "listen-and-choose"
-    ]
+  "isolated": {
+   "stageId": "isolated",
+   "note": "Изолированный звук [Ж] через игровые образы.",
+   "items": [
+    {
+     "id": "zh-iso-0",
+     "word": "жж-жук",
+     "hint": "Жук жужжит в траве: жжжж.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-iso-0.m4a"
+    },
+    {
+     "id": "zh-iso-1",
+     "word": "жж-шмель",
+     "hint": "Шмель летит к цветку: жжжж.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-iso-1.m4a"
+    },
+    {
+     "id": "zh-iso-2",
+     "word": "жж-мотор",
+     "hint": "Машина заводится: жжж — гудит!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-iso-2.m4a"
+    },
+    {
+     "id": "zh-iso-3",
+     "word": "жж-пила",
+     "hint": "Пила пилит дерево: жжж.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-3.m4a"
+    },
+    {
+     "id": "zh-iso-4",
+     "word": "жж-электричка",
+     "hint": "Электричка едет: жжжж — быстро!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-4.m4a"
+    },
+    {
+     "id": "zh-iso-5",
+     "word": "жж-долго",
+     "hint": "Тянем жжж на одном выдохе — долго.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-5.m4a"
+    },
+    {
+     "id": "zh-iso-6",
+     "word": "жж-тихо-громко",
+     "hint": "Тихо жжж — громко ЖЖЖ!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-6.m4a"
+    },
+    {
+     "id": "zh-iso-7",
+     "word": "жж-прерывисто",
+     "hint": "Ж-Ж-Ж отдельными толчками.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-iso-7.m4a"
+    },
+    {
+     "id": "zh-iso-8",
+     "word": "жж-оса",
+     "hint": "Оса сердитая: ж-ж-ж — не трогай!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-8.m4a"
+    },
+    {
+     "id": "zh-iso-9",
+     "word": "жж-волна",
+     "hint": "Жжж тихо — ЖЖЖ громко — жжж тихо.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-iso-9.m4a"
+    },
+    {
+     "id": "zh-iso-10",
+     "word": "жж-пчела",
+     "hint": "Пчёлка у улья: жжжж — занята!",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-10.m4a"
+    },
+    {
+     "id": "zh-iso-11",
+     "word": "жж-стрекоза",
+     "hint": "Стрекоза над водой: жжжж.",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-iso-11.m4a"
+    }
+   ]
+  },
+  "syllable": {
+   "stageId": "syllable",
+   "note": "Прямые, обратные, со стечением слоги с [Ж].",
+   "items": [
+    {
+     "id": "zh-syl-0",
+     "word": "жа",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-0.m4a"
+    },
+    {
+     "id": "zh-syl-1",
+     "word": "жо",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-1.m4a"
+    },
+    {
+     "id": "zh-syl-2",
+     "word": "жу",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-2.m4a"
+    },
+    {
+     "id": "zh-syl-3",
+     "word": "жи",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-3.m4a"
+    },
+    {
+     "id": "zh-syl-4",
+     "word": "же",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-4.m4a"
+    },
+    {
+     "id": "zh-syl-5",
+     "word": "аж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-5.m4a"
+    },
+    {
+     "id": "zh-syl-6",
+     "word": "ож",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-6.m4a"
+    },
+    {
+     "id": "zh-syl-7",
+     "word": "уж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-7.m4a"
+    },
+    {
+     "id": "zh-syl-8",
+     "word": "иж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-8.m4a"
+    },
+    {
+     "id": "zh-syl-9",
+     "word": "еж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-9.m4a"
+    },
+    {
+     "id": "zh-syl-10",
+     "word": "жа-жа",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-10.m4a"
+    },
+    {
+     "id": "zh-syl-11",
+     "word": "жо-жо",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-11.m4a"
+    },
+    {
+     "id": "zh-syl-12",
+     "word": "жу-жу",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-12.m4a"
+    },
+    {
+     "id": "zh-syl-13",
+     "word": "ажа",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-13.m4a"
+    },
+    {
+     "id": "zh-syl-14",
+     "word": "ожа",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-14.m4a"
+    },
+    {
+     "id": "zh-syl-15",
+     "word": "ужа",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-15.m4a"
+    },
+    {
+     "id": "zh-syl-16",
+     "word": "ажо",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-16.m4a"
+    },
+    {
+     "id": "zh-syl-17",
+     "word": "ажу",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-17.m4a"
+    },
+    {
+     "id": "zh-syl-18",
+     "word": "жда",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-18.m4a"
+    },
+    {
+     "id": "zh-syl-19",
+     "word": "жна",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-19.m4a"
+    },
+    {
+     "id": "zh-syl-20",
+     "word": "жва",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-20.m4a"
+    },
+    {
+     "id": "zh-syl-21",
+     "word": "жка",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-21.m4a"
+    },
+    {
+     "id": "zh-syl-22",
+     "word": "жа-жо-жу",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-22.m4a"
+    },
+    {
+     "id": "zh-syl-23",
+     "word": "аж-ож-уж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-23.m4a"
+    },
+    {
+     "id": "zh-syl-24",
+     "word": "ажа-ожа-ужа",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-24.m4a"
+    },
+    {
+     "id": "zh-syl-25",
+     "word": "жда-ждо-жду",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-25.m4a"
+    },
+    {
+     "id": "zh-syl-26",
+     "word": "жка-жко-жку",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-syl-26.m4a"
+    },
+    {
+     "id": "zh-syl-27",
+     "word": "аж-аж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-27.m4a"
+    },
+    {
+     "id": "zh-syl-28",
+     "word": "уж-уж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-syl-28.m4a"
+    },
+    {
+     "id": "zh-syl-29",
+     "word": "жи-жи",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-syl-29.m4a"
+    }
+   ]
+  },
+  "wordInit": {
+   "stageId": "wordInit",
+   "note": "[Ж] в начале слова — от простых к сложным.",
+   "items": [
+    {
+     "id": "zh-wi-0",
+     "word": "жук",
+     "imageAsset": "word_zhuk",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wi-0.m4a"
+    },
+    {
+     "id": "zh-wi-1",
+     "word": "жаба",
+     "imageAsset": "word_zhaba",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wi-1.m4a"
+    },
+    {
+     "id": "zh-wi-2",
+     "word": "жара",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wi-2.m4a"
+    },
+    {
+     "id": "zh-wi-3",
+     "word": "жало",
+     "imageAsset": "word_zhalo",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wi-3.m4a"
+    },
+    {
+     "id": "zh-wi-4",
+     "word": "желе",
+     "imageAsset": "word_zhele",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wi-4.m4a"
+    },
+    {
+     "id": "zh-wi-5",
+     "word": "жилет",
+     "imageAsset": "word_zhilet",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-5.m4a"
+    },
+    {
+     "id": "zh-wi-6",
+     "word": "живот",
+     "imageAsset": "word_zhivot",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-6.m4a"
+    },
+    {
+     "id": "zh-wi-7",
+     "word": "жизнь",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-7.m4a"
+    },
+    {
+     "id": "zh-wi-8",
+     "word": "жираф",
+     "imageAsset": "word_zhiraf",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-8.m4a"
+    },
+    {
+     "id": "zh-wi-9",
+     "word": "журнал",
+     "imageAsset": "word_zhurnal",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-9.m4a"
+    },
+    {
+     "id": "zh-wi-10",
+     "word": "журавль",
+     "imageAsset": "word_zhuravl",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-10.m4a"
+    },
+    {
+     "id": "zh-wi-11",
+     "word": "жёлудь",
+     "imageAsset": "word_zholudj",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-11.m4a"
+    },
+    {
+     "id": "zh-wi-12",
+     "word": "желток",
+     "imageAsset": "word_zheltok",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-12.m4a"
+    },
+    {
+     "id": "zh-wi-13",
+     "word": "жираф",
+     "imageAsset": "word_giraffe",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-13.m4a"
+    },
+    {
+     "id": "zh-wi-14",
+     "word": "жёлтый",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-14.m4a"
+    },
+    {
+     "id": "zh-wi-15",
+     "word": "жасмин",
+     "imageAsset": "word_zhasmin",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-15.m4a"
+    },
+    {
+     "id": "zh-wi-16",
+     "word": "жажда",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-16.m4a"
+    },
+    {
+     "id": "zh-wi-17",
+     "word": "жадный",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-17.m4a"
+    },
+    {
+     "id": "zh-wi-18",
+     "word": "жатва",
+     "imageAsset": "word_zhatva",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-18.m4a"
+    },
+    {
+     "id": "zh-wi-19",
+     "word": "женщина",
+     "imageAsset": "word_zhenshina",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-19.m4a"
+    },
+    {
+     "id": "zh-wi-20",
+     "word": "жемчуг",
+     "imageAsset": "word_zhemchug",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-20.m4a"
+    },
+    {
+     "id": "zh-wi-21",
+     "word": "желание",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-21.m4a"
+    },
+    {
+     "id": "zh-wi-22",
+     "word": "жёрнов",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-22.m4a"
+    },
+    {
+     "id": "zh-wi-23",
+     "word": "жеребёнок",
+     "imageAsset": "word_zherebyonok",
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-23.m4a"
+    },
+    {
+     "id": "zh-wi-24",
+     "word": "жилище",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-24.m4a"
+    },
+    {
+     "id": "zh-wi-25",
+     "word": "жимолость",
+     "imageAsset": "word_zhimolost",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-25.m4a"
+    },
+    {
+     "id": "zh-wi-26",
+     "word": "жонглёр",
+     "imageAsset": "word_zhonglyor",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-26.m4a"
+    },
+    {
+     "id": "zh-wi-27",
+     "word": "живопись",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-27.m4a"
+    },
+    {
+     "id": "zh-wi-28",
+     "word": "жестокий",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-28.m4a"
+    },
+    {
+     "id": "zh-wi-29",
+     "word": "жительница",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-29.m4a"
+    },
+    {
+     "id": "zh-wi-30",
+     "word": "жуткий",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-30.m4a"
+    },
+    {
+     "id": "zh-wi-31",
+     "word": "жуликоватый",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-31.m4a"
+    },
+    {
+     "id": "zh-wi-32",
+     "word": "жёсткий",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-32.m4a"
+    },
+    {
+     "id": "zh-wi-33",
+     "word": "желудь",
+     "imageAsset": "word_giraffe",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-33.m4a",
+     "hint": "Же-лудь. [Ж] в начале."
+    },
+    {
+     "id": "zh-wi-34",
+     "word": "жалость",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-34.m4a"
+    },
+    {
+     "id": "zh-wi-35",
+     "word": "жарко",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-35.m4a"
+    },
+    {
+     "id": "zh-wi-36",
+     "word": "жучок",
+     "imageAsset": "word_zhuchok",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-36.m4a"
+    },
+    {
+     "id": "zh-wi-37",
+     "word": "жёлоб",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-37.m4a"
+    },
+    {
+     "id": "zh-wi-38",
+     "word": "жабры",
+     "imageAsset": "word_zhabry",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-38.m4a"
+    },
+    {
+     "id": "zh-wi-39",
+     "word": "жокей",
+     "imageAsset": "word_zhokei",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-39.m4a"
+    },
+    {
+     "id": "zh-wi-40",
+     "word": "жаворонок",
+     "imageAsset": "word_zhavoronok",
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-40.m4a"
+    },
+    {
+     "id": "zh-wi-41",
+     "word": "жёлобок",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-41.m4a"
+    },
+    {
+     "id": "zh-wi-42",
+     "word": "жутковато",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-42.m4a"
+    },
+    {
+     "id": "zh-wi-43",
+     "word": "жалеть",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-43.m4a"
+    },
+    {
+     "id": "zh-wi-44",
+     "word": "жилой",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-44.m4a"
+    },
+    {
+     "id": "zh-wi-45",
+     "word": "жениться",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wi-45.m4a"
+    },
+    {
+     "id": "zh-wi-46",
+     "word": "желудок",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-46.m4a"
+    },
+    {
+     "id": "zh-wi-47",
+     "word": "жеребец",
+     "imageAsset": "word_zherebyec",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wi-47.m4a"
+    },
+    {
+     "id": "zh-wi-48",
+     "word": "жирный",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-48.m4a"
+    },
+    {
+     "id": "zh-wi-49",
+     "word": "жюри",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-49.m4a"
+    },
+    {
+     "id": "zh-wi-50",
+     "word": "жгучий",
+     "hint": "ЖГ — звонкий + глухой в начале.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-wi-50.m4a"
+    },
+    {
+     "id": "zh-wi-51",
+     "word": "жмурки",
+     "hint": "ЖМ — Ж + носовой.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-51.m4a"
+    },
+    {
+     "id": "zh-wi-52",
+     "word": "жрать",
+     "hint": "ЖР — два шумных в начале.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-wi-52.m4a"
+    },
+    {
+     "id": "zh-wi-53",
+     "word": "жнец",
+     "hint": "ЖН — Ж + носовой.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-53.m4a"
+    },
+    {
+     "id": "zh-wi-54",
+     "word": "жёваный",
+     "hint": "ЖЁ — ударный вариант.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-54.m4a"
+    },
+    {
+     "id": "zh-wi-55",
+     "word": "жуткий",
+     "hint": "ЖУТ — Ж в ударном слоге.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-55.m4a"
+    },
+    {
+     "id": "zh-wi-56",
+     "word": "жесть",
+     "hint": "ЖЕС + ТЬ — Ж + согласный кластер.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-56.m4a"
+    },
+    {
+     "id": "zh-wi-57",
+     "word": "жнивьё",
+     "hint": "ЖН + ВЬЁ — сложная фонема.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-wi-57.m4a"
+    },
+    {
+     "id": "zh-wi-58",
+     "word": "жирный",
+     "hint": "ЖИ + РН — Ж с сонорным.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-58.m4a"
+    },
+    {
+     "id": "zh-wi-59",
+     "word": "желать",
+     "hint": "ЖЕ — мягкий контекст для Ж.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-59.m4a"
+    },
+    {
+     "id": "zh-wi-60",
+     "word": "жаровня",
+     "hint": "ЖА+РО+ВНЯ — посуда для жарки.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-60.m4a"
+    },
+    {
+     "id": "zh-wi-61",
+     "word": "жакет",
+     "hint": "Жа-кет. [Ж] в начале.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-wi-61.m4a"
+    },
+    {
+     "id": "zh-wi-62",
+     "word": "жонглёр",
+     "hint": "ЖОН+ГЛЁР — цирковой артист.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-62.m4a"
+    },
+    {
+     "id": "zh-wi-63",
+     "word": "жеребёнок",
+     "hint": "ЖЕ+РЕ+БЁ+НОК — детёныш лошади.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-63.m4a"
+    },
+    {
+     "id": "zh-wi-64",
+     "word": "жимолость",
+     "hint": "ЖИ+МО+ЛОСТЬ — лесная ягода.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-64.m4a"
+    },
+    {
+     "id": "zh-wi-65",
+     "word": "жизнерадостный",
+     "hint": "ЖИЗ+НЕ+РА+ДОС+ТНЫ — длинное слово с Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-wi-65.m4a"
+    },
+    {
+     "id": "zh-wi-66",
+     "word": "железнодорожный",
+     "hint": "ЖЕ+ЛЕЗ+НО+ДО+РО+ЖНЫ — Ж дважды.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-wi-66.m4a"
+    },
+    {
+     "id": "zh-wi-67",
+     "word": "жалованье",
+     "hint": "ЖА+ЛО+ВА+НЬЕ — зарплата.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-wi-67.m4a"
+    },
+    {
+     "id": "zh-wi-68",
+     "word": "жадность",
+     "hint": "ЖА+ДНОСТЬ — черта характера.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-68.m4a"
+    },
+    {
+     "id": "zh-wi-69",
+     "word": "жилище",
+     "hint": "ЖИ+ЛИ+ЩЕ — место проживания.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-wi-69.m4a"
+    },
+    {
+     "id": "zh-wi-70",
+     "word": "животное",
+     "imageAsset": "word_zhivotnoe",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-70.m4a"
+    },
+    {
+     "id": "zh-wi-71",
+     "word": "жужжать",
+     "imageAsset": "word_zhuzhzhat",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-71.m4a"
+    },
+    {
+     "id": "zh-wi-72",
+     "word": "жар",
+     "imageAsset": "word_zhar",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-72.m4a"
+    },
+    {
+     "id": "zh-wi-73",
+     "word": "жужелица",
+     "imageAsset": "word_zhuzhelitsa",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-73.m4a"
+    },
+    {
+     "id": "zh-wi-74",
+     "word": "железо",
+     "imageAsset": "word_zhelezo",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-74.m4a"
+    },
+    {
+     "id": "zh-wi-75",
+     "word": "животик",
+     "imageAsset": "word_zhivotik",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-75.m4a"
+    },
+    {
+     "id": "zh-wi-76",
+     "word": "жилетка",
+     "imageAsset": "word_zhiletka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wi-76.m4a"
+    }
+   ]
+  },
+  "wordMed": {
+   "stageId": "wordMed",
+   "note": "[Ж] в середине слова.",
+   "items": [
+    {
+     "id": "zh-wm-0",
+     "word": "ежи",
+     "imageAsset": "word_ezhi",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-0.m4a"
+    },
+    {
+     "id": "zh-wm-1",
+     "word": "ужин",
+     "imageAsset": "word_uzhin",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-1.m4a"
+    },
+    {
+     "id": "zh-wm-2",
+     "word": "лыжи",
+     "imageAsset": "word_lyzhi",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-2.m4a"
+    },
+    {
+     "id": "zh-wm-3",
+     "word": "ножи",
+     "imageAsset": "word_nozhi",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-3.m4a"
+    },
+    {
+     "id": "zh-wm-4",
+     "word": "кожа",
+     "imageAsset": "word_kozha",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-4.m4a"
+    },
+    {
+     "id": "zh-wm-5",
+     "word": "ножи",
+     "imageAsset": "word_nozhi",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-5.m4a"
+    },
+    {
+     "id": "zh-wm-6",
+     "word": "ложка",
+     "imageAsset": "word_lozhka",
+     "audioAsset": null,
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wm-6.m4a"
+    },
+    {
+     "id": "zh-wm-7",
+     "word": "снежок",
+     "imageAsset": "word_snezhok",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-7.m4a"
+    },
+    {
+     "id": "zh-wm-8",
+     "word": "лежать",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-8.m4a"
+    },
+    {
+     "id": "zh-wm-9",
+     "word": "бежать",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-9.m4a"
+    },
+    {
+     "id": "zh-wm-10",
+     "word": "нежный",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-10.m4a"
+    },
+    {
+     "id": "zh-wm-11",
+     "word": "пижама",
+     "imageAsset": "word_pizhama",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-11.m4a"
+    },
+    {
+     "id": "zh-wm-12",
+     "word": "художник",
+     "imageAsset": "word_hudozhnik",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-12.m4a"
+    },
+    {
+     "id": "zh-wm-13",
+     "word": "творожок",
+     "imageAsset": "word_nozhi",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-13.m4a",
+     "hint": "тво-ро-Жок. [Ж] в середине."
+    },
+    {
+     "id": "zh-wm-14",
+     "word": "дорожка",
+     "imageAsset": "word_dorozhka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-14.m4a"
+    },
+    {
+     "id": "zh-wm-15",
+     "word": "одежда",
+     "imageAsset": "word_odezhda",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-15.m4a"
+    },
+    {
+     "id": "zh-wm-16",
+     "word": "наряжать",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-16.m4a"
+    },
+    {
+     "id": "zh-wm-17",
+     "word": "рожок",
+     "imageAsset": "word_rog",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-17.m4a",
+     "hint": "Ро-Жок. [Ж] звенит между гласными."
+    },
+    {
+     "id": "zh-wm-18",
+     "word": "мороженое",
+     "imageAsset": "word_morozhenoe",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-18.m4a"
+    },
+    {
+     "id": "zh-wm-19",
+     "word": "ножницы",
+     "imageAsset": "word_nozhnicy",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-19.m4a"
+    },
+    {
+     "id": "zh-wm-20",
+     "word": "вожак",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-20.m4a"
+    },
+    {
+     "id": "zh-wm-21",
+     "word": "сажа",
+     "imageAsset": "word_sazha",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-21.m4a"
+    },
+    {
+     "id": "zh-wm-22",
+     "word": "кожура",
+     "imageAsset": "word_kozhura",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-22.m4a"
+    },
+    {
+     "id": "zh-wm-23",
+     "word": "пожар",
+     "imageAsset": "word_pozhar",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-23.m4a"
+    },
+    {
+     "id": "zh-wm-24",
+     "word": "рыжий",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-24.m4a"
+    },
+    {
+     "id": "zh-wm-25",
+     "word": "дружба",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-25.m4a"
+    },
+    {
+     "id": "zh-wm-26",
+     "word": "служба",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-26.m4a"
+    },
+    {
+     "id": "zh-wm-27",
+     "word": "бумажный",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-27.m4a"
+    },
+    {
+     "id": "zh-wm-28",
+     "word": "кружить",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-28.m4a"
+    },
+    {
+     "id": "zh-wm-29",
+     "word": "тужить",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-29.m4a"
+    },
+    {
+     "id": "zh-wm-30",
+     "word": "ужас",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-30.m4a"
+    },
+    {
+     "id": "zh-wm-31",
+     "word": "сажать",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-31.m4a"
+    },
+    {
+     "id": "zh-wm-32",
+     "word": "дождик",
+     "imageAsset": "word_dozhdik",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-32.m4a"
+    },
+    {
+     "id": "zh-wm-33",
+     "word": "вождение",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wm-33.m4a"
+    },
+    {
+     "id": "zh-wm-34",
+     "word": "уважение",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wm-34.m4a"
+    },
+    {
+     "id": "zh-wm-35",
+     "word": "оружие",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wm-35.m4a"
+    },
+    {
+     "id": "zh-wm-36",
+     "word": "прыжок",
+     "imageAsset": "word_pryzhok",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-36.m4a"
+    },
+    {
+     "id": "zh-wm-37",
+     "word": "кружка",
+     "imageAsset": "word_kruzhka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-37.m4a"
+    },
+    {
+     "id": "zh-wm-38",
+     "word": "пружина",
+     "imageAsset": "word_pruzhina",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-38.m4a"
+    },
+    {
+     "id": "zh-wm-39",
+     "word": "пирожок",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-39.m4a",
+     "hint": "Пи-ро-Жок. [Ж] звенит между гласными."
+    },
+    {
+     "id": "zh-wm-40",
+     "word": "бежевый",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-40.m4a"
+    },
+    {
+     "id": "zh-wm-41",
+     "word": "дружить",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-41.m4a"
+    },
+    {
+     "id": "zh-wm-42",
+     "word": "ужинать",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-42.m4a"
+    },
+    {
+     "id": "zh-wm-43",
+     "word": "лужайка",
+     "imageAsset": "word_luzhajka",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-43.m4a"
+    },
+    {
+     "id": "zh-wm-44",
+     "word": "снежинка",
+     "imageAsset": "word_snezhinka",
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-44.m4a"
+    },
+    {
+     "id": "zh-wm-45",
+     "word": "варежки",
+     "imageAsset": "word_varezhki",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-45.m4a"
+    },
+    {
+     "id": "zh-wm-46",
+     "word": "джинсы",
+     "imageAsset": "word_dzhinsy",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-46.m4a"
+    },
+    {
+     "id": "zh-wm-47",
+     "word": "ножка",
+     "imageAsset": "word_nozhka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-47.m4a"
+    },
+    {
+     "id": "zh-wm-48",
+     "word": "дождливо",
+     "imageAsset": "word_dozhdlivo",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-48.m4a"
+    },
+    {
+     "id": "zh-wm-49",
+     "word": "баклажан",
+     "imageAsset": "word_baklazhan",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-49.m4a"
+    },
+    {
+     "id": "zh-wm-50",
+     "word": "застёжка",
+     "imageAsset": "word_zastyozhka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-50.m4a"
+    },
+    {
+     "id": "zh-wm-51",
+     "word": "ножовка",
+     "imageAsset": "word_nozhovka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-51.m4a"
+    },
+    {
+     "id": "zh-wm-52",
+     "word": "джип",
+     "imageAsset": "word_dzhip",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-52.m4a"
+    },
+    {
+     "id": "zh-wm-53",
+     "word": "джем",
+     "imageAsset": "word_dzhem",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-53.m4a"
+    },
+    {
+     "id": "zh-wm-54",
+     "word": "ежевика",
+     "imageAsset": "word_ezhevika",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-54.m4a"
+    },
+    {
+     "id": "zh-wm-55",
+     "word": "рукопожатие",
+     "imageAsset": "word_rukopozhatie",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-55.m4a"
+    },
+    {
+     "id": "zh-wm-56",
+     "word": "ряженка",
+     "imageAsset": "word_ryazhenka",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-56.m4a"
+    },
+    {
+     "id": "zh-wm-57",
+     "word": "инжир",
+     "imageAsset": "word_inzhir",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-57.m4a"
+    },
+    {
+     "id": "zh-wm-58",
+     "word": "внедорожник",
+     "imageAsset": "word_vnedorozhnik",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-58.m4a"
+    },
+    {
+     "id": "zh-wm-59",
+     "word": "баржа",
+     "imageAsset": "word_barzha",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-59.m4a"
+    },
+    {
+     "id": "zh-wm-60",
+     "word": "дирижабль",
+     "imageAsset": "word_dirizhabl",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-60.m4a"
+    },
+    {
+     "id": "zh-wm-61",
+     "word": "джекфрут",
+     "imageAsset": "word_dzhekfrut",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-61.m4a"
+    },
+    {
+     "id": "zh-wm-62",
+     "word": "ежонок",
+     "imageAsset": "word_ezhonok",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-62.m4a"
+    },
+    {
+     "id": "zh-wm-63",
+     "word": "дождь",
+     "imageAsset": "word_dozhd",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-63.m4a"
+    },
+    {
+     "id": "zh-wm-64",
+     "word": "хижина",
+     "imageAsset": "word_khizhina",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-64.m4a"
+    },
+    {
+     "id": "zh-wm-65",
+     "word": "ружьё",
+     "imageAsset": "word_ruzhyo",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-65.m4a"
+    },
+    {
+     "id": "zh-wm-66",
+     "word": "джейран",
+     "imageAsset": "word_dzheyran",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-66.m4a"
+    },
+    {
+     "id": "zh-wm-67",
+     "word": "джунгарик",
+     "imageAsset": "word_dzhungarik",
+     "audioAsset": null,
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wm-67.m4a"
+    },
+    {
+     "id": "zh-wm-68",
+     "word": "рыжеволосый",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wm-68.m4a",
+     "hint": "ЖВ — звонкий вариант стечения."
+    },
+    {
+     "id": "zh-wm-69",
+     "word": "дожди",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-wm-69.m4a",
+     "hint": "ЖД — звонкий + звонкий."
+    },
+    {
+     "id": "zh-wm-70",
+     "word": "коврижка",
+     "imageAsset": null,
+     "audioAsset": null,
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wm-70.m4a"
+    }
+   ]
+  },
+  "wordFinal": {
+   "stageId": "wordFinal",
+   "note": "[Ж] в середине слова (между гласными звенит, не оглушается).",
+   "items": [
+    {
+     "id": "zh-wf-0",
+     "word": "пирожок",
+     "hint": "Пи-ро-Жок. [Ж] звенит между гласными.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wf-0.m4a"
+    },
+    {
+     "id": "zh-wf-1",
+     "word": "рожок",
+     "hint": "Ро-Жок. [Ж] звенит.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wf-1.m4a"
+    },
+    {
+     "id": "zh-wf-2",
+     "word": "дорожка",
+     "hint": "До-роЖ-ка. [Ж] звенит.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wf-2.m4a"
+    },
+    {
+     "id": "zh-wf-3",
+     "word": "художник",
+     "hint": "ху-доЖ-ник. [Ж] звенит.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wf-3.m4a"
+    },
+    {
+     "id": "zh-wf-4",
+     "word": "пожар",
+     "hint": "по-Жар. [Ж] звенит.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-wf-4.m4a"
+    },
+    {
+     "id": "zh-wf-5",
+     "word": "медвежонок",
+     "hint": "мед-ве-Жо-нок. [Ж] звенит.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wf-5.m4a"
+    },
+    {
+     "id": "zh-wf-6",
+     "word": "снежок",
+     "hint": "сне-Жок. [Ж] звенит.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wf-6.m4a"
+    },
+    {
+     "id": "zh-wf-7",
+     "word": "сапожок",
+     "hint": "са-по-Жок. [Ж] звенит.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wf-7.m4a"
+    },
+    {
+     "id": "zh-wf-8",
+     "word": "флажок",
+     "hint": "фла-Жок. [Ж] звенит.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wf-8.m4a"
+    },
+    {
+     "id": "zh-wf-9",
+     "word": "кружок",
+     "hint": "кру-Жок. [Ж] звенит.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wf-9.m4a"
+    },
+    {
+     "id": "zh-wf-10",
+     "word": "творожок",
+     "hint": "тво-ро-Жок. [Ж] звенит.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-wf-10.m4a"
+    },
+    {
+     "id": "zh-wf-11",
+     "word": "дружок",
+     "hint": "дру-Жок. [Ж] звенит.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-wf-11.m4a"
+    }
+   ]
+  },
+  "phrase": {
+   "stageId": "phrase",
+   "note": "Словосочетания и фразы со звуком [Ж].",
+   "items": [
+    {
+     "id": "zh-ph-0",
+     "word": "жук на жёлуде",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-0.m4a"
+    },
+    {
+     "id": "zh-ph-1",
+     "word": "живой ёжик",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-1.m4a"
+    },
+    {
+     "id": "zh-ph-2",
+     "word": "жёлтый жираф",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-2.m4a"
+    },
+    {
+     "id": "zh-ph-3",
+     "word": "большой журнал",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-3.m4a"
+    },
+    {
+     "id": "zh-ph-4",
+     "word": "жужжит жук",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/ZH/zh-ph-4.m4a"
+    },
+    {
+     "id": "zh-ph-5",
+     "word": "лыжная прогулка",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-5.m4a"
+    },
+    {
+     "id": "zh-ph-6",
+     "word": "нежный ежонок",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-6.m4a"
+    },
+    {
+     "id": "zh-ph-7",
+     "word": "ужин готов",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-7.m4a"
+    },
+    {
+     "id": "zh-ph-8",
+     "word": "рыжий кот",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-8.m4a"
+    },
+    {
+     "id": "zh-ph-9",
+     "word": "мороженое тает",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-9.m4a"
+    },
+    {
+     "id": "zh-ph-10",
+     "word": "снежинка падает",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-10.m4a"
+    },
+    {
+     "id": "zh-ph-11",
+     "word": "дружная семья",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-11.m4a"
+    },
+    {
+     "id": "zh-ph-12",
+     "word": "нож на столе",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-12.m4a"
+    },
+    {
+     "id": "zh-ph-13",
+     "word": "журавль летит",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-13.m4a"
+    },
+    {
+     "id": "zh-ph-14",
+     "word": "жареная рыба",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-14.m4a"
+    },
+    {
+     "id": "zh-ph-15",
+     "word": "ужасный жук",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-15.m4a"
+    },
+    {
+     "id": "zh-ph-16",
+     "word": "лужайка зелёная",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-16.m4a"
+    },
+    {
+     "id": "zh-ph-17",
+     "word": "пижама в полоску",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-17.m4a"
+    },
+    {
+     "id": "zh-ph-18",
+     "word": "прыжок в воду",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-18.m4a"
+    },
+    {
+     "id": "zh-ph-19",
+     "word": "художник рисует",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-19.m4a"
+    },
+    {
+     "id": "zh-ph-20",
+     "word": "кожаный портфель",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-20.m4a"
+    },
+    {
+     "id": "zh-ph-21",
+     "word": "жилой дом",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-21.m4a"
+    },
+    {
+     "id": "zh-ph-22",
+     "word": "жирный кот",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-22.m4a"
+    },
+    {
+     "id": "zh-ph-23",
+     "word": "снежный ком",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-23.m4a"
+    },
+    {
+     "id": "zh-ph-24",
+     "word": "жевать морковку",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-24.m4a"
+    },
+    {
+     "id": "zh-ph-25",
+     "word": "ёж под листьями",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-25.m4a"
+    },
+    {
+     "id": "zh-ph-26",
+     "word": "жаркое лето",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-26.m4a"
+    },
+    {
+     "id": "zh-ph-27",
+     "word": "новый этаж",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-27.m4a"
+    },
+    {
+     "id": "zh-ph-28",
+     "word": "дождик идёт",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-28.m4a"
+    },
+    {
+     "id": "zh-ph-29",
+     "word": "жилет тёплый",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-29.m4a"
+    },
+    {
+     "id": "zh-ph-30",
+     "word": "пожарная машина",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-30.m4a"
+    },
+    {
+     "id": "zh-ph-31",
+     "word": "кружка чая",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-31.m4a"
+    },
+    {
+     "id": "zh-ph-32",
+     "word": "ужин с семьёй",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-32.m4a"
+    },
+    {
+     "id": "zh-ph-33",
+     "word": "железная дорога",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-33.m4a"
+    },
+    {
+     "id": "zh-ph-34",
+     "word": "жёлтый желток",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-ph-34.m4a"
+    },
+    {
+     "id": "zh-ph-35",
+     "word": "живая природа",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-35.m4a"
+    },
+    {
+     "id": "zh-ph-36",
+     "word": "жёсткая щётка",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-36.m4a"
+    },
+    {
+     "id": "zh-ph-37",
+     "word": "кружиться на льду",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-ph-37.m4a"
+    },
+    {
+     "id": "zh-ph-38",
+     "word": "уважать старших",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-ph-38.m4a"
+    },
+    {
+     "id": "zh-ph-39",
+     "word": "жара в июле",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-ph-39.m4a"
+    },
+    {
+     "id": "zh-ph-40",
+     "word": "жук жужжит у жасмина",
+     "hint": "ЖУ + ЖУ + ЖЖ + ЖА — четыре Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-ph-40.m4a"
+    },
+    {
+     "id": "zh-ph-41",
+     "word": "желтая рожь",
+     "hint": "ЖЕ + ЖЬ — Ж в начале и конце.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-41.m4a"
+    },
+    {
+     "id": "zh-ph-42",
+     "word": "жмурки в саду",
+     "hint": "ЖМ + РКИ — сложный ритм.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-42.m4a"
+    },
+    {
+     "id": "zh-ph-43",
+     "word": "жирный еж",
+     "hint": "ЖИ + ЖЬ — твёрдый + мягкий Ж.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-ph-43.m4a"
+    },
+    {
+     "id": "zh-ph-44",
+     "word": "жаркий южный берег",
+     "hint": "ЖА + ЮЖ + БЕ — Ж в двух позициях.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-44.m4a"
+    },
+    {
+     "id": "zh-ph-45",
+     "word": "жёлтый журавль",
+     "hint": "ЖЁ + ЖУ — два Ж в фразе.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-45.m4a"
+    },
+    {
+     "id": "zh-ph-46",
+     "word": "дождь прошёл над лужей",
+     "hint": "ЖД + ЖЁ + ЖЕ — три Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-ph-46.m4a"
+    },
+    {
+     "id": "zh-ph-47",
+     "word": "жестокий мороз",
+     "hint": "ЖЕС + МО — Ж + мороз.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-47.m4a"
+    },
+    {
+     "id": "zh-ph-48",
+     "word": "кожаный жилет",
+     "hint": "КО + ЖА + ЖИ — Ж в двух позициях.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-48.m4a"
+    },
+    {
+     "id": "zh-ph-49",
+     "word": "уже жарко снаружи",
+     "hint": "УЖЕ + ЖА + РУ + ЖИ — четыре Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-ph-49.m4a"
+    },
+    {
+     "id": "zh-ph-50",
+     "word": "жёлтый жираф у воды",
+     "hint": "ЖЁЛ+ЖИ — два Ж-слова подряд.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-ph-50.m4a"
+    },
+    {
+     "id": "zh-ph-51",
+     "word": "жужжание жука над лугом",
+     "hint": "ЖУ+ЖА+ЖУ — три Ж подряд.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-ph-51.m4a"
+    },
+    {
+     "id": "zh-ph-52",
+     "word": "ежи живут в можжевельнике",
+     "hint": "ЖИ+ЖИ+МО+ЖЖЕ — насыщенная Ж-фраза.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-ph-52.m4a"
+    },
+    {
+     "id": "zh-ph-53",
+     "word": "уже жарче снаружи сада",
+     "hint": "УЖЕ+ЖА+НА+РУ+ЖИ — четыре Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-ph-53.m4a"
+    },
+    {
+     "id": "zh-ph-54",
+     "word": "железная ограда вокруг дома",
+     "hint": "ЖЕ+ЛЕЗ — Ж в середине слова.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-ph-54.m4a"
+    },
+    {
+     "id": "zh-ph-55",
+     "word": "жёлтые жёлуди на земле",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-55.m4a"
+    },
+    {
+     "id": "zh-ph-56",
+     "word": "живая изгородь у дома",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-56.m4a"
+    },
+    {
+     "id": "zh-ph-57",
+     "word": "жаркое лето в деревне",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-57.m4a"
+    },
+    {
+     "id": "zh-ph-58",
+     "word": "ежи ежатся в листве",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-58.m4a"
+    },
+    {
+     "id": "zh-ph-59",
+     "word": "жук жужжал над цветком",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-59.m4a"
+    },
+    {
+     "id": "zh-ph-60",
+     "word": "журнал лежал на столе",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/Zh/zh-ph-60.m4a"
+    },
+    {
+     "id": "zh-ph-61",
+     "word": "жирная лужа после дождя",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-61.m4a"
+    },
+    {
+     "id": "zh-ph-62",
+     "word": "медведь дружит с медвежатами",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-62.m4a"
+    },
+    {
+     "id": "zh-ph-63",
+     "word": "жираф вытянул шею вверх",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-63.m4a"
+    },
+    {
+     "id": "zh-ph-64",
+     "word": "уже наступает рассвет",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-ph-64.m4a"
+    }
+   ]
+  },
+  "sentence": {
+   "stageId": "sentence",
+   "note": "Предложения со звуком [Ж].",
+   "items": [
+    {
+     "id": "zh-sen-0",
+     "word": "Жук жужжит над цветком.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-0.m4a"
+    },
+    {
+     "id": "zh-sen-1",
+     "word": "Ёж прячется под листьями.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-1.m4a"
+    },
+    {
+     "id": "zh-sen-2",
+     "word": "Жираф жуёт листья.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-2.m4a"
+    },
+    {
+     "id": "zh-sen-3",
+     "word": "Мама готовит ужин.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-3.m4a"
+    },
+    {
+     "id": "zh-sen-4",
+     "word": "Рыжий кот лежит на кровати.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-4.m4a"
+    },
+    {
+     "id": "zh-sen-5",
+     "word": "Лыжи стоят у двери.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-sen-5.m4a"
+    },
+    {
+     "id": "zh-sen-6",
+     "word": "Снежинки падают на землю.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-6.m4a"
+    },
+    {
+     "id": "zh-sen-7",
+     "word": "Художник рисует жёлтые цветы.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-7.m4a"
+    },
+    {
+     "id": "zh-sen-8",
+     "word": "Мороженое тает на жаре.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-8.m4a"
+    },
+    {
+     "id": "zh-sen-9",
+     "word": "Дождик идёт, мы дружно бежим.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-9.m4a"
+    },
+    {
+     "id": "zh-sen-10",
+     "word": "У ежонка острые иголки.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-10.m4a"
+    },
+    {
+     "id": "zh-sen-11",
+     "word": "Журавль летит над лугом.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-11.m4a"
+    },
+    {
+     "id": "zh-sen-12",
+     "word": "Жёлтый жук сидит на жёлуде.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-12.m4a"
+    },
+    {
+     "id": "zh-sen-13",
+     "word": "Пижама лежит на кровати.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-13.m4a"
+    },
+    {
+     "id": "zh-sen-14",
+     "word": "Пожарная машина едет на пожар.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-14.m4a"
+    },
+    {
+     "id": "zh-sen-15",
+     "word": "Мы живём на пятом этаже.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-15.m4a"
+    },
+    {
+     "id": "zh-sen-16",
+     "word": "Жаба сидит у лужи.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-16.m4a"
+    },
+    {
+     "id": "zh-sen-17",
+     "word": "В жару хочется мороженого.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-sen-17.m4a"
+    },
+    {
+     "id": "zh-sen-18",
+     "word": "Дружные ребята помогают друг другу.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-sen-18.m4a"
+    },
+    {
+     "id": "zh-sen-19",
+     "word": "Стрижи летят над рекой.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-19.m4a"
+    },
+    {
+     "id": "zh-sen-20",
+     "word": "Железная дорога ведёт в город.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-sen-20.m4a"
+    },
+    {
+     "id": "zh-sen-21",
+     "word": "Ножницы лежат на столе художника.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-sen-21.m4a"
+    },
+    {
+     "id": "zh-sen-22",
+     "word": "Снежный ком катится с горки.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-22.m4a"
+    },
+    {
+     "id": "zh-sen-23",
+     "word": "Кожаный портфель тяжёлый.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/ZH/zh-sen-23.m4a"
+    },
+    {
+     "id": "zh-sen-24",
+     "word": "Жасмин цветёт в саду.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-sen-24.m4a"
+    },
+    {
+     "id": "zh-sen-25",
+     "word": "Жук жужжал и кружил над лужей.",
+     "hint": "ЖУ + ЖУЖ + КРУ + ЛУ — насыщенный Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-25.m4a"
+    },
+    {
+     "id": "zh-sen-26",
+     "word": "Жираф живёт в жарких странах.",
+     "hint": "ЖИ + ЖИ + ЖА — три Ж.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-sen-26.m4a"
+    },
+    {
+     "id": "zh-sen-27",
+     "word": "Желтеющая рожь шумела на ветру.",
+     "hint": "ЖЕЛ + ЖЬ — образный нарратив.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-27.m4a"
+    },
+    {
+     "id": "zh-sen-28",
+     "word": "Ёж нашёл ягоды у дорожки.",
+     "hint": "ЁЖ + НА + ШЁ + ДО + РО + ЖКИ — Ж три раза.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-28.m4a"
+    },
+    {
+     "id": "zh-sen-29",
+     "word": "Жёлтые листья кружились вокруг берёзы.",
+     "hint": "ЖЁ + КРУ + ЖИ + РЁ — Ж в нарративе.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-29.m4a"
+    },
+    {
+     "id": "zh-sen-30",
+     "word": "Дождь прошёл ночью и освежил воздух.",
+     "hint": "ЖД + ШЁ + ЖИЛ — связный нарратив.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-30.m4a"
+    },
+    {
+     "id": "zh-sen-31",
+     "word": "Бабушка жарила пирожки уже до обеда.",
+     "hint": "ЖА + РИ + ЖКИ + УЖЕ — три Ж.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-sen-31.m4a"
+    },
+    {
+     "id": "zh-sen-32",
+     "word": "Жираф и ежи — друзья из зоопарка.",
+     "hint": "ЖИ + ЕЖИ — Ж в двух словах.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-sen-32.m4a"
+    },
+    {
+     "id": "zh-sen-33",
+     "word": "Каждое утро живая изгородь дрожит от росы.",
+     "hint": "ЖДО + ЖИ + ЖО + ДРОЖИТ — насыщенный Ж.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-33.m4a"
+    },
+    {
+     "id": "zh-sen-34",
+     "word": "Жадный ёжик прятал ягоды под листьями.",
+     "hint": "ЖА + ЁЖИ + ЯГО + ЛИС + ЬЯ — нарратив.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-34.m4a"
+    },
+    {
+     "id": "zh-sen-35",
+     "word": "Жора дружил с жирафом из соседнего зоопарка.",
+     "hint": "ЖО+ДРУ+ЖИ+ЖИ — Ж в разных позициях.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-35.m4a"
+    },
+    {
+     "id": "zh-sen-36",
+     "word": "Железные ножи лежали у повара на столе.",
+     "hint": "ЖЕ+НО+ЖИ — Ж в трёх словах.",
+     "difficulty": 4,
+     "audio_file": "Audio/Content/Zh/zh-sen-36.m4a"
+    },
+    {
+     "id": "zh-sen-37",
+     "word": "Ежата нашли ежевику между дорожками сада.",
+     "hint": "ЖА+ЖЕ+ЖИ+ДО+РО — насыщенный Ж-нарратив.",
+     "difficulty": 5,
+     "audio_file": "Audio/Content/Zh/zh-sen-37.m4a"
+    },
+    {
+     "id": "zh-sen-38",
+     "word": "Ежата дружно бежали за мамой-ежихой.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-38.m4a"
+    },
+    {
+     "id": "zh-sen-39",
+     "word": "Жадная сорока утащила блестящее кольцо.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-39.m4a"
+    },
+    {
+     "id": "zh-sen-40",
+     "word": "Ужин уже стоял на столе.",
+     "difficulty": 1,
+     "audio_file": "Audio/Content/Zh/zh-sen-40.m4a"
+    },
+    {
+     "id": "zh-sen-41",
+     "word": "Жираф жевал листья у высокого дерева.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-41.m4a"
+    },
+    {
+     "id": "zh-sen-42",
+     "word": "Журчала вода в каждом овражке.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-sen-42.m4a"
+    },
+    {
+     "id": "zh-sen-43",
+     "word": "Животные жили дружно в большом лесу.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-43.m4a"
+    },
+    {
+     "id": "zh-sen-44",
+     "word": "Жёлтые жёлуди упали на дорожку.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-44.m4a"
+    },
+    {
+     "id": "zh-sen-45",
+     "word": "Ножи лежали у повара в ящике.",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/Zh/zh-sen-45.m4a"
+    },
+    {
+     "id": "zh-sen-46",
+     "word": "Живой ёжик нашёл грибок под можжевельником.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-sen-46.m4a"
+    },
+    {
+     "id": "zh-sen-47",
+     "word": "Женя ждал поезд на железной дороге.",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/Zh/zh-sen-47.m4a"
+    }
+   ]
+  },
+  "diff": {
+   "stageId": "diff",
+   "note": "Дифференциация Ж–Ш и Ж–З на реальных минимальных парах (звук в середине).",
+   "items": [
+    {
+     "id": "zh-df-0",
+     "word": "жар — шар",
+     "hint": "Жар — горячо; шар — круглый. Ж или Ш?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-0.m4a",
+     "imageAsset": "word_zhar|word_shar"
+    },
+    {
+     "id": "zh-df-1",
+     "word": "жить — шить",
+     "hint": "Жить — живём; шить — иголкой. Ж или Ш?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-1.m4a"
+    },
+    {
+     "id": "zh-df-2",
+     "word": "жесть — шесть",
+     "hint": "Жесть — металл; шесть — число. Ж или Ш?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-2.m4a"
+    },
+    {
+     "id": "zh-df-3",
+     "word": "кожа — Коша",
+     "hint": "Кожа — на руке; Коша — кличка кота. Ж или Ш?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-3.m4a"
+    },
+    {
+     "id": "zh-df-4",
+     "word": "лужа — Луша",
+     "hint": "Лужа — после дождя; Луша — имя. Ж или Ш?",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-df-4.m4a"
+    },
+    {
+     "id": "zh-df-5",
+     "word": "ужи — уши",
+     "hint": "Ужи — змейки; уши — слышим. Ж или Ш?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-5.m4a"
+    },
+    {
+     "id": "zh-df-6",
+     "word": "жалить — залить",
+     "hint": "Жалить — кусать; залить — налить. Ж или З?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-6.m4a"
+    },
+    {
+     "id": "zh-df-7",
+     "word": "кожа — коза",
+     "hint": "Кожа — на руке; коза — зверь. Ж или З?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-7.m4a",
+     "imageAsset": "word_kozha|word_goat"
+    },
+    {
+     "id": "zh-df-8",
+     "word": "рожа — роза",
+     "hint": "Рожа — лицо; роза — цветок. Ж или З?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-8.m4a"
+    },
+    {
+     "id": "zh-df-9",
+     "word": "лужи — лузы",
+     "hint": "Лужи — после дождя; лузы — в бильярде. Ж или З?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-9.m4a"
+    },
+    {
+     "id": "zh-df-10",
+     "word": "кожи — козы",
+     "hint": "Кожи — кусочки; козы — звери. Ж или З?",
+     "difficulty": 2,
+     "audio_file": "Audio/Content/ZH/zh-df-10.m4a"
+    },
+    {
+     "id": "zh-df-11",
+     "word": "рожок — разок",
+     "hint": "Рожок — мороженое; разок — один раз. Ж или З?",
+     "difficulty": 3,
+     "audio_file": "Audio/Content/ZH/zh-df-11.m4a"
+    }
+   ]
   }
+ },
+ "templateCompatibility": {
+  "prep": [
+   "articulation-imitation",
+   "breathing",
+   "rhythm",
+   "ar-activity"
+  ],
+  "isolated": [
+   "repeat-after-model",
+   "listen-and-choose",
+   "ar-activity"
+  ],
+  "syllable": [
+   "listen-and-choose",
+   "repeat-after-model",
+   "bingo",
+   "rhythm"
+  ],
+  "wordInit": [
+   "listen-and-choose",
+   "repeat-after-model",
+   "drag-and-match",
+   "memory",
+   "bingo",
+   "sound-hunter",
+   "puzzle-reveal",
+   "minimal-pairs"
+  ],
+  "wordMed": [
+   "listen-and-choose",
+   "repeat-after-model",
+   "drag-and-match",
+   "memory",
+   "bingo",
+   "sound-hunter",
+   "puzzle-reveal",
+   "minimal-pairs"
+  ],
+  "wordFinal": [
+   "listen-and-choose",
+   "repeat-after-model",
+   "drag-and-match",
+   "memory",
+   "bingo",
+   "sound-hunter",
+   "puzzle-reveal",
+   "minimal-pairs"
+  ],
+  "phrase": [
+   "story-completion",
+   "drag-and-match",
+   "repeat-after-model",
+   "sorting",
+   "minimal-pairs"
+  ],
+  "sentence": [
+   "story-completion",
+   "drag-and-match",
+   "repeat-after-model",
+   "sorting",
+   "minimal-pairs"
+  ],
+  "diff": [
+   "minimal-pairs",
+   "sorting",
+   "listen-and-choose"
+  ]
+ }
 }

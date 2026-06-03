@@ -61,6 +61,10 @@ final class ARSoundHunterInteractor: ARSoundHunterBusinessLogic {
     private var lockCandidate: String?
     private var lockCount = 0
     private var totalFound = 0
+    /// Какие слова-карточки фоллбэк-сетки содержат целевой звук (word → isTarget).
+    /// Заполняется при старте фото-карточного режима; используется в `selectCard`
+    /// для различения целевых и дистракторов.
+    private var cardTargets: [String: Bool] = [:]
 
     init(
         classifier: any VisionObjectClassifierWorkerProtocol,
@@ -75,6 +79,7 @@ final class ARSoundHunterInteractor: ARSoundHunterBusinessLogic {
     func startGame(_ request: ARSoundHunterModels.StartGame.Request) {
         resetRoundState()
         totalFound = 0
+        cardTargets = [:]
         currentMode = request.cameraAvailable ? .camera : .photoCards
 
         Task { [weak self] in
@@ -88,17 +93,36 @@ final class ARSoundHunterInteractor: ARSoundHunterBusinessLogic {
                 }
             }
             let resolvedSound = sound ?? "С"
-            let words = await classifier.huntableWords(forSound: resolvedSound)
+
+            // Сетка фото-карточек нужна только в фоллбэк-режиме. Состав по возрасту:
+            // 5–6 лет — 4 карточки (1–2 целевых + 2–3 дистрактора), 7–8 — 6 карточек
+            // (2–3 целевых + 3–4 дистрактора). Минимумы (≥1 цель, ≥2 дистрактора)
+            // гарантирует сам Worker.
+            var grid: [SoundHunterMapping.GridCard] = []
+            if self.currentMode == .photoCards {
+                let young = age <= 6
+                let targetCount = young ? 2 : 3
+                let distractorCount = young ? 2 : 3
+                grid = await self.classifier.huntableGrid(
+                    forSound: resolvedSound,
+                    targetCount: targetCount,
+                    distractorCount: distractorCount
+                )
+            }
             guard !Task.isCancelled else { return }
 
             // Interactor — @MainActor, Task наследует изоляцию: безопасно мутируем
             // состояние и вызываем presenter без отдельного MainActor.run.
             self.targetSound = resolvedSound
             self.childAge = age
+            self.cardTargets = Dictionary(
+                grid.map { ($0.match.word, $0.isTarget) },
+                uniquingKeysWith: { first, _ in first }
+            )
             self.presenter?.presentStartGame(.init(
                 targetSound: resolvedSound,
                 mode: self.currentMode,
-                huntableWords: words,
+                gridCards: grid,
                 childAge: age
             ))
         }
@@ -139,8 +163,24 @@ final class ARSoundHunterInteractor: ARSoundHunterBusinessLogic {
 
     func selectCard(_ request: ARSoundHunterModels.SelectCard.Request) {
         // cardId == word (детерминированный id из Presenter).
+        // Дистрактор (слово без целевого звука по умолчанию) → мягкий фидбэк, без
+        // звезды и штрафа; не захватываем слово, ребёнок продолжает выбирать.
+        let isTarget = cardTargets[request.cardId] ?? false
+        guard isTarget else {
+            HSLogger.ar.info("SoundHunter: distractor card selected (no target sound) — soft feedback")
+            presenter?.presentSelectCard(.init(
+                word: request.cardId,
+                isTarget: false,
+                targetSound: targetSound
+            ))
+            return
+        }
         lockedWord = request.cardId
-        presenter?.presentSelectCard(.init(word: request.cardId))
+        presenter?.presentSelectCard(.init(
+            word: request.cardId,
+            isTarget: true,
+            targetSound: targetSound
+        ))
     }
 
     // MARK: - ScoreNaming

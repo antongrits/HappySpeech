@@ -70,6 +70,9 @@ struct ARSoundHunterView: View {
             promptCard
             if display.mode == .photoCards, display.phase == .hunting {
                 photoCardsGrid
+                if let feedback = display.distractorFeedback {
+                    distractorFeedbackBanner(feedback)
+                }
             }
             if display.phase == .prompting || display.phase == .recording {
                 nameItPanel
@@ -85,6 +88,16 @@ struct ARSoundHunterView: View {
             Spacer()
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+        // Резервируем высоту верхнего HUD (крестик + плашка заголовка), чтобы
+        // центрируемый контент (промпт-карта «Найди и назови предмет…») не
+        // налезал на хедер на компактных экранах.
+        .padding(.top, hudReservedHeight)
+    }
+
+    /// Высота, под которой стартует контент, чтобы не пересекаться с `overlayHUD`.
+    /// Кнопка-крестик HUD — 56pt + верхний отступ; плюс небольшой зазор.
+    private var hudReservedHeight: CGFloat {
+        56 + SpacingTokens.small + SpacingTokens.medium
     }
 
     // MARK: - Prompt card
@@ -157,7 +170,10 @@ struct ARSoundHunterView: View {
     }
 
     private func photoCard(_ card: ARSoundHunterModels.Card) -> some View {
-        VStack(spacing: SpacingTokens.tiny) {
+        // Карточка-дистрактор после выбора подсвечивается мягким «не подходит»
+        // контуром (без штрафа). Целевые/невыбранные — нейтральный surface.
+        let isDistractorHighlighted = card.id == display.distractorCardId
+        return VStack(spacing: SpacingTokens.tiny) {
             HSContentSymbol(card.assetName ?? "photo", size: 56)
             Text(card.word)
                 .font(TypographyTokens.headline(15))
@@ -168,6 +184,31 @@ struct ARSoundHunterView: View {
         .frame(maxWidth: .infinity)
         .padding(SpacingTokens.small)
         .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md)
+                .strokeBorder(
+                    ColorTokens.Brand.gold,
+                    lineWidth: isDistractorHighlighted ? 3 : 0
+                )
+        )
+    }
+
+    private func distractorFeedbackBanner(_ feedback: String) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Image(systemName: "lightbulb.fill")
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Brand.gold)
+                .accessibilityHidden(true)
+            Text(feedback)
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(SpacingTokens.small)
+        .frame(maxWidth: .infinity)
+        .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Name-it panel (record voice)
@@ -389,6 +430,10 @@ final class ARSoundHunterDisplay: ARSoundHunterDisplayLogic {
     var totalFoundText: String?
     var showConfetti: Bool = false
     var childAge: Int = 6
+    /// Мягкий фидбэк при выборе карточки-дистрактора (без целевого звука).
+    var distractorFeedback: String?
+    /// id карточки, подсвеченной как «не подходит» (выбран дистрактор).
+    var distractorCardId: String?
 
     func setPhase(_ newPhase: ARSoundHunterModels.Phase) { phase = newPhase }
 
@@ -413,8 +458,19 @@ final class ARSoundHunterDisplay: ARSoundHunterDisplayLogic {
     }
 
     func displaySelectCard(_ viewModel: ARSoundHunterModels.SelectCard.ViewModel) {
-        foundWord = viewModel.word
-        nameItPrompt = viewModel.prompt
+        // Дистрактор: показываем мягкий фидбэк и подсветку, остаёмся в поиске,
+        // ребёнок продолжает выбирать. Без перехода к называнию.
+        if let feedback = viewModel.distractorFeedback {
+            distractorFeedback = feedback
+            distractorCardId = viewModel.distractorCardId
+            phase = .hunting
+            return
+        }
+        guard let word = viewModel.word, let prompt = viewModel.prompt else { return }
+        distractorFeedback = nil
+        distractorCardId = nil
+        foundWord = word
+        nameItPrompt = prompt
         phase = .prompting
     }
 

@@ -160,6 +160,38 @@ final class VisionObjectClassifierWorkerTests: XCTestCase {
         XCTAssertTrue(mapping.huntableWords(forSound: "ы").isEmpty)
     }
 
+    // MARK: - distractorWords(forSound:) + huntableGrid(...)
+    // P0-1: фоллбэк-сетка фото-карточек должна содержать дистракторы (без звука),
+    // иначе «найди предмет со звуком Х» теряет смысл — все карточки «правильные».
+
+    func test_distractorWords_excludeTargetSound() {
+        let mapping = makeMapping()
+        // Звук "ш": целевые — шарф, чашка; дистракторы — носок, зонт.
+        let distractors = mapping.distractorWords(forSound: "ш")
+        XCTAssertEqual(Set(distractors.map(\.word)), ["носок", "зонт"])
+        XCTAssertFalse(distractors.contains { $0.sounds.contains("ш") })
+    }
+
+    func test_huntableGrid_hasTargetsAndDistractors() {
+        let mapping = makeMapping()
+        let grid = mapping.huntableGrid(forSound: "ш", targetCount: 2, distractorCount: 2)
+        let targets = grid.filter { $0.isTarget }
+        let distractors = grid.filter { !$0.isTarget }
+        XCTAssertGreaterThanOrEqual(targets.count, 1, "Всегда хотя бы 1 целевой")
+        XCTAssertGreaterThanOrEqual(distractors.count, 2, "Всегда хотя бы 2 дистрактора")
+        // Целевые реально содержат звук, дистракторы — нет.
+        XCTAssertTrue(targets.allSatisfy { $0.match.sounds.contains("ш") })
+        XCTAssertFalse(distractors.contains { $0.match.sounds.contains("ш") })
+    }
+
+    func test_huntableGrid_enforcesMinimumsEvenWhenZeroRequested() {
+        let mapping = makeMapping()
+        // Запросили 0 целевых/0 дистракторов — Worker всё равно держит минимумы.
+        let grid = mapping.huntableGrid(forSound: "ш", targetCount: 0, distractorCount: 0)
+        XCTAssertGreaterThanOrEqual(grid.filter { $0.isTarget }.count, 1)
+        XCTAssertGreaterThanOrEqual(grid.filter { !$0.isTarget }.count, 2)
+    }
+
     // MARK: - MockVisionObjectClassifierWorker (async contract)
 
     func test_mockWorker_classify_filtersByTargetSound() async throws {

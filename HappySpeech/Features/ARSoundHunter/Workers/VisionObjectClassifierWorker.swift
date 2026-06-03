@@ -27,6 +27,13 @@ struct SoundHunterMapping: Sendable {
         let sounds: [String]
     }
 
+    /// Карточка сетки фоллбэк-режима: предмет + признак «целевой ли он»
+    /// (содержит целевой звук). Дистрактор — `isTarget == false`.
+    struct GridCard: Sendable, Equatable {
+        let match: Match
+        let isTarget: Bool
+    }
+
     /// Словарь `ImageNet label → (русское слово, звуки)`.
     private let entries: [String: ObjectMapping]
 
@@ -108,6 +115,57 @@ struct SoundHunterMapping: Sendable {
             .sorted { $0.word < $1.word }
     }
 
+    /// Слова БЕЗ целевого звука — дистракторы для сетки фото-карточек.
+    /// Детерминированно отсортированы по слову.
+    func distractorWords(forSound sound: String) -> [Match] {
+        guard let target = SoundHunterMapping.normalize(sound: sound) else { return [] }
+        return entries
+            .filter { entry in !entry.value.sounds.contains { $0.lowercased() == target } }
+            .map {
+                Match(visionLabel: $0.key, word: $0.value.ru, confidence: 1, sounds: $0.value.sounds)
+            }
+            .sorted { $0.word < $1.word }
+    }
+
+    // MARK: - Huntable grid (fallback photo-card mode, with distractors)
+
+    /// Формирует сетку фото-карточек для фоллбэк-режима как смесь **целевых**
+    /// (слово содержит целевой звук) и **дистракторов** (слово БЕЗ целевого
+    /// звука) — иначе задание «найди предмет со звуком Х» теряет смысл (все
+    /// карточки «правильные»).
+    ///
+    /// Гарантии: всегда хотя бы один целевой и хотя бы два дистрактора; если в
+    /// словаре не набирается запрошенное количество — берётся максимум доступного,
+    /// но не нарушая минимумы (целевые при острой нехватке дополняются повтором
+    /// доступных целевых нельзя — просто меньше дистракторов). Источники
+    /// перемешиваются, итоговый порядок карточек также перемешивается, чтобы
+    /// правильные позиции были непредсказуемы.
+    ///
+    /// - Parameters:
+    ///   - sound: целевой русский звук.
+    ///   - targetCount: желаемое число целевых карточек.
+    ///   - distractorCount: желаемое число дистракторов.
+    /// - Returns: карточки `GridCard` в перемешанном порядке.
+    func huntableGrid(
+        forSound sound: String,
+        targetCount: Int,
+        distractorCount: Int
+    ) -> [GridCard] {
+        let availableTargets = huntableWords(forSound: sound).shuffled()
+        let availableDistractors = distractorWords(forSound: sound).shuffled()
+
+        // Минимумы: ≥1 целевой, ≥2 дистрактора (если их хватает в словаре).
+        let wantTargets = max(1, targetCount)
+        let wantDistractors = max(2, distractorCount)
+
+        let chosenTargets = Array(availableTargets.prefix(wantTargets))
+        let chosenDistractors = Array(availableDistractors.prefix(wantDistractors))
+
+        var grid = chosenTargets.map { GridCard(match: $0, isTarget: true) }
+        grid += chosenDistractors.map { GridCard(match: $0, isTarget: false) }
+        return grid.shuffled()
+    }
+
     // MARK: - Helpers
 
     /// Нормализует целевой звук: приводит к нижнему регистру, обрезает пробелы;
@@ -140,6 +198,14 @@ protocol VisionObjectClassifierWorkerProtocol: Actor {
 
     /// Слова из словаря с целевым звуком — для фоллбэк-режима фото-карточек.
     func huntableWords(forSound sound: String) async -> [SoundHunterMapping.Match]
+
+    /// Сетка фото-карточек: целевые (со звуком) + дистракторы (без звука).
+    /// Для фоллбэк-режима, чтобы задание «найди предмет со звуком Х» имело смысл.
+    func huntableGrid(
+        forSound sound: String,
+        targetCount: Int,
+        distractorCount: Int
+    ) async -> [SoundHunterMapping.GridCard]
 }
 
 // MARK: - VisionObjectClassifierWorker
@@ -193,6 +259,18 @@ actor VisionObjectClassifierWorker: VisionObjectClassifierWorkerProtocol {
 
     func huntableWords(forSound sound: String) async -> [SoundHunterMapping.Match] {
         mapping.huntableWords(forSound: sound)
+    }
+
+    func huntableGrid(
+        forSound sound: String,
+        targetCount: Int,
+        distractorCount: Int
+    ) async -> [SoundHunterMapping.GridCard] {
+        mapping.huntableGrid(
+            forSound: sound,
+            targetCount: targetCount,
+            distractorCount: distractorCount
+        )
     }
 
     // MARK: - Vision invocation
@@ -260,10 +338,17 @@ actor MockVisionObjectClassifierWorker: VisionObjectClassifierWorkerProtocol {
 
     init() {
         // Маленький детерминированный словарь — независим от bundle.
+        // Для каждого звука есть и целевые (со звуком), и дистракторы (без звука),
+        // чтобы фоллбэк-сетка фото-карточек собиралась осмысленно и в Preview.
         self.mapping = SoundHunterMapping(entries: [
             "scarf": ObjectMapping(ru: "шарф", sounds: ["ш", "р", "ф"]),
+            "cup": ObjectMapping(ru: "чашка", sounds: ["ч", "ш", "к"]),
+            "hat": ObjectMapping(ru: "шапка", sounds: ["ш", "п", "к"]),
             "sock": ObjectMapping(ru: "носок", sounds: ["с", "к"]),
-            "cup": ObjectMapping(ru: "чашка", sounds: ["ч", "ш", "к"])
+            "spoon": ObjectMapping(ru: "ложка", sounds: ["л", "ж", "к"]),
+            "book": ObjectMapping(ru: "книга", sounds: ["к", "н", "г"]),
+            "umbrella": ObjectMapping(ru: "зонт", sounds: ["з", "н", "т"]),
+            "ball": ObjectMapping(ru: "мяч", sounds: ["м", "ч"])
         ])
         self.fixedClassifications = [
             (label: "scarf", confidence: 0.88),
@@ -281,5 +366,17 @@ actor MockVisionObjectClassifierWorker: VisionObjectClassifierWorkerProtocol {
 
     func huntableWords(forSound sound: String) async -> [SoundHunterMapping.Match] {
         mapping.huntableWords(forSound: sound)
+    }
+
+    func huntableGrid(
+        forSound sound: String,
+        targetCount: Int,
+        distractorCount: Int
+    ) async -> [SoundHunterMapping.GridCard] {
+        mapping.huntableGrid(
+            forSound: sound,
+            targetCount: targetCount,
+            distractorCount: distractorCount
+        )
     }
 }

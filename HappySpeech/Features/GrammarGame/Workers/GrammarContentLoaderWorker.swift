@@ -126,16 +126,25 @@ final class GrammarContentLoaderWorker {
         item: GrammarPackItem,
         difficulty: GrammarDifficulty
     ) -> GrammarRound {
-        let parts = item.word.components(separatedBy: " — ")
-        let base = parts.first.map { Self.extractNoun(from: $0) } ?? item.word
-        let instrumental = parts.last.map { Self.extractNoun(from: $0) } ?? item.word
+        // Творит. форма — целая фраза «с Машей», поэтому берём части как есть
+        // (без extractNoun, который вернул бы предлог «с»).
+        let parts = item.word.components(separatedBy: " — ").map { $0.trimmingCharacters(in: .whitespaces) }
+        let base = parts.first ?? item.word          // именит.: «Маша»
+        let instrumental = parts.count > 1 ? parts[parts.count - 1] : item.word   // творит.: «с Машей»
 
         let isPartyMode = difficulty == .hard
         let question: String
         if isPartyMode {
-            question = String(format: String(localized: "grammar.game.party.invite"), instrumental)
+            // «Пригласить %@?» — компаньон в винит. падеже (имя = винит. для имён
+            // на -а даёт «Машу»; берём базовую форму, шаблон допускает имя).
+            question = String(format: String(localized: "grammar.game.party.invite"), base)
         } else {
-            question = String(format: String(localized: "grammar.game.dative.question"), base)
+            // Корректный творительный вопрос «С кем дружить? Это %@.» вместо
+            // прежнего ошибочного дательного «Кому нужен %@?».
+            question = String(
+                format: String(localized: "grammar.game.instrumental.question", bundle: .main),
+                base
+            )
         }
 
         let distractors = Self.instrumentalDistractors(
@@ -162,12 +171,32 @@ final class GrammarContentLoaderWorker {
         )
     }
 
-    // MARK: - Fetch items from pack_grammar.json
+    // MARK: - Fetch items
 
     private func fetchItems(
         for mode: GrammarGameMode,
         difficulty: GrammarDifficulty
     ) async -> [GrammarPackItem] {
+        // Падежные режимы (дательный/родительный/творительный) НЕ берут items из
+        // pack_grammar.json: его падежные стадии (`cases`, `grammar_cases`,
+        // `prepositions`, `sentences_grammar`) содержат не существительные, а
+        // ИНСТРУКЦИИ/предложения («именительный: кто? что?», «иду В школу»). Из них
+        // `extractNoun` извлекает мусор → бессмысленный вопрос и абсурдные
+        // дистракторы. Для этих режимов используем чистые in-code каталоги
+        // существительных/творительных пар. `one_many` берёт чистую стадию `plural`.
+        switch mode {
+        case .oneMany:
+            return await pluralItems(difficulty: difficulty)
+        case .dative:
+            return Self.caseObjectItems(prefix: "dat", difficulty: difficulty)
+        case .genitive:
+            return Self.caseObjectItems(prefix: "gen", difficulty: difficulty)
+        case .instrumental:
+            return Self.instrumentalItems(difficulty: difficulty)
+        }
+    }
+
+    private func pluralItems(difficulty: GrammarDifficulty) async -> [GrammarPackItem] {
         guard let url = Bundle.main.url(forResource: "pack_grammar", withExtension: "json") else {
             logger.error("pack_grammar.json not found in bundle")
             return []
@@ -175,7 +204,7 @@ final class GrammarContentLoaderWorker {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             let raw  = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
-            return parseItems(from: raw, mode: mode, difficulty: difficulty)
+            return parseItems(from: raw, mode: .oneMany, difficulty: difficulty)
         } catch {
             logger.error("pack_grammar.json parse error: \(error.localizedDescription)")
             return []
@@ -214,12 +243,12 @@ final class GrammarContentLoaderWorker {
 
     // MARK: - Static helpers
 
+    /// Стадии JSON-пака для чтения. Используется только `one_many` (чистая стадия
+    /// `plural`); падежные режимы берут in-code каталоги (см. `fetchItems`).
     private static func stageKeys(for mode: GrammarGameMode) -> [String] {
         switch mode {
-        case .oneMany:      return ["plural"]
-        case .dative:       return ["cases", "grammar_cases", "sentences_grammar"]
-        case .genitive:     return ["grammar_cases", "prepositions"]
-        case .instrumental: return ["cases", "grammar_cases", "sentences_grammar"]
+        case .oneMany:                          return ["plural"]
+        case .dative, .genitive, .instrumental: return []
         }
     }
 
@@ -231,39 +260,140 @@ final class GrammarContentLoaderWorker {
         return words.first(where: { !stopWords.contains($0.lowercased()) }) ?? text
     }
 
+    // MARK: - In-code case-noun catalogs
+    //
+    // pack_grammar.json не содержит чистых пар «слово — форма» для падежей (его
+    // падежные стадии — инструкции/предложения), поэтому существительные для
+    // дательного/родительного/творительного режимов берутся из кодовых каталогов.
+    // Слова подобраны так, чтобы резолвиться в `word_*` ассеты и грамматически
+    // согласоваться с шаблонами вопросов.
+
+    /// Объекты-существительные для дательного/родительного режимов.
+    /// `dat` — предмет, который кому-то нужен (именит.=винит. падеж, муж. род,
+    /// чтобы согласоваться с «Кому нужен %@?»). `gen` — предмет, который взяли
+    /// (винит. падеж, для «Откуда Ляля взяла %@?»).
+    static func caseObjectItems(prefix: String, difficulty: GrammarDifficulty) -> [GrammarPackItem] {
+        // Существительные мужского рода, неодушевлённые: именит. = винит. падеж,
+        // поэтому одна форма годится и для «Кому нужен %@?» (дательный режим), и
+        // для «Откуда Ляля взяла %@?» (родительный режим — что взяла, винит.). Все
+        // слова резолвятся в word_* ассеты.
+        let words = ["мяч", "зонт", "ключ", "бант", "шар", "топор", "молоток", "карандаш"]
+        return words.enumerated().map { idx, word in
+            GrammarPackItem(
+                id: "\(prefix)-\(idx)",
+                word: word,
+                hint: "",
+                difficulty: min(3, 1 + idx / 3),
+                audioFile: ""
+            )
+        }
+    }
+
+    /// Пары «компаньон — творительная форма» для творительного режима «С кем дружу?».
+    /// Формат `word` = «именит. — творит.» (как у plural), чтобы переиспользовать
+    /// разбор по « — ». Творит. форма = «с <имя/животное в твор. падеже>».
+    static func instrumentalItems(difficulty: GrammarDifficulty) -> [GrammarPackItem] {
+        let pairs: [(base: String, instrumental: String)] = [
+            ("Маша", "с Машей"),
+            ("Ваня", "с Ваней"),
+            ("мама", "с мамой"),
+            ("папа", "с папой"),
+            ("кот", "с котом"),
+            ("собака", "с собакой"),
+            ("друг", "с другом"),
+            ("кукла", "с куклой")
+        ]
+        return pairs.enumerated().map { idx, pair in
+            GrammarPackItem(
+                id: "instr-\(idx)",
+                word: "\(pair.base) — \(pair.instrumental)",
+                hint: "",
+                difficulty: min(3, 1 + idx / 3),
+                audioFile: ""
+            )
+        }
+    }
+
+    /// Резолвит существительное в имя имейджсета (`word_*`) через
+    /// `LessonContentMap` — единый путь, что используют рабочие экраны уроков.
+    /// Прежний `"illus_<кириллица>"` не существовал в каталоге (все ассеты —
+    /// `word_*` латиницей), картинка не показывалась. Если ассета реально нет —
+    /// graceful SF Symbol-плейсхолдер `questionmark.circle` (HSPictTile/HSContentSymbol
+    /// корректно его рендерят).
     private static func imageAsset(for noun: String) -> String {
-        "illus_\(noun.lowercased())"
+        LessonContentMap.asset(for: noun) ?? "questionmark.circle"
     }
 
     // MARK: - Distractor generation
 
-    /// Типичные детские ошибки для мн.числа: гиперобобщение -ов и ед.ч.
+    /// Реалистичные детские ошибки множественного числа.
+    ///
+    /// Для регулярных слов — гиперобобщение частотных окончаний (-ов/-ей/-а/-и) и
+    /// застревание на ед.числе. Для слов-исключений (супплетивы/чередования:
+    /// ухо→уши, ребёнок→дети, друг→друзья…) механическая склейка давала
+    /// нечитаемый абсурд («ухоов», «ребёноков»), и ребёнок отсеивал бы вариант не
+    /// по грамматике, а по бессмыслице. Поэтому для них используется курируемый
+    /// набор ПРАВДОПОДОБНЫХ детских ошибок (типичные гиперобобщения, которые дети
+    /// реально произносят: «ухи», «другов», «деревов»).
     static func pluralDistractors(for singular: String, correct: String, count: Int) -> [String] {
-        var pool: [String] = []
-        // B: гиперобобщение частотного окончания
-        let hypergen = singular + "ов"
-        if hypergen != correct { pool.append(hypergen) }
-        // C: ед.ч. вместо мн.ч.
-        let sing = "много " + singular
-        if sing != correct { pool.append(sing) }
-        // D: другое частое окончание
-        let altEnding = singular + "ей"
-        if altEnding != correct && altEnding != hypergen { pool.append(altEnding) }
-        // E: добавить «а» (дома, стола)
-        let altA = singular + "а"
-        if altA != correct { pool.append(altA) }
+        let key = singular.lowercased()
+        var pool: [String]
+        if let curated = Self.irregularPluralErrors[key] {
+            pool = curated.filter { $0 != correct }
+        } else {
+            pool = []
+            // Гиперобобщение частотного окончания.
+            let hypergen = singular + "ов"
+            if hypergen != correct { pool.append(hypergen) }
+            // Застревание на ед.ч.
+            let sing = "много " + singular
+            if sing != correct { pool.append(sing) }
+            // Другое частое окончание.
+            let altEnding = singular + "ей"
+            if altEnding != correct && altEnding != hypergen { pool.append(altEnding) }
+            // Добавить «а» (дома, стола).
+            let altA = singular + "а"
+            if altA != correct { pool.append(altA) }
+            // Добавить «и» (типичная детская форма).
+            let altI = singular + "и"
+            if altI != correct && altI != altA { pool.append(altI) }
+        }
 
         var result: [String] = []
         for d in pool.shuffled() {
             if result.count >= count { break }
-            if !result.contains(d) { result.append(d) }
+            if !result.contains(d) && d != correct { result.append(d) }
         }
-        // Если не хватает — добавить дополнительные слова
+        // Если не хватает — добить ед.ч.-вариантом (всегда правдоподобная ошибка).
+        let singFallback = "много " + singular
         while result.count < count {
-            result.append("\(singular)и")
+            let candidate = result.isEmpty || !result.contains(singFallback)
+                ? singFallback
+                : "\(singular)а"
+            if candidate == correct || result.contains(candidate) { break }
+            result.append(candidate)
         }
         return result
     }
+
+    /// Курируемые правдоподобные детские ошибки мн.ч. для слов-исключений
+    /// (супплетивы и чередования основы). Это РЕАЛЬНЫЕ гиперобобщения детской
+    /// речи, а не механическая склейка.
+    private static let irregularPluralErrors: [String: [String]] = [
+        "ухо":      ["ухи", "ухов", "много ухо"],
+        "ребёнок":  ["ребёнки", "ребёноки", "много ребёнок"],
+        "ребенок":  ["ребенки", "ребеноки", "много ребенок"],
+        "друг":     ["другы", "другов", "много друг"],
+        "брат":     ["браты", "братов", "много брат"],
+        "дерево":   ["деревы", "деревов", "много дерево"],
+        "лист":     ["листы", "листов", "много лист"],
+        "стул":     ["стулы", "стулов", "много стул"],
+        "перо":     ["перы", "перов", "много перо"],
+        "цыплёнок": ["цыплёнки", "цыплёноки", "много цыплёнок"],
+        "цыпленок": ["цыпленки", "цыпленоки", "много цыпленок"],
+        "рот":      ["роты", "ротов", "много рот"],
+        "пень":     ["пеньи", "пенёв", "много пень"]
+    ]
 
     static func instrumentalDistractors(for correct: String, count: Int) -> [String] {
         let pool = ["с Ваней", "с собакой", "с мамой", "карандашом", "ложкой",
