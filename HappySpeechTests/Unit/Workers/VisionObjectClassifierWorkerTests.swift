@@ -192,6 +192,40 @@ final class VisionObjectClassifierWorkerTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(grid.filter { !$0.isTarget }.count, 2)
     }
 
+    // MARK: - hasAsset фильтрация (пустые карточки)
+
+    func test_huntableWords_hasAssetFilter_excludesWordsWithoutImage() {
+        let mapping = makeMapping()
+        // Разрешаем только "носок" — "шарф" будет отброшен.
+        let words = mapping.huntableWords(forSound: "к", hasAsset: { $0 == "носок" })
+        XCTAssertEqual(words.map(\.word), ["носок"])
+        XCTAssertFalse(words.contains { $0.word == "чашка" })
+    }
+
+    func test_distractorWords_hasAssetFilter_excludesWordsWithoutImage() {
+        let mapping = makeMapping()
+        // Для звука "ш" дистракторы — носок, зонт; разрешаем только зонт.
+        let words = mapping.distractorWords(forSound: "ш", hasAsset: { $0 == "зонт" })
+        XCTAssertEqual(words.map(\.word), ["зонт"])
+    }
+
+    func test_huntableGrid_hasAssetFilter_noEmptyCards() {
+        // Словарь с 4 предметами: 2 со звуком "ш" (шарф, чашка) и 2 без (носок, зонт).
+        // Запрещаем "шарф" — в целевых должна оказаться только "чашка".
+        let mapping = makeMapping()
+        let grid = mapping.huntableGrid(
+            forSound: "ш",
+            targetCount: 2,
+            distractorCount: 2,
+            hasAsset: { $0 != "шарф" }
+        )
+        XCTAssertFalse(grid.contains { $0.match.word == "шарф" },
+                       "Слово без ассета не должно попадать в сетку")
+        // Хотя бы 1 целевой (чашка) и 2 дистрактора (носок, зонт).
+        XCTAssertGreaterThanOrEqual(grid.filter { $0.isTarget }.count, 1)
+        XCTAssertGreaterThanOrEqual(grid.filter { !$0.isTarget }.count, 2)
+    }
+
     // MARK: - MockVisionObjectClassifierWorker (async contract)
 
     func test_mockWorker_classify_filtersByTargetSound() async throws {

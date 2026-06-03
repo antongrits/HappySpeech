@@ -105,10 +105,19 @@ struct SoundHunterMapping: Sendable {
     /// Все слова из словаря, содержащие целевой звук — источник для фоллбэк-режима
     /// (фото-карточки), когда камеры нет или iOS < 18. Детерминированно
     /// отсортированы по слову.
-    func huntableWords(forSound sound: String) -> [Match] {
+    ///
+    /// - Parameter hasAsset: необязательный предикат «есть ли изображение для слова».
+    ///   Если передан, слова без ассета исключаются из результата, что гарантирует
+    ///   отсутствие пустых карточек в UI. Передайте `nil`, чтобы пропустить фильтрацию
+    ///   (используется в unit-тестах с изолированным маленьким словарём).
+    func huntableWords(forSound sound: String, hasAsset: ((String) -> Bool)? = nil) -> [Match] {
         guard let target = SoundHunterMapping.normalize(sound: sound) else { return [] }
         return entries
-            .filter { entry in entry.value.sounds.contains { $0.lowercased() == target } }
+            .filter { entry in
+                guard entry.value.sounds.contains(where: { $0.lowercased() == target }) else { return false }
+                if let hasAsset { return hasAsset(entry.value.ru) }
+                return true
+            }
             .map {
                 Match(visionLabel: $0.key, word: $0.value.ru, confidence: 1, sounds: $0.value.sounds)
             }
@@ -117,10 +126,17 @@ struct SoundHunterMapping: Sendable {
 
     /// Слова БЕЗ целевого звука — дистракторы для сетки фото-карточек.
     /// Детерминированно отсортированы по слову.
-    func distractorWords(forSound sound: String) -> [Match] {
+    ///
+    /// - Parameter hasAsset: необязательный предикат «есть ли изображение для слова».
+    ///   Если передан, слова без ассета исключаются из результата.
+    func distractorWords(forSound sound: String, hasAsset: ((String) -> Bool)? = nil) -> [Match] {
         guard let target = SoundHunterMapping.normalize(sound: sound) else { return [] }
         return entries
-            .filter { entry in !entry.value.sounds.contains { $0.lowercased() == target } }
+            .filter { entry in
+                guard !entry.value.sounds.contains(where: { $0.lowercased() == target }) else { return false }
+                if let hasAsset { return hasAsset(entry.value.ru) }
+                return true
+            }
             .map {
                 Match(visionLabel: $0.key, word: $0.value.ru, confidence: 1, sounds: $0.value.sounds)
             }
@@ -145,14 +161,19 @@ struct SoundHunterMapping: Sendable {
     ///   - sound: целевой русский звук.
     ///   - targetCount: желаемое число целевых карточек.
     ///   - distractorCount: желаемое число дистракторов.
+    ///   - hasAsset: необязательный предикат «есть ли изображение для слова».
+    ///     Когда передан, из пула выбираются только слова с реальными ассетами
+    ///     — карточка никогда не будет пустой. Передайте `nil`, чтобы пропустить
+    ///     фильтрацию (используется в unit-тестах).
     /// - Returns: карточки `GridCard` в перемешанном порядке.
     func huntableGrid(
         forSound sound: String,
         targetCount: Int,
-        distractorCount: Int
+        distractorCount: Int,
+        hasAsset: ((String) -> Bool)? = nil
     ) -> [GridCard] {
-        let availableTargets = huntableWords(forSound: sound).shuffled()
-        let availableDistractors = distractorWords(forSound: sound).shuffled()
+        let availableTargets = huntableWords(forSound: sound, hasAsset: hasAsset).shuffled()
+        let availableDistractors = distractorWords(forSound: sound, hasAsset: hasAsset).shuffled()
 
         // Минимумы: ≥1 целевой, ≥2 дистрактора (если их хватает в словаре).
         let wantTargets = max(1, targetCount)
@@ -201,10 +222,16 @@ protocol VisionObjectClassifierWorkerProtocol: Actor {
 
     /// Сетка фото-карточек: целевые (со звуком) + дистракторы (без звука).
     /// Для фоллбэк-режима, чтобы задание «найди предмет со звуком Х» имело смысл.
+    ///
+    /// Параметр `hasAsset` позволяет вызывающей стороне (обычно `Interactor`)
+    /// ограничить пул только словами с реальными картинками — тогда пустых
+    /// карточек в UI не появляется. Передайте `nil`, чтобы пропустить фильтрацию
+    /// (например, в preview / unit-тестах с маленьким фиксированным словарём).
     func huntableGrid(
         forSound sound: String,
         targetCount: Int,
-        distractorCount: Int
+        distractorCount: Int,
+        hasAsset: (@Sendable (String) -> Bool)?
     ) async -> [SoundHunterMapping.GridCard]
 }
 
@@ -264,12 +291,14 @@ actor VisionObjectClassifierWorker: VisionObjectClassifierWorkerProtocol {
     func huntableGrid(
         forSound sound: String,
         targetCount: Int,
-        distractorCount: Int
+        distractorCount: Int,
+        hasAsset: (@Sendable (String) -> Bool)?
     ) async -> [SoundHunterMapping.GridCard] {
         mapping.huntableGrid(
             forSound: sound,
             targetCount: targetCount,
-            distractorCount: distractorCount
+            distractorCount: distractorCount,
+            hasAsset: hasAsset
         )
     }
 
@@ -371,12 +400,16 @@ actor MockVisionObjectClassifierWorker: VisionObjectClassifierWorkerProtocol {
     func huntableGrid(
         forSound sound: String,
         targetCount: Int,
-        distractorCount: Int
+        distractorCount: Int,
+        hasAsset: (@Sendable (String) -> Bool)?
     ) async -> [SoundHunterMapping.GridCard] {
+        // Mock использует маленький фиксированный словарь — фильтрация по ассетам
+        // не применяется (nil), чтобы тесты не зависели от bundle.
         mapping.huntableGrid(
             forSound: sound,
             targetCount: targetCount,
-            distractorCount: distractorCount
+            distractorCount: distractorCount,
+            hasAsset: nil
         )
     }
 }

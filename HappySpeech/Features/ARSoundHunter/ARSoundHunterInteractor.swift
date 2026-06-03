@@ -103,10 +103,15 @@ final class ARSoundHunterInteractor: ARSoundHunterBusinessLogic {
                 let young = age <= 6
                 let targetCount = young ? 2 : 3
                 let distractorCount = young ? 2 : 3
+                // Передаём предикат наличия ассета: выбираются только слова,
+                // для которых есть реальный word_* imageset в каталоге контента.
+                // Это исключает пустые карточки (Телескоп, Мыло и т.п.), у которых
+                // нет иллюстрации в word_manifest.json.
                 grid = await self.classifier.huntableGrid(
                     forSound: resolvedSound,
                     targetCount: targetCount,
-                    distractorCount: distractorCount
+                    distractorCount: distractorCount,
+                    hasAsset: { LessonContentMap.asset(for: $0) != nil }
                 )
             }
             guard !Task.isCancelled else { return }

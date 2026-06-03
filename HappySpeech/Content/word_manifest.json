@@ -15578,8 +15578,8 @@
       "soundFamily": "Щ"
     }
   ],
-  "totalWords": 1376,
-  "generatedAt": "2026-05-24",
+  "totalWords": 1273,
+  "generatedAt": "2026-06-03T11:30:33Z",
   "entries": [
     {
       "word": "абрикос",
@@ -28846,6 +28846,743 @@
       "visualComplexity": "medium",
       "semanticCategory": "objects",
       "methodologySource": "Pollinations.ai overnight v3"
+    },
+    {
+      "word": "альманах",
+      "asset": "word_almanakh",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "балагур",
+      "asset": "word_balagur",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "берлога",
+      "asset": "word_berloga",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "боксёр",
+      "asset": "word_bokser",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "газета",
+      "asset": "word_gazeta",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "голыш",
+      "asset": "word_golysh",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "гуща",
+      "asset": "word_gushcha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "детёныш",
+      "asset": "word_detenysh",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "дозор",
+      "asset": "word_dozor",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "дружок",
+      "asset": "word_druzhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "жакет",
+      "asset": "word_zhaket",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "заноза",
+      "asset": "word_zanoza",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "зоосад",
+      "asset": "word_zoosad",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "places",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "каланча",
+      "asset": "word_kalancha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "places",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "катушка",
+      "asset": "word_katushka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "кошёлка",
+      "asset": "word_koshelka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "крепыш",
+      "asset": "word_krepysh",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "кругляш",
+      "asset": "word_kruglyash",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "кружок",
+      "asset": "word_kruzhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "кулич",
+      "asset": "word_kulich",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "курага",
+      "asset": "word_kuraga",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "лаваш",
+      "asset": "word_lavash",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "медвежонок",
+      "asset": "word_medvezhonok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "москвич",
+      "asset": "word_moskvich",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "музыка",
+      "asset": "word_muzyka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "муравей",
+      "asset": "word_muravei",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "огонёк",
+      "asset": "word_ogonek",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "опушка",
+      "asset": "word_opushka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "певица",
+      "asset": "word_pevitsa",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "пирожок",
+      "asset": "word_pirozhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "плющик",
+      "asset": "word_plyushchik",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "прыщик",
+      "asset": "word_pryshchik",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "рапира",
+      "asset": "word_rapira",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "ребус",
+      "asset": "word_rebus",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "репей",
+      "asset": "word_repei",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "ротозей",
+      "asset": "word_rotosei",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "салют",
+      "asset": "word_salyut",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "санитар",
+      "asset": "word_sanitar",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "сапожок",
+      "asset": "word_sapozhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "семафор",
+      "asset": "word_semafhor",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "силач",
+      "asset": "word_silach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "скрипач",
+      "asset": "word_skripach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "сойка",
+      "asset": "word_soika",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "сувенир",
+      "asset": "word_suvenir",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "сургуч",
+      "asset": "word_surguch",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "творожок",
+      "asset": "word_tvorozhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "телега",
+      "asset": "word_telega",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "ткач",
+      "asset": "word_tkach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "торопыш",
+      "asset": "word_toropysh",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "трещина",
+      "asset": "word_treshchina",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "трещотка",
+      "asset": "word_treshchotka",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "трубач",
+      "asset": "word_trubach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "трюкач",
+      "asset": "word_tryukach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "угощение",
+      "asset": "word_ugoshchenie",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "финиш",
+      "asset": "word_finish",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "флажок",
+      "asset": "word_flazhok",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "циркач",
+      "asset": "word_tsirkach",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "циркуль",
+      "asset": "word_tsirkul",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "чародей",
+      "asset": "word_charodei",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "чибис",
+      "asset": "word_chibis",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "чулан",
+      "asset": "word_chulan",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "places",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "шиш",
+      "asset": "word_shish",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "шишка",
+      "asset": "word_shishka",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "шорох",
+      "asset": "word_shoroh",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "эпоха",
+      "asset": "word_epokha",
+      "recommendedStages": [
+        "wordMid",
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "юбилей",
+      "asset": "word_yubilei",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
+    },
+    {
+      "word": "ясли",
+      "asset": "word_yasli",
+      "recommendedStages": [
+        "wordInit",
+        "wordMid"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
     }
   ]
 }
