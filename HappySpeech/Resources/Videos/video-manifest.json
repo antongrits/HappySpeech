@@ -945,9 +945,9 @@
       "title": "Страна Звуков поёт",
       "cutscene_id": "cs-finale",
       "kind": "finale",
-      "duration_sec": 8.6,
+      "duration_sec": 56.0,
       "video_ready": true,
-      "size_bytes": 6493477
+      "size_bytes": 20520592
     },
     {
       "id": "cs_streak_7",
