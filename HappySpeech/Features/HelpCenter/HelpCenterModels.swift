@@ -342,6 +342,33 @@ public enum HelpCenterCorpus {
         .init(id: "movie-gym", titleKey: "helpCenter.video.movie_gym.title",
               descriptionKey: "helpCenter.video.movie_gym.description",
               resourceName: "story_tongue_gym", durationSeconds: 48, symbolName: "figure.flexibility")
+    ] + cutsceneMovies
+
+    /// «Кинозал» — раздел «Мультфильм о Ляле»: все кат-сцены доступны для
+    /// пересмотра всегда (read-only, parent-контур; `seen` НЕ проверяется).
+    /// Источник — `CutsceneCatalog.movieReel`. Кат-сцены без видео показывают
+    /// «видео недоступно» в sheet (graceful), пока ролик не сгенерирован.
+    public static let cutsceneMovies: [TutorialVideo] = CutsceneCatalog.movieReel.map { cutscene in
+        TutorialVideo(
+            id: "cutscene-\(cutscene.id)",
+            titleKey: "cutscene.helpcenter.\(cutscene.id).title",
+            descriptionKey: cutscene.voiceoverKey,
+            resourceName: cutscene.videoResourceName,
+            durationSeconds: cutsceneDurationSeconds[cutscene.id] ?? 30,
+            symbolName: "sparkles.tv.fill"
+        )
+    }
+
+    /// Длительности кат-сцен (сек) — зеркало `cutscenes`-секции video-manifest.
+    private static let cutsceneDurationSeconds: [String: Int] = [
+        "cs-prologue": 40,
+        "cs-isl-whistling-in": 32, "cs-isl-whistling-out": 24,
+        "cs-isl-hissing-in": 32, "cs-isl-hissing-out": 24,
+        "cs-isl-affr-in": 32, "cs-isl-affr-out": 24,
+        "cs-isl-sonor-in": 40, "cs-isl-sonor-out": 40,
+        "cs-isl-velar-in": 32, "cs-isl-velar-out": 24,
+        "cs-isl-grammar-in": 32, "cs-isl-grammar-out": 24,
+        "cs-finale": 56, "cs-streak-7": 16, "cs-streak-30": 16
     ]
 
     public static func video(forId id: String) -> TutorialVideo? {

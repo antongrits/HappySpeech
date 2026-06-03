@@ -520,6 +520,9 @@ struct HelpCenterView: View {
             forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/tutorials"
         ) ?? Bundle.main.url(
             forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/lessons/edu"
+        ) ?? Bundle.main.url(
+            // «Кинозал» кат-сцен — Videos/cutscenes/*.mp4.
+            forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/cutscenes"
         )
     }
 

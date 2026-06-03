@@ -60,7 +60,7 @@ final class VideoPlayerServiceLive: VideoPlayerServiceProtocol {
                 for entry in root.videos {
                     loaded[entry.id] = entry
                 }
-                for section in [root.stories, root.lessons, root.achievements, root.tutorials] {
+                for section in [root.stories, root.lessons, root.achievements, root.tutorials, root.cutscenes] {
                     for item in section ?? [] {
                         paths[item.id] = item.path
                     }
@@ -116,6 +116,8 @@ final class VideoPlayerServiceLive: VideoPlayerServiceProtocol {
         let lessons: [PathItem]?
         let achievements: [PathItem]?
         let tutorials: [PathItem]?
+        /// Нарративные кат-сцены «Путешествие Ляли» (`Videos/cutscenes/*.mp4`).
+        let cutscenes: [PathItem]?
     }
 
     private struct PathItem: Decodable {

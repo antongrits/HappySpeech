@@ -91,7 +91,7 @@ final class AudioMemoryGameInteractor {
         .init(id: "f-slon", text: "Слон", asset: "word_slon", soundFamily: "С"),
         .init(id: "f-ryba", text: "Рыба", asset: "word_ryba", soundFamily: "Р"),
         .init(id: "f-rak", text: "Рак", asset: "word_rak", soundFamily: "Р"),
-        .init(id: "f-zayac", text: "Заяц", asset: "word_zayac", soundFamily: "З"),
+        .init(id: "f-zayac", text: "Заяц", asset: "word_zayats", soundFamily: "З"),
         .init(id: "f-koshka", text: "Кошка", asset: "word_koshka", soundFamily: "К")
     ]
 

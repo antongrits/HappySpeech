@@ -815,5 +815,157 @@
       "duration_sec": 20.0,
       "size_bytes": 1176756
     }
+  ],
+  "cutscenes": [
+    {
+      "id": "cs_prologue",
+      "path": "cutscenes/cs_prologue.mp4",
+      "title": "Страна Звуков уснула",
+      "cutscene_id": "cs-prologue",
+      "kind": "prologue",
+      "duration_sec": 40.0,
+      "size_bytes": 7334319,
+      "video_ready": true,
+      "has_audio": true
+    },
+    {
+      "id": "cs_isl_whistling_in",
+      "path": "cutscenes/cs_isl_whistling_in.mp4",
+      "title": "Остров Свистящих спит",
+      "cutscene_id": "cs-isl-whistling-in",
+      "kind": "islandIntro",
+      "duration_sec": 32.0,
+      "size_bytes": 6422057,
+      "video_ready": true,
+      "has_audio": true
+    },
+    {
+      "id": "cs_isl_whistling_out",
+      "path": "cutscenes/cs_isl_whistling_out.mp4",
+      "title": "Остров Свистящих ожил",
+      "cutscene_id": "cs-isl-whistling-out",
+      "kind": "islandTriumph",
+      "duration_sec": 24.0,
+      "size_bytes": 8251741,
+      "video_ready": true,
+      "has_audio": true
+    },
+    {
+      "id": "cs_isl_hissing_in",
+      "path": "cutscenes/cs_isl_hissing_in.mp4",
+      "title": "Остров Шипящих спит",
+      "cutscene_id": "cs-isl-hissing-in",
+      "kind": "islandIntro",
+      "duration_sec": 32.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_hissing_out",
+      "path": "cutscenes/cs_isl_hissing_out.mp4",
+      "title": "Остров Шипящих ожил",
+      "cutscene_id": "cs-isl-hissing-out",
+      "kind": "islandTriumph",
+      "duration_sec": 24.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_affr_in",
+      "path": "cutscenes/cs_isl_affr_in.mp4",
+      "title": "Остров Аффрикат спит",
+      "cutscene_id": "cs-isl-affr-in",
+      "kind": "islandIntro",
+      "duration_sec": 32.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_affr_out",
+      "path": "cutscenes/cs_isl_affr_out.mp4",
+      "title": "Остров Аффрикат ожил",
+      "cutscene_id": "cs-isl-affr-out",
+      "kind": "islandTriumph",
+      "duration_sec": 24.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_sonor_in",
+      "path": "cutscenes/cs_isl_sonor_in.mp4",
+      "title": "Остров Соноров спит",
+      "cutscene_id": "cs-isl-sonor-in",
+      "kind": "islandIntro",
+      "duration_sec": 40.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_sonor_out",
+      "path": "cutscenes/cs_isl_sonor_out.mp4",
+      "title": "Остров Соноров ожил",
+      "cutscene_id": "cs-isl-sonor-out",
+      "kind": "islandTriumph",
+      "duration_sec": 40.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_velar_in",
+      "path": "cutscenes/cs_isl_velar_in.mp4",
+      "title": "Остров Заднеязычных спит",
+      "cutscene_id": "cs-isl-velar-in",
+      "kind": "islandIntro",
+      "duration_sec": 32.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_velar_out",
+      "path": "cutscenes/cs_isl_velar_out.mp4",
+      "title": "Остров Заднеязычных ожил",
+      "cutscene_id": "cs-isl-velar-out",
+      "kind": "islandTriumph",
+      "duration_sec": 24.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_grammar_in",
+      "path": "cutscenes/cs_isl_grammar_in.mp4",
+      "title": "Остров Грамматики спит",
+      "cutscene_id": "cs-isl-grammar-in",
+      "kind": "islandIntro",
+      "duration_sec": 32.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_isl_grammar_out",
+      "path": "cutscenes/cs_isl_grammar_out.mp4",
+      "title": "Остров Грамматики ожил",
+      "cutscene_id": "cs-isl-grammar-out",
+      "kind": "islandTriumph",
+      "duration_sec": 24.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_finale",
+      "path": "cutscenes/cs_finale.mp4",
+      "title": "Страна Звуков поёт",
+      "cutscene_id": "cs-finale",
+      "kind": "finale",
+      "duration_sec": 56.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_streak_7",
+      "path": "cutscenes/cs_streak_7.mp4",
+      "title": "Неделя занятий с Лялей",
+      "cutscene_id": "cs-streak-7",
+      "kind": "milestone",
+      "duration_sec": 16.0,
+      "video_ready": false
+    },
+    {
+      "id": "cs_streak_30",
+      "path": "cutscenes/cs_streak_30.mp4",
+      "title": "Месяц занятий с Лялей",
+      "cutscene_id": "cs-streak-30",
+      "kind": "milestone",
+      "duration_sec": 16.0,
+      "video_ready": false
+    }
   ]
 }

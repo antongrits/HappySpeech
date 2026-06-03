@@ -12131,6 +12131,618 @@
         }
       }
     },
+    "cutscene.cs-finale.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The whole Land of Sounds sings again! The pot shimmers with every colour. Thank you, my friend — we woke all the sounds together!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вся Страна Звуков снова поёт! Бочонок переливается всеми красками. Спасибо тебе, мой друг, — мы разбудили все звуки вместе!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-affr-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tricky sounds Ch and Sch hide behind the hissing ones. Let's catch them and wake this island!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хитрые звуки Ч и Щ прячутся за шипящими. Поймаем их вместе и разбудим этот остров!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-affr-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The affricates woke up! Ch and Sch ring again. Well done!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аффрикаты проснулись! Ч и Щ снова звенят. Какой ты молодец!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-grammar-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the island of Words. The wise owl will help us build whole words and sentences from sounds. Shall we start?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это остров Слов. Мудрая сова поможет нам собрать из звуков целые слова и предложения. Начнём?"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-grammar-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The island of Words is shining! Now sounds form beautiful sentences. You're a true speech master!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Слов засиял! Теперь из звуков получаются красивые предложения. Ты — настоящий мастер речи!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-hissing-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the island of hissing sounds. The beetle and the goose forgot how to hiss. Let's wake the sounds Sh and Zh together!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это остров Шипящих звуков. Жук и гусь забыли, как шипеть. Разбудим звуки Ш и Ж вместе!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-hissing-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The hissing island came alive! Hear how nicely the breeze hisses? It's all thanks to you."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Шипящих ожил! Слышишь, как красиво шипит ветерок? Это всё благодаря тебе."
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-sonor-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the hardest but most beautiful island — the island of sonorants. The sounds R and L live here. Ready for the adventure?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это самый трудный, но самый красивый остров — остров Соноров. Здесь живут звуки Р и Л. Готов к приключению?"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-sonor-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The sonorant island burst into all colours! R roars, L sings — you woke the hardest sounds!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Соноров вспыхнул всеми красками! Р рычит, Л поёт — ты разбудил самые сложные звуки!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-velar-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the island of velar sounds. The cat, the goose and the hamster are waiting. Let's wake the sounds K, G and Kh!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это остров Заднеязычных звуков. Кот, гусь и хомяк ждут тебя. Разбудим звуки К, Г и Х!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-velar-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The velars woke up! K, G and Kh sound clear. The island blooms again."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заднеязычные проснулись! К, Г и Х звучат звонко. Остров снова цветёт."
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-whistling-in.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the island of whistling sounds. The kind snake Sss is asleep here. Let's call the sounds S, Z and Ts together to wake the island!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вот остров Свистящих звуков. Здесь спит добрая змейка Сссс. Давай вместе позовём звуки С, З и Ц — и остров проснётся!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-isl-whistling-out.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Did you hear? The whistling island woke up! The first sounds are in our pot. Shall we fly to wake the next island?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты услышал? Остров Свистящих проснулся! Первые звуки — в нашем бочонке. Полетим будить следующий остров?"
+          }
+        }
+      }
+    },
+    "cutscene.cs-prologue.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the Land of Sounds. But one morning all the sounds fell asleep. Will you help me wake them up? Off to the first island!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это Страна Звуков. Но однажды утром все звуки уснули. Поможешь мне их разбудить? Полетели на первый остров!"
+          }
+        }
+      }
+    },
+    "cutscene.cs-streak-30.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A whole month together! You're a true hero of the Land of Sounds."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целый месяц вместе! Ты настоящий герой Страны Звуков."
+          }
+        }
+      }
+    },
+    "cutscene.cs-streak-7.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A whole week of practice! Our flower has bloomed. Keep it up!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целая неделя занятий! Наш цветок распустился. Так держать!"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-finale.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Land of Sounds Sings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Страна Звуков поёт"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-affr-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Affricates Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Аффрикат спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-affr-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Affricates Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Аффрикат ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-grammar-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Words Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Слов спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-grammar-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Words Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Слов ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-hissing-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Hissing Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Шипящих спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-hissing-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Hissing Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Шипящих ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-sonor-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Sonorants Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Соноров спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-sonor-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Sonorants Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Соноров ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-velar-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Velars Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Заднеязычных спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-velar-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Velars Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Заднеязычных ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-whistling-in.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Whistling Island Sleeps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Свистящих спит"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-isl-whistling-out.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Whistling Island Awakens"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Свистящих ожил"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-prologue.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The Land of Sounds Fell Asleep"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Страна Звуков уснула"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-streak-30.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Month with Lyalya"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц с Лялей"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.cs-streak-7.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Week with Lyalya"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя с Лялей"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.section.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyalya's Cartoon"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мультфильм о Ляле"
+          }
+        }
+      }
+    },
+    "cutscene.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        }
+      }
+    },
+    "cutscene.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить"
+          }
+        }
+      }
+    },
+    "cutscene.skip.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip the cartoon"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить мультфильм"
+          }
+        }
+      }
+    },
     "dailyChallenge.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -16095,17 +16707,6 @@
         }
       }
     },
-    "family.challenge.share": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поделиться"
-          }
-        }
-      }
-    },
     "family.challenge.contributions.title": {
       "extractionState": "manual",
       "localizations": {
@@ -16135,6 +16736,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пока нет участников"
+          }
+        }
+      }
+    },
+    "family.challenge.share": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться"
           }
         }
       }
@@ -24592,72 +25204,6 @@
         }
       }
     },
-    "lyalyaMail.welcome.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Привет, мой друг!"
-          }
-        }
-      }
-    },
-    "lyalyaMail.welcome.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Я так рада, что мы будем играть вместе! Со мной ты научишься говорить красиво и чётко. Ты — настоящий герой звуков. Жду тебя на занятии!"
-          }
-        }
-      }
-    },
-    "lyalyaMail.streak.title %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ура! %lld дней подряд!"
-          }
-        }
-      }
-    },
-    "lyalyaMail.streak.body %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ты занимаешься со мной уже %lld дней подряд! Маленькие шажки каждый день — и звуки слушаются всё лучше. Я тобой горжусь!"
-          }
-        }
-      }
-    },
-    "lyalyaMail.firstSound.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук получился!"
-          }
-        }
-      }
-    },
-    "lyalyaMail.firstSound.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "У тебя получился чистый звук! Я слышала и хлопала в ладоши! Завтра попробуем ещё — и будет ещё чище."
-          }
-        }
-      }
-    },
     "lyalya.mail.unread.format": {
       "extractionState": "manual",
       "localizations": {
@@ -24890,6 +25436,72 @@
           "stringUnit": {
             "state": "translated",
             "value": "What is the first sound in “%@”?"
+          }
+        }
+      }
+    },
+    "lyalyaMail.firstSound.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У тебя получился чистый звук! Я слышала и хлопала в ладоши! Завтра попробуем ещё — и будет ещё чище."
+          }
+        }
+      }
+    },
+    "lyalyaMail.firstSound.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук получился!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.streak.body %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты занимаешься со мной уже %lld дней подряд! Маленькие шажки каждый день — и звуки слушаются всё лучше. Я тобой горжусь!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.streak.title %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ура! %lld дней подряд!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.welcome.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я так рада, что мы будем играть вместе! Со мной ты научишься говорить красиво и чётко. Ты — настоящий герой звуков. Жду тебя на занятии!"
+          }
+        }
+      }
+    },
+    "lyalyaMail.welcome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет, мой друг!"
           }
         }
       }
@@ -59955,7 +60567,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Игра «Повтори ритм». Слушай Лалу и повторяй слово по слогам."
+            "value": "Игра «Повтори ритм». Слушай Лялю и повторяй слово по слогам."
           }
         }
       }

@@ -1604,6 +1604,32 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-67.m4a"
+        },
+        {
+          "id": "zh-wm-68",
+          "word": "рыжеволосый",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/ZH/zh-wm-68.m4a",
+          "hint": "ЖВ — звонкий вариант стечения."
+        },
+        {
+          "id": "zh-wm-69",
+          "word": "дожди",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/ZH/zh-wm-69.m4a",
+          "hint": "ЖД — звонкий + звонкий."
+        },
+        {
+          "id": "zh-wm-70",
+          "word": "коврижка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/ZH/zh-wm-70.m4a"
         }
       ]
     },

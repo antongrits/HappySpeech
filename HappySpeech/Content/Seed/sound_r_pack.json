@@ -621,7 +621,7 @@
         {
           "id": "r-syl-34",
           "word": "ре",
-          "hint": "Мягкий [Р'] — рe.",
+          "hint": "Мягкий [Р'] — ре.",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-syl-34.m4a"
         },
@@ -1181,7 +1181,7 @@
         },
         {
           "id": "r-wi-73",
-          "word": "рекламa",
+          "word": "реклама",
           "hint": "Мягкий [Р'].",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-73.m4a"
@@ -1569,7 +1569,7 @@
         },
         {
           "id": "r-wm-4",
-          "word": "паруc",
+          "word": "парус",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-4.m4a"
         },
@@ -3131,7 +3131,7 @@
         },
         {
           "id": "r-wf-37",
-          "word": "долг-нет-дударь",
+          "word": "дударь",
           "hint": "Слово: дударь.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-37.m4a"
@@ -3330,7 +3330,7 @@
         },
         {
           "id": "r-wf-67",
-          "word": "стадион-нет-экватор",
+          "word": "экватор",
           "hint": "Слово: экватор.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-67.m4a"
@@ -3398,7 +3398,7 @@
         },
         {
           "id": "r-wf-77",
-          "word": "глагол-нет-сахар",
+          "word": "сахар",
           "hint": "Слово: сахар — Р на конце.",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-77.m4a"
@@ -3431,7 +3431,7 @@
         },
         {
           "id": "r-wf-82",
-          "word": "стетоскоп... нет: компьютер",
+          "word": "компьютер",
           "hint": "ТЕР — Р в западноевропейском слове.",
           "difficulty": 4,
           "audio_file": "Audio/Content/R/r-wf-82.m4a"

@@ -351,6 +351,12 @@ struct WorldMapView: View {
 
     private func handleStartZone(_ id: String) {
         display.dismissZoneDetailSheet()
+        // Интро-кат-сцена острова перед уроком (не гейтит вход — показывается
+        // поверх, skippable, один раз/остров). CutsceneService проверит seen +
+        // наличие видео/постера; если нечего показывать — просто не всплывёт.
+        if let island = islandId(forZoneId: id) {
+            container.cutsceneService.enqueue(.islandIntro(island), childId: childId)
+        }
         router?.routeOpenZone(zoneId: id)
     }
 
@@ -389,5 +395,80 @@ struct WorldMapView: View {
             highlightedSound: targetSound.isEmpty ? nil : targetSound,
             childAge: nil
         ))
+
+        // Кат-сцена-пролог «Страна Звуков уснула»: первый показ карты после
+        // онбординга. CutsceneService сам проверит seen-флаг (один раз/ребёнка)
+        // и наличие видео/постера — повторно не всплывёт.
+        container.cutsceneService.enqueue(.onboardingComplete, childId: childId)
+
+        // Страховка триумфов/майлстоунов: если ребёнок завершил остров или
+        // достиг стрика, но триумф ещё не показан (например вернулся на карту
+        // мимо SessionComplete) — догоняем здесь по реальному прогрессу.
+        await enqueueCompletedIslandCutscenes()
     }
+
+    // MARK: - Cutscene triggers
+
+    /// Маппинг `zoneId → MapIslandID` для интро-кат-сцен острова.
+    private func islandId(forZoneId zoneId: String) -> MapIslandID? {
+        switch zoneId {
+        case "zone-vowels":     return .vowels
+        case "zone-whistling":  return .whistling
+        case "zone-hissing":    return .hissing
+        case "zone-affricates": return .affricates
+        case "zone-sonorant":   return .sonorant
+        case "zone-velar":      return .velar
+        case "zone-grammar":    return .special
+        default:                return nil
+        }
+    }
+
+    /// Догоняет триумф-кат-сцены уже завершённых островов и стрик-майлстоуны на
+    /// основе РЕАЛЬНОГО прогресса ребёнка (без фабрикации). Каждая сцена
+    /// проходит через `shouldPlay` (seen + видео/постер), так что повторно не
+    /// покажется. Вызывается из `bootstrap`.
+    @MainActor
+    private func enqueueCompletedIslandCutscenes() async {
+        guard !childId.isEmpty else { return }
+        guard let profile = try? await container.childRepository.fetch(id: childId) else { return }
+
+        let summary = profile.progressSummary
+        var completedCount = 0
+        for (zoneId, sounds) in Self.islandSounds {
+            guard !sounds.isEmpty else { continue }
+            let mastery = sounds.reduce(0.0) { $0 + (summary[$1] ?? 0) } / Double(sounds.count)
+            if mastery >= 1.0 {
+                completedCount += 1
+                if let island = islandId(forZoneId: zoneId) {
+                    container.cutsceneService.enqueue(.islandComplete(island), childId: childId)
+                }
+            }
+        }
+        // Все 5 звуковых островов завершены → финал (грамматика — бонус, см.
+        // contentIslandCount).
+        if completedCount >= Self.contentIslandCount {
+            container.cutsceneService.enqueue(.allIslandsComplete, childId: childId)
+        }
+        // Стрик-майлстоуны 7 / 30.
+        for milestone in [7, 30] where profile.currentStreak >= milestone {
+            container.cutsceneService.enqueue(.streak(days: milestone), childId: childId)
+        }
+    }
+
+    /// Звуки контентных островов (vowels не получает своей пары — его роль
+    /// играет пролог; см. спеку §2). Используется для honest-проверки
+    /// завершённости острова из `progressSummary`.
+    private static let islandSounds: [(zoneId: String, sounds: [String])] = [
+        ("zone-whistling", ["С", "Сь", "З", "Зь", "Ц"]),
+        ("zone-hissing", ["Ш", "Ж"]),
+        ("zone-affricates", ["Ч", "Щ"]),
+        ("zone-sonorant", ["Р", "Рь", "Л", "Ль"]),
+        ("zone-velar", ["К", "Кь", "Г", "Гь", "Х", "Хь"])
+    ]
+
+    /// Контентных островов с собственной парой кат-сцен (для триггера финала).
+    /// Грамматика без звуков не детектится из progressSummary, поэтому финал
+    /// триггерится по завершению 5 звуковых островов (см. спеку §5 п.2 —
+    /// финалом считается прохождение звуковых островов; грамматика — бонус).
+    private static let contentIslandCount = 5
 }

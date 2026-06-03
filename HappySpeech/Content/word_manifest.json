@@ -15554,9 +15554,31 @@
       "semanticCategory": "music",
       "methodologySource": "HappySpeech-lexical-v3",
       "soundFamily": null
+    },
+    {
+      "word": "холод",
+      "asset": "word_holod",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "щётка",
+      "asset": "word_shchetka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
     }
   ],
-  "totalWords": 1374,
+  "totalWords": 1376,
   "generatedAt": "2026-05-24",
   "entries": [
     {

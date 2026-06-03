@@ -1316,14 +1316,6 @@
           "audio_file": "Audio/Content/SH/sh-wm-13.m4a"
         },
         {
-          "id": "sh-wm-14",
-          "word": "дорожка",
-          "imageAsset": "word_dorozhka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SH/sh-wm-14.m4a"
-        },
-        {
           "id": "sh-wm-15",
           "word": "сушка",
           "imageAsset": "word_sushka",
@@ -1653,27 +1645,6 @@
           "audio_file": "Audio/Content/Sh/sh-wm-56.m4a"
         },
         {
-          "id": "sh-wm-57",
-          "word": "рыжеволосый",
-          "hint": "ЖВ — звонкий вариант стечения.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Sh/sh-wm-57.m4a"
-        },
-        {
-          "id": "sh-wm-58",
-          "word": "ножницы",
-          "hint": "ЖН — звонкий Ж + носовой.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/Sh/sh-wm-58.m4a"
-        },
-        {
-          "id": "sh-wm-59",
-          "word": "дожди",
-          "hint": "ЖД — звонкий + звонкий.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/Sh/sh-wm-59.m4a"
-        },
-        {
           "id": "sh-wm-60",
           "word": "башмак",
           "imageAsset": "word_bashmak",
@@ -1968,78 +1939,6 @@
           "audio_file": "Audio/Content/SH/sh-wf-14.m4a"
         },
         {
-          "id": "sh-wf-15",
-          "word": "монтаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-15.m4a"
-        },
-        {
-          "id": "sh-wf-16",
-          "word": "персонаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-16.m4a"
-        },
-        {
-          "id": "sh-wf-17",
-          "word": "пейзаж",
-          "imageAsset": "word_peyzazh",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-17.m4a"
-        },
-        {
-          "id": "sh-wf-18",
-          "word": "экипаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-18.m4a"
-        },
-        {
-          "id": "sh-wf-19",
-          "word": "трикотаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/SH/sh-wf-19.m4a"
-        },
-        {
-          "id": "sh-wf-20",
-          "word": "мираж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-20.m4a"
-        },
-        {
-          "id": "sh-wf-21",
-          "word": "гараж",
-          "imageAsset": "word_garazh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SH/sh-wf-21.m4a"
-        },
-        {
-          "id": "sh-wf-22",
-          "word": "богаж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-22.m4a"
-        },
-        {
-          "id": "sh-wf-23",
-          "word": "коврижка",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-23.m4a"
-        },
-        {
           "id": "sh-wf-24",
           "word": "малыш",
           "imageAsset": null,
@@ -2110,22 +2009,6 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wf-32.m4a"
-        },
-        {
-          "id": "sh-wf-33",
-          "word": "стриж",
-          "imageAsset": "word_strizh",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SH/sh-wf-33.m4a"
-        },
-        {
-          "id": "sh-wf-34",
-          "word": "рубеж",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wf-34.m4a"
         },
         {
           "id": "sh-wf-35",

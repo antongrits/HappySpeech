@@ -99,7 +99,7 @@ enum LiteracyCatalog {
         "С": ("С", [
             WordSample(text: "Сова",   assetName: "word_sova"),
             WordSample(text: "Сок",    assetName: "word_sok"),
-            WordSample(text: "Самолёт", assetName: "word_samolet")
+            WordSample(text: "Самолёт", assetName: "word_samolyot")
         ]),
         "З": ("З", [
             WordSample(text: "Зонт",   assetName: "word_zont"),
@@ -121,7 +121,7 @@ enum LiteracyCatalog {
         "Ж": ("Ж", [
             WordSample(text: "Жук",    assetName: "word_zhuk"),
             WordSample(text: "Жираф",  assetName: "word_zhiraf"),
-            WordSample(text: "Жёлудь", assetName: "word_zhelud")
+            WordSample(text: "Жёлудь", assetName: "word_zhyolud")
         ]),
         "Ч": ("Ч", [
             WordSample(text: "Часы",   assetName: "word_chasy"),
@@ -129,15 +129,15 @@ enum LiteracyCatalog {
             WordSample(text: "Черепаха", assetName: "word_cherepaha")
         ]),
         "Щ": ("Щ", [
-            WordSample(text: "Щенок",  assetName: "word_schenok"),
-            WordSample(text: "Щётка",  assetName: "word_schetka"),
-            WordSample(text: "Щука",   assetName: "word_schuka")
+            WordSample(text: "Щенок",  assetName: "word_shchenok"),
+            WordSample(text: "Щётка",  assetName: "word_shchetka"),
+            WordSample(text: "Щука",   assetName: "word_shchuka")
         ]),
 
         // Соноры
         "Р": ("Р", [
             WordSample(text: "Рак",  assetName: "word_rak"),
-            WordSample(text: "Роза", assetName: "word_roza"),
+            WordSample(text: "Роза", assetName: "word_rose"),
             WordSample(text: "Рыба", assetName: "word_ryba")
         ]),
         "Л": ("Л", [
@@ -159,7 +159,7 @@ enum LiteracyCatalog {
         ]),
         "Х": ("Х", [
             WordSample(text: "Хлеб",  assetName: "word_hleb"),
-            WordSample(text: "Хвост", assetName: "word_hvost"),
+            WordSample(text: "Хвост", assetName: "word_khvost"),
             WordSample(text: "Холод", assetName: "word_holod")
         ])
     ]

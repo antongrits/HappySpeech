@@ -872,7 +872,50 @@ struct SessionCompleteView: View {
 
         interactor.loadResult(.init(result: result))
 
+        // Страховка кат-сцен (дубль к WorldMap): если эта сессия закрыла остров
+        // или подняла стрик до 7/30 — ставим триумф/майлстоун в очередь. Проверка
+        // честная (по реальному progressSummary ребёнка), повторно не покажется.
+        await enqueueCutsceneIfNeeded()
+
         await runStageSchedule()
+    }
+
+    /// Честная страховка-триггер кат-сцен по итогам сессии. Маппит
+    /// `result.soundTarget → остров`, проверяет завершённость острова и стрик по
+    /// реальным данным ребёнка. Каждый enqueue гейтится `shouldPlay` (seen +
+    /// видео/постер) внутри CutsceneService.
+    @MainActor
+    private func enqueueCutsceneIfNeeded() async {
+        let childId = result.childId
+        guard !childId.isEmpty else { return }
+        guard let profile = try? await container.childRepository.fetch(id: childId) else { return }
+        let summary = profile.progressSummary
+
+        // Триумф острова целевого звука сессии — только если остров реально завершён.
+        if let (island, sounds) = Self.island(forSound: result.soundTarget), !sounds.isEmpty {
+            let mastery = sounds.reduce(0.0) { $0 + (summary[$1] ?? 0) } / Double(sounds.count)
+            if mastery >= 1.0 {
+                container.cutsceneService.enqueue(.islandComplete(island), childId: childId)
+            }
+        }
+
+        // Стрик-майлстоуны 7 / 30.
+        for milestone in [7, 30] where profile.currentStreak >= milestone {
+            container.cutsceneService.enqueue(.streak(days: milestone), childId: childId)
+        }
+    }
+
+    /// Остров (+ его звуки) для целевого звука сессии. Грамматика (без звуков)
+    /// и гласные исключены — их триумф не триггерится из SessionComplete.
+    private static func island(forSound sound: String) -> (MapIslandID, [String])? {
+        let map: [(MapIslandID, [String])] = [
+            (.whistling, ["С", "Сь", "З", "Зь", "Ц"]),
+            (.hissing, ["Ш", "Ж"]),
+            (.affricates, ["Ч", "Щ"]),
+            (.sonorant, ["Р", "Рь", "Л", "Ль"]),
+            (.velar, ["К", "Кь", "Г", "Гь", "Х", "Хь"])
+        ]
+        return map.first { $0.1.contains(sound) }
     }
 
     private func runStageSchedule() async {

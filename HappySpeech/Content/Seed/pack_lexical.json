@@ -2181,7 +2181,7 @@
         {
           "id": "lex-an-10",
           "word": "мокрый — сухой",
-          "hint": "Мокрый зонт — сухой полотенце.",
+          "hint": "Мокрый зонт — сухое полотенце.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-an-10.m4a"
         },
@@ -2883,7 +2883,7 @@
         {
           "id": "lex-sw-24",
           "word": "расскажи о сезоне",
-          "hint": "Моя любимое время года — ... Потому что ...",
+          "hint": "Моё любимое время года — ... Потому что ...",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-sw-24.m4a"
         },
@@ -5515,7 +5515,7 @@
         },
         {
           "id": "lex-rh-3",
-          "word": "елка — иголка — колколка",
+          "word": "ёлка — иголка — колкая",
           "hint": "Ёлка, иголка — рифма! А колкая — нет. Слышишь?",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-rh-3.m4a"

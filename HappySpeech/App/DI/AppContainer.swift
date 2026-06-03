@@ -97,6 +97,17 @@ public final class AppContainer {
     // parent / specialist контур за parental gate — НИКОГДА из kid-контекста.
     private var _methodologyAssistantClient: (any MethodologyAssistantClientProtocol)?
 
+    // VideoPlayerService — lazy, реестр видео из Videos/video-manifest.json
+    // (stories / lessons / achievements / tutorials / cutscenes). Live:
+    // VideoPlayerServiceLive. Preview/Test: MockVideoPlayerService.
+    private var _videoPlayerService: (any VideoPlayerServiceProtocol)?
+
+    // CutsceneService — lazy, нарративные кат-сцены «Путешествие Ляли».
+    // Зависит от videoPlayerService (видео-URL) + hapticService (опц.).
+    // Live: CutsceneServiceLive (@Observable, приоритетная очередь, per-child
+    // seen-персистентность). Preview/Test: MockCutsceneService (shouldPlay=false).
+    private var _cutsceneService: (any CutsceneServiceProtocol)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -589,6 +600,42 @@ public final class AppContainer {
         _methodologyAssistantClient = client
     }
 
+    /// Реестр видео-роликов из `Videos/video-manifest.json`.
+    /// Live: ``VideoPlayerServiceLive``. Preview/Test: ``MockVideoPlayerService``.
+    /// Internal — `VideoPlayerServiceProtocol` объявлен internal (один app-target).
+    var videoPlayerService: any VideoPlayerServiceProtocol {
+        if let existing = _videoPlayerService { return existing }
+        let new: any VideoPlayerServiceProtocol = VideoPlayerServiceLive()
+        _videoPlayerService = new
+        return new
+    }
+
+    /// Подмена ``videoPlayerService`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `videoPlayerService`.
+    func overrideVideoPlayerService(_ service: any VideoPlayerServiceProtocol) {
+        _videoPlayerService = service
+    }
+
+    /// Сервис нарративных кат-сцен «Путешествие Ляли по Стране Звуков».
+    /// Live: ``CutsceneServiceLive`` (приоритетная очередь + per-child seen).
+    /// Preview/Test: ``MockCutsceneService`` (по умолчанию `shouldPlay=false`).
+    /// Internal — `CutsceneServiceProtocol` объявлен internal (один app-target).
+    var cutsceneService: any CutsceneServiceProtocol {
+        if let existing = _cutsceneService { return existing }
+        let new: any CutsceneServiceProtocol = CutsceneServiceLive(
+            videoPlayerService: videoPlayerService,
+            hapticService: hapticService
+        )
+        _cutsceneService = new
+        return new
+    }
+
+    /// Подмена ``cutsceneService`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `cutsceneService`.
+    func overrideCutsceneService(_ service: any CutsceneServiceProtocol) {
+        _cutsceneService = service
+    }
+
     public var soundService: any SoundServiceProtocol {
         if let existing = _soundService { return existing }
         let new = LiveSoundService()
@@ -992,6 +1039,10 @@ public extension AppContainer {
         container.overrideChatRepository(MockChatRepository.previewSeeded())
         // MethodologyAssistant — mock без сети в preview/tests.
         container.overrideMethodologyAssistantClient(MockMethodologyAssistantClient())
+        // Cutscenes — mock в preview/tests: кат-сцены не всплывают в превью /
+        // снапшотах (shouldPlay=false), видео не грузится.
+        container.overrideVideoPlayerService(MockVideoPlayerService())
+        container.overrideCutsceneService(MockCutsceneService())
         return container
     }
 }

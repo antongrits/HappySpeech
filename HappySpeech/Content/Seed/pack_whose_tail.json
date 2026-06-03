@@ -1027,7 +1027,7 @@
       "id": "wt-home-15",
       "subtask": "animalHome",
       "cueImage": "home_domik_cat",
-      "question": "Чьё это домик?",
+      "question": "Чей это домик?",
       "difficulty": 2,
       "minAge": 6,
       "options": [

@@ -462,6 +462,23 @@ struct AppCoordinatorView: View {
             .sheet(item: $coordinator.presentedSheet) { sheet in
                 sheetContent(for: sheet)
             }
+            // Нарративные кат-сцены «Путешествие Ляли» — fullScreen-overlay
+            // поверх навигации и offline-banner. НЕ AppRoute (не раздуваем
+            // back-stack). pending != nil → показываем CutscenePlayerView.
+            .fullScreenCover(isPresented: Binding(
+                get: { container.cutsceneService.pending != nil },
+                set: { isPresented in
+                    if !isPresented { container.cutsceneService.pop() }
+                }
+            )) {
+                if let cutscene = container.cutsceneService.pending {
+                    CutscenePlayerView(
+                        cutscene: cutscene,
+                        onFinish: { container.cutsceneService.pop() }
+                    )
+                    .environment(\.circuitContext, .kid)
+                }
+            }
         }
     }
 
