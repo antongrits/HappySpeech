@@ -179,7 +179,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_hissing_in",
             posterAssetName: "cutscene_poster_hissing_in",
             voiceoverKey: "cutscene.cs-isl-hissing-in.subtitle",
-            mapNode: .hissing
+            mapNode: .hissing,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-isl-hissing-out",
@@ -188,7 +189,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_hissing_out",
             posterAssetName: "cutscene_poster_hissing_out",
             voiceoverKey: "cutscene.cs-isl-hissing-out.subtitle",
-            mapNode: .hissing
+            mapNode: .hissing,
+            videoReady: true
         ),
         // Аффрикаты (Ч/Щ).
         Cutscene(
@@ -198,7 +200,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_affr_in",
             posterAssetName: "cutscene_poster_affr_in",
             voiceoverKey: "cutscene.cs-isl-affr-in.subtitle",
-            mapNode: .affricates
+            mapNode: .affricates,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-isl-affr-out",
@@ -207,7 +210,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_affr_out",
             posterAssetName: "cutscene_poster_affr_out",
             voiceoverKey: "cutscene.cs-isl-affr-out.subtitle",
-            mapNode: .affricates
+            mapNode: .affricates,
+            videoReady: true
         ),
         // Соноры (Р/Л) — кульминация.
         Cutscene(
@@ -217,7 +221,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_sonor_in",
             posterAssetName: "cutscene_poster_sonor_in",
             voiceoverKey: "cutscene.cs-isl-sonor-in.subtitle",
-            mapNode: .sonorant
+            mapNode: .sonorant,
+            videoReady: true
         ),
         Cutscene(
             id: "cs-isl-sonor-out",
@@ -226,7 +231,8 @@ enum CutsceneCatalog {
             videoResourceName: "cs_isl_sonor_out",
             posterAssetName: "cutscene_poster_sonor_out",
             voiceoverKey: "cutscene.cs-isl-sonor-out.subtitle",
-            mapNode: .sonorant
+            mapNode: .sonorant,
+            videoReady: true
         ),
         // Заднеязычные (К/Г/Х).
         Cutscene(

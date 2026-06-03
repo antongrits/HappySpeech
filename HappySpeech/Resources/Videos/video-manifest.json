@@ -841,8 +841,10 @@
       "title": "Остров Шипящих спит",
       "cutscene_id": "cs-isl-hissing-in",
       "kind": "islandIntro",
-      "duration_sec": 32.0,
-      "video_ready": false
+      "duration_sec": 30.4,
+      "size_bytes": 9903932,
+      "video_ready": true,
+      "has_audio": true
     },
     {
       "id": "cs_isl_hissing_out",
@@ -851,7 +853,9 @@
       "cutscene_id": "cs-isl-hissing-out",
       "kind": "islandTriumph",
       "duration_sec": 24.0,
-      "video_ready": false
+      "size_bytes": 15729246,
+      "video_ready": true,
+      "has_audio": true
     },
     {
       "id": "cs_isl_affr_in",
@@ -860,7 +864,7 @@
       "cutscene_id": "cs-isl-affr-in",
       "kind": "islandIntro",
       "duration_sec": 32.0,
-      "video_ready": false
+      "video_ready": true
     },
     {
       "id": "cs_isl_affr_out",
@@ -869,7 +873,7 @@
       "cutscene_id": "cs-isl-affr-out",
       "kind": "islandTriumph",
       "duration_sec": 24.0,
-      "video_ready": false
+      "video_ready": true
     },
     {
       "id": "cs_isl_sonor_in",
@@ -877,8 +881,10 @@
       "title": "Остров Соноров спит",
       "cutscene_id": "cs-isl-sonor-in",
       "kind": "islandIntro",
-      "duration_sec": 40.0,
-      "video_ready": false
+      "duration_sec": 37.2,
+      "size_bytes": 13187456,
+      "video_ready": true,
+      "has_audio": true
     },
     {
       "id": "cs_isl_sonor_out",
@@ -886,8 +892,10 @@
       "title": "Остров Соноров ожил",
       "cutscene_id": "cs-isl-sonor-out",
       "kind": "islandTriumph",
-      "duration_sec": 40.0,
-      "video_ready": false
+      "duration_sec": 36.9,
+      "size_bytes": 24143440,
+      "video_ready": true,
+      "has_audio": true
     },
     {
       "id": "cs_isl_velar_in",

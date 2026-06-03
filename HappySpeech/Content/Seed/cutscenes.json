@@ -5,7 +5,9 @@
     {
       "id": "cs-prologue",
       "kind": "prologue",
-      "trigger": { "type": "onboardingComplete" },
+      "trigger": {
+        "type": "onboardingComplete"
+      },
       "videoResourceName": "cs_prologue",
       "posterAssetName": "cutscene_poster_prologue",
       "voiceoverKey": "cutscene.cs-prologue.subtitle",
@@ -17,7 +19,10 @@
     {
       "id": "cs-isl-whistling-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "whistling" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "whistling"
+      },
       "videoResourceName": "cs_isl_whistling_in",
       "posterAssetName": "cutscene_poster_whistling_in",
       "voiceoverKey": "cutscene.cs-isl-whistling-in.subtitle",
@@ -29,7 +34,10 @@
     {
       "id": "cs-isl-whistling-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "whistling" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "whistling"
+      },
       "videoResourceName": "cs_isl_whistling_out",
       "posterAssetName": "cutscene_poster_whistling_out",
       "voiceoverKey": "cutscene.cs-isl-whistling-out.subtitle",
@@ -41,79 +49,100 @@
     {
       "id": "cs-isl-hissing-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "hissing" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "hissing"
+      },
       "videoResourceName": "cs_isl_hissing_in",
       "posterAssetName": "cutscene_poster_hissing_in",
       "voiceoverKey": "cutscene.cs-isl-hissing-in.subtitle",
       "mapNode": "hissing",
       "priority": 60,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-hissing-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "hissing" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "hissing"
+      },
       "videoResourceName": "cs_isl_hissing_out",
       "posterAssetName": "cutscene_poster_hissing_out",
       "voiceoverKey": "cutscene.cs-isl-hissing-out.subtitle",
       "mapNode": "hissing",
       "priority": 80,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-affr-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "affricates" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "affricates"
+      },
       "videoResourceName": "cs_isl_affr_in",
       "posterAssetName": "cutscene_poster_affr_in",
       "voiceoverKey": "cutscene.cs-isl-affr-in.subtitle",
       "mapNode": "affricates",
       "priority": 60,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-affr-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "affricates" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "affricates"
+      },
       "videoResourceName": "cs_isl_affr_out",
       "posterAssetName": "cutscene_poster_affr_out",
       "voiceoverKey": "cutscene.cs-isl-affr-out.subtitle",
       "mapNode": "affricates",
       "priority": 80,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-sonor-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "sonorant" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "sonorant"
+      },
       "videoResourceName": "cs_isl_sonor_in",
       "posterAssetName": "cutscene_poster_sonor_in",
       "voiceoverKey": "cutscene.cs-isl-sonor-in.subtitle",
       "mapNode": "sonorant",
       "priority": 60,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-sonor-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "sonorant" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "sonorant"
+      },
       "videoResourceName": "cs_isl_sonor_out",
       "posterAssetName": "cutscene_poster_sonor_out",
       "voiceoverKey": "cutscene.cs-isl-sonor-out.subtitle",
       "mapNode": "sonorant",
       "priority": 80,
       "enabled": true,
-      "videoReady": false
+      "videoReady": true
     },
     {
       "id": "cs-isl-velar-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "velar" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "velar"
+      },
       "videoResourceName": "cs_isl_velar_in",
       "posterAssetName": "cutscene_poster_velar_in",
       "voiceoverKey": "cutscene.cs-isl-velar-in.subtitle",
@@ -125,7 +154,10 @@
     {
       "id": "cs-isl-velar-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "velar" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "velar"
+      },
       "videoResourceName": "cs_isl_velar_out",
       "posterAssetName": "cutscene_poster_velar_out",
       "voiceoverKey": "cutscene.cs-isl-velar-out.subtitle",
@@ -137,7 +169,10 @@
     {
       "id": "cs-isl-grammar-in",
       "kind": "islandIntro",
-      "trigger": { "type": "islandIntro", "island": "special" },
+      "trigger": {
+        "type": "islandIntro",
+        "island": "special"
+      },
       "videoResourceName": "cs_isl_grammar_in",
       "posterAssetName": "cutscene_poster_grammar_in",
       "voiceoverKey": "cutscene.cs-isl-grammar-in.subtitle",
@@ -149,7 +184,10 @@
     {
       "id": "cs-isl-grammar-out",
       "kind": "islandTriumph",
-      "trigger": { "type": "islandComplete", "island": "special" },
+      "trigger": {
+        "type": "islandComplete",
+        "island": "special"
+      },
       "videoResourceName": "cs_isl_grammar_out",
       "posterAssetName": "cutscene_poster_grammar_out",
       "voiceoverKey": "cutscene.cs-isl-grammar-out.subtitle",
@@ -161,7 +199,9 @@
     {
       "id": "cs-finale",
       "kind": "finale",
-      "trigger": { "type": "allIslandsComplete" },
+      "trigger": {
+        "type": "allIslandsComplete"
+      },
       "videoResourceName": "cs_finale",
       "posterAssetName": "cutscene_poster_finale",
       "voiceoverKey": "cutscene.cs-finale.subtitle",
@@ -173,7 +213,10 @@
     {
       "id": "cs-streak-7",
       "kind": "milestone",
-      "trigger": { "type": "streak", "days": 7 },
+      "trigger": {
+        "type": "streak",
+        "days": 7
+      },
       "videoResourceName": "cs_streak_7",
       "posterAssetName": "cutscene_poster_streak_7",
       "voiceoverKey": "cutscene.cs-streak-7.subtitle",
@@ -185,7 +228,10 @@
     {
       "id": "cs-streak-30",
       "kind": "milestone",
-      "trigger": { "type": "streak", "days": 30 },
+      "trigger": {
+        "type": "streak",
+        "days": 30
+      },
       "videoResourceName": "cs_streak_30",
       "posterAssetName": "cutscene_poster_streak_30",
       "voiceoverKey": "cutscene.cs-streak-30.subtitle",
