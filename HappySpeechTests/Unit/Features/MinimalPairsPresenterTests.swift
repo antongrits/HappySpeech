@@ -43,9 +43,9 @@ final class MinimalPairsPresenterTests: XCTestCase {
         MinimalPairRound(
             id: "pair-sh-s",
             targetWord: "шар",
-            foilWord: "сар",
-            targetEmoji: "balloon.fill",
-            foilEmoji: "word_flower",
+            foilWord: "сова",
+            targetEmoji: "word_shar",
+            foilEmoji: "word_sova",
             soundContrast: "С-Ш",
             targetIsLeft: true
         )

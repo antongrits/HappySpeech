@@ -48,45 +48,45 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "miska_mishka",
             targetWord: "миска", foilWord: "мишка",
-            targetEmoji: "word_cup", foilEmoji: "word_bear",
+            targetEmoji: "word_miska", foilEmoji: "word_bear",
             soundContrast: "С-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "sova_shuba",
             targetWord: "сова", foilWord: "шуба",
-            targetEmoji: "word_bird", foilEmoji: "word_bag",
+            targetEmoji: "word_sova", foilEmoji: "word_shuba",
             soundContrast: "С-Ш", targetIsLeft: false
         ),
         MinimalPairRound(
-            id: "suk_shuk",
-            targetWord: "сук", foilWord: "шук",
-            targetEmoji: "word_flower", foilEmoji: "word_flower",
+            id: "krysa_krysha",
+            targetWord: "крыса", foilWord: "крыша",
+            targetEmoji: "word_krysa", foilEmoji: "word_krysha",
             soundContrast: "С-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "kosa_kosha",
+            id: "kosa_koshka",
             targetWord: "коса", foilWord: "кошка",
-            targetEmoji: "word_flower", foilEmoji: "word_cat",
+            targetEmoji: "word_kosa", foilEmoji: "word_koshka",
             soundContrast: "С-Ш", targetIsLeft: false
         ),
 
         // MARK: З/Ж
         MinimalPairRound(
-            id: "zima_zhima",
-            targetWord: "зима", foilWord: "жима",
-            targetEmoji: "word_window", foilEmoji: "reward_brave_heart",
+            id: "koza_kozha",
+            targetWord: "коза", foilWord: "кожа",
+            targetEmoji: "word_koza", foilEmoji: "word_kozha",
             soundContrast: "З-Ж", targetIsLeft: false
         ),
         MinimalPairRound(
-            id: "zuk_zhuk",
-            targetWord: "зук", foilWord: "жук",
-            targetEmoji: "word_flower", foilEmoji: "word_butterfly_insect",
+            id: "zub_zhuk",
+            targetWord: "зуб", foilWord: "жук",
+            targetEmoji: "word_zub", foilEmoji: "word_zhuk",
             soundContrast: "З-Ж", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "zaba_zhaba",
-            targetWord: "заба", foilWord: "жаба",
-            targetEmoji: "word_flower", foilEmoji: "word_frog",
+            id: "zima_zhaba",
+            targetWord: "зима", foilWord: "жаба",
+            targetEmoji: "word_zima", foilEmoji: "word_zhaba",
             soundContrast: "З-Ж", targetIsLeft: false
         ),
 
@@ -94,19 +94,19 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "rak_lak",
             targetWord: "рак", foilWord: "лак",
-            targetEmoji: "word_fish", foilEmoji: "word_apple",
+            targetEmoji: "word_rak", foilEmoji: "word_lak",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "rama_lama",
-            targetWord: "рама", foilWord: "лама",
-            targetEmoji: "word_window", foilEmoji: "word_cow",
+            id: "rama_luzha",
+            targetWord: "рама", foilWord: "лужа",
+            targetEmoji: "word_rama", foilEmoji: "word_luzha",
             soundContrast: "Р-Л", targetIsLeft: false
         ),
         MinimalPairRound(
-            id: "rot_lot",
-            targetWord: "рот", foilWord: "лот",
-            targetEmoji: "mouth.fill", foilEmoji: "tag.fill",
+            id: "rot_luk",
+            targetWord: "рот", foilWord: "лук",
+            targetEmoji: "word_rot", foilEmoji: "word_luk",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
 
@@ -114,167 +114,167 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "bochka_pochka",
             targetWord: "бочка", foilWord: "почка",
-            targetEmoji: "word_bag", foilEmoji: "word_apple",
+            targetEmoji: "word_bochka", foilEmoji: "word_buton",
             soundContrast: "Б-П", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "bala_pala",
-            targetWord: "бала", foilWord: "пала",
-            targetEmoji: "balloon.fill", foilEmoji: "word_tree",
+            id: "bant_pushka",
+            targetWord: "бант", foilWord: "пушка",
+            targetEmoji: "word_bant", foilEmoji: "word_pushka",
             soundContrast: "Б-П", targetIsLeft: false
         ),
         MinimalPairRound(
-            id: "bant_pant",
-            targetWord: "бант", foilWord: "пант",
-            targetEmoji: "ribbon", foilEmoji: "word_bear",
+            id: "buton_palka",
+            targetWord: "бутон", foilWord: "палка",
+            targetEmoji: "word_buton", foilEmoji: "word_palka",
             soundContrast: "Б-П", targetIsLeft: true
         ),
 
         // MARK: Д/Т
         MinimalPairRound(
-            id: "dom_tom",
-            targetWord: "дом", foilWord: "том",
-            targetEmoji: "word_house", foilEmoji: "books.vertical.fill",
+            id: "dom_dub",
+            targetWord: "дом", foilWord: "дуб",
+            targetEmoji: "word_dom", foilEmoji: "word_dub",
             soundContrast: "Д-Т", targetIsLeft: false
         ),
         MinimalPairRound(
-            id: "duk_tuk",
-            targetWord: "дук", foilWord: "тук",
-            targetEmoji: "word_flower", foilEmoji: "hammer.fill",
+            id: "dochka_tochka",
+            targetWord: "дочка", foilWord: "точка",
+            targetEmoji: "word_dochka", foilEmoji: "word_tochka",
             soundContrast: "Д-Т", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "dama_tama",
-            targetWord: "дама", foilWord: "тама",
-            targetEmoji: "mascot_lyalya_read", foilEmoji: "word_flower",
+            id: "dub_topor",
+            targetWord: "дуб", foilWord: "топор",
+            targetEmoji: "word_dub", foilEmoji: "word_topor",
             soundContrast: "Д-Т", targetIsLeft: false
         ),
 
         // MARK: Г/К
         MinimalPairRound(
-            id: "kot_god",
+            id: "kot_kalendar",
             targetWord: "кот", foilWord: "год",
-            targetEmoji: "word_cat", foilEmoji: "calendar",
+            targetEmoji: "word_cat", foilEmoji: "word_kalendar",
             soundContrast: "К-Г", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "gora_kora",
             targetWord: "гора", foilWord: "кора",
-            targetEmoji: "word_forest", foilEmoji: "word_tree",
+            targetEmoji: "word_gora", foilEmoji: "word_kora",
             soundContrast: "К-Г", targetIsLeft: true
         ),
 
         // MARK: В/Ф
         MinimalPairRound(
-            id: "vaza_faza",
-            targetWord: "ваза", foilWord: "фаза",
-            targetEmoji: "word_cup", foilEmoji: "bolt.fill",
+            id: "vaza_volna",
+            targetWord: "ваза", foilWord: "волна",
+            targetEmoji: "word_vaza", foilEmoji: "word_volna",
             soundContrast: "В-Ф", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "volk_folk",
-            targetWord: "волк", foilWord: "фолк",
-            targetEmoji: "word_fox", foilEmoji: "music.note",
+            id: "volk_konfeta",
+            targetWord: "волк", foilWord: "конфета",
+            targetEmoji: "word_volk", foilEmoji: "word_konfeta",
             soundContrast: "В-Ф", targetIsLeft: false
         ),
 
         // MARK: Ж/Ш
         MinimalPairRound(
-            id: "zhuk_shuk_2",
-            targetWord: "жук", foilWord: "шук",
-            targetEmoji: "word_butterfly_insect", foilEmoji: "word_flower",
+            id: "zhuk_shar",
+            targetWord: "жук", foilWord: "шар",
+            targetEmoji: "word_zhuk", foilEmoji: "word_shar",
             soundContrast: "Ж-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "zhar_shar",
-            targetWord: "жар", foilWord: "шар",
-            targetEmoji: "flame.fill", foilEmoji: "balloon.fill",
+            id: "zhar_shuba",
+            targetWord: "жара", foilWord: "шуба",
+            targetEmoji: "word_zhara", foilEmoji: "word_shuba",
             soundContrast: "Ж-Ш", targetIsLeft: false
         ),
 
         // MARK: Ч/Щ
         MinimalPairRound(
-            id: "chelka_shelka",
-            targetWord: "чёлка", foilWord: "щёлка",
-            targetEmoji: "scissors", foilEmoji: "lock.open.fill",
+            id: "chashka_shchotka",
+            targetWord: "чашка", foilWord: "щётка",
+            targetEmoji: "word_chashka", foilEmoji: "word_shchotka",
             soundContrast: "Ч-Щ", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "chit_shit",
-            targetWord: "чит", foilWord: "щит",
-            targetEmoji: "rectangle.fill.on.rectangle.fill", foilEmoji: "shield.fill",
+            id: "myach_shchit",
+            targetWord: "мяч", foilWord: "щит",
+            targetEmoji: "word_myach", foilEmoji: "word_shchit",
             soundContrast: "Ч-Щ", targetIsLeft: false
         ),
 
         // MARK: С/З
         MinimalPairRound(
-            id: "sort_zort",
-            targetWord: "сорт", foilWord: "зорт",
-            targetEmoji: "folder.fill", foilEmoji: "word_flower",
+            id: "sova_zub",
+            targetWord: "сова", foilWord: "зуб",
+            targetEmoji: "word_sova", foilEmoji: "word_zub",
             soundContrast: "С-З", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "suk_zuk",
-            targetWord: "сук", foilWord: "зук",
-            targetEmoji: "word_flower", foilEmoji: "word_flower",
+            id: "sok_zont",
+            targetWord: "сок", foilWord: "зонт",
+            targetEmoji: "word_sok", foilEmoji: "word_zont",
             soundContrast: "С-З", targetIsLeft: false
         ),
 
         // MARK: Ш/Щ
         MinimalPairRound(
-            id: "sholk_shcholk",
-            targetWord: "шёлк", foilWord: "щёлк",
-            targetEmoji: "scissors", foilEmoji: "hand.point.up.fill",
+            id: "shuba_shchuka",
+            targetWord: "шуба", foilWord: "щука",
+            targetEmoji: "word_shuba", foilEmoji: "word_shchuka",
             soundContrast: "Ш-Щ", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "shit_shchit",
-            targetWord: "шит", foilWord: "щит",
-            targetEmoji: "scribble", foilEmoji: "shield.fill",
+            id: "shar_shchit",
+            targetWord: "шар", foilWord: "щит",
+            targetEmoji: "word_shar", foilEmoji: "word_shchit",
             soundContrast: "Ш-Щ", targetIsLeft: false
         ),
 
         // MARK: Л/Й
         MinimalPairRound(
-            id: "les_yes",
-            targetWord: "лес", foilWord: "ес",
-            targetEmoji: "word_forest", foilEmoji: "word_flower",
+            id: "les_yula",
+            targetWord: "лес", foilWord: "юла",
+            targetEmoji: "word_forest", foilEmoji: "word_yula",
             soundContrast: "Л-Й", targetIsLeft: true
         ),
 
         // MARK: М/Н
         MinimalPairRound(
-            id: "mama_nana",
-            targetWord: "мама", foilWord: "нана",
-            targetEmoji: "mascot_lyalya_read", foilEmoji: "mascot_lyalya_read",
+            id: "myach_nos",
+            targetWord: "мяч", foilWord: "нос",
+            targetEmoji: "word_myach", foilEmoji: "word_nos",
             soundContrast: "М-Н", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "mol_nol",
-            targetWord: "моль", foilWord: "ноль",
-            targetEmoji: "word_butterfly_insect", foilEmoji: "0.circle.fill",
+            id: "mel_noga",
+            targetWord: "мел", foilWord: "нога",
+            targetEmoji: "word_mel", foilEmoji: "word_noga",
             soundContrast: "М-Н", targetIsLeft: false
         ),
 
         // MARK: Г/Х
         MinimalPairRound(
-            id: "gora_hora",
-            targetWord: "гора", foilWord: "хора",
-            targetEmoji: "word_forest", foilEmoji: "figure.dance",
+            id: "gus_hleb",
+            targetWord: "гусь", foilWord: "хлеб",
+            targetEmoji: "word_gus", foilEmoji: "word_hleb",
             soundContrast: "Г-Х", targetIsLeft: true
         ),
 
         // MARK: Л/Л' (мягкость)
         MinimalPairRound(
-            id: "lisa_lysa",
-            targetWord: "лиса", foilWord: "лыса",
-            targetEmoji: "word_fox", foilEmoji: "person.fill",
+            id: "lisa_los",
+            targetWord: "лиса", foilWord: "лось",
+            targetEmoji: "word_fox", foilEmoji: "word_los",
             soundContrast: "Л-Л'", targetIsLeft: true
         ),
         MinimalPairRound(
-            id: "luk_lyuk",
-            targetWord: "лук", foilWord: "люк",
-            targetEmoji: "word_apple", foilEmoji: "word_door",
+            id: "luk_dver",
+            targetWord: "лук", foilWord: "дверь",
+            targetEmoji: "word_luk", foilEmoji: "word_dver",
             soundContrast: "Л-Л'", targetIsLeft: false
         ),
 
@@ -282,7 +282,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "roza_koza",
             targetWord: "роза", foilWord: "коза",
-            targetEmoji: "word_flower", foilEmoji: "word_cow",
+            targetEmoji: "word_rose", foilEmoji: "word_koza",
             soundContrast: "Р-К", targetIsLeft: true
         )
     ]

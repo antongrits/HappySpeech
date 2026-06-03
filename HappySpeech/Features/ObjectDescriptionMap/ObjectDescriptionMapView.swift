@@ -165,7 +165,7 @@ struct ObjectDescriptionMapView: View {
             .padding(.top, SpacingTokens.sp2)
 
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
                     if let load = holder.loadVM {
                         ForEach(load.categoriesInOrder, id: \.self) { category in
                             categorySection(
@@ -184,7 +184,9 @@ struct ObjectDescriptionMapView: View {
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
+                .padding(.bottom, SpacingTokens.sp4)
             }
+            .scrollBounceBehavior(.basedOnSize)
             instructionBar
         }
     }
@@ -198,7 +200,7 @@ struct ObjectDescriptionMapView: View {
                 columns: [GridItem(.adaptive(minimum: 110), spacing: SpacingTokens.sp2)],
                 spacing: SpacingTokens.sp2
             ) {
-                ForEach(Array(items.enumerated()), id: \.element.id) { index, object in
+                ForEach(items) { object in
                     objectButton(object)
                         .scrollTransition(.animated(
                             reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
@@ -207,8 +209,6 @@ struct ObjectDescriptionMapView: View {
                                 .opacity(phase.isIdentity ? 1 : 0)
                                 .scaleEffect(phase.isIdentity ? 1 : 0.9)
                         }
-                        .hsParallaxTile(factor: 0.22)
-                        .zIndex(Double(items.count - index))
                 }
             }
         }
