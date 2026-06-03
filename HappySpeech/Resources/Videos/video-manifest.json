@@ -808,7 +808,7 @@
       "title": "Страна Звуков уснула",
       "cutscene_id": "cs-prologue",
       "kind": "prologue",
-      "duration_sec": 40.0,
+      "duration_sec": 17.0,
       "size_bytes": 7334319,
       "video_ready": true,
       "has_audio": true
@@ -819,7 +819,7 @@
       "title": "Остров Свистящих спит",
       "cutscene_id": "cs-isl-whistling-in",
       "kind": "islandIntro",
-      "duration_sec": 32.0,
+      "duration_sec": 19.0,
       "size_bytes": 6422057,
       "video_ready": true,
       "has_audio": true
@@ -830,7 +830,7 @@
       "title": "Остров Свистящих ожил",
       "cutscene_id": "cs-isl-whistling-out",
       "kind": "islandTriumph",
-      "duration_sec": 24.0,
+      "duration_sec": 14.0,
       "size_bytes": 8251741,
       "video_ready": true,
       "has_audio": true
@@ -841,7 +841,7 @@
       "title": "Остров Шипящих спит",
       "cutscene_id": "cs-isl-hissing-in",
       "kind": "islandIntro",
-      "duration_sec": 30.4,
+      "duration_sec": 22.0,
       "size_bytes": 9903932,
       "video_ready": true,
       "has_audio": true
@@ -852,7 +852,7 @@
       "title": "Остров Шипящих ожил",
       "cutscene_id": "cs-isl-hissing-out",
       "kind": "islandTriumph",
-      "duration_sec": 24.0,
+      "duration_sec": 6.0,
       "size_bytes": 15729246,
       "video_ready": true,
       "has_audio": true
@@ -863,7 +863,7 @@
       "title": "Остров Аффрикат спит",
       "cutscene_id": "cs-isl-affr-in",
       "kind": "islandIntro",
-      "duration_sec": 32.0,
+      "duration_sec": 11.0,
       "video_ready": true
     },
     {
@@ -872,7 +872,7 @@
       "title": "Остров Аффрикат ожил",
       "cutscene_id": "cs-isl-affr-out",
       "kind": "islandTriumph",
-      "duration_sec": 24.0,
+      "duration_sec": 14.0,
       "video_ready": true
     },
     {
@@ -881,7 +881,7 @@
       "title": "Остров Соноров спит",
       "cutscene_id": "cs-isl-sonor-in",
       "kind": "islandIntro",
-      "duration_sec": 37.2,
+      "duration_sec": 14.0,
       "size_bytes": 13187456,
       "video_ready": true,
       "has_audio": true
@@ -892,7 +892,7 @@
       "title": "Остров Соноров ожил",
       "cutscene_id": "cs-isl-sonor-out",
       "kind": "islandTriumph",
-      "duration_sec": 36.9,
+      "duration_sec": 21.0,
       "size_bytes": 24143440,
       "video_ready": true,
       "has_audio": true

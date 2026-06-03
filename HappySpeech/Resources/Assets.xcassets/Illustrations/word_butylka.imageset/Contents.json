@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "word_butylka.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "word_butylka@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "word_butylka@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

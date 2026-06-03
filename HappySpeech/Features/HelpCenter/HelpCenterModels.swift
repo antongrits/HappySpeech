@@ -365,12 +365,13 @@ public enum HelpCenterCorpus {
         }
 
     /// Длительности кат-сцен (сек) — зеркало `cutscenes`-секции video-manifest.
+    /// Значения измерены ffprobe из реальных mp4-файлов в бандле.
     private static let cutsceneDurationSeconds: [String: Int] = [
-        "cs-prologue": 40,
-        "cs-isl-whistling-in": 32, "cs-isl-whistling-out": 24,
-        "cs-isl-hissing-in": 32, "cs-isl-hissing-out": 24,
-        "cs-isl-affr-in": 32, "cs-isl-affr-out": 24,
-        "cs-isl-sonor-in": 40, "cs-isl-sonor-out": 40,
+        "cs-prologue": 17,
+        "cs-isl-whistling-in": 19, "cs-isl-whistling-out": 14,
+        "cs-isl-hissing-in": 22, "cs-isl-hissing-out": 6,
+        "cs-isl-affr-in": 11, "cs-isl-affr-out": 14,
+        "cs-isl-sonor-in": 14, "cs-isl-sonor-out": 21,
         "cs-isl-velar-in": 32, "cs-isl-velar-out": 24,
         "cs-isl-grammar-in": 32, "cs-isl-grammar-out": 24,
         "cs-finale": 56, "cs-streak-7": 16, "cs-streak-30": 16

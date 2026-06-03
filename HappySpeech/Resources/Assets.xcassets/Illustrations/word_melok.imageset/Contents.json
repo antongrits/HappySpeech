@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "word_melok.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "word_melok@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "word_melok@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
