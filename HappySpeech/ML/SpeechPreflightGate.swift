@@ -129,21 +129,47 @@ public final class LiveSpeechPreflightGate: SpeechPreflightGating, @unchecked Se
             return nil
         }
 
-        var consumed = false
+        // `AVAudioConverter` зовёт input-блок синхронно на текущем потоке, но под
+        // Swift 6 блок помечен `@Sendable`, поэтому состояние «отдан ли буфер»
+        // держим в reference-боксе, а не в захваченной `var` (иначе data-race warning).
+        let inputState = ConverterInputState(buffer: sourceBuffer)
         var convertError: NSError?
         let status = converter.convert(to: outBuffer, error: &convertError) { _, inputStatus in
-            if consumed {
-                inputStatus.pointee = .noDataNow
-                return nil
-            }
-            consumed = true
-            inputStatus.pointee = .haveData
-            return sourceBuffer
+            inputState.next(into: inputStatus)
         }
         guard status != .error, convertError == nil, outBuffer.frameLength > 0 else {
             return nil
         }
         return outBuffer
+    }
+}
+
+// MARK: - ConverterInputState
+
+/// Reference-бокс одноразовой выдачи входного буфера для `AVAudioConverter`.
+///
+/// `AVAudioConverter.convert(to:error:withInputFrom:)` вызывает input-блок
+/// синхронно на текущем потоке, но под Swift 6 блок помечен `@Sendable`, поэтому
+/// изменяемое состояние нельзя держать в захваченной `var` (data-race warning).
+/// Класс отдаёт буфер ровно один раз, затем сообщает `.noDataNow`.
+/// `@unchecked Sendable` обоснован: мутация происходит синхронно внутри
+/// единственного вызова конвертера, без конкурентного доступа.
+private final class ConverterInputState: @unchecked Sendable {
+    private let buffer: AVAudioPCMBuffer
+    private var consumed = false
+
+    init(buffer: AVAudioPCMBuffer) {
+        self.buffer = buffer
+    }
+
+    func next(into status: UnsafeMutablePointer<AVAudioConverterInputStatus>) -> AVAudioBuffer? {
+        if consumed {
+            status.pointee = .noDataNow
+            return nil
+        }
+        consumed = true
+        status.pointee = .haveData
+        return buffer
     }
 }
 

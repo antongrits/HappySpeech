@@ -56,7 +56,8 @@ final class HelpCenterPresenterTests: XCTestCase {
         await sut.presentLoad(response: .init(
             categories: [.gettingStarted],
             entries: [],
-            videos: []
+            videos: [],
+            cinema: []
         ))
         XCTAssertNotNil(spy.loadVM)
         XCTAssertTrue(spy.loadVM?.categories.isEmpty == true)
@@ -68,7 +69,8 @@ final class HelpCenterPresenterTests: XCTestCase {
         await sut.presentLoad(response: .init(
             categories: [.gettingStarted],
             entries: [entry],
-            videos: []
+            videos: [],
+            cinema: []
         ))
         XCTAssertEqual(spy.loadVM?.categories.count, 1)
         XCTAssertEqual(spy.loadVM?.categories.first?.entries.count, 1)
@@ -76,21 +78,45 @@ final class HelpCenterPresenterTests: XCTestCase {
 
     func test_presentLoad_contactCtaNotEmpty() async {
         let (sut, spy) = makeSUT()
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: []))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [], cinema: []))
         XCTAssertFalse(spy.loadVM?.contactCta.isEmpty ?? true)
         XCTAssertFalse(spy.loadVM?.contactDescription.isEmpty ?? true)
     }
 
     func test_presentLoad_videoSectionTitleNotEmpty() async {
         let (sut, spy) = makeSUT()
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: []))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [], cinema: []))
         XCTAssertFalse(spy.loadVM?.videoSection.title.isEmpty ?? true)
+    }
+
+    func test_presentLoad_cinemaSection_distinctFromVideoSection() async {
+        let (sut, spy) = makeSUT()
+        let cinema = makeVideo(id: "cutscene-cs-prologue", durationSeconds: 40)
+        await sut.presentLoad(response: .init(
+            categories: [],
+            entries: [],
+            videos: [makeVideo(id: "tut-1")],
+            cinema: [cinema]
+        ))
+        // Кинозал — отдельная секция со своим заголовком и своими ячейками.
+        XCTAssertFalse(spy.loadVM?.cinemaSection.title.isEmpty ?? true)
+        XCTAssertEqual(spy.loadVM?.cinemaSection.videos.count, 1)
+        XCTAssertEqual(spy.loadVM?.cinemaSection.videos.first?.id, "cutscene-cs-prologue")
+        XCTAssertEqual(spy.loadVM?.videoSection.videos.count, 1)
+        XCTAssertEqual(spy.loadVM?.videoSection.videos.first?.id, "tut-1")
+        XCTAssertNotEqual(spy.loadVM?.cinemaSection.title, spy.loadVM?.videoSection.title)
+    }
+
+    func test_presentLoad_emptyCinema_cinemaSectionEmpty() async {
+        let (sut, spy) = makeSUT()
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [], cinema: []))
+        XCTAssertTrue(spy.loadVM?.cinemaSection.videos.isEmpty ?? false)
     }
 
     func test_presentLoad_videoCell_durationLabel_formattedCorrectly() async {
         let (sut, spy) = makeSUT()
         let video = makeVideo(durationSeconds: 125)
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video]))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video], cinema: []))
         let cell = spy.loadVM?.videoSection.videos.first
         XCTAssertEqual(cell?.durationLabel, "2:05")
     }
@@ -98,7 +124,7 @@ final class HelpCenterPresenterTests: XCTestCase {
     func test_presentLoad_videoCell_zeroDuration_formattedAsZero() async {
         let (sut, spy) = makeSUT()
         let video = makeVideo(durationSeconds: 0)
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video]))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video], cinema: []))
         let cell = spy.loadVM?.videoSection.videos.first
         XCTAssertEqual(cell?.durationLabel, "0:00")
     }
@@ -106,13 +132,13 @@ final class HelpCenterPresenterTests: XCTestCase {
     func test_presentLoad_videoCell_exactlyOneMinute() async {
         let (sut, spy) = makeSUT()
         let video = makeVideo(durationSeconds: 60)
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video]))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [video], cinema: []))
         XCTAssertEqual(spy.loadVM?.videoSection.videos.first?.durationLabel, "1:00")
     }
 
     func test_presentLoad_videoCell_accessibilityLabelNotEmpty() async {
         let (sut, spy) = makeSUT()
-        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [makeVideo()]))
+        await sut.presentLoad(response: .init(categories: [], entries: [], videos: [makeVideo()], cinema: []))
         XCTAssertFalse(spy.loadVM?.videoSection.videos.first?.accessibilityLabel.isEmpty ?? true)
     }
 
@@ -122,7 +148,8 @@ final class HelpCenterPresenterTests: XCTestCase {
         await sut.presentLoad(response: .init(
             categories: [.voiceRecognition],
             entries: [entry],
-            videos: []
+            videos: [],
+            cinema: []
         ))
         XCTAssertFalse(spy.loadVM?.categories.first?.symbolName.isEmpty ?? true)
     }

@@ -221,6 +221,19 @@ enum ARTutorialCatalog {
                 animationSystemSymbol: "book.pages",
                 accentColorIndex: 3
             )
+        case "sound-hunter-room":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.soundHunter.title",
+                bodyKey: "ar.tutorial.soundHunter.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.viewfinder", textKey: "ar.tutorial.soundHunter.step1"),
+                    ARTutorialStep(id: "s2", icon: "binoculars.fill", textKey: "ar.tutorial.soundHunter.step2"),
+                    ARTutorialStep(id: "s3", icon: "mic.fill", textKey: "ar.tutorial.soundHunter.step3")
+                ],
+                animationSystemSymbol: "binoculars.fill",
+                accentColorIndex: 2
+            )
         case "ar-songs", "ar-fairy-tale", "ar-breathing-exercise":
             // v32 placeholder тайлы используют общий tutorial AR-зеркала — точка
             // входа одинаковая, инструкция корректна. Когда появятся реальные
@@ -448,6 +461,9 @@ public enum ARGameDestination: String, Sendable, Hashable, CaseIterable {
     case soundAndFace
     case poseSequence
     case arStoryQuest
+    /// «Звуковой охотник по комнате» — Apple Vision классифицирует предмет с
+    /// задней камеры, ребёнок находит и называет предмет с целевым звуком.
+    case soundHunter
 }
 
 // MARK: - ARGameCard (view-ready)
@@ -559,6 +575,22 @@ enum ARGameCatalog {
             targetSounds: [],
             requiresFaceTracking: true,
             destination: .arStoryQuest
+        ),
+
+        // «Звуковой охотник по комнате» — задняя камера + Apple Vision
+        // (ClassifyImageRequest, iOS 18+). НЕ требует face tracking — работает на
+        // любом устройстве с задней камерой; на iOS 17 / без камеры падает в
+        // фоллбэк фото-карточек.
+        ARGame(
+            id: "sound-hunter-room",
+            nameKey: "ar.game.soundHunter.name",
+            descriptionKey: "ar.game.soundHunter.desc",
+            iconName: "binoculars.fill",
+            difficulty: 2,
+            estimatedMinutes: 5,
+            targetSounds: ["С", "З", "Ц", "Ш", "Ж", "Ч", "Щ", "Р", "Л", "К", "Г", "Х"],
+            requiresFaceTracking: false,
+            destination: .soundHunter
         ),
 
         // v32 P2 — 3 placeholder тайла. Все они пока маршрутизируются на

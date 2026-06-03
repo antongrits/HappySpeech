@@ -11,24 +11,9 @@
       "description": "Трейлер приложения"
     },
     {
-      "id": "transition_correct",
+      "id": "transition_1",
       "duration": 1.5,
-      "description": "Переход — верный ответ"
-    },
-    {
-      "id": "transition_wrong",
-      "duration": 1.5,
-      "description": "Переход — неверный ответ"
-    },
-    {
-      "id": "transition_levelup",
-      "duration": 2.0,
-      "description": "Повышение уровня"
-    },
-    {
-      "id": "transition_complete",
-      "duration": 2.0,
-      "description": "Завершение сессии"
+      "description": "Переход между заданиями"
     },
     {
       "id": "celebrate_star1",

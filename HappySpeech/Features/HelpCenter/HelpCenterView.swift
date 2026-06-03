@@ -88,6 +88,7 @@ struct HelpCenterView: View {
                             heroSection
                             faqSection(viewModel: viewModel)
                             videoSection(viewModel: viewModel.videoSection)
+                            cinemaSection(viewModel: viewModel.cinemaSection)
                             contactSection(viewModel: viewModel)
                         } else {
                             loadingSection
@@ -169,17 +170,8 @@ struct HelpCenterView: View {
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
 
-            ForEach(Array(viewModel.categories.enumerated()), id: \.element.id) { index, category in
+            ForEach(viewModel.categories) { category in
                 categorySection(category)
-                    .scrollTransition(
-                        .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))
-                    ) { content, phase in
-                        content
-                            .opacity(phase.isIdentity ? 1 : 0)
-                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
-                    }
-                    .hsParallaxTile(factor: 0.16)
-                    .zIndex(Double(viewModel.categories.count - index))
             }
         }
     }
@@ -269,6 +261,26 @@ struct HelpCenterView: View {
 
     @ViewBuilder
     private func videoSection(viewModel: HelpCenterModels.Load.VideoSectionViewModel) -> some View {
+        videoListSection(viewModel: viewModel, emptyTextKey: "helpCenter.video.empty")
+    }
+
+    // MARK: - Cinema («Мультфильм о Ляле»)
+
+    @ViewBuilder
+    private func cinemaSection(viewModel: HelpCenterModels.Load.VideoSectionViewModel) -> some View {
+        // Кинозал показываем только при наличии готовых кат-сцен — иначе секции нет.
+        if !viewModel.videos.isEmpty {
+            videoListSection(viewModel: viewModel, emptyTextKey: nil)
+        }
+    }
+
+    // MARK: - Generic video list section
+
+    @ViewBuilder
+    private func videoListSection(
+        viewModel: HelpCenterModels.Load.VideoSectionViewModel,
+        emptyTextKey: LocalizedStringKey?
+    ) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(viewModel.title)
@@ -282,28 +294,21 @@ struct HelpCenterView: View {
             }
 
             if viewModel.videos.isEmpty {
-                Text("helpCenter.video.empty")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .padding(SpacingTokens.sp4)
-                    .frame(maxWidth: .infinity)
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.sm)
-                            .fill(ColorTokens.Parent.surface)
-                    )
+                if let emptyTextKey {
+                    Text(emptyTextKey)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .padding(SpacingTokens.sp4)
+                        .frame(maxWidth: .infinity)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                                .fill(ColorTokens.Parent.surface)
+                        )
+                }
             } else {
                 VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(Array(viewModel.videos.enumerated()), id: \.element.id) { index, video in
+                    ForEach(viewModel.videos) { video in
                         videoCell(video)
-                            .scrollTransition(
-                                .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
-                            ) { content, phase in
-                                content
-                                    .opacity(phase.isIdentity ? 1 : 0)
-                                    .scaleEffect(phase.isIdentity ? 1 : 0.94)
-                            }
-                            .hsParallaxTile(factor: 0.20)
-                            .zIndex(Double(viewModel.videos.count - index))
                     }
                 }
             }

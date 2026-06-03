@@ -270,6 +270,14 @@ enum AppRoute: Hashable {
     /// Текстовые методические вопросы взрослого → обоснованный ответ + источники.
     /// COPPA: НИКОГДА из детского контура.
     case methodologyAssistant
+
+    // MARK: - AR Sound Hunter (Vision room object hunting)
+
+    /// «Звуковой охотник по комнате» (kid): задняя камера + Apple Vision
+    /// (`ClassifyImageRequest`, iOS 18+) распознаёт предмет в комнате → ребёнок
+    /// находит и называет предмет с целевым звуком → on-device скоринг. Фоллбэк
+    /// на фото-карточки без камеры / на iOS 17. COPPA: всё on-device.
+    case arSoundHunter(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1161,6 +1169,14 @@ struct AppCoordinatorView: View {
         case .methodologyAssistant:
             MethodologyAssistantView()
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - AR Sound Hunter
+
+        case .arSoundHunter(let childId):
+            NavigationStack {
+                ARSoundHunterView(childId: childId)
+            }
+            .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1724,6 +1740,10 @@ extension AppCoordinatorView {
         // MARK: Cad-task-1: Methodology Assistant
         case "methodologyAssistant", "methodology", "assistant":
             return .methodologyAssistant
+
+        // MARK: AR Sound Hunter (Vision room object hunting)
+        case "arSoundHunter", "soundHunter", "soundHunterRoom":
+            return .arSoundHunter(childId: previewChild)
 
         default:
             return .auth

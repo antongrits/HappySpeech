@@ -2106,6 +2106,28 @@
         }
       }
     },
+    "ar.game.soundHunter.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди в комнате предмет с нужным звуком и назови его"
+          }
+        }
+      }
+    },
+    "ar.game.soundHunter.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой охотник"
+          }
+        }
+      }
+    },
     "ar.holdPose.result": {
       "extractionState": "manual",
       "localizations": {
@@ -3359,6 +3381,61 @@
         }
       }
     },
+    "ar.tutorial.soundHunter.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наведи камеру на комнату, найди предмет с нужным звуком и назови его вслух!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundHunter.step1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наведи камеру на предметы вокруг"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundHunter.step2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди предмет с нужным звуком"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundHunter.step3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назови его — Ляля послушает"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundHunter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой охотник"
+          }
+        }
+      }
+    },
     "ar.zone.activitiesSection": {
       "extractionState": "manual",
       "localizations": {
@@ -3742,6 +3819,160 @@
           "stringUnit": {
             "state": "translated",
             "value": "AR не поддерживается"
+          }
+        }
+      }
+    },
+    "arSoundHunter.card.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери предмет, чтобы назвать его"
+          }
+        }
+      }
+    },
+    "arSoundHunter.cta.huntMore": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Искать ещё"
+          }
+        }
+      }
+    },
+    "arSoundHunter.cta.listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
+          }
+        }
+      }
+    },
+    "arSoundHunter.cta.sayWord": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказать слово"
+          }
+        }
+      }
+    },
+    "arSoundHunter.cta.sayWord.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми и произнеси название предмета"
+          }
+        }
+      }
+    },
+    "arSoundHunter.feedback.didntHear": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я тебя не расслышала. Скажи ещё раз!"
+          }
+        }
+      }
+    },
+    "arSoundHunter.feedback.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Чистый звук!"
+          }
+        }
+      }
+    },
+    "arSoundHunter.feedback.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Уже почти получилось!"
+          }
+        }
+      }
+    },
+    "arSoundHunter.feedback.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая попытка! Попробуем ещё разок"
+          }
+        }
+      }
+    },
+    "arSoundHunter.prompt.findAndName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди и назови предмет со звуком «%@»"
+          }
+        }
+      }
+    },
+    "arSoundHunter.prompt.nameIt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назови предмет: %@"
+          }
+        }
+      }
+    },
+    "arSoundHunter.stars.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %d из трёх"
+          }
+        }
+      }
+    },
+    "arSoundHunter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой охотник"
+          }
+        }
+      }
+    },
+    "arSoundHunter.totalFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найдено: %d"
           }
         }
       }
@@ -12671,6 +12902,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Неделя с Лялей"
+          }
+        }
+      }
+    },
+    "cutscene.helpcenter.section.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Re-watch the story of Lyalya travelling through the Land of Sounds."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пересмотрите историю путешествия Ляли по Стране Звуков."
           }
         }
       }

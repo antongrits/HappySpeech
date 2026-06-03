@@ -308,3 +308,48 @@ public struct PronunciationScore: Codable, Sendable, Equatable {
         case excellent, good, improving, needsPractice
     }
 }
+
+// MARK: - StreakCalculator
+
+/// Единый источник правды для расчёта серии активных дней подряд.
+///
+/// Используется в ChildHomeInteractor, WorldMapInteractor и любых других местах,
+/// где нужен стрик. Гарантирует идентичный алгоритм везде:
+///   - «Активный день» — день, в который есть хотя бы одна сессия.
+///   - Серия считается от сегодня или вчера назад подряд.
+///   - Если ни сегодня, ни вчера не было практики — стрик 0.
+public enum StreakCalculator {
+
+    /// Считает trailing-run серию активных дней из списка сессий.
+    /// - Parameters:
+    ///   - sessions: список `SessionDTO` за произвольный период.
+    ///   - calendar: календарь (по умолчанию `.current`).
+    ///   - referenceDate: дата «сегодня» (параметр для тестируемости; по умолчанию `Date()`).
+    /// - Returns: количество дней подряд с активностью, заканчивающихся сегодня или вчера.
+    public static func activeDayStreak(
+        in sessions: [SessionDTO],
+        calendar: Calendar = .current,
+        referenceDate: Date = Date()
+    ) -> Int {
+        let today = calendar.startOfDay(for: referenceDate)
+        let activeDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
+        guard !activeDays.isEmpty else { return 0 }
+
+        // Стартуем с сегодня; если сегодня не было — пробуем вчера.
+        var cursor = today
+        if !activeDays.contains(cursor) {
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor),
+                  activeDays.contains(yesterday) else {
+                return 0
+            }
+            cursor = yesterday
+        }
+        var streak = 0
+        while activeDays.contains(cursor) {
+            streak += 1
+            guard let previous = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = previous
+        }
+        return streak
+    }
+}

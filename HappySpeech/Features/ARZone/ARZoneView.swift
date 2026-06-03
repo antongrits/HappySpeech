@@ -366,6 +366,7 @@ struct ARZoneView: View {
         case .soundAndFace:    SoundAndFaceView()
         case .poseSequence:    PoseSequenceView()
         case .arStoryQuest:    ARStoryQuestView()
+        case .soundHunter:     ARSoundHunterView(childId: "")
         }
     }
 }

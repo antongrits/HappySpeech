@@ -7,9 +7,11 @@ import XCTest
 private final class StubFAQRepositoryWorker: FAQRepositoryWorkerProtocol {
     var faqs: [FAQEntry] = HelpCenterCorpus.faqs
     var videos: [TutorialVideo] = HelpCenterCorpus.videos
+    var cinema: [TutorialVideo] = HelpCenterCorpus.cutsceneMovies
     var videoExistsResult = true
     private(set) var loadFAQCallCount = 0
     private(set) var loadVideosCallCount = 0
+    private(set) var loadCinemaCallCount = 0
     private(set) var videoExistsCallCount = 0
 
     func loadFAQ() async -> [FAQEntry] {
@@ -19,6 +21,10 @@ private final class StubFAQRepositoryWorker: FAQRepositoryWorkerProtocol {
     func loadVideos() async -> [TutorialVideo] {
         loadVideosCallCount += 1
         return videos
+    }
+    func loadCinema() async -> [TutorialVideo] {
+        loadCinemaCallCount += 1
+        return cinema
     }
     func videoExists(_ resourceName: String) -> Bool {
         videoExistsCallCount += 1

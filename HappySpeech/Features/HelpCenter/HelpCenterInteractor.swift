@@ -67,13 +67,15 @@ final class HelpCenterInteractor: HelpCenterBusinessLogic, HelpCenterDataStore {
         _ = request
         let faqs = await faqWorker.loadFAQ()
         let videos = await faqWorker.loadVideos()
+        let cinema = await faqWorker.loadCinema()
 
         let response = HelpCenterModels.Load.Response(
             categories: FAQCategory.allCases,
             entries: faqs,
-            videos: videos
+            videos: videos,
+            cinema: cinema
         )
-        Self.logger.debug("Loaded HelpCenter: \(faqs.count) FAQ, \(videos.count) videos")
+        Self.logger.debug("Loaded HelpCenter: \(faqs.count) FAQ, \(videos.count) videos, \(cinema.count) cutscenes")
         await presenter?.presentLoad(response: response)
     }
 

@@ -7,6 +7,8 @@ import OSLog
 protocol FAQRepositoryWorkerProtocol: AnyObject {
     func loadFAQ() async -> [FAQEntry]
     func loadVideos() async -> [TutorialVideo]
+    /// Кат-сцены «кинозала» — только те, чьи видеофайлы реально лежат в bundle.
+    func loadCinema() async -> [TutorialVideo]
     /// Возвращает true, если видеофайл существует в bundle.
     func videoExists(_ resourceName: String) -> Bool
 }
@@ -40,14 +42,24 @@ final class FAQRepositoryWorker: FAQRepositoryWorkerProtocol {
         return videos
     }
 
+    func loadCinema() async -> [TutorialVideo] {
+        // Кат-сцены — только с реально существующим видеофайлом в бандле,
+        // чтобы в кинозале не было пустых/битых строк.
+        let cinema = HelpCenterCorpus.cutsceneMovies.filter { videoExists($0.resourceName) }
+        Self.logger.debug("Loaded \(cinema.count)/\(HelpCenterCorpus.cutsceneMovies.count) cutscenes")
+        return cinema
+    }
+
     func videoExists(_ resourceName: String) -> Bool {
         // `Videos` подключён как folder-reference: в бандле сохраняется структура.
         // Туториалы — в `Videos/tutorials/`, обучающие видео-мультики (Veo) —
-        // в `Videos/lessons/edu/`. Проверяем оба каталога.
+        // в `Videos/lessons/edu/`, кат-сцены кинозала — в `Videos/cutscenes/`.
         Bundle.main.url(
             forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/tutorials"
         ) != nil || Bundle.main.url(
             forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/lessons/edu"
+        ) != nil || Bundle.main.url(
+            forResource: resourceName, withExtension: "mp4", subdirectory: "Videos/cutscenes"
         ) != nil
     }
 }

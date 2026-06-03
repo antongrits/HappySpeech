@@ -100,11 +100,13 @@ enum HelpCenterModels {
             let categories: [FAQCategory]
             let entries: [FAQEntry]
             let videos: [TutorialVideo]
+            let cinema: [TutorialVideo]
         }
 
         struct ViewModel: Sendable {
             let categories: [CategoryViewModel]
             let videoSection: VideoSectionViewModel
+            let cinemaSection: VideoSectionViewModel
             let contactCta: String
             let contactDescription: String
         }
@@ -342,22 +344,25 @@ public enum HelpCenterCorpus {
         .init(id: "movie-gym", titleKey: "helpCenter.video.movie_gym.title",
               descriptionKey: "helpCenter.video.movie_gym.description",
               resourceName: "story_tongue_gym", durationSeconds: 48, symbolName: "figure.flexibility")
-    ] + cutsceneMovies
+    ]
 
-    /// «Кинозал» — раздел «Мультфильм о Ляле»: все кат-сцены доступны для
-    /// пересмотра всегда (read-only, parent-контур; `seen` НЕ проверяется).
-    /// Источник — `CutsceneCatalog.movieReel`. Кат-сцены без видео показывают
-    /// «видео недоступно» в sheet (graceful), пока ролик не сгенерирован.
-    public static let cutsceneMovies: [TutorialVideo] = CutsceneCatalog.movieReel.map { cutscene in
-        TutorialVideo(
-            id: "cutscene-\(cutscene.id)",
-            titleKey: "cutscene.helpcenter.\(cutscene.id).title",
-            descriptionKey: cutscene.voiceoverKey,
-            resourceName: cutscene.videoResourceName,
-            durationSeconds: cutsceneDurationSeconds[cutscene.id] ?? 30,
-            symbolName: "sparkles.tv.fill"
-        )
-    }
+    /// «Кинозал» — раздел «Мультфильм о Ляле»: кат-сцены, доступные для
+    /// пересмотра (read-only, parent-контур; `seen` НЕ проверяется).
+    /// Источник — `CutsceneCatalog.movieReel`. Показываем ТОЛЬКО кат-сцены с
+    /// готовым видео (`videoReady`), чтобы в кинозале не было пустых строк;
+    /// дополнительная проверка наличия файла в бандле — в `FAQRepositoryWorker`.
+    public static let cutsceneMovies: [TutorialVideo] = CutsceneCatalog.movieReel
+        .filter { $0.videoReady }
+        .map { cutscene in
+            TutorialVideo(
+                id: "cutscene-\(cutscene.id)",
+                titleKey: "cutscene.helpcenter.\(cutscene.id).title",
+                descriptionKey: cutscene.voiceoverKey,
+                resourceName: cutscene.videoResourceName,
+                durationSeconds: cutsceneDurationSeconds[cutscene.id] ?? 30,
+                symbolName: "sparkles.tv.fill"
+            )
+        }
 
     /// Длительности кат-сцен (сек) — зеркало `cutscenes`-секции video-manifest.
     private static let cutsceneDurationSeconds: [String: Int] = [
@@ -372,7 +377,7 @@ public enum HelpCenterCorpus {
     ]
 
     public static func video(forId id: String) -> TutorialVideo? {
-        videos.first { $0.id == id }
+        videos.first { $0.id == id } ?? cutsceneMovies.first { $0.id == id }
     }
 
     public static func entry(forId id: String) -> FAQEntry? {

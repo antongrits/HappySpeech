@@ -54,31 +54,22 @@ final class HelpCenterPresenter: HelpCenterPresentationLogic {
             )
         }
 
-        let videoCells = response.videos.map { video in
-            HelpCenterModels.Load.VideoCellViewModel(
-                id: video.id,
-                title: String(localized: String.LocalizationValue(video.titleKey)),
-                description: String(localized: String.LocalizationValue(video.descriptionKey)),
-                resourceName: video.resourceName,
-                durationLabel: formatDuration(video.durationSeconds),
-                symbolName: video.symbolName,
-                accessibilityLabel: String(
-                    format: String(localized: "helpCenter.video.cell.a11y"),
-                    String(localized: String.LocalizationValue(video.titleKey)),
-                    formatDuration(video.durationSeconds)
-                )
-            )
-        }
-
         let videoSection = HelpCenterModels.Load.VideoSectionViewModel(
             title: String(localized: "helpCenter.video.section.title"),
             subtitle: String(localized: "helpCenter.video.section.subtitle"),
-            videos: videoCells
+            videos: response.videos.map(makeVideoCell)
+        )
+
+        let cinemaSection = HelpCenterModels.Load.VideoSectionViewModel(
+            title: String(localized: "cutscene.helpcenter.section.title"),
+            subtitle: String(localized: "cutscene.helpcenter.section.subtitle"),
+            videos: response.cinema.map(makeVideoCell)
         )
 
         let viewModel = HelpCenterModels.Load.ViewModel(
             categories: categoryVMs,
             videoSection: videoSection,
+            cinemaSection: cinemaSection,
             contactCta: String(localized: "helpCenter.contact.cta"),
             contactDescription: String(localized: "helpCenter.contact.description")
         )
@@ -121,6 +112,24 @@ final class HelpCenterPresenter: HelpCenterPresentationLogic {
     }
 
     // MARK: - Helpers
+
+    private func makeVideoCell(_ video: TutorialVideo) -> HelpCenterModels.Load.VideoCellViewModel {
+        let title = String(localized: String.LocalizationValue(video.titleKey))
+        let duration = formatDuration(video.durationSeconds)
+        return HelpCenterModels.Load.VideoCellViewModel(
+            id: video.id,
+            title: title,
+            description: String(localized: String.LocalizationValue(video.descriptionKey)),
+            resourceName: video.resourceName,
+            durationLabel: duration,
+            symbolName: video.symbolName,
+            accessibilityLabel: String(
+                format: String(localized: "helpCenter.video.cell.a11y"),
+                title,
+                duration
+            )
+        )
+    }
 
     private func formatDuration(_ seconds: Int) -> String {
         let minutes = seconds / 60

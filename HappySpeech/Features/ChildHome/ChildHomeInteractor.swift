@@ -64,15 +64,17 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         // Реальные данные из Realm — основной путь.
         do {
             let profile = try await childRepository.fetch(id: request.childId)
+            // Загружаем до 120 сессий для точного trailing-run стрика
+            // (аналогично WorldMapInteractor.resolveDailyStreak).
             let recentSessions = (try? await sessionRepository.fetchRecent(
                 childId: request.childId,
-                limit: 3
+                limit: 120
             )) ?? []
 
             let response = buildResponse(profile: profile, recent: recentSessions)
             presenter?.presentFetch(response)
             // Синхронизируем виджет: анонимные данные, без имени ребёнка (COPPA-safe)
-            await syncMissionWidget(response: response, streak: profile.currentStreak)
+            await syncMissionWidget(response: response, streak: response.currentStreak)
         } catch {
             logger.error("ChildHome fetch failed: \(error.localizedDescription, privacy: .public)")
             // Профиль не загрузился — честное пустое состояние, без фабрикации.
@@ -126,11 +128,17 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             requiredReps: requiredReps,
             completedReps: completedReps
         )
+        // Стрик: единый trailing-run алгоритм через StreakCalculator (аналогично WorldMap).
+        // recent содержит до 120 сессий — достаточно для точного подсчёта.
+        // Если сессий нет (новый ребёнок) — берём значение из профиля.
+        let streak = recent.isEmpty
+            ? profile.currentStreak
+            : StreakCalculator.activeDayStreak(in: recent)
         return ChildHomeModels.Fetch.Response(
             childName: profile.name,
-            currentStreak: profile.currentStreak,
+            currentStreak: streak,
             mascotMood: Self.mascotMood(
-                for: profile.currentStreak,
+                for: streak,
                 hasOverdueTask: hasOverdueTask
             ),
             mascotPhrase: Self.mascotPhrase(name: profile.name, sound: dailySound),
