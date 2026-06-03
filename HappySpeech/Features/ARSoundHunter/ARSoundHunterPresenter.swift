@@ -32,16 +32,17 @@ final class ARSoundHunterPresenter: ARSoundHunterPresentationLogic {
 
     weak var display: (any ARSoundHunterDisplayLogic)?
 
-    /// Маппинг звук → имена имейджсетов берётся через `KidWordContentProvider`
-    /// (общий источник правды по контенту). Если для слова нет ассета — карточка
-    /// рендерит SF Symbol-плейсхолдер.
+    /// Резолв слова в имя имейджсета (`word_*`) через `LessonContentMap` —
+    /// тот же путь, что используют рабочие экраны уроков (Listen-and-Choose и др.).
+    ///
+    /// Источник правды — полный `word_manifest.json`, поэтому слова без тега
+    /// группы звуков (арбуз, вертолёт) и слова из «несвистящих» групп (барабан=Б,
+    /// ведро=В) тоже резолвятся — в отличие от прежнего пути через
+    /// `KidWordContentProvider`, который перебирал лишь канонические группы
+    /// и оставлял такие карточки пустыми. Если ассета реально нет — `nil`, и
+    /// View рендерит graceful SF Symbol-плейсхолдер.
     private static func assetName(for word: String) -> String? {
-        let normalized = word.lowercased()
-        return KidWordContentProvider.allFamilies
-            .lazy
-            .flatMap { KidWordContentProvider.words(soundFamily: $0) }
-            .first { $0.text.lowercased() == normalized }?
-            .asset
+        LessonContentMap.asset(for: word)
     }
 
     func presentStartGame(_ response: ARSoundHunterModels.StartGame.Response) {

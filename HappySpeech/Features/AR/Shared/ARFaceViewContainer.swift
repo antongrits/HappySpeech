@@ -82,7 +82,10 @@ struct ARGameHUD: View {
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
-                .background(ColorTokens.Overlay.dimmer, in: Capsule())
+                // Тяжёлый scrim держит контраст белого заголовка и на тёмном
+                // кадре камеры, и на светлом тёплом фоне (фоллбэк фото-карточек),
+                // где лёгкий dimmer (10% в light) делал заголовок бледным.
+                .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
 
             Spacer()
 

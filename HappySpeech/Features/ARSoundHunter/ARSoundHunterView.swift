@@ -104,7 +104,9 @@ struct ARSoundHunterView: View {
                 }
                 Text(display.prompt)
                     .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    // Промпт-карта — светлое .elevated стекло; тёмный ink держит
+                    // контраст в обеих темах (white сливался со светлым фоном).
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
                 if display.mode == .camera, display.phase == .hunting {
