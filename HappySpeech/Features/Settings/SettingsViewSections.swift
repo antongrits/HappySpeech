@@ -1,5 +1,33 @@
 import SwiftUI
 
+// MARK: - SettingsIconLabel
+//
+// P1.1: тёплый кружок-иконка для строк настроек (заменяет голый Image в Label).
+// Размер 32pt, тёплая заливка Brand.primaryLo.opacity(0.15) + символ в Brand.primary.
+
+private struct SettingsIconLabel: View {
+    let systemName: String
+    let color: Color
+
+    init(_ systemName: String, color: Color = ColorTokens.Brand.primary) {
+        self.systemName = systemName
+        self.color = color
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(color.opacity(0.15))
+                .frame(width: 32, height: 32)
+            Image(systemName: systemName)
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(color)
+        }
+        .frame(width: 32, height: 32)
+        .accessibilityHidden(true)
+    }
+}
+
 // MARK: - SettingsView Sections + Bindings
 //
 // Секционные свойства и биндинги вынесены из `SettingsView.swift` для
@@ -50,13 +78,13 @@ extension SettingsView {
             // Block J v18 — заменён системный Picker(.segmented) на HSSegmentedPicker
             // (kavsoft-style underline indicator для parent-контура).
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                // P1.1: тёплая иконка темы (lilac = оформление/кастомизация)
                 Label {
                     Text(String(localized: "settings.theme.label"))
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "paintpalette.fill")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabel("paintpalette.fill", color: ColorTokens.Brand.lilac)
                 }
 
                 HSSegmentedPicker(
@@ -91,6 +119,7 @@ extension SettingsView {
                 showCustomizationSheet = true
             } label: {
                 HStack(spacing: SpacingTokens.regular) {
+                    // P1.1: тёплая иконка кастомизации Ляли (rose = маскот/персонаж)
                     Label {
                         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                             Text(String(localized: "settings.customization.label"))
@@ -101,8 +130,7 @@ extension SettingsView {
                                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                         }
                     } icon: {
-                        Image(systemName: "paintpalette.fill")
-                            .foregroundStyle(ColorTokens.Brand.primary)
+                        SettingsIconLabel("face.smiling.inverse", color: ColorTokens.Brand.rose)
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
@@ -174,10 +202,8 @@ extension SettingsView {
                 showDialectAdaptationSheet = true
             } label: {
                 HStack(spacing: SpacingTokens.regular) {
-                    Image(systemName: "waveform.and.mic")
-                        .font(TypographyTokens.subtitle(20))
-                        .foregroundStyle(ColorTokens.Parent.accent)
-                        .frame(width: 32, height: 32)
+                    // P1.1: тёплая иконка диалекта (gold = речь/язык)
+                    SettingsIconLabel("waveform.and.mic", color: ColorTokens.Brand.gold)
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
@@ -221,8 +247,7 @@ extension SettingsView {
                     Text(String(localized: "settings.notifications.label"))
                         .font(TypographyTokens.body(15))
                 } icon: {
-                    Image(systemName: "bell.fill")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabel("bell.fill", color: ColorTokens.Brand.butter)
                 }
             }
             .tint(ColorTokens.Brand.primary)
@@ -247,8 +272,7 @@ extension SettingsView {
                         Text(String(localized: "notifications.toggle.daily"))
                             .font(TypographyTokens.body(15))
                     } icon: {
-                        Image(systemName: "bird.fill")
-                            .foregroundStyle(ColorTokens.Brand.primary)
+                        SettingsIconLabel("bird.fill", color: ColorTokens.Brand.primary)
                     }
                 }
                 .tint(ColorTokens.Brand.primary)
@@ -263,8 +287,7 @@ extension SettingsView {
                         Text(String(localized: "notifications.toggle.weekly"))
                             .font(TypographyTokens.body(15))
                     } icon: {
-                        Image(systemName: "calendar.badge.checkmark")
-                            .foregroundStyle(ColorTokens.Parent.accent)
+                        SettingsIconLabel("calendar.badge.checkmark", color: ColorTokens.Brand.rose)
                     }
                 }
                 .tint(ColorTokens.Brand.primary)
@@ -301,8 +324,7 @@ extension SettingsView {
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     }
                 } icon: {
-                    Image(systemName: "iphone.radiowaves.left.and.right")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabel("iphone.radiowaves.left.and.right", color: ColorTokens.Brand.primary)
                 }
                 Spacer()
                 Picker("", selection: hapticsLevelBinding) {

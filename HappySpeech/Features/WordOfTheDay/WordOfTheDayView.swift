@@ -95,29 +95,35 @@ struct WordOfTheDayView: View {
     }
 
     private func illustration(interactor: WordOfTheDayInteractor) -> some View {
-        HSCard(style: .elevated) {
+        // P1.3: градиентная карточка warmSunset + слово-герой kidDisplay(40).
+        HSCard(style: .gradientTinted(GradientTokens.cardCoralButter)) {
             VStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: interactor.card.illustrationSymbol)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 140, height: 140)
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    // Step 10 Batch G — Pattern 5: pulse on illustration.
                     .hsSymbolEffect(.pulse, value: interactor.card.word)
                     .accessibilityHidden(true)
+                // P3: целевое слово — главный элемент экрана, kidDisplay(40)
                 Text(interactor.card.word.capitalized)
-                    .font(TypographyTokens.titleLarge(32))
+                    .font(TypographyTokens.kidDisplay(40))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.75)
                 Text(interactor.card.hint)
-                    .font(TypographyTokens.body(14))
+                    .font(TypographyTokens.kidBody(15))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                // Целевой звук — маленький тёплый чип
                 Text("Звук: \(interactor.card.targetSound)")
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .padding(.horizontal, SpacingTokens.sp2)
+                    .padding(.vertical, SpacingTokens.micro)
+                    .background(Capsule().fill(ColorTokens.Brand.primaryLo.opacity(0.18)))
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, SpacingTokens.sp2)

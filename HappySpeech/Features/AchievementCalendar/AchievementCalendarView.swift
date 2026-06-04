@@ -130,7 +130,8 @@ struct AchievementCalendarView: View {
     }
 
     private func calendarGrid(interactor: AchievementCalendarInteractor) -> some View {
-        HSCard(style: .flat) {
+        // P1.4: контейнер сетки — celebrationGold (тёплый, золотой тон).
+        HSCard(style: .gradientTinted(GradientTokens.cardGold)) {
             LazyVGrid(columns: columns, spacing: SpacingTokens.sp1) {
                 ForEach(Array(interactor.state.days.enumerated()), id: \.element.id) { index, entry in
                     dayCell(entry, isSelected: entry.day == interactor.state.selectedDay) {
@@ -154,23 +155,23 @@ struct AchievementCalendarView: View {
         isSelected: Bool,
         action: @escaping () -> Void
     ) -> some View {
-        Button(action: action) {
+        // P1.4: achieved days → Brand.gold filled; current → Brand.primary ring.
+        let hasAchievements = entry.achievementCount > 0
+        return Button(action: action) {
             VStack(spacing: 2) {
                 Text("\(entry.day)")
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                if entry.achievementCount > 0 {
-                    HStack(spacing: 1) {
-                        ForEach(0..<min(entry.achievementCount, 4), id: \.self) { _ in
-                            Circle()
-                                .fill(ColorTokens.Brand.primary)
-                                .frame(width: 4, height: 4)
-                        }
-                    }
+                    .font(TypographyTokens.caption(11).weight(hasAchievements ? .bold : .regular))
+                    .foregroundStyle(
+                        hasAchievements
+                            ? Color.white
+                            : ColorTokens.Parent.ink
+                    )
+                if hasAchievements {
+                    Image(systemName: "star.fill")
+                        .font(.system(size: 6))
+                        .foregroundStyle(Color.white.opacity(0.85))
                 } else {
-                    Circle()
-                        .fill(Color.clear)
-                        .frame(width: 4, height: 4)
+                    Color.clear.frame(width: 6, height: 6)
                 }
             }
             .frame(height: 38)
@@ -178,9 +179,20 @@ struct AchievementCalendarView: View {
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(
-                        isSelected
-                            ? ColorTokens.Parent.accent.opacity(0.20)
-                            : ColorTokens.Parent.surface
+                        hasAchievements
+                            ? ColorTokens.Brand.gold
+                            : isSelected
+                                ? ColorTokens.Brand.primary.opacity(0.15)
+                                : ColorTokens.Parent.surface.opacity(0.70)
+                    )
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(
+                        isSelected && !hasAchievements
+                            ? ColorTokens.Brand.primary.opacity(0.6)
+                            : Color.clear,
+                        lineWidth: 1.5
                     )
             )
         }

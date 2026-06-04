@@ -221,12 +221,13 @@ struct SettingsSpecialistConnectSheet: View {
                 .accessibilityLabel(String(localized: "settings.a11y.specialistCode"))
 
                 if isConnected {
+                    // P1.1: connected badge → Brand.gold
                     HStack(spacing: SpacingTokens.tiny) {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Semantic.success)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                         Text(String(localized: "settings.specialist.connected"))
                             .font(TypographyTokens.body(14))
-                            .foregroundStyle(ColorTokens.Semantic.success)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                     }
                 }
 
@@ -316,13 +317,14 @@ struct ModelPackRow: View {
                             .lineLimit(1)
                             .minimumScaleFactor(0.85)
                         if item.isActive {
+                            // P1.1: активная модель — gold вместо зелёного success
                             Text(String(localized: "settings.models.badge.active"))
                                 .font(TypographyTokens.caption(10).weight(.bold))
                                 .foregroundStyle(ColorTokens.Overlay.onAccent)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
                                 .background(
-                                    Capsule().fill(ColorTokens.Semantic.success)
+                                    Capsule().fill(ColorTokens.Brand.gold)
                                 )
                         }
                     }
@@ -367,19 +369,20 @@ struct ModelPackRow: View {
     }
 
     private var iconBackground: Color {
-        if item.isActive { return ColorTokens.Semantic.success.opacity(0.15) }
+        // P1.1: активная модель — gold вместо зелёного
+        if item.isActive { return ColorTokens.Brand.gold.opacity(0.15) }
         if item.isInstalled { return ColorTokens.Brand.primary.opacity(0.15) }
         return ColorTokens.Parent.line.opacity(0.6)
     }
 
     private var iconForeground: Color {
-        if item.isActive { return ColorTokens.Semantic.success }
+        if item.isActive { return ColorTokens.Brand.gold }
         if item.isInstalled { return ColorTokens.Brand.primary }
         return ColorTokens.Parent.inkMuted
     }
 
     private var actionColor: Color {
-        if item.isActive { return ColorTokens.Semantic.success }
+        if item.isActive { return ColorTokens.Brand.gold }
         if item.isInstalled { return ColorTokens.Semantic.error }
         if item.isDownloading { return ColorTokens.Parent.inkMuted }
         return ColorTokens.Brand.primary

@@ -86,44 +86,59 @@ struct SoundOfTheDayView: View {
     }
 
     private func greetingHeader(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            LyalyaMascotView(state: .waving, size: 72)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text(vm.greeting)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Text(vm.subtitle)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+        // P1.2: greetingHeader обёрнут в HSCard(.gradientTinted) с Лялей слева.
+        HSCard(style: .gradientTinted(GradientTokens.cardRosePrimary), padding: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .waving, size: 56)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text(vm.greeting)
+                        .font(TypographyTokens.kidTitle(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.8)
+                    Text(vm.subtitle)
+                        .font(TypographyTokens.kidBody(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
         }
     }
 
     private func heroCard(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
-        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+        HSCard(style: .gradientTinted(GradientTokens.cardCoralButter), padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                // Звук дня — крупная буква-якорь (P1.2, P3: kidDisplay(64))
                 HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.primary.opacity(0.12))
+                            .frame(width: 88, height: 88)
+                        Text(vm.heroTitle)
+                            .font(TypographyTokens.kidDisplay(64))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .minimumScaleFactor(0.7)
+                            .lineLimit(1)
+                    }
+                    .accessibilityHidden(true)
+
                     VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                         Text(vm.heroTitle)
-                            .font(TypographyTokens.title(24))
+                            .font(TypographyTokens.kidTitle(22))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .lineLimit(2)
                             .minimumScaleFactor(0.8)
                         Text(vm.heroReason)
-                            .font(TypographyTokens.body(14))
+                            .font(TypographyTokens.kidBody(15))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(nil)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer(minLength: 0)
-                    LyalyaMascotView(state: .celebrating, size: 80)
+                    LyalyaMascotView(state: .celebrating, size: 72)
                         .accessibilityHidden(true)
                 }
             }

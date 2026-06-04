@@ -325,12 +325,13 @@ struct ChildHomeView: View {
                     .buttonStyle(.plain)
                     .accessibilityHint(Text("child.home.streak.tap.hint"))
                 } else {
+                    // Part 2: completed mission ring → Brand.gold вместо Semantic.success
                     HSProgressRing(
                         value: viewModel.dailyMissionDetail.isCompleted ? 1.0 : 0.0,
                         size: 56,
                         lineWidth: 6,
                         color: viewModel.dailyMissionDetail.isCompleted
-                            ? ColorTokens.Semantic.success
+                            ? ColorTokens.Brand.gold
                             : ColorTokens.Brand.primary,
                         label: viewModel.dailyMissionDetail.isCompleted ? "✓" : ""
                     )

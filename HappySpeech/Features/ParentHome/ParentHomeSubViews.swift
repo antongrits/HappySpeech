@@ -80,8 +80,9 @@ struct SessionRow: View {
     }
 
     private var resultLabel: some View {
+        // Part 2: success → Brand.gold; warning залишається (янтарний = тёплый)
         let color = session.successRate >= 0.7
-            ? ColorTokens.Semantic.success
+            ? ColorTokens.Brand.gold
             : ColorTokens.Semantic.warning
         return Text(session.resultText)
             .font(TypographyTokens.mono(14))
@@ -224,9 +225,10 @@ struct SoundAccuracyChartCard: View {
 
     private var averageRow: some View {
         HStack(spacing: SpacingTokens.sp2) {
+            // Part 2: success → Brand.gold (прогресс-индикатор)
             Image(systemName: "checkmark.seal.fill")
                 .font(TypographyTokens.caption(14))
-                .foregroundStyle(ColorTokens.Semantic.success)
+                .foregroundStyle(ColorTokens.Brand.gold)
             Text(String(localized: "Средняя точность: \(Int(averageAccuracy * 100))%"))
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
@@ -238,12 +240,13 @@ struct SoundAccuracyChartCard: View {
         .padding(.top, SpacingTokens.sp1)
     }
 
-    /// Bar tint by accuracy band — green >= 80%, gold 60–79%, warning < 60%.
+    /// Bar tint by accuracy band — gold >= 80%, gold 60–79%, warning < 60%.
+    /// Part 2: Semantic.success (green) → Brand.gold для chart-баров прогресса.
     static func tint(for rate: Double) -> Color {
         if rate >= 0.80 {
-            return ColorTokens.Semantic.success
-        } else if rate >= 0.60 {
             return ColorTokens.Brand.gold
+        } else if rate >= 0.60 {
+            return ColorTokens.Brand.butter
         } else {
             return ColorTokens.Semantic.warning
         }

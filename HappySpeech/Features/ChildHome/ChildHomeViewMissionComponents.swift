@@ -109,13 +109,14 @@ struct ChildHomeDailyMissionDetailCard: View {
     }
 
     private var completedRow: some View {
+        // Part 2: mission completed → Brand.gold вместо Semantic.success (зелёный)
         HStack(spacing: SpacingTokens.sp2) {
             Image(systemName: "checkmark.seal.fill")
-                .foregroundStyle(ColorTokens.Semantic.success)
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(String(localized: "child.home.mission.completed"))
                 .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Semantic.success)
+                .foregroundStyle(ColorTokens.Brand.gold)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

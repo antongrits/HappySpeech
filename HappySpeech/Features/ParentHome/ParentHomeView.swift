@@ -537,9 +537,10 @@ private struct ParentDashboardTab: View {
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                             .lineLimit(1)
                             .minimumScaleFactor(0.85)
+                        // Part 2: success (зелёный) → Brand.gold
                         Text(session.resultText)
                             .font(TypographyTokens.headline(20))
-                            .foregroundStyle(session.successRate >= 0.7 ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
+                            .foregroundStyle(session.successRate >= 0.7 ? ColorTokens.Brand.gold : ColorTokens.Semantic.warning)
                             .lineLimit(2)
                             .minimumScaleFactor(0.85)
                     }
@@ -560,8 +561,9 @@ private struct ParentDashboardTab: View {
                     }
                 }
 
+                // Part 2: success (зелёный) → Brand.gold для progress bar
                 let tint = session.successRate >= 0.7
-                    ? ColorTokens.Semantic.success
+                    ? ColorTokens.Brand.gold
                     : ColorTokens.Semantic.warning
                 HSProgressBar(value: session.successRate, style: .parent, tint: tint)
             }
@@ -608,11 +610,12 @@ private struct ParentDashboardTab: View {
             icon: "clock.fill",
             color: ColorTokens.Brand.sky
         )
+        // Part 2: success (зелёный) → Brand.gold для stat-карточки «Средний результат»
         ParentStatCard(
             value: "\(Int((viewModel.overallRate) * 100))%",
             label: String(localized: "Средний результат"),
             icon: "checkmark.seal.fill",
-            color: ColorTokens.Semantic.success
+            color: ColorTokens.Brand.gold
         )
     }
 
@@ -717,10 +720,11 @@ private struct ParentDashboardTab: View {
     }
 
     private func severityColor(for token: String) -> Color {
+        // Part 2: default/mild screening → Brand.gold вместо зелёного success
         switch token {
         case "severe":   return ColorTokens.Semantic.error
         case "moderate": return ColorTokens.Brand.gold
-        default:          return ColorTokens.Semantic.success
+        default:          return ColorTokens.Brand.butter
         }
     }
 

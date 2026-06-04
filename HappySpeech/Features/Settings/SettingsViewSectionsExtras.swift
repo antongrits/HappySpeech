@@ -1,5 +1,32 @@
 import SwiftUI
 
+// MARK: - SettingsIconLabelExtras (private, only for this file)
+// Зеркальная копия из SettingsViewSections.swift — нужна т.к. оба файла
+// являются extensions одного типа в разных файлах; private scope не распространяется.
+
+private struct SettingsIconLabelX: View {
+    let systemName: String
+    let color: Color
+
+    init(_ systemName: String, color: Color = ColorTokens.Brand.primary) {
+        self.systemName = systemName
+        self.color = color
+    }
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(color.opacity(0.15))
+                .frame(width: 32, height: 32)
+            Image(systemName: systemName)
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(color)
+        }
+        .frame(width: 32, height: 32)
+        .accessibilityHidden(true)
+    }
+}
+
 // MARK: - SettingsView Sections + Bindings (extras)
 //
 // Вторая часть секций settings: content/model packs/data/performance/
@@ -17,8 +44,7 @@ extension SettingsView {
                     Text(String(localized: "settings.content.autoDownload"))
                         .font(TypographyTokens.body(15))
                 } icon: {
-                    Image(systemName: "arrow.down.circle.fill")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("arrow.down.circle.fill", color: ColorTokens.Brand.primary)
                 }
             }
             .tint(ColorTokens.Brand.primary)
@@ -29,8 +55,7 @@ extension SettingsView {
                     Text(String(localized: "settings.content.quality"))
                         .font(TypographyTokens.body(15))
                 } icon: {
-                    Image(systemName: "speaker.wave.3.fill")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("speaker.wave.3.fill", color: ColorTokens.Brand.butter)
                 }
                 Spacer()
                 Picker("", selection: audioQualityBinding) {
@@ -101,8 +126,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "square.and.arrow.up")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("square.and.arrow.up", color: ColorTokens.Brand.primary)
                 }
             }
             .frame(minHeight: 44)
@@ -152,8 +176,7 @@ extension SettingsView {
                             .minimumScaleFactor(0.85)
                     }
                 } icon: {
-                    Image(systemName: "gauge.with.dots.needle.67percent")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("gauge.with.dots.needle.67percent", color: ColorTokens.Brand.rose)
                 }
             }
             .tint(ColorTokens.Brand.primary)
@@ -190,15 +213,18 @@ extension SettingsView {
                             .font(TypographyTokens.body(15))
                             .foregroundStyle(ColorTokens.Parent.ink)
                     } icon: {
-                        Image(systemName: "person.badge.shield.checkmark")
-                            .foregroundStyle(display.settings.specialistConnected
-                                             ? ColorTokens.Semantic.success
-                                             : ColorTokens.Parent.accent)
+                        // P1.1: gold — специалист/доверие вместо зелёного success
+                        SettingsIconLabelX(
+                            "person.badge.shield.checkmark",
+                            color: display.settings.specialistConnected
+                                ? ColorTokens.Brand.gold
+                                : ColorTokens.Brand.primary
+                        )
                     }
                     Spacer()
                     if display.settings.specialistConnected {
                         Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Semantic.success)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                     } else {
                         Image(systemName: "chevron.right")
                             .font(TypographyTokens.caption(13))
@@ -226,8 +252,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "waveform.and.mic")
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                    SettingsIconLabelX("waveform.and.mic", color: ColorTokens.Brand.rose)
                 }
             }
             .frame(minHeight: 44)
@@ -251,8 +276,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "sparkles")
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                    SettingsIconLabelX("sparkles", color: ColorTokens.Brand.gold)
                 }
             }
             .frame(minHeight: 44)
@@ -264,8 +288,7 @@ extension SettingsView {
                     Text(String(localized: "settings.about.version"))
                         .font(TypographyTokens.body(15))
                 } icon: {
-                    Image(systemName: "info.circle")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("info.circle", color: ColorTokens.Brand.primary)
                 }
                 Spacer()
                 Text(display.appVersionLine)
@@ -282,8 +305,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "lock.shield")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("lock.shield", color: ColorTokens.Brand.lilac)
                 }
             }
             .frame(minHeight: 44)
@@ -296,8 +318,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "doc.text")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("doc.text", color: ColorTokens.Brand.primary)
                 }
             }
             .frame(minHeight: 44)
@@ -313,8 +334,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "lightbulb")
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                    SettingsIconLabelX("lightbulb", color: ColorTokens.Brand.butter)
                 }
             }
             .frame(minHeight: 44)
@@ -332,8 +352,7 @@ extension SettingsView {
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 } icon: {
-                    Image(systemName: "doc.plaintext")
-                        .foregroundStyle(ColorTokens.Parent.accent)
+                    SettingsIconLabelX("doc.plaintext", color: ColorTokens.Brand.primary)
                 }
             }
             .frame(minHeight: 44)

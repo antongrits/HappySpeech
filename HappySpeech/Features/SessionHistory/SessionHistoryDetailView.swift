@@ -135,7 +135,11 @@ struct SessionHistoryDetailView: View {
     // MARK: Header
 
     private var headerCard: some View {
-        HSCard(style: .elevated) {
+        // P1.6: высокий результат → золотая градиентная карточка (≥80%).
+        let cardStyle: HSCardStyle = detail.scorePercent >= 80
+            ? .gradientTinted(GradientTokens.cardGold)
+            : .elevated
+        return HSCard(style: cardStyle) {
             HStack(alignment: .top, spacing: SpacingTokens.regular) {
                 LyalyaMascotView(
                     state: detail.scorePercent >= 70 ? .celebrating : .encouraging,
@@ -154,8 +158,9 @@ struct SessionHistoryDetailView: View {
                         .lineLimit(2)
                 }
                 Spacer()
+                // P1.6: крупное число результата — kidDisplay(36) для читаемости
                 Text("\(detail.scorePercent)%")
-                    .font(TypographyTokens.display(36))
+                    .font(TypographyTokens.kidDisplay(36))
                     .foregroundStyle(scoreColor)
                     .accessibilityHidden(true)
             }

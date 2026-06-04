@@ -268,14 +268,15 @@ struct RewardShopView: View {
                 .accessibilityHidden(true)
 
             if sticker.isOwned {
+                // P1.5: "Куплено" — золотая печать вместо mint-зелёной.
                 VStack {
                     HStack {
                         Spacer()
                         Image(systemName: "checkmark.seal.fill")
                             .font(.title3)
-                            .foregroundStyle(ColorTokens.Brand.mint)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                             .padding(4)
-                            .background(Circle().fill(ColorTokens.Overlay.onAccent.opacity(0.9)))
+                            .background(Circle().fill(Color.white.opacity(0.92)))
                             .accessibilityHidden(true)
                     }
                     Spacer()
@@ -290,13 +291,14 @@ struct RewardShopView: View {
         _ sticker: RewardShopModels.Load.StickerViewModel
     ) -> some View {
         if sticker.isOwned {
+            // P1.5: "Куплено" — золотой чип вместо mint-зелёного.
             Text("rewardShop.sticker.owned")
                 .font(TypographyTokens.caption(11).weight(.semibold))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .padding(.horizontal, SpacingTokens.sp2)
                 .padding(.vertical, 4)
                 .background(
-                    Capsule().fill(ColorTokens.Brand.mint.opacity(0.18))
+                    Capsule().fill(ColorTokens.Brand.gold.opacity(0.18))
                 )
         } else {
             HStack(spacing: 4) {
@@ -373,9 +375,10 @@ struct RewardShopView: View {
     // MARK: - Rarity styling
 
     private func rarityBackground(_ rarity: ShopStickerRarity) -> Color {
+        // P1.5: sky(uncommon) → тёплый butter; остальные без изменений.
         switch rarity {
         case .common:    return ColorTokens.Kid.surface
-        case .uncommon:  return ColorTokens.Brand.sky.opacity(0.10)
+        case .uncommon:  return ColorTokens.Brand.butter.opacity(0.12)
         case .rare:      return ColorTokens.Brand.lilac.opacity(0.12)
         case .epic:      return ColorTokens.Brand.rose.opacity(0.12)
         case .legendary: return ColorTokens.Brand.gold.opacity(0.18)
@@ -385,7 +388,7 @@ struct RewardShopView: View {
     private func rarityBorder(_ rarity: ShopStickerRarity) -> Color {
         switch rarity {
         case .common:    return ColorTokens.Kid.line
-        case .uncommon:  return ColorTokens.Brand.sky.opacity(0.5)
+        case .uncommon:  return ColorTokens.Brand.butter.opacity(0.6)
         case .rare:      return ColorTokens.Brand.lilac.opacity(0.6)
         case .epic:      return ColorTokens.Brand.rose.opacity(0.6)
         case .legendary: return ColorTokens.Brand.gold.opacity(0.8)

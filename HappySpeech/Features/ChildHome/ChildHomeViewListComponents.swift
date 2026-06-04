@@ -412,16 +412,17 @@ struct ChildHomeTaskPreviewRow: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: SpacingTokens.sp3) {
+                // Part 2: completed task icon → Brand.gold.opacity(0.12) + Brand.gold
                 ZStack {
                     Circle()
                         .fill(task.isCompleted
-                              ? ColorTokens.Semantic.success.opacity(0.12)
+                              ? ColorTokens.Brand.gold.opacity(0.12)
                               : ColorTokens.Brand.primary.opacity(0.12))
                         .frame(width: 40, height: 40)
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "doc.badge.arrow.up")
                         .font(TypographyTokens.subtitle(18))
                         .foregroundStyle(task.isCompleted
-                                         ? ColorTokens.Semantic.success
+                                         ? ColorTokens.Brand.gold
                                          : ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                 }
