@@ -6,6 +6,9 @@ public enum HSCardStyle {
     case elevated   // card with shadow
     case flat       // no shadow, subtle border
     case tinted(Color)  // coloured background
+    /// Warm gradient fill over the surface colour (v32 design-modernisation).
+    /// Use one of the `GradientTokens.card*` presets.
+    case gradientTinted(LinearGradient)
 }
 
 // MARK: - HSCard
@@ -79,6 +82,14 @@ public struct HSCard<Content: View>: View {
             surfaceColor
         case .tinted(let color):
             color
+        case .gradientTinted(let gradient):
+            // Surface colour base + warm gradient overlay (v32).
+            // Gradients have low opacity (≤0.22) so they never overpower text.
+            ZStack {
+                surfaceColor
+                    .overlay(colorScheme == .dark ? Color.white.opacity(0.04) : Color.clear)
+                gradient
+            }
         }
     }
 
@@ -88,7 +99,7 @@ public struct HSCard<Content: View>: View {
     @ViewBuilder
     private var hairlineBorder: some View {
         switch style {
-        case .elevated:
+        case .elevated, .gradientTinted:
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                 .strokeBorder(hairlineColor, lineWidth: 0.5)
         case .flat, .tinted:
@@ -117,10 +128,9 @@ private extension View {
     @ViewBuilder
     func applyShadow(for circuit: CircuitContext, style: HSCardStyle) -> some View {
         switch style {
-        case .elevated:
-            // v29 — raised cards use a two-layer depth shadow (tight
-            // contact + soft ambient) so they read clearly above the
-            // opaque base layer.
+        case .elevated, .gradientTinted:
+            // v29/v32 — raised cards (including gradient-tinted) use a two-layer
+            // depth shadow so they read clearly above the opaque base layer.
             self.depthShadow(for: circuit)
         case .flat:
             self.overlay(
@@ -150,6 +160,19 @@ private extension View {
         }
         HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.2))) {
             Text("Тинтованная карточка")
+        }
+        HSCard(style: .gradientTinted(GradientTokens.cardCoralButter)) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Градиентная карточка")
+                    .font(TypographyTokens.kidCardTitle())
+                Text("Тёплый коралл → butter")
+                    .font(TypographyTokens.kidBody())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
+        }
+        HSCard(style: .gradientTinted(GradientTokens.cardGold)) {
+            Text("Стрик / достижения")
+                .font(TypographyTokens.kidCardTitle())
         }
     }
     .padding()

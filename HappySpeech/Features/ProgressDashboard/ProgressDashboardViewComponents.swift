@@ -13,25 +13,43 @@ struct SoundDetailRoute: Hashable {
 }
 
 // MARK: - SummaryCardView
+//
+// P0.3 v32 design-modernisation: каждая summary-карточка получает:
+// - HSCard(.gradientTinted) с семантическим тёплым градиентом
+// - HSIconCircle 56pt для иконки вместо плоского SF Symbol
+// - kidDisplay(30) для главного числа
+// - P8 scroll entrance уже применён в ProgressDashboardView.summaryCardsRow
 
 struct SummaryCardView: View {
 
     let card: SummaryCardViewModel
 
     var body: some View {
-        HSLiquidGlassCard(style: .tinted(accentColor), padding: SpacingTokens.cardPad) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(card.title)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+        HSCard(style: .gradientTinted(cardGradient), padding: SpacingTokens.cardPad) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                // Иконка + заголовок (P4 v32)
+                HStack(spacing: SpacingTokens.tiny) {
+                    HSIconCircle(
+                        systemName: cardIconName,
+                        size: 36,
+                        color: accentColor,
+                        iconScale: 0.50,
+                        fillOpacity: 0.18
+                    )
+                    Text(card.title)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Spacer(minLength: 0)
+                }
 
+                // Главное число (P3 v32: kidDisplay(30))
                 Text(card.value)
-                    .font(TypographyTokens.display(34))
+                    .font(TypographyTokens.kidDisplay(30))
                     .foregroundStyle(accentColor)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.55)
                     .accessibilityHidden(true)
 
                 if let progress = card.progress {
@@ -40,25 +58,64 @@ struct SummaryCardView: View {
                         .padding(.top, SpacingTokens.micro)
                 } else if let caption = card.caption {
                     Text(caption)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(width: 160, height: 120)
+        .frame(width: 160, height: 128)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(card.accessibilityLabel)
     }
 
+    // MARK: - Accent colour per kind
+
     private var accentColor: Color {
         switch card.valueAccent {
-        case .accent: return ColorTokens.Parent.accent
-        case .butter: return ColorTokens.Brand.butter
-        case .mint:   return ColorTokens.Brand.mint
-        case .lilac:  return ColorTokens.Brand.lilac
+        case .accent: return ColorTokens.Brand.primary
+        case .butter: return ColorTokens.Brand.gold
+        case .mint:   return ColorTokens.Brand.lilac
+        case .lilac:  return ColorTokens.Brand.rose
+        }
+    }
+
+    // MARK: - Gradient per kind (P0.3 semantic tints)
+
+    private var cardGradient: LinearGradient {
+        switch card.valueAccent {
+        case .accent:
+            // Sessions: coral
+            return LinearGradient(
+                colors: [
+                    ColorTokens.Brand.primary.opacity(0.15),
+                    ColorTokens.Brand.primaryLo.opacity(0.06)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        case .butter:
+            // Streak: gold
+            return GradientTokens.cardGold
+        case .mint:
+            // Accuracy: lilac-rose
+            return GradientTokens.cardLilacRose
+        case .lilac:
+            // Time: rose
+            return GradientTokens.cardRosePrimary
+        }
+    }
+
+    // MARK: - Icon per kind
+
+    private var cardIconName: String {
+        switch card.valueAccent {
+        case .accent: return "calendar.badge.checkmark"
+        case .butter: return "flame.fill"
+        case .mint:   return "target"
+        case .lilac:  return "clock.fill"
         }
     }
 }

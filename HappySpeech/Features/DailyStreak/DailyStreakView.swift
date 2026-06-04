@@ -145,38 +145,70 @@ struct DailyStreakView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: DailyStreakModels.Load.ViewModel) -> some View {
-        // Step 10 Batch A — Pattern 2+5: hero обёрнут в HSLiquidGlassCard.elevated,
-        // pulse-эффект на flame через hsSymbolEffect — реагирует на изменение streak.
+        // P0.4 v32: glass card получает тёплый gradient overlay; flame — radial glow;
+        // streak number → kidDisplay(52) (доминирует как главный элемент экрана).
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
-            VStack(spacing: SpacingTokens.sp2) {
-                // Block G v18: statusEmoji теперь хранит SF Symbol name.
-                Image(systemName: viewModel.statusEmoji)
-                    .font(.system(size: 64))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .hsSymbolEffect(.bounce, value: viewModel.currentStreak)
+            // Тёплый gradient overlay поверх glass (butter → gold, низкая opacity).
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        ColorTokens.Brand.butter.opacity(0.12),
+                        ColorTokens.Brand.gold.opacity(0.06)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+                .allowsHitTesting(false)
+
+                VStack(spacing: SpacingTokens.sp2) {
+                    // Flame + тёплый radial glow (P0.4 spec).
+                    ZStack {
+                        if !reduceMotion {
+                            RadialGradient(
+                                colors: [
+                                    ColorTokens.Brand.gold.opacity(0.30),
+                                    Color.clear
+                                ],
+                                center: .center,
+                                startRadius: 16,
+                                endRadius: 56
+                            )
+                            .frame(width: 112, height: 112)
+                            .allowsHitTesting(false)
+                        }
+
+                        Image(systemName: viewModel.statusEmoji)
+                            .font(.system(size: 64))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .hsSymbolEffect(.bounce, value: viewModel.currentStreak)
+                    }
                     .accessibilityHidden(true)
 
-                Text(verbatim: "\(viewModel.currentStreak)")
-                    .font(.system(size: 64, weight: .heavy, design: .rounded))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .contentTransition(.numericText())
-                    .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
+                    // P3 v32: hero number → kidDisplay(52) для максимальной выразительности.
+                    Text(verbatim: "\(viewModel.currentStreak)")
+                        .font(TypographyTokens.kidDisplay(52))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .contentTransition(.numericText())
+                        .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
 
-                Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                    .multilineTextAlignment(.center)
+                    Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
+                        .font(TypographyTokens.kidBody(17))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.center)
 
-                Text(viewModel.statusLabel)
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .multilineTextAlignment(.center)
+                    Text(viewModel.statusLabel)
+                        .font(TypographyTokens.kidBody(15))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.center)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, SpacingTokens.sp2)
             }
-            .frame(maxWidth: .infinity)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
@@ -257,13 +289,16 @@ struct DailyStreakView: View {
 
     @ViewBuilder
     private func milestoneCard(row: DailyStreakModels.Load.MilestoneRow) -> some View {
+        // P0.4 v32: P4 warm icon circles для milestone.
+        // Разблокировано = HSIconCircle Brand.gold. Заблокировано = Kid.inkSoft.
         VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: row.symbolName)
-                .font(.title)
-                .foregroundStyle(row.isUnlocked
-                                 ? ColorTokens.Brand.gold
-                                 : ColorTokens.Kid.inkSoft.opacity(0.4))
-                .frame(height: 36)
+            HSIconCircle(
+                systemName: row.symbolName,
+                size: 44,
+                color: row.isUnlocked ? ColorTokens.Brand.gold : ColorTokens.Kid.inkSoft,
+                iconScale: 0.48,
+                fillOpacity: row.isUnlocked ? 0.20 : 0.10
+            )
 
             Text(verbatim: "\(row.days)")
                 .font(.system(.title3, design: .rounded).weight(.bold))
@@ -276,9 +311,36 @@ struct DailyStreakView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, SpacingTokens.sp3)
         .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(row.isUnlocked ? ColorTokens.Kid.surface : ColorTokens.Kid.surfaceAlt)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(
+                    row.isUnlocked
+                        ? LinearGradient(
+                            colors: [
+                                ColorTokens.Brand.butter.opacity(0.18),
+                                ColorTokens.Brand.gold.opacity(0.08)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                        : LinearGradient(
+                            colors: [
+                                ColorTokens.Kid.surfaceAlt,
+                                ColorTokens.Kid.surfaceAlt
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                )
                 .opacity(row.isUnlocked ? 1.0 : 0.6)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(
+                    row.isUnlocked
+                        ? ColorTokens.Brand.gold.opacity(0.20)
+                        : Color.white.opacity(0.10),
+                    lineWidth: 0.5
+                )
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(row.accessibilityLabel))

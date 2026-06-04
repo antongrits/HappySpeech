@@ -133,6 +133,7 @@ struct NarrativeQuestView: View {
         VStack(spacing: SpacingTokens.medium) {
             header
 
+            // P0.5 v32: glass CTA footer — ScrollView + safeAreaInset glass pill.
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.small) {
                     Image(systemName: display.finalRewardEmoji)
@@ -151,18 +152,18 @@ struct NarrativeQuestView: View {
                         .padding(.horizontal, SpacingTokens.screenEdge)
                 }
                 .padding(.top, SpacingTokens.small)
-                .padding(.bottom, SpacingTokens.small)
+                .padding(.bottom, SpacingTokens.sp16)
             }
             .scrollBounceBehavior(.basedOnSize)
-
-            HSButton(String(localized: "Начать"), style: .primary, icon: "sparkles") {
-                container.soundService.playUISound(.tap)
-                container.hapticService.selection()
-                interactor.startStage(.init(stageIndex: 0))
+            .glassCTAFooter {
+                HSButton(String(localized: "Начать"), style: .primary, icon: "sparkles") {
+                    container.soundService.playUISound(.tap)
+                    container.hapticService.selection()
+                    interactor.startStage(.init(stageIndex: 0))
+                }
+                .accessibilityIdentifier("gameNextButton")
+                .accessibilityHint(String(localized: "Начнёт первый этап квеста"))
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityIdentifier("gameNextButton")
-            .accessibilityHint(String(localized: "Начнёт первый этап квеста"))
         }
         .padding(.vertical, SpacingTokens.regular)
     }

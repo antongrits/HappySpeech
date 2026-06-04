@@ -49177,6 +49177,57 @@
         }
       }
     },
+    "soundMap.mastery.known": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mastered"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "освоен"
+          }
+        }
+      }
+    },
+    "soundMap.mastery.learning": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "learning"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "учу"
+          }
+        }
+      }
+    },
+    "soundMap.mastery.untried": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not tried yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ещё не пробовал"
+          }
+        }
+      }
+    },
     "soundMap.nav.title": {
       "localizations": {
         "ru": {

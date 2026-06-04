@@ -420,6 +420,7 @@ struct MemoryView: View {
     // MARK: - Completed
 
     private var completedView: some View {
+        // P0.5 v32: glass CTA footer pattern.
         VStack(spacing: SpacingTokens.large) {
             Spacer()
             starsRow
@@ -435,16 +436,21 @@ struct MemoryView: View {
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.xLarge)
             Spacer()
-            HSButton(
-                String(localized: "Завершить"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) { finalize() }
-            .frame(maxWidth: 320)
-            .padding(.bottom, SpacingTokens.large)
-            .accessibilityIdentifier("gameNextButton")
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.sp16)
+        .safeAreaInset(edge: .bottom) {
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
+                HSButton(
+                    String(localized: "Завершить"),
+                    style: .primary,
+                    icon: "checkmark.circle.fill"
+                ) { finalize() }
+                .accessibilityIdentifier("gameNextButton")
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.tiny)
+        }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(String(localized: "Игра завершена"))
     }

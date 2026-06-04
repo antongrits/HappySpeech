@@ -145,6 +145,54 @@ public enum GradientTokens {
         endPoint: .bottom
     )
 
+    // MARK: - Card Tint Presets (v32 — design-modernization Wave A)
+    //
+    // Тёплые градиентные пресеты для `HSCard(.gradientTinted(...))`.
+    // Используются вместо плоского `HSCard(.elevated)` на hero- и summary-карточках
+    // детского контура, чтобы создать визуальную глубину без конкуренции с контентом.
+    // Все значения opacity подобраны так, чтобы текст на карточке оставался читаемым
+    // в light и dark режимах (цвет фона — всегда surface, поверх него градиент).
+
+    /// Коралл → butter — тёплый дефолт для hero-карточек детского контура.
+    public static let cardCoralButter = LinearGradient(
+        colors: [
+            ColorTokens.Brand.primaryLo.opacity(0.18),
+            ColorTokens.Brand.butter.opacity(0.10)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    /// Butter → gold — стрик, достижения, золотые награды.
+    public static let cardGold = LinearGradient(
+        colors: [
+            ColorTokens.Brand.butter.opacity(0.22),
+            ColorTokens.Brand.gold.opacity(0.10)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    /// Lilac → rose — магия, AR-активности, игры воображения.
+    public static let cardLilacRose = LinearGradient(
+        colors: [
+            ColorTokens.Brand.lilac.opacity(0.18),
+            ColorTokens.Brand.rose.opacity(0.10)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    /// Rose → primary — праздник, завершение сессии, поздравления.
+    public static let cardRosePrimary = LinearGradient(
+        colors: [
+            ColorTokens.Brand.rose.opacity(0.18),
+            ColorTokens.Brand.primary.opacity(0.10)
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
     // MARK: - Functional fade overlays
 
     /// Нижний fade-оверлей для action footer (top = прозрачный, bottom = заданный цвет).

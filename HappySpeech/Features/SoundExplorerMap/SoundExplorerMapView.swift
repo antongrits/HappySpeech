@@ -66,11 +66,19 @@ struct SoundExplorerMapView: View {
                     hero
                     filterBar(interactor: interactor)
                     grid(interactor: interactor)
-                    cta
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+                // P6 v32: отступ снизу для glass-футера CTA.
+                .padding(.bottom, SpacingTokens.sp16)
+            }
+            // P6 v32: стеклянный футер CTA, плавающий над контентом.
+            .safeAreaInset(edge: .bottom) {
+                HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
+                    cta
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.tiny)
             }
         } else {
             ProgressView().controlSize(.large)
@@ -156,36 +164,100 @@ struct SoundExplorerMapView: View {
     }
 
     private func soundCell(_ cell: SoundExplorerMapModels.SoundCell) -> some View {
-        let tint: Color = {
+        // P0.2 v32: каждый чип — 72pt квадрат с gradient fill, radius md=18,
+        // badge состояния цветной (gold/primary/soft). ShadowTokens.Kid.tile.
+        let (bgFrom, bgTo, textColor): (Color, Color, Color) = {
             switch cell.mastery {
-            // Тёплая палитра приложения вместо зелёного success: освоено = мягкий
-            // коралл (как чип «Знаю»), учу = жёлтый butter, не пробовал = кремовый.
-            case .known:    return ColorTokens.Brand.primaryLo
-            case .learning: return ColorTokens.Brand.butter
-            case .untried:  return ColorTokens.Kid.bgSoft
+            case .known:
+                return (
+                    ColorTokens.Brand.primaryLo.opacity(0.30),
+                    ColorTokens.Brand.primary.opacity(0.10),
+                    ColorTokens.Brand.primary
+                )
+            case .learning:
+                return (
+                    ColorTokens.Brand.butter.opacity(0.35),
+                    ColorTokens.Brand.gold.opacity(0.12),
+                    ColorTokens.Brand.gold
+                )
+            case .untried:
+                return (
+                    ColorTokens.Kid.bgSoft.opacity(0.90),
+                    ColorTokens.Kid.surface.opacity(0.60),
+                    ColorTokens.Kid.ink
+                )
             }
         }()
+
         return Button {
             hapticService.impact(.light)
             coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
         } label: {
-            VStack(spacing: 2) {
-                Text(cell.id)
-                    .font(TypographyTokens.title(22).weight(.bold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                Text(cell.group)
-                    .font(TypographyTokens.caption(9))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 2) {
+                    Text(cell.id)
+                        .font(TypographyTokens.title(22).weight(.black))
+                        .foregroundStyle(textColor)
+                    Text(cell.group)
+                        .font(TypographyTokens.caption(8))
+                        .foregroundStyle(textColor.opacity(0.70))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: 72)
+                .padding(.vertical, SpacingTokens.sp2)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(
+                            LinearGradient(
+                                colors: [bgFrom, bgTo],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(
+                            Color.white.opacity(colorScheme == .dark ? 0.10 : 0.50),
+                            lineWidth: 0.5
+                        )
+                )
+
+                // Значок состояния (P0.2: цветные badge вместо серого замка)
+                masteryBadge(for: cell.mastery)
+                    .padding(SpacingTokens.micro)
             }
-            .frame(maxWidth: .infinity, minHeight: 56)
-            .padding(.vertical, SpacingTokens.sp2)
-            .background(RoundedRectangle(cornerRadius: 14).fill(tint))
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text("\(cell.id), группа \(cell.group)"))
+        .accessibilityLabel(Text("\(cell.id), группа \(cell.group), \(masteryAccessibilityLabel(cell.mastery))"))
+    }
+
+    @ViewBuilder
+    private func masteryBadge(for mastery: SoundExplorerMapModels.Mastery) -> some View {
+        switch mastery {
+        case .known:
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 12))
+                .foregroundStyle(ColorTokens.Brand.primary)
+        case .learning:
+            Image(systemName: "star.fill")
+                .font(.system(size: 11))
+                .foregroundStyle(ColorTokens.Brand.gold)
+        case .untried:
+            EmptyView()
+        }
+    }
+
+    private func masteryAccessibilityLabel(_ mastery: SoundExplorerMapModels.Mastery) -> String {
+        switch mastery {
+        case .known:    return String(localized: "soundMap.mastery.known", defaultValue: "освоен")
+        case .learning: return String(localized: "soundMap.mastery.learning", defaultValue: "учу")
+        case .untried:  return String(localized: "soundMap.mastery.untried", defaultValue: "ещё не пробовал")
+        }
     }
 
     private var cta: some View {

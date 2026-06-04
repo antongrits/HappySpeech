@@ -57,12 +57,13 @@ struct RoleSelectView: View {
                         .opacity(colorScheme == .dark ? 0.92 : 1.0)
                         .padding(.bottom, SpacingTokens.sp2)
 
+                    // P3 v32: hero text → kidDisplay для большей выразительности.
                     Text(String(localized: "Кто вы?"))
-                        .font(TypographyTokens.display(28))
+                        .font(TypographyTokens.kidDisplay(32))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.80)
 
                     Text(String(localized: "Выберите профиль для начала"))
                         .font(TypographyTokens.body())
@@ -113,46 +114,70 @@ private struct RoleCard: View {
     let accentColor: Color
     let action: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isPressed = false
+
     var body: some View {
         Button(action: action) {
-            HSLiquidGlassCard(style: .tinted(accentColor), padding: SpacingTokens.sp5) {
+            // P0.1 v32: каждая RoleCard получает gradientTinted background
+            // (accentColor.opacity(0.15) → surface). Иконка — HSIconCircle 72pt.
+            HSCard(
+                style: .gradientTinted(
+                    LinearGradient(
+                        colors: [
+                            accentColor.opacity(0.15),
+                            accentColor.opacity(0.04)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                ),
+                padding: SpacingTokens.sp5
+            ) {
                 HStack(spacing: SpacingTokens.sp5) {
-                    // Icon container
-                    ZStack {
-                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                            .fill(accentColor.opacity(0.15))
-                            .frame(width: 56, height: 56)
-
-                        Image(systemName: icon)
-                            .font(TypographyTokens.title(24))
-                            .foregroundStyle(accentColor)
-                    }
+                    // P4 v32: тёплый кружок-иконка 72pt с concentric radius.
+                    HSIconCircle(
+                        systemName: icon,
+                        size: 72,
+                        color: accentColor,
+                        iconScale: 0.44,
+                        fillOpacity: 0.18
+                    )
 
                     // Text
-                    VStack(alignment: .leading, spacing: 3) {
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                         Text(title)
-                            .font(TypographyTokens.headline(17))
+                            .font(TypographyTokens.kidCardTitle(18))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .lineLimit(nil)
                             .minimumScaleFactor(0.85)
 
                         Text(subtitle)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(2)
+                            .lineLimit(nil)
                             .minimumScaleFactor(0.85)
-                            .ctaTextStyle()
+                            .fixedSize(horizontal: false, vertical: true)
                     }
 
                     Spacer()
 
                     Image(systemName: "chevron.right")
                         .font(TypographyTokens.caption(14))
-                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(accentColor.opacity(0.60))
                 }
             }
         }
         .buttonStyle(.plain)
+        // P0.1 v32: MotionTokens.playful spring на tap + scaleEffect press-feedback.
+        .scaleEffect(isPressed ? 0.97 : 1.0)
+        .animation(reduceMotion ? nil : MotionTokens.pressSpring, value: isPressed)
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
         .tapFeedback()
         .accessibilityLabel("\(title). \(subtitle)")
         .accessibilityAddTraits(.isButton)

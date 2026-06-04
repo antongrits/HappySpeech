@@ -43,6 +43,12 @@ public struct HSEmptyStateView: View {
     public enum IllustrationKind {
         case symbol(String)
         case mascot(LyalyaState)
+        /// Тёплая панель с маскотом (v32 design-modernisation, P5).
+        /// Используется в kid-контуре вместо серой символьной заглушки.
+        /// - Parameters:
+        ///   - mascot: Состояние маскота Ляли.
+        ///   - tint: Основной тинт-цвет заливки. По умолчанию `Brand.primaryLo`.
+        case warmPanel(mascot: LyalyaState, tint: Color = ColorTokens.Brand.primaryLo)
     }
 
     // MARK: - Public API
@@ -87,9 +93,36 @@ public struct HSEmptyStateView: View {
         self.action = action
     }
 
+    // MARK: - Init (warmPanel — kid-circuit, v32)
+
+    public init(
+        warmPanel mascot: LyalyaState,
+        tint: Color = ColorTokens.Brand.primaryLo,
+        title: String,
+        subtitle: String,
+        actionTitle: String = String(localized: "empty.custom.cta", defaultValue: "Попробовать"),
+        action: (() -> Void)? = nil
+    ) {
+        self.illustration = .warmPanel(mascot: mascot, tint: tint)
+        self.title = title
+        self.message = subtitle
+        self.actionTitle = actionTitle
+        self.action = action
+    }
+
     // MARK: - Body
 
     public var body: some View {
+        if case .warmPanel(let mascot, let tint) = illustration {
+            warmPanelBody(mascot: mascot, tint: tint)
+        } else {
+            defaultBody
+        }
+    }
+
+    // MARK: - Default layout (symbol / mascot variants)
+
+    private var defaultBody: some View {
         VStack(spacing: SpacingTokens.large) {
             illustrationView
                 .frame(height: 120)
@@ -116,16 +149,75 @@ public struct HSEmptyStateView: View {
         .accessibilityLabel("\(title). \(message)")
     }
 
+    // MARK: - WarmPanel layout (v32, P5)
+
+    private func warmPanelBody(mascot: LyalyaState, tint: Color) -> some View {
+        HSCard(
+            style: .gradientTinted(
+                LinearGradient(
+                    colors: [
+                        tint.opacity(0.18),
+                        ColorTokens.Brand.butter.opacity(0.08)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            ),
+            padding: SpacingTokens.xLarge
+        ) {
+            VStack(spacing: SpacingTokens.large) {
+                // Маскот в тёплом кружке
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                        .frame(width: 100, height: 100)
+                    LyalyaMascotView(state: mascot, size: 80)
+                        .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
+                }
+
+                VStack(spacing: SpacingTokens.small) {
+                    Text(title)
+                        .font(TypographyTokens.kidHero(26))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                    Text(message)
+                        .font(TypographyTokens.kidBody(16))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+
+                if let action {
+                    HSButton(actionTitle, style: .primary, action: action)
+                }
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(title). \(message)")
+    }
+
     // MARK: - Illustration
 
     @ViewBuilder
     private var illustrationView: some View {
         switch illustration {
         case .symbol(let name):
-            Image(systemName: name)
-                .font(.system(size: 56))
-                .foregroundStyle(.secondary)
-                .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
+            // v32 P5: upgraded symbol variant — warm circle background (80pt),
+            // symbol at 36pt in Brand.primary.opacity(0.7) (not plain .secondary).
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Brand.primaryLo.opacity(0.12))
+                    .frame(width: 80, height: 80)
+                Image(systemName: name)
+                    .font(.system(size: 36))
+                    .foregroundStyle(ColorTokens.Brand.primary.opacity(0.70))
+            }
+            .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
         case .mascot(let state):
             ZStack {
                 Circle()
@@ -134,6 +226,9 @@ public struct HSEmptyStateView: View {
                 LyalyaMascotView(state: state, size: 96)
             }
             .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
+        case .warmPanel:
+            // warmPanel имеет собственный layout — эта ветка никогда не вызывается.
+            EmptyView()
         }
     }
 }
@@ -290,6 +385,22 @@ public extension HSEmptyStateView {
         actionTitle: "Начать",
         action: { }
     )
+    .background(ColorTokens.Kid.bg)
+    .environment(\.circuitContext, .kid)
+}
+
+#Preview("HSEmptyStateView WarmPanel") {
+    VStack {
+        Spacer()
+        HSEmptyStateView(
+            warmPanel: .happy,
+            title: "Здесь пока пусто",
+            subtitle: "Пройди первое занятие, чтобы увидеть результаты!",
+            actionTitle: "Начать занятие",
+            action: { }
+        )
+        Spacer()
+    }
     .background(ColorTokens.Kid.bg)
     .environment(\.circuitContext, .kid)
 }
