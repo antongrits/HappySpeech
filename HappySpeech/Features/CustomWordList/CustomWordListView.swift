@@ -60,7 +60,7 @@ struct CustomWordListView: View {
     @State private var showEditor: Bool = false
     @State private var pendingDeleteId: String?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -89,7 +89,6 @@ struct CustomWordListView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
                         router?.dismiss()
-                        dismiss()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
@@ -290,7 +289,7 @@ struct CustomWordListView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = CustomWordListRouter(dismissAction: { dismiss() })
+            self.router = CustomWordListRouter(dismissAction: { exitToSpecialistHome() })
         }
         await interactor?.load(request: .init(specialistId: specialistId))
     }

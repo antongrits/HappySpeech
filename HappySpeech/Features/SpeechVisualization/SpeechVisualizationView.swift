@@ -64,7 +64,7 @@ struct SpeechVisualizationView: View {
     @State private var isRecordingPractice = false
 
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
@@ -120,7 +120,7 @@ struct SpeechVisualizationView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button { dismiss() } label: {
+                    Button { exitToParentHome() } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
                             .foregroundStyle(ColorTokens.Kid.inkSoft)

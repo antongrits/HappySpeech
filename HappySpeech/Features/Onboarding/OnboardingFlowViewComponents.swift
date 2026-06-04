@@ -312,65 +312,73 @@ struct OnboardingAgeStep: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer(minLength: SpacingTokens.medium)
+        // P0-FIX (SE/iOS26): обёрнут в ScrollView (как соседние шаги role/name/
+        // goals/sounds). Маскот 200pt + заголовок + 5 возрастных кружков 70pt +
+        // wheel-picker 110pt переполняли экран iPhone SE (667pt) — кнопка «Далее»
+        // в нижнем footer'е оставалась доступна, но контент шага уезжал за неё и
+        // обрезался. ScrollView гарантирует, что весь шаг доступен прокруткой.
+        ScrollView {
+            VStack(spacing: SpacingTokens.large) {
+                Spacer(minLength: SpacingTokens.medium)
 
-            LyalyaHeroView(state: .thinking, size: 200)
-                .accessibilityHidden(true)
+                LyalyaHeroView(state: .thinking, size: 200)
+                    .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.small) {
-                Text(String(localized: "onboarding.age.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
+                VStack(spacing: SpacingTokens.small) {
+                    Text(String(localized: "onboarding.age.title"))
+                        .font(TypographyTokens.title(24))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .padding(.horizontal, SpacingTokens.medium)
+                        .accessibilityAddTraits(.isHeader)
 
-                Text(String(localized: "onboarding.age.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
-
-            HStack(spacing: SpacingTokens.small) {
-                ForEach(OnboardingProfile.recommendedAgeRange, id: \.self) { value in
-                    AgeBubble(
-                        value: value,
-                        isSelected: age == value,
-                        onTap: { onChange(value) }
-                    )
+                    Text(String(localized: "onboarding.age.subtitle"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .padding(.horizontal, SpacingTokens.large)
                 }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
 
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(String(localized: "onboarding.age.other.label"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .textCase(.uppercase)
-                    .tracking(0.6)
-
-                Picker(
-                    String(localized: "onboarding.profile.age.label"),
-                    selection: Binding(get: { age }, set: { onChange($0) })
-                ) {
-                    ForEach(OnboardingProfile.availableAges, id: \.self) { value in
-                        Text(String(format: String(localized: "onboarding.profile.age.years"), value))
-                            .tag(value)
+                HStack(spacing: SpacingTokens.small) {
+                    ForEach(OnboardingProfile.recommendedAgeRange, id: \.self) { value in
+                        AgeBubble(
+                            value: value,
+                            isSelected: age == value,
+                            onTap: { onChange(value) }
+                        )
                     }
                 }
-                .pickerStyle(.wheel)
-                .frame(height: 110)
-                .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
-            Spacer(minLength: SpacingTokens.medium)
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    Text(String(localized: "onboarding.age.other.label"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .textCase(.uppercase)
+                        .tracking(0.6)
+
+                    Picker(
+                        String(localized: "onboarding.profile.age.label"),
+                        selection: Binding(get: { age }, set: { onChange($0) })
+                    ) {
+                        ForEach(OnboardingProfile.availableAges, id: \.self) { value in
+                            Text(String(format: String(localized: "onboarding.profile.age.years"), value))
+                                .tag(value)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                    .frame(height: 110)
+                    .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Spacer(minLength: SpacingTokens.medium)
+            }
+            .frame(maxWidth: .infinity)
         }
     }
 }

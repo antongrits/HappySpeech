@@ -62,7 +62,7 @@ struct HelpCenterView: View {
     @State private var router: HelpCenterRouter?
     @State private var showVideoSheet: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -103,7 +103,7 @@ struct HelpCenterView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -543,7 +543,7 @@ struct HelpCenterView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = HelpCenterRouter(dismissAction: { dismiss() })
+            self.router = HelpCenterRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init())
     }

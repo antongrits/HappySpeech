@@ -70,7 +70,7 @@ struct ParentVoiceNoteView: View {
     @State private var pendingTempURL: URL?
     @State private var pendingDuration: Double = 0
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -97,7 +97,7 @@ struct ParentVoiceNoteView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -495,7 +495,7 @@ struct ParentVoiceNoteView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = ParentVoiceNoteRouter(dismissAction: { dismiss() })
+            self.router = ParentVoiceNoteRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init(childId: childId))
     }

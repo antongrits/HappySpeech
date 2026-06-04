@@ -47,7 +47,7 @@ struct VoiceJournalView: View {
     @State private var isRecordingSheetPresented: Bool = false
     @State private var newEntryTitle: String = ""
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -282,7 +282,7 @@ struct VoiceJournalView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button {
-                dismiss()
+                exitToParentHome()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

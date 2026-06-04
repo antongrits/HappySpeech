@@ -28,10 +28,30 @@ struct ProfileEditorView: View {
 
     private let childId: String
     private let onSaved: (() -> Void)?
+    /// Явное закрытие для случая, когда экран открыт как полноэкранный
+    /// маршрут координатора (а не как `.sheet`). В sheet-режиме (`nil`)
+    /// используется штатный `@Environment(\.dismiss)`; на маршруте координатор
+    /// передаёт возврат на `parentHome`, т.к. `dismiss()` там — no-op.
+    private let onClose: (() -> Void)?
 
-    init(childId: String, onSaved: (() -> Void)? = nil) {
+    init(
+        childId: String,
+        onSaved: (() -> Void)? = nil,
+        onClose: (() -> Void)? = nil
+    ) {
         self.childId = childId
         self.onSaved = onSaved
+        self.onClose = onClose
+    }
+
+    /// Единая точка закрытия: route → `onClose`, sheet → `dismiss`.
+    @MainActor
+    private func close() {
+        if let onClose {
+            onClose()
+        } else {
+            dismiss()
+        }
     }
 
     // MARK: - Body
@@ -56,7 +76,7 @@ struct ProfileEditorView: View {
         .onChange(of: viewModel.isSaved) { _, saved in
             if saved {
                 onSaved?()
-                dismiss()
+                close()
             }
         }
     }
@@ -367,7 +387,7 @@ struct ProfileEditorView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .cancellationAction) {
             Button(String(localized: "action.cancel")) {
-                dismiss()
+                close()
             }
             .foregroundStyle(ColorTokens.Parent.accent)
         }

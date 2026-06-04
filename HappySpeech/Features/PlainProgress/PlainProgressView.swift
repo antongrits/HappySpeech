@@ -54,7 +54,7 @@ struct PlainProgressView: View {
     @State private var presenter: PlainProgressPresenter?
     @State private var router: PlainProgressRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -104,7 +104,7 @@ struct PlainProgressView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -500,7 +500,7 @@ struct PlainProgressView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = PlainProgressRouter(dismissAction: { dismiss() })
+            self.router = PlainProgressRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init(childId: childId))
     }

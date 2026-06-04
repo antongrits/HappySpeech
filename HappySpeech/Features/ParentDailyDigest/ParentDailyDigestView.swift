@@ -7,7 +7,7 @@ struct ParentDailyDigestView: View {
     @State private var interactor = ParentDailyDigestInteractor()
     @State private var bootstrapped = false
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -37,7 +37,7 @@ struct ParentDailyDigestView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -171,7 +171,7 @@ struct ParentDailyDigestView: View {
             icon: "checkmark"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToParentHome()
         }
     }
 }

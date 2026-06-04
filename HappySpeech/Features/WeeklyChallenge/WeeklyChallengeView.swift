@@ -58,7 +58,7 @@ struct WeeklyChallengeView: View {
     @State private var router: WeeklyChallengeRouter?
     @State private var pickerSelection: WeeklyChallengeKind = .soundStreak
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -106,7 +106,7 @@ struct WeeklyChallengeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -536,7 +536,7 @@ struct WeeklyChallengeView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = WeeklyChallengeRouter(dismissAction: { dismiss() })
+            self.router = WeeklyChallengeRouter(dismissAction: { exitGame() })
         }
 
         await interactor?.load(request: .init(childId: childId, now: Date()))

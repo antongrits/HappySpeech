@@ -59,7 +59,7 @@ struct SoundDictionaryView: View {
     @State private var router: SoundDictionaryRouter?
     @State private var showDetailSheet: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -115,7 +115,7 @@ struct SoundDictionaryView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -477,7 +477,7 @@ struct SoundDictionaryView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SoundDictionaryRouter(dismissAction: { dismiss() })
+            self.router = SoundDictionaryRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init())
     }

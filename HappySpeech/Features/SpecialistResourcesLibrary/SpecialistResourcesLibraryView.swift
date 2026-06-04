@@ -7,7 +7,7 @@ struct SpecialistResourcesLibraryView: View {
     let specialistId: String
 
     @State private var interactor: SpecialistResourcesLibraryInteractor?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -23,7 +23,7 @@ struct SpecialistResourcesLibraryView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToSpecialistHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
@@ -252,7 +252,7 @@ struct SpecialistResourcesLibraryView: View {
             icon: "checkmark"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToSpecialistHome()
         }
     }
 }

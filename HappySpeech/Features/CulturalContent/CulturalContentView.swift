@@ -56,7 +56,7 @@ struct CulturalContentView: View {
     @State private var presenter: CulturalContentPresenter?
     @State private var router: CulturalContentRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -96,7 +96,7 @@ struct CulturalContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -446,7 +446,7 @@ struct CulturalContentView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = CulturalContentRouter(dismissAction: { dismiss() })
+            self.router = CulturalContentRouter(dismissAction: { exitGame() })
         }
 
         await interactor?.load(request: .init(childId: childId, category: nil))

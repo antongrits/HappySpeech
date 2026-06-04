@@ -7,7 +7,7 @@ struct SpecialistScheduleView: View {
     let specialistId: String
 
     @State private var interactor: SpecialistScheduleInteractor?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -23,7 +23,7 @@ struct SpecialistScheduleView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToSpecialistHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
@@ -176,7 +176,7 @@ struct SpecialistScheduleView: View {
             icon: "plus"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToSpecialistHome()
         }
     }
 }

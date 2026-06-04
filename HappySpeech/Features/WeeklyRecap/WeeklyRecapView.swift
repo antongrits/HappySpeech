@@ -8,7 +8,7 @@ struct WeeklyRecapView: View {
     @State private var interactor = WeeklyRecapInteractor()
     @State private var bootstrapped = false
     @State private var shareItem: WeeklyRecapShareItem?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -26,7 +26,7 @@ struct WeeklyRecapView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)

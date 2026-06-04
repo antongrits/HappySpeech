@@ -55,7 +55,7 @@ struct DailyRitualsLyalyaView: View {
     @State private var router: DailyRitualsLyalyaRouter?
     @State private var pickerDate: Date = Date()
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
@@ -100,7 +100,7 @@ struct DailyRitualsLyalyaView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -383,7 +383,7 @@ struct DailyRitualsLyalyaView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = DailyRitualsLyalyaRouter(dismissAction: { dismiss() })
+            self.router = DailyRitualsLyalyaRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init(kind: kind))
     }

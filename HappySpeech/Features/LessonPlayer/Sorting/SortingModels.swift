@@ -175,11 +175,11 @@ extension SortingSet {
                         soundGroup: "any", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
             SortingWord(id: "les_sc", word: "Лес", emoji: "word_forest", correctCategory: "one",
                         soundGroup: "any", syllableCount: 1, firstSound: "Л", soundPosition: "initial"),
-            SortingWord(id: "reka_sc", word: "Река", emoji: "word_fish", correctCategory: "two",
+            SortingWord(id: "reka_sc", word: "Река", emoji: "word_reka", correctCategory: "two",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
             SortingWord(id: "malina_sc", word: "Малина", emoji: "word_apple", correctCategory: "three",
                         soundGroup: "any", syllableCount: 3, firstSound: "М", soundPosition: "initial"),
-            SortingWord(id: "kit_sc", word: "Кит", emoji: "word_fish", correctCategory: "one",
+            SortingWord(id: "kit_sc", word: "Кит", emoji: "word_kit", correctCategory: "one",
                         soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial"),
             SortingWord(id: "ryba_sc", word: "Рыба", emoji: "word_fish", correctCategory: "two",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial")

@@ -8,7 +8,7 @@ struct SpecialistCaseNotesView: View {
     let specialistId: String
 
     @State private var interactor: SpecialistCaseNotesInteractor?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -31,7 +31,7 @@ struct SpecialistCaseNotesView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToSpecialistHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Spec.inkMuted)

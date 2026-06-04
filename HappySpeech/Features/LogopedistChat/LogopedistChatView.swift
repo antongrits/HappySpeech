@@ -73,7 +73,7 @@ struct LogopedistChatView: View {
     /// перетирает инжектированное состояние async-загрузкой (snapshot-детерминизм).
     private let skipBootstrapForSnapshot: Bool
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -138,7 +138,7 @@ struct LogopedistChatView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -696,7 +696,7 @@ struct LogopedistChatView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = LogopedistChatRouter(dismissAction: { dismiss() })
+            self.router = LogopedistChatRouter(dismissAction: { exitToParentHome() })
         }
 
         await interactor?.load(request: .init(

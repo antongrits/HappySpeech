@@ -28,6 +28,7 @@ enum SoundOfTheDayModels {
             let greeting: String        // «Привет, Миша!»
             let subtitle: String        // «Сегодня — суббота, 23 мая»
             let heroTitle: String       // «Звук дня: «Р»»
+            let soundLetter: String     // «Р» — только буква для кружка-якоря
             let heroReason: String
             let streakText: String      // «3 дня подряд»
             let streakProgress: Double  // 0…1

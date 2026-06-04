@@ -48,7 +48,7 @@ struct FamilyChallengeView: View {
     @State private var didBootstrap = false
     @State private var animatedProgress: Double = 0
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -321,7 +321,7 @@ struct FamilyChallengeView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitToParentHome()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

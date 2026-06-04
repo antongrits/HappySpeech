@@ -8,8 +8,22 @@ enum WordOfTheDayModels {
     struct Card: Equatable {
         let word: String
         let targetSound: String
+        /// SF Symbol-фолбэк — используется ТОЛЬКО если для слова нет реального
+        /// `word_*` ассета в `word_manifest.json`.
         let illustrationSymbol: String
         let hint: String
+
+        /// Реальная иллюстрация слова из `word_manifest.json`
+        /// (например `word_fox` для «лиса»). `nil` → нет ассета, рисуем
+        /// `illustrationSymbol`.
+        var illustrationAsset: String? {
+            LessonContentMap.asset(for: word)
+        }
+
+        /// Имя для `HSContentSymbol`: реальный ассет, иначе SF-символ-фолбэк.
+        var displaySymbol: String {
+            illustrationAsset ?? illustrationSymbol
+        }
     }
 
     enum RecordingPhase: Equatable {

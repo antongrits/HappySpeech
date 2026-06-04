@@ -5,7 +5,7 @@ import SwiftUI
 struct ParentMoodCheckInView: View {
 
     @State private var interactor = ParentMoodCheckInInteractor()
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -23,7 +23,7 @@ struct ParentMoodCheckInView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -140,7 +140,7 @@ struct ParentMoodCheckInView: View {
         ) {
             hapticService.notification(.success)
             interactor.save()
-            dismiss()
+            exitToParentHome()
         }
         .disabled(interactor.entry.mood == nil)
         .opacity(interactor.entry.mood == nil ? 0.5 : 1.0)

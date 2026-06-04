@@ -27,7 +27,6 @@ struct DailyTimeCapView: View {
     @State private var localCap: Int = 30
     @State private var contentAppeared: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator

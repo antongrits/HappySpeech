@@ -48,6 +48,7 @@ final class SoundOfTheDayPresenter {
             greeting: greeting,
             subtitle: subtitle,
             heroTitle: heroTitle,
+            soundLetter: response.targetSound,
             heroReason: response.reasonText,
             streakText: streakText,
             streakProgress: streakProgress,

@@ -7,7 +7,7 @@ struct ChildLanguageMilestonesView: View {
     @State private var interactor = ChildLanguageMilestonesInteractor()
     @State private var didBindChild = false
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -25,7 +25,7 @@ struct ChildLanguageMilestonesView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -158,7 +158,7 @@ struct ChildLanguageMilestonesView: View {
             icon: "checkmark"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToParentHome()
         }
     }
 }

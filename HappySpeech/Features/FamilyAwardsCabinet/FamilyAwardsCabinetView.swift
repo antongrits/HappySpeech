@@ -47,7 +47,7 @@ struct FamilyAwardsCabinetView: View {
     @State private var router: FamilyAwardsCabinetRouter?
     @State private var showDetailSheet: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -92,7 +92,7 @@ struct FamilyAwardsCabinetView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -456,7 +456,7 @@ struct FamilyAwardsCabinetView: View {
             self.presenter = presenter
             self.interactor = interactor
             self.router = FamilyAwardsCabinetRouter(
-                dismissAction: { [self] in dismiss() },
+                dismissAction: { [self] in exitToParentHome() },
                 openAchievementsAction: { [self] childId in
                     coordinator.navigate(to: .achievements(childId: childId))
                 }

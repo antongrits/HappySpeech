@@ -17,7 +17,7 @@ struct MethodologyAssistantView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.circuitContext) private var circuit
 
@@ -67,7 +67,7 @@ struct MethodologyAssistantView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(mutedColor)

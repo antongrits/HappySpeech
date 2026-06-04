@@ -98,13 +98,17 @@ struct WordOfTheDayView: View {
         // P1.3: градиентная карточка warmSunset + слово-герой kidDisplay(40).
         HSCard(style: .gradientTinted(GradientTokens.cardCoralButter)) {
             VStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: interactor.card.illustrationSymbol)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 140, height: 140)
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .hsSymbolEffect(.pulse, value: interactor.card.word)
-                    .accessibilityHidden(true)
+                // P1-FIX: показываем реальную картинку слова (word_* из
+                // word_manifest), а не абстрактный SF-символ. HSContentSymbol
+                // сам выбирает ассет vs SF-фолбэк по имени displaySymbol.
+                HSContentSymbol(
+                    interactor.card.displaySymbol,
+                    size: 132,
+                    tint: ColorTokens.Brand.primary
+                )
+                .frame(width: 140, height: 140)
+                .hsSymbolEffect(.pulse, value: interactor.card.word)
+                .accessibilityHidden(true)
                 // P3: целевое слово — главный элемент экрана, kidDisplay(40)
                 Text(interactor.card.word.capitalized)
                     .font(TypographyTokens.kidDisplay(40))

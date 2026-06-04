@@ -462,6 +462,16 @@ struct AppCoordinatorView: View {
                     .environment(\.exitGame, KidGameExitAction {
                         coordinator.navigate(to: .childHome(childId: ""))
                     })
+                    // Единый выход из полноэкранных parent/specialist-маршрутов:
+                    // они тоже запускаются через navigate(to:), поэтому корневой
+                    // @Environment(\.dismiss) — no-op. Эти действия восстанавливают
+                    // корень соответствующей взрослой главной.
+                    .environment(\.exitToParentHome, CircuitExitAction {
+                        coordinator.navigate(to: .parentHome)
+                    })
+                    .environment(\.exitToSpecialistHome, CircuitExitAction {
+                        coordinator.navigate(to: .specialistHome)
+                    })
 
                 // Offline banner (global)
                 if coordinator.isShowingOfflineBanner {
@@ -669,8 +679,11 @@ struct AppCoordinatorView: View {
                 .environment(\.circuitContext, .parent)
 
         case .profileEditor(let childId):
-            ProfileEditorView(childId: childId)
-                .environment(\.circuitContext, .parent)
+            ProfileEditorView(
+                childId: childId,
+                onClose: { coordinator.navigate(to: .parentHome) }
+            )
+            .environment(\.circuitContext, .parent)
 
         case .sharePlay:
             SharePlayView()

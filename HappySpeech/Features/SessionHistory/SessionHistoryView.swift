@@ -17,7 +17,7 @@ struct SessionHistoryView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
@@ -504,6 +504,17 @@ struct SessionHistoryView: View {
 
     @ToolbarContentBuilder
     private var filterToolbarItem: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                exitToParentHome()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(TypographyTokens.subtitle(17))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .frame(width: 44, height: 44)
+            }
+            .accessibilityLabel(Text("common.close"))
+        }
         ToolbarItem(placement: .topBarTrailing) {
             HStack(spacing: SpacingTokens.tiny) {
                 Button {

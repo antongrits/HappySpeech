@@ -5,7 +5,7 @@ import SwiftUI
 struct ParentInspirationBoardView: View {
 
     @State private var interactor = ParentInspirationBoardInteractor()
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -21,7 +21,7 @@ struct ParentInspirationBoardView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -204,7 +204,7 @@ struct ParentInspirationBoardView: View {
             icon: "checkmark"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToParentHome()
         }
     }
 }

@@ -14,43 +14,50 @@ struct OnboardingScheduleStep: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            Spacer(minLength: SpacingTokens.tiny)
+        // P0-FIX (SE/iOS26): обёрнут в ScrollView (как соседние шаги role/name/
+        // goals/sounds/permissions). Маскот 200pt + заголовок + 4 карточки
+        // расписания (~80pt каждая) переполняли экран iPhone SE (667pt) —
+        // нижние пресеты уходили за footer с кнопкой «Далее».
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                Spacer(minLength: SpacingTokens.tiny)
 
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .happy, size: 200)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
+                // Block I v19: scaleEffect убран с 2D Ляли.
+                LyalyaHeroView(state: .happy, size: 200)
+                    .opacity(appeared ? 1 : 0)
+                    .accessibilityHidden(true)
 
-            Text(String(localized: "onboarding.schedule.title"))
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, SpacingTokens.medium)
-                .accessibilityAddTraits(.isHeader)
+                Text(String(localized: "onboarding.schedule.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
+                    .accessibilityAddTraits(.isHeader)
 
-            Text(String(localized: "onboarding.schedule.subtitle"))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
+                Text(String(localized: "onboarding.schedule.subtitle"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
 
-            VStack(spacing: SpacingTokens.small) {
-                ForEach(DailySchedulePreset.allPresets) { preset in
-                    ScheduleRow(
-                        preset: preset,
-                        isSelected: preset.minutes == selectedMinutes,
-                        onTap: { onSelect(preset.minutes) }
-                    )
+                VStack(spacing: SpacingTokens.small) {
+                    ForEach(DailySchedulePreset.allPresets) { preset in
+                        ScheduleRow(
+                            preset: preset,
+                            isSelected: preset.minutes == selectedMinutes,
+                            onTap: { onSelect(preset.minutes) }
+                        )
+                    }
                 }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
-            Spacer(minLength: SpacingTokens.medium)
+                Spacer(minLength: SpacingTokens.medium)
+            }
+            .frame(maxWidth: .infinity)
         }
         .onAppear {
             withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {

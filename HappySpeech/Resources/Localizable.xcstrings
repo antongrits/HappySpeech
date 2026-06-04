@@ -36843,28 +36843,6 @@
         }
       }
     },
-    "reports.stage.\\(group.last?.stage ??": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "reports.stage.\\(group.last?.stage ??"
-          }
-        }
-      }
-    },
-    "reports.stage.\\(group.last?.stage ?? ": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "reports.stage.\\(group.last?.stage ?? "
-          }
-        }
-      }
-    },
     "reports.stage.isolated": {
       "extractionState": "manual",
       "localizations": {
@@ -36872,6 +36850,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Изолированный звук"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isolated sound"
           }
         }
       }
@@ -36883,6 +36867,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Фраза"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Phrase"
           }
         }
       }
@@ -36906,6 +36896,12 @@
             "state": "translated",
             "value": "Предложение"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sentence"
+          }
         }
       }
     },
@@ -36916,6 +36912,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слоги"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syllables"
           }
         }
       }
@@ -36939,6 +36941,12 @@
             "state": "translated",
             "value": "Не определён"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Undetermined"
+          }
         }
       }
     },
@@ -36949,6 +36957,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово (конец)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word (final)"
           }
         }
       }
@@ -36961,6 +36975,12 @@
             "state": "translated",
             "value": "Слово (начало)"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word (initial)"
+          }
         }
       }
     },
@@ -36971,6 +36991,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово (середина)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Word (medial)"
           }
         }
       }
@@ -66504,6 +66530,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
+          }
+        }
+      }
+    },
+    "reports.stage.prep": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulation prep"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подготовка артикуляции"
+          }
+        }
+      }
+    },
+    "reports.stage.story": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Story"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ"
+          }
+        }
+      }
+    },
+    "reports.stage.diff": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Differentiation"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дифференциация"
           }
         }
       }

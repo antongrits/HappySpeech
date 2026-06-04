@@ -117,7 +117,10 @@ struct SoundOfTheDayView: View {
                         Circle()
                             .fill(ColorTokens.Brand.primary.opacity(0.12))
                             .frame(width: 88, height: 88)
-                        Text(vm.heroTitle)
+                        // P1-FIX: в кружок-якорь подаём ТОЛЬКО букву звука
+                        // (vm.soundLetter), а не полный heroTitle «Звук дня: «Р»»,
+                        // который kidDisplay(64) обрезал до «З…».
+                        Text(vm.soundLetter)
                             .font(TypographyTokens.kidDisplay(64))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .minimumScaleFactor(0.7)

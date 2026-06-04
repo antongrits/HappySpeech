@@ -11,6 +11,8 @@ import SwiftUI
 
 struct ParentSessionsTab: View {
     let sessions: [ParentHomeModels.SessionSummary]
+    let childId: String
+    let coordinator: AppCoordinator
 
     var body: some View {
         NavigationStack {
@@ -23,9 +25,18 @@ struct ParentSessionsTab: View {
                     )
                 } else {
                     List(sessions, id: \.id) { session in
-                        SessionRow(session: session)
-                            .listRowBackground(ColorTokens.Parent.surface)
-                            .listRowSeparatorTint(ColorTokens.Parent.line)
+                        Button {
+                            // Открываем полную историю занятий ребёнка, где
+                            // доступен подробный разбор каждого занятия
+                            // (реальные данные из SessionRepository).
+                            coordinator.navigate(to: .sessionHistory(childId: childId))
+                        } label: {
+                            SessionRow(session: session)
+                        }
+                        .buttonStyle(.plain)
+                        .listRowBackground(ColorTokens.Parent.surface)
+                        .listRowSeparatorTint(ColorTokens.Parent.line)
+                        .accessibilityHint(Text("Открыть разбор занятия"))
                     }
                     .listStyle(.insetGrouped)
                     .scrollContentBackground(.hidden)
@@ -48,7 +59,12 @@ struct SessionRow: View {
             infoStack
             Spacer()
             resultLabel
+            Image(systemName: "chevron.right")
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .accessibilityHidden(true)
         }
+        .contentShape(Rectangle())
         .padding(.vertical, SpacingTokens.sp2)
     }
 

@@ -84,7 +84,11 @@ struct ParentHomeView: View {
             if let vm = scene?.viewModel {
                 switch selectedTab {
                 case .dashboard:  ParentDashboardTab(viewModel: vm, coordinator: coordinator)
-                case .sessions:   ParentSessionsTab(sessions: vm.recentSessions)
+                case .sessions:   ParentSessionsTab(
+                    sessions: vm.recentSessions,
+                    childId: vm.childId,
+                    coordinator: coordinator
+                )
                 case .analytics:  ParentAnalyticsTab(progress: vm.soundProgress)
                 case .settings:   SettingsView()
                 }
@@ -150,7 +154,11 @@ struct ParentHomeView: View {
 
     @ViewBuilder private var sessionsTab: some View {
         if let vm = scene?.viewModel {
-            ParentSessionsTab(sessions: vm.recentSessions)
+            ParentSessionsTab(
+                sessions: vm.recentSessions,
+                childId: vm.childId,
+                coordinator: coordinator
+            )
         } else {
             loadingSection
         }

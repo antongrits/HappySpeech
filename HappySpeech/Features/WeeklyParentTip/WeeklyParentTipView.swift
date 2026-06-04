@@ -6,7 +6,7 @@ struct WeeklyParentTipView: View {
 
     @State private var interactor = WeeklyParentTipInteractor()
     @State private var isShareSheetPresented: Bool = false
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -22,7 +22,7 @@ struct WeeklyParentTipView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)

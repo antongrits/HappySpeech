@@ -46,7 +46,7 @@ struct SpeechNormsEncyclopediaView: View {
     @State private var expandedCards: Set<String> = []
     @State private var query: String = ""
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let logger = Logger(
@@ -101,7 +101,7 @@ struct SpeechNormsEncyclopediaView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -448,7 +448,7 @@ struct SpeechNormsEncyclopediaView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SpeechNormsEncyclopediaRouter(dismissAction: { dismiss() })
+            self.router = SpeechNormsEncyclopediaRouter(dismissAction: { exitToParentHome() })
         }
         await interactor?.load(request: .init(initialAge: initialAge, query: query))
     }

@@ -21,7 +21,7 @@ struct SharePlayView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     // MARK: - VIP
@@ -213,7 +213,7 @@ struct SharePlayView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarLeading) {
             Button {
-                dismiss()
+                exitToParentHome()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(ColorTokens.Parent.inkSoft)

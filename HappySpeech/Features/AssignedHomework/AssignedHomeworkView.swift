@@ -52,7 +52,7 @@ struct AssignedHomeworkView: View {
     @State private var dueInDays: Int = 3
     @State private var comment: String = ""
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -85,7 +85,7 @@ struct AssignedHomeworkView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToSpecialistHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -376,7 +376,7 @@ struct AssignedHomeworkView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = AssignedHomeworkRouter(dismissAction: { dismiss() })
+            self.router = AssignedHomeworkRouter(dismissAction: { exitToSpecialistHome() })
         }
         await interactor?.load(request: .init(specialistId: specialistId))
     }

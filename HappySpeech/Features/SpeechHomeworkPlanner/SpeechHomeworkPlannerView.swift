@@ -5,7 +5,7 @@ import SwiftUI
 struct SpeechHomeworkPlannerView: View {
 
     @State private var interactor = SpeechHomeworkPlannerInteractor()
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -25,7 +25,7 @@ struct SpeechHomeworkPlannerView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -133,7 +133,7 @@ struct SpeechHomeworkPlannerView: View {
             icon: "checkmark.circle.fill"
         ) {
             hapticService.notification(.success)
-            dismiss()
+            exitToParentHome()
         }
     }
 }

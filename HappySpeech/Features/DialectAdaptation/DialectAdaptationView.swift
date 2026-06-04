@@ -52,7 +52,7 @@ struct DialectAdaptationView: View {
     @State private var presenter: DialectAdaptationPresenter?
     @State private var router: DialectAdaptationRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -96,7 +96,7 @@ struct DialectAdaptationView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -391,7 +391,7 @@ struct DialectAdaptationView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = DialectAdaptationRouter(dismissAction: { dismiss() })
+            self.router = DialectAdaptationRouter(dismissAction: { exitToParentHome() })
         }
 
         await interactor?.load(request: .init(childId: childId))

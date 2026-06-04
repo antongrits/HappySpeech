@@ -50,7 +50,7 @@ struct SpecialistAssessmentView: View {
     /// Локальный выбор для multiselect-вопросов: questionId → выбранные варианты.
     @State private var multiselectSelection: [String: Set<String>] = [:]
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -71,7 +71,7 @@ struct SpecialistAssessmentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitToSpecialistHome()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -379,7 +379,7 @@ struct SpecialistAssessmentView: View {
                 }
 
                 Button {
-                    dismiss()
+                    exitToSpecialistHome()
                 } label: {
                     Text(submit.applyCtaTitle)
                         .font(TypographyTokens.headline(17))
@@ -461,7 +461,7 @@ struct SpecialistAssessmentView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SpecialistAssessmentRouter(dismissAction: { dismiss() })
+            self.router = SpecialistAssessmentRouter(dismissAction: { exitToSpecialistHome() })
         }
         await interactor?.load(
             request: .init(childId: childId, specialistId: specialistId)
