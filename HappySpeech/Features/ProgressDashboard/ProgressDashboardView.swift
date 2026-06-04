@@ -171,7 +171,7 @@ struct ProgressDashboardView: View {
                         highlightsCard(
                             title: String(localized: "progressDashboard.top"),
                             iconName: "star.fill",
-                            iconTint: ColorTokens.Semantic.success,
+                            iconTint: ColorTokens.Brand.gold,
                             chips: display.topPerformers
                         )
                     }
@@ -569,9 +569,9 @@ struct ProgressDashboardView: View {
     }
 
     private func barColor(for value: Double) -> Color {
-        if value >= 70 { return ColorTokens.Semantic.success }
-        if value >= 50 { return ColorTokens.Semantic.warning }
-        return ColorTokens.Semantic.error
+        if value >= 70 { return ColorTokens.Brand.gold }
+        if value >= 50 { return ColorTokens.Brand.primary }
+        return ColorTokens.Brand.rose
     }
 
     // MARK: - Actions

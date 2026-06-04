@@ -289,9 +289,9 @@ struct SessionHistoryView: View {
 
     private var averageAccuracyColor: Color {
         let percent = display.averageAccuracyPercent()
-        if percent >= 70 { return ColorTokens.Semantic.success }
+        if percent >= 70 { return ColorTokens.Brand.gold }
         if percent >= 50 { return ColorTokens.Semantic.warning }
-        return ColorTokens.Semantic.error
+        return ColorTokens.Brand.rose
     }
 
     private var summaryAccessibilityLabel: String {

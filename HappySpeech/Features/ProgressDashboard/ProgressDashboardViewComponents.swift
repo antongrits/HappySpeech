@@ -175,8 +175,8 @@ struct SoundProgressCellView: View {
 
     private var trendColor: Color {
         switch cell.trend {
-        case .up:     return ColorTokens.Semantic.success
-        case .down:   return ColorTokens.Semantic.error
+        case .up:     return ColorTokens.Brand.gold
+        case .down:   return ColorTokens.Brand.rose
         case .stable: return ColorTokens.Parent.inkMuted
         }
     }
@@ -272,14 +272,14 @@ struct SoundChipView: View {
 
     private var textColor: Color {
         switch chip.tone {
-        case .positive:  return ColorTokens.Semantic.success
+        case .positive:  return ColorTokens.Brand.gold
         case .attention: return ColorTokens.Semantic.warning
         }
     }
 
     private var backgroundColor: Color {
         switch chip.tone {
-        case .positive:  return ColorTokens.Semantic.successBg
+        case .positive:  return ColorTokens.Brand.butter.opacity(0.30)
         case .attention: return ColorTokens.Semantic.warningBg
         }
     }
@@ -344,7 +344,7 @@ struct ParentInsightCard: View {
 
     private var toneColor: Color {
         switch card.toneRawValue {
-        case "positive": return ColorTokens.Semantic.success
+        case "positive": return ColorTokens.Brand.gold
         case "warning":  return ColorTokens.Semantic.warning
         default:         return ColorTokens.Brand.primary
         }

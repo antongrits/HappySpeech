@@ -47,7 +47,7 @@ struct SoundProgressDetailView: View {
 
                 Text("\(detail.accuracyPercent)%")
                     .font(TypographyTokens.display(36))
-                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .foregroundStyle(ColorTokens.Brand.gold)
                     .accessibilityHidden(true)
             }
         }
@@ -103,7 +103,7 @@ struct SoundProgressDetailView: View {
             DetailMetric(
                 title: String(localized: "progressDashboard.detail.metric.accuracy"),
                 value: "\(detail.accuracyPercent)%",
-                color: ColorTokens.Semantic.success
+                color: ColorTokens.Brand.gold
             )
             DetailMetric(
                 title: String(localized: "progressDashboard.detail.metric.sessions"),

@@ -311,9 +311,9 @@ struct SpecProgressBar: View {
 
     private var progressColor: Color {
         switch percent {
-        case ..<50: return ColorTokens.Semantic.error
+        case ..<50: return ColorTokens.Brand.rose
         case ..<80: return ColorTokens.Semantic.warning
-        default: return ColorTokens.Semantic.success
+        default: return ColorTokens.Brand.gold
         }
     }
 }
@@ -452,9 +452,9 @@ struct SpecSoundRow: View {
     private var deltaText: String { "\(deltaSign)\(Int((row.weekOverWeekDelta * 100).rounded()))%" }
     private var barColor: Color {
         switch percent {
-        case ..<50: return ColorTokens.Semantic.error
+        case ..<50: return ColorTokens.Brand.rose
         case ..<80: return ColorTokens.Semantic.warning
-        default: return ColorTokens.Semantic.success
+        default: return ColorTokens.Brand.gold
         }
     }
 
@@ -479,8 +479,8 @@ struct SpecSoundRow: View {
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(
                                 row.weekOverWeekDelta >= 0
-                                    ? ColorTokens.Semantic.success
-                                    : ColorTokens.Semantic.error
+                                    ? ColorTokens.Brand.gold
+                                    : ColorTokens.Brand.rose
                             )
                         Spacer()
                         Text(row.currentStageTitle)

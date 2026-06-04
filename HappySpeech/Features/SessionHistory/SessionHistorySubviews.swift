@@ -116,8 +116,8 @@ struct SessionHistoryAttemptRowCard: View {
                 Image(systemName: row.isCorrect ? "checkmark.circle.fill" : "xmark.circle")
                     .font(TypographyTokens.subtitle(16))
                     .foregroundStyle(row.isCorrect
-                                     ? ColorTokens.Semantic.success
-                                     : ColorTokens.Semantic.error)
+                                     ? ColorTokens.Brand.gold
+                                     : ColorTokens.Brand.rose)
                     .accessibilityHidden(true)
             }
         }
@@ -146,9 +146,9 @@ struct SessionHistoryScoreBadge: View {
 
     private var color: Color {
         switch tier {
-        case .excellent: return ColorTokens.Semantic.success
+        case .excellent: return ColorTokens.Brand.gold
         case .ok:        return ColorTokens.Semantic.warning
-        case .low:       return ColorTokens.Semantic.error
+        case .low:       return ColorTokens.Brand.rose
         }
     }
 }
@@ -182,7 +182,7 @@ struct SessionHistoryExportSheet: View {
                     title: String(localized: "sessionHistory.export.csv"),
                     subtitle: String(localized: "sessionHistory.export.csv.subtitle"),
                     icon: "tablecells",
-                    color: ColorTokens.Semantic.success,
+                    color: ColorTokens.Brand.gold,
                     action: { dismiss(); onCSV() }
                 )
                 exportButton(

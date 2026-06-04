@@ -175,9 +175,9 @@ struct NeurolinguistInsightsView: View {
     private func trendBadge(text: String, colorToken: String) -> some View {
         let tint: Color = {
             switch colorToken {
-            case "success": return ColorTokens.Semantic.success
+            case "success": return ColorTokens.Brand.gold
             case "warning": return ColorTokens.Semantic.warning
-            case "info":    return ColorTokens.Brand.sky
+            case "info":    return ColorTokens.Brand.primary
             default:        return ColorTokens.Parent.inkMuted
             }
         }()
@@ -216,9 +216,9 @@ struct NeurolinguistInsightsView: View {
         let tint: Color = {
             switch chip.colorToken {
             case "primary": return ColorTokens.Brand.primary
-            case "success": return ColorTokens.Semantic.success
+            case "success": return ColorTokens.Brand.gold
             case "warning": return ColorTokens.Semantic.warning
-            case "info":    return ColorTokens.Brand.sky
+            case "info":    return ColorTokens.Brand.primary
             default:        return ColorTokens.Parent.inkMuted
             }
         }()

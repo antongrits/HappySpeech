@@ -174,7 +174,7 @@ struct PhonemeAccuracyRow: View {
 
     private func toneColor(_ tone: AccuracyTone) -> Color {
         switch tone {
-        case .good:   return ColorTokens.Semantic.success
+        case .good:   return ColorTokens.Brand.gold
         case .medium: return ColorTokens.Brand.gold
         case .poor:   return ColorTokens.Semantic.error
         }
@@ -202,7 +202,7 @@ struct ToneIndicator: View {
 
     private var color: Color {
         switch tone {
-        case .good:   return ColorTokens.Semantic.success
+        case .good:   return ColorTokens.Brand.gold
         case .medium: return ColorTokens.Brand.gold
         case .poor:   return ColorTokens.Semantic.error
         }
@@ -226,7 +226,7 @@ struct AccuracyPill: View {
 
     private var pillColor: Color {
         switch tone {
-        case .good:   return ColorTokens.Semantic.success
+        case .good:   return ColorTokens.Brand.gold
         case .medium: return ColorTokens.Brand.gold
         case .poor:   return ColorTokens.Semantic.error
         }

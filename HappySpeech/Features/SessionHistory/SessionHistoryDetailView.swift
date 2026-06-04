@@ -213,9 +213,9 @@ struct SessionHistoryDetailView: View {
 
     private var scoreColor: Color {
         switch detail.scoreTier {
-        case .excellent: return ColorTokens.Semantic.success
+        case .excellent: return ColorTokens.Brand.gold
         case .ok:        return ColorTokens.Semantic.warning
-        case .low:       return ColorTokens.Semantic.error
+        case .low:       return ColorTokens.Brand.rose
         }
     }
 }

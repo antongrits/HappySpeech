@@ -248,11 +248,11 @@ final class SessionReviewPresenter: SessionReviewPresentationLogic {
     private static func color(for tone: AccuracyTone) -> Color {
         switch tone {
         case .good:
-            return ColorTokens.Semantic.success
-        case .medium:
             return ColorTokens.Brand.gold
+        case .medium:
+            return ColorTokens.Brand.primary
         case .poor:
-            return ColorTokens.Semantic.error
+            return ColorTokens.Brand.rose
         }
     }
 }

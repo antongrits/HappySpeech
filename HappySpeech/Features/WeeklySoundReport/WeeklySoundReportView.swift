@@ -306,7 +306,7 @@ struct WeeklySoundReportView: View {
                 wordsBlock(
                     titleKey: "weeklyReport.detail.topWords",
                     words: detail.topWordsFormatted,
-                    tint: ColorTokens.Semantic.success
+                    tint: ColorTokens.Brand.gold
                 )
             }
 
@@ -430,17 +430,17 @@ struct WeeklySoundReportView: View {
 
     private func ringColor(for rate: Double) -> Color {
         switch rate {
-        case 0.8...:    return ColorTokens.Semantic.success
+        case 0.8...:    return ColorTokens.Brand.gold
         case 0.5..<0.8: return ColorTokens.Semantic.warning
-        default:        return ColorTokens.Semantic.error
+        default:        return ColorTokens.Brand.rose
         }
     }
 
     private func trendColor(_ trend: TrendArrow) -> Color {
         switch trend {
-        case .up:     return ColorTokens.Semantic.success
+        case .up:     return ColorTokens.Brand.gold
         case .stable: return ColorTokens.Parent.inkMuted
-        case .down:   return ColorTokens.Semantic.error
+        case .down:   return ColorTokens.Brand.rose
         }
     }
 

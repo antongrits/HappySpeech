@@ -35,7 +35,7 @@ struct BreakdownStatsCard: View {
                 VStack(alignment: .trailing, spacing: 3) {
                     Text(stats.totalCorrectText)
                         .font(TypographyTokens.body(12))
-                        .foregroundStyle(ColorTokens.Semantic.success)
+                        .foregroundStyle(ColorTokens.Brand.gold)
                     if let manual = stats.manualOverrideText {
                         Text(manual)
                             .font(TypographyTokens.caption(10))
@@ -174,9 +174,9 @@ struct AttemptBreakdownRowView: View {
 
     private func toneColor(_ tone: AccuracyTone) -> Color {
         switch tone {
-        case .good:   return ColorTokens.Semantic.success
-        case .medium: return ColorTokens.Brand.gold
-        case .poor:   return ColorTokens.Semantic.error
+        case .good:   return ColorTokens.Brand.gold
+        case .medium: return ColorTokens.Brand.primary
+        case .poor:   return ColorTokens.Brand.rose
         }
     }
 

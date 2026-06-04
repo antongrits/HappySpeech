@@ -277,9 +277,9 @@ struct SessionReviewView: View {
     private var overallAccuracyColor: Color {
         let tone = AccuracyTone.make(from: viewModel.overallAccuracyPercent)
         switch tone {
-        case .good:   return ColorTokens.Semantic.success
-        case .medium: return ColorTokens.Brand.gold
-        case .poor:   return ColorTokens.Semantic.error
+        case .good:   return ColorTokens.Brand.gold
+        case .medium: return ColorTokens.Brand.primary
+        case .poor:   return ColorTokens.Brand.rose
         }
     }
 

@@ -143,11 +143,11 @@ struct SpecialistQuickAssessmentView: View {
     }
 
     private var savedBanner: some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.30))) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 28))
-                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .foregroundStyle(ColorTokens.Brand.gold)
                     .hsSymbolEffect(.bounce, value: true)
                 Text("Оценка сохранена")
                     .font(TypographyTokens.headline(15))

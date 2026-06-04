@@ -278,8 +278,8 @@ struct SpecialistReportsView: View {
     private var overallBadge: some View {
         let percent = viewModel.overallSuccessPercent
         let color: Color = percent >= 80
-            ? ColorTokens.Semantic.success
-            : (percent >= 60 ? ColorTokens.Brand.gold : ColorTokens.Semantic.warning)
+            ? ColorTokens.Brand.gold
+            : (percent >= 60 ? ColorTokens.Brand.primary : ColorTokens.Semantic.warning)
         return Text("\(percent)%")
             .font(TypographyTokens.titleSmall(22))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -391,7 +391,7 @@ struct SpecialistReportsView: View {
     private func lastExportRow(url: URL) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(ColorTokens.Semantic.success)
+                .foregroundStyle(ColorTokens.Brand.gold)
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: "reports.export.ready"))
                     .font(TypographyTokens.body(13))
@@ -654,8 +654,8 @@ private struct SoundBreakdownRowView: View {
         let delta = row.weekOverWeekDelta
         let percent = String(format: "%+.0f", delta * 100)
         let color: Color = delta >= 0.05
-            ? ColorTokens.Semantic.success
-            : (delta <= -0.05 ? ColorTokens.Semantic.warning : ColorTokens.Spec.inkMuted)
+            ? ColorTokens.Brand.gold
+            : (delta <= -0.05 ? ColorTokens.Brand.rose : ColorTokens.Spec.inkMuted)
         let iconName = delta >= 0.05
             ? "arrow.up.right"
             : (delta <= -0.05 ? "arrow.down.right" : "minus")
