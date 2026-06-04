@@ -53,7 +53,7 @@ struct SyllableConstructorView: View {
     @State private var router: SyllableConstructorRouter?
     @State private var isSubmitting: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -92,7 +92,7 @@ struct SyllableConstructorView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -437,7 +437,7 @@ struct SyllableConstructorView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SyllableConstructorRouter(dismissAction: { dismiss() })
+            self.router = SyllableConstructorRouter(dismissAction: { exitGame() })
         }
         await interactor?.start(request: .init(childId: childId, preferredTier: preferredTier))
     }

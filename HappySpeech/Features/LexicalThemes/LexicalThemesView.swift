@@ -74,7 +74,7 @@ struct LexicalThemesView: View {
     /// правильный вариант не всегда был первым на экране).
     @State private var optionOrder: [Int] = []
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -118,7 +118,7 @@ struct LexicalThemesView: View {
                         if holder.isInGame {
                             Task { await backToHub() }
                         } else {
-                            dismiss()
+                            exitGame()
                         }
                     } label: {
                         Image(systemName: "xmark.circle.fill")
@@ -389,7 +389,7 @@ struct LexicalThemesView: View {
                 .accessibilityHint(Text("lexicalThemes.summary.backToThemes.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("lexicalThemes.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -454,7 +454,7 @@ struct LexicalThemesView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = LexicalThemesRouter(dismissAction: { dismiss() })
+            self.router = LexicalThemesRouter(dismissAction: { exitGame() })
         }
         await interactor?.loadThemes(request: .init(childId: childId))
     }

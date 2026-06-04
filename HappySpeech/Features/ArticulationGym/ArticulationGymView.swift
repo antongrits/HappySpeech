@@ -66,7 +66,7 @@ struct ArticulationGymView: View {
     @State private var secondsRemaining: Int = 0
     @State private var timerTask: Task<Void, Never>?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -108,7 +108,7 @@ struct ArticulationGymView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         stopTimer()
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -316,7 +316,7 @@ struct ArticulationGymView: View {
             self.router = ArticulationGymRouter(
                 coordinator: coordinator,
                 childId: childId,
-                dismissAction: { dismiss() }
+                dismissAction: { exitGame() }
             )
         }
         await reloadGroup(selectedGroup)

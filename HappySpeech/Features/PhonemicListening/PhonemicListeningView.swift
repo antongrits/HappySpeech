@@ -67,7 +67,7 @@ struct PhonemicListeningView: View {
     /// экране перемешана, чтобы правильный вариант не был всегда первым.
     @State private var optionOrder: [Int] = []
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -104,7 +104,7 @@ struct PhonemicListeningView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -311,7 +311,7 @@ struct PhonemicListeningView: View {
                 .accessibilityHint(Text("phonemicListening.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("phonemicListening.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -375,7 +375,7 @@ struct PhonemicListeningView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = PhonemicListeningRouter(dismissAction: { dismiss() })
+            self.router = PhonemicListeningRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))

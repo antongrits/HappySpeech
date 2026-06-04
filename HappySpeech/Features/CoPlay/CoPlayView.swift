@@ -76,7 +76,7 @@ struct CoPlayView: View {
     }
     #endif
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -112,7 +112,7 @@ struct CoPlayView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -352,7 +352,7 @@ struct CoPlayView: View {
                 .accessibilityHint(Text("coPlay.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("coPlay.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -397,7 +397,7 @@ struct CoPlayView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = CoPlayRouter(dismissAction: { dismiss() })
+            self.router = CoPlayRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))

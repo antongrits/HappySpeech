@@ -86,7 +86,16 @@ struct GrammarGameView: View {
     // SE adaptation
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State var screenWidth: CGFloat = 390
-    var isSmallDevice: Bool { screenWidth < 375 }
+    // SE 3 имеет ширину РОВНО 375pt — строгое `< 375` его исключало, из-за чего
+    // компактные отступы/размеры к нему не применялись и нижние кнопки уходили
+    // под сгиб. `<= 375` корректно охватывает SE.
+    var isSmallDevice: Bool { screenWidth <= 375 }
+
+    /// Верхний отступ контента: на SE минимизируем, чтобы варианты ответов
+    /// помещались без скролла.
+    private var contentTopInset: CGFloat {
+        isSmallDevice ? SpacingTokens.regular : SpacingTokens.xxLarge
+    }
 
     // Reduced Motion
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -266,16 +275,16 @@ struct GrammarGameView: View {
             switch roundExtraData {
             case .dative(let characters, let targetIndex):
                 dativeContentView(characters: characters, targetIndex: targetIndex)
-                    .padding(.top, SpacingTokens.xxLarge)
+                    .padding(.top, contentTopInset)
             case .genitive(let containers, let correctIndex):
                 genitiveContentView(containers: containers, correctIndex: correctIndex)
-                    .padding(.top, SpacingTokens.xxLarge)
+                    .padding(.top, contentTopInset)
             case .instrumental(let partyMode):
                 instrumentalContentView(partyMode: partyMode)
-                    .padding(.top, SpacingTokens.xxLarge)
+                    .padding(.top, contentTopInset)
             case .none:
                 pluralContentView
-                    .padding(.top, SpacingTokens.xxLarge)
+                    .padding(.top, contentTopInset)
             }
         }
     }
@@ -315,12 +324,13 @@ struct GrammarGameView: View {
             VStack(spacing: SpacingTokens.regular) {
                 ForEach(choices) { choice in
                     pluralChoiceButton(choice)
-                        // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                        // + parallax drift на choice buttons. Гейтятся reduceMotion.
+                        // Step 10 Batch C — лёгкий scroll-stagger (только масштаб).
+                        // Opacity НЕ гасим до 0: на SE варианты лежат у нижнего
+                        // края scroll-вьюшки, и opacity→0 делал их невидимыми до
+                        // скролла (неочевидный скролл = жалоба). Кнопки видимы всегда.
                         .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                             content
-                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.96))
                         }
                         .hsParallaxTile(factor: 0.25)
                 }

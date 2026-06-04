@@ -97,7 +97,7 @@ struct WhoseTailView: View {
     @State private var presenter: WhoseTailPresenter?
     @State private var router: WhoseTailRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -147,7 +147,7 @@ struct WhoseTailView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -392,7 +392,7 @@ struct WhoseTailView: View {
                 .accessibilityHint(Text("whoseTail.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("whoseTail.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -457,7 +457,7 @@ struct WhoseTailView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = WhoseTailRouter(dismissAction: { dismiss() })
+            self.router = WhoseTailRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId, preferredSubtask: nil))

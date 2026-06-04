@@ -97,7 +97,7 @@ struct WordFormationView: View {
     @State private var presenter: WordFormationPresenter?
     @State private var router: WordFormationRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -142,7 +142,7 @@ struct WordFormationView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -385,7 +385,7 @@ struct WordFormationView: View {
                 .accessibilityHint(Text("wordFormation.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("wordFormation.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -456,7 +456,7 @@ struct WordFormationView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = WordFormationRouter(dismissAction: { dismiss() })
+            self.router = WordFormationRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId, preferredSubtask: nil))

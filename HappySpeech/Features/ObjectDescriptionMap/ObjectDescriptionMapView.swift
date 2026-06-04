@@ -56,7 +56,7 @@ struct ObjectDescriptionMapView: View {
     @State private var didBootstrap = false
     @State private var recordCountdown: Int = 90
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -668,7 +668,7 @@ struct ObjectDescriptionMapView: View {
             }
             .buttonStyle(.plain)
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Text("Готово") // L10n
                     .font(TypographyTokens.headline(16))
@@ -701,7 +701,7 @@ struct ObjectDescriptionMapView: View {
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

@@ -55,7 +55,7 @@ struct BedtimeModeView: View {
     @State private var breathingGeneration: Int = 0
     @State private var isStoryPlaying = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -131,7 +131,7 @@ struct BedtimeModeView: View {
             Spacer()
             Button {
                 interactor?.stopNarration()
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
@@ -381,7 +381,7 @@ struct BedtimeModeView: View {
                 .lineLimit(nil)
             Button {
                 interactor?.stopNarration()
-                dismiss()
+                exitGame()
             } label: {
                 Text("bedtime.farewell.close")
                     .font(TypographyTokens.headline(17))
@@ -438,7 +438,7 @@ struct BedtimeModeView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = BedtimeModeRouter(dismissAction: { dismiss() })
+            self.router = BedtimeModeRouter(dismissAction: { exitGame() })
         }
         await interactor?.start(request: .init(childId: childId))
     }

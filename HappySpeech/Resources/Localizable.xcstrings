@@ -6696,6 +6696,28 @@
         }
       }
     },
+    "bilingualMode.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Называй предметы на русском и втором языке"
+          }
+        }
+      }
+    },
+    "bilingualMode.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Два языка"
+          }
+        }
+      }
+    },
     "bilingualMode.lang.belarusian": {
       "extractionState": "manual",
       "localizations": {
@@ -7517,6 +7539,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Молодец! Язычок размялся и готов к красивым звукам."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.steps %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнений пройдено: %1$lld из %2$lld"
           }
         }
       }
@@ -9007,6 +9040,17 @@
         }
       }
     },
+    "child.home.quick.minimalpairs": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Похожие звуки"
+          }
+        }
+      }
+    },
     "child.home.quick.repeat": {
       "extractionState": "manual",
       "localizations": {
@@ -9025,6 +9069,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Быстрая игра"
+          }
+        }
+      }
+    },
+    "child.home.quick.sorting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разложи по группам"
           }
         }
       }
@@ -15098,6 +15153,28 @@
         }
       }
     },
+    "descriptionMap.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Опиши предмет по подсказкам план-схемы"
+          }
+        }
+      }
+    },
+    "descriptionMap.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Описательная карта"
+          }
+        }
+      }
+    },
     "detective.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -18779,6 +18856,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Закрыть пальчиковую игру"
+          }
+        }
+      }
+    },
+    "fingerPlay.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй жесты пальчиками вместе с Лялей"
+          }
+        }
+      }
+    },
+    "fingerPlay.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пальчики-говоруны"
           }
         }
       }
@@ -23515,6 +23614,28 @@
         }
       }
     },
+    "karaoke.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подпевай мелодии и следи за линией голоса"
+          }
+        }
+      }
+    },
+    "karaoke.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пой вместе с Лялей"
+          }
+        }
+      }
+    },
     "karaoke.feedback.one": {
       "extractionState": "manual",
       "localizations": {
@@ -25432,6 +25553,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слова со звуком"
+          }
+        }
+      }
+    },
+    "logorhythmics.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Двигайся и говори в такт ритму"
+          }
+        }
+      }
+    },
+    "logorhythmics.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логоритмика"
           }
         }
       }
@@ -51786,6 +51929,28 @@
         }
       }
     },
+    "storyCreator.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери картинки и придумай по ним рассказ"
+          }
+        }
+      }
+    },
+    "storyCreator.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расскажи свою историю"
+          }
+        }
+      }
+    },
     "storyCreator.loading": {
       "extractionState": "manual",
       "localizations": {
@@ -57464,6 +57629,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Совпадение: %d%%"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.matchIdle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадение: —"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match: —"
           }
         }
       }
@@ -66272,22 +66453,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "whisperGame.meter.matchIdle": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Совпадение: —"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Match: —"
           }
         }
       }

@@ -403,6 +403,22 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 icon: "hand.draw.fill",
                 accent: .sky,
                 difficulty: 1
+            ),
+            .init(
+                id: "qp-sorting",
+                templateType: TemplateType.sorting.rawValue,
+                titleKey: "child.home.quick.sorting",
+                icon: "tray.2.fill",
+                accent: .rose,
+                difficulty: 2
+            ),
+            .init(
+                id: "qp-minimalpairs",
+                templateType: TemplateType.minimalPairs.rawValue,
+                titleKey: "child.home.quick.minimalpairs",
+                icon: "waveform.and.magnifyingglass",
+                accent: .gold,
+                difficulty: 3
             )
         ]
     }

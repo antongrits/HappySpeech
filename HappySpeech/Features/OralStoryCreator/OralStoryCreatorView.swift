@@ -48,7 +48,7 @@ struct OralStoryCreatorView: View {
     @State private var didBootstrap = false
     @State private var recordCountdown: Int = 60
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -326,7 +326,7 @@ struct OralStoryCreatorView: View {
                     transcriptCard(vm)
                     metricsCard(vm)
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Text("storyCreator.button.done")
                             .font(TypographyTokens.headline(17))
@@ -434,7 +434,7 @@ struct OralStoryCreatorView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

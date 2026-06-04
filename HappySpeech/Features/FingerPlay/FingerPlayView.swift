@@ -49,7 +49,7 @@ struct FingerPlayView: View {
     @State private var cameraSession: HandPoseCameraSession?
     @State private var permissionDenied: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -320,7 +320,7 @@ struct FingerPlayView: View {
                 .frame(maxWidth: .infinity)
             }
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Text("fingerPlay.button.done")
                     .font(TypographyTokens.headline(18))
@@ -386,7 +386,7 @@ struct FingerPlayView: View {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
                 cameraSession?.stop()
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

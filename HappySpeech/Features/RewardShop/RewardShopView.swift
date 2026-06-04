@@ -55,7 +55,7 @@ struct RewardShopView: View {
     @State private var presenter: RewardShopPresenter?
     @State private var router: RewardShopRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -100,8 +100,8 @@ struct RewardShopView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        router?.dismiss()
-                        dismiss()
+                        exitGame()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -406,7 +406,7 @@ struct RewardShopView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = RewardShopRouter(dismissAction: { dismiss() })
+            self.router = RewardShopRouter(dismissAction: { exitGame() })
         }
         await interactor?.load(request: .init(childId: childId))
     }

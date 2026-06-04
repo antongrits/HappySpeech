@@ -85,7 +85,7 @@ struct ComprehensionDetectiveView: View {
     @State private var router: ComprehensionDetectiveRouter?
     @State private var pickInFlight = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -138,7 +138,7 @@ struct ComprehensionDetectiveView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -365,7 +365,7 @@ struct ComprehensionDetectiveView: View {
                 .accessibilityHint(Text("detective.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("detective.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -408,7 +408,7 @@ struct ComprehensionDetectiveView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = ComprehensionDetectiveRouter(dismissAction: { dismiss() })
+            self.router = ComprehensionDetectiveRouter(dismissAction: { exitGame() })
         }
         await interactor?.start(request: .init(childId: childId, preferredTier: preferredTier))
     }

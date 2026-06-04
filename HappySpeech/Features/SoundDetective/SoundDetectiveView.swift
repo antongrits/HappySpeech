@@ -88,7 +88,7 @@ struct SoundDetectiveView: View {
     @State private var presenter: SoundDetectivePresenter?
     @State private var router: SoundDetectiveRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -134,7 +134,7 @@ struct SoundDetectiveView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -392,7 +392,7 @@ struct SoundDetectiveView: View {
                 .accessibilityHint(Text("soundDetective.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("soundDetective.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -477,7 +477,7 @@ struct SoundDetectiveView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SoundDetectiveRouter(dismissAction: { dismiss() })
+            self.router = SoundDetectiveRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId, preferredLevel: nil))

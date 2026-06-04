@@ -32,14 +32,17 @@ final class SessionShellRouter: SessionShellRoutingLogic {
     }
 
     func routeToHome() {
-        coordinator?.popToRoot()
+        // Сессия запускается через `coordinator.navigate(to:)`, который ЗАМЕНЯЕТ
+        // корневой маршрут (currentRoute), а не push'ит в стек. Поэтому popToRoot()
+        // (чистит только navigationPath) НЕ возвращает на детскую главную —
+        // пользователь застревал. Возвращаем корень kid-home явно.
+        coordinator?.navigate(to: .childHome(childId: ""))
     }
 
     func routeBack() {
-        // AppCoordinator может не предоставлять "back-by-one" — для kid-circuit
-        // безопаснее всегда возвращаться на корень kid-home, чтобы сессия
-        // не "застревала" в навигационном стеке после ручного выхода.
-        coordinator?.popToRoot()
+        // См. routeToHome: единственный надёжный выход из kid-circuit-сессии —
+        // восстановить корневой маршрут детской главной.
+        coordinator?.navigate(to: .childHome(childId: ""))
     }
 }
 

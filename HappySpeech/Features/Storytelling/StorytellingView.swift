@@ -72,7 +72,7 @@ struct StorytellingView: View {
     @State private var presenter: StorytellingPresenter?
     @State private var router: StorytellingRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -114,7 +114,7 @@ struct StorytellingView: View {
                         if holder.phase == .telling {
                             Task { await backToTopics() }
                         } else {
-                            dismiss()
+                            exitGame()
                         }
                     } label: {
                         Image(systemName: "xmark.circle.fill")
@@ -373,7 +373,7 @@ struct StorytellingView: View {
                 .accessibilityHint(Text("storytelling.summary.another.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("storytelling.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -415,7 +415,7 @@ struct StorytellingView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = StorytellingRouter(dismissAction: { dismiss() })
+            self.router = StorytellingRouter(dismissAction: { exitGame() })
         }
         await interactor?.loadTopics(request: .init(childId: childId))
     }

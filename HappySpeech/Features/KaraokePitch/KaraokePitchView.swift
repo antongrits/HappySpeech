@@ -64,7 +64,7 @@ struct KaraokePitchView: View {
     @State private var router: KaraokePitchRouter?
     @State private var didBootstrap = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -533,7 +533,7 @@ struct KaraokePitchView: View {
 
     private func dismissTapped() {
         Task { await interactor?.stopRecording() }
-        dismiss()
+        exitGame()
     }
 }
 

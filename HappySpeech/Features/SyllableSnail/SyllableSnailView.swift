@@ -124,7 +124,7 @@ struct SyllableSnailView: View {
     @State private var presenter: SyllableSnailPresenter?
     @State private var router: SyllableSnailRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -179,7 +179,7 @@ struct SyllableSnailView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -220,13 +220,13 @@ struct SyllableSnailView: View {
 
                     replayButton(round: round)
 
-                    Spacer(minLength: 0)
-
                     // Тропинка-улитка (общий визуальный мотив всех режимов).
+                    // Spacer'ы убраны: на SE 375pt они раздували вертикаль и
+                    // уводили кнопки действия («Убрать один хлопок»/«Проверить»)
+                    // под сгиб. Фиксированный отступ держит действия на виду.
                     snailPath(round: round)
                         .padding(.horizontal, SpacingTokens.screenEdge)
-
-                    Spacer(minLength: 0)
+                        .padding(.vertical, SpacingTokens.sp2)
 
                     // Подвью по режиму.
                     modeSection(round: round)
@@ -537,7 +537,10 @@ struct SyllableSnailView: View {
         _ summary: SyllableSnailModels.SummaryViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp5) {
-            Spacer()
+            // Верхний отступ меньше нижнего распорки — контент сидит в верхней
+            // трети, без большой пустоты над иконкой. Улитка «дошла до домика»
+            // как визуальный итог пути заполняет середину.
+            Spacer(minLength: SpacingTokens.sp4)
 
             Image(systemName: summary.accuracyFraction >= 0.8
                 ? "tortoise.circle.fill"
@@ -563,7 +566,26 @@ struct SyllableSnailView: View {
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.sp6)
+
+            // «Улитка дошла до домика» — итоговый визуальный мотив пути.
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "tortoise.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Brand.mint)
+                ForEach(0..<3, id: \.self) { _ in
+                    Image(systemName: "house.fill")
+                        .font(.body)
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                }
+                Image(systemName: "flag.fill")
+                    .font(.body)
+                    .foregroundStyle(ColorTokens.Brand.gold)
+            }
+            .padding(.top, SpacingTokens.sp2)
+            .accessibilityHidden(true)
 
             Spacer()
 
@@ -584,7 +606,7 @@ struct SyllableSnailView: View {
                 .accessibilityHint(Text("syllableSnail.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("syllableSnail.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -657,7 +679,7 @@ struct SyllableSnailView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SyllableSnailRouter(dismissAction: { dismiss() })
+            self.router = SyllableSnailRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(

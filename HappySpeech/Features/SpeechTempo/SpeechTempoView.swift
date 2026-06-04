@@ -68,7 +68,7 @@ struct SpeechTempoView: View {
     @State private var router: SpeechTempoRouter?
     @State private var attemptStart: Date?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -102,7 +102,7 @@ struct SpeechTempoView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -278,7 +278,9 @@ struct SpeechTempoView: View {
         _ summary: SpeechTempoModels.Finish.SummaryViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp5) {
-            Spacer()
+            // Верхний отступ меньше нижней распорки — контент сидит в верхней
+            // трети, без большой пустоты над иконкой.
+            Spacer(minLength: SpacingTokens.sp4)
 
             Image(systemName: "flag.checkered.2.crossed")
                 .font(.system(size: 80))
@@ -302,7 +304,28 @@ struct SpeechTempoView: View {
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.sp6)
+
+            // Машина доехала до финиша — итоговый визуальный мотив дорожки.
+            // Заполняет середину экрана, без «тонкой полоски + большой дыры».
+            ZStack(alignment: .trailing) {
+                Capsule()
+                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .frame(height: 48)
+                HStack(spacing: SpacingTokens.sp1) {
+                    Image(systemName: "car.side.fill")
+                        .font(.system(size: 32))
+                        .foregroundStyle(ColorTokens.Brand.rose)
+                    Image(systemName: "flag.checkered")
+                        .font(.title3)
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                }
+                .padding(.trailing, SpacingTokens.sp3)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityHidden(true)
 
             Spacer()
 
@@ -323,7 +346,7 @@ struct SpeechTempoView: View {
                 .accessibilityHint(Text("speechTempo.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("speechTempo.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -365,7 +388,7 @@ struct SpeechTempoView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SpeechTempoRouter(dismissAction: { dismiss() })
+            self.router = SpeechTempoRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         attemptStart = nil

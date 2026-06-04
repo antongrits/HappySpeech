@@ -56,7 +56,7 @@ struct LetterTraceView: View {
     @State private var canvasView = PKCanvasView()
     @State private var canvasSize: CGSize = .zero
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -100,8 +100,8 @@ struct LetterTraceView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        router?.dismiss()
-                        dismiss()
+                        exitGame()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -396,7 +396,7 @@ struct LetterTraceView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = LetterTraceRouter(dismissAction: { dismiss() })
+            self.router = LetterTraceRouter(dismissAction: { exitGame() })
         }
         await interactor?.load(request: .init(childId: childId))
     }

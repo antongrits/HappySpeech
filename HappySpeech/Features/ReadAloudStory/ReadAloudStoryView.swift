@@ -88,7 +88,7 @@ struct ReadAloudStoryView: View {
     @State private var router: ReadAloudStoryRouter?
     @State private var optionOrder: [Int] = []
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -117,7 +117,7 @@ struct ReadAloudStoryView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -405,7 +405,7 @@ struct ReadAloudStoryView: View {
                 .buttonStyle(.plain)
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("readAloud.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -464,7 +464,7 @@ struct ReadAloudStoryView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = ReadAloudStoryRouter(dismissAction: { dismiss() })
+            self.router = ReadAloudStoryRouter(dismissAction: { exitGame() })
         }
         await interactor?.start(request: .init(childId: childId, excludeStoryId: nil))
     }

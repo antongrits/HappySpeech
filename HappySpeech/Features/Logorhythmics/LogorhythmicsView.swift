@@ -58,7 +58,7 @@ struct LogorhythmicsView: View {
     @State private var mascotState: LyalyaState = .thinking
     @State private var showConfetti: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -564,7 +564,7 @@ struct LogorhythmicsView: View {
             }
             .buttonStyle(.plain)
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Text("Готово")
                     .font(TypographyTokens.headline(16))
@@ -598,7 +598,7 @@ struct LogorhythmicsView: View {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
                 interactor?.stopPlayback()
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

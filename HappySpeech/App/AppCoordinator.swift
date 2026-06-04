@@ -456,6 +456,12 @@ struct AppCoordinatorView: View {
                 // Main content
                 mainContent
                     .animation(MotionTokens.page, value: coordinator.currentRoute)
+                    // Единый выход из детских мини-игр: игры запускаются через
+                    // navigate(to:) (замена currentRoute), поэтому @Environment(\.dismiss)
+                    // в них — no-op. exitGame восстанавливает корень детской главной.
+                    .environment(\.exitGame, KidGameExitAction {
+                        coordinator.navigate(to: .childHome(childId: ""))
+                    })
 
                 // Offline banner (global)
                 if coordinator.isShowingOfflineBanner {

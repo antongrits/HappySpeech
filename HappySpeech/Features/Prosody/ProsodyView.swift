@@ -62,7 +62,7 @@ struct ProsodyView: View {
     @State private var presenter: ProsodyPresenter?
     @State private var router: ProsodyRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -95,7 +95,7 @@ struct ProsodyView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -221,18 +221,17 @@ struct ProsodyView: View {
                     .padding(.horizontal, SpacingTokens.sp4)
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
-                            .fill(ColorTokens.Brand.sky)
+                            .fill(ColorTokens.Brand.primary)
                     )
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(option.label))
                 .accessibilityHint(Text("prosody.option.hint"))
-                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
-                    content
-                        .opacity(phase.isIdentity ? 1 : 0)
-                        .scaleEffect(phase.isIdentity ? 1 : 0.94)
-                }
-                .hsParallaxTile(factor: 0.22)
+                // Простая appear-анимация, привязанная к смене раунда. Ранее здесь
+                // стоял `.scrollTransition`, но кнопки НЕ внутри ScrollView →
+                // `phase.isIdentity` всегда false → opacity 0 → кнопки были
+                // невидимы и игра неиграбельна. Кнопки видимы всегда.
+                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                 .zIndex(Double(round.options.count - index))
             }
         }
@@ -345,7 +344,7 @@ struct ProsodyView: View {
                 .accessibilityHint(Text("prosody.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("prosody.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -387,7 +386,7 @@ struct ProsodyView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = ProsodyRouter(dismissAction: { dismiss() })
+            self.router = ProsodyRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))

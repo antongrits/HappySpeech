@@ -57,7 +57,7 @@ struct BreatheAndSpeakView: View {
     /// чтобы счётчик не убывал вдвое быстрее при быстрой смене шагов.
     @State private var holdGeneration: Int = 0
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -94,7 +94,7 @@ struct BreatheAndSpeakView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -183,6 +183,10 @@ struct BreatheAndSpeakView: View {
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    // Без обрезки на SE: текст разворачивается на полную высоту,
+                    // а не клипуется родительским VStack между Spacer'ами.
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, SpacingTokens.sp4)
             }
             .frame(maxWidth: .infinity)
@@ -251,7 +255,7 @@ struct BreatheAndSpeakView: View {
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
-                            .fill(ColorTokens.Brand.mint)
+                            .fill(ColorTokens.Brand.primary)
                     )
             }
             .buttonStyle(.plain)
@@ -267,11 +271,13 @@ struct BreatheAndSpeakView: View {
         _ summary: BreatheAndSpeakModels.Advance.SummaryViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp5) {
-            Spacer()
+            // Верхний отступ меньше нижней распорки — контент сидит в верхней
+            // трети, без большой пустоты над иконкой.
+            Spacer(minLength: SpacingTokens.sp4)
 
             Image(systemName: "lungs.fill")
                 .font(.system(size: 80))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .hsSymbolEffect(.bounce, value: summary.title)
                 .accessibilityHidden(true)
 
@@ -282,11 +288,23 @@ struct BreatheAndSpeakView: View {
                 .lineLimit(2)
                 .minimumScaleFactor(0.8)
 
+            // Реальный итог упражнения (из ViewModel) — заполняет середину
+            // экрана осмысленным результатом, а не пустотой.
+            Text(String(
+                format: String(localized: "breatheAndSpeak.summary.steps %lld %lld"),
+                summary.completedSteps,
+                summary.totalSteps
+            ))
+            .font(TypographyTokens.headline(20).monospacedDigit())
+            .foregroundStyle(ColorTokens.Brand.primary)
+
             Text(summary.encouragement)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.sp6)
 
             Spacer()
@@ -308,7 +326,7 @@ struct BreatheAndSpeakView: View {
                 .accessibilityHint(Text("breatheAndSpeak.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("breatheAndSpeak.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -371,7 +389,7 @@ struct BreatheAndSpeakView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = BreatheAndSpeakRouter(dismissAction: { dismiss() })
+            self.router = BreatheAndSpeakRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         resetHoldState()

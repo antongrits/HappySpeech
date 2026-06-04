@@ -45,7 +45,7 @@ struct BilingualModeView: View {
     @State private var showPractice = false
     @State private var contentAppeared = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -324,7 +324,7 @@ struct BilingualModeView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

@@ -66,7 +66,7 @@ struct RetellingView: View {
     @State private var presenter: RetellingPresenter?
     @State private var router: RetellingRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
@@ -101,7 +101,7 @@ struct RetellingView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -381,7 +381,7 @@ struct RetellingView: View {
                     .accessibilityHint(Text("retelling.summary.again.hint"))
 
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Text("retelling.summary.done")
                             .font(TypographyTokens.body(16).weight(.medium))
@@ -423,7 +423,7 @@ struct RetellingView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = RetellingRouter(dismissAction: { dismiss() })
+            self.router = RetellingRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         holder.phase = .loading

@@ -97,7 +97,7 @@ struct FourthExtraView: View {
     @State private var presenter: FourthExtraPresenter?
     @State private var router: FourthExtraRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -148,7 +148,7 @@ struct FourthExtraView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -368,7 +368,7 @@ struct FourthExtraView: View {
                 .accessibilityHint(Text("fourthExtra.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("fourthExtra.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -433,7 +433,7 @@ struct FourthExtraView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = FourthExtraRouter(dismissAction: { dismiss() })
+            self.router = FourthExtraRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId, preferredVariant: nil))

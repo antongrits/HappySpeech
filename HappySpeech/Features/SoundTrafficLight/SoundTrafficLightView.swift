@@ -62,7 +62,7 @@ struct SoundTrafficLightView: View {
     @State private var presenter: SoundTrafficLightPresenter?
     @State private var router: SoundTrafficLightRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -99,7 +99,7 @@ struct SoundTrafficLightView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -311,7 +311,7 @@ struct SoundTrafficLightView: View {
                 .accessibilityHint(Text("soundTrafficLight.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("soundTrafficLight.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -353,7 +353,7 @@ struct SoundTrafficLightView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SoundTrafficLightRouter(dismissAction: { dismiss() })
+            self.router = SoundTrafficLightRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))

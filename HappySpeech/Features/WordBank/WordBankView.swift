@@ -54,7 +54,7 @@ struct WordBankView: View {
     @State private var selectedFilter: String = WordBankView.allFilterTag
     @State private var showDetailSheet: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.colorScheme) private var colorScheme
@@ -96,7 +96,7 @@ struct WordBankView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -393,7 +393,7 @@ struct WordBankView: View {
             self.router = WordBankRouter(
                 coordinator: coordinator,
                 childId: childId,
-                dismissAction: { dismiss() }
+                dismissAction: { exitGame() }
             )
         }
         await interactor?.loadBank(request: .init(childId: childId))
