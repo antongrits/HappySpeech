@@ -23,7 +23,7 @@ public struct HSSpeechBubble: View {
             switch self {
             case .lyalya:   return ColorTokens.Brand.primary
             case .hint:     return ColorTokens.Brand.lilac
-            case .question: return ColorTokens.Games.listenAndChoose
+            case .question: return ColorTokens.Brand.primary
             }
         }
 

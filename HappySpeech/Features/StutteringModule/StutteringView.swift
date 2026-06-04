@@ -531,7 +531,7 @@ struct StutteringWelcomeSheet: View {
         .padding(.vertical, SpacingTokens.sp8)
         .background(ColorTokens.Kid.bg.ignoresSafeArea())
         .presentationDetents([.medium, .large])
-        .environment(\.circuitContext, .parent)
+        .environment(\.circuitContext, .kid)
     }
 }
 

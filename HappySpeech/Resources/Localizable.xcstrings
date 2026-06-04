@@ -18943,7 +18943,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось загрузить дневник. Проверьте свободное место и попробуйте снова."
+            "value": "Не удалось открыть дневник. Попробуйте снова."
           }
         }
       }
@@ -66272,6 +66272,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
+          }
+        }
+      }
+    },
+    "whisperGame.meter.matchIdle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадение: —"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Match: —"
           }
         }
       }

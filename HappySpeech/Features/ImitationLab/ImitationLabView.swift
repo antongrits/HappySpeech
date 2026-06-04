@@ -225,19 +225,26 @@ struct ImitationLabView: View {
         }
     }
 
+    @ViewBuilder
     private func cta(interactor: ImitationLabInteractor) -> some View {
-        HSButton(
-            interactor.state.isComplete
-                ? String(localized: "imitationLab.cta.done")
-                : String(localized: "kidGame.restart"),
-            style: interactor.state.isComplete ? .primary : .ghost,
-            size: .large,
-            icon: interactor.state.isComplete ? "checkmark" : "arrow.counterclockwise"
-        ) {
-            if interactor.state.isComplete {
+        if interactor.state.isComplete {
+            HSButton(
+                String(localized: "imitationLab.cta.done"),
+                style: .primary,
+                size: .large,
+                icon: "checkmark"
+            ) {
                 hapticService.notification(.success)
                 dismiss()
-            } else {
+            }
+        } else if interactor.state.practicedCount > 0 {
+            // «Начать заново» бессмысленна до первой попытки — скрываем.
+            HSButton(
+                String(localized: "kidGame.restart"),
+                style: .ghost,
+                size: .large,
+                icon: "arrow.counterclockwise"
+            ) {
                 hapticService.impact(.light)
                 interactor.reset()
             }

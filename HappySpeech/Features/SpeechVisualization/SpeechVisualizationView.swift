@@ -91,6 +91,7 @@ struct SpeechVisualizationView: View {
                         .padding(.vertical, SpacingTokens.sp4)
                     }
                     .scrollBounceBehavior(.basedOnSize)
+                    .safeAreaPadding(.bottom)
                 } else {
                     // H v18 — Lyalya hero на loading-экране.
                     VStack(spacing: SpacingTokens.sp3) {
@@ -181,18 +182,15 @@ struct SpeechVisualizationView: View {
 
     @ViewBuilder
     private var spectrogramSection: some View {
-        // Reuse существующего компонента (referenceSpectrogram=nil → live-only).
-        // Fix v35 (SE 3 overlap) — прежний `.frame(height: 180)` зажимал
-        // компонент, чья естественная высота ≈ 320pt (две панели по 100pt +
-        // заголовки + divider + padding 16). SwiftUI центрирует контент в
-        // зажатом фрейме БЕЗ клипа, и тёмная панель спектрограммы вылезала
-        // вверх поверх карточки слогов «со ва» и вниз на CTA. Отдаём компоненту
-        // его естественную высоту — тогда VStack(spacing: sp4) корректно
-        // разделяет секции, карточка слогов остаётся полностью видимой, а
-        // спектрограмма лежит строго НИЖЕ, ничего не перекрывая.
-        SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
-            .fixedSize(horizontal: false, vertical: true)
-            .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+        // Тёплая карточка-обёртка с нейтральным surface-фоном. Тёмный холст
+        // спектрограммы остаётся внутри — data-viz требует тёмного фона.
+        // Внешняя карточка «встраивает» блок в тёплую палитру экрана.
+        HSCard(style: .flat) {
+            SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
+                .fixedSize(horizontal: false, vertical: true)
+                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+        }
     }
 
     @ViewBuilder

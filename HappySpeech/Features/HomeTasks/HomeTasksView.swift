@@ -127,9 +127,11 @@ struct HomeTasksView: View {
 
     /// Двусторонний binding для `.alert` — гасит prompt через
     /// `display.dismissOverduePrompt()` при отказе пользователя.
+    /// Алерт не показывается пока контент не загружен (isLoading == true),
+    /// чтобы не перекрывать список на холодном запуске.
     private var overduePromptBinding: Binding<Bool> {
         Binding(
-            get: { display.pendingOverduePrompt && display.overdueCount > 0 },
+            get: { display.pendingOverduePrompt && display.overdueCount > 0 && !display.isLoading },
             set: { newValue in
                 if !newValue {
                     display.dismissOverduePrompt()

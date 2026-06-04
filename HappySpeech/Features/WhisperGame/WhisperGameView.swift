@@ -167,12 +167,20 @@ struct WhisperGameView: View {
                 .accessibilityValue(Text("\(Int(state.currentLevel * 100))%"))
                 if interactor.isMicAvailable {
                     HStack {
-                        Text(String(
-                            format: String(localized: "whisperGame.meter.match"),
-                            Int(state.matchAccuracy * 100)
-                        ))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.ink)
+                        // Показывать совпадение только после первой попытки —
+                        // до записи «совпадение» не имеет смысла.
+                        if state.roundsCompleted > 0 {
+                            Text(String(
+                                format: String(localized: "whisperGame.meter.match"),
+                                Int(state.matchAccuracy * 100)
+                            ))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                        } else {
+                            Text(String(localized: "whisperGame.meter.matchIdle"))
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        }
                         Spacer()
                         Text(String(
                             format: String(localized: "whisperGame.meter.rounds"),
