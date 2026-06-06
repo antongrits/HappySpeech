@@ -150,6 +150,7 @@ struct SpecChildDashboardView: View {
                         }
                         .padding(.top, SpacingTokens.sp2)
                         SpecSoundBreakdownSection(rows: breakdown)
+                        phonemeReportCard
                         SpecSessionsPreviewSection(sessions: sessions) { _ in
                             // Navigation is handled by parent NavigationStack
                         }
@@ -274,6 +275,52 @@ struct SpecChildDashboardView: View {
     private func sendMessage() {
         showMessageSheet = false
         messageText = ""
+    }
+
+    // MARK: - A-09: «Детальный пофонемный отчёт»
+
+    /// Карточка-вход в карту точности по звукам с историей (паритет SpeechLP).
+    private var phonemeReportCard: some View {
+        Button {
+            coordinator.navigate(to: .phonemeReport(childId: childId))
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "waveform.path.ecg.rectangle.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .frame(width: 44)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "phonemeReport.entry.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "phonemeReport.entry.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Spec.panel)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            Text(String(localized: "phonemeReport.entry.title") + ". " +
+                 String(localized: "phonemeReport.entry.subtitle"))
+        )
+        .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("phonemeReport.entryCard")
     }
 
     // MARK: - v29 Фаза 8: Ф.4 «Домашнее задание от логопеда»

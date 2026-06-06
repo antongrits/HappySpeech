@@ -278,6 +278,13 @@ enum AppRoute: Hashable {
     /// находит и называет предмет с целевым звуком → on-device скоринг. Фоллбэк
     /// на фото-карточки без камеры / на iOS 17. COPPA: всё on-device.
     case arSoundHunter(childId: String)
+
+    // MARK: - A-09: Детальный пофонемный отчёт (specialist, паритет SpeechLP)
+
+    /// Карта точности по целевым звукам ребёнка с историей по сессиям.
+    /// Только реальные данные из истории сессий (`SessionRepository`); звуки
+    /// без сессий помечаются «нет данных». COPPA: только из контура специалиста.
+    case phonemeReport(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1196,6 +1203,12 @@ struct AppCoordinatorView: View {
                 ARSoundHunterView(childId: childId)
             }
             .environment(\.circuitContext, .kid)
+
+        // MARK: - A-09: Детальный пофонемный отчёт
+
+        case .phonemeReport(let childId):
+            PhonemeReportView(childId: childId)
+                .environment(\.circuitContext, .specialist)
         }
     }
 
@@ -1427,6 +1440,8 @@ extension AppCoordinatorView {
              "sessionReview",
              "reports":
             return .specialistHome
+        case "phonemeReport":
+            return .phonemeReport(childId: previewChild)
 
         // MARK: Tier 9 — Stuttering 5
         case "stutteringHome":

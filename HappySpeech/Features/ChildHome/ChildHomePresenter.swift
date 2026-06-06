@@ -196,7 +196,7 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
         return String.localizedStringWithFormat(format, sound)
     }
 
-    static func family(for sound: String) -> SoundFamily {
+    nonisolated static func family(for sound: String) -> SoundFamily {
         let upper = sound.uppercased()
         if ["С", "З", "Ц"].contains(upper) { return .whistling }
         if ["Ш", "Ж", "Ч", "Щ"].contains(upper) { return .hissing }
