@@ -469,16 +469,16 @@ private extension WorldMapModels.LoadZoneDetail.ViewModel {
 private extension String {
     var zoneBackgroundColor: Color {
         switch self {
-        case "mint":    return ColorTokens.Brand.mint
+        case "mint":    return ColorTokens.Brand.butter   // mint→butter (тёплый; mint убран с заливок зон)
         case "butter":  return ColorTokens.Brand.butter
         case "lilac":   return ColorTokens.Brand.lilac
         case "coral":   return ColorTokens.Brand.primary
         case "gold":    return ColorTokens.Brand.gold
-        case "sky":     return ColorTokens.Brand.sky
+        case "sky":     return ColorTokens.Brand.primary  // sky→primary (тёплый коралл; sky убран с заливок зон)
         case "primary": return ColorTokens.Brand.primary
         // v32 P2 — rose добавлен для новой зоны «Аффрикаты».
         case "rose":    return ColorTokens.Brand.rose
-        default:        return ColorTokens.Brand.sky
+        default:        return ColorTokens.Brand.primary  // тёплый fallback вместо Brand.sky
         }
     }
 

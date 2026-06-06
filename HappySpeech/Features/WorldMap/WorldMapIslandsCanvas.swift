@@ -449,14 +449,14 @@ enum WorldMapIslandVisuals {
     static func gradientColors(for zoneId: String) -> (from: Color, to: Color) {
         switch zoneId {
         case "zone-whistling":
-            return (ColorTokens.SoundFamilyColors.Whistling.bg,
-                    ColorTokens.SoundFamilyColors.Whistling.hue)
+            // Свистящие: тёплый жёлтый (SoundWhistlingHue = синий → заменён на butter/gold)
+            return (ColorTokens.Brand.butter.opacity(0.45), ColorTokens.Brand.gold)
         case "zone-hissing":
             return (ColorTokens.SoundFamilyColors.Hissing.bg,
                     ColorTokens.SoundFamilyColors.Hissing.hue)
         case "zone-sonorant":
-            return (ColorTokens.SoundFamilyColors.Sonorant.bg,
-                    ColorTokens.SoundFamilyColors.Sonorant.hue)
+            // Сонорные: тёплый лавандовый (SoundSonorantHue = зелёный → заменён на lilac)
+            return (ColorTokens.Brand.lilac.opacity(0.45), ColorTokens.Brand.lilac)
         case "zone-velar":
             return (ColorTokens.SoundFamilyColors.Velar.bg,
                     ColorTokens.SoundFamilyColors.Velar.hue)
@@ -466,22 +466,22 @@ enum WorldMapIslandVisuals {
         case "zone-affricates":
             return (ColorTokens.Brand.butter.opacity(0.45), ColorTokens.Brand.gold)
         case "zone-grammar":
-            return (ColorTokens.Brand.lilac.opacity(0.45), ColorTokens.Brand.sky)
+            return (ColorTokens.Brand.gold.opacity(0.45), ColorTokens.Brand.gold)
         default:
-            return (ColorTokens.Brand.lilac.opacity(0.45), ColorTokens.Brand.sky)
+            return (ColorTokens.Brand.gold.opacity(0.45), ColorTokens.Brand.gold)
         }
     }
 
     static func arcTint(for zoneId: String) -> Color {
         switch zoneId {
-        case "zone-whistling":  return ColorTokens.SoundFamilyColors.Whistling.hue
+        case "zone-whistling":  return ColorTokens.Brand.gold        // было Whistling.hue (синий)
         case "zone-hissing":    return ColorTokens.SoundFamilyColors.Hissing.hue
-        case "zone-sonorant":   return ColorTokens.SoundFamilyColors.Sonorant.hue
+        case "zone-sonorant":   return ColorTokens.Brand.lilac       // было Sonorant.hue (зелёный)
         case "zone-velar":      return ColorTokens.SoundFamilyColors.Velar.hue
         case "zone-vowels":     return ColorTokens.SoundFamilyColors.Vowels.hue
         case "zone-affricates": return ColorTokens.Brand.gold
-        case "zone-grammar":    return ColorTokens.Brand.sky
-        default:                return ColorTokens.Overlay.onAccent
+        case "zone-grammar":    return ColorTokens.Brand.gold         // было Brand.sky
+        default:                return ColorTokens.Brand.gold
         }
     }
 }
@@ -498,7 +498,7 @@ enum WorldMapIslandVisuals {
             progress: 1.0,
             progressLabel: "100%",
             lessonsLabel: "10 / 10",
-            colorName: "sky",
+            colorName: "primary",
             isLocked: false,
             isHighlighted: false,
             position: .zero,
@@ -515,7 +515,7 @@ enum WorldMapIslandVisuals {
             progress: 0.65,
             progressLabel: "65%",
             lessonsLabel: "13 / 20",
-            colorName: "mint",
+            colorName: "butter",
             isLocked: false,
             isHighlighted: false,
             position: .zero,
@@ -532,7 +532,7 @@ enum WorldMapIslandVisuals {
             progress: 0.30,
             progressLabel: "30%",
             lessonsLabel: "6 / 20",
-            colorName: "butter",
+            colorName: "gold",
             isLocked: false,
             isHighlighted: false,
             position: .zero,
