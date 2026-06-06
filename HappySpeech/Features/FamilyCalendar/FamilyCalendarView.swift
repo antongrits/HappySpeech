@@ -25,9 +25,7 @@ struct FamilyCalendarView: View {
 
     // MARK: - Local UI State
 
-    @State private var showDayDetail = false
     @State private var showScheduleSheet = false
-    @State private var showWeekSummarySheet = false
     @State private var selectedDayForSchedule: Date?
     @State private var voiceHintText: String?
 
@@ -69,10 +67,7 @@ struct FamilyCalendarView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     if let weekStart = viewModel.weekDays.first?.date {
-                        Task {
-                            scene?.interactor.generateWeekSummary(request: .init(weekStart: weekStart))
-                        }
-                        showWeekSummarySheet = true
+                        scene?.interactor.generateWeekSummary(request: .init(weekStart: weekStart))
                     }
                 } label: {
                     Image(systemName: "chart.bar.doc.horizontal")
@@ -82,17 +77,18 @@ struct FamilyCalendarView: View {
                 .accessibilityLabel(String(localized: "family_calendar.toolbar.week_summary"))
             }
         }
-        .sheet(isPresented: $showDayDetail) {
-            if let detail = viewModel.selectedDayDetail {
-                DayDetailSheet(
-                    detail: detail,
-                    onSchedule: { date in
-                        selectedDayForSchedule = date
-                        showDayDetail = false
-                        showScheduleSheet = true
-                    }
-                )
-            }
+        .sheet(item: Binding(
+            get: { viewModel.selectedDayDetail },
+            set: { if $0 == nil { viewModel.selectedDayDetail = nil } }
+        )) { detail in
+            DayDetailSheet(
+                detail: detail,
+                onSchedule: { date in
+                    selectedDayForSchedule = date
+                    viewModel.selectedDayDetail = nil
+                    showScheduleSheet = true
+                }
+            )
         }
         .sheet(isPresented: $showScheduleSheet) {
             if let children = scene.map({ _ in viewModel.children.filter { !$0.isAll } }) {
@@ -112,10 +108,11 @@ struct FamilyCalendarView: View {
                 }
             }
         }
-        .sheet(isPresented: $showWeekSummarySheet) {
-            if let summary = viewModel.weekSummary {
-                WeekSummarySheet(summary: summary)
-            }
+        .sheet(item: Binding(
+            get: { viewModel.weekSummary },
+            set: { if $0 == nil { viewModel.weekSummary = nil } }
+        )) { summary in
+            WeekSummarySheet(summary: summary)
         }
         .task {
             if scene == nil {
@@ -235,8 +232,7 @@ struct FamilyCalendarView: View {
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 6) {
                     ForEach(viewModel.weekDays) { day in
                         WeekDayCell(day: day) {
-                            Task { scene?.interactor.selectDay(request: .init(date: day.date)) }
-                            showDayDetail = true
+                            scene?.interactor.selectDay(request: .init(date: day.date))
                         } onLongPress: {
                             selectedDayForSchedule = day.date
                             showScheduleSheet = true
@@ -330,8 +326,7 @@ struct FamilyCalendarView: View {
                 entries: viewModel.heatmapEntries,
                 weeksCount: weeksCount
             ) { entry in
-                Task { scene?.interactor.selectDay(request: .init(date: entry.date)) }
-                showDayDetail = true
+                scene?.interactor.selectDay(request: .init(date: entry.date))
             }
             .padding(SpacingTokens.sp4)
             .background(ColorTokens.Parent.surface)

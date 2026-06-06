@@ -255,7 +255,8 @@ enum GrammarGameModels {
 
     enum ExitConfirmation {
         struct Request: Sendable {}
-        struct ViewModel: Sendable {
+        struct ViewModel: Sendable, Identifiable {
+            let id = UUID()
             let title: String
             let body: String
             let confirmLabel: String

@@ -529,7 +529,8 @@ struct DayVisitItem: Equatable {
     let reportRequested: Bool
 }
 
-struct WeekSummaryViewModel: Equatable {
+struct WeekSummaryViewModel: Equatable, Identifiable {
+    var id: String { weekRangeText }
     let weekRangeText: String
     let childRows: [WeekSummaryRowViewModel]
     let familyTotalMinutes: Int

@@ -84,23 +84,21 @@ struct HomeTasksView: View {
                 actions: { overdueAlertActions },
                 message: { Text(String(localized: "homeTasks.overdue.alert.message")) }
             )
-            .sheet(isPresented: Binding(
-                get: { display.isDetailSheetPresented },
-                set: { if !$0 { display.dismissDetailSheet() } }
-            )) {
-                if let detail = display.detailViewModel {
-                    HomeTaskDetailSheet(
-                        viewModel: detail,
-                        reduceMotion: reduceMotion,
-                        onToggle: { handleToggle(detail.id) },
-                        onStart: { handleStart(detail.id) },
-                        onScheduleReminder: { handleScheduleReminder(detail.id) },
-                        onDismiss: { display.dismissDetailSheet() }
-                    )
-                    .presentationDetents([.large, .fraction(0.75)])
-                    .presentationDragIndicator(.visible)
-                    .presentationCornerRadius(RadiusTokens.xl)
-                }
+            .sheet(item: Binding(
+                get: { display.detailViewModel },
+                set: { if $0 == nil { display.dismissDetailSheet() } }
+            )) { detail in
+                HomeTaskDetailSheet(
+                    viewModel: detail,
+                    reduceMotion: reduceMotion,
+                    onToggle: { handleToggle(detail.id) },
+                    onStart: { handleStart(detail.id) },
+                    onScheduleReminder: { handleScheduleReminder(detail.id) },
+                    onDismiss: { display.dismissDetailSheet() }
+                )
+                .presentationDetents([.large, .fraction(0.75)])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(RadiusTokens.xl)
             }
         }
         .environment(\.circuitContext, .parent)

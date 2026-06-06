@@ -1,6 +1,14 @@
 import OSLog
 import SwiftUI
 
+/// Identifiable-обёртка для текста, передаваемого в share-sheet. Используется
+/// как `item` у `.sheet(item:)` — контент строится строго после получения
+/// текста, без риска пустого шита.
+private struct DailyChallengeShareText: Identifiable {
+    let text: String
+    var id: String { text }
+}
+
 // MARK: - DailyChallengeViewModelHolder
 
 @MainActor
@@ -51,7 +59,7 @@ struct DailyChallengeView: View {
     @State private var interactor: DailyChallengeInteractor?
     @State private var presenter: DailyChallengePresenter?
     @State private var router: DailyChallengeRouter?
-    @State private var showShareSheet: Bool = false
+    @State private var shareSnapshot: DailyChallengeShareText?
     @State private var flamePulse: Bool = false
 
     @Environment(\.exitGame) private var exitGame
@@ -118,11 +126,9 @@ struct DailyChallengeView: View {
                 }
             }
             .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.showToast)
-            .sheet(isPresented: $showShareSheet) {
-                if let snap = holder.toastMessage {
-                    DailyChallengeShareSheet(text: snap)
-                        .presentationDetents([.medium])
-                }
+            .sheet(item: $shareSnapshot) { snapshot in
+                DailyChallengeShareSheet(text: snapshot.text)
+                    .presentationDetents([.medium])
             }
             .task {
                 await setupAndLoad()
@@ -390,8 +396,8 @@ struct DailyChallengeView: View {
                 startSessionAction: { [self] childId, targetSound in
                     coordinator.navigate(to: .worldMap(childId: childId, targetSound: targetSound))
                 },
-                shareAction: { [self] _ in
-                    showShareSheet = true
+                shareAction: { [self] snapshotText in
+                    shareSnapshot = DailyChallengeShareText(text: snapshotText)
                 }
             )
         }

@@ -41,9 +41,8 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
     var isPresentingVoicePrompt: Bool = false
     var pendingLevelNavigation: WorldMapModels.SelectLevel.ViewModel?
 
-    // Детальный sheet зоны — заполняется при loadZoneDetail.
+    // Детальный sheet зоны — заполняется при loadZoneDetail (item-driven).
     var zoneDetailViewModel: WorldMapModels.LoadZoneDetail.ViewModel?
-    var isZoneDetailSheetPresented: Bool = false
 
     func displayLoadMap(_ viewModel: WorldMapModels.LoadMap.ViewModel) {
         zones = viewModel.zones
@@ -67,7 +66,6 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
 
     func displayLoadZoneDetail(_ viewModel: WorldMapModels.LoadZoneDetail.ViewModel) {
         zoneDetailViewModel = viewModel
-        isZoneDetailSheetPresented = true
     }
 
     func displayRefreshProgress(_ viewModel: WorldMapModels.RefreshProgress.ViewModel) {
@@ -121,7 +119,6 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
     }
 
     func dismissZoneDetailSheet() {
-        isZoneDetailSheetPresented = false
         zoneDetailViewModel = nil
     }
 

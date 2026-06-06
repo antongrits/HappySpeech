@@ -72,8 +72,7 @@ struct GrammarGameView: View {
     @State var sessionResultText: String = ""
     @State var showSessionReward: Bool = false
 
-    // Exit confirmation
-    @State var showExitSheet: Bool = false
+    // Exit confirmation (item-driven sheet — устраняет race пустого шита)
     @State var exitViewModel: GrammarGameModels.ExitConfirmation.ViewModel?
 
     // Loading / error
@@ -158,10 +157,8 @@ struct GrammarGameView: View {
         } action: { newWidth in
             screenWidth = newWidth
         }
-        .sheet(isPresented: $showExitSheet) {
-            if let vm = exitViewModel {
-                exitConfirmationSheet(vm)
-            }
+        .sheet(item: $exitViewModel) { vm in
+            exitConfirmationSheet(vm)
         }
         .accessibilityLabel(String(localized: "grammar.game.title.\(modeTitle)"))
         .task {
@@ -585,11 +582,11 @@ struct GrammarGameView: View {
 
             HStack(spacing: SpacingTokens.regular) {
                 HSButton(vm.confirmLabel, style: .secondary) {
-                    showExitSheet = false
+                    exitViewModel = nil
                     router.dismissGame()
                 }
                 HSButton(vm.cancelLabel, style: .primary) {
-                    showExitSheet = false
+                    exitViewModel = nil
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

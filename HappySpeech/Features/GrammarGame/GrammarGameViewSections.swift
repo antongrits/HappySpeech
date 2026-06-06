@@ -90,7 +90,6 @@ extension GrammarGameView {
 
     func displayExitConfirmation(_ viewModel: GrammarGameModels.ExitConfirmation.ViewModel) {
         exitViewModel = viewModel
-        showExitSheet = true
     }
 
     func displayError(_ message: String) {

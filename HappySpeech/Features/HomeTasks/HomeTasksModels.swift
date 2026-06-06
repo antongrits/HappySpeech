@@ -147,7 +147,7 @@ enum HomeTasksModels {
             let reminderScheduled: Bool
         }
 
-        struct ViewModel: Sendable {
+        struct ViewModel: Sendable, Identifiable {
             let id: String
             let title: String
             let description: String

@@ -8,6 +8,14 @@ import SwiftUI
 //
 // VIP: View → Interactor (запросы) → Presenter (форматирование) → Display.
 
+/// Identifiable-обёртка для внешней ссылки, открываемой после Parental Gate.
+/// Используется как `item` у `.sheet(item:)`, чтобы устранить race пустого
+/// шита (URL и флаг показа ранее ставились в одном тике).
+private struct ParentalGateURL: Identifiable {
+    let url: URL
+    var id: String { url.absoluteString }
+}
+
 struct SettingsView: View {
 
     // MARK: - Environment
@@ -39,8 +47,7 @@ struct SettingsView: View {
     @State var showShareSheet = false
     @State var pendingDeletePackId: String?
     @State var showCustomizationSheet = false
-    @State private var showParentalGate = false
-    @State private var parentalGatePendingURL: URL?
+    @State private var parentalGatePendingURL: ParentalGateURL?
     @State private var showChangelog = false
     /// Block R.1 v18 — sheet для DialectAdaptationView (Settings → Profile → Dialect).
     @State var showDialectAdaptationSheet = false
@@ -196,8 +203,7 @@ struct SettingsView: View {
             .sheet(item: $selectedLicense) { license in
                 SettingsLicenseDetailSheet(license: license) { url in
                     selectedLicense = nil
-                    parentalGatePendingURL = url
-                    showParentalGate = true
+                    parentalGatePendingURL = ParentalGateURL(url: url)
                 }
             }
             .sheet(
@@ -220,12 +226,15 @@ struct SettingsView: View {
                 }
                 .presentationDetents([.large])
             }
-            .sheet(isPresented: $showParentalGate) {
-                if let url = parentalGatePendingURL {
-                    ParentalGate(isPresented: $showParentalGate) {
-                        UIApplication.shared.open(url)
-                        parentalGatePendingURL = nil
-                    }
+            .sheet(item: $parentalGatePendingURL) { pending in
+                ParentalGate(
+                    isPresented: Binding(
+                        get: { parentalGatePendingURL != nil },
+                        set: { if !$0 { parentalGatePendingURL = nil } }
+                    )
+                ) {
+                    UIApplication.shared.open(pending.url)
+                    parentalGatePendingURL = nil
                 }
             }
             // Block R.1 v18 — DialectAdaptation sheet.

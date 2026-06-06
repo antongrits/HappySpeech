@@ -92,7 +92,8 @@ enum WorldMapModels {
             let unlocksNeeded: Int
         }
 
-        struct ViewModel: Sendable {
+        struct ViewModel: Sendable, Identifiable {
+            var id: String { zoneId }
             let zoneId: String
             let name: String
             let icon: String

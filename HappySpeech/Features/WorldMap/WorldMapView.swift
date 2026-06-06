@@ -107,21 +107,19 @@ struct WorldMapView: View {
                 appeared = true
             }
         }
-        .sheet(isPresented: Binding(
-            get: { display.isZoneDetailSheetPresented },
-            set: { if !$0 { display.dismissZoneDetailSheet() } }
-        )) {
-            if let detail = display.zoneDetailViewModel {
-                WorldZoneDetailSheet(
-                    viewModel: detail,
-                    reduceMotion: reduceMotion,
-                    onStart: { handleStartZone(detail.zoneId) },
-                    onDismiss: { display.dismissZoneDetailSheet() }
-                )
-                .presentationDetents([.large, .fraction(0.72)])
-                .presentationDragIndicator(.visible)
-                .presentationCornerRadius(RadiusTokens.xl)
-            }
+        .sheet(item: Binding(
+            get: { display.zoneDetailViewModel },
+            set: { if $0 == nil { display.dismissZoneDetailSheet() } }
+        )) { detail in
+            WorldZoneDetailSheet(
+                viewModel: detail,
+                reduceMotion: reduceMotion,
+                onStart: { handleStartZone(detail.zoneId) },
+                onDismiss: { display.dismissZoneDetailSheet() }
+            )
+            .presentationDetents([.large, .fraction(0.72)])
+            .presentationDragIndicator(.visible)
+            .presentationCornerRadius(RadiusTokens.xl)
         }
     }
 

@@ -268,7 +268,8 @@ enum CulturalContentModels {
             let isBookmarked: Bool
         }
 
-        struct ViewModel: Sendable {
+        struct ViewModel: Sendable, Identifiable {
+            var id: String { title }
             let title: String
             let author: String?
             let lines: [LineViewModel]

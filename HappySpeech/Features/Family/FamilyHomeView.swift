@@ -9,6 +9,13 @@ import SwiftUI
 //
 // VIP: View → Interactor → Presenter → ViewModel (@Observable).
 
+/// Identifiable-цель для редактора профиля ребёнка. Используется как `item`
+/// у `.sheet(item:)`, чтобы устранить race пустого шита (id и флаг показа
+/// ранее ставились в одном тике long-press жеста).
+private struct ProfileEditorTarget: Identifiable {
+    let id: String
+}
+
 struct FamilyHomeView: View {
 
     // MARK: - Environment
@@ -28,8 +35,7 @@ struct FamilyHomeView: View {
 
     // MARK: - Local UI
 
-    @State private var profileEditorChildId: String?
-    @State private var showingProfileEditor = false
+    @State private var profileEditorChild: ProfileEditorTarget?
 
     // MARK: S.2 v16 — Family Leaderboard
     @State private var showingLeaderboard = false
@@ -76,14 +82,12 @@ struct FamilyHomeView: View {
             .refreshable { await refresh() }
         }
         .task { await bootstrap() }
-        .sheet(isPresented: $showingProfileEditor) {
-            if let childId = profileEditorChildId {
-                ProfileEditorView(childId: childId) {
-                    Task { await refresh() }
-                }
-                .environment(container)
-                .environment(coordinator)
+        .sheet(item: $profileEditorChild) { target in
+            ProfileEditorView(childId: target.id) {
+                Task { await refresh() }
             }
+            .environment(container)
+            .environment(coordinator)
         }
         .sheet(isPresented: $showingLeaderboard) {
             FamilyLeaderboardView(parentId: "")
@@ -133,8 +137,7 @@ struct FamilyHomeView: View {
                     }
                 }
                 .onLongPressGesture {
-                    profileEditorChildId = child.id
-                    showingProfileEditor = true
+                    profileEditorChild = ProfileEditorTarget(id: child.id)
                 }
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel(childCardA11yLabel(child))

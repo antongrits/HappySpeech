@@ -49,9 +49,8 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
     // Поднимается Presenter'ом в presentFetch, гасится View после отклика пользователя.
     var pendingOverduePrompt: Bool = false
 
-    // Детальный sheet задания — заполняется при fetchDetail.
+    // Детальный sheet задания — заполняется при fetchDetail (item-driven).
     var detailViewModel: HomeTasksModels.FetchDetail.ViewModel?
-    var isDetailSheetPresented: Bool = false
 
     // MARK: - HomeTasksDisplayLogic
 
@@ -112,7 +111,6 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
 
     func displayDetail(_ viewModel: HomeTasksModels.FetchDetail.ViewModel) {
         detailViewModel = viewModel
-        isDetailSheetPresented = true
     }
 
     func displayScheduleReminder(_ viewModel: HomeTasksModels.ScheduleReminder.ViewModel) {
@@ -167,7 +165,6 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
 
     /// Закрывает детальный sheet.
     func dismissDetailSheet() {
-        isDetailSheetPresented = false
         detailViewModel = nil
     }
 }

@@ -11,7 +11,6 @@ final class CulturalContentViewModelHolder: CulturalContentDisplayLogic {
     var openVM: CulturalContentModels.Open.ViewModel?
     var toggleVM: CulturalContentModels.ToggleBookmark.ViewModel?
     var showToast: Bool = false
-    var showReader: Bool = false
 
     func displayLoad(viewModel: CulturalContentModels.Load.ViewModel) async {
         self.loadVM = viewModel
@@ -19,7 +18,6 @@ final class CulturalContentViewModelHolder: CulturalContentDisplayLogic {
 
     func displayOpen(viewModel: CulturalContentModels.Open.ViewModel) async {
         self.openVM = viewModel
-        self.showReader = true
     }
 
     func displayToggleBookmark(viewModel: CulturalContentModels.ToggleBookmark.ViewModel) async {
@@ -113,17 +111,15 @@ struct CulturalContentView: View {
                 }
             }
             .animation(reduceMotion ? nil : .spring(duration: 0.4), value: holder.showToast)
-            .sheet(isPresented: $holder.showReader) {
-                if let openVM = holder.openVM {
-                    CulturalContentReaderView(
-                        viewModel: openVM,
-                        onToggleBookmark: { itemId in
-                            Task { await toggleBookmark(itemId: itemId) }
-                        }
-                    )
-                    .environment(container)
-                    .presentationDetents([.large])
-                }
+            .sheet(item: $holder.openVM) { openVM in
+                CulturalContentReaderView(
+                    viewModel: openVM,
+                    onToggleBookmark: { itemId in
+                        Task { await toggleBookmark(itemId: itemId) }
+                    }
+                )
+                .environment(container)
+                .presentationDetents([.large])
             }
         }
         .environment(\.circuitContext, .kid)
