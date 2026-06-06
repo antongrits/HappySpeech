@@ -52,7 +52,7 @@ struct ParentInsightsTimelineView: View {
     @State private var showDetailSheet: Bool = false
     @State private var isRefreshing: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -96,7 +96,7 @@ struct ParentInsightsTimelineView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        dismiss()
+                        exitToParentHome()
                     } label: {
                         Image(systemName: "chevron.left")
                             .font(.title3)
@@ -475,7 +475,7 @@ struct ParentInsightsTimelineView: View {
             self.presenter = presenter
             self.interactor = interactor
             self.router = ParentInsightsTimelineRouter(
-                dismissAction: { [self] in dismiss() },
+                dismissAction: { exitToParentHome() },
                 openProgressDashboardAction: { [self] in
                     coordinator.navigate(to: .progressDashboard(childId: childId))
                 }

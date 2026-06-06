@@ -7,7 +7,7 @@ struct MorningRoutineView: View {
     let childId: String
 
     @State private var interactor: MorningRoutineInteractor?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -26,7 +26,7 @@ struct MorningRoutineView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Kid.inkSoft)
@@ -157,7 +157,7 @@ struct MorningRoutineView: View {
         ) {
             hapticService.notification(.success)
             if interactor.state.isCompleted {
-                dismiss()
+                exitGame()
             } else {
                 coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
             }

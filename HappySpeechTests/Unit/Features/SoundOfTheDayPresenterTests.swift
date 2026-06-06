@@ -69,6 +69,13 @@ final class SoundOfTheDayPresenterTests: XCTestCase {
         XCTAssertTrue(spy.lastVM?.heroTitle.contains("Ш") ?? false)
     }
 
+    func test_presentLoadToday_soundLetterIsBareTargetSound() async {
+        // P1-FIX: кружок-якорь должен получать ТОЛЬКО букву (без «Звук дня: …»).
+        let (sut, spy) = makeSUT()
+        await sut.presentLoadToday(response: makeResponse(targetSound: "Р"))
+        XCTAssertEqual(spy.lastVM?.soundLetter, "Р")
+    }
+
     func test_presentLoadToday_streakProgressClamped() async {
         // 7+ days should clamp to 1.0
         let (sut, spy) = makeSUT()

@@ -7,7 +7,7 @@ struct EveningReflectionView: View {
     let childId: String
 
     @State private var interactor: EveningReflectionInteractor?
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -25,7 +25,7 @@ struct EveningReflectionView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Kid.inkSoft)
@@ -235,7 +235,7 @@ struct EveningReflectionView: View {
         ) {
             hapticService.notification(.success)
             interactor.submit()
-            dismiss()
+            exitGame()
         }
         .disabled(interactor.entry.mood == nil)
         .opacity(interactor.entry.mood == nil ? 0.5 : 1.0)

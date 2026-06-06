@@ -54,7 +54,7 @@ struct DailyChallengeView: View {
     @State private var showShareSheet: Bool = false
     @State private var flamePulse: Bool = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -101,7 +101,7 @@ struct DailyChallengeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -386,7 +386,7 @@ struct DailyChallengeView: View {
             self.presenter = presenter
             self.interactor = interactor
             self.router = DailyChallengeRouter(
-                dismissAction: { [self] in dismiss() },
+                dismissAction: { exitGame() },
                 startSessionAction: { [self] childId, targetSound in
                     coordinator.navigate(to: .worldMap(childId: childId, targetSound: targetSound))
                 },

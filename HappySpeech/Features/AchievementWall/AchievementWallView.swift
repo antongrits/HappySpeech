@@ -67,7 +67,7 @@ struct AchievementWallView: View {
     }
     #endif
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -361,7 +361,7 @@ struct AchievementWallView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)

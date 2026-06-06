@@ -8,7 +8,7 @@ struct SentenceBuilderKidView: View {
 
     @State private var interactor: SentenceBuilderKidInteractor?
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
@@ -31,7 +31,7 @@ struct SentenceBuilderKidView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Kid.inkSoft)

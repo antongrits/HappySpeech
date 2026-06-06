@@ -142,7 +142,7 @@ struct SentenceBuilderView: View {
     @State private var presenter: SentenceBuilderPresenter?
     @State private var router: SentenceBuilderRouter?
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
@@ -189,7 +189,7 @@ struct SentenceBuilderView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title3)
@@ -485,7 +485,7 @@ struct SentenceBuilderView: View {
                 .accessibilityHint(Text("sentenceBuilder.summary.again.hint"))
 
                 Button {
-                    dismiss()
+                    exitGame()
                 } label: {
                     Text("sentenceBuilder.summary.done")
                         .font(TypographyTokens.body(16).weight(.medium))
@@ -538,7 +538,7 @@ struct SentenceBuilderView: View {
             interactor.presenter = presenter
             self.presenter = presenter
             self.interactor = interactor
-            self.router = SentenceBuilderRouter(dismissAction: { dismiss() })
+            self.router = SentenceBuilderRouter(dismissAction: { exitGame() })
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId, preferredSubtask: nil))

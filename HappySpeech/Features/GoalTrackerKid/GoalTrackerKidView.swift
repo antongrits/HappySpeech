@@ -8,7 +8,7 @@ struct GoalTrackerKidView: View {
 
     @State private var interactor: GoalTrackerKidInteractor?
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -29,7 +29,7 @@ struct GoalTrackerKidView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Kid.inkSoft)

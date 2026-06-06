@@ -8,7 +8,7 @@ struct LyalyaPersonalCoachView: View {
 
     @State private var interactor: LyalyaPersonalCoachInteractor?
     @Environment(AppContainer.self) private var container
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -28,7 +28,7 @@ struct LyalyaPersonalCoachView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        dismiss()
+                        exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(ColorTokens.Kid.inkSoft)

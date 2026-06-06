@@ -46,7 +46,7 @@ struct LyalyaMailView: View {
     @State private var didBootstrap = false
     @State private var showDetail = false
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
@@ -284,7 +284,7 @@ struct LyalyaMailView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                dismiss()
+                exitGame()
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
