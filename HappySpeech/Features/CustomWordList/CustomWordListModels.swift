@@ -43,7 +43,7 @@ public struct GeneratedExercise: Sendable, Identifiable, Equatable {
 
 // MARK: - WordListDraft (editor state)
 
-public struct WordListDraft: Sendable, Equatable {
+public struct WordListDraft: Sendable, Equatable, Identifiable {
     public var id: String
     public var name: String
     public var targetSound: String
@@ -171,6 +171,28 @@ enum CustomWordListModels {
         struct ViewModel: Sendable {
             let text: String
             let exercisesCount: Int
+        }
+    }
+
+    // MARK: AutoPick
+
+    enum AutoPick {
+        struct Request: Sendable {
+            let params: AutoPickParams
+        }
+
+        struct Response: Sendable {
+            let result: AutoPickResult
+            let params: AutoPickParams
+        }
+
+        struct ViewModel: Sendable {
+            /// Слова для добавления в редактируемый список.
+            let words: [String]
+            /// Отображаемый текст о результате («Найдено 12 из 15 кандидатов»).
+            let summaryText: String
+            /// true, если нашлось меньше, чем запрошено.
+            let showShortWarning: Bool
         }
     }
 }

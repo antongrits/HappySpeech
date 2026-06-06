@@ -9,6 +9,8 @@ protocol CustomWordListDisplayLogic: AnyObject {
     func displaySaveFailure(viewModel: CustomWordListModels.Save.FailureViewModel) async
     func displayDelete(removedId: String) async
     func displayPreview(viewModel: CustomWordListModels.Preview.ViewModel) async
+    func displayAutoPick(viewModel: CustomWordListModels.AutoPick.ViewModel) async
+    func displayAutoPickLoading(_ isLoading: Bool) async
 }
 
 // MARK: - CustomWordListPresentationLogic
@@ -20,4 +22,6 @@ protocol CustomWordListPresentationLogic: AnyObject {
     func presentSaveFailure(response: CustomWordListModels.Save.FailureResponse) async
     func presentDelete(response: CustomWordListModels.Delete.Response) async
     func presentPreview(response: CustomWordListModels.Preview.Response) async
+    func presentAutoPick(response: CustomWordListModels.AutoPick.Response) async
+    func presentAutoPickLoading(_ isLoading: Bool) async
 }

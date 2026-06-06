@@ -14,6 +14,10 @@ final class CustomWordListViewModelHolder: CustomWordListDisplayLogic {
     var previewCount: Int = 0
     var didJustSave: Bool = false
 
+    // AutoPick
+    var autoPickResult: CustomWordListModels.AutoPick.ViewModel?
+    var isAutoPickLoading: Bool = false
+
     func displayLoad(viewModel: CustomWordListModels.Load.ViewModel) async {
         rows = viewModel.lists
         isEmpty = viewModel.isEmpty
@@ -38,6 +42,18 @@ final class CustomWordListViewModelHolder: CustomWordListDisplayLogic {
         previewText = viewModel.text
         previewCount = viewModel.exercisesCount
     }
+
+    func displayAutoPick(viewModel: CustomWordListModels.AutoPick.ViewModel) async {
+        autoPickResult = viewModel
+        isAutoPickLoading = false
+    }
+
+    func displayAutoPickLoading(_ isLoading: Bool) async {
+        isAutoPickLoading = isLoading
+        if isLoading {
+            autoPickResult = nil
+        }
+    }
 }
 
 // MARK: - CustomWordListView (Clean Swift: View)
@@ -57,7 +73,6 @@ struct CustomWordListView: View {
     @State private var presenter: CustomWordListPresenter?
     @State private var router: CustomWordListRouter?
     @State private var editingDraft: WordListDraft?
-    @State private var showEditor: Bool = false
     @State private var pendingDeleteId: String?
 
     @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
@@ -98,7 +113,6 @@ struct CustomWordListView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         editingDraft = WordListDraft()
-                        showEditor = true
                     } label: {
                         Label(String(localized: "customWordList.new"), systemImage: "plus")
                     }
@@ -106,14 +120,13 @@ struct CustomWordListView: View {
                 }
             }
             .task { await setupAndLoad() }
-            .sheet(isPresented: $showEditor, onDismiss: {
-                editingDraft = nil
+            .sheet(item: $editingDraft, onDismiss: {
                 holder.saveError = nil
                 holder.previewText = nil
-            }) {
-                if let draft = editingDraft {
-                    editorSheet(draft: draft)
-                }
+                holder.autoPickResult = nil
+                holder.isAutoPickLoading = false
+            }) { draft in
+                editorSheet(draft: draft)
             }
             .confirmationDialog(
                 Text("customWordList.delete"),
@@ -222,7 +235,6 @@ struct CustomWordListView: View {
                     .lineLimit(nil)
                 Button {
                     editingDraft = WordListDraft()
-                    showEditor = true
                 } label: {
                     Label(String(localized: "customWordList.new"), systemImage: "plus.circle.fill")
                         .padding(.horizontal, SpacingTokens.sp4)
@@ -246,25 +258,31 @@ struct CustomWordListView: View {
             previewText: holder.previewText,
             previewCount: holder.previewCount,
             errorMessage: holder.saveError,
+            autoPickResult: holder.autoPickResult,
+            isAutoPickLoading: holder.isAutoPickLoading,
             onPreview: { current in
                 Task {
                     await interactor?.preview(request: .init(draft: current))
                 }
             },
+            onAutoPick: { params in
+                Task {
+                    await interactor?.autoPick(request: .init(params: params))
+                }
+            },
             onSave: { current in
-                editingDraft = current
                 Task {
                     await interactor?.save(
                         request: .init(specialistId: specialistId, draft: current)
                     )
                     if holder.didJustSave {
                         holder.didJustSave = false
-                        showEditor = false
+                        editingDraft = nil
                     }
                 }
             },
             onCancel: {
-                showEditor = false
+                editingDraft = nil
             }
         )
         .presentationDetents([.large])
@@ -275,7 +293,6 @@ struct CustomWordListView: View {
     private func editRow(_ id: String) {
         guard let data = interactor?.lists.first(where: { $0.id == id }) else { return }
         editingDraft = WordListDraft.from(data)
-        showEditor = true
     }
 
     private func setupAndLoad() async {

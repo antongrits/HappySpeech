@@ -81,4 +81,35 @@ final class CustomWordListPresenter: CustomWordListPresentationLogic {
             exercisesCount: response.exercises.count
         ))
     }
+
+    func presentAutoPickLoading(_ isLoading: Bool) async {
+        await displayLogic?.displayAutoPickLoading(isLoading)
+    }
+
+    func presentAutoPick(response: CustomWordListModels.AutoPick.Response) async {
+        let result = response.result
+        let requested = response.params.requestedCount
+
+        let summaryText: String
+        if result.words.isEmpty {
+            summaryText = String(localized: "customWordList.autoPick.result.empty")
+        } else if result.words.count < requested {
+            summaryText = String(
+                format: String(localized: "customWordList.autoPick.result.partial"),
+                result.words.count,
+                result.totalCandidates
+            )
+        } else {
+            summaryText = String(
+                format: String(localized: "customWordList.autoPick.result.full"),
+                result.words.count
+            )
+        }
+
+        await displayLogic?.displayAutoPick(viewModel: .init(
+            words: result.words,
+            summaryText: summaryText,
+            showShortWarning: !result.words.isEmpty && result.words.count < requested
+        ))
+    }
 }

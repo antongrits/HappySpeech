@@ -9,6 +9,7 @@ protocol CustomWordListBusinessLogic: AnyObject {
     func save(request: CustomWordListModels.Save.Request) async
     func delete(request: CustomWordListModels.Delete.Request) async
     func preview(request: CustomWordListModels.Preview.Request) async
+    func autoPick(request: CustomWordListModels.AutoPick.Request) async
 }
 
 // MARK: - CustomWordListDataStore
@@ -32,6 +33,7 @@ final class CustomWordListInteractor: CustomWordListBusinessLogic, CustomWordLis
     var presenter: (any CustomWordListPresentationLogic)?
 
     private let worker: any CustomWordListWorkerProtocol
+    private let autoPickWorker: any WordAutoPickWorkerProtocol
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -40,10 +42,12 @@ final class CustomWordListInteractor: CustomWordListBusinessLogic, CustomWordLis
 
     init(
         specialistId: String,
-        worker: any CustomWordListWorkerProtocol
+        worker: any CustomWordListWorkerProtocol,
+        autoPickWorker: any WordAutoPickWorkerProtocol = WordAutoPickWorker()
     ) {
         self.specialistId = specialistId
         self.worker = worker
+        self.autoPickWorker = autoPickWorker
     }
 
     func load(request: CustomWordListModels.Load.Request) async {
@@ -89,5 +93,12 @@ final class CustomWordListInteractor: CustomWordListBusinessLogic, CustomWordLis
     func preview(request: CustomWordListModels.Preview.Request) async {
         let exercises = worker.generateExercises(from: request.draft)
         await presenter?.presentPreview(response: .init(exercises: exercises))
+    }
+
+    func autoPick(request: CustomWordListModels.AutoPick.Request) async {
+        await presenter?.presentAutoPickLoading(true)
+        let result = autoPickWorker.pick(params: request.params)
+        await presenter?.presentAutoPickLoading(false)
+        await presenter?.presentAutoPick(response: .init(result: result, params: request.params))
     }
 }

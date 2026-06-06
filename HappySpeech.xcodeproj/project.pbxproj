@@ -822,6 +822,7 @@
 		603A02206A451346880458A1 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFACBCDA9257938D50A0549 /* MemoryView.swift */; };
 		603CF9F9E13CC309DE67CEF2 /* LexicalThemesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01B457276CFFB39D1B07970 /* LexicalThemesModels.swift */; };
 		604545E305BCA01778D5A539 /* RemoteLLMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94845A4DECFB5A4F78EDB150 /* RemoteLLMClient.swift */; };
+		6089C1D1494E470E90C373A1 /* WordAutoPickWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F8A0F5E27BF3FABBC92DAB /* WordAutoPickWorker.swift */; };
 		60E756889CE71E4DA8D02C36 /* KeychainStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190B919BBDEC65CA9247C7D6 /* KeychainStoreTests.swift */; };
 		60FB3084CD83165124F3FA07 /* CircuitExitAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CC6DBEE62BA051A3C3F92C /* CircuitExitAction.swift */; };
 		61109635A25CCAA9AC54A16D /* ParentInsightsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE18B2DD8491798EA26AF10 /* ParentInsightsWorkerTests.swift */; };
@@ -3857,6 +3858,7 @@
 		D06639D1A4BA6BCB074C9436 /* RealtimeDatabaseServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeDatabaseServiceTests.swift; sourceTree = "<group>"; };
 		D0D09F90621A1F7EE74ED5F7 /* SeasonalEventsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalEventsModels.swift; sourceTree = "<group>"; };
 		D0E950AA3B1372F2AF9AF3D3 /* HelpCenterInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCenterInteractorTests.swift; sourceTree = "<group>"; };
+		D0F8A0F5E27BF3FABBC92DAB /* WordAutoPickWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordAutoPickWorker.swift; sourceTree = "<group>"; };
 		D14FA9566D41CAF0FD05DF62 /* GrammarScoringWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarScoringWorker.swift; sourceTree = "<group>"; };
 		D15704D61761C34F827CB1ED /* ParentVoiceNoteWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVoiceNoteWorkerTests.swift; sourceTree = "<group>"; };
 		D159F525FB768A8A38D887D1 /* DeepLinkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkRouter.swift; sourceTree = "<group>"; };
@@ -7382,6 +7384,7 @@
 			isa = PBXGroup;
 			children = (
 				9CE8337192A1576F8BC9D0EB /* CustomWordListWorker.swift */,
+				D0F8A0F5E27BF3FABBC92DAB /* WordAutoPickWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -12002,6 +12005,7 @@
 				938099EAC49542D23EB5A9ED /* WhoseTailRouter.swift in Sources */,
 				A389B13FDFE004A6F46304A2 /* WhoseTailView.swift in Sources */,
 				BFA7270D2A9B78EE9E4ABCD5 /* WhoseTailWorker.swift in Sources */,
+				6089C1D1494E470E90C373A1 /* WordAutoPickWorker.swift in Sources */,
 				0A97A7E092389EACA900A5A8 /* WordBankInteractor.swift in Sources */,
 				9778796DDFC100F99FC24EFD /* WordBankModels.swift in Sources */,
 				18DC0AB0DC4DBBB0F70CF38C /* WordBankPresenter.swift in Sources */,
