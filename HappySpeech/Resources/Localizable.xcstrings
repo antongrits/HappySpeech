@@ -67667,6 +67667,91 @@
           }
         }
       }
+    },
+    "soundDictionary.detail.articulationVideo.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема произношения"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulation diagram"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимация"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animated"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка схемы..."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading diagram..."
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимированная схема артикуляции звука %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animated articulation diagram for sound %@"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положение языка и губ по методике Фомичёвой. Видео зацикленное."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue and lip position by Fomichyova methodology. Looping video."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

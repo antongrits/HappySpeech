@@ -317,6 +317,17 @@ struct SoundDictionaryView: View {
                 // только у согласных, для которых задан и реально существует imageset.
                 articulationProfileCard(viewModel)
 
+                // Programmatic side-view articulation video (Remotion, научно корректная схема).
+                // Показывается для С, Ш, Р, Л и их близких пар.
+                if let profileDemo = VideoCatalog.ArticulationDemo.profileDemo(
+                    forCyrillic: viewModel.title
+                ) {
+                    ArticulationVideoPlayerView(
+                        videoSlug: profileDemo,
+                        soundLetter: viewModel.title
+                    )
+                }
+
                 // Articulation note
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     Text("soundDictionary.detail.articulation.label")

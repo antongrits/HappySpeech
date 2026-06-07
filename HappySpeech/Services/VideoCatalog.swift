@@ -78,6 +78,11 @@ enum VideoCatalog {
         case lTongueTipAlveolar = "l_tongue_tip_alveolar"
         case lSideAir = "l_side_air"
         case lLopata = "l_lopata"
+        // Программные side-view профили (Remotion, 1280×720, научно корректные)
+        case articulationSProfile = "articulation_s_profile"
+        case articulationShProfile = "articulation_sh_profile"
+        case articulationRProfile = "articulation_r_profile"
+        case articulationLProfile = "articulation_l_profile"
     }
 
     /// Унифицированная ссылка на видео в каталоге.
@@ -106,10 +111,19 @@ enum VideoCatalog {
                 subdirectory: "Videos/Lyalya"
             )
         case .articulation(let demo):
+            // Программные side-view профили лежат в подпапке programmatic/
+            let subdirectory: String
+            switch demo {
+            case .articulationSProfile, .articulationShProfile,
+                 .articulationRProfile, .articulationLProfile:
+                subdirectory = "Videos/Articulation/programmatic"
+            default:
+                subdirectory = "Videos/Articulation"
+            }
             return Bundle.main.url(
                 forResource: demo.rawValue,
                 withExtension: "mp4",
-                subdirectory: "Videos/Articulation"
+                subdirectory: subdirectory
             )
         }
     }

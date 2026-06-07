@@ -163,5 +163,73 @@
     "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue flattening wide like a shovel shape, smooth morph animation, kawaii anatomical illustration style, warm cream palette, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
     "fallback_prompt": "Abstract stylized 3D anatomical animation of a rounded shape slowly flattening and widening into a broad shovel-like form, smooth morphing animation, warm tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
     "generated_at": "2026-05-23T20:39:04Z"
+  },
+  {
+    "slug": "articulation_s_profile",
+    "category": "articulation_profile",
+    "soundFamily": "С",
+    "exerciseId": "articulation_s_profile",
+    "duration_seconds": 8,
+    "file_size_bytes": 652700,
+    "path": "Articulation/programmatic/articulation_s_profile.mp4",
+    "source": "remotion",
+    "description": "Профиль артикуляции звука С (side-view): кончик языка у нижних зубов, губы улыбкой, холодная узкая струя. По методике Фомичёвой.",
+    "phases": [
+      "Язык у нижних зубов",
+      "Холодная воздушная струя",
+      "Звук «ссс»"
+    ],
+    "generated_at": "2026-06-07T00:00:00Z"
+  },
+  {
+    "slug": "articulation_sh_profile",
+    "category": "articulation_profile",
+    "soundFamily": "Ш",
+    "exerciseId": "articulation_sh_profile",
+    "duration_seconds": 8,
+    "file_size_bytes": 657100,
+    "path": "Articulation/programmatic/articulation_sh_profile.mp4",
+    "source": "remotion",
+    "description": "Профиль артикуляции звука Ш (side-view): язык-чашечка поднят к альвеолам, губы вперёд-округлены, тёплая широкая струя. По методике Фомичёвой.",
+    "phases": [
+      "Язык — чашечка, губы вперёд",
+      "Тёплая широкая струя",
+      "Звук «шшш»"
+    ],
+    "generated_at": "2026-06-07T00:00:00Z"
+  },
+  {
+    "slug": "articulation_r_profile",
+    "category": "articulation_profile",
+    "soundFamily": "Р",
+    "exerciseId": "articulation_r_profile",
+    "duration_seconds": 8,
+    "file_size_bytes": 526900,
+    "path": "Articulation/programmatic/articulation_r_profile.mp4",
+    "source": "remotion",
+    "description": "Профиль артикуляции звука Р (side-view): кончик языка вибрирует у верхних альвеол, сильная центральная струя воздуха. По методике Фомичёвой.",
+    "phases": [
+      "Кончик языка у альвеол",
+      "Сильный поток воздуха",
+      "Вибрация — звук «ррр»"
+    ],
+    "generated_at": "2026-06-07T00:00:00Z"
+  },
+  {
+    "slug": "articulation_l_profile",
+    "category": "articulation_profile",
+    "soundFamily": "Л",
+    "exerciseId": "articulation_l_profile",
+    "duration_seconds": 8,
+    "file_size_bytes": 473300,
+    "path": "Articulation/programmatic/articulation_l_profile.mp4",
+    "source": "remotion",
+    "description": "Профиль артикуляции звука Л (side-view): кончик языка упирается в альвеолы без вибрации, воздух идёт по бокам (боковой сонор). По методике Фомичёвой.",
+    "phases": [
+      "Кончик языка к альвеолам",
+      "Воздух выходит по бокам",
+      "Голос — звук «ллл»"
+    ],
+    "generated_at": "2026-06-07T00:00:00Z"
   }
 ]
