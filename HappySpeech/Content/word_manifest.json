@@ -1302,7 +1302,7 @@
     },
     {
       "word": "акция",
-      "asset": "word_aktsiya",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -1380,7 +1380,7 @@
     },
     {
       "word": "граница",
-      "asset": "word_granitsa",
+      "asset": "word_zabor",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -1861,7 +1861,7 @@
     },
     {
       "word": "липа",
-      "asset": "word_lipa",
+      "asset": "word_derevo",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2186,7 +2186,7 @@
     },
     {
       "word": "рассказ",
-      "asset": "word_rasskaz",
+      "asset": "word_kniga",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2212,7 +2212,7 @@
     },
     {
       "word": "разговор",
-      "asset": "word_razgovor",
+      "asset": "word_telefon",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2238,7 +2238,7 @@
     },
     {
       "word": "разведчик",
-      "asset": "word_razvedchik",
+      "asset": "word_lupa",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2381,7 +2381,7 @@
     },
     {
       "word": "рисунок",
-      "asset": "word_risunok",
+      "asset": "word_albom",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2420,7 +2420,7 @@
     },
     {
       "word": "рогатка",
-      "asset": "word_rogatka",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2433,7 +2433,7 @@
     },
     {
       "word": "рокот",
-      "asset": "word_rokot",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2615,7 +2615,7 @@
     },
     {
       "word": "ряска",
-      "asset": "word_ryaska",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2836,7 +2836,7 @@
     },
     {
       "word": "шахтёр",
-      "asset": "word_shakhtyor",
+      "asset": "word_shlem",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2849,7 +2849,7 @@
     },
     {
       "word": "шалунья",
-      "asset": "word_shalunya",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2875,7 +2875,7 @@
     },
     {
       "word": "сила",
-      "asset": "word_sila",
+      "asset": "word_girya",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -4383,7 +4383,7 @@
     },
     {
       "word": "пловец",
-      "asset": "word_plovets",
+      "asset": "word_volna",
       "recommendedStages": [
         "word"
       ],
@@ -4988,7 +4988,7 @@
     },
     {
       "word": "апполон",
-      "asset": "word_appolon",
+      "asset": "word_babochka",
       "recommendedStages": [
         "word"
       ],
@@ -5032,7 +5032,7 @@
     },
     {
       "word": "архитектор",
-      "asset": "word_arkhitektor",
+      "asset": "word_tsirkul",
       "recommendedStages": [
         "word"
       ],
@@ -5439,7 +5439,7 @@
     },
     {
       "word": "батюшка",
-      "asset": "word_batyushka",
+      "asset": "word_svecha",
       "recommendedStages": [
         "word"
       ],
@@ -5472,7 +5472,7 @@
     },
     {
       "word": "бедро",
-      "asset": "word_bedro",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -5626,7 +5626,7 @@
     },
     {
       "word": "благодарность",
-      "asset": "word_blagodarnost",
+      "asset": "word_serdtse",
       "recommendedStages": [
         "word"
       ],
@@ -6275,7 +6275,7 @@
     },
     {
       "word": "дальнобойщик",
-      "asset": "word_dalnoboyshchik",
+      "asset": "word_gruzovik",
       "recommendedStages": [
         "word"
       ],
@@ -6319,7 +6319,7 @@
     },
     {
       "word": "дедуля",
-      "asset": "word_dedulya",
+      "asset": "word_dedushka",
       "recommendedStages": [
         "word"
       ],
@@ -6396,7 +6396,7 @@
     },
     {
       "word": "дерзость",
-      "asset": "word_derzost",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -6495,7 +6495,7 @@
     },
     {
       "word": "дисциплина",
-      "asset": "word_distsiplina",
+      "asset": "word_chasy",
       "recommendedStages": [
         "word"
       ],
@@ -6682,7 +6682,7 @@
     },
     {
       "word": "дровосек",
-      "asset": "word_drovosek",
+      "asset": "word_topor",
       "recommendedStages": [
         "word"
       ],
@@ -8431,7 +8431,7 @@
     },
     {
       "word": "кефаль",
-      "asset": "word_kefal",
+      "asset": "word_karp",
       "recommendedStages": [
         "word"
       ],
@@ -8497,7 +8497,7 @@
     },
     {
       "word": "кишечник",
-      "asset": "word_kishechnik",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -8552,7 +8552,7 @@
     },
     {
       "word": "кладбище",
-      "asset": "word_kladbishche",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -9421,7 +9421,7 @@
     },
     {
       "word": "вещи",
-      "asset": "word_veshchi",
+      "asset": "word_chemodan",
       "recommendedStages": [
         "word"
       ],
@@ -9586,7 +9586,7 @@
     },
     {
       "word": "висок",
-      "asset": "word_visok",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -9608,7 +9608,7 @@
     },
     {
       "word": "водитель",
-      "asset": "word_voditel",
+      "asset": "word_avtomobil",
       "recommendedStages": [
         "word"
       ],
@@ -9641,7 +9641,7 @@
     },
     {
       "word": "военный",
-      "asset": "word_voennyy",
+      "asset": "word_shchit",
       "recommendedStages": [
         "word"
       ],
@@ -9872,7 +9872,7 @@
     },
     {
       "word": "встреча",
-      "asset": "word_vstrecha",
+      "asset": "word_rukopozhatie",
       "recommendedStages": [
         "word"
       ],
@@ -10037,7 +10037,7 @@
     },
     {
       "word": "зависть",
-      "asset": "word_zavist",
+      "asset": "word_grust",
       "recommendedStages": [
         "word"
       ],
@@ -10224,7 +10224,7 @@
     },
     {
       "word": "жестокий",
-      "asset": "word_zhestokiy",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -10653,7 +10653,7 @@
     },
     {
       "word": "блохи",
-      "asset": "word_blokha",
+      "asset": null,
       "recommendedStages": [
         "wordMed"
       ],
@@ -10675,7 +10675,7 @@
     },
     {
       "word": "боец",
-      "asset": "word_boyets",
+      "asset": "word_shlem",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -10741,7 +10741,7 @@
     },
     {
       "word": "доктор",
-      "asset": "word_doktor",
+      "asset": "word_vrach",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -11005,7 +11005,7 @@
     },
     {
       "word": "клещ",
-      "asset": "word_kleshch",
+      "asset": null,
       "recommendedStages": [
         "wordFinal"
       ],
@@ -11016,7 +11016,7 @@
     },
     {
       "word": "клещи",
-      "asset": "word_kleshchi",
+      "asset": null,
       "recommendedStages": [
         "wordMed"
       ],
@@ -11170,7 +11170,7 @@
     },
     {
       "word": "летчик",
-      "asset": "word_letchik",
+      "asset": "word_samolyot",
       "recommendedStages": [
         "wordInit"
       ],
@@ -11258,7 +11258,7 @@
     },
     {
       "word": "монах",
-      "asset": "word_monakh",
+      "asset": "word_khram",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -11401,7 +11401,7 @@
     },
     {
       "word": "пахарь",
-      "asset": "word_pakhar",
+      "asset": "word_traktor",
       "recommendedStages": [
         "wordMed"
       ],
@@ -11632,7 +11632,7 @@
     },
     {
       "word": "рыбак",
-      "asset": "word_rybak",
+      "asset": "word_rybalka",
       "recommendedStages": [
         "wordInit"
       ],
@@ -12875,7 +12875,7 @@
     },
     {
       "word": "борода",
-      "asset": "word_boroda",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -12886,7 +12886,7 @@
     },
     {
       "word": "бородач",
-      "asset": "word_borodach",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -13062,7 +13062,7 @@
     },
     {
       "word": "хрящ",
-      "asset": "word_khryashch",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -13326,7 +13326,7 @@
     },
     {
       "word": "пастух",
-      "asset": "word_pastukh",
+      "asset": "word_ovtsa",
       "recommendedStages": [
         "word"
       ],
@@ -13491,7 +13491,7 @@
     },
     {
       "word": "ружьё",
-      "asset": "word_ruzhyo",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -13502,7 +13502,7 @@
     },
     {
       "word": "сапожник",
-      "asset": "word_sapozhnik",
+      "asset": "word_sapog",
       "recommendedStages": [
         "word"
       ],
@@ -14140,7 +14140,7 @@
     },
     {
       "word": "повар",
-      "asset": "word_povar",
+      "asset": "word_kastryulya",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -14162,7 +14162,7 @@
     },
     {
       "word": "моряк",
-      "asset": "word_moryak",
+      "asset": "word_yakor",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -14294,7 +14294,7 @@
     },
     {
       "word": "цирюльник",
-      "asset": "word_tsiryulnik",
+      "asset": "word_nozhnitsy",
       "recommendedStages": [
         "word"
       ],
@@ -14305,7 +14305,7 @@
     },
     {
       "word": "певец",
-      "asset": "word_pevets",
+      "asset": "word_pevitsa",
       "recommendedStages": [
         "word"
       ],
@@ -14338,7 +14338,7 @@
     },
     {
       "word": "подруга",
-      "asset": "word_podruga",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -14349,7 +14349,7 @@
     },
     {
       "word": "охотник",
-      "asset": "word_okhotnik",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -14371,7 +14371,7 @@
     },
     {
       "word": "инженер",
-      "asset": "word_inzhener",
+      "asset": "word_karandash",
       "recommendedStages": [
         "word"
       ],
@@ -15260,7 +15260,7 @@
     },
     {
       "word": "блоха",
-      "asset": "word_blokha",
+      "asset": null,
       "recommendedStages": [
         "wordMed"
       ],
@@ -16127,7 +16127,7 @@
     },
     {
       "word": "aktsiya",
-      "asset": "word_aktsiya",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -16314,7 +16314,7 @@
     },
     {
       "word": "appolon",
-      "asset": "word_appolon",
+      "asset": "word_babochka",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -16358,7 +16358,7 @@
     },
     {
       "word": "arkhitektor",
-      "asset": "word_arkhitektor",
+      "asset": "word_tsirkul",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -16842,7 +16842,7 @@
     },
     {
       "word": "batyushka",
-      "asset": "word_batyushka",
+      "asset": "word_svecha",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -16897,7 +16897,7 @@
     },
     {
       "word": "bedro",
-      "asset": "word_bedro",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -17117,7 +17117,7 @@
     },
     {
       "word": "blagodarnost",
-      "asset": "word_blagodarnost",
+      "asset": "word_serdtse",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -18536,7 +18536,7 @@
     },
     {
       "word": "dalnoboyshchik",
-      "asset": "word_dalnoboyshchik",
+      "asset": "word_gruzovik",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -18580,7 +18580,7 @@
     },
     {
       "word": "dedulya",
-      "asset": "word_dedulya",
+      "asset": "word_dedushka",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -18734,7 +18734,7 @@
     },
     {
       "word": "derzost",
-      "asset": "word_derzost",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -18844,7 +18844,7 @@
     },
     {
       "word": "distsiplina",
-      "asset": "word_distsiplina",
+      "asset": "word_chasy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -19218,7 +19218,7 @@
     },
     {
       "word": "drovosek",
-      "asset": "word_drovosek",
+      "asset": "word_topor",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -20516,7 +20516,7 @@
     },
     {
       "word": "granitsa",
-      "asset": "word_granitsa",
+      "asset": "word_zabor",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -21099,7 +21099,7 @@
     },
     {
       "word": "инженер",
-      "asset": "word_inzhener",
+      "asset": "word_karandash",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -21880,7 +21880,7 @@
     },
     {
       "word": "kefal",
-      "asset": "word_kefal",
+      "asset": "word_karp",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -22012,7 +22012,7 @@
     },
     {
       "word": "kishechnik",
-      "asset": "word_kishechnik",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -22100,7 +22100,7 @@
     },
     {
       "word": "kladbishche",
-      "asset": "word_kladbishche",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -23123,7 +23123,7 @@
     },
     {
       "word": "липа",
-      "asset": "word_lipa",
+      "asset": "word_derevo",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -23948,7 +23948,7 @@
     },
     {
       "word": "моряк",
-      "asset": "word_moryak",
+      "asset": "word_yakor",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24267,7 +24267,7 @@
     },
     {
       "word": "охотник",
-      "asset": "word_okhotnik",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24575,7 +24575,7 @@
     },
     {
       "word": "певец",
-      "asset": "word_pevets",
+      "asset": "word_pevitsa",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24685,7 +24685,7 @@
     },
     {
       "word": "plovets",
-      "asset": "word_plovets",
+      "asset": "word_volna",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24707,7 +24707,7 @@
     },
     {
       "word": "подруга",
-      "asset": "word_podruga",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24751,7 +24751,7 @@
     },
     {
       "word": "повар",
-      "asset": "word_povar",
+      "asset": "word_kastryulya",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24905,7 +24905,7 @@
     },
     {
       "word": "rasskaz",
-      "asset": "word_rasskaz",
+      "asset": "word_kniga",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24949,7 +24949,7 @@
     },
     {
       "word": "razgovor",
-      "asset": "word_razgovor",
+      "asset": "word_telefon",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24982,7 +24982,7 @@
     },
     {
       "word": "razvedchik",
-      "asset": "word_razvedchik",
+      "asset": "word_lupa",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25202,7 +25202,7 @@
     },
     {
       "word": "risunok",
-      "asset": "word_risunok",
+      "asset": "word_albom",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25279,7 +25279,7 @@
     },
     {
       "word": "rogatka",
-      "asset": "word_rogatka",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25301,7 +25301,7 @@
     },
     {
       "word": "rokot",
-      "asset": "word_rokot",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25554,7 +25554,7 @@
     },
     {
       "word": "ryaska",
-      "asset": "word_ryaska",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25873,7 +25873,7 @@
     },
     {
       "word": "shakhtyor",
-      "asset": "word_shakhtyor",
+      "asset": "word_shlem",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25906,7 +25906,7 @@
     },
     {
       "word": "shalunya",
-      "asset": "word_shalunya",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26456,7 +26456,7 @@
     },
     {
       "word": "sila",
-      "asset": "word_sila",
+      "asset": "word_girya",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27171,7 +27171,7 @@
     },
     {
       "word": "tsiryulnik",
-      "asset": "word_tsiryulnik",
+      "asset": "word_nozhnitsy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27523,7 +27523,7 @@
     },
     {
       "word": "veshchi",
-      "asset": "word_veshchi",
+      "asset": "word_chemodan",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27721,7 +27721,7 @@
     },
     {
       "word": "visok",
-      "asset": "word_visok",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27765,7 +27765,7 @@
     },
     {
       "word": "водитель",
-      "asset": "word_voditel",
+      "asset": "word_avtomobil",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27809,7 +27809,7 @@
     },
     {
       "word": "voennyy",
-      "asset": "word_voennyy",
+      "asset": "word_shchit",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -28062,7 +28062,7 @@
     },
     {
       "word": "vstrecha",
-      "asset": "word_vstrecha",
+      "asset": "word_rukopozhatie",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -28304,7 +28304,7 @@
     },
     {
       "word": "zavist",
-      "asset": "word_zavist",
+      "asset": "word_grust",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -28568,7 +28568,7 @@
     },
     {
       "word": "zhestokiy",
-      "asset": "word_zhestokiy",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"

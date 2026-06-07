@@ -1,3585 +1,3585 @@
 {
- "id": "sound_l_v1",
- "soundTarget": "Л",
- "group": "соноры",
- "version": 1,
- "description": "Коррекция звука [Л] и [Л'] — артикуляционная подготовка, изолированный звук, слоги (прямые, обратные, со стечением), слова (начальная / средняя / конечная позиция), фразы, предложения, скороговорки, дифференциация Л/Р.",
- "stages": {
-  "prep": {
-   "stageId": "prep",
-   "note": "Артикуляционная гимнастика для подготовки смычки кончика языка с зубами.",
-   "items": [
-    {
-     "id": "l-prep-0",
-     "word": "Пароход гудит",
-     "hint": "Прижми кончик языка к верхним зубам и тяни: ЫЫЫЫЛ — как пароход!",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-0.m4a"
+  "id": "sound_l_v1",
+  "soundTarget": "Л",
+  "group": "соноры",
+  "version": 1,
+  "description": "Коррекция звука [Л] и [Л'] — артикуляционная подготовка, изолированный звук, слоги (прямые, обратные, со стечением), слова (начальная / средняя / конечная позиция), фразы, предложения, скороговорки, дифференциация Л/Р.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Артикуляционная гимнастика для подготовки смычки кончика языка с зубами.",
+      "items": [
+        {
+          "id": "l-prep-0",
+          "word": "Пароход гудит",
+          "hint": "Прижми кончик языка к верхним зубам и тяни: ЫЫЫЫЛ — как пароход!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-0.m4a"
+        },
+        {
+          "id": "l-prep-1",
+          "word": "Широкая улыбка",
+          "hint": "Улыбнись как можно шире — покажи все зубы! Держи 5 секунд.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-1.m4a"
+        },
+        {
+          "id": "l-prep-2",
+          "word": "Лопатка",
+          "hint": "Широкий мягкий язычок лежит на нижней губе — как лопатка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-2.m4a"
+        },
+        {
+          "id": "l-prep-3",
+          "word": "Качели",
+          "hint": "Язык качается: вверх — к носу, вниз — к подбородку. Кач-кач!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-3.m4a"
+        },
+        {
+          "id": "l-prep-4",
+          "word": "Гармошка",
+          "hint": "Язык прижат к нёбу, зубы сомкнуты — открывай рот, не отрывая язык!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-4.m4a"
+        },
+        {
+          "id": "l-prep-5",
+          "word": "Покусаем язычок",
+          "hint": "Слегка покусывай кончик языка — расслабляем мышцы.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-5.m4a"
+        },
+        {
+          "id": "l-prep-6",
+          "word": "Ы-позиция",
+          "hint": "Скажи Ы и почувствуй: корень языка поднялся вверх-назад — запомни!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-6.m4a"
+        },
+        {
+          "id": "l-prep-7",
+          "word": "Иголочка",
+          "hint": "Язык острый и узкий — как иголочка, тяни вперёд. Держи 5 секунд.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-7.m4a"
+        },
+        {
+          "id": "l-prep-8",
+          "word": "Заборчик",
+          "hint": "Широкая улыбка, зубы видны — как заборчик.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-8.m4a"
+        },
+        {
+          "id": "l-prep-9",
+          "word": "Паровозик",
+          "hint": "Язык у верхних зубов — тяни: ЛЛЛ — ту-ту-ту!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-9.m4a"
+        },
+        {
+          "id": "l-prep-10",
+          "word": "Чашечка",
+          "hint": "Высунь язык и загни края вверх — чашечка готова!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-10.m4a"
+        },
+        {
+          "id": "l-prep-11",
+          "word": "Часики",
+          "hint": "Кончик языка движется влево-вправо: тик-так, тик-так.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-11.m4a"
+        },
+        {
+          "id": "l-prep-12",
+          "word": "Почистим зубки",
+          "hint": "Кончиком языка чистим верхние зубы изнутри — туда-сюда.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-12.m4a"
+        },
+        {
+          "id": "l-prep-13",
+          "word": "Прилипли",
+          "hint": "Кончик языка прилип к верхним зубам — оторви с усилием.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-13.m4a"
+        },
+        {
+          "id": "l-prep-14",
+          "word": "Самолёт",
+          "hint": "Язык у верхних зубов — дуй сквозь края языка — самолёт гудит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-prep-14.m4a"
+        },
+        {
+          "id": "l-prep-15",
+          "word": "Орешек",
+          "hint": "Язык упёрся в щёку — перекатываем орешек в другую щёку.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-prep-15.m4a"
+        },
+        {
+          "id": "l-prep-16",
+          "word": "Тяпаем",
+          "hint": "Язык ляпает по верхней губе: ла-ла-ла — мягко и ритмично.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-16.m4a"
+        },
+        {
+          "id": "l-prep-17",
+          "word": "Ветерок",
+          "hint": "Кончик языка у верхних зубов — дуй по краям языка мягко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-17.m4a"
+        },
+        {
+          "id": "l-prep-18",
+          "word": "Л-позиция",
+          "hint": "Кончик языка упёрся в верхние зубы изнутри — вот позиция Л!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-prep-18.m4a"
+        },
+        {
+          "id": "l-prep-19",
+          "word": "Тянем ЛА",
+          "hint": "Из позиции Л открой рот и получи ЛА — молодец!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-prep-19.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-1",
-     "word": "Широкая улыбка",
-     "hint": "Улыбнись как можно шире — покажи все зубы! Держи 5 секунд.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-1.m4a"
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный звук [Л] через образы.",
+      "items": [
+        {
+          "id": "l-iso-0",
+          "word": "л-л-л пароход",
+          "hint": "Пароход гудит в тумане: Л-Л-Л — долго и гулко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-iso-0.m4a"
+        },
+        {
+          "id": "l-iso-1",
+          "word": "л-л-л самолёт",
+          "hint": "Самолёт летит высоко: лллл — ровно и тихо.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-iso-1.m4a"
+        },
+        {
+          "id": "l-iso-2",
+          "word": "л-л-л луна",
+          "hint": "Луна светит тихо: л-л-л — почти шёпотом.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-iso-2.m4a"
+        },
+        {
+          "id": "l-iso-3",
+          "word": "л-л-л долгий",
+          "hint": "Тяни Л как можно дольше — на одном выдохе!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-3.m4a"
+        },
+        {
+          "id": "l-iso-4",
+          "word": "л-л-л короткий",
+          "hint": "Быстрое Л — как щелчок: Л! Л! Л!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-4.m4a"
+        },
+        {
+          "id": "l-iso-5",
+          "word": "л-л-л тихо громко",
+          "hint": "Начни тихо — становись громче: л...л-л-Л-Л-ЛЛЛ!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-iso-5.m4a"
+        },
+        {
+          "id": "l-iso-6",
+          "word": "л-л-л паровозик",
+          "hint": "Паровозик едет: ЛЛЛ-ЛЛЛ — ритмично, как колёса.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-6.m4a"
+        },
+        {
+          "id": "l-iso-7",
+          "word": "ль-ль-ль мягкий",
+          "hint": "Мягкий Л' — как нежный ветерок: ль-ль-ль.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-iso-7.m4a"
+        },
+        {
+          "id": "l-iso-8",
+          "word": "л-ль чередование",
+          "hint": "Чередуем твёрдый и мягкий: Л — ЛЬ — Л — ЛЬ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-iso-8.m4a"
+        },
+        {
+          "id": "l-iso-9",
+          "word": "л-л-л перед а",
+          "hint": "Л и сразу А: Л-А, Л-А, Л-А.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-9.m4a"
+        },
+        {
+          "id": "l-iso-10",
+          "word": "л-л-л перед о",
+          "hint": "Л-О, Л-О, Л-О — ровно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-10.m4a"
+        },
+        {
+          "id": "l-iso-11",
+          "word": "л-л-л перед у",
+          "hint": "Л-У, Л-У, Л-У.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-11.m4a"
+        },
+        {
+          "id": "l-iso-12",
+          "word": "л-л-л ритм",
+          "hint": "Отстукивай ладошкой: Л — Л — Л — в ритме.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-12.m4a"
+        },
+        {
+          "id": "l-iso-13",
+          "word": "л-л-л зеркало",
+          "hint": "Смотри в зеркало — кончик языка видно у верхних зубов? Л-л-л!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-iso-13.m4a"
+        },
+        {
+          "id": "l-iso-14",
+          "word": "л-л-л маяк",
+          "hint": "Маяк мигает и гудит: Л... Л... Л — медленно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-iso-14.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-2",
-     "word": "Лопатка",
-     "hint": "Широкий мягкий язычок лежит на нижней губе — как лопатка.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-2.m4a"
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги прямые и обратные; стечения согласных; мягкий [Л'].",
+      "items": [
+        {
+          "id": "l-syl-0",
+          "word": "ла",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-0.m4a"
+        },
+        {
+          "id": "l-syl-1",
+          "word": "ло",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-1.m4a"
+        },
+        {
+          "id": "l-syl-2",
+          "word": "лу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-2.m4a"
+        },
+        {
+          "id": "l-syl-3",
+          "word": "лы",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-3.m4a"
+        },
+        {
+          "id": "l-syl-4",
+          "word": "ал",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-4.m4a"
+        },
+        {
+          "id": "l-syl-5",
+          "word": "ол",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-5.m4a"
+        },
+        {
+          "id": "l-syl-6",
+          "word": "ул",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-6.m4a"
+        },
+        {
+          "id": "l-syl-7",
+          "word": "ыл",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-7.m4a"
+        },
+        {
+          "id": "l-syl-8",
+          "word": "ла-ла-ла",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-8.m4a"
+        },
+        {
+          "id": "l-syl-9",
+          "word": "ло-ло-ло",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-9.m4a"
+        },
+        {
+          "id": "l-syl-10",
+          "word": "лу-лу-лу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-10.m4a"
+        },
+        {
+          "id": "l-syl-11",
+          "word": "лы-лы-лы",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-syl-11.m4a"
+        },
+        {
+          "id": "l-syl-12",
+          "word": "ала",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-12.m4a"
+        },
+        {
+          "id": "l-syl-13",
+          "word": "оло",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-13.m4a"
+        },
+        {
+          "id": "l-syl-14",
+          "word": "улу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-14.m4a"
+        },
+        {
+          "id": "l-syl-15",
+          "word": "ала-ола",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-15.m4a"
+        },
+        {
+          "id": "l-syl-16",
+          "word": "пла",
+          "hint": "Стечение ПЛ — пла, пла, пла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-16.m4a"
+        },
+        {
+          "id": "l-syl-17",
+          "word": "гла",
+          "hint": "Стечение ГЛ — гла, гла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-17.m4a"
+        },
+        {
+          "id": "l-syl-18",
+          "word": "сла",
+          "hint": "Стечение СЛ — сла, сла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-18.m4a"
+        },
+        {
+          "id": "l-syl-19",
+          "word": "кла",
+          "hint": "Стечение КЛ — кла, кла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-19.m4a"
+        },
+        {
+          "id": "l-syl-20",
+          "word": "фла",
+          "hint": "Стечение ФЛ — фла, фла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-20.m4a"
+        },
+        {
+          "id": "l-syl-21",
+          "word": "бла",
+          "hint": "Стечение БЛ — бла, бла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-21.m4a"
+        },
+        {
+          "id": "l-syl-22",
+          "word": "вла",
+          "hint": "Стечение ВЛ — вла, вла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-22.m4a"
+        },
+        {
+          "id": "l-syl-23",
+          "word": "пло",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-23.m4a"
+        },
+        {
+          "id": "l-syl-24",
+          "word": "сло",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-24.m4a"
+        },
+        {
+          "id": "l-syl-25",
+          "word": "кло",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-25.m4a"
+        },
+        {
+          "id": "l-syl-26",
+          "word": "плу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-26.m4a"
+        },
+        {
+          "id": "l-syl-27",
+          "word": "слу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-27.m4a"
+        },
+        {
+          "id": "l-syl-28",
+          "word": "ле",
+          "hint": "Мягкий [Л'] — ле.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-28.m4a"
+        },
+        {
+          "id": "l-syl-29",
+          "word": "ли",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-29.m4a"
+        },
+        {
+          "id": "l-syl-30",
+          "word": "ля",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-30.m4a"
+        },
+        {
+          "id": "l-syl-31",
+          "word": "лю",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-31.m4a"
+        },
+        {
+          "id": "l-syl-32",
+          "word": "лё",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-32.m4a"
+        },
+        {
+          "id": "l-syl-33",
+          "word": "али",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-33.m4a"
+        },
+        {
+          "id": "l-syl-34",
+          "word": "оле",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-34.m4a"
+        },
+        {
+          "id": "l-syl-35",
+          "word": "ля-ля-ля",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-35.m4a"
+        },
+        {
+          "id": "l-syl-36",
+          "word": "ли-ли-ли",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-syl-36.m4a"
+        },
+        {
+          "id": "l-syl-37",
+          "word": "ла-ля-ла",
+          "hint": "Чередуем твёрдый и мягкий: ла — ля — ла.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-37.m4a"
+        },
+        {
+          "id": "l-syl-38",
+          "word": "ло-лё-ло",
+          "hint": "Чередуем: ло — лё — ло.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-38.m4a"
+        },
+        {
+          "id": "l-syl-39",
+          "word": "лу-лю-лу",
+          "hint": "Чередуем: лу — лю — лу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-syl-39.m4a"
+        },
+        {
+          "id": "l-syl-40",
+          "word": "пли",
+          "hint": "Стечение ПЛ мягкое — пли, пли!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-syl-40.m4a"
+        },
+        {
+          "id": "l-syl-41",
+          "word": "сле",
+          "hint": "Стечение СЛ мягкое — сле, сле!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-syl-41.m4a"
+        },
+        {
+          "id": "l-syl-42",
+          "word": "кле",
+          "hint": "Стечение КЛ мягкое — кле, кле!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-syl-42.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-3",
-     "word": "Качели",
-     "hint": "Язык качается: вверх — к носу, вниз — к подбородку. Кач-кач!",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-3.m4a"
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "[Л] и [Л'] в начале слова.",
+      "items": [
+        {
+          "id": "l-wi-0",
+          "word": "лак",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-0.m4a",
+          "imageAsset": "word_lak"
+        },
+        {
+          "id": "l-wi-1",
+          "word": "лоб",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-1.m4a",
+          "imageAsset": "word_lob"
+        },
+        {
+          "id": "l-wi-2",
+          "word": "лук",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-2.m4a",
+          "imageAsset": "word_luk"
+        },
+        {
+          "id": "l-wi-3",
+          "word": "лыжи",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-3.m4a",
+          "imageAsset": "word_lyzhi"
+        },
+        {
+          "id": "l-wi-4",
+          "word": "лапа",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-4.m4a",
+          "imageAsset": "word_lapa"
+        },
+        {
+          "id": "l-wi-5",
+          "word": "луна",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-5.m4a",
+          "imageAsset": "word_luna"
+        },
+        {
+          "id": "l-wi-6",
+          "word": "лиса",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-6.m4a",
+          "imageAsset": "word_lisa"
+        },
+        {
+          "id": "l-wi-7",
+          "word": "лист",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-7.m4a"
+        },
+        {
+          "id": "l-wi-8",
+          "word": "лев",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-8.m4a",
+          "imageAsset": "word_lev"
+        },
+        {
+          "id": "l-wi-9",
+          "word": "лейка",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-9.m4a",
+          "imageAsset": "word_leyka"
+        },
+        {
+          "id": "l-wi-10",
+          "word": "лента",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-10.m4a",
+          "imageAsset": "word_lenta"
+        },
+        {
+          "id": "l-wi-11",
+          "word": "лебедь",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-11.m4a",
+          "imageAsset": "word_lebed"
+        },
+        {
+          "id": "l-wi-12",
+          "word": "лимон",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-12.m4a",
+          "imageAsset": "word_limon"
+        },
+        {
+          "id": "l-wi-13",
+          "word": "липа",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-13.m4a",
+          "imageAsset": "word_derevo"
+        },
+        {
+          "id": "l-wi-14",
+          "word": "лупа",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-14.m4a",
+          "imageAsset": "word_lupa"
+        },
+        {
+          "id": "l-wi-15",
+          "word": "лодка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-15.m4a",
+          "imageAsset": "word_lodka"
+        },
+        {
+          "id": "l-wi-16",
+          "word": "лопата",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-16.m4a",
+          "imageAsset": "word_lopata"
+        },
+        {
+          "id": "l-wi-17",
+          "word": "лапоть",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-17.m4a",
+          "imageAsset": "word_lapot"
+        },
+        {
+          "id": "l-wi-18",
+          "word": "ложка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-18.m4a",
+          "imageAsset": "word_lozhka"
+        },
+        {
+          "id": "l-wi-19",
+          "word": "лужа",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-19.m4a",
+          "imageAsset": "word_luzha"
+        },
+        {
+          "id": "l-wi-20",
+          "word": "лось",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-20.m4a",
+          "imageAsset": "word_los"
+        },
+        {
+          "id": "l-wi-21",
+          "word": "лоза",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-21.m4a",
+          "imageAsset": "word_loza"
+        },
+        {
+          "id": "l-wi-22",
+          "word": "лопух",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-22.m4a",
+          "imageAsset": "word_lopukh"
+        },
+        {
+          "id": "l-wi-23",
+          "word": "лыко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-23.m4a",
+          "imageAsset": "word_lyko"
+        },
+        {
+          "id": "l-wi-24",
+          "word": "лёд",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-24.m4a",
+          "imageAsset": "word_lyod"
+        },
+        {
+          "id": "l-wi-25",
+          "word": "летчик",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-25.m4a",
+          "imageAsset": "word_samolyot"
+        },
+        {
+          "id": "l-wi-26",
+          "word": "лёгкий",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-26.m4a",
+          "imageAsset": "word_lyogkiy"
+        },
+        {
+          "id": "l-wi-27",
+          "word": "лягушка",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-27.m4a",
+          "imageAsset": "word_lyagushka"
+        },
+        {
+          "id": "l-wi-28",
+          "word": "лялька",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-28.m4a"
+        },
+        {
+          "id": "l-wi-29",
+          "word": "ляля",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-29.m4a",
+          "imageAsset": "word_lyalya"
+        },
+        {
+          "id": "l-wi-30",
+          "word": "лыжник",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-30.m4a",
+          "imageAsset": "word_lyzhnik"
+        },
+        {
+          "id": "l-wi-31",
+          "word": "лавочка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-31.m4a",
+          "imageAsset": "word_lavochka"
+        },
+        {
+          "id": "l-wi-32",
+          "word": "ласточка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-32.m4a",
+          "imageAsset": "word_lastochka"
+        },
+        {
+          "id": "l-wi-33",
+          "word": "лошадка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-33.m4a"
+        },
+        {
+          "id": "l-wi-34",
+          "word": "лопастной",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-34.m4a",
+          "imageAsset": "word_lopastnoy"
+        },
+        {
+          "id": "l-wi-35",
+          "word": "лиловый",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-35.m4a",
+          "imageAsset": "word_lilovyy"
+        },
+        {
+          "id": "l-wi-36",
+          "word": "ливень",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-36.m4a",
+          "imageAsset": "word_liven"
+        },
+        {
+          "id": "l-wi-37",
+          "word": "листопад",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-37.m4a",
+          "imageAsset": "word_listopad"
+        },
+        {
+          "id": "l-wi-38",
+          "word": "ледяной",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-38.m4a",
+          "imageAsset": "word_ledyanoy"
+        },
+        {
+          "id": "l-wi-39",
+          "word": "лесник",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-39.m4a",
+          "imageAsset": "word_lesnik"
+        },
+        {
+          "id": "l-wi-40",
+          "word": "лесенка",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-40.m4a",
+          "imageAsset": "word_lesenka"
+        },
+        {
+          "id": "l-wi-41",
+          "word": "лисёнок",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-41.m4a",
+          "imageAsset": "word_lisyonok"
+        },
+        {
+          "id": "l-wi-42",
+          "word": "лентяй",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-42.m4a"
+        },
+        {
+          "id": "l-wi-43",
+          "word": "любимый",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-43.m4a",
+          "imageAsset": "word_lyubimyy"
+        },
+        {
+          "id": "l-wi-44",
+          "word": "люлька",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-44.m4a",
+          "imageAsset": "word_lyulka"
+        },
+        {
+          "id": "l-wi-45",
+          "word": "лягушонок",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-45.m4a",
+          "imageAsset": "word_lyagushonok"
+        },
+        {
+          "id": "l-wi-46",
+          "word": "ловкий",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-46.m4a"
+        },
+        {
+          "id": "l-wi-47",
+          "word": "ладонь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-47.m4a",
+          "imageAsset": "word_ruki"
+        },
+        {
+          "id": "l-wi-48",
+          "word": "ладья",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-48.m4a",
+          "imageAsset": "word_ladya"
+        },
+        {
+          "id": "l-wi-49",
+          "word": "лакомство",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-49.m4a",
+          "imageAsset": "word_lakomstvo"
+        },
+        {
+          "id": "l-wi-50",
+          "word": "ласка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-50.m4a",
+          "imageAsset": "word_laska"
+        },
+        {
+          "id": "l-wi-51",
+          "word": "лакать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-51.m4a",
+          "imageAsset": "word_lakat"
+        },
+        {
+          "id": "l-wi-52",
+          "word": "луковица",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-52.m4a",
+          "imageAsset": "word_lukovitsa"
+        },
+        {
+          "id": "l-wi-53",
+          "word": "луноход",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-53.m4a",
+          "imageAsset": "word_lunokhod"
+        },
+        {
+          "id": "l-wi-54",
+          "word": "лужайка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-54.m4a",
+          "imageAsset": "word_luzhayka"
+        },
+        {
+          "id": "l-wi-55",
+          "word": "ложочек",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-55.m4a",
+          "imageAsset": "word_lozhochek"
+        },
+        {
+          "id": "l-wi-56",
+          "word": "лесочек",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-56.m4a",
+          "imageAsset": "word_lesochek"
+        },
+        {
+          "id": "l-wi-57",
+          "word": "летний",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-57.m4a",
+          "imageAsset": "word_letniy"
+        },
+        {
+          "id": "l-wi-58",
+          "word": "летать",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-58.m4a",
+          "imageAsset": "word_letat"
+        },
+        {
+          "id": "l-wi-59",
+          "word": "лечить",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-59.m4a",
+          "imageAsset": "word_lechit"
+        },
+        {
+          "id": "l-wi-60",
+          "word": "льдина",
+          "hint": "ЛЬД — мягкий Л + звонкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-60.m4a",
+          "imageAsset": "word_ldina"
+        },
+        {
+          "id": "l-wi-61",
+          "word": "льстить",
+          "hint": "ЛЬС — мягкий + шипящий.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-61.m4a"
+        },
+        {
+          "id": "l-wi-62",
+          "word": "лягушонок",
+          "hint": "ЛЯ — мягкий [Л'] + ГУ + ШО.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-62.m4a",
+          "imageAsset": "word_lyagushonok"
+        },
+        {
+          "id": "l-wi-63",
+          "word": "лиственница",
+          "hint": "ЛИС + ТВ — мягкий Л + стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-63.m4a",
+          "imageAsset": "word_listvennitsa"
+        },
+        {
+          "id": "l-wi-64",
+          "word": "лебединый",
+          "hint": "ЛЕ — мягкий в прилагательном.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-64.m4a",
+          "imageAsset": "word_lebedinyy"
+        },
+        {
+          "id": "l-wi-65",
+          "word": "льётся",
+          "hint": "ЛЬЁ — мягкий с ударным Ё.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-65.m4a",
+          "imageAsset": "word_lyotsya"
+        },
+        {
+          "id": "l-wi-66",
+          "word": "лиловый",
+          "hint": "Два ЛИ — твёрдый и мягкий чередуются.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-66.m4a",
+          "imageAsset": "word_lilovyy"
+        },
+        {
+          "id": "l-wi-67",
+          "word": "ловкость",
+          "hint": "ЛО + ВКС — твёрдый Л + стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-67.m4a"
+        },
+        {
+          "id": "l-wi-68",
+          "word": "ломоносов",
+          "hint": "ЛО + МО + НО + СО — ритм 4 слогов.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-68.m4a",
+          "imageAsset": "word_lomonosov"
+        },
+        {
+          "id": "l-wi-69",
+          "word": "лопотать",
+          "hint": "ЛО + ПО — мягкая интонация.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-69.m4a",
+          "imageAsset": "word_lopotat"
+        },
+        {
+          "id": "l-wi-70",
+          "word": "ладонь",
+          "hint": "ЛА+ДОНЬ — внутренняя часть руки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-70.m4a",
+          "imageAsset": "word_ruki"
+        },
+        {
+          "id": "l-wi-71",
+          "word": "ловушка",
+          "hint": "ЛО+ВУШ+КА — ловить кого-то.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-71.m4a",
+          "imageAsset": "word_lovushka"
+        },
+        {
+          "id": "l-wi-72",
+          "word": "лебедёнок",
+          "hint": "ЛЕ+БЕ+ДЁ+НОК — детёныш лебедя, Л мягкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-72.m4a",
+          "imageAsset": "word_lebedyonok"
+        },
+        {
+          "id": "l-wi-73",
+          "word": "локомотив",
+          "hint": "ЛО+КО+МО+ТИВ — паровоз.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-73.m4a",
+          "imageAsset": "word_lokomotiv"
+        },
+        {
+          "id": "l-wi-74",
+          "word": "лопасть",
+          "hint": "ЛО+ПАСТЬ — часть пропеллера.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-74.m4a",
+          "imageAsset": "word_lopast"
+        },
+        {
+          "id": "l-wi-75",
+          "word": "лоскуток",
+          "hint": "ЛО+СКУТ+ОК — кусочек ткани.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-75.m4a",
+          "imageAsset": "word_loskutok"
+        },
+        {
+          "id": "l-wi-76",
+          "word": "лампа",
+          "hint": "Лам-па. [Л] в начале.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-76.m4a",
+          "imageAsset": "word_lampa"
+        },
+        {
+          "id": "l-wi-77",
+          "word": "летопись",
+          "hint": "ЛЕ+ТО+ПИСЬ — историческая запись.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-77.m4a",
+          "imageAsset": "word_letopis"
+        },
+        {
+          "id": "l-wi-78",
+          "word": "ленточка",
+          "hint": "ЛЕН+ТОЧ+КА — украшение, Л мягкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-78.m4a",
+          "imageAsset": "word_lentochka"
+        },
+        {
+          "id": "l-wi-79",
+          "word": "листопад",
+          "hint": "ЛИС+ТО+ПАД — падение листьев, два Л.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-79.m4a",
+          "imageAsset": "word_listopad"
+        },
+        {
+          "id": "l-wi-80",
+          "word": "лукошко",
+          "hint": "ЛУ+КОШ+КО — корзинка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-80.m4a",
+          "imageAsset": "word_lukoshko"
+        },
+        {
+          "id": "l-wi-81",
+          "word": "ластоногий",
+          "hint": "ЛА+СТО+НО+ГИЙ — прилагательное про моржей.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-81.m4a",
+          "imageAsset": "word_lastonogiy"
+        },
+        {
+          "id": "l-wi-82",
+          "word": "лазоревый",
+          "hint": "ЛА+ЗО+РЕ+ВЫЙ — небесно-голубой.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-82.m4a",
+          "imageAsset": "word_lazorevyy"
+        },
+        {
+          "id": "l-wi-83",
+          "word": "лопотание",
+          "hint": "ЛО+ПО+ТА+НИЕ — невнятная речь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-83.m4a",
+          "imageAsset": "word_lopotanie"
+        },
+        {
+          "id": "l-wi-84",
+          "word": "лапоть",
+          "hint": "ЛА+ПОТЬ — народная обувь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-84.m4a",
+          "imageAsset": "word_lapot"
+        },
+        {
+          "id": "l-wi-85",
+          "word": "лайка",
+          "imageAsset": "word_layka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-85.m4a"
+        },
+        {
+          "id": "l-wi-86",
+          "word": "линейка",
+          "imageAsset": "word_lineyka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-86.m4a"
+        },
+        {
+          "id": "l-wi-87",
+          "word": "листок",
+          "imageAsset": "word_listok",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-87.m4a"
+        },
+        {
+          "id": "l-wi-88",
+          "word": "луг",
+          "imageAsset": "word_lug",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wi-88.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-4",
-     "word": "Гармошка",
-     "hint": "Язык прижат к нёбу, зубы сомкнуты — открывай рот, не отрывая язык!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-4.m4a"
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "[Л] в середине слова, включая мягкий [Л'].",
+      "items": [
+        {
+          "id": "l-wm-0",
+          "word": "белка",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-0.m4a",
+          "imageAsset": "word_belka"
+        },
+        {
+          "id": "l-wm-1",
+          "word": "палка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-1.m4a",
+          "imageAsset": "word_palka"
+        },
+        {
+          "id": "l-wm-2",
+          "word": "полка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-2.m4a",
+          "imageAsset": "word_polka"
+        },
+        {
+          "id": "l-wm-3",
+          "word": "стол",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-3.m4a",
+          "imageAsset": "word_stol"
+        },
+        {
+          "id": "l-wm-4",
+          "word": "волк",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-4.m4a",
+          "imageAsset": "word_volk"
+        },
+        {
+          "id": "l-wm-5",
+          "word": "слон",
+          "hint": "Стечение СЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-5.m4a",
+          "imageAsset": "word_slon"
+        },
+        {
+          "id": "l-wm-6",
+          "word": "молоко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-6.m4a",
+          "imageAsset": "word_moloko"
+        },
+        {
+          "id": "l-wm-7",
+          "word": "голова",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-7.m4a",
+          "imageAsset": "word_golova"
+        },
+        {
+          "id": "l-wm-8",
+          "word": "малина",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-8.m4a",
+          "imageAsset": "word_malina"
+        },
+        {
+          "id": "l-wm-9",
+          "word": "налево",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-9.m4a"
+        },
+        {
+          "id": "l-wm-10",
+          "word": "велосипед",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-10.m4a",
+          "imageAsset": "word_velosiped"
+        },
+        {
+          "id": "l-wm-11",
+          "word": "холодный",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-11.m4a"
+        },
+        {
+          "id": "l-wm-12",
+          "word": "белка",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-12.m4a",
+          "imageAsset": "word_belka"
+        },
+        {
+          "id": "l-wm-13",
+          "word": "долото",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-13.m4a"
+        },
+        {
+          "id": "l-wm-14",
+          "word": "колобок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-14.m4a",
+          "imageAsset": "word_kolobok"
+        },
+        {
+          "id": "l-wm-15",
+          "word": "школа",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-15.m4a",
+          "imageAsset": "word_shkola"
+        },
+        {
+          "id": "l-wm-16",
+          "word": "шалость",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-16.m4a"
+        },
+        {
+          "id": "l-wm-17",
+          "word": "коляска",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-17.m4a",
+          "imageAsset": "word_kolyaska"
+        },
+        {
+          "id": "l-wm-18",
+          "word": "колесо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-18.m4a",
+          "imageAsset": "word_koleso"
+        },
+        {
+          "id": "l-wm-19",
+          "word": "малина",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-19.m4a",
+          "imageAsset": "word_malina"
+        },
+        {
+          "id": "l-wm-20",
+          "word": "облако",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-20.m4a",
+          "imageAsset": "word_oblako"
+        },
+        {
+          "id": "l-wm-21",
+          "word": "платье",
+          "hint": "Стечение ПЛ + мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-21.m4a",
+          "imageAsset": "word_plate"
+        },
+        {
+          "id": "l-wm-22",
+          "word": "блюдце",
+          "hint": "Стечение БЛ + мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-22.m4a",
+          "imageAsset": "word_blyudtse"
+        },
+        {
+          "id": "l-wm-23",
+          "word": "галстук",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-23.m4a"
+        },
+        {
+          "id": "l-wm-24",
+          "word": "флаг",
+          "hint": "Стечение ФЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-24.m4a",
+          "imageAsset": "word_flag"
+        },
+        {
+          "id": "l-wm-25",
+          "word": "глаза",
+          "hint": "Стечение ГЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-25.m4a",
+          "imageAsset": "word_glaza"
+        },
+        {
+          "id": "l-wm-26",
+          "word": "класс",
+          "hint": "Стечение КЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-26.m4a",
+          "imageAsset": "word_klass"
+        },
+        {
+          "id": "l-wm-27",
+          "word": "клубника",
+          "hint": "Стечение КЛ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-27.m4a",
+          "imageAsset": "word_klubnika"
+        },
+        {
+          "id": "l-wm-28",
+          "word": "слива",
+          "hint": "Стечение СЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-28.m4a",
+          "imageAsset": "word_sliva"
+        },
+        {
+          "id": "l-wm-29",
+          "word": "плита",
+          "hint": "Стечение ПЛ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-29.m4a",
+          "imageAsset": "word_plita"
+        },
+        {
+          "id": "l-wm-30",
+          "word": "холм",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-30.m4a"
+        },
+        {
+          "id": "l-wm-31",
+          "word": "залив",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-31.m4a"
+        },
+        {
+          "id": "l-wm-32",
+          "word": "тулуп",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-32.m4a"
+        },
+        {
+          "id": "l-wm-33",
+          "word": "белый",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-33.m4a",
+          "imageAsset": "word_belyy"
+        },
+        {
+          "id": "l-wm-34",
+          "word": "жёлтый",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-34.m4a",
+          "imageAsset": "word_zhyoltyy"
+        },
+        {
+          "id": "l-wm-35",
+          "word": "маленький",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-35.m4a"
+        },
+        {
+          "id": "l-wm-36",
+          "word": "голубой",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-36.m4a",
+          "imageAsset": "word_goluboy"
+        },
+        {
+          "id": "l-wm-37",
+          "word": "болото",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-37.m4a",
+          "imageAsset": "word_boloto"
+        },
+        {
+          "id": "l-wm-38",
+          "word": "полка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-38.m4a",
+          "imageAsset": "word_polka"
+        },
+        {
+          "id": "l-wm-39",
+          "word": "солнышко",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-39.m4a",
+          "imageAsset": "word_solnyshko"
+        },
+        {
+          "id": "l-wm-40",
+          "word": "яблоко",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-40.m4a"
+        },
+        {
+          "id": "l-wm-41",
+          "word": "яблочный",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-41.m4a"
+        },
+        {
+          "id": "l-wm-42",
+          "word": "волнушка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-42.m4a"
+        },
+        {
+          "id": "l-wm-43",
+          "word": "булавка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-43.m4a"
+        },
+        {
+          "id": "l-wm-44",
+          "word": "пулемёт",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-44.m4a"
+        },
+        {
+          "id": "l-wm-45",
+          "word": "пловец",
+          "hint": "Стечение ПЛ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-45.m4a",
+          "imageAsset": "word_volna"
+        },
+        {
+          "id": "l-wm-46",
+          "word": "колокол",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-46.m4a",
+          "imageAsset": "word_kolokol"
+        },
+        {
+          "id": "l-wm-47",
+          "word": "столовая",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-47.m4a"
+        },
+        {
+          "id": "l-wm-48",
+          "word": "самолёт",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-48.m4a",
+          "imageAsset": "word_samolyot"
+        },
+        {
+          "id": "l-wm-49",
+          "word": "деловой",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-49.m4a"
+        },
+        {
+          "id": "l-wm-50",
+          "word": "яблоко",
+          "hint": "ЯБ+ЛО+КО — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-50.m4a"
+        },
+        {
+          "id": "l-wm-51",
+          "word": "палка",
+          "hint": "ПА+ЛКА — Л в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-51.m4a",
+          "imageAsset": "word_palka"
+        },
+        {
+          "id": "l-wm-52",
+          "word": "молоток",
+          "hint": "МО+ЛО+ТОК — Л дважды в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-52.m4a",
+          "imageAsset": "word_molotok"
+        },
+        {
+          "id": "l-wm-53",
+          "word": "халва",
+          "hint": "ХА+ЛВА — ЛВ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-53.m4a"
+        },
+        {
+          "id": "l-wm-54",
+          "word": "платье",
+          "hint": "ПЛА+ТОК — ПЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-54.m4a",
+          "imageAsset": "word_plate"
+        },
+        {
+          "id": "l-wm-55",
+          "word": "пила",
+          "hint": "пи-Ла. [Л] в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-55.m4a",
+          "imageAsset": "word_pila"
+        },
+        {
+          "id": "l-wm-56",
+          "word": "полотенце",
+          "hint": "ПО+ЛО+ТЕН+ЦЕ — Л дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wm-56.m4a",
+          "imageAsset": "word_polotentse"
+        },
+        {
+          "id": "l-wm-57",
+          "word": "облако",
+          "hint": "ОБ+ЛА+КО — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-57.m4a",
+          "imageAsset": "word_oblako"
+        },
+        {
+          "id": "l-wm-58",
+          "word": "шалаш",
+          "hint": "ША+ЛАШ — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-58.m4a",
+          "imageAsset": "word_shalash"
+        },
+        {
+          "id": "l-wm-59",
+          "word": "глобус",
+          "hint": "ГЛО+БУС — ГЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-59.m4a",
+          "imageAsset": "word_globus"
+        },
+        {
+          "id": "l-wm-60",
+          "word": "флаг",
+          "hint": "ФЛА+Г — ФЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-60.m4a",
+          "imageAsset": "word_flag"
+        },
+        {
+          "id": "l-wm-61",
+          "word": "блинчик",
+          "hint": "БЛИ+НЧИ+К — БЛ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-61.m4a",
+          "imageAsset": "word_blinchik"
+        },
+        {
+          "id": "l-wm-62",
+          "word": "плакат",
+          "hint": "ПЛА+КАТ — ПЛ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-62.m4a",
+          "imageAsset": "word_plakat"
+        },
+        {
+          "id": "l-wm-63",
+          "word": "пилотка",
+          "hint": "ПИ+ЛОТ+КА — Л в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-63.m4a",
+          "imageAsset": "word_pilotka"
+        },
+        {
+          "id": "l-wm-64",
+          "word": "кулак",
+          "hint": "КУ+ЛАК — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-64.m4a",
+          "imageAsset": "word_kulak"
+        },
+        {
+          "id": "l-wm-65",
+          "word": "акула",
+          "imageAsset": "word_akula",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-65.m4a"
+        },
+        {
+          "id": "l-wm-66",
+          "word": "альбом",
+          "imageAsset": "word_albom",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-66.m4a"
+        },
+        {
+          "id": "l-wm-67",
+          "word": "балкон",
+          "imageAsset": "word_balkon",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-67.m4a"
+        },
+        {
+          "id": "l-wm-68",
+          "word": "бейсболка",
+          "imageAsset": "word_beysbolka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-68.m4a"
+        },
+        {
+          "id": "l-wm-69",
+          "word": "блоха",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-69.m4a"
+        },
+        {
+          "id": "l-wm-70",
+          "word": "блокнот",
+          "imageAsset": "word_bloknot",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-70.m4a"
+        },
+        {
+          "id": "l-wm-71",
+          "word": "блузка",
+          "imageAsset": "word_bluzka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-71.m4a"
+        },
+        {
+          "id": "l-wm-72",
+          "word": "блюдо",
+          "imageAsset": "word_blyudo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-72.m4a"
+        },
+        {
+          "id": "l-wm-73",
+          "word": "бублик",
+          "imageAsset": "word_bublik",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-73.m4a"
+        },
+        {
+          "id": "l-wm-74",
+          "word": "дедуля",
+          "imageAsset": "word_dedushka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-74.m4a"
+        },
+        {
+          "id": "l-wm-75",
+          "word": "дельфин",
+          "imageAsset": "word_delfin",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-75.m4a"
+        },
+        {
+          "id": "l-wm-76",
+          "word": "глаз",
+          "imageAsset": "word_glaz",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-76.m4a"
+        },
+        {
+          "id": "l-wm-77",
+          "word": "голубь",
+          "imageAsset": "word_golub",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-77.m4a"
+        },
+        {
+          "id": "l-wm-78",
+          "word": "игла",
+          "imageAsset": "word_igla",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-78.m4a"
+        },
+        {
+          "id": "l-wm-79",
+          "word": "кегли",
+          "imageAsset": "word_kegli",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-79.m4a"
+        },
+        {
+          "id": "l-wm-80",
+          "word": "кисель",
+          "imageAsset": "word_kisel",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-80.m4a"
+        },
+        {
+          "id": "l-wm-81",
+          "word": "кладовка",
+          "imageAsset": "word_kladovka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-81.m4a"
+        },
+        {
+          "id": "l-wm-82",
+          "word": "клоун",
+          "imageAsset": "word_kloun",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-82.m4a"
+        },
+        {
+          "id": "l-wm-83",
+          "word": "колодец",
+          "imageAsset": "word_kolodets",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-83.m4a"
+        },
+        {
+          "id": "l-wm-84",
+          "word": "масло",
+          "imageAsset": "word_maslo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-84.m4a"
+        },
+        {
+          "id": "l-wm-85",
+          "word": "мельница",
+          "imageAsset": "word_melnitsa",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-85.m4a"
+        },
+        {
+          "id": "l-wm-86",
+          "word": "олень",
+          "imageAsset": "word_olen",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-86.m4a"
+        },
+        {
+          "id": "l-wm-87",
+          "word": "подсолнух",
+          "imageAsset": "word_podsolnukh",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-87.m4a"
+        },
+        {
+          "id": "l-wm-88",
+          "word": "пугало",
+          "imageAsset": "word_pugalo",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-88.m4a"
+        },
+        {
+          "id": "l-wm-89",
+          "word": "салат",
+          "imageAsset": "word_salat",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-89.m4a"
+        },
+        {
+          "id": "l-wm-90",
+          "word": "скала",
+          "imageAsset": "word_skala",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-90.m4a"
+        },
+        {
+          "id": "l-wm-91",
+          "word": "соловей",
+          "imageAsset": "word_solovey",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-91.m4a"
+        },
+        {
+          "id": "l-wm-92",
+          "word": "сосулька",
+          "imageAsset": "word_sosulka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-92.m4a"
+        },
+        {
+          "id": "l-wm-93",
+          "word": "цапля",
+          "imageAsset": "word_tsaplya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-93.m4a"
+        },
+        {
+          "id": "l-wm-94",
+          "word": "улей",
+          "imageAsset": "word_uley",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-94.m4a"
+        },
+        {
+          "id": "l-wm-95",
+          "word": "валенки",
+          "imageAsset": "word_valenki",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-95.m4a"
+        },
+        {
+          "id": "l-wm-96",
+          "word": "волна",
+          "imageAsset": "word_volna",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-96.m4a"
+        },
+        {
+          "id": "l-wm-97",
+          "word": "волосы",
+          "imageAsset": "word_volosy",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-97.m4a"
+        },
+        {
+          "id": "l-wm-98",
+          "word": "ёлка",
+          "imageAsset": "word_yolka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-98.m4a"
+        },
+        {
+          "id": "l-wm-99",
+          "word": "юла",
+          "imageAsset": "word_yula",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-99.m4a"
+        },
+        {
+          "id": "l-wm-100",
+          "word": "закладка",
+          "imageAsset": "word_zakladka",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-100.m4a"
+        },
+        {
+          "id": "l-wm-101",
+          "word": "земля",
+          "imageAsset": "word_zemlya",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-101.m4a"
+        },
+        {
+          "id": "l-wm-102",
+          "word": "золото",
+          "imageAsset": "word_zoloto",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-102.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-5",
-     "word": "Покусаем язычок",
-     "hint": "Слегка покусывай кончик языка — расслабляем мышцы.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-5.m4a"
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "[Л] в конце слова; мягкий [Л'] с мягким знаком.",
+      "items": [
+        {
+          "id": "l-wf-0",
+          "word": "пол",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-0.m4a",
+          "imageAsset": "word_pol"
+        },
+        {
+          "id": "l-wf-1",
+          "word": "стол",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-1.m4a",
+          "imageAsset": "word_stol"
+        },
+        {
+          "id": "l-wf-2",
+          "word": "зал",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-2.m4a",
+          "imageAsset": "word_zal"
+        },
+        {
+          "id": "l-wf-3",
+          "word": "мёл",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-3.m4a"
+        },
+        {
+          "id": "l-wf-4",
+          "word": "угол",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-4.m4a"
+        },
+        {
+          "id": "l-wf-5",
+          "word": "козёл",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-5.m4a",
+          "imageAsset": "word_kozyol"
+        },
+        {
+          "id": "l-wf-6",
+          "word": "орёл",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-6.m4a",
+          "imageAsset": "word_oryol"
+        },
+        {
+          "id": "l-wf-7",
+          "word": "укол",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-7.m4a",
+          "imageAsset": "word_ukol"
+        },
+        {
+          "id": "l-wf-8",
+          "word": "сигнал",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-8.m4a"
+        },
+        {
+          "id": "l-wf-9",
+          "word": "канал",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-9.m4a",
+          "imageAsset": "word_kanal"
+        },
+        {
+          "id": "l-wf-10",
+          "word": "кристалл",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-10.m4a"
+        },
+        {
+          "id": "l-wf-11",
+          "word": "журнал",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-11.m4a",
+          "imageAsset": "word_zhurnal"
+        },
+        {
+          "id": "l-wf-12",
+          "word": "контроль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-12.m4a"
+        },
+        {
+          "id": "l-wf-13",
+          "word": "цель",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-13.m4a"
+        },
+        {
+          "id": "l-wf-14",
+          "word": "роль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-14.m4a"
+        },
+        {
+          "id": "l-wf-15",
+          "word": "шаль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-15.m4a",
+          "imageAsset": "word_shal"
+        },
+        {
+          "id": "l-wf-16",
+          "word": "фасоль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-16.m4a",
+          "imageAsset": "word_fasol"
+        },
+        {
+          "id": "l-wf-17",
+          "word": "моль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-17.m4a"
+        },
+        {
+          "id": "l-wf-18",
+          "word": "мель",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-18.m4a",
+          "imageAsset": "word_mel"
+        },
+        {
+          "id": "l-wf-19",
+          "word": "сталь",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-19.m4a"
+        },
+        {
+          "id": "l-wf-20",
+          "word": "пчёл",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-20.m4a"
+        },
+        {
+          "id": "l-wf-21",
+          "word": "уголь",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-21.m4a"
+        },
+        {
+          "id": "l-wf-22",
+          "word": "фасоль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-22.m4a",
+          "imageAsset": "word_fasol"
+        },
+        {
+          "id": "l-wf-23",
+          "word": "карусель",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-23.m4a",
+          "imageAsset": "word_karusel"
+        },
+        {
+          "id": "l-wf-24",
+          "word": "тюль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-24.m4a",
+          "imageAsset": "word_tyul"
+        },
+        {
+          "id": "l-wf-25",
+          "word": "мел",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-25.m4a",
+          "imageAsset": "word_mel"
+        },
+        {
+          "id": "l-wf-26",
+          "word": "мол",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-26.m4a"
+        },
+        {
+          "id": "l-wf-27",
+          "word": "стол",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-27.m4a",
+          "imageAsset": "word_stol"
+        },
+        {
+          "id": "l-wf-28",
+          "word": "козёл",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-28.m4a",
+          "imageAsset": "word_kozyol"
+        },
+        {
+          "id": "l-wf-29",
+          "word": "даль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-29.m4a"
+        },
+        {
+          "id": "l-wf-30",
+          "word": "рояль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-30.m4a"
+        },
+        {
+          "id": "l-wf-31",
+          "word": "деталь",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-31.m4a"
+        },
+        {
+          "id": "l-wf-32",
+          "word": "медаль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-32.m4a",
+          "imageAsset": "word_medal"
+        },
+        {
+          "id": "l-wf-33",
+          "word": "хрусталь",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-33.m4a"
+        },
+        {
+          "id": "l-wf-34",
+          "word": "миндаль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-34.m4a",
+          "imageAsset": "word_mindal"
+        },
+        {
+          "id": "l-wf-35",
+          "word": "педаль",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-35.m4a"
+        },
+        {
+          "id": "l-wf-36",
+          "word": "дятел",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wf-36.m4a",
+          "imageAsset": "word_dyatel"
+        },
+        {
+          "id": "l-wf-37",
+          "word": "футбол",
+          "hint": "футбоЛ — звук [Л] слышен в конце слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-37.m4a"
+        },
+        {
+          "id": "l-wf-38",
+          "word": "туннель",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wf-38.m4a"
+        },
+        {
+          "id": "l-wf-39",
+          "word": "канитель",
+          "hint": "Мягкий [Л'].",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wf-39.m4a"
+        },
+        {
+          "id": "l-wf-40",
+          "word": "бокал",
+          "imageAsset": "word_bokal",
+          "audioAsset": null,
+          "hint": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wf-40.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-6",
-     "word": "Ы-позиция",
-     "hint": "Скажи Ы и почувствуй: корень языка поднялся вверх-назад — запомни!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-6.m4a"
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Короткие фразы и словосочетания со звуком [Л]/[Л'].",
+      "items": [
+        {
+          "id": "l-ph-0",
+          "word": "белая лошадь",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-ph-0.m4a"
+        },
+        {
+          "id": "l-ph-1",
+          "word": "лиса в лесу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-ph-1.m4a"
+        },
+        {
+          "id": "l-ph-2",
+          "word": "лунный свет",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-ph-2.m4a"
+        },
+        {
+          "id": "l-ph-3",
+          "word": "лимон на ложке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-3.m4a"
+        },
+        {
+          "id": "l-ph-4",
+          "word": "слон в зоопарке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-4.m4a"
+        },
+        {
+          "id": "l-ph-5",
+          "word": "голубое небо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-5.m4a"
+        },
+        {
+          "id": "l-ph-6",
+          "word": "лебедь на озере",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-6.m4a"
+        },
+        {
+          "id": "l-ph-7",
+          "word": "клубника в ладошке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-7.m4a"
+        },
+        {
+          "id": "l-ph-8",
+          "word": "жёлтый лимон",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-8.m4a"
+        },
+        {
+          "id": "l-ph-9",
+          "word": "маленький лисёнок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-9.m4a"
+        },
+        {
+          "id": "l-ph-10",
+          "word": "ласточка летит",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-10.m4a"
+        },
+        {
+          "id": "l-ph-11",
+          "word": "белый лебедь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-11.m4a"
+        },
+        {
+          "id": "l-ph-12",
+          "word": "холодная вода в стакане",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-12.m4a"
+        },
+        {
+          "id": "l-ph-13",
+          "word": "лётчик в самолёте",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-13.m4a"
+        },
+        {
+          "id": "l-ph-14",
+          "word": "лягушка на листе",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-14.m4a"
+        },
+        {
+          "id": "l-ph-15",
+          "word": "листопад в лесу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-15.m4a"
+        },
+        {
+          "id": "l-ph-16",
+          "word": "лыжник на горе",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-16.m4a"
+        },
+        {
+          "id": "l-ph-17",
+          "word": "сладкое молоко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-17.m4a"
+        },
+        {
+          "id": "l-ph-18",
+          "word": "слива на столе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-18.m4a"
+        },
+        {
+          "id": "l-ph-19",
+          "word": "голубая лагуна",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-19.m4a"
+        },
+        {
+          "id": "l-ph-20",
+          "word": "малина в корзинке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-20.m4a"
+        },
+        {
+          "id": "l-ph-21",
+          "word": "слон и лев в зоопарке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-21.m4a"
+        },
+        {
+          "id": "l-ph-22",
+          "word": "луноход на луне",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-22.m4a"
+        },
+        {
+          "id": "l-ph-23",
+          "word": "ледяная горка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-23.m4a"
+        },
+        {
+          "id": "l-ph-24",
+          "word": "лиловый цветок",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-24.m4a"
+        },
+        {
+          "id": "l-ph-25",
+          "word": "яблочный сок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-25.m4a"
+        },
+        {
+          "id": "l-ph-26",
+          "word": "солнечный свет",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-26.m4a"
+        },
+        {
+          "id": "l-ph-27",
+          "word": "лесная тропинка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-27.m4a"
+        },
+        {
+          "id": "l-ph-28",
+          "word": "золотая рыбка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-28.m4a"
+        },
+        {
+          "id": "l-ph-29",
+          "word": "плыть к берегу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-29.m4a"
+        },
+        {
+          "id": "l-ph-30",
+          "word": "лениво лежать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-30.m4a"
+        },
+        {
+          "id": "l-ph-31",
+          "word": "слушать сказку",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-31.m4a"
+        },
+        {
+          "id": "l-ph-32",
+          "word": "ловкий лисёнок",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-32.m4a"
+        },
+        {
+          "id": "l-ph-33",
+          "word": "любимая лялька",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-33.m4a"
+        },
+        {
+          "id": "l-ph-34",
+          "word": "голубой велосипед",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-34.m4a"
+        },
+        {
+          "id": "l-ph-35",
+          "word": "холодный ливень",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-35.m4a"
+        },
+        {
+          "id": "l-ph-36",
+          "word": "ловить рыбу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-36.m4a"
+        },
+        {
+          "id": "l-ph-37",
+          "word": "лакомиться малиной",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-37.m4a"
+        },
+        {
+          "id": "l-ph-38",
+          "word": "белочка с луком",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-38.m4a"
+        },
+        {
+          "id": "l-ph-39",
+          "word": "лягушка и цапля",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-39.m4a"
+        },
+        {
+          "id": "l-ph-40",
+          "word": "лосось в реке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-40.m4a"
+        },
+        {
+          "id": "l-ph-41",
+          "word": "луговые цветы",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-41.m4a"
+        },
+        {
+          "id": "l-ph-42",
+          "word": "лопата и лейка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-42.m4a"
+        },
+        {
+          "id": "l-ph-43",
+          "word": "лунная дорожка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-43.m4a"
+        },
+        {
+          "id": "l-ph-44",
+          "word": "лёгкий ветерок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-44.m4a"
+        },
+        {
+          "id": "l-ph-45",
+          "word": "лось лесной — лиса лесная",
+          "hint": "Твёрдый Л и мягкий Ль — минимальная пара.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-45.m4a"
+        },
+        {
+          "id": "l-ph-46",
+          "word": "луч и люстра",
+          "hint": "ЛУ (твёрдый) и ЛЮ (мягкий).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-46.m4a"
+        },
+        {
+          "id": "l-ph-47",
+          "word": "лапа лисы",
+          "hint": "ЛА + ЛИ — твёрдый и мягкий рядом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-47.m4a"
+        },
+        {
+          "id": "l-ph-48",
+          "word": "лесная лужа",
+          "hint": "ЛЕ + ЛУ — оба Л разные по мягкости.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-48.m4a"
+        },
+        {
+          "id": "l-ph-49",
+          "word": "ловкий лисёнок",
+          "hint": "ЛО + ЛИ — дифференциация.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-49.m4a"
+        },
+        {
+          "id": "l-ph-50",
+          "word": "лёгкий летний дождик",
+          "hint": "ЛЁ + ЛЕ — два мягких Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-50.m4a"
+        },
+        {
+          "id": "l-ph-51",
+          "word": "лошадь везла лён",
+          "hint": "ЛО + ВЕ + ЛЁН — нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-51.m4a"
+        },
+        {
+          "id": "l-ph-52",
+          "word": "лаяли громко два льва",
+          "hint": "ЛА + ЛЬВ — твёрдый и мягкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-52.m4a"
+        },
+        {
+          "id": "l-ph-53",
+          "word": "плыл лебедь по волнам",
+          "hint": "ПЛ + ЛЕ + ВО + ЛН — два Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-53.m4a"
+        },
+        {
+          "id": "l-ph-54",
+          "word": "лиловая лилия",
+          "hint": "Два ЛИ — мягкий повтор.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-54.m4a"
+        },
+        {
+          "id": "l-ph-55",
+          "word": "далёкий лес",
+          "hint": "ДА + ЛЁ + ЛЕС — нарративный образ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-55.m4a"
+        },
+        {
+          "id": "l-ph-56",
+          "word": "лодка плыла вдоль берега",
+          "hint": "ЛО + ПЛЫ + ВДО + ЛЬ — насыщенный Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-ph-56.m4a"
+        },
+        {
+          "id": "l-ph-57",
+          "word": "белый лебедь у лесного озера",
+          "hint": "БЕ + ЛЕ + ЛЕ + ЛЕ — три мягких Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-57.m4a"
+        },
+        {
+          "id": "l-ph-58",
+          "word": "смелый и ловкий",
+          "hint": "ЛЫ + ЛО — два Л в прилагательных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-58.m4a"
+        },
+        {
+          "id": "l-ph-59",
+          "word": "ласточка летит к лесу",
+          "hint": "ЛА + ЛЕ + ЛЕ — три Л-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-59.m4a"
+        },
+        {
+          "id": "l-ph-60",
+          "word": "лёгкий листочек летит вниз",
+          "hint": "ЛЁГ+ЛИС+ЛЕ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-60.m4a"
+        },
+        {
+          "id": "l-ph-61",
+          "word": "лукавый лис у реки",
+          "hint": "ЛУ+ЛИС — Л дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-61.m4a"
+        },
+        {
+          "id": "l-ph-62",
+          "word": "ласковая лошадка на лугу",
+          "hint": "ЛА+ЛО+ЛУ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-62.m4a"
+        },
+        {
+          "id": "l-ph-63",
+          "word": "летит ласточка над полем",
+          "hint": "ЛЕ+ЛА+ПО — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-63.m4a"
+        },
+        {
+          "id": "l-ph-64",
+          "word": "лиловый лотос у пруда",
+          "hint": "ЛИ+ЛО — Л дважды в нач. слов.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-64.m4a"
+        },
+        {
+          "id": "l-ph-65",
+          "word": "лесные лилии цветут весной",
+          "hint": "ЛЕС+ЛИ+ЛИ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-65.m4a"
+        },
+        {
+          "id": "l-ph-66",
+          "word": "лебеди летят над длинным озером",
+          "hint": "ЛЕ+ЛЕ+ДЛИН+ОЗЕ — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-ph-66.m4a"
+        },
+        {
+          "id": "l-ph-67",
+          "word": "ловкий лягушонок прыгнул в лужу",
+          "hint": "ЛО+ЛЯ+ЛУ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-67.m4a"
+        },
+        {
+          "id": "l-ph-68",
+          "word": "луговые цветы ломятся от красоты",
+          "hint": "ЛУ+ЛО+КРА — Л дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-68.m4a"
+        },
+        {
+          "id": "l-ph-69",
+          "word": "луна светила в тёмном лесу",
+          "hint": "ЛУ+ЛЕ — Л в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-69.m4a"
+        },
+        {
+          "id": "l-ph-70",
+          "word": "лунный свет в окошке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-70.m4a"
+        },
+        {
+          "id": "l-ph-71",
+          "word": "ловкий лосёнок в лесу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-71.m4a"
+        },
+        {
+          "id": "l-ph-72",
+          "word": "ласточка летит над полем",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-72.m4a"
+        },
+        {
+          "id": "l-ph-73",
+          "word": "лиловый цветок на клумбе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-73.m4a"
+        },
+        {
+          "id": "l-ph-74",
+          "word": "летний лагерь у озера",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-74.m4a"
+        },
+        {
+          "id": "l-ph-75",
+          "word": "лёгкий ветерок в долине",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-75.m4a"
+        },
+        {
+          "id": "l-ph-76",
+          "word": "ленивый кот на солнышке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-76.m4a"
+        },
+        {
+          "id": "l-ph-77",
+          "word": "лопата у огородника",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-ph-77.m4a"
+        },
+        {
+          "id": "l-ph-78",
+          "word": "белые облака над полем",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-78.m4a"
+        },
+        {
+          "id": "l-ph-79",
+          "word": "флажки висят на флагштоке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-79.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-7",
-     "word": "Иголочка",
-     "hint": "Язык острый и узкий — как иголочка, тяни вперёд. Держи 5 секунд.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-7.m4a"
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения со звуком [Л]/[Л'].",
+      "items": [
+        {
+          "id": "l-sen-0",
+          "word": "Лена ела малину.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-sen-0.m4a"
+        },
+        {
+          "id": "l-sen-1",
+          "word": "Лиса живёт в лесу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-sen-1.m4a"
+        },
+        {
+          "id": "l-sen-2",
+          "word": "Лунный свет падает на пол.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-2.m4a"
+        },
+        {
+          "id": "l-sen-3",
+          "word": "Белый лебедь плывёт по озеру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-3.m4a"
+        },
+        {
+          "id": "l-sen-4",
+          "word": "Лягушка прыгнула на большой лист.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-4.m4a"
+        },
+        {
+          "id": "l-sen-5",
+          "word": "Слон пьёт воду из большой лужи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-5.m4a"
+        },
+        {
+          "id": "l-sen-6",
+          "word": "Лётчик летит на самолёте.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-6.m4a"
+        },
+        {
+          "id": "l-sen-7",
+          "word": "В лесу зреет малина и черника.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-7.m4a"
+        },
+        {
+          "id": "l-sen-8",
+          "word": "Лисёнок выглянул из норы на лужайку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-8.m4a"
+        },
+        {
+          "id": "l-sen-9",
+          "word": "Лыжник быстро едет с горы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-9.m4a"
+        },
+        {
+          "id": "l-sen-10",
+          "word": "Ласточка свила гнездо под балконом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-10.m4a"
+        },
+        {
+          "id": "l-sen-11",
+          "word": "Лена лепит из глины лошадку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-11.m4a"
+        },
+        {
+          "id": "l-sen-12",
+          "word": "Клубника растёт в огороде у бабушки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-12.m4a"
+        },
+        {
+          "id": "l-sen-13",
+          "word": "На лугу колышутся лиловые цветы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-13.m4a"
+        },
+        {
+          "id": "l-sen-14",
+          "word": "Луноход медленно едет по Луне.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-14.m4a"
+        },
+        {
+          "id": "l-sen-15",
+          "word": "Лена и Лёша лепят снеговика.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-15.m4a"
+        },
+        {
+          "id": "l-sen-16",
+          "word": "Голубой велосипед стоит у школы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-16.m4a"
+        },
+        {
+          "id": "l-sen-17",
+          "word": "Белочка нашла желудь под дубом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-17.m4a"
+        },
+        {
+          "id": "l-sen-18",
+          "word": "Холодный ливень прибил листья к земле.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-18.m4a"
+        },
+        {
+          "id": "l-sen-19",
+          "word": "Лётчики пролетели над полем.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-19.m4a"
+        },
+        {
+          "id": "l-sen-20",
+          "word": "Лягушки квакают всю ночь у болота.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-20.m4a"
+        },
+        {
+          "id": "l-sen-21",
+          "word": "Лена любит лепить из солёного теста.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-21.m4a"
+        },
+        {
+          "id": "l-sen-22",
+          "word": "Слон и лев — самые большие в зоопарке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-22.m4a"
+        },
+        {
+          "id": "l-sen-23",
+          "word": "Лисёнок ловко залез на дерево.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-23.m4a"
+        },
+        {
+          "id": "l-sen-24",
+          "word": "Луна светит ночью, солнце — днём.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-24.m4a"
+        },
+        {
+          "id": "l-sen-25",
+          "word": "Ласточки летели над лугом и лесом.",
+          "hint": "ЛА + ЛЕ + ЛУ + ЛЕ — четыре Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-25.m4a"
+        },
+        {
+          "id": "l-sen-26",
+          "word": "Лоси любят лизать соль в лесу.",
+          "hint": "ЛО + ЛЮ + ЛИ + ЛЕ — нарративная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-26.m4a"
+        },
+        {
+          "id": "l-sen-27",
+          "word": "Ловкий лисёнок нашёл лесную малину.",
+          "hint": "ЛО + ЛИ + НА + ЛЕ + МА + ЛИ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-27.m4a"
+        },
+        {
+          "id": "l-sen-28",
+          "word": "Лёля любила лепить из пластилина.",
+          "hint": "ЛЁ + ЛЮ + ЛЕ + ЛА + ПЛА + ЛИ — шесть Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-28.m4a"
+        },
+        {
+          "id": "l-sen-29",
+          "word": "Бабушка наливала клубничный компот.",
+          "hint": "ЛИ + КЛУ + ЛА — Л в разных позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-29.m4a"
+        },
+        {
+          "id": "l-sen-30",
+          "word": "Листья падали тихо и ложились на землю.",
+          "hint": "ЛИС + ЛО + ЛЕ + ЗЕМ — осенний нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-30.m4a"
+        },
+        {
+          "id": "l-sen-31",
+          "word": "Льдина плыла по холодной реке.",
+          "hint": "ЛЬД + ПЛЫ + ХО + ЛО — мягкий и твёрдый.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-31.m4a"
+        },
+        {
+          "id": "l-sen-32",
+          "word": "Лилии у озера лилового цвета.",
+          "hint": "ЛИ + ЛИ + ЛИ + ЛО — четыре Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-32.m4a"
+        },
+        {
+          "id": "l-sen-33",
+          "word": "Лев и олень дружили в зелёном лесу.",
+          "hint": "ЛЕВ + О + ЛЕ + ЗЕ + ЛЁ + ЛЕ — шесть Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-33.m4a"
+        },
+        {
+          "id": "l-sen-34",
+          "word": "Солнечный луч лёг на лесную полянку.",
+          "hint": "СО + ЛУ + ЛЁ + ЛЕ + ПО + ЛЯ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-34.m4a"
+        },
+        {
+          "id": "l-sen-35",
+          "word": "Дедушка купил деревянный лук и стрелы.",
+          "hint": "ДЕ + КУ + ДЕ + ЛУ + СТ + РЕ + ЛЫ — Л в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-35.m4a"
+        },
+        {
+          "id": "l-sen-36",
+          "word": "Лошадка легко перепрыгнула лужу.",
+          "hint": "ЛО + ЛЕ + КО + ЛУ — нарратив действия.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-36.m4a"
+        },
+        {
+          "id": "l-sen-37",
+          "word": "Ласковый волк из сказки оказался добрым.",
+          "hint": "ЛА + ВО + ЛК + ОКА + ДО + РЫМ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-37.m4a"
+        },
+        {
+          "id": "l-sen-38",
+          "word": "Белые облака плыли медленно над лесом.",
+          "hint": "БЕ + ОБ + ПЛЫ + МЕД + ЛЕН + ЛЕ — длинный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-38.m4a"
+        },
+        {
+          "id": "l-sen-39",
+          "word": "Ленивый кот лежал на полке и лизал лапы.",
+          "hint": "ЛЕ + КОТ + ЛЕ + ПО + ЛКЕ + ЛИ + ЛА — семь Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-39.m4a"
+        },
+        {
+          "id": "l-sen-40",
+          "word": "Лисята лакали молоко из блюдца.",
+          "hint": "ЛИ+ЛА+МО+БЛЮ — Л в четырёх словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-40.m4a"
+        },
+        {
+          "id": "l-sen-41",
+          "word": "Ласковое летнее солнце грело лужайку.",
+          "hint": "ЛА+ЛЕ+СОЛ+ЛУ — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-41.m4a"
+        },
+        {
+          "id": "l-sen-42",
+          "word": "Лодка плыла по спокойному лесному озеру.",
+          "hint": "ЛО+ПЛЫ+ЛЕС — Л трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-42.m4a"
+        },
+        {
+          "id": "l-sen-43",
+          "word": "Лёля нашла листочки лопуха у калитки.",
+          "hint": "ЛЁ+ЛИС+ЛО+КА — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-43.m4a"
+        },
+        {
+          "id": "l-sen-44",
+          "word": "Лесные ёлки светились в лунную ночь.",
+          "hint": "ЛЕС+ЁЛ+ЛУН — Л трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-44.m4a"
+        },
+        {
+          "id": "l-sen-45",
+          "word": "Лёша нашёл лягушку у лесной лужи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-45.m4a"
+        },
+        {
+          "id": "l-sen-46",
+          "word": "Ласточки летели над лугом стройной стаей.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-46.m4a"
+        },
+        {
+          "id": "l-sen-47",
+          "word": "Белые лилии плавали по спокойному озеру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-47.m4a"
+        },
+        {
+          "id": "l-sen-48",
+          "word": "Луна светила всю ночь над полями.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-48.m4a"
+        },
+        {
+          "id": "l-sen-49",
+          "word": "Лосёнок лизал соль у лесного камня.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-49.m4a"
+        },
+        {
+          "id": "l-sen-50",
+          "word": "Лена лепила куклу из мягкой глины.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-50.m4a"
+        },
+        {
+          "id": "l-sen-51",
+          "word": "Лётчик поднял самолёт в облачное небо.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-51.m4a"
+        },
+        {
+          "id": "l-sen-52",
+          "word": "Плотный туман лежал в долине всё утро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-52.m4a"
+        },
+        {
+          "id": "l-sen-53",
+          "word": "Лошадь галопом мчалась по зелёному лугу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-53.m4a"
+        },
+        {
+          "id": "l-sen-54",
+          "word": "Голуби летали около колокольни.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-54.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-8",
-     "word": "Заборчик",
-     "hint": "Широкая улыбка, зубы видны — как заборчик.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-8.m4a"
+    "story": {
+      "stageId": "story",
+      "note": "Скороговорки и стихи для закрепления [Л]/[Л'].",
+      "items": [
+        {
+          "id": "l-st-0",
+          "word": "Еле-еле Лена ела, есть из лени не хотела.",
+          "hint": "Медленно, потом быстрее!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-st-0.m4a"
+        },
+        {
+          "id": "l-st-1",
+          "word": "Лиса Лариса любила лисят — и лисят она ела опрятно.",
+          "hint": "Каждый Л произноси чётко.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-st-1.m4a"
+        },
+        {
+          "id": "l-st-2",
+          "word": "Клала Клава лук на полку — кликни Клаву, сняла полку.",
+          "hint": "Следи за Л в каждом слове.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-st-2.m4a"
+        },
+        {
+          "id": "l-st-3",
+          "word": "Лев Лёлик лежал и лениво лизал лимон.",
+          "hint": "Все Л мягкие и твёрдые — слушай разницу!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-st-3.m4a"
+        },
+        {
+          "id": "l-st-4",
+          "word": "На лугу под луной стоит лопата — это луговая лопата.",
+          "hint": "Нараспев, как сказка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-st-4.m4a"
+        },
+        {
+          "id": "l-st-5",
+          "word": "Лось у ели полетел — нет, лось у ели лёг и ел.",
+          "hint": "Слушай — где Л твёрдый, где мягкий.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-st-5.m4a"
+        },
+        {
+          "id": "l-st-6",
+          "word": "Ела-ела Маша мела, мела — и стол блестел.",
+          "hint": "Финальный Л — чётко!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-st-6.m4a"
+        },
+        {
+          "id": "l-st-7",
+          "word": "Белый снег летит, летит — лёгкий, лёгкий — на лёд.",
+          "hint": "Плавно, как снежинки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-st-7.m4a"
+        },
+        {
+          "id": "l-st-8",
+          "word": "Лена ела булку, Лёша лепил луну — двое лепили лодку.",
+          "hint": "Два раза подряд.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-st-8.m4a"
+        },
+        {
+          "id": "l-st-9",
+          "word": "Слева лес, слева луг — слева слышен голос вслух.",
+          "hint": "Стечение СЛ — особенно следи!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-st-9.m4a"
+        }
+      ]
     },
-    {
-     "id": "l-prep-9",
-     "word": "Паровозик",
-     "hint": "Язык у верхних зубов — тяни: ЛЛЛ — ту-ту-ту!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-9.m4a"
-    },
-    {
-     "id": "l-prep-10",
-     "word": "Чашечка",
-     "hint": "Высунь язык и загни края вверх — чашечка готова!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-10.m4a"
-    },
-    {
-     "id": "l-prep-11",
-     "word": "Часики",
-     "hint": "Кончик языка движется влево-вправо: тик-так, тик-так.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-11.m4a"
-    },
-    {
-     "id": "l-prep-12",
-     "word": "Почистим зубки",
-     "hint": "Кончиком языка чистим верхние зубы изнутри — туда-сюда.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-12.m4a"
-    },
-    {
-     "id": "l-prep-13",
-     "word": "Прилипли",
-     "hint": "Кончик языка прилип к верхним зубам — оторви с усилием.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-13.m4a"
-    },
-    {
-     "id": "l-prep-14",
-     "word": "Самолёт",
-     "hint": "Язык у верхних зубов — дуй сквозь края языка — самолёт гудит.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-prep-14.m4a"
-    },
-    {
-     "id": "l-prep-15",
-     "word": "Орешек",
-     "hint": "Язык упёрся в щёку — перекатываем орешек в другую щёку.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-prep-15.m4a"
-    },
-    {
-     "id": "l-prep-16",
-     "word": "Тяпаем",
-     "hint": "Язык ляпает по верхней губе: ла-ла-ла — мягко и ритмично.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-16.m4a"
-    },
-    {
-     "id": "l-prep-17",
-     "word": "Ветерок",
-     "hint": "Кончик языка у верхних зубов — дуй по краям языка мягко.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-17.m4a"
-    },
-    {
-     "id": "l-prep-18",
-     "word": "Л-позиция",
-     "hint": "Кончик языка упёрся в верхние зубы изнутри — вот позиция Л!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-prep-18.m4a"
-    },
-    {
-     "id": "l-prep-19",
-     "word": "Тянем ЛА",
-     "hint": "Из позиции Л открой рот и получи ЛА — молодец!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-prep-19.m4a"
+    "diff": {
+      "stageId": "diff",
+      "note": "Дифференциация [Л] и [Р] — минимальные пары.",
+      "items": [
+        {
+          "id": "l-diff-0",
+          "word": "лак — рак",
+          "hint": "Лак — блестит, рак — плавает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-0.m4a"
+        },
+        {
+          "id": "l-diff-1",
+          "word": "луна — рана",
+          "hint": "Луна — на небе, рана — больно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-1.m4a"
+        },
+        {
+          "id": "l-diff-2",
+          "word": "лот — рот",
+          "hint": "Лот — груз, рот — у нас.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-2.m4a"
+        },
+        {
+          "id": "l-diff-3",
+          "word": "лучше — ручей",
+          "hint": "Лучше — хорошо, ручей — бежит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-3.m4a"
+        },
+        {
+          "id": "l-diff-4",
+          "word": "лис — рис",
+          "hint": "Лис (форма слова лиса) — рис (крупа).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-4.m4a"
+        },
+        {
+          "id": "l-diff-5",
+          "word": "лоза — роза",
+          "hint": "Лоза — виноград, роза — цветок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-5.m4a"
+        },
+        {
+          "id": "l-diff-6",
+          "word": "лампа — рампа",
+          "hint": "Лампа — светит, рампа — в театре.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-6.m4a"
+        },
+        {
+          "id": "l-diff-7",
+          "word": "лук — рук",
+          "hint": "Лук — овощ, рук — форма руки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-7.m4a"
+        },
+        {
+          "id": "l-diff-8",
+          "word": "лось — рось",
+          "hint": "Лось — зверь, роса — капли.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-8.m4a"
+        },
+        {
+          "id": "l-diff-9",
+          "word": "слава — трава",
+          "hint": "Слава — Л, трава — Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-9.m4a"
+        },
+        {
+          "id": "l-diff-10",
+          "word": "клот — крот",
+          "hint": "Клот — морской, крот — зверёк.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-10.m4a"
+        },
+        {
+          "id": "l-diff-11",
+          "word": "лечь — речь",
+          "hint": "Лечь — Л', речь — Р'.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-11.m4a"
+        },
+        {
+          "id": "l-diff-12",
+          "word": "ляп — ряп",
+          "hint": "Ляп — Л', рябь — Р'.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-12.m4a"
+        },
+        {
+          "id": "l-diff-13",
+          "word": "голень — горень",
+          "hint": "Голень — Л, горе — Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-13.m4a"
+        },
+        {
+          "id": "l-diff-14",
+          "word": "дрова — слова",
+          "hint": "Дрова — Р, слова — Л.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-14.m4a"
+        },
+        {
+          "id": "l-diff-15",
+          "word": "орёл — осёл",
+          "hint": "Орёл — Р, осёл — Л.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-15.m4a"
+        },
+        {
+          "id": "l-diff-16",
+          "word": "плуг — прут",
+          "hint": "Плуг — Л, прут — Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-16.m4a"
+        },
+        {
+          "id": "l-diff-17",
+          "word": "флаг — фрак",
+          "hint": "Флаг — Л, фрак — Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-diff-17.m4a"
+        },
+        {
+          "id": "l-diff-18",
+          "word": "кладь — краб",
+          "hint": "Кладь — Л, краб — Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-diff-18.m4a"
+        },
+        {
+          "id": "l-diff-19",
+          "word": "блеск — бреск",
+          "hint": "Блеск — Л', бреск — Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-diff-19.m4a"
+        },
+        {
+          "id": "l-diff-20",
+          "word": "лак — рак",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-20.m4a",
+          "hint": "Л боковой, Р вибрант."
+        },
+        {
+          "id": "l-diff-21",
+          "word": "лыко — рыко",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-21.m4a",
+          "hint": "Л против Р в начале."
+        },
+        {
+          "id": "l-diff-22",
+          "word": "лук — рук",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-22.m4a",
+          "hint": "Короткое слово Л—Р."
+        },
+        {
+          "id": "l-diff-23",
+          "word": "лев — рев",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-23.m4a",
+          "hint": "Мягкие Л'—Р'."
+        },
+        {
+          "id": "l-diff-24",
+          "word": "полка — порка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-24.m4a",
+          "hint": "В середине: Л—Р."
+        },
+        {
+          "id": "l-diff-25",
+          "word": "слон — срон",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-25.m4a",
+          "hint": "Стечение СЛ против СР."
+        },
+        {
+          "id": "l-diff-26",
+          "word": "плот — прот",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-26.m4a",
+          "hint": "Стечение ПЛ против ПР."
+        },
+        {
+          "id": "l-diff-27",
+          "word": "клад — крад",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-27.m4a",
+          "hint": "Стечение КЛ против КР."
+        },
+        {
+          "id": "l-diff-28",
+          "word": "лебедь — ребедь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-28.m4a",
+          "hint": "Мягкие в начале."
+        },
+        {
+          "id": "l-diff-29",
+          "word": "соль — сорь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-29.m4a",
+          "hint": "Мягкий Л' на конце против Р'."
+        }
+      ]
     }
-   ]
   },
-  "isolated": {
-   "stageId": "isolated",
-   "note": "Изолированный звук [Л] через образы.",
-   "items": [
-    {
-     "id": "l-iso-0",
-     "word": "л-л-л пароход",
-     "hint": "Пароход гудит в тумане: Л-Л-Л — долго и гулко.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-iso-0.m4a"
-    },
-    {
-     "id": "l-iso-1",
-     "word": "л-л-л самолёт",
-     "hint": "Самолёт летит высоко: лллл — ровно и тихо.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-iso-1.m4a"
-    },
-    {
-     "id": "l-iso-2",
-     "word": "л-л-л луна",
-     "hint": "Луна светит тихо: л-л-л — почти шёпотом.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-iso-2.m4a"
-    },
-    {
-     "id": "l-iso-3",
-     "word": "л-л-л долгий",
-     "hint": "Тяни Л как можно дольше — на одном выдохе!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-3.m4a"
-    },
-    {
-     "id": "l-iso-4",
-     "word": "л-л-л короткий",
-     "hint": "Быстрое Л — как щелчок: Л! Л! Л!",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-4.m4a"
-    },
-    {
-     "id": "l-iso-5",
-     "word": "л-л-л тихо громко",
-     "hint": "Начни тихо — становись громче: л...л-л-Л-Л-ЛЛЛ!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-iso-5.m4a"
-    },
-    {
-     "id": "l-iso-6",
-     "word": "л-л-л паровозик",
-     "hint": "Паровозик едет: ЛЛЛ-ЛЛЛ — ритмично, как колёса.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-6.m4a"
-    },
-    {
-     "id": "l-iso-7",
-     "word": "ль-ль-ль мягкий",
-     "hint": "Мягкий Л' — как нежный ветерок: ль-ль-ль.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-iso-7.m4a"
-    },
-    {
-     "id": "l-iso-8",
-     "word": "л-ль чередование",
-     "hint": "Чередуем твёрдый и мягкий: Л — ЛЬ — Л — ЛЬ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-iso-8.m4a"
-    },
-    {
-     "id": "l-iso-9",
-     "word": "л-л-л перед а",
-     "hint": "Л и сразу А: Л-А, Л-А, Л-А.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-9.m4a"
-    },
-    {
-     "id": "l-iso-10",
-     "word": "л-л-л перед о",
-     "hint": "Л-О, Л-О, Л-О — ровно.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-10.m4a"
-    },
-    {
-     "id": "l-iso-11",
-     "word": "л-л-л перед у",
-     "hint": "Л-У, Л-У, Л-У.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-11.m4a"
-    },
-    {
-     "id": "l-iso-12",
-     "word": "л-л-л ритм",
-     "hint": "Отстукивай ладошкой: Л — Л — Л — в ритме.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-12.m4a"
-    },
-    {
-     "id": "l-iso-13",
-     "word": "л-л-л зеркало",
-     "hint": "Смотри в зеркало — кончик языка видно у верхних зубов? Л-л-л!",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-iso-13.m4a"
-    },
-    {
-     "id": "l-iso-14",
-     "word": "л-л-л маяк",
-     "hint": "Маяк мигает и гудит: Л... Л... Л — медленно.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-iso-14.m4a"
-    }
-   ]
-  },
-  "syllable": {
-   "stageId": "syllable",
-   "note": "Слоги прямые и обратные; стечения согласных; мягкий [Л'].",
-   "items": [
-    {
-     "id": "l-syl-0",
-     "word": "ла",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-0.m4a"
-    },
-    {
-     "id": "l-syl-1",
-     "word": "ло",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-1.m4a"
-    },
-    {
-     "id": "l-syl-2",
-     "word": "лу",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-2.m4a"
-    },
-    {
-     "id": "l-syl-3",
-     "word": "лы",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-3.m4a"
-    },
-    {
-     "id": "l-syl-4",
-     "word": "ал",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-4.m4a"
-    },
-    {
-     "id": "l-syl-5",
-     "word": "ол",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-5.m4a"
-    },
-    {
-     "id": "l-syl-6",
-     "word": "ул",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-6.m4a"
-    },
-    {
-     "id": "l-syl-7",
-     "word": "ыл",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-7.m4a"
-    },
-    {
-     "id": "l-syl-8",
-     "word": "ла-ла-ла",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-8.m4a"
-    },
-    {
-     "id": "l-syl-9",
-     "word": "ло-ло-ло",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-9.m4a"
-    },
-    {
-     "id": "l-syl-10",
-     "word": "лу-лу-лу",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-10.m4a"
-    },
-    {
-     "id": "l-syl-11",
-     "word": "лы-лы-лы",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-syl-11.m4a"
-    },
-    {
-     "id": "l-syl-12",
-     "word": "ала",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-12.m4a"
-    },
-    {
-     "id": "l-syl-13",
-     "word": "оло",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-13.m4a"
-    },
-    {
-     "id": "l-syl-14",
-     "word": "улу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-14.m4a"
-    },
-    {
-     "id": "l-syl-15",
-     "word": "ала-ола",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-15.m4a"
-    },
-    {
-     "id": "l-syl-16",
-     "word": "пла",
-     "hint": "Стечение ПЛ — пла, пла, пла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-16.m4a"
-    },
-    {
-     "id": "l-syl-17",
-     "word": "гла",
-     "hint": "Стечение ГЛ — гла, гла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-17.m4a"
-    },
-    {
-     "id": "l-syl-18",
-     "word": "сла",
-     "hint": "Стечение СЛ — сла, сла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-18.m4a"
-    },
-    {
-     "id": "l-syl-19",
-     "word": "кла",
-     "hint": "Стечение КЛ — кла, кла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-19.m4a"
-    },
-    {
-     "id": "l-syl-20",
-     "word": "фла",
-     "hint": "Стечение ФЛ — фла, фла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-20.m4a"
-    },
-    {
-     "id": "l-syl-21",
-     "word": "бла",
-     "hint": "Стечение БЛ — бла, бла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-21.m4a"
-    },
-    {
-     "id": "l-syl-22",
-     "word": "вла",
-     "hint": "Стечение ВЛ — вла, вла!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-22.m4a"
-    },
-    {
-     "id": "l-syl-23",
-     "word": "пло",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-23.m4a"
-    },
-    {
-     "id": "l-syl-24",
-     "word": "сло",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-24.m4a"
-    },
-    {
-     "id": "l-syl-25",
-     "word": "кло",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-25.m4a"
-    },
-    {
-     "id": "l-syl-26",
-     "word": "плу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-26.m4a"
-    },
-    {
-     "id": "l-syl-27",
-     "word": "слу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-27.m4a"
-    },
-    {
-     "id": "l-syl-28",
-     "word": "ле",
-     "hint": "Мягкий [Л'] — ле.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-28.m4a"
-    },
-    {
-     "id": "l-syl-29",
-     "word": "ли",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-29.m4a"
-    },
-    {
-     "id": "l-syl-30",
-     "word": "ля",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-30.m4a"
-    },
-    {
-     "id": "l-syl-31",
-     "word": "лю",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-31.m4a"
-    },
-    {
-     "id": "l-syl-32",
-     "word": "лё",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-32.m4a"
-    },
-    {
-     "id": "l-syl-33",
-     "word": "али",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-33.m4a"
-    },
-    {
-     "id": "l-syl-34",
-     "word": "оле",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-34.m4a"
-    },
-    {
-     "id": "l-syl-35",
-     "word": "ля-ля-ля",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-35.m4a"
-    },
-    {
-     "id": "l-syl-36",
-     "word": "ли-ли-ли",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-syl-36.m4a"
-    },
-    {
-     "id": "l-syl-37",
-     "word": "ла-ля-ла",
-     "hint": "Чередуем твёрдый и мягкий: ла — ля — ла.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-37.m4a"
-    },
-    {
-     "id": "l-syl-38",
-     "word": "ло-лё-ло",
-     "hint": "Чередуем: ло — лё — ло.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-38.m4a"
-    },
-    {
-     "id": "l-syl-39",
-     "word": "лу-лю-лу",
-     "hint": "Чередуем: лу — лю — лу.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-syl-39.m4a"
-    },
-    {
-     "id": "l-syl-40",
-     "word": "пли",
-     "hint": "Стечение ПЛ мягкое — пли, пли!",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-syl-40.m4a"
-    },
-    {
-     "id": "l-syl-41",
-     "word": "сле",
-     "hint": "Стечение СЛ мягкое — сле, сле!",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-syl-41.m4a"
-    },
-    {
-     "id": "l-syl-42",
-     "word": "кле",
-     "hint": "Стечение КЛ мягкое — кле, кле!",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-syl-42.m4a"
-    }
-   ]
-  },
-  "wordInit": {
-   "stageId": "wordInit",
-   "note": "[Л] и [Л'] в начале слова.",
-   "items": [
-    {
-     "id": "l-wi-0",
-     "word": "лак",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-0.m4a",
-     "imageAsset": "word_lak"
-    },
-    {
-     "id": "l-wi-1",
-     "word": "лоб",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-1.m4a",
-     "imageAsset": "word_lob"
-    },
-    {
-     "id": "l-wi-2",
-     "word": "лук",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-2.m4a",
-     "imageAsset": "word_luk"
-    },
-    {
-     "id": "l-wi-3",
-     "word": "лыжи",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-3.m4a",
-     "imageAsset": "word_lyzhi"
-    },
-    {
-     "id": "l-wi-4",
-     "word": "лапа",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-4.m4a",
-     "imageAsset": "word_lapa"
-    },
-    {
-     "id": "l-wi-5",
-     "word": "луна",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-5.m4a",
-     "imageAsset": "word_luna"
-    },
-    {
-     "id": "l-wi-6",
-     "word": "лиса",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-6.m4a",
-     "imageAsset": "word_lisa"
-    },
-    {
-     "id": "l-wi-7",
-     "word": "лист",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-7.m4a"
-    },
-    {
-     "id": "l-wi-8",
-     "word": "лев",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-8.m4a",
-     "imageAsset": "word_lev"
-    },
-    {
-     "id": "l-wi-9",
-     "word": "лейка",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-9.m4a",
-     "imageAsset": "word_leyka"
-    },
-    {
-     "id": "l-wi-10",
-     "word": "лента",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-10.m4a",
-     "imageAsset": "word_lenta"
-    },
-    {
-     "id": "l-wi-11",
-     "word": "лебедь",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-11.m4a",
-     "imageAsset": "word_lebed"
-    },
-    {
-     "id": "l-wi-12",
-     "word": "лимон",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-12.m4a",
-     "imageAsset": "word_limon"
-    },
-    {
-     "id": "l-wi-13",
-     "word": "липа",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-13.m4a",
-     "imageAsset": "word_lipa"
-    },
-    {
-     "id": "l-wi-14",
-     "word": "лупа",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-14.m4a",
-     "imageAsset": "word_lupa"
-    },
-    {
-     "id": "l-wi-15",
-     "word": "лодка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-15.m4a",
-     "imageAsset": "word_lodka"
-    },
-    {
-     "id": "l-wi-16",
-     "word": "лопата",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-16.m4a",
-     "imageAsset": "word_lopata"
-    },
-    {
-     "id": "l-wi-17",
-     "word": "лапоть",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-17.m4a",
-     "imageAsset": "word_lapot"
-    },
-    {
-     "id": "l-wi-18",
-     "word": "ложка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-18.m4a",
-     "imageAsset": "word_lozhka"
-    },
-    {
-     "id": "l-wi-19",
-     "word": "лужа",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-19.m4a",
-     "imageAsset": "word_luzha"
-    },
-    {
-     "id": "l-wi-20",
-     "word": "лось",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-20.m4a",
-     "imageAsset": "word_los"
-    },
-    {
-     "id": "l-wi-21",
-     "word": "лоза",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-21.m4a",
-     "imageAsset": "word_loza"
-    },
-    {
-     "id": "l-wi-22",
-     "word": "лопух",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-22.m4a",
-     "imageAsset": "word_lopukh"
-    },
-    {
-     "id": "l-wi-23",
-     "word": "лыко",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-23.m4a",
-     "imageAsset": "word_lyko"
-    },
-    {
-     "id": "l-wi-24",
-     "word": "лёд",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-24.m4a",
-     "imageAsset": "word_lyod"
-    },
-    {
-     "id": "l-wi-25",
-     "word": "летчик",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-25.m4a",
-     "imageAsset": "word_letchik"
-    },
-    {
-     "id": "l-wi-26",
-     "word": "лёгкий",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-26.m4a",
-     "imageAsset": "word_lyogkiy"
-    },
-    {
-     "id": "l-wi-27",
-     "word": "лягушка",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-27.m4a",
-     "imageAsset": "word_lyagushka"
-    },
-    {
-     "id": "l-wi-28",
-     "word": "лялька",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-28.m4a"
-    },
-    {
-     "id": "l-wi-29",
-     "word": "ляля",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-29.m4a",
-     "imageAsset": "word_lyalya"
-    },
-    {
-     "id": "l-wi-30",
-     "word": "лыжник",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-30.m4a",
-     "imageAsset": "word_lyzhnik"
-    },
-    {
-     "id": "l-wi-31",
-     "word": "лавочка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-31.m4a",
-     "imageAsset": "word_lavochka"
-    },
-    {
-     "id": "l-wi-32",
-     "word": "ласточка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-32.m4a",
-     "imageAsset": "word_lastochka"
-    },
-    {
-     "id": "l-wi-33",
-     "word": "лошадка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-33.m4a"
-    },
-    {
-     "id": "l-wi-34",
-     "word": "лопастной",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-34.m4a",
-     "imageAsset": "word_lopastnoy"
-    },
-    {
-     "id": "l-wi-35",
-     "word": "лиловый",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-35.m4a",
-     "imageAsset": "word_lilovyy"
-    },
-    {
-     "id": "l-wi-36",
-     "word": "ливень",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-36.m4a",
-     "imageAsset": "word_liven"
-    },
-    {
-     "id": "l-wi-37",
-     "word": "листопад",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-37.m4a",
-     "imageAsset": "word_listopad"
-    },
-    {
-     "id": "l-wi-38",
-     "word": "ледяной",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-38.m4a",
-     "imageAsset": "word_ledyanoy"
-    },
-    {
-     "id": "l-wi-39",
-     "word": "лесник",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-39.m4a",
-     "imageAsset": "word_lesnik"
-    },
-    {
-     "id": "l-wi-40",
-     "word": "лесенка",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-40.m4a",
-     "imageAsset": "word_lesenka"
-    },
-    {
-     "id": "l-wi-41",
-     "word": "лисёнок",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-41.m4a",
-     "imageAsset": "word_lisyonok"
-    },
-    {
-     "id": "l-wi-42",
-     "word": "лентяй",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-42.m4a"
-    },
-    {
-     "id": "l-wi-43",
-     "word": "любимый",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-43.m4a",
-     "imageAsset": "word_lyubimyy"
-    },
-    {
-     "id": "l-wi-44",
-     "word": "люлька",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-44.m4a",
-     "imageAsset": "word_lyulka"
-    },
-    {
-     "id": "l-wi-45",
-     "word": "лягушонок",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-45.m4a",
-     "imageAsset": "word_lyagushonok"
-    },
-    {
-     "id": "l-wi-46",
-     "word": "ловкий",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-46.m4a"
-    },
-    {
-     "id": "l-wi-47",
-     "word": "ладонь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-47.m4a",
-     "imageAsset": "word_ruki"
-    },
-    {
-     "id": "l-wi-48",
-     "word": "ладья",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-48.m4a",
-     "imageAsset": "word_ladya"
-    },
-    {
-     "id": "l-wi-49",
-     "word": "лакомство",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-49.m4a",
-     "imageAsset": "word_lakomstvo"
-    },
-    {
-     "id": "l-wi-50",
-     "word": "ласка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-50.m4a",
-     "imageAsset": "word_laska"
-    },
-    {
-     "id": "l-wi-51",
-     "word": "лакать",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-51.m4a",
-     "imageAsset": "word_lakat"
-    },
-    {
-     "id": "l-wi-52",
-     "word": "луковица",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-52.m4a",
-     "imageAsset": "word_lukovitsa"
-    },
-    {
-     "id": "l-wi-53",
-     "word": "луноход",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-53.m4a",
-     "imageAsset": "word_lunokhod"
-    },
-    {
-     "id": "l-wi-54",
-     "word": "лужайка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-54.m4a",
-     "imageAsset": "word_luzhayka"
-    },
-    {
-     "id": "l-wi-55",
-     "word": "ложочек",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-55.m4a",
-     "imageAsset": "word_lozhochek"
-    },
-    {
-     "id": "l-wi-56",
-     "word": "лесочек",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-56.m4a",
-     "imageAsset": "word_lesochek"
-    },
-    {
-     "id": "l-wi-57",
-     "word": "летний",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-57.m4a",
-     "imageAsset": "word_letniy"
-    },
-    {
-     "id": "l-wi-58",
-     "word": "летать",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-58.m4a",
-     "imageAsset": "word_letat"
-    },
-    {
-     "id": "l-wi-59",
-     "word": "лечить",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-59.m4a",
-     "imageAsset": "word_lechit"
-    },
-    {
-     "id": "l-wi-60",
-     "word": "льдина",
-     "hint": "ЛЬД — мягкий Л + звонкий.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-60.m4a",
-     "imageAsset": "word_ldina"
-    },
-    {
-     "id": "l-wi-61",
-     "word": "льстить",
-     "hint": "ЛЬС — мягкий + шипящий.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-wi-61.m4a"
-    },
-    {
-     "id": "l-wi-62",
-     "word": "лягушонок",
-     "hint": "ЛЯ — мягкий [Л'] + ГУ + ШО.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-62.m4a",
-     "imageAsset": "word_lyagushonok"
-    },
-    {
-     "id": "l-wi-63",
-     "word": "лиственница",
-     "hint": "ЛИС + ТВ — мягкий Л + стечение.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-wi-63.m4a",
-     "imageAsset": "word_listvennitsa"
-    },
-    {
-     "id": "l-wi-64",
-     "word": "лебединый",
-     "hint": "ЛЕ — мягкий в прилагательном.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-64.m4a",
-     "imageAsset": "word_lebedinyy"
-    },
-    {
-     "id": "l-wi-65",
-     "word": "льётся",
-     "hint": "ЛЬЁ — мягкий с ударным Ё.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-65.m4a",
-     "imageAsset": "word_lyotsya"
-    },
-    {
-     "id": "l-wi-66",
-     "word": "лиловый",
-     "hint": "Два ЛИ — твёрдый и мягкий чередуются.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-66.m4a",
-     "imageAsset": "word_lilovyy"
-    },
-    {
-     "id": "l-wi-67",
-     "word": "ловкость",
-     "hint": "ЛО + ВКС — твёрдый Л + стечение.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-67.m4a"
-    },
-    {
-     "id": "l-wi-68",
-     "word": "ломоносов",
-     "hint": "ЛО + МО + НО + СО — ритм 4 слогов.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-68.m4a",
-     "imageAsset": "word_lomonosov"
-    },
-    {
-     "id": "l-wi-69",
-     "word": "лопотать",
-     "hint": "ЛО + ПО — мягкая интонация.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-69.m4a",
-     "imageAsset": "word_lopotat"
-    },
-    {
-     "id": "l-wi-70",
-     "word": "ладонь",
-     "hint": "ЛА+ДОНЬ — внутренняя часть руки.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-70.m4a",
-     "imageAsset": "word_ruki"
-    },
-    {
-     "id": "l-wi-71",
-     "word": "ловушка",
-     "hint": "ЛО+ВУШ+КА — ловить кого-то.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-71.m4a",
-     "imageAsset": "word_lovushka"
-    },
-    {
-     "id": "l-wi-72",
-     "word": "лебедёнок",
-     "hint": "ЛЕ+БЕ+ДЁ+НОК — детёныш лебедя, Л мягкий.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-72.m4a",
-     "imageAsset": "word_lebedyonok"
-    },
-    {
-     "id": "l-wi-73",
-     "word": "локомотив",
-     "hint": "ЛО+КО+МО+ТИВ — паровоз.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-73.m4a",
-     "imageAsset": "word_lokomotiv"
-    },
-    {
-     "id": "l-wi-74",
-     "word": "лопасть",
-     "hint": "ЛО+ПАСТЬ — часть пропеллера.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-74.m4a",
-     "imageAsset": "word_lopast"
-    },
-    {
-     "id": "l-wi-75",
-     "word": "лоскуток",
-     "hint": "ЛО+СКУТ+ОК — кусочек ткани.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-75.m4a",
-     "imageAsset": "word_loskutok"
-    },
-    {
-     "id": "l-wi-76",
-     "word": "лампа",
-     "hint": "Лам-па. [Л] в начале.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-76.m4a",
-     "imageAsset": "word_lampa"
-    },
-    {
-     "id": "l-wi-77",
-     "word": "летопись",
-     "hint": "ЛЕ+ТО+ПИСЬ — историческая запись.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-77.m4a",
-     "imageAsset": "word_letopis"
-    },
-    {
-     "id": "l-wi-78",
-     "word": "ленточка",
-     "hint": "ЛЕН+ТОЧ+КА — украшение, Л мягкий.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-78.m4a",
-     "imageAsset": "word_lentochka"
-    },
-    {
-     "id": "l-wi-79",
-     "word": "листопад",
-     "hint": "ЛИС+ТО+ПАД — падение листьев, два Л.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wi-79.m4a",
-     "imageAsset": "word_listopad"
-    },
-    {
-     "id": "l-wi-80",
-     "word": "лукошко",
-     "hint": "ЛУ+КОШ+КО — корзинка.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-80.m4a",
-     "imageAsset": "word_lukoshko"
-    },
-    {
-     "id": "l-wi-81",
-     "word": "ластоногий",
-     "hint": "ЛА+СТО+НО+ГИЙ — прилагательное про моржей.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-81.m4a",
-     "imageAsset": "word_lastonogiy"
-    },
-    {
-     "id": "l-wi-82",
-     "word": "лазоревый",
-     "hint": "ЛА+ЗО+РЕ+ВЫЙ — небесно-голубой.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-wi-82.m4a",
-     "imageAsset": "word_lazorevyy"
-    },
-    {
-     "id": "l-wi-83",
-     "word": "лопотание",
-     "hint": "ЛО+ПО+ТА+НИЕ — невнятная речь.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wi-83.m4a",
-     "imageAsset": "word_lopotanie"
-    },
-    {
-     "id": "l-wi-84",
-     "word": "лапоть",
-     "hint": "ЛА+ПОТЬ — народная обувь.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-84.m4a",
-     "imageAsset": "word_lapot"
-    },
-    {
-     "id": "l-wi-85",
-     "word": "лайка",
-     "imageAsset": "word_layka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-85.m4a"
-    },
-    {
-     "id": "l-wi-86",
-     "word": "линейка",
-     "imageAsset": "word_lineyka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wi-86.m4a"
-    },
-    {
-     "id": "l-wi-87",
-     "word": "листок",
-     "imageAsset": "word_listok",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-87.m4a"
-    },
-    {
-     "id": "l-wi-88",
-     "word": "луг",
-     "imageAsset": "word_lug",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wi-88.m4a"
-    }
-   ]
-  },
-  "wordMed": {
-   "stageId": "wordMed",
-   "note": "[Л] в середине слова, включая мягкий [Л'].",
-   "items": [
-    {
-     "id": "l-wm-0",
-     "word": "белка",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-0.m4a",
-     "imageAsset": "word_belka"
-    },
-    {
-     "id": "l-wm-1",
-     "word": "палка",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-1.m4a",
-     "imageAsset": "word_palka"
-    },
-    {
-     "id": "l-wm-2",
-     "word": "полка",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-2.m4a",
-     "imageAsset": "word_polka"
-    },
-    {
-     "id": "l-wm-3",
-     "word": "стол",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-3.m4a",
-     "imageAsset": "word_stol"
-    },
-    {
-     "id": "l-wm-4",
-     "word": "волк",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-4.m4a",
-     "imageAsset": "word_volk"
-    },
-    {
-     "id": "l-wm-5",
-     "word": "слон",
-     "hint": "Стечение СЛ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-5.m4a",
-     "imageAsset": "word_slon"
-    },
-    {
-     "id": "l-wm-6",
-     "word": "молоко",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-6.m4a",
-     "imageAsset": "word_moloko"
-    },
-    {
-     "id": "l-wm-7",
-     "word": "голова",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-7.m4a",
-     "imageAsset": "word_golova"
-    },
-    {
-     "id": "l-wm-8",
-     "word": "малина",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-8.m4a",
-     "imageAsset": "word_malina"
-    },
-    {
-     "id": "l-wm-9",
-     "word": "налево",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-9.m4a"
-    },
-    {
-     "id": "l-wm-10",
-     "word": "велосипед",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-10.m4a",
-     "imageAsset": "word_velosiped"
-    },
-    {
-     "id": "l-wm-11",
-     "word": "холодный",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-11.m4a"
-    },
-    {
-     "id": "l-wm-12",
-     "word": "белка",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-12.m4a",
-     "imageAsset": "word_belka"
-    },
-    {
-     "id": "l-wm-13",
-     "word": "долото",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-13.m4a"
-    },
-    {
-     "id": "l-wm-14",
-     "word": "колобок",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-14.m4a",
-     "imageAsset": "word_kolobok"
-    },
-    {
-     "id": "l-wm-15",
-     "word": "школа",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-15.m4a",
-     "imageAsset": "word_shkola"
-    },
-    {
-     "id": "l-wm-16",
-     "word": "шалость",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-16.m4a"
-    },
-    {
-     "id": "l-wm-17",
-     "word": "коляска",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-17.m4a",
-     "imageAsset": "word_kolyaska"
-    },
-    {
-     "id": "l-wm-18",
-     "word": "колесо",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-18.m4a",
-     "imageAsset": "word_koleso"
-    },
-    {
-     "id": "l-wm-19",
-     "word": "малина",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-19.m4a",
-     "imageAsset": "word_malina"
-    },
-    {
-     "id": "l-wm-20",
-     "word": "облако",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-20.m4a",
-     "imageAsset": "word_oblako"
-    },
-    {
-     "id": "l-wm-21",
-     "word": "платье",
-     "hint": "Стечение ПЛ + мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-21.m4a",
-     "imageAsset": "word_plate"
-    },
-    {
-     "id": "l-wm-22",
-     "word": "блюдце",
-     "hint": "Стечение БЛ + мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-22.m4a",
-     "imageAsset": "word_blyudtse"
-    },
-    {
-     "id": "l-wm-23",
-     "word": "галстук",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-23.m4a"
-    },
-    {
-     "id": "l-wm-24",
-     "word": "флаг",
-     "hint": "Стечение ФЛ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-24.m4a",
-     "imageAsset": "word_flag"
-    },
-    {
-     "id": "l-wm-25",
-     "word": "глаза",
-     "hint": "Стечение ГЛ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-25.m4a",
-     "imageAsset": "word_glaza"
-    },
-    {
-     "id": "l-wm-26",
-     "word": "класс",
-     "hint": "Стечение КЛ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-26.m4a",
-     "imageAsset": "word_klass"
-    },
-    {
-     "id": "l-wm-27",
-     "word": "клубника",
-     "hint": "Стечение КЛ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-27.m4a",
-     "imageAsset": "word_klubnika"
-    },
-    {
-     "id": "l-wm-28",
-     "word": "слива",
-     "hint": "Стечение СЛ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-28.m4a",
-     "imageAsset": "word_sliva"
-    },
-    {
-     "id": "l-wm-29",
-     "word": "плита",
-     "hint": "Стечение ПЛ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-29.m4a",
-     "imageAsset": "word_plita"
-    },
-    {
-     "id": "l-wm-30",
-     "word": "холм",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-30.m4a"
-    },
-    {
-     "id": "l-wm-31",
-     "word": "залив",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-31.m4a"
-    },
-    {
-     "id": "l-wm-32",
-     "word": "тулуп",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-32.m4a"
-    },
-    {
-     "id": "l-wm-33",
-     "word": "белый",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-33.m4a",
-     "imageAsset": "word_belyy"
-    },
-    {
-     "id": "l-wm-34",
-     "word": "жёлтый",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-34.m4a",
-     "imageAsset": "word_zhyoltyy"
-    },
-    {
-     "id": "l-wm-35",
-     "word": "маленький",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-35.m4a"
-    },
-    {
-     "id": "l-wm-36",
-     "word": "голубой",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-36.m4a",
-     "imageAsset": "word_goluboy"
-    },
-    {
-     "id": "l-wm-37",
-     "word": "болото",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-37.m4a",
-     "imageAsset": "word_boloto"
-    },
-    {
-     "id": "l-wm-38",
-     "word": "полка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-38.m4a",
-     "imageAsset": "word_polka"
-    },
-    {
-     "id": "l-wm-39",
-     "word": "солнышко",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-39.m4a",
-     "imageAsset": "word_solnyshko"
-    },
-    {
-     "id": "l-wm-40",
-     "word": "яблоко",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-40.m4a"
-    },
-    {
-     "id": "l-wm-41",
-     "word": "яблочный",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-41.m4a"
-    },
-    {
-     "id": "l-wm-42",
-     "word": "волнушка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-42.m4a"
-    },
-    {
-     "id": "l-wm-43",
-     "word": "булавка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-43.m4a"
-    },
-    {
-     "id": "l-wm-44",
-     "word": "пулемёт",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-44.m4a"
-    },
-    {
-     "id": "l-wm-45",
-     "word": "пловец",
-     "hint": "Стечение ПЛ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-45.m4a",
-     "imageAsset": "word_plovets"
-    },
-    {
-     "id": "l-wm-46",
-     "word": "колокол",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-46.m4a",
-     "imageAsset": "word_kolokol"
-    },
-    {
-     "id": "l-wm-47",
-     "word": "столовая",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-47.m4a"
-    },
-    {
-     "id": "l-wm-48",
-     "word": "самолёт",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-48.m4a",
-     "imageAsset": "word_samolyot"
-    },
-    {
-     "id": "l-wm-49",
-     "word": "деловой",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-49.m4a"
-    },
-    {
-     "id": "l-wm-50",
-     "word": "яблоко",
-     "hint": "ЯБ+ЛО+КО — Л в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-50.m4a"
-    },
-    {
-     "id": "l-wm-51",
-     "word": "палка",
-     "hint": "ПА+ЛКА — Л в середине.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-51.m4a",
-     "imageAsset": "word_palka"
-    },
-    {
-     "id": "l-wm-52",
-     "word": "молоток",
-     "hint": "МО+ЛО+ТОК — Л дважды в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-52.m4a",
-     "imageAsset": "word_molotok"
-    },
-    {
-     "id": "l-wm-53",
-     "word": "халва",
-     "hint": "ХА+ЛВА — ЛВ стечение.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-53.m4a"
-    },
-    {
-     "id": "l-wm-54",
-     "word": "платье",
-     "hint": "ПЛА+ТОК — ПЛ стечение.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-54.m4a",
-     "imageAsset": "word_plate"
-    },
-    {
-     "id": "l-wm-55",
-     "word": "пила",
-     "hint": "пи-Ла. [Л] в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-55.m4a",
-     "imageAsset": "word_pila"
-    },
-    {
-     "id": "l-wm-56",
-     "word": "полотенце",
-     "hint": "ПО+ЛО+ТЕН+ЦЕ — Л дважды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wm-56.m4a",
-     "imageAsset": "word_polotentse"
-    },
-    {
-     "id": "l-wm-57",
-     "word": "облако",
-     "hint": "ОБ+ЛА+КО — Л в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-57.m4a",
-     "imageAsset": "word_oblako"
-    },
-    {
-     "id": "l-wm-58",
-     "word": "шалаш",
-     "hint": "ША+ЛАШ — Л в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-58.m4a",
-     "imageAsset": "word_shalash"
-    },
-    {
-     "id": "l-wm-59",
-     "word": "глобус",
-     "hint": "ГЛО+БУС — ГЛ стечение.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-59.m4a",
-     "imageAsset": "word_globus"
-    },
-    {
-     "id": "l-wm-60",
-     "word": "флаг",
-     "hint": "ФЛА+Г — ФЛ стечение.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-60.m4a",
-     "imageAsset": "word_flag"
-    },
-    {
-     "id": "l-wm-61",
-     "word": "блинчик",
-     "hint": "БЛИ+НЧИ+К — БЛ стечение.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-61.m4a",
-     "imageAsset": "word_blinchik"
-    },
-    {
-     "id": "l-wm-62",
-     "word": "плакат",
-     "hint": "ПЛА+КАТ — ПЛ стечение.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-62.m4a",
-     "imageAsset": "word_plakat"
-    },
-    {
-     "id": "l-wm-63",
-     "word": "пилотка",
-     "hint": "ПИ+ЛОТ+КА — Л в середине.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wm-63.m4a",
-     "imageAsset": "word_pilotka"
-    },
-    {
-     "id": "l-wm-64",
-     "word": "кулак",
-     "hint": "КУ+ЛАК — Л в середине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-64.m4a",
-     "imageAsset": "word_kulak"
-    },
-    {
-     "id": "l-wm-65",
-     "word": "акула",
-     "imageAsset": "word_akula",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-65.m4a"
-    },
-    {
-     "id": "l-wm-66",
-     "word": "альбом",
-     "imageAsset": "word_albom",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-66.m4a"
-    },
-    {
-     "id": "l-wm-67",
-     "word": "балкон",
-     "imageAsset": "word_balkon",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-67.m4a"
-    },
-    {
-     "id": "l-wm-68",
-     "word": "бейсболка",
-     "imageAsset": "word_beysbolka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-68.m4a"
-    },
-    {
-     "id": "l-wm-69",
-     "word": "блоха",
-     "imageAsset": "word_blokha",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-69.m4a"
-    },
-    {
-     "id": "l-wm-70",
-     "word": "блокнот",
-     "imageAsset": "word_bloknot",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-70.m4a"
-    },
-    {
-     "id": "l-wm-71",
-     "word": "блузка",
-     "imageAsset": "word_bluzka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-71.m4a"
-    },
-    {
-     "id": "l-wm-72",
-     "word": "блюдо",
-     "imageAsset": "word_blyudo",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-72.m4a"
-    },
-    {
-     "id": "l-wm-73",
-     "word": "бублик",
-     "imageAsset": "word_bublik",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-73.m4a"
-    },
-    {
-     "id": "l-wm-74",
-     "word": "дедуля",
-     "imageAsset": "word_dedulya",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-74.m4a"
-    },
-    {
-     "id": "l-wm-75",
-     "word": "дельфин",
-     "imageAsset": "word_delfin",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-75.m4a"
-    },
-    {
-     "id": "l-wm-76",
-     "word": "глаз",
-     "imageAsset": "word_glaz",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-76.m4a"
-    },
-    {
-     "id": "l-wm-77",
-     "word": "голубь",
-     "imageAsset": "word_golub",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-77.m4a"
-    },
-    {
-     "id": "l-wm-78",
-     "word": "игла",
-     "imageAsset": "word_igla",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-78.m4a"
-    },
-    {
-     "id": "l-wm-79",
-     "word": "кегли",
-     "imageAsset": "word_kegli",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-79.m4a"
-    },
-    {
-     "id": "l-wm-80",
-     "word": "кисель",
-     "imageAsset": "word_kisel",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-80.m4a"
-    },
-    {
-     "id": "l-wm-81",
-     "word": "кладовка",
-     "imageAsset": "word_kladovka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-81.m4a"
-    },
-    {
-     "id": "l-wm-82",
-     "word": "клоун",
-     "imageAsset": "word_kloun",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-82.m4a"
-    },
-    {
-     "id": "l-wm-83",
-     "word": "колодец",
-     "imageAsset": "word_kolodets",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-83.m4a"
-    },
-    {
-     "id": "l-wm-84",
-     "word": "масло",
-     "imageAsset": "word_maslo",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-84.m4a"
-    },
-    {
-     "id": "l-wm-85",
-     "word": "мельница",
-     "imageAsset": "word_melnitsa",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-85.m4a"
-    },
-    {
-     "id": "l-wm-86",
-     "word": "олень",
-     "imageAsset": "word_olen",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-86.m4a"
-    },
-    {
-     "id": "l-wm-87",
-     "word": "подсолнух",
-     "imageAsset": "word_podsolnukh",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-87.m4a"
-    },
-    {
-     "id": "l-wm-88",
-     "word": "пугало",
-     "imageAsset": "word_pugalo",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-88.m4a"
-    },
-    {
-     "id": "l-wm-89",
-     "word": "салат",
-     "imageAsset": "word_salat",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-89.m4a"
-    },
-    {
-     "id": "l-wm-90",
-     "word": "скала",
-     "imageAsset": "word_skala",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-90.m4a"
-    },
-    {
-     "id": "l-wm-91",
-     "word": "соловей",
-     "imageAsset": "word_solovey",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-91.m4a"
-    },
-    {
-     "id": "l-wm-92",
-     "word": "сосулька",
-     "imageAsset": "word_sosulka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-92.m4a"
-    },
-    {
-     "id": "l-wm-93",
-     "word": "цапля",
-     "imageAsset": "word_tsaplya",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-93.m4a"
-    },
-    {
-     "id": "l-wm-94",
-     "word": "улей",
-     "imageAsset": "word_uley",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-94.m4a"
-    },
-    {
-     "id": "l-wm-95",
-     "word": "валенки",
-     "imageAsset": "word_valenki",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-95.m4a"
-    },
-    {
-     "id": "l-wm-96",
-     "word": "волна",
-     "imageAsset": "word_volna",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-96.m4a"
-    },
-    {
-     "id": "l-wm-97",
-     "word": "волосы",
-     "imageAsset": "word_volosy",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-97.m4a"
-    },
-    {
-     "id": "l-wm-98",
-     "word": "ёлка",
-     "imageAsset": "word_yolka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-98.m4a"
-    },
-    {
-     "id": "l-wm-99",
-     "word": "юла",
-     "imageAsset": "word_yula",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-99.m4a"
-    },
-    {
-     "id": "l-wm-100",
-     "word": "закладка",
-     "imageAsset": "word_zakladka",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-100.m4a"
-    },
-    {
-     "id": "l-wm-101",
-     "word": "земля",
-     "imageAsset": "word_zemlya",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wm-101.m4a"
-    },
-    {
-     "id": "l-wm-102",
-     "word": "золото",
-     "imageAsset": "word_zoloto",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wm-102.m4a"
-    }
-   ]
-  },
-  "wordFinal": {
-   "stageId": "wordFinal",
-   "note": "[Л] в конце слова; мягкий [Л'] с мягким знаком.",
-   "items": [
-    {
-     "id": "l-wf-0",
-     "word": "пол",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-0.m4a",
-     "imageAsset": "word_pol"
-    },
-    {
-     "id": "l-wf-1",
-     "word": "стол",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-1.m4a",
-     "imageAsset": "word_stol"
-    },
-    {
-     "id": "l-wf-2",
-     "word": "зал",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-2.m4a",
-     "imageAsset": "word_zal"
-    },
-    {
-     "id": "l-wf-3",
-     "word": "мёл",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-3.m4a"
-    },
-    {
-     "id": "l-wf-4",
-     "word": "угол",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-4.m4a"
-    },
-    {
-     "id": "l-wf-5",
-     "word": "козёл",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-5.m4a",
-     "imageAsset": "word_kozyol"
-    },
-    {
-     "id": "l-wf-6",
-     "word": "орёл",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-6.m4a",
-     "imageAsset": "word_oryol"
-    },
-    {
-     "id": "l-wf-7",
-     "word": "укол",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-7.m4a",
-     "imageAsset": "word_ukol"
-    },
-    {
-     "id": "l-wf-8",
-     "word": "сигнал",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-8.m4a"
-    },
-    {
-     "id": "l-wf-9",
-     "word": "канал",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-9.m4a",
-     "imageAsset": "word_kanal"
-    },
-    {
-     "id": "l-wf-10",
-     "word": "кристалл",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-10.m4a"
-    },
-    {
-     "id": "l-wf-11",
-     "word": "журнал",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-11.m4a",
-     "imageAsset": "word_zhurnal"
-    },
-    {
-     "id": "l-wf-12",
-     "word": "контроль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-12.m4a"
-    },
-    {
-     "id": "l-wf-13",
-     "word": "цель",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-13.m4a"
-    },
-    {
-     "id": "l-wf-14",
-     "word": "роль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-14.m4a"
-    },
-    {
-     "id": "l-wf-15",
-     "word": "шаль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-15.m4a",
-     "imageAsset": "word_shal"
-    },
-    {
-     "id": "l-wf-16",
-     "word": "фасоль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-16.m4a",
-     "imageAsset": "word_fasol"
-    },
-    {
-     "id": "l-wf-17",
-     "word": "моль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-17.m4a"
-    },
-    {
-     "id": "l-wf-18",
-     "word": "мель",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-18.m4a",
-     "imageAsset": "word_mel"
-    },
-    {
-     "id": "l-wf-19",
-     "word": "сталь",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-19.m4a"
-    },
-    {
-     "id": "l-wf-20",
-     "word": "пчёл",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-20.m4a"
-    },
-    {
-     "id": "l-wf-21",
-     "word": "уголь",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-21.m4a"
-    },
-    {
-     "id": "l-wf-22",
-     "word": "фасоль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-22.m4a",
-     "imageAsset": "word_fasol"
-    },
-    {
-     "id": "l-wf-23",
-     "word": "карусель",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-23.m4a",
-     "imageAsset": "word_karusel"
-    },
-    {
-     "id": "l-wf-24",
-     "word": "тюль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-24.m4a",
-     "imageAsset": "word_tyul"
-    },
-    {
-     "id": "l-wf-25",
-     "word": "мел",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-25.m4a",
-     "imageAsset": "word_mel"
-    },
-    {
-     "id": "l-wf-26",
-     "word": "мол",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-26.m4a"
-    },
-    {
-     "id": "l-wf-27",
-     "word": "стол",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-27.m4a",
-     "imageAsset": "word_stol"
-    },
-    {
-     "id": "l-wf-28",
-     "word": "козёл",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-28.m4a",
-     "imageAsset": "word_kozyol"
-    },
-    {
-     "id": "l-wf-29",
-     "word": "даль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-29.m4a"
-    },
-    {
-     "id": "l-wf-30",
-     "word": "рояль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-30.m4a"
-    },
-    {
-     "id": "l-wf-31",
-     "word": "деталь",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-31.m4a"
-    },
-    {
-     "id": "l-wf-32",
-     "word": "медаль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-32.m4a",
-     "imageAsset": "word_medal"
-    },
-    {
-     "id": "l-wf-33",
-     "word": "хрусталь",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-33.m4a"
-    },
-    {
-     "id": "l-wf-34",
-     "word": "миндаль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-34.m4a",
-     "imageAsset": "word_mindal"
-    },
-    {
-     "id": "l-wf-35",
-     "word": "педаль",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-35.m4a"
-    },
-    {
-     "id": "l-wf-36",
-     "word": "дятел",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-wf-36.m4a",
-     "imageAsset": "word_dyatel"
-    },
-    {
-     "id": "l-wf-37",
-     "word": "футбол",
-     "hint": "футбоЛ — звук [Л] слышен в конце слова.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-37.m4a"
-    },
-    {
-     "id": "l-wf-38",
-     "word": "туннель",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-wf-38.m4a"
-    },
-    {
-     "id": "l-wf-39",
-     "word": "канитель",
-     "hint": "Мягкий [Л'].",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-wf-39.m4a"
-    },
-    {
-     "id": "l-wf-40",
-     "word": "бокал",
-     "imageAsset": "word_bokal",
-     "audioAsset": null,
-     "hint": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-wf-40.m4a"
-    }
-   ]
-  },
-  "phrase": {
-   "stageId": "phrase",
-   "note": "Короткие фразы и словосочетания со звуком [Л]/[Л'].",
-   "items": [
-    {
-     "id": "l-ph-0",
-     "word": "белая лошадь",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-ph-0.m4a"
-    },
-    {
-     "id": "l-ph-1",
-     "word": "лиса в лесу",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-ph-1.m4a"
-    },
-    {
-     "id": "l-ph-2",
-     "word": "лунный свет",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-ph-2.m4a"
-    },
-    {
-     "id": "l-ph-3",
-     "word": "лимон на ложке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-3.m4a"
-    },
-    {
-     "id": "l-ph-4",
-     "word": "слон в зоопарке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-4.m4a"
-    },
-    {
-     "id": "l-ph-5",
-     "word": "голубое небо",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-5.m4a"
-    },
-    {
-     "id": "l-ph-6",
-     "word": "лебедь на озере",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-6.m4a"
-    },
-    {
-     "id": "l-ph-7",
-     "word": "клубника в ладошке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-7.m4a"
-    },
-    {
-     "id": "l-ph-8",
-     "word": "жёлтый лимон",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-8.m4a"
-    },
-    {
-     "id": "l-ph-9",
-     "word": "маленький лисёнок",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-9.m4a"
-    },
-    {
-     "id": "l-ph-10",
-     "word": "ласточка летит",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-10.m4a"
-    },
-    {
-     "id": "l-ph-11",
-     "word": "белый лебедь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-11.m4a"
-    },
-    {
-     "id": "l-ph-12",
-     "word": "холодная вода в стакане",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-12.m4a"
-    },
-    {
-     "id": "l-ph-13",
-     "word": "лётчик в самолёте",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-13.m4a"
-    },
-    {
-     "id": "l-ph-14",
-     "word": "лягушка на листе",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-14.m4a"
-    },
-    {
-     "id": "l-ph-15",
-     "word": "листопад в лесу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-15.m4a"
-    },
-    {
-     "id": "l-ph-16",
-     "word": "лыжник на горе",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-16.m4a"
-    },
-    {
-     "id": "l-ph-17",
-     "word": "сладкое молоко",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-17.m4a"
-    },
-    {
-     "id": "l-ph-18",
-     "word": "слива на столе",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-18.m4a"
-    },
-    {
-     "id": "l-ph-19",
-     "word": "голубая лагуна",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-19.m4a"
-    },
-    {
-     "id": "l-ph-20",
-     "word": "малина в корзинке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-20.m4a"
-    },
-    {
-     "id": "l-ph-21",
-     "word": "слон и лев в зоопарке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-21.m4a"
-    },
-    {
-     "id": "l-ph-22",
-     "word": "луноход на луне",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-22.m4a"
-    },
-    {
-     "id": "l-ph-23",
-     "word": "ледяная горка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-23.m4a"
-    },
-    {
-     "id": "l-ph-24",
-     "word": "лиловый цветок",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-24.m4a"
-    },
-    {
-     "id": "l-ph-25",
-     "word": "яблочный сок",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-25.m4a"
-    },
-    {
-     "id": "l-ph-26",
-     "word": "солнечный свет",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-26.m4a"
-    },
-    {
-     "id": "l-ph-27",
-     "word": "лесная тропинка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-27.m4a"
-    },
-    {
-     "id": "l-ph-28",
-     "word": "золотая рыбка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-28.m4a"
-    },
-    {
-     "id": "l-ph-29",
-     "word": "плыть к берегу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-29.m4a"
-    },
-    {
-     "id": "l-ph-30",
-     "word": "лениво лежать",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-30.m4a"
-    },
-    {
-     "id": "l-ph-31",
-     "word": "слушать сказку",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-31.m4a"
-    },
-    {
-     "id": "l-ph-32",
-     "word": "ловкий лисёнок",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-32.m4a"
-    },
-    {
-     "id": "l-ph-33",
-     "word": "любимая лялька",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-33.m4a"
-    },
-    {
-     "id": "l-ph-34",
-     "word": "голубой велосипед",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-34.m4a"
-    },
-    {
-     "id": "l-ph-35",
-     "word": "холодный ливень",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-35.m4a"
-    },
-    {
-     "id": "l-ph-36",
-     "word": "ловить рыбу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-36.m4a"
-    },
-    {
-     "id": "l-ph-37",
-     "word": "лакомиться малиной",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-37.m4a"
-    },
-    {
-     "id": "l-ph-38",
-     "word": "белочка с луком",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-38.m4a"
-    },
-    {
-     "id": "l-ph-39",
-     "word": "лягушка и цапля",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-39.m4a"
-    },
-    {
-     "id": "l-ph-40",
-     "word": "лосось в реке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-40.m4a"
-    },
-    {
-     "id": "l-ph-41",
-     "word": "луговые цветы",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-41.m4a"
-    },
-    {
-     "id": "l-ph-42",
-     "word": "лопата и лейка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-42.m4a"
-    },
-    {
-     "id": "l-ph-43",
-     "word": "лунная дорожка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-43.m4a"
-    },
-    {
-     "id": "l-ph-44",
-     "word": "лёгкий ветерок",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-44.m4a"
-    },
-    {
-     "id": "l-ph-45",
-     "word": "лось лесной — лиса лесная",
-     "hint": "Твёрдый Л и мягкий Ль — минимальная пара.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-45.m4a"
-    },
-    {
-     "id": "l-ph-46",
-     "word": "луч и люстра",
-     "hint": "ЛУ (твёрдый) и ЛЮ (мягкий).",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-46.m4a"
-    },
-    {
-     "id": "l-ph-47",
-     "word": "лапа лисы",
-     "hint": "ЛА + ЛИ — твёрдый и мягкий рядом.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-47.m4a"
-    },
-    {
-     "id": "l-ph-48",
-     "word": "лесная лужа",
-     "hint": "ЛЕ + ЛУ — оба Л разные по мягкости.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-48.m4a"
-    },
-    {
-     "id": "l-ph-49",
-     "word": "ловкий лисёнок",
-     "hint": "ЛО + ЛИ — дифференциация.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-49.m4a"
-    },
-    {
-     "id": "l-ph-50",
-     "word": "лёгкий летний дождик",
-     "hint": "ЛЁ + ЛЕ — два мягких Л.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-50.m4a"
-    },
-    {
-     "id": "l-ph-51",
-     "word": "лошадь везла лён",
-     "hint": "ЛО + ВЕ + ЛЁН — нарратив.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-51.m4a"
-    },
-    {
-     "id": "l-ph-52",
-     "word": "лаяли громко два льва",
-     "hint": "ЛА + ЛЬВ — твёрдый и мягкий.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-52.m4a"
-    },
-    {
-     "id": "l-ph-53",
-     "word": "плыл лебедь по волнам",
-     "hint": "ПЛ + ЛЕ + ВО + ЛН — два Л.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-53.m4a"
-    },
-    {
-     "id": "l-ph-54",
-     "word": "лиловая лилия",
-     "hint": "Два ЛИ — мягкий повтор.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-54.m4a"
-    },
-    {
-     "id": "l-ph-55",
-     "word": "далёкий лес",
-     "hint": "ДА + ЛЁ + ЛЕС — нарративный образ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-55.m4a"
-    },
-    {
-     "id": "l-ph-56",
-     "word": "лодка плыла вдоль берега",
-     "hint": "ЛО + ПЛЫ + ВДО + ЛЬ — насыщенный Л.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-ph-56.m4a"
-    },
-    {
-     "id": "l-ph-57",
-     "word": "белый лебедь у лесного озера",
-     "hint": "БЕ + ЛЕ + ЛЕ + ЛЕ — три мягких Л.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-57.m4a"
-    },
-    {
-     "id": "l-ph-58",
-     "word": "смелый и ловкий",
-     "hint": "ЛЫ + ЛО — два Л в прилагательных.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-58.m4a"
-    },
-    {
-     "id": "l-ph-59",
-     "word": "ласточка летит к лесу",
-     "hint": "ЛА + ЛЕ + ЛЕ — три Л-слова.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-59.m4a"
-    },
-    {
-     "id": "l-ph-60",
-     "word": "лёгкий листочек летит вниз",
-     "hint": "ЛЁГ+ЛИС+ЛЕ — Л трижды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-60.m4a"
-    },
-    {
-     "id": "l-ph-61",
-     "word": "лукавый лис у реки",
-     "hint": "ЛУ+ЛИС — Л дважды.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-61.m4a"
-    },
-    {
-     "id": "l-ph-62",
-     "word": "ласковая лошадка на лугу",
-     "hint": "ЛА+ЛО+ЛУ — Л трижды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-62.m4a"
-    },
-    {
-     "id": "l-ph-63",
-     "word": "летит ласточка над полем",
-     "hint": "ЛЕ+ЛА+ПО — Л трижды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-63.m4a"
-    },
-    {
-     "id": "l-ph-64",
-     "word": "лиловый лотос у пруда",
-     "hint": "ЛИ+ЛО — Л дважды в нач. слов.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-64.m4a"
-    },
-    {
-     "id": "l-ph-65",
-     "word": "лесные лилии цветут весной",
-     "hint": "ЛЕС+ЛИ+ЛИ — Л трижды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-65.m4a"
-    },
-    {
-     "id": "l-ph-66",
-     "word": "лебеди летят над длинным озером",
-     "hint": "ЛЕ+ЛЕ+ДЛИН+ОЗЕ — Л четырежды.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-ph-66.m4a"
-    },
-    {
-     "id": "l-ph-67",
-     "word": "ловкий лягушонок прыгнул в лужу",
-     "hint": "ЛО+ЛЯ+ЛУ — Л трижды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-67.m4a"
-    },
-    {
-     "id": "l-ph-68",
-     "word": "луговые цветы ломятся от красоты",
-     "hint": "ЛУ+ЛО+КРА — Л дважды.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-ph-68.m4a"
-    },
-    {
-     "id": "l-ph-69",
-     "word": "луна светила в тёмном лесу",
-     "hint": "ЛУ+ЛЕ — Л в двух словах.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-69.m4a"
-    },
-    {
-     "id": "l-ph-70",
-     "word": "лунный свет в окошке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-70.m4a"
-    },
-    {
-     "id": "l-ph-71",
-     "word": "ловкий лосёнок в лесу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-71.m4a"
-    },
-    {
-     "id": "l-ph-72",
-     "word": "ласточка летит над полем",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-72.m4a"
-    },
-    {
-     "id": "l-ph-73",
-     "word": "лиловый цветок на клумбе",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-73.m4a"
-    },
-    {
-     "id": "l-ph-74",
-     "word": "летний лагерь у озера",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-74.m4a"
-    },
-    {
-     "id": "l-ph-75",
-     "word": "лёгкий ветерок в долине",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-75.m4a"
-    },
-    {
-     "id": "l-ph-76",
-     "word": "ленивый кот на солнышке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-76.m4a"
-    },
-    {
-     "id": "l-ph-77",
-     "word": "лопата у огородника",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-ph-77.m4a"
-    },
-    {
-     "id": "l-ph-78",
-     "word": "белые облака над полем",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-ph-78.m4a"
-    },
-    {
-     "id": "l-ph-79",
-     "word": "флажки висят на флагштоке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-ph-79.m4a"
-    }
-   ]
-  },
-  "sentence": {
-   "stageId": "sentence",
-   "note": "Предложения со звуком [Л]/[Л'].",
-   "items": [
-    {
-     "id": "l-sen-0",
-     "word": "Лена ела малину.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-sen-0.m4a"
-    },
-    {
-     "id": "l-sen-1",
-     "word": "Лиса живёт в лесу.",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-sen-1.m4a"
-    },
-    {
-     "id": "l-sen-2",
-     "word": "Лунный свет падает на пол.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-2.m4a"
-    },
-    {
-     "id": "l-sen-3",
-     "word": "Белый лебедь плывёт по озеру.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-3.m4a"
-    },
-    {
-     "id": "l-sen-4",
-     "word": "Лягушка прыгнула на большой лист.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-4.m4a"
-    },
-    {
-     "id": "l-sen-5",
-     "word": "Слон пьёт воду из большой лужи.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-5.m4a"
-    },
-    {
-     "id": "l-sen-6",
-     "word": "Лётчик летит на самолёте.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-6.m4a"
-    },
-    {
-     "id": "l-sen-7",
-     "word": "В лесу зреет малина и черника.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-7.m4a"
-    },
-    {
-     "id": "l-sen-8",
-     "word": "Лисёнок выглянул из норы на лужайку.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-8.m4a"
-    },
-    {
-     "id": "l-sen-9",
-     "word": "Лыжник быстро едет с горы.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-9.m4a"
-    },
-    {
-     "id": "l-sen-10",
-     "word": "Ласточка свила гнездо под балконом.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-10.m4a"
-    },
-    {
-     "id": "l-sen-11",
-     "word": "Лена лепит из глины лошадку.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-11.m4a"
-    },
-    {
-     "id": "l-sen-12",
-     "word": "Клубника растёт в огороде у бабушки.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-12.m4a"
-    },
-    {
-     "id": "l-sen-13",
-     "word": "На лугу колышутся лиловые цветы.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-13.m4a"
-    },
-    {
-     "id": "l-sen-14",
-     "word": "Луноход медленно едет по Луне.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-14.m4a"
-    },
-    {
-     "id": "l-sen-15",
-     "word": "Лена и Лёша лепят снеговика.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-15.m4a"
-    },
-    {
-     "id": "l-sen-16",
-     "word": "Голубой велосипед стоит у школы.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-16.m4a"
-    },
-    {
-     "id": "l-sen-17",
-     "word": "Белочка нашла желудь под дубом.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-17.m4a"
-    },
-    {
-     "id": "l-sen-18",
-     "word": "Холодный ливень прибил листья к земле.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-18.m4a"
-    },
-    {
-     "id": "l-sen-19",
-     "word": "Лётчики пролетели над полем.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-19.m4a"
-    },
-    {
-     "id": "l-sen-20",
-     "word": "Лягушки квакают всю ночь у болота.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-20.m4a"
-    },
-    {
-     "id": "l-sen-21",
-     "word": "Лена любит лепить из солёного теста.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-21.m4a"
-    },
-    {
-     "id": "l-sen-22",
-     "word": "Слон и лев — самые большие в зоопарке.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-22.m4a"
-    },
-    {
-     "id": "l-sen-23",
-     "word": "Лисёнок ловко залез на дерево.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-23.m4a"
-    },
-    {
-     "id": "l-sen-24",
-     "word": "Луна светит ночью, солнце — днём.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-24.m4a"
-    },
-    {
-     "id": "l-sen-25",
-     "word": "Ласточки летели над лугом и лесом.",
-     "hint": "ЛА + ЛЕ + ЛУ + ЛЕ — четыре Л.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-25.m4a"
-    },
-    {
-     "id": "l-sen-26",
-     "word": "Лоси любят лизать соль в лесу.",
-     "hint": "ЛО + ЛЮ + ЛИ + ЛЕ — нарративная цепочка.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-26.m4a"
-    },
-    {
-     "id": "l-sen-27",
-     "word": "Ловкий лисёнок нашёл лесную малину.",
-     "hint": "ЛО + ЛИ + НА + ЛЕ + МА + ЛИ — нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-27.m4a"
-    },
-    {
-     "id": "l-sen-28",
-     "word": "Лёля любила лепить из пластилина.",
-     "hint": "ЛЁ + ЛЮ + ЛЕ + ЛА + ПЛА + ЛИ — шесть Л.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-28.m4a"
-    },
-    {
-     "id": "l-sen-29",
-     "word": "Бабушка наливала клубничный компот.",
-     "hint": "ЛИ + КЛУ + ЛА — Л в разных позициях.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-29.m4a"
-    },
-    {
-     "id": "l-sen-30",
-     "word": "Листья падали тихо и ложились на землю.",
-     "hint": "ЛИС + ЛО + ЛЕ + ЗЕМ — осенний нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-30.m4a"
-    },
-    {
-     "id": "l-sen-31",
-     "word": "Льдина плыла по холодной реке.",
-     "hint": "ЛЬД + ПЛЫ + ХО + ЛО — мягкий и твёрдый.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-31.m4a"
-    },
-    {
-     "id": "l-sen-32",
-     "word": "Лилии у озера лилового цвета.",
-     "hint": "ЛИ + ЛИ + ЛИ + ЛО — четыре Л.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-32.m4a"
-    },
-    {
-     "id": "l-sen-33",
-     "word": "Лев и олень дружили в зелёном лесу.",
-     "hint": "ЛЕВ + О + ЛЕ + ЗЕ + ЛЁ + ЛЕ — шесть Л.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-33.m4a"
-    },
-    {
-     "id": "l-sen-34",
-     "word": "Солнечный луч лёг на лесную полянку.",
-     "hint": "СО + ЛУ + ЛЁ + ЛЕ + ПО + ЛЯ — нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-34.m4a"
-    },
-    {
-     "id": "l-sen-35",
-     "word": "Дедушка купил деревянный лук и стрелы.",
-     "hint": "ДЕ + КУ + ДЕ + ЛУ + СТ + РЕ + ЛЫ — Л в разных позициях.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-35.m4a"
-    },
-    {
-     "id": "l-sen-36",
-     "word": "Лошадка легко перепрыгнула лужу.",
-     "hint": "ЛО + ЛЕ + КО + ЛУ — нарратив действия.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-sen-36.m4a"
-    },
-    {
-     "id": "l-sen-37",
-     "word": "Ласковый волк из сказки оказался добрым.",
-     "hint": "ЛА + ВО + ЛК + ОКА + ДО + РЫМ — нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-37.m4a"
-    },
-    {
-     "id": "l-sen-38",
-     "word": "Белые облака плыли медленно над лесом.",
-     "hint": "БЕ + ОБ + ПЛЫ + МЕД + ЛЕН + ЛЕ — длинный нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-38.m4a"
-    },
-    {
-     "id": "l-sen-39",
-     "word": "Ленивый кот лежал на полке и лизал лапы.",
-     "hint": "ЛЕ + КОТ + ЛЕ + ПО + ЛКЕ + ЛИ + ЛА — семь Л.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-39.m4a"
-    },
-    {
-     "id": "l-sen-40",
-     "word": "Лисята лакали молоко из блюдца.",
-     "hint": "ЛИ+ЛА+МО+БЛЮ — Л в четырёх словах.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-40.m4a"
-    },
-    {
-     "id": "l-sen-41",
-     "word": "Ласковое летнее солнце грело лужайку.",
-     "hint": "ЛА+ЛЕ+СОЛ+ЛУ — Л четырежды.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-41.m4a"
-    },
-    {
-     "id": "l-sen-42",
-     "word": "Лодка плыла по спокойному лесному озеру.",
-     "hint": "ЛО+ПЛЫ+ЛЕС — Л трижды.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-42.m4a"
-    },
-    {
-     "id": "l-sen-43",
-     "word": "Лёля нашла листочки лопуха у калитки.",
-     "hint": "ЛЁ+ЛИС+ЛО+КА — Л четырежды.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-43.m4a"
-    },
-    {
-     "id": "l-sen-44",
-     "word": "Лесные ёлки светились в лунную ночь.",
-     "hint": "ЛЕС+ЁЛ+ЛУН — Л трижды.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-sen-44.m4a"
-    },
-    {
-     "id": "l-sen-45",
-     "word": "Лёша нашёл лягушку у лесной лужи.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-45.m4a"
-    },
-    {
-     "id": "l-sen-46",
-     "word": "Ласточки летели над лугом стройной стаей.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-46.m4a"
-    },
-    {
-     "id": "l-sen-47",
-     "word": "Белые лилии плавали по спокойному озеру.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-47.m4a"
-    },
-    {
-     "id": "l-sen-48",
-     "word": "Луна светила всю ночь над полями.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-48.m4a"
-    },
-    {
-     "id": "l-sen-49",
-     "word": "Лосёнок лизал соль у лесного камня.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-49.m4a"
-    },
-    {
-     "id": "l-sen-50",
-     "word": "Лена лепила куклу из мягкой глины.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-50.m4a"
-    },
-    {
-     "id": "l-sen-51",
-     "word": "Лётчик поднял самолёт в облачное небо.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-51.m4a"
-    },
-    {
-     "id": "l-sen-52",
-     "word": "Плотный туман лежал в долине всё утро.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-52.m4a"
-    },
-    {
-     "id": "l-sen-53",
-     "word": "Лошадь галопом мчалась по зелёному лугу.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-sen-53.m4a"
-    },
-    {
-     "id": "l-sen-54",
-     "word": "Голуби летали около колокольни.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-sen-54.m4a"
-    }
-   ]
-  },
-  "story": {
-   "stageId": "story",
-   "note": "Скороговорки и стихи для закрепления [Л]/[Л'].",
-   "items": [
-    {
-     "id": "l-st-0",
-     "word": "Еле-еле Лена ела, есть из лени не хотела.",
-     "hint": "Медленно, потом быстрее!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-st-0.m4a"
-    },
-    {
-     "id": "l-st-1",
-     "word": "Лиса Лариса любила лисят — и лисят она ела опрятно.",
-     "hint": "Каждый Л произноси чётко.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-st-1.m4a"
-    },
-    {
-     "id": "l-st-2",
-     "word": "Клала Клава лук на полку — кликни Клаву, сняла полку.",
-     "hint": "Следи за Л в каждом слове.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-st-2.m4a"
-    },
-    {
-     "id": "l-st-3",
-     "word": "Лев Лёлик лежал и лениво лизал лимон.",
-     "hint": "Все Л мягкие и твёрдые — слушай разницу!",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-st-3.m4a"
-    },
-    {
-     "id": "l-st-4",
-     "word": "На лугу под луной стоит лопата — это луговая лопата.",
-     "hint": "Нараспев, как сказка.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-st-4.m4a"
-    },
-    {
-     "id": "l-st-5",
-     "word": "Лось у ели полетел — нет, лось у ели лёг и ел.",
-     "hint": "Слушай — где Л твёрдый, где мягкий.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-st-5.m4a"
-    },
-    {
-     "id": "l-st-6",
-     "word": "Ела-ела Маша мела, мела — и стол блестел.",
-     "hint": "Финальный Л — чётко!",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-st-6.m4a"
-    },
-    {
-     "id": "l-st-7",
-     "word": "Белый снег летит, летит — лёгкий, лёгкий — на лёд.",
-     "hint": "Плавно, как снежинки.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-st-7.m4a"
-    },
-    {
-     "id": "l-st-8",
-     "word": "Лена ела булку, Лёша лепил луну — двое лепили лодку.",
-     "hint": "Два раза подряд.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-st-8.m4a"
-    },
-    {
-     "id": "l-st-9",
-     "word": "Слева лес, слева луг — слева слышен голос вслух.",
-     "hint": "Стечение СЛ — особенно следи!",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/L/l-st-9.m4a"
-    }
-   ]
-  },
-  "diff": {
-   "stageId": "diff",
-   "note": "Дифференциация [Л] и [Р] — минимальные пары.",
-   "items": [
-    {
-     "id": "l-diff-0",
-     "word": "лак — рак",
-     "hint": "Лак — блестит, рак — плавает.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-0.m4a"
-    },
-    {
-     "id": "l-diff-1",
-     "word": "луна — рана",
-     "hint": "Луна — на небе, рана — больно.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-1.m4a"
-    },
-    {
-     "id": "l-diff-2",
-     "word": "лот — рот",
-     "hint": "Лот — груз, рот — у нас.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-2.m4a"
-    },
-    {
-     "id": "l-diff-3",
-     "word": "лучше — ручей",
-     "hint": "Лучше — хорошо, ручей — бежит.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-3.m4a"
-    },
-    {
-     "id": "l-diff-4",
-     "word": "лис — рис",
-     "hint": "Лис (форма слова лиса) — рис (крупа).",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-4.m4a"
-    },
-    {
-     "id": "l-diff-5",
-     "word": "лоза — роза",
-     "hint": "Лоза — виноград, роза — цветок.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-5.m4a"
-    },
-    {
-     "id": "l-diff-6",
-     "word": "лампа — рампа",
-     "hint": "Лампа — светит, рампа — в театре.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-6.m4a"
-    },
-    {
-     "id": "l-diff-7",
-     "word": "лук — рук",
-     "hint": "Лук — овощ, рук — форма руки.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-7.m4a"
-    },
-    {
-     "id": "l-diff-8",
-     "word": "лось — рось",
-     "hint": "Лось — зверь, роса — капли.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-8.m4a"
-    },
-    {
-     "id": "l-diff-9",
-     "word": "слава — трава",
-     "hint": "Слава — Л, трава — Р.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-9.m4a"
-    },
-    {
-     "id": "l-diff-10",
-     "word": "клот — крот",
-     "hint": "Клот — морской, крот — зверёк.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-10.m4a"
-    },
-    {
-     "id": "l-diff-11",
-     "word": "лечь — речь",
-     "hint": "Лечь — Л', речь — Р'.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-11.m4a"
-    },
-    {
-     "id": "l-diff-12",
-     "word": "ляп — ряп",
-     "hint": "Ляп — Л', рябь — Р'.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-12.m4a"
-    },
-    {
-     "id": "l-diff-13",
-     "word": "голень — горень",
-     "hint": "Голень — Л, горе — Р.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-13.m4a"
-    },
-    {
-     "id": "l-diff-14",
-     "word": "дрова — слова",
-     "hint": "Дрова — Р, слова — Л.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-14.m4a"
-    },
-    {
-     "id": "l-diff-15",
-     "word": "орёл — осёл",
-     "hint": "Орёл — Р, осёл — Л.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-15.m4a"
-    },
-    {
-     "id": "l-diff-16",
-     "word": "плуг — прут",
-     "hint": "Плуг — Л, прут — Р.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-16.m4a"
-    },
-    {
-     "id": "l-diff-17",
-     "word": "флаг — фрак",
-     "hint": "Флаг — Л, фрак — Р.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-diff-17.m4a"
-    },
-    {
-     "id": "l-diff-18",
-     "word": "кладь — краб",
-     "hint": "Кладь — Л, краб — Р.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/L/l-diff-18.m4a"
-    },
-    {
-     "id": "l-diff-19",
-     "word": "блеск — бреск",
-     "hint": "Блеск — Л', бреск — Р.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/L/l-diff-19.m4a"
-    },
-    {
-     "id": "l-diff-20",
-     "word": "лак — рак",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-diff-20.m4a",
-     "hint": "Л боковой, Р вибрант."
-    },
-    {
-     "id": "l-diff-21",
-     "word": "лыко — рыко",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-diff-21.m4a",
-     "hint": "Л против Р в начале."
-    },
-    {
-     "id": "l-diff-22",
-     "word": "лук — рук",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-diff-22.m4a",
-     "hint": "Короткое слово Л—Р."
-    },
-    {
-     "id": "l-diff-23",
-     "word": "лев — рев",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/L/l-diff-23.m4a",
-     "hint": "Мягкие Л'—Р'."
-    },
-    {
-     "id": "l-diff-24",
-     "word": "полка — порка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-24.m4a",
-     "hint": "В середине: Л—Р."
-    },
-    {
-     "id": "l-diff-25",
-     "word": "слон — срон",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-25.m4a",
-     "hint": "Стечение СЛ против СР."
-    },
-    {
-     "id": "l-diff-26",
-     "word": "плот — прот",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-26.m4a",
-     "hint": "Стечение ПЛ против ПР."
-    },
-    {
-     "id": "l-diff-27",
-     "word": "клад — крад",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-27.m4a",
-     "hint": "Стечение КЛ против КР."
-    },
-    {
-     "id": "l-diff-28",
-     "word": "лебедь — ребедь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-28.m4a",
-     "hint": "Мягкие в начале."
-    },
-    {
-     "id": "l-diff-29",
-     "word": "соль — сорь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/L/l-diff-29.m4a",
-     "hint": "Мягкий Л' на конце против Р'."
-    }
-   ]
+  "templateCompatibility": {
+    "prep": [
+      "articulation-imitation",
+      "breathing",
+      "rhythm",
+      "ar-activity"
+    ],
+    "isolated": [
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting",
+      "ar-activity",
+      "rhythm"
+    ],
+    "syllable": [
+      "listen-and-choose",
+      "sorting",
+      "repeat-after-model",
+      "bingo",
+      "rhythm",
+      "minimal-pairs"
+    ],
+    "wordInit": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "visual-acoustic",
+      "minimal-pairs"
+    ],
+    "wordMed": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "sound-hunter",
+      "puzzle-reveal"
+    ],
+    "wordFinal": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "minimal-pairs",
+      "sorting",
+      "bingo"
+    ],
+    "phrase": [
+      "story-completion",
+      "drag-and-match",
+      "repeat-after-model",
+      "sorting",
+      "minimal-pairs",
+      "narrative-quest"
+    ],
+    "sentence": [
+      "story-completion",
+      "repeat-after-model",
+      "narrative-quest",
+      "drag-and-match"
+    ],
+    "story": [
+      "repeat-after-model",
+      "rhythm",
+      "narrative-quest"
+    ],
+    "diff": [
+      "minimal-pairs",
+      "sorting",
+      "listen-and-choose",
+      "drag-and-match",
+      "memory"
+    ]
   }
- },
- "templateCompatibility": {
-  "prep": [
-   "articulation-imitation",
-   "breathing",
-   "rhythm",
-   "ar-activity"
-  ],
-  "isolated": [
-   "repeat-after-model",
-   "listen-and-choose",
-   "sorting",
-   "ar-activity",
-   "rhythm"
-  ],
-  "syllable": [
-   "listen-and-choose",
-   "sorting",
-   "repeat-after-model",
-   "bingo",
-   "rhythm",
-   "minimal-pairs"
-  ],
-  "wordInit": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "drag-and-match",
-   "memory",
-   "bingo",
-   "sound-hunter",
-   "puzzle-reveal",
-   "visual-acoustic",
-   "minimal-pairs"
-  ],
-  "wordMed": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "drag-and-match",
-   "memory",
-   "sound-hunter",
-   "puzzle-reveal"
-  ],
-  "wordFinal": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "minimal-pairs",
-   "sorting",
-   "bingo"
-  ],
-  "phrase": [
-   "story-completion",
-   "drag-and-match",
-   "repeat-after-model",
-   "sorting",
-   "minimal-pairs",
-   "narrative-quest"
-  ],
-  "sentence": [
-   "story-completion",
-   "repeat-after-model",
-   "narrative-quest",
-   "drag-and-match"
-  ],
-  "story": [
-   "repeat-after-model",
-   "rhythm",
-   "narrative-quest"
-  ],
-  "diff": [
-   "minimal-pairs",
-   "sorting",
-   "listen-and-choose",
-   "drag-and-match",
-   "memory"
-  ]
- }
 }

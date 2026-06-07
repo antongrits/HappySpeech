@@ -225,7 +225,7 @@
         {
           "id": "scf-wm-3",
           "word": "клещи",
-          "imageAsset": "word_kleshchi",
+          "imageAsset": null,
           "audioAsset": null,
           "hint": "Кле-щи. Ими тянут гвозди.",
           "difficulty": 2,
@@ -243,7 +243,7 @@
         {
           "id": "scf-wm-5",
           "word": "вещи",
-          "imageAsset": "word_veshchi",
+          "imageAsset": "word_chemodan",
           "audioAsset": null,
           "hint": "Ве-щи. Одежда в шкафу.",
           "difficulty": 2,
@@ -312,7 +312,7 @@
         {
           "id": "scf-wf-3",
           "word": "клещ",
-          "imageAsset": "word_kleshch",
+          "imageAsset": null,
           "audioAsset": null,
           "hint": "Клещ. Маленький, в лесу.",
           "difficulty": 2,
@@ -339,7 +339,7 @@
         {
           "id": "scf-wf-6",
           "word": "хрящ",
-          "imageAsset": "word_khryashch",
+          "imageAsset": null,
           "audioAsset": null,
           "hint": "Хрящ. Твёрдый, в ушке.",
           "difficulty": 3,

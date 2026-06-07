@@ -1,3213 +1,3213 @@
 {
- "id": "sound_sh_v1",
- "soundTarget": "Ш",
- "group": "шипящие",
- "version": 1,
- "description": "Коррекция звука [Ш] — артикуляционная подготовка, изолированный звук, слоги, слова по позициям, фразы, предложения, скороговорки, дифференциация.",
- "stages": {
-  "prep": {
-   "stageId": "prep",
-   "note": "Артикуляционная гимнастика для постановки шипящих: широкий язык, чашечка, удержание позиции.",
-   "items": [
-    {
-     "id": "sh-prep-0",
-     "word": "чашечка",
-     "hint": "Широкий язык — края вверх, как чашечка.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-0.m4a"
+  "id": "sound_sh_v1",
+  "soundTarget": "Ш",
+  "group": "шипящие",
+  "version": 1,
+  "description": "Коррекция звука [Ш] — артикуляционная подготовка, изолированный звук, слоги, слова по позициям, фразы, предложения, скороговорки, дифференциация.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Артикуляционная гимнастика для постановки шипящих: широкий язык, чашечка, удержание позиции.",
+      "items": [
+        {
+          "id": "sh-prep-0",
+          "word": "чашечка",
+          "hint": "Широкий язык — края вверх, как чашечка.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-0.m4a"
+        },
+        {
+          "id": "sh-prep-1",
+          "word": "блинчик",
+          "hint": "Плоский язык лежит на нижней губе.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-1.m4a"
+        },
+        {
+          "id": "sh-prep-2",
+          "word": "лопатка",
+          "hint": "Широкий расслабленный язык — лопатка.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-2.m4a"
+        },
+        {
+          "id": "sh-prep-3",
+          "word": "грибок",
+          "hint": "Язык присасывается к нёбу — гриб на ножке.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-3.m4a"
+        },
+        {
+          "id": "sh-prep-4",
+          "word": "маляр",
+          "hint": "Красим нёбо кончиком языка вперёд-назад.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-4.m4a"
+        },
+        {
+          "id": "sh-prep-5",
+          "word": "лошадка",
+          "hint": "Цокаем языком — лошадка скачет.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-5.m4a"
+        },
+        {
+          "id": "sh-prep-6",
+          "word": "вкусное-варенье",
+          "hint": "Лижем верхнюю губу языком — вкусно!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-6.m4a"
+        },
+        {
+          "id": "sh-prep-7",
+          "word": "покусаем-язычок",
+          "hint": "Тихонько кусаем кончик языка зубками.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-7.m4a"
+        },
+        {
+          "id": "sh-prep-8",
+          "word": "большая-чашечка",
+          "hint": "Чашечка стала ещё шире — держим 5 секунд.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-8.m4a"
+        },
+        {
+          "id": "sh-prep-9",
+          "word": "чашечка-в-рот",
+          "hint": "Чашечку убираем за верхние зубы.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-9.m4a"
+        },
+        {
+          "id": "sh-prep-10",
+          "word": "фокус",
+          "hint": "Дуем на ватку — она летит вверх.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-10.m4a"
+        },
+        {
+          "id": "sh-prep-11",
+          "word": "гармошка",
+          "hint": "Язык у нёба — двигаем челюстью вниз-вверх.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-prep-11.m4a"
+        },
+        {
+          "id": "sh-prep-12",
+          "word": "индюк",
+          "hint": "Язык по верхней губе: бл-бл-бл быстро.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-prep-12.m4a"
+        },
+        {
+          "id": "sh-prep-13",
+          "word": "качели",
+          "hint": "Язык вверх к носу — вниз к подбородку.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-13.m4a"
+        },
+        {
+          "id": "sh-prep-14",
+          "word": "иголочка",
+          "hint": "Острый язык тянется вперёд — иголочка.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-14.m4a"
+        },
+        {
+          "id": "sh-prep-15",
+          "word": "парус",
+          "hint": "Язык упирается в верхние зубы изнутри.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-prep-15.m4a"
+        },
+        {
+          "id": "sh-prep-16",
+          "word": "чья-чашечка-больше",
+          "hint": "Соревнуемся — у кого чашечка шире.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-16.m4a"
+        },
+        {
+          "id": "sh-prep-17",
+          "word": "футбол",
+          "hint": "Язык-мяч толкаем в правую щёку, в левую.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-17.m4a"
+        },
+        {
+          "id": "sh-prep-18",
+          "word": "часики",
+          "hint": "Язык влево-вправо как маятник часов.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-18.m4a"
+        },
+        {
+          "id": "sh-prep-19",
+          "word": "трубочка",
+          "hint": "Губы вытягиваем трубочкой вперёд.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-prep-19.m4a"
+        },
+        {
+          "id": "sh-prep-20",
+          "word": "чистим-зубки-сверху",
+          "hint": "Языком чистим верхние зубы изнутри.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-prep-20.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-1",
-     "word": "блинчик",
-     "hint": "Плоский язык лежит на нижней губе.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-1.m4a"
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный звук [Ш] через игровые образы без опоры на текст.",
+      "items": [
+        {
+          "id": "sh-iso-0",
+          "word": "шш-листья",
+          "hint": "Ветер шелестит листьями: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-0.m4a"
+        },
+        {
+          "id": "sh-iso-1",
+          "word": "шш-дождь",
+          "hint": "Тихий дождик по стеклу: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-1.m4a"
+        },
+        {
+          "id": "sh-iso-2",
+          "word": "шш-змея",
+          "hint": "Змея шипит: шшш — не подходи!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-2.m4a"
+        },
+        {
+          "id": "sh-iso-3",
+          "word": "шш-шина",
+          "hint": "Шина спускает воздух: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-3.m4a"
+        },
+        {
+          "id": "sh-iso-4",
+          "word": "шш-мышь",
+          "hint": "Мышка шуршит в норке: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-4.m4a"
+        },
+        {
+          "id": "sh-iso-5",
+          "word": "шш-тихо",
+          "hint": "Говорим тише: шшш — все спят.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-iso-5.m4a"
+        },
+        {
+          "id": "sh-iso-6",
+          "word": "шш-пар",
+          "hint": "Пар из чайника: шшш — горячо!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-6.m4a"
+        },
+        {
+          "id": "sh-iso-7",
+          "word": "шш-лес",
+          "hint": "В лесу шумят деревья: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-7.m4a"
+        },
+        {
+          "id": "sh-iso-8",
+          "word": "шш-долго",
+          "hint": "Тянем шшш на одном выдохе — долго.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-8.m4a"
+        },
+        {
+          "id": "sh-iso-9",
+          "word": "шш-тихо-громко",
+          "hint": "Шепчем шшш — кричим ШШШ!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-9.m4a"
+        },
+        {
+          "id": "sh-iso-10",
+          "word": "шш-прерывисто",
+          "hint": "Ш-Ш-Ш отдельными толчками.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-iso-10.m4a"
+        },
+        {
+          "id": "sh-iso-11",
+          "word": "шш-волна",
+          "hint": "Тихо — громче — тихо: шш-ШШ-шш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-iso-11.m4a"
+        },
+        {
+          "id": "sh-iso-12",
+          "word": "шш-ветер-сильный",
+          "hint": "Сильный ветер: ШШШШ — долго!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-iso-12.m4a"
+        },
+        {
+          "id": "sh-iso-13",
+          "word": "шш-камыш",
+          "hint": "Камыш у реки качается: шшш.",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-13.m4a"
+        },
+        {
+          "id": "sh-iso-14",
+          "word": "шш-ёжик",
+          "hint": "Ёжик пыхтит: шш-шш — я иду!",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-iso-14.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-2",
-     "word": "лопатка",
-     "hint": "Широкий расслабленный язык — лопатка.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-2.m4a"
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Прямые, обратные, со стечением слоги с [Ш].",
+      "items": [
+        {
+          "id": "sh-syl-0",
+          "word": "ша",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-0.m4a"
+        },
+        {
+          "id": "sh-syl-1",
+          "word": "шо",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-1.m4a"
+        },
+        {
+          "id": "sh-syl-2",
+          "word": "шу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-2.m4a"
+        },
+        {
+          "id": "sh-syl-3",
+          "word": "шы",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-3.m4a"
+        },
+        {
+          "id": "sh-syl-4",
+          "word": "ше",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-4.m4a"
+        },
+        {
+          "id": "sh-syl-5",
+          "word": "аш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-5.m4a"
+        },
+        {
+          "id": "sh-syl-6",
+          "word": "ош",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-6.m4a"
+        },
+        {
+          "id": "sh-syl-7",
+          "word": "уш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-7.m4a"
+        },
+        {
+          "id": "sh-syl-8",
+          "word": "ыш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-8.m4a"
+        },
+        {
+          "id": "sh-syl-9",
+          "word": "еш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-9.m4a"
+        },
+        {
+          "id": "sh-syl-10",
+          "word": "ша-ша",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-10.m4a"
+        },
+        {
+          "id": "sh-syl-11",
+          "word": "шо-шо",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-11.m4a"
+        },
+        {
+          "id": "sh-syl-12",
+          "word": "шу-шу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-12.m4a"
+        },
+        {
+          "id": "sh-syl-13",
+          "word": "аша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-13.m4a"
+        },
+        {
+          "id": "sh-syl-14",
+          "word": "оша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-14.m4a"
+        },
+        {
+          "id": "sh-syl-15",
+          "word": "уша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-15.m4a"
+        },
+        {
+          "id": "sh-syl-16",
+          "word": "ашо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-16.m4a"
+        },
+        {
+          "id": "sh-syl-17",
+          "word": "ашу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-17.m4a"
+        },
+        {
+          "id": "sh-syl-18",
+          "word": "шта",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-18.m4a"
+        },
+        {
+          "id": "sh-syl-19",
+          "word": "шна",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-19.m4a"
+        },
+        {
+          "id": "sh-syl-20",
+          "word": "шка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-20.m4a"
+        },
+        {
+          "id": "sh-syl-21",
+          "word": "шко",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-21.m4a"
+        },
+        {
+          "id": "sh-syl-22",
+          "word": "шла",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-22.m4a"
+        },
+        {
+          "id": "sh-syl-23",
+          "word": "шра",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-23.m4a"
+        },
+        {
+          "id": "sh-syl-24",
+          "word": "аш-аш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-24.m4a"
+        },
+        {
+          "id": "sh-syl-25",
+          "word": "ош-ош",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-25.m4a"
+        },
+        {
+          "id": "sh-syl-26",
+          "word": "уш-уш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-26.m4a"
+        },
+        {
+          "id": "sh-syl-27",
+          "word": "ша-шо-шу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-27.m4a"
+        },
+        {
+          "id": "sh-syl-28",
+          "word": "аш-ош-уш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-28.m4a"
+        },
+        {
+          "id": "sh-syl-29",
+          "word": "шта-што-шту",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-29.m4a"
+        },
+        {
+          "id": "sh-syl-30",
+          "word": "шка-шко-шку",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-30.m4a"
+        },
+        {
+          "id": "sh-syl-31",
+          "word": "шла-шло-шлу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-syl-31.m4a"
+        },
+        {
+          "id": "sh-syl-32",
+          "word": "аша-оша-уша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-32.m4a"
+        },
+        {
+          "id": "sh-syl-33",
+          "word": "ши",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-syl-33.m4a"
+        },
+        {
+          "id": "sh-syl-34",
+          "word": "иш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-syl-34.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-3",
-     "word": "грибок",
-     "hint": "Язык присасывается к нёбу — гриб на ножке.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-3.m4a"
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "[Ш] в начале слова — от простых к сложным.",
+      "items": [
+        {
+          "id": "sh-wi-0",
+          "word": "шар",
+          "imageAsset": "word_shar",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-0.m4a"
+        },
+        {
+          "id": "sh-wi-1",
+          "word": "шар",
+          "imageAsset": "word_shar",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-1.m4a"
+        },
+        {
+          "id": "sh-wi-2",
+          "word": "шуба",
+          "imageAsset": "word_shuba",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-2.m4a"
+        },
+        {
+          "id": "sh-wi-3",
+          "word": "шея",
+          "imageAsset": "word_sheya",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-3.m4a"
+        },
+        {
+          "id": "sh-wi-4",
+          "word": "шесть",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-4.m4a"
+        },
+        {
+          "id": "sh-wi-5",
+          "word": "шапка",
+          "imageAsset": "word_shapka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-5.m4a"
+        },
+        {
+          "id": "sh-wi-6",
+          "word": "шаль",
+          "imageAsset": "word_shal",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-6.m4a"
+        },
+        {
+          "id": "sh-wi-7",
+          "word": "шина",
+          "imageAsset": "word_shina",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-7.m4a"
+        },
+        {
+          "id": "sh-wi-8",
+          "word": "шило",
+          "imageAsset": "word_shilo",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wi-8.m4a"
+        },
+        {
+          "id": "sh-wi-9",
+          "word": "шутка",
+          "imageAsset": "word_kloun",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-9.m4a"
+        },
+        {
+          "id": "sh-wi-10",
+          "word": "шуметь",
+          "imageAsset": "word_shumet",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-10.m4a"
+        },
+        {
+          "id": "sh-wi-11",
+          "word": "школа",
+          "imageAsset": "word_shkola",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-11.m4a"
+        },
+        {
+          "id": "sh-wi-12",
+          "word": "шкаф",
+          "imageAsset": "word_shkaf",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-12.m4a"
+        },
+        {
+          "id": "sh-wi-13",
+          "word": "шарф",
+          "imageAsset": "word_sharf",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-13.m4a"
+        },
+        {
+          "id": "sh-wi-14",
+          "word": "шалаш",
+          "imageAsset": "word_shalash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-14.m4a"
+        },
+        {
+          "id": "sh-wi-15",
+          "word": "шайба",
+          "imageAsset": "word_shayba",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-15.m4a"
+        },
+        {
+          "id": "sh-wi-16",
+          "word": "шахта",
+          "imageAsset": "word_shakhta",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-16.m4a"
+        },
+        {
+          "id": "sh-wi-17",
+          "word": "шипы",
+          "imageAsset": "word_shipy",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-17.m4a"
+        },
+        {
+          "id": "sh-wi-18",
+          "word": "широкий",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-18.m4a"
+        },
+        {
+          "id": "sh-wi-19",
+          "word": "шоколад",
+          "imageAsset": "word_shokolad",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-19.m4a"
+        },
+        {
+          "id": "sh-wi-20",
+          "word": "шофёр",
+          "imageAsset": "word_shofor",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-20.m4a"
+        },
+        {
+          "id": "sh-wi-21",
+          "word": "шторм",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-21.m4a"
+        },
+        {
+          "id": "sh-wi-22",
+          "word": "штаны",
+          "imageAsset": "word_shtany",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-22.m4a"
+        },
+        {
+          "id": "sh-wi-23",
+          "word": "штанга",
+          "imageAsset": "word_shtanga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-23.m4a"
+        },
+        {
+          "id": "sh-wi-24",
+          "word": "шакал",
+          "imageAsset": "word_shakal",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-24.m4a"
+        },
+        {
+          "id": "sh-wi-25",
+          "word": "шатёр",
+          "imageAsset": "word_shator",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-25.m4a"
+        },
+        {
+          "id": "sh-wi-26",
+          "word": "шахматы",
+          "imageAsset": "word_shakhmaty",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-26.m4a"
+        },
+        {
+          "id": "sh-wi-27",
+          "word": "шалость",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-27.m4a"
+        },
+        {
+          "id": "sh-wi-28",
+          "word": "шиповник",
+          "imageAsset": "word_shipovnik",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-28.m4a"
+        },
+        {
+          "id": "sh-wi-29",
+          "word": "шиншилла",
+          "imageAsset": "word_shinshilla",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-29.m4a"
+        },
+        {
+          "id": "sh-wi-30",
+          "word": "шоколадка",
+          "imageAsset": "word_shokoladka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-30.m4a"
+        },
+        {
+          "id": "sh-wi-31",
+          "word": "шкатулка",
+          "imageAsset": "word_shkatulka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-31.m4a"
+        },
+        {
+          "id": "sh-wi-32",
+          "word": "шелковица",
+          "imageAsset": "word_shelkovitsa",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-32.m4a"
+        },
+        {
+          "id": "sh-wi-33",
+          "word": "шиловидный",
+          "imageAsset": "word_shilovidnyy",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-33.m4a"
+        },
+        {
+          "id": "sh-wi-34",
+          "word": "шляпа",
+          "imageAsset": "word_shlyapa",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-34.m4a"
+        },
+        {
+          "id": "sh-wi-35",
+          "word": "шнурок",
+          "imageAsset": "word_shnurki",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-35.m4a"
+        },
+        {
+          "id": "sh-wi-36",
+          "word": "шнурок",
+          "imageAsset": "word_shnurki",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-36.m4a"
+        },
+        {
+          "id": "sh-wi-37",
+          "word": "шпага",
+          "imageAsset": "word_shpaga",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-37.m4a"
+        },
+        {
+          "id": "sh-wi-38",
+          "word": "шприц",
+          "imageAsset": "word_shpric",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-38.m4a"
+        },
+        {
+          "id": "sh-wi-39",
+          "word": "шпилька",
+          "imageAsset": "word_shpilka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-39.m4a"
+        },
+        {
+          "id": "sh-wi-40",
+          "word": "шляпа",
+          "imageAsset": "word_shlyapa",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-40.m4a"
+        },
+        {
+          "id": "sh-wi-41",
+          "word": "шлюпка",
+          "imageAsset": "word_shlyupka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-41.m4a"
+        },
+        {
+          "id": "sh-wi-42",
+          "word": "шмель",
+          "imageAsset": "word_shmel",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-42.m4a"
+        },
+        {
+          "id": "sh-wi-43",
+          "word": "шпон",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-43.m4a"
+        },
+        {
+          "id": "sh-wi-44",
+          "word": "шершень",
+          "imageAsset": "word_shershen",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-44.m4a"
+        },
+        {
+          "id": "sh-wi-45",
+          "word": "шиловатый",
+          "imageAsset": "word_shilovatyy",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-45.m4a"
+        },
+        {
+          "id": "sh-wi-46",
+          "word": "ширина",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-46.m4a"
+        },
+        {
+          "id": "sh-wi-47",
+          "word": "широта",
+          "imageAsset": "word_shirota",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-47.m4a"
+        },
+        {
+          "id": "sh-wi-48",
+          "word": "шиповка",
+          "imageAsset": "word_kedy",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-48.m4a"
+        },
+        {
+          "id": "sh-wi-49",
+          "word": "шоссе",
+          "imageAsset": "word_shosse",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-49.m4a"
+        },
+        {
+          "id": "sh-wi-50",
+          "word": "шорты",
+          "imageAsset": "word_shorty",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-50.m4a"
+        },
+        {
+          "id": "sh-wi-51",
+          "word": "шорник",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-51.m4a"
+        },
+        {
+          "id": "sh-wi-52",
+          "word": "шутник",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-52.m4a"
+        },
+        {
+          "id": "sh-wi-53",
+          "word": "шушуканье",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-53.m4a"
+        },
+        {
+          "id": "sh-wi-54",
+          "word": "шалунья",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-54.m4a"
+        },
+        {
+          "id": "sh-wi-55",
+          "word": "шестёрка",
+          "imageAsset": "word_shestyorka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-55.m4a"
+        },
+        {
+          "id": "sh-wi-56",
+          "word": "шеренга",
+          "imageAsset": "word_sherenga",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-56.m4a"
+        },
+        {
+          "id": "sh-wi-57",
+          "word": "шнырять",
+          "imageAsset": "word_shnyryat",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-57.m4a"
+        },
+        {
+          "id": "sh-wi-58",
+          "word": "шелестеть",
+          "imageAsset": "word_shelestet",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-58.m4a"
+        },
+        {
+          "id": "sh-wi-59",
+          "word": "шевелить",
+          "imageAsset": "word_shevelit",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wi-59.m4a"
+        },
+        {
+          "id": "sh-wi-60",
+          "word": "шлагбаум",
+          "imageAsset": "word_shlagbaum",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wi-60.m4a"
+        },
+        {
+          "id": "sh-wi-61",
+          "word": "шкаф",
+          "hint": "ШК — два согласных в начале.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-61.m4a",
+          "imageAsset": "word_shkaf"
+        },
+        {
+          "id": "sh-wi-62",
+          "word": "шприц",
+          "hint": "ШПР — три согласных на старте.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-62.m4a"
+        },
+        {
+          "id": "sh-wi-63",
+          "word": "шпион",
+          "hint": "ШП — редкое стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-63.m4a",
+          "imageAsset": "word_lupa"
+        },
+        {
+          "id": "sh-wi-64",
+          "word": "шхуна",
+          "hint": "ШХ — оба шумных согласных.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-64.m4a",
+          "imageAsset": "word_shkhuna"
+        },
+        {
+          "id": "sh-wi-65",
+          "word": "шторка",
+          "hint": "ШТ — два глухих в начале.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-65.m4a",
+          "imageAsset": "word_shtorka"
+        },
+        {
+          "id": "sh-wi-66",
+          "word": "шкварки",
+          "hint": "ШКВ — три согласных + ударный А.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-66.m4a",
+          "imageAsset": "word_shkvarki"
+        },
+        {
+          "id": "sh-wi-67",
+          "word": "шпала",
+          "hint": "ШП + Л — два стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-67.m4a",
+          "imageAsset": "word_relsy"
+        },
+        {
+          "id": "sh-wi-68",
+          "word": "шпилька",
+          "hint": "ШП + ЛЬ — сложная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-68.m4a",
+          "imageAsset": "word_shpilka"
+        },
+        {
+          "id": "sh-wi-69",
+          "word": "штора",
+          "hint": "ШТО — мягкий старт после ШТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-69.m4a",
+          "imageAsset": "word_shtora"
+        },
+        {
+          "id": "sh-wi-70",
+          "word": "шкурка",
+          "hint": "ШК + РК — двойное стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-70.m4a",
+          "imageAsset": "word_kozhura"
+        },
+        {
+          "id": "sh-wi-71",
+          "word": "шатёр",
+          "hint": "ША+ТЁР — шатёр в цирке или на природе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wi-71.m4a",
+          "imageAsset": "word_shatyor"
+        },
+        {
+          "id": "sh-wi-72",
+          "word": "шоссе",
+          "hint": "ШО+ССЕ — дорога.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wi-72.m4a",
+          "imageAsset": "word_shosse"
+        },
+        {
+          "id": "sh-wi-73",
+          "word": "шифровка",
+          "hint": "ШИ+ФРО+ВКА — секретное сообщение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-73.m4a",
+          "imageAsset": "word_shifrovka"
+        },
+        {
+          "id": "sh-wi-74",
+          "word": "штанга",
+          "hint": "ШТА+НГА — спортивный инвентарь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-74.m4a",
+          "imageAsset": "word_shtanga"
+        },
+        {
+          "id": "sh-wi-75",
+          "word": "шасси",
+          "hint": "ША+ССИ — колёса самолёта.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-75.m4a",
+          "imageAsset": "word_shassi"
+        },
+        {
+          "id": "sh-wi-76",
+          "word": "шнурки",
+          "hint": "ШНУ+РКИ — то, чем завязывают ботинки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-76.m4a",
+          "imageAsset": "word_shnurki"
+        },
+        {
+          "id": "sh-wi-77",
+          "word": "штиль",
+          "hint": "ШТИ+ЛЬ — полная тишина на море.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-77.m4a"
+        },
+        {
+          "id": "sh-wi-78",
+          "word": "шахтёр",
+          "hint": "ШАХ+ТЁР — тот, кто работает в шахте.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-78.m4a",
+          "imageAsset": "word_shlem"
+        },
+        {
+          "id": "sh-wi-79",
+          "word": "шествие",
+          "hint": "ШЕС+ТВИЕ — торжественный поход.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-79.m4a",
+          "imageAsset": "word_shestvie"
+        },
+        {
+          "id": "sh-wi-80",
+          "word": "шпиль",
+          "hint": "ШПИ+ЛЬ — острый верх башни.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-80.m4a",
+          "imageAsset": "word_shpil"
+        },
+        {
+          "id": "sh-wi-81",
+          "word": "шлем",
+          "imageAsset": "word_shlem",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wi-81.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-4",
-     "word": "маляр",
-     "hint": "Красим нёбо кончиком языка вперёд-назад.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-4.m4a"
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "[Ш] в середине слова.",
+      "items": [
+        {
+          "id": "sh-wm-0",
+          "word": "каша",
+          "imageAsset": "word_kasha",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-0.m4a"
+        },
+        {
+          "id": "sh-wm-1",
+          "word": "мышка",
+          "imageAsset": "word_myshka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-1.m4a"
+        },
+        {
+          "id": "sh-wm-2",
+          "word": "каша",
+          "imageAsset": "word_kasha",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-2.m4a"
+        },
+        {
+          "id": "sh-wm-3",
+          "word": "шишка",
+          "imageAsset": "word_kasha",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-3.m4a",
+          "hint": "Шиш-ка. [Ш] в середине."
+        },
+        {
+          "id": "sh-wm-4",
+          "word": "опушка",
+          "imageAsset": "word_opushka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-4.m4a",
+          "hint": "о-пуШ-ка. [Ш] в середине."
+        },
+        {
+          "id": "sh-wm-5",
+          "word": "кошка",
+          "imageAsset": "word_koshka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-5.m4a"
+        },
+        {
+          "id": "sh-wm-6",
+          "word": "мышка",
+          "imageAsset": "word_myshka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-6.m4a"
+        },
+        {
+          "id": "sh-wm-7",
+          "word": "пышка",
+          "imageAsset": "word_pyshka",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-7.m4a"
+        },
+        {
+          "id": "sh-wm-8",
+          "word": "ушко",
+          "imageAsset": "word_ushko",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wm-8.m4a"
+        },
+        {
+          "id": "sh-wm-9",
+          "word": "мешок",
+          "imageAsset": "word_meshok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-9.m4a"
+        },
+        {
+          "id": "sh-wm-10",
+          "word": "пушка",
+          "imageAsset": "word_pushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-10.m4a"
+        },
+        {
+          "id": "sh-wm-11",
+          "word": "машина",
+          "imageAsset": "word_mashina",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-11.m4a"
+        },
+        {
+          "id": "sh-wm-12",
+          "word": "рубашка",
+          "imageAsset": "word_rubashka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-12.m4a"
+        },
+        {
+          "id": "sh-wm-13",
+          "word": "кошка",
+          "imageAsset": "word_cat",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-13.m4a"
+        },
+        {
+          "id": "sh-wm-15",
+          "word": "сушка",
+          "imageAsset": "word_sushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-15.m4a"
+        },
+        {
+          "id": "sh-wm-16",
+          "word": "подушка",
+          "imageAsset": "word_podushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-16.m4a"
+        },
+        {
+          "id": "sh-wm-17",
+          "word": "лягушка",
+          "imageAsset": "word_lyagushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-17.m4a"
+        },
+        {
+          "id": "sh-wm-18",
+          "word": "кукушка",
+          "imageAsset": "word_kukushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-18.m4a"
+        },
+        {
+          "id": "sh-wm-19",
+          "word": "лукошко",
+          "imageAsset": "word_lukoshko",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-19.m4a"
+        },
+        {
+          "id": "sh-wm-20",
+          "word": "горошина",
+          "imageAsset": "word_goroshina",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-20.m4a"
+        },
+        {
+          "id": "sh-wm-21",
+          "word": "окошко",
+          "imageAsset": "word_okoshko",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-21.m4a"
+        },
+        {
+          "id": "sh-wm-22",
+          "word": "пушинка",
+          "imageAsset": "word_pushinka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-22.m4a"
+        },
+        {
+          "id": "sh-wm-23",
+          "word": "мышонок",
+          "imageAsset": "word_myshonok",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-23.m4a"
+        },
+        {
+          "id": "sh-wm-24",
+          "word": "грушевый",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-24.m4a"
+        },
+        {
+          "id": "sh-wm-25",
+          "word": "ошибка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-25.m4a"
+        },
+        {
+          "id": "sh-wm-26",
+          "word": "пешком",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-26.m4a"
+        },
+        {
+          "id": "sh-wm-27",
+          "word": "дышать",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-27.m4a"
+        },
+        {
+          "id": "sh-wm-28",
+          "word": "лошадь",
+          "imageAsset": "word_loshad",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-28.m4a"
+        },
+        {
+          "id": "sh-wm-29",
+          "word": "нашивка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-29.m4a"
+        },
+        {
+          "id": "sh-wm-30",
+          "word": "башня",
+          "imageAsset": "word_bashnya",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-30.m4a"
+        },
+        {
+          "id": "sh-wm-31",
+          "word": "кашне",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-31.m4a"
+        },
+        {
+          "id": "sh-wm-32",
+          "word": "дошкольник",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wm-32.m4a"
+        },
+        {
+          "id": "sh-wm-33",
+          "word": "пошатнуться",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 5,
+          "audio_file": "Audio/Content/SH/sh-wm-33.m4a"
+        },
+        {
+          "id": "sh-wm-34",
+          "word": "шашлык",
+          "imageAsset": "word_shashlyk",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-34.m4a"
+        },
+        {
+          "id": "sh-wm-35",
+          "word": "кашель",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-35.m4a"
+        },
+        {
+          "id": "sh-wm-36",
+          "word": "ватрушка",
+          "imageAsset": "word_vatrushka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-36.m4a"
+        },
+        {
+          "id": "sh-wm-37",
+          "word": "петрушка",
+          "imageAsset": "word_petrushka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-37.m4a"
+        },
+        {
+          "id": "sh-wm-38",
+          "word": "рогатушка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wm-38.m4a"
+        },
+        {
+          "id": "sh-wm-39",
+          "word": "матрёшка",
+          "imageAsset": "word_matryoshka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-39.m4a"
+        },
+        {
+          "id": "sh-wm-40",
+          "word": "картошка",
+          "imageAsset": "word_kartoshka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-40.m4a"
+        },
+        {
+          "id": "sh-wm-41",
+          "word": "кошёлка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-41.m4a",
+          "hint": "ко-Шёл-ка. [Ш] в середине."
+        },
+        {
+          "id": "sh-wm-42",
+          "word": "кошелёк",
+          "imageAsset": "word_koshelyok",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-42.m4a"
+        },
+        {
+          "id": "sh-wm-43",
+          "word": "мешочек",
+          "imageAsset": "word_meshochek",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-43.m4a"
+        },
+        {
+          "id": "sh-wm-44",
+          "word": "ромашка",
+          "imageAsset": "word_romashka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-44.m4a"
+        },
+        {
+          "id": "sh-wm-45",
+          "word": "катушка",
+          "imageAsset": "word_sapog",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-45.m4a",
+          "hint": "Ка-туШ-ка. [Ш] в середине."
+        },
+        {
+          "id": "sh-wm-46",
+          "word": "затушить",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wm-46.m4a"
+        },
+        {
+          "id": "sh-wm-47",
+          "word": "мышиный",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-47.m4a"
+        },
+        {
+          "id": "sh-wm-48",
+          "word": "большой",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-48.m4a"
+        },
+        {
+          "id": "sh-wm-49",
+          "word": "хороший",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wm-49.m4a"
+        },
+        {
+          "id": "sh-wm-50",
+          "word": "вспышка",
+          "hint": "ПШК — три согласных в середине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-50.m4a"
+        },
+        {
+          "id": "sh-wm-51",
+          "word": "мышьяк",
+          "hint": "ШЬЯ — Ш с мягким знаком.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-51.m4a"
+        },
+        {
+          "id": "sh-wm-52",
+          "word": "прошлое",
+          "hint": "ШЛ — плавный после Ш.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wm-52.m4a"
+        },
+        {
+          "id": "sh-wm-53",
+          "word": "ошмётки",
+          "hint": "ШМ в середине слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-53.m4a"
+        },
+        {
+          "id": "sh-wm-54",
+          "word": "лошадка",
+          "hint": "Ш между двумя гласными.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wm-54.m4a"
+        },
+        {
+          "id": "sh-wm-55",
+          "word": "сушёный",
+          "hint": "ШЁ — лабиализованный звук после Ш.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wm-55.m4a"
+        },
+        {
+          "id": "sh-wm-56",
+          "word": "нашествие",
+          "hint": "ШЕС — Ш + шипящий контекст.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-56.m4a"
+        },
+        {
+          "id": "sh-wm-60",
+          "word": "башмак",
+          "imageAsset": "word_bashmak",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-60.m4a"
+        },
+        {
+          "id": "sh-wm-61",
+          "word": "ловушка",
+          "imageAsset": "word_lovushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-61.m4a"
+        },
+        {
+          "id": "sh-wm-62",
+          "word": "вишня",
+          "imageAsset": "word_vishnya",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-62.m4a"
+        },
+        {
+          "id": "sh-wm-63",
+          "word": "вешалка",
+          "imageAsset": "word_veshalka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-63.m4a"
+        },
+        {
+          "id": "sh-wm-64",
+          "word": "солнышко",
+          "imageAsset": "word_solnyshko",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-64.m4a"
+        },
+        {
+          "id": "sh-wm-65",
+          "word": "рикша",
+          "imageAsset": "word_riksha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-65.m4a"
+        },
+        {
+          "id": "sh-wm-66",
+          "word": "каштан",
+          "imageAsset": "word_kashtan",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-66.m4a"
+        },
+        {
+          "id": "sh-wm-67",
+          "word": "грушка",
+          "imageAsset": "word_grushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-67.m4a"
+        },
+        {
+          "id": "sh-wm-68",
+          "word": "индюшонок",
+          "imageAsset": "word_indyushonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-68.m4a"
+        },
+        {
+          "id": "sh-wm-69",
+          "word": "индюшка",
+          "imageAsset": "word_indyushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-69.m4a"
+        },
+        {
+          "id": "sh-wm-70",
+          "word": "горбуша",
+          "imageAsset": "word_gorbusha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-70.m4a"
+        },
+        {
+          "id": "sh-wm-71",
+          "word": "галоши",
+          "imageAsset": "word_galoshi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-71.m4a"
+        },
+        {
+          "id": "sh-wm-72",
+          "word": "избушка",
+          "imageAsset": "word_izbushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-72.m4a"
+        },
+        {
+          "id": "sh-wm-73",
+          "word": "ракушка",
+          "imageAsset": "word_rakushka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-73.m4a"
+        },
+        {
+          "id": "sh-wm-74",
+          "word": "боярышник",
+          "imageAsset": "word_boyaryshnik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-74.m4a"
+        },
+        {
+          "id": "sh-wm-75",
+          "word": "лягушонок",
+          "imageAsset": "word_lyagushonok",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-75.m4a"
+        },
+        {
+          "id": "sh-wm-76",
+          "word": "уши",
+          "imageAsset": "word_ushi",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-76.m4a"
+        },
+        {
+          "id": "sh-wm-77",
+          "word": "вишенка",
+          "imageAsset": "word_vishenka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-77.m4a"
+        },
+        {
+          "id": "sh-wm-78",
+          "word": "кувшин",
+          "imageAsset": "word_kuvshin",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-78.m4a"
+        },
+        {
+          "id": "sh-wm-79",
+          "word": "галоша",
+          "imageAsset": "word_galosha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-79.m4a"
+        },
+        {
+          "id": "sh-wm-80",
+          "word": "крыша",
+          "imageAsset": "word_krysha",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wm-80.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-5",
-     "word": "лошадка",
-     "hint": "Цокаем языком — лошадка скачет.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-5.m4a"
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "[Ш] в конце слова.",
+      "items": [
+        {
+          "id": "sh-wf-0",
+          "word": "малыш",
+          "imageAsset": "word_malysh",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wf-0.m4a"
+        },
+        {
+          "id": "sh-wf-1",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wf-1.m4a"
+        },
+        {
+          "id": "sh-wf-2",
+          "word": "ковш",
+          "imageAsset": "word_kovsh",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wf-2.m4a"
+        },
+        {
+          "id": "sh-wf-3",
+          "word": "туш",
+          "imageAsset": "word_tush",
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wf-3.m4a"
+        },
+        {
+          "id": "sh-wf-4",
+          "word": "тишь",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-wf-4.m4a"
+        },
+        {
+          "id": "sh-wf-5",
+          "word": "камыш",
+          "imageAsset": "word_kamysh",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-5.m4a"
+        },
+        {
+          "id": "sh-wf-6",
+          "word": "ёрш",
+          "imageAsset": "word_yorsh",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-6.m4a"
+        },
+        {
+          "id": "sh-wf-7",
+          "word": "плюш",
+          "imageAsset": "word_plyush",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-7.m4a"
+        },
+        {
+          "id": "sh-wf-8",
+          "word": "тушь",
+          "imageAsset": "word_tush",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-8.m4a"
+        },
+        {
+          "id": "sh-wf-9",
+          "word": "брошь",
+          "imageAsset": "word_brosh",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-9.m4a"
+        },
+        {
+          "id": "sh-wf-10",
+          "word": "гуашь",
+          "imageAsset": "word_guash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-10.m4a"
+        },
+        {
+          "id": "sh-wf-11",
+          "word": "малыш",
+          "imageAsset": "word_malysh",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-11.m4a"
+        },
+        {
+          "id": "sh-wf-12",
+          "word": "карандаш",
+          "imageAsset": "word_karandash",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-12.m4a"
+        },
+        {
+          "id": "sh-wf-13",
+          "word": "шалаш",
+          "imageAsset": "word_shalash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-13.m4a"
+        },
+        {
+          "id": "sh-wf-14",
+          "word": "кругляш",
+          "imageAsset": "word_kruglyash",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-14.m4a",
+          "hint": "кру-гляШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-24",
+          "word": "лаваш",
+          "imageAsset": "word_lavash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-24.m4a",
+          "hint": "ла-ваШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-25",
+          "word": "ландыш",
+          "imageAsset": "word_landysh",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-25.m4a"
+        },
+        {
+          "id": "sh-wf-26",
+          "word": "финиш",
+          "imageAsset": "word_finish",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-26.m4a",
+          "hint": "фи-ниШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-27",
+          "word": "торопыш",
+          "imageAsset": "word_toropysh",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wf-27.m4a",
+          "hint": "то-ро-пыШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-28",
+          "word": "крепыш",
+          "imageAsset": "word_krepysh",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-28.m4a",
+          "hint": "кре-пыШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-29",
+          "word": "шиш",
+          "imageAsset": "word_shish",
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-wf-29.m4a",
+          "hint": "шиШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-30",
+          "word": "детёныш",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-30.m4a",
+          "hint": "де-тё-ныШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-31",
+          "word": "голыш",
+          "imageAsset": "word_golysh",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-31.m4a",
+          "hint": "го-лыШ. [Ш] в конце."
+        },
+        {
+          "id": "sh-wf-32",
+          "word": "ландыш",
+          "imageAsset": "word_landysh_b",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-wf-32.m4a"
+        },
+        {
+          "id": "sh-wf-35",
+          "word": "гуляш",
+          "imageAsset": "word_gulyash",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-wf-35.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-6",
-     "word": "вкусное-варенье",
-     "hint": "Лижем верхнюю губу языком — вкусно!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-6.m4a"
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания и короткие фразы со звуком [Ш].",
+      "items": [
+        {
+          "id": "sh-ph-0",
+          "word": "шуба на вешалке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-0.m4a"
+        },
+        {
+          "id": "sh-ph-1",
+          "word": "школьник пишет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-1.m4a"
+        },
+        {
+          "id": "sh-ph-2",
+          "word": "большая шапка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-2.m4a"
+        },
+        {
+          "id": "sh-ph-3",
+          "word": "красивый шарф",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-3.m4a"
+        },
+        {
+          "id": "sh-ph-4",
+          "word": "наша машина",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-4.m4a"
+        },
+        {
+          "id": "sh-ph-5",
+          "word": "кошачий хвост",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-5.m4a"
+        },
+        {
+          "id": "sh-ph-6",
+          "word": "школьная сумка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-6.m4a"
+        },
+        {
+          "id": "sh-ph-7",
+          "word": "пушистая кошка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-7.m4a"
+        },
+        {
+          "id": "sh-ph-8",
+          "word": "шумный малыш",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-8.m4a"
+        },
+        {
+          "id": "sh-ph-9",
+          "word": "мышка в норке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-9.m4a"
+        },
+        {
+          "id": "sh-ph-10",
+          "word": "шар летит",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-ph-10.m4a"
+        },
+        {
+          "id": "sh-ph-11",
+          "word": "машина едет",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-ph-11.m4a"
+        },
+        {
+          "id": "sh-ph-12",
+          "word": "кошка спит",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SH/sh-ph-12.m4a"
+        },
+        {
+          "id": "sh-ph-13",
+          "word": "широкий шарф",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-13.m4a"
+        },
+        {
+          "id": "sh-ph-14",
+          "word": "шоколадная конфета",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-14.m4a"
+        },
+        {
+          "id": "sh-ph-15",
+          "word": "пышная подушка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-15.m4a"
+        },
+        {
+          "id": "sh-ph-16",
+          "word": "мышиный хвостик",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-16.m4a"
+        },
+        {
+          "id": "sh-ph-17",
+          "word": "шумит лес",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-17.m4a"
+        },
+        {
+          "id": "sh-ph-18",
+          "word": "шагает солдат",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-18.m4a"
+        },
+        {
+          "id": "sh-ph-19",
+          "word": "ошибся мышонок",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-19.m4a"
+        },
+        {
+          "id": "sh-ph-20",
+          "word": "шишка на ёлке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-20.m4a"
+        },
+        {
+          "id": "sh-ph-21",
+          "word": "шелест листьев",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-21.m4a"
+        },
+        {
+          "id": "sh-ph-22",
+          "word": "кушать кашу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-22.m4a"
+        },
+        {
+          "id": "sh-ph-23",
+          "word": "лягушка на кочке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-23.m4a"
+        },
+        {
+          "id": "sh-ph-24",
+          "word": "шиповник цветёт",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-24.m4a"
+        },
+        {
+          "id": "sh-ph-25",
+          "word": "шарики на ёлке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-25.m4a"
+        },
+        {
+          "id": "sh-ph-26",
+          "word": "мышка грызёт сушку",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-26.m4a"
+        },
+        {
+          "id": "sh-ph-27",
+          "word": "большой мешок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-27.m4a"
+        },
+        {
+          "id": "sh-ph-28",
+          "word": "найти карандаш",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-28.m4a"
+        },
+        {
+          "id": "sh-ph-29",
+          "word": "шалить и прыгать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-29.m4a"
+        },
+        {
+          "id": "sh-ph-30",
+          "word": "пышный шарик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-30.m4a"
+        },
+        {
+          "id": "sh-ph-31",
+          "word": "тихая мышь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-31.m4a"
+        },
+        {
+          "id": "sh-ph-32",
+          "word": "шофёр за рулём",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-32.m4a"
+        },
+        {
+          "id": "sh-ph-33",
+          "word": "горячая каша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-33.m4a"
+        },
+        {
+          "id": "sh-ph-34",
+          "word": "широкая дорожка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-34.m4a"
+        },
+        {
+          "id": "sh-ph-35",
+          "word": "свежий шиповник",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-35.m4a"
+        },
+        {
+          "id": "sh-ph-36",
+          "word": "кошка и мышка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-36.m4a"
+        },
+        {
+          "id": "sh-ph-37",
+          "word": "красный шар",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-37.m4a"
+        },
+        {
+          "id": "sh-ph-38",
+          "word": "шапка и шарф",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-38.m4a"
+        },
+        {
+          "id": "sh-ph-39",
+          "word": "шума в ушах",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-39.m4a"
+        },
+        {
+          "id": "sh-ph-40",
+          "word": "матрёшка в руках",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-40.m4a"
+        },
+        {
+          "id": "sh-ph-41",
+          "word": "ватрушка с вареньем",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-41.m4a"
+        },
+        {
+          "id": "sh-ph-42",
+          "word": "машина шумит",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-42.m4a"
+        },
+        {
+          "id": "sh-ph-43",
+          "word": "шершень жужжит",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-43.m4a"
+        },
+        {
+          "id": "sh-ph-44",
+          "word": "белая мышь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-44.m4a"
+        },
+        {
+          "id": "sh-ph-45",
+          "word": "подушка на кровати",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-45.m4a"
+        },
+        {
+          "id": "sh-ph-46",
+          "word": "сушки в мешке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-46.m4a"
+        },
+        {
+          "id": "sh-ph-47",
+          "word": "шина у велосипеда",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-47.m4a"
+        },
+        {
+          "id": "sh-ph-48",
+          "word": "пышный снег",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-ph-48.m4a"
+        },
+        {
+          "id": "sh-ph-49",
+          "word": "шалаш в лесу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-ph-49.m4a"
+        },
+        {
+          "id": "sh-ph-50",
+          "word": "шкаф у окна",
+          "hint": "ШК в начале фразы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-50.m4a"
+        },
+        {
+          "id": "sh-ph-51",
+          "word": "шторка задёрнута плотно",
+          "hint": "ШТ + плавное Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-51.m4a"
+        },
+        {
+          "id": "sh-ph-52",
+          "word": "большой шкаф с полками",
+          "hint": "Ш в двух позициях: конец + начало.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-52.m4a"
+        },
+        {
+          "id": "sh-ph-53",
+          "word": "шпионская игра",
+          "hint": "ШП + ИГ — сложный ритм.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-53.m4a"
+        },
+        {
+          "id": "sh-ph-54",
+          "word": "сушёная шиповник",
+          "hint": "ШЁ + ШИ — два Ш в фразе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-54.m4a"
+        },
+        {
+          "id": "sh-ph-55",
+          "word": "дождь прошёл быстро",
+          "hint": "ЖД + ШЁ — звонкий + шипящий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-55.m4a"
+        },
+        {
+          "id": "sh-ph-56",
+          "word": "вышка над крышей",
+          "hint": "ШК + КР — насыщенная фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-56.m4a"
+        },
+        {
+          "id": "sh-ph-57",
+          "word": "маленький мышонок",
+          "hint": "Ш в середине — картинный образ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-57.m4a"
+        },
+        {
+          "id": "sh-ph-58",
+          "word": "ошибка в решении",
+          "hint": "Ш + Ш — дифференциация позиций.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-58.m4a"
+        },
+        {
+          "id": "sh-ph-59",
+          "word": "нашла клешнями",
+          "hint": "ШН + КЛ + ШН — ритмическое чередование.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-59.m4a"
+        },
+        {
+          "id": "sh-ph-60",
+          "word": "шприц в кармане",
+          "hint": "ШПР — три согласных в теме.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-60.m4a"
+        },
+        {
+          "id": "sh-ph-61",
+          "word": "прошлой зимой шёл снег",
+          "hint": "ШЛ + ШЁ — нарративный образ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-61.m4a"
+        },
+        {
+          "id": "sh-ph-62",
+          "word": "шустрый мышонок убежал",
+          "hint": "ШУ + ШО — два Ш в разных слогах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-62.m4a"
+        },
+        {
+          "id": "sh-ph-63",
+          "word": "вышла кошка из корзинки",
+          "hint": "ШЛА + КШК — плотная Ш-цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-63.m4a"
+        },
+        {
+          "id": "sh-ph-64",
+          "word": "школьная экскурсия прошла",
+          "hint": "ШК + КС + ШЛ — три стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-64.m4a"
+        },
+        {
+          "id": "sh-ph-65",
+          "word": "шустрый шмель над цветком",
+          "hint": "ШУС+ШМЕ — два Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-65.m4a"
+        },
+        {
+          "id": "sh-ph-66",
+          "word": "шёлковый шарф на плечах",
+          "hint": "ШЁЛ+ША — Ш в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-66.m4a"
+        },
+        {
+          "id": "sh-ph-67",
+          "word": "шумная школа во вторник",
+          "hint": "ШУМ+ШКО — ШМ и ШК стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-67.m4a"
+        },
+        {
+          "id": "sh-ph-68",
+          "word": "мышиная нора под крыльцом",
+          "hint": "МЫ+НО+КРЫ — Ш в середине слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-68.m4a"
+        },
+        {
+          "id": "sh-ph-69",
+          "word": "шёлковая подушка у дивана",
+          "hint": "ШЁЛ+ПО+ДУ+ШКА — длинная фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-69.m4a"
+        },
+        {
+          "id": "sh-ph-70",
+          "word": "шёлковый платок на шее",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-70.m4a"
+        },
+        {
+          "id": "sh-ph-71",
+          "word": "большой шар над площадью",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-71.m4a"
+        },
+        {
+          "id": "sh-ph-72",
+          "word": "мышиный домик в поле",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-72.m4a"
+        },
+        {
+          "id": "sh-ph-73",
+          "word": "кошачья лапа на подушке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-73.m4a"
+        },
+        {
+          "id": "sh-ph-74",
+          "word": "горошины рассыпались по полу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-74.m4a"
+        },
+        {
+          "id": "sh-ph-75",
+          "word": "ушки зайца торчат над травой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-75.m4a"
+        },
+        {
+          "id": "sh-ph-76",
+          "word": "шахматный конь прыгнул вперёд",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-76.m4a"
+        },
+        {
+          "id": "sh-ph-77",
+          "word": "рубашка висит на крючке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-77.m4a"
+        },
+        {
+          "id": "sh-ph-78",
+          "word": "шустрая мышь под крыльцом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-78.m4a"
+        },
+        {
+          "id": "sh-ph-79",
+          "word": "пышная шапка на голове",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-79.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-7",
-     "word": "покусаем-язычок",
-     "hint": "Тихонько кусаем кончик языка зубками.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-7.m4a"
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения со звуком [Ш].",
+      "items": [
+        {
+          "id": "sh-sen-0",
+          "word": "Маша нашла большой шар.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-0.m4a"
+        },
+        {
+          "id": "sh-sen-1",
+          "word": "Кошка спит на подушке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-1.m4a"
+        },
+        {
+          "id": "sh-sen-2",
+          "word": "Мыши прячутся в тишине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-2.m4a"
+        },
+        {
+          "id": "sh-sen-3",
+          "word": "Школьник пишет в тетради.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-3.m4a"
+        },
+        {
+          "id": "sh-sen-4",
+          "word": "Шофёр едет на машине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-4.m4a"
+        },
+        {
+          "id": "sh-sen-5",
+          "word": "Мышка грызёт сушку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-5.m4a"
+        },
+        {
+          "id": "sh-sen-6",
+          "word": "Пушистая кошка сидит у окошка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-6.m4a"
+        },
+        {
+          "id": "sh-sen-7",
+          "word": "Наша лягушка живёт в болоте.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-7.m4a"
+        },
+        {
+          "id": "sh-sen-8",
+          "word": "Бабушка варит кашу для малыша.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-8.m4a"
+        },
+        {
+          "id": "sh-sen-9",
+          "word": "Мишка надел шапку и шарф.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-9.m4a"
+        },
+        {
+          "id": "sh-sen-10",
+          "word": "Шумит лес в ненастную погоду.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-10.m4a"
+        },
+        {
+          "id": "sh-sen-11",
+          "word": "Кукушка кукует в чаще.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-11.m4a"
+        },
+        {
+          "id": "sh-sen-12",
+          "word": "Шмель летит к шиповнику.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-12.m4a"
+        },
+        {
+          "id": "sh-sen-13",
+          "word": "Маша положила карандаш в мешок.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-13.m4a"
+        },
+        {
+          "id": "sh-sen-14",
+          "word": "Паша нашёл ёжика в лесу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-14.m4a"
+        },
+        {
+          "id": "sh-sen-15",
+          "word": "Широкая дорожка ведёт к школе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-15.m4a"
+        },
+        {
+          "id": "sh-sen-16",
+          "word": "У кошки пышный хвост.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-sen-16.m4a"
+        },
+        {
+          "id": "sh-sen-17",
+          "word": "Малыш надевает тёплую шубу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-17.m4a"
+        },
+        {
+          "id": "sh-sen-18",
+          "word": "Мышонок спрятался под подушку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-18.m4a"
+        },
+        {
+          "id": "sh-sen-19",
+          "word": "На ёлке висят красивые шары.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-19.m4a"
+        },
+        {
+          "id": "sh-sen-20",
+          "word": "Шёл дождь, шумели листья.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-20.m4a"
+        },
+        {
+          "id": "sh-sen-21",
+          "word": "Машина едет по широкой дороге.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-21.m4a"
+        },
+        {
+          "id": "sh-sen-22",
+          "word": "Петрушка любит баловаться.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-22.m4a"
+        },
+        {
+          "id": "sh-sen-23",
+          "word": "Ватрушки пекли в духовке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-23.m4a"
+        },
+        {
+          "id": "sh-sen-24",
+          "word": "Шмель жужжал над ромашкой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-24.m4a"
+        },
+        {
+          "id": "sh-sen-25",
+          "word": "Подушка упала с кровати.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-25.m4a"
+        },
+        {
+          "id": "sh-sen-26",
+          "word": "Лошадь скачет по полю.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-sen-26.m4a"
+        },
+        {
+          "id": "sh-sen-27",
+          "word": "Бабушка дала Мише рубашку.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-27.m4a"
+        },
+        {
+          "id": "sh-sen-28",
+          "word": "Дошкольник рисует карандашом.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-28.m4a"
+        },
+        {
+          "id": "sh-sen-29",
+          "word": "Матрёшка стоит на полке в шкафу.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-sen-29.m4a"
+        },
+        {
+          "id": "sh-sen-30",
+          "word": "Шустрый мышонок спрятался под шкафом.",
+          "hint": "ШУ + МШ + ШК — три позиции Ш.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-30.m4a"
+        },
+        {
+          "id": "sh-sen-31",
+          "word": "Шторм прошёл, и вышло солнышко.",
+          "hint": "ШТ + ШЁ + ШЛ + ШЛ + ШН — цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-31.m4a"
+        },
+        {
+          "id": "sh-sen-32",
+          "word": "Маша нашла шпильку в шкафу.",
+          "hint": "ША + НШ + ШП + ШК — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-32.m4a"
+        },
+        {
+          "id": "sh-sen-33",
+          "word": "Большая мышь утащила кусочек сыра.",
+          "hint": "ШЬ в конце + ШК — связный текст.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-33.m4a"
+        },
+        {
+          "id": "sh-sen-34",
+          "word": "Шкаф скрипит, когда его открывают.",
+          "hint": "ШК + КР — придаточное предложение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-34.m4a"
+        },
+        {
+          "id": "sh-sen-35",
+          "word": "Дождь прошёл, и стало свежее.",
+          "hint": "ЖД + ШЁ — нарративная связка.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-35.m4a"
+        },
+        {
+          "id": "sh-sen-36",
+          "word": "Кошка смотрела на мышку издалека.",
+          "hint": "КШ + МШ — две позиции шипящих.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-36.m4a"
+        },
+        {
+          "id": "sh-sen-37",
+          "word": "Школьники прошли мимо старой вышки.",
+          "hint": "ШК + ШЛ + ШК — тройная связь.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-37.m4a"
+        },
+        {
+          "id": "sh-sen-38",
+          "word": "Шёпот в тишине слышен очень хорошо.",
+          "hint": "ШЁ + ШН + ШН — шёпотная тема.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-38.m4a"
+        },
+        {
+          "id": "sh-sen-39",
+          "word": "Шершавый камень лежал у дорожки.",
+          "hint": "ШРШВ — сложная фонетика слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-39.m4a"
+        },
+        {
+          "id": "sh-sen-40",
+          "word": "Наша кошка уже старая, но шустрая.",
+          "hint": "НШ + КШ + ШУ — три Ш-слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-40.m4a"
+        },
+        {
+          "id": "sh-sen-41",
+          "word": "Прошлой осенью мы нашли гриб.",
+          "hint": "ШЛ + НШ — два Ш в одном предложении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-41.m4a"
+        },
+        {
+          "id": "sh-sen-42",
+          "word": "В шкафу лежат шарф и шапка.",
+          "hint": "Три Ш-слова — счёт и называние.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-42.m4a"
+        },
+        {
+          "id": "sh-sen-43",
+          "word": "Шумный поезд промчался мимо станции.",
+          "hint": "ШУМ + ЧШ — шипящий нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-43.m4a"
+        },
+        {
+          "id": "sh-sen-44",
+          "word": "Миша и Даша делили большую шоколадку.",
+          "hint": "МШ + ДШ + ШО — имена + слово.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-44.m4a"
+        },
+        {
+          "id": "sh-sen-45",
+          "word": "Шура нашёл шишку под большой ёлкой.",
+          "hint": "ШУ+ШИ+ШКУ — три Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-45.m4a"
+        },
+        {
+          "id": "sh-sen-46",
+          "word": "Большая мышь спряталась под деревянным крыльцом.",
+          "hint": "ША+МЫ+КРЫ — Ш в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-46.m4a"
+        },
+        {
+          "id": "sh-sen-47",
+          "word": "Шустрый малыш шлёпал по лужам весело.",
+          "hint": "ШУС+МА+ШЛЁ — нарратив с двумя Ш.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-47.m4a"
+        },
+        {
+          "id": "sh-sen-48",
+          "word": "Наш шофёр ехал по широкому шоссе.",
+          "hint": "ШО+ШИ+ШО — три Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-48.m4a"
+        },
+        {
+          "id": "sh-sen-49",
+          "word": "Шмель жужжал над шиповником у тропинки.",
+          "hint": "ШМЕ+ШИ — Ш в начале двух слов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-49.m4a"
+        },
+        {
+          "id": "sh-sen-50",
+          "word": "Шарик нашёл шишку под высокой елью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-50.m4a"
+        },
+        {
+          "id": "sh-sen-51",
+          "word": "Наша кошка любит спать на мягкой подушке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-51.m4a"
+        },
+        {
+          "id": "sh-sen-52",
+          "word": "Маша смешила малышей смешной шуткой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-52.m4a"
+        },
+        {
+          "id": "sh-sen-53",
+          "word": "Широкий шарф согревал в морозный день.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-53.m4a"
+        },
+        {
+          "id": "sh-sen-54",
+          "word": "Мышата прятались в стогу соломы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-54.m4a"
+        },
+        {
+          "id": "sh-sen-55",
+          "word": "Шурик нашёл большого жука под камнем.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-55.m4a"
+        },
+        {
+          "id": "sh-sen-56",
+          "word": "Шоколадный торт стоял на праздничном столе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-56.m4a"
+        },
+        {
+          "id": "sh-sen-57",
+          "word": "Хорошая лошадь слушалась своего хозяина.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-57.m4a"
+        },
+        {
+          "id": "sh-sen-58",
+          "word": "Дошколята рисовали пышные ёлки карандашами.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-58.m4a"
+        },
+        {
+          "id": "sh-sen-59",
+          "word": "Кукушка кричала в тишине лесной опушки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-59.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-8",
-     "word": "большая-чашечка",
-     "hint": "Чашечка стала ещё шире — держим 5 секунд.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-8.m4a"
+    "story": {
+      "stageId": "story",
+      "note": "Скороговорки и тексты насыщенные звуком [Ш].",
+      "items": [
+        {
+          "id": "sh-st-0",
+          "word": "Шла Саша по шоссе и сосала сушку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-st-0.m4a"
+        },
+        {
+          "id": "sh-st-1",
+          "word": "У нашей Маши каша, у Паши шапка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-st-1.m4a"
+        },
+        {
+          "id": "sh-st-2",
+          "word": "Мышка мышке шепчет: тише, кошка слышит.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-st-2.m4a"
+        },
+        {
+          "id": "sh-st-3",
+          "word": "Шишки на ёлке, шмели на ромашке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-st-3.m4a"
+        },
+        {
+          "id": "sh-st-4",
+          "word": "Наша Маша пьёт горячую кашу с ложки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-st-4.m4a"
+        },
+        {
+          "id": "sh-st-5",
+          "word": "Ёжик шуршит в шалаше.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-st-5.m4a"
+        },
+        {
+          "id": "sh-st-6",
+          "word": "Мышонок нашёл кусочек сушки под подушкой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-st-6.m4a"
+        },
+        {
+          "id": "sh-st-7",
+          "word": "Кошка Мурка спит на пышной подушке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-st-7.m4a"
+        },
+        {
+          "id": "sh-st-8",
+          "word": "Шофёр Яша едет на машине по шоссе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-st-8.m4a"
+        },
+        {
+          "id": "sh-st-9",
+          "word": "В нашей школе пишут карандашами и красками.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/SH/sh-st-9.m4a"
+        },
+        {
+          "id": "sh-st-10",
+          "word": "Лягушка прыгнула в болото — буль-буль-шлёп!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/SH/sh-st-10.m4a"
+        }
+      ]
     },
-    {
-     "id": "sh-prep-9",
-     "word": "чашечка-в-рот",
-     "hint": "Чашечку убираем за верхние зубы.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-9.m4a"
-    },
-    {
-     "id": "sh-prep-10",
-     "word": "фокус",
-     "hint": "Дуем на ватку — она летит вверх.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-10.m4a"
-    },
-    {
-     "id": "sh-prep-11",
-     "word": "гармошка",
-     "hint": "Язык у нёба — двигаем челюстью вниз-вверх.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-prep-11.m4a"
-    },
-    {
-     "id": "sh-prep-12",
-     "word": "индюк",
-     "hint": "Язык по верхней губе: бл-бл-бл быстро.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-prep-12.m4a"
-    },
-    {
-     "id": "sh-prep-13",
-     "word": "качели",
-     "hint": "Язык вверх к носу — вниз к подбородку.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-13.m4a"
-    },
-    {
-     "id": "sh-prep-14",
-     "word": "иголочка",
-     "hint": "Острый язык тянется вперёд — иголочка.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-14.m4a"
-    },
-    {
-     "id": "sh-prep-15",
-     "word": "парус",
-     "hint": "Язык упирается в верхние зубы изнутри.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-prep-15.m4a"
-    },
-    {
-     "id": "sh-prep-16",
-     "word": "чья-чашечка-больше",
-     "hint": "Соревнуемся — у кого чашечка шире.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-16.m4a"
-    },
-    {
-     "id": "sh-prep-17",
-     "word": "футбол",
-     "hint": "Язык-мяч толкаем в правую щёку, в левую.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-17.m4a"
-    },
-    {
-     "id": "sh-prep-18",
-     "word": "часики",
-     "hint": "Язык влево-вправо как маятник часов.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-18.m4a"
-    },
-    {
-     "id": "sh-prep-19",
-     "word": "трубочка",
-     "hint": "Губы вытягиваем трубочкой вперёд.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-prep-19.m4a"
-    },
-    {
-     "id": "sh-prep-20",
-     "word": "чистим-зубки-сверху",
-     "hint": "Языком чистим верхние зубы изнутри.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-prep-20.m4a"
+    "diff": {
+      "stageId": "diff",
+      "note": "Дифференциация Ш–С, Ш–Ж, Ш–Щ: реальные минимальные пары и выбор правильного написания.",
+      "items": [
+        {
+          "id": "sh-df-0",
+          "word": "мишка — миска",
+          "hint": "Мишка — медведь; миска — посуда. Ш или С?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-0.m4a"
+        },
+        {
+          "id": "sh-df-1",
+          "word": "крыша — крыса",
+          "hint": "Крыша — над домом; крыса — зверёк. Ш или С?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-1.m4a",
+          "imageAsset": "word_krysha|word_krysa"
+        },
+        {
+          "id": "sh-df-2",
+          "word": "кашка — каска",
+          "hint": "Кашка — кашка; каска — на голове. Ш или С?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-2.m4a"
+        },
+        {
+          "id": "sh-df-3",
+          "word": "уши — усы",
+          "hint": "Уши — слышим; усы — у кота. Ш или С?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-3.m4a",
+          "imageAsset": "word_ushi|word_usy"
+        },
+        {
+          "id": "sh-df-4",
+          "word": "шутки — сутки",
+          "hint": "Шутки — смеёмся; сутки — день и ночь. Ш или С?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-4.m4a"
+        },
+        {
+          "id": "sh-df-5",
+          "word": "сила — шило",
+          "hint": "Сила — сильный; шило — острое. С или Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-5.m4a",
+          "imageAsset": "word_sila|word_shilo"
+        },
+        {
+          "id": "sh-df-6",
+          "word": "Машка — маска",
+          "hint": "Машка — имя; маска на лицо. Ш или С?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-6.m4a"
+        },
+        {
+          "id": "sh-df-7",
+          "word": "жар — шар",
+          "hint": "Жар — горячо; шар — круглый. Ж или Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-7.m4a",
+          "imageAsset": "word_zhar|word_shar"
+        },
+        {
+          "id": "sh-df-8",
+          "word": "жить — шить",
+          "hint": "Жить — живём; шить — иголкой. Ж или Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-8.m4a"
+        },
+        {
+          "id": "sh-df-9",
+          "word": "кожа — Коша",
+          "hint": "Кожа — на руке; Коша — кличка кота. Ж или Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-9.m4a"
+        },
+        {
+          "id": "sh-df-10",
+          "word": "лужа — Луша",
+          "hint": "Лужа — после дождя; Луша — имя. Ж или Ш?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-10.m4a"
+        },
+        {
+          "id": "sh-df-11",
+          "word": "жесть — шесть",
+          "hint": "Жесть — металл; шесть — число. Ж или Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SH/sh-df-11.m4a"
+        },
+        {
+          "id": "sh-df-12",
+          "word": "ужи — уши",
+          "hint": "Ужи — змейки; уши — слышим. Ж или Ш?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-12.m4a"
+        },
+        {
+          "id": "sh-df-13",
+          "word": "чаша — чаща",
+          "hint": "Чаша — посуда; чаща — густой лес. Ш или Щ?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-13.m4a",
+          "imageAsset": "word_chasha|word_chashcha2"
+        },
+        {
+          "id": "sh-df-14",
+          "word": "шёлк — щёлк",
+          "hint": "Шёлк — ткань; щёлк — щёлкнуть. Ш или Щ?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-14.m4a"
+        },
+        {
+          "id": "sh-df-15",
+          "word": "шёлка — щёлка",
+          "hint": "Шёлка — ткани; щёлка — узкая щель. Ш или Щ?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SH/sh-df-15.m4a"
+        }
+      ]
     }
-   ]
   },
-  "isolated": {
-   "stageId": "isolated",
-   "note": "Изолированный звук [Ш] через игровые образы без опоры на текст.",
-   "items": [
-    {
-     "id": "sh-iso-0",
-     "word": "шш-листья",
-     "hint": "Ветер шелестит листьями: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-0.m4a"
-    },
-    {
-     "id": "sh-iso-1",
-     "word": "шш-дождь",
-     "hint": "Тихий дождик по стеклу: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-1.m4a"
-    },
-    {
-     "id": "sh-iso-2",
-     "word": "шш-змея",
-     "hint": "Змея шипит: шшш — не подходи!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-2.m4a"
-    },
-    {
-     "id": "sh-iso-3",
-     "word": "шш-шина",
-     "hint": "Шина спускает воздух: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-3.m4a"
-    },
-    {
-     "id": "sh-iso-4",
-     "word": "шш-мышь",
-     "hint": "Мышка шуршит в норке: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-4.m4a"
-    },
-    {
-     "id": "sh-iso-5",
-     "word": "шш-тихо",
-     "hint": "Говорим тише: шшш — все спят.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-iso-5.m4a"
-    },
-    {
-     "id": "sh-iso-6",
-     "word": "шш-пар",
-     "hint": "Пар из чайника: шшш — горячо!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-6.m4a"
-    },
-    {
-     "id": "sh-iso-7",
-     "word": "шш-лес",
-     "hint": "В лесу шумят деревья: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-7.m4a"
-    },
-    {
-     "id": "sh-iso-8",
-     "word": "шш-долго",
-     "hint": "Тянем шшш на одном выдохе — долго.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-8.m4a"
-    },
-    {
-     "id": "sh-iso-9",
-     "word": "шш-тихо-громко",
-     "hint": "Шепчем шшш — кричим ШШШ!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-9.m4a"
-    },
-    {
-     "id": "sh-iso-10",
-     "word": "шш-прерывисто",
-     "hint": "Ш-Ш-Ш отдельными толчками.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-iso-10.m4a"
-    },
-    {
-     "id": "sh-iso-11",
-     "word": "шш-волна",
-     "hint": "Тихо — громче — тихо: шш-ШШ-шш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-iso-11.m4a"
-    },
-    {
-     "id": "sh-iso-12",
-     "word": "шш-ветер-сильный",
-     "hint": "Сильный ветер: ШШШШ — долго!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-iso-12.m4a"
-    },
-    {
-     "id": "sh-iso-13",
-     "word": "шш-камыш",
-     "hint": "Камыш у реки качается: шшш.",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-13.m4a"
-    },
-    {
-     "id": "sh-iso-14",
-     "word": "шш-ёжик",
-     "hint": "Ёжик пыхтит: шш-шш — я иду!",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-iso-14.m4a"
-    }
-   ]
-  },
-  "syllable": {
-   "stageId": "syllable",
-   "note": "Прямые, обратные, со стечением слоги с [Ш].",
-   "items": [
-    {
-     "id": "sh-syl-0",
-     "word": "ша",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-0.m4a"
-    },
-    {
-     "id": "sh-syl-1",
-     "word": "шо",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-1.m4a"
-    },
-    {
-     "id": "sh-syl-2",
-     "word": "шу",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-2.m4a"
-    },
-    {
-     "id": "sh-syl-3",
-     "word": "шы",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-3.m4a"
-    },
-    {
-     "id": "sh-syl-4",
-     "word": "ше",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-4.m4a"
-    },
-    {
-     "id": "sh-syl-5",
-     "word": "аш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-5.m4a"
-    },
-    {
-     "id": "sh-syl-6",
-     "word": "ош",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-6.m4a"
-    },
-    {
-     "id": "sh-syl-7",
-     "word": "уш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-7.m4a"
-    },
-    {
-     "id": "sh-syl-8",
-     "word": "ыш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-8.m4a"
-    },
-    {
-     "id": "sh-syl-9",
-     "word": "еш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-9.m4a"
-    },
-    {
-     "id": "sh-syl-10",
-     "word": "ша-ша",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-10.m4a"
-    },
-    {
-     "id": "sh-syl-11",
-     "word": "шо-шо",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-11.m4a"
-    },
-    {
-     "id": "sh-syl-12",
-     "word": "шу-шу",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-12.m4a"
-    },
-    {
-     "id": "sh-syl-13",
-     "word": "аша",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-13.m4a"
-    },
-    {
-     "id": "sh-syl-14",
-     "word": "оша",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-14.m4a"
-    },
-    {
-     "id": "sh-syl-15",
-     "word": "уша",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-15.m4a"
-    },
-    {
-     "id": "sh-syl-16",
-     "word": "ашо",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-16.m4a"
-    },
-    {
-     "id": "sh-syl-17",
-     "word": "ашу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-17.m4a"
-    },
-    {
-     "id": "sh-syl-18",
-     "word": "шта",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-18.m4a"
-    },
-    {
-     "id": "sh-syl-19",
-     "word": "шна",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-19.m4a"
-    },
-    {
-     "id": "sh-syl-20",
-     "word": "шка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-20.m4a"
-    },
-    {
-     "id": "sh-syl-21",
-     "word": "шко",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-21.m4a"
-    },
-    {
-     "id": "sh-syl-22",
-     "word": "шла",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-22.m4a"
-    },
-    {
-     "id": "sh-syl-23",
-     "word": "шра",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-23.m4a"
-    },
-    {
-     "id": "sh-syl-24",
-     "word": "аш-аш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-24.m4a"
-    },
-    {
-     "id": "sh-syl-25",
-     "word": "ош-ош",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-25.m4a"
-    },
-    {
-     "id": "sh-syl-26",
-     "word": "уш-уш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-26.m4a"
-    },
-    {
-     "id": "sh-syl-27",
-     "word": "ша-шо-шу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-27.m4a"
-    },
-    {
-     "id": "sh-syl-28",
-     "word": "аш-ош-уш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-28.m4a"
-    },
-    {
-     "id": "sh-syl-29",
-     "word": "шта-што-шту",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-29.m4a"
-    },
-    {
-     "id": "sh-syl-30",
-     "word": "шка-шко-шку",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-30.m4a"
-    },
-    {
-     "id": "sh-syl-31",
-     "word": "шла-шло-шлу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-syl-31.m4a"
-    },
-    {
-     "id": "sh-syl-32",
-     "word": "аша-оша-уша",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-32.m4a"
-    },
-    {
-     "id": "sh-syl-33",
-     "word": "ши",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-syl-33.m4a"
-    },
-    {
-     "id": "sh-syl-34",
-     "word": "иш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-syl-34.m4a"
-    }
-   ]
-  },
-  "wordInit": {
-   "stageId": "wordInit",
-   "note": "[Ш] в начале слова — от простых к сложным.",
-   "items": [
-    {
-     "id": "sh-wi-0",
-     "word": "шар",
-     "imageAsset": "word_shar",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-0.m4a"
-    },
-    {
-     "id": "sh-wi-1",
-     "word": "шар",
-     "imageAsset": "word_shar",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-1.m4a"
-    },
-    {
-     "id": "sh-wi-2",
-     "word": "шуба",
-     "imageAsset": "word_shuba",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-2.m4a"
-    },
-    {
-     "id": "sh-wi-3",
-     "word": "шея",
-     "imageAsset": "word_sheya",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-3.m4a"
-    },
-    {
-     "id": "sh-wi-4",
-     "word": "шесть",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-4.m4a"
-    },
-    {
-     "id": "sh-wi-5",
-     "word": "шапка",
-     "imageAsset": "word_shapka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-5.m4a"
-    },
-    {
-     "id": "sh-wi-6",
-     "word": "шаль",
-     "imageAsset": "word_shal",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-6.m4a"
-    },
-    {
-     "id": "sh-wi-7",
-     "word": "шина",
-     "imageAsset": "word_shina",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-7.m4a"
-    },
-    {
-     "id": "sh-wi-8",
-     "word": "шило",
-     "imageAsset": "word_shilo",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wi-8.m4a"
-    },
-    {
-     "id": "sh-wi-9",
-     "word": "шутка",
-     "imageAsset": "word_kloun",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-9.m4a"
-    },
-    {
-     "id": "sh-wi-10",
-     "word": "шуметь",
-     "imageAsset": "word_shumet",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-10.m4a"
-    },
-    {
-     "id": "sh-wi-11",
-     "word": "школа",
-     "imageAsset": "word_shkola",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-11.m4a"
-    },
-    {
-     "id": "sh-wi-12",
-     "word": "шкаф",
-     "imageAsset": "word_shkaf",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-12.m4a"
-    },
-    {
-     "id": "sh-wi-13",
-     "word": "шарф",
-     "imageAsset": "word_sharf",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-13.m4a"
-    },
-    {
-     "id": "sh-wi-14",
-     "word": "шалаш",
-     "imageAsset": "word_shalash",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-14.m4a"
-    },
-    {
-     "id": "sh-wi-15",
-     "word": "шайба",
-     "imageAsset": "word_shayba",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-15.m4a"
-    },
-    {
-     "id": "sh-wi-16",
-     "word": "шахта",
-     "imageAsset": "word_shakhta",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-16.m4a"
-    },
-    {
-     "id": "sh-wi-17",
-     "word": "шипы",
-     "imageAsset": "word_shipy",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-17.m4a"
-    },
-    {
-     "id": "sh-wi-18",
-     "word": "широкий",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-18.m4a"
-    },
-    {
-     "id": "sh-wi-19",
-     "word": "шоколад",
-     "imageAsset": "word_shokolad",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-19.m4a"
-    },
-    {
-     "id": "sh-wi-20",
-     "word": "шофёр",
-     "imageAsset": "word_shofor",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-20.m4a"
-    },
-    {
-     "id": "sh-wi-21",
-     "word": "шторм",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-21.m4a"
-    },
-    {
-     "id": "sh-wi-22",
-     "word": "штаны",
-     "imageAsset": "word_shtany",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-22.m4a"
-    },
-    {
-     "id": "sh-wi-23",
-     "word": "штанга",
-     "imageAsset": "word_shtanga",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-23.m4a"
-    },
-    {
-     "id": "sh-wi-24",
-     "word": "шакал",
-     "imageAsset": "word_shakal",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-24.m4a"
-    },
-    {
-     "id": "sh-wi-25",
-     "word": "шатёр",
-     "imageAsset": "word_shator",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-25.m4a"
-    },
-    {
-     "id": "sh-wi-26",
-     "word": "шахматы",
-     "imageAsset": "word_shakhmaty",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-26.m4a"
-    },
-    {
-     "id": "sh-wi-27",
-     "word": "шалость",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-27.m4a"
-    },
-    {
-     "id": "sh-wi-28",
-     "word": "шиповник",
-     "imageAsset": "word_shipovnik",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-28.m4a"
-    },
-    {
-     "id": "sh-wi-29",
-     "word": "шиншилла",
-     "imageAsset": "word_shinshilla",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-29.m4a"
-    },
-    {
-     "id": "sh-wi-30",
-     "word": "шоколадка",
-     "imageAsset": "word_shokoladka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-30.m4a"
-    },
-    {
-     "id": "sh-wi-31",
-     "word": "шкатулка",
-     "imageAsset": "word_shkatulka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-31.m4a"
-    },
-    {
-     "id": "sh-wi-32",
-     "word": "шелковица",
-     "imageAsset": "word_shelkovitsa",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-32.m4a"
-    },
-    {
-     "id": "sh-wi-33",
-     "word": "шиловидный",
-     "imageAsset": "word_shilovidnyy",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-33.m4a"
-    },
-    {
-     "id": "sh-wi-34",
-     "word": "шляпа",
-     "imageAsset": "word_shlyapa",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-34.m4a"
-    },
-    {
-     "id": "sh-wi-35",
-     "word": "шнурок",
-     "imageAsset": "word_shnurki",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-35.m4a"
-    },
-    {
-     "id": "sh-wi-36",
-     "word": "шнурок",
-     "imageAsset": "word_shnurki",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-36.m4a"
-    },
-    {
-     "id": "sh-wi-37",
-     "word": "шпага",
-     "imageAsset": "word_shpaga",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-37.m4a"
-    },
-    {
-     "id": "sh-wi-38",
-     "word": "шприц",
-     "imageAsset": "word_shpric",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-38.m4a"
-    },
-    {
-     "id": "sh-wi-39",
-     "word": "шпилька",
-     "imageAsset": "word_shpilka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-39.m4a"
-    },
-    {
-     "id": "sh-wi-40",
-     "word": "шляпа",
-     "imageAsset": "word_shlyapa",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-40.m4a"
-    },
-    {
-     "id": "sh-wi-41",
-     "word": "шлюпка",
-     "imageAsset": "word_shlyupka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-41.m4a"
-    },
-    {
-     "id": "sh-wi-42",
-     "word": "шмель",
-     "imageAsset": "word_shmel",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-42.m4a"
-    },
-    {
-     "id": "sh-wi-43",
-     "word": "шпон",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-43.m4a"
-    },
-    {
-     "id": "sh-wi-44",
-     "word": "шершень",
-     "imageAsset": "word_shershen",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-44.m4a"
-    },
-    {
-     "id": "sh-wi-45",
-     "word": "шиловатый",
-     "imageAsset": "word_shilovatyy",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-45.m4a"
-    },
-    {
-     "id": "sh-wi-46",
-     "word": "ширина",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-46.m4a"
-    },
-    {
-     "id": "sh-wi-47",
-     "word": "широта",
-     "imageAsset": "word_shirota",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-47.m4a"
-    },
-    {
-     "id": "sh-wi-48",
-     "word": "шиповка",
-     "imageAsset": "word_kedy",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-48.m4a"
-    },
-    {
-     "id": "sh-wi-49",
-     "word": "шоссе",
-     "imageAsset": "word_shosse",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-49.m4a"
-    },
-    {
-     "id": "sh-wi-50",
-     "word": "шорты",
-     "imageAsset": "word_shorty",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-50.m4a"
-    },
-    {
-     "id": "sh-wi-51",
-     "word": "шорник",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-51.m4a"
-    },
-    {
-     "id": "sh-wi-52",
-     "word": "шутник",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-52.m4a"
-    },
-    {
-     "id": "sh-wi-53",
-     "word": "шушуканье",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-53.m4a"
-    },
-    {
-     "id": "sh-wi-54",
-     "word": "шалунья",
-     "imageAsset": "word_shalunya",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-54.m4a"
-    },
-    {
-     "id": "sh-wi-55",
-     "word": "шестёрка",
-     "imageAsset": "word_shestyorka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-55.m4a"
-    },
-    {
-     "id": "sh-wi-56",
-     "word": "шеренга",
-     "imageAsset": "word_sherenga",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-56.m4a"
-    },
-    {
-     "id": "sh-wi-57",
-     "word": "шнырять",
-     "imageAsset": "word_shnyryat",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-57.m4a"
-    },
-    {
-     "id": "sh-wi-58",
-     "word": "шелестеть",
-     "imageAsset": "word_shelestet",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-58.m4a"
-    },
-    {
-     "id": "sh-wi-59",
-     "word": "шевелить",
-     "imageAsset": "word_shevelit",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wi-59.m4a"
-    },
-    {
-     "id": "sh-wi-60",
-     "word": "шлагбаум",
-     "imageAsset": "word_shlagbaum",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wi-60.m4a"
-    },
-    {
-     "id": "sh-wi-61",
-     "word": "шкаф",
-     "hint": "ШК — два согласных в начале.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-61.m4a",
-     "imageAsset": "word_shkaf"
-    },
-    {
-     "id": "sh-wi-62",
-     "word": "шприц",
-     "hint": "ШПР — три согласных на старте.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-62.m4a"
-    },
-    {
-     "id": "sh-wi-63",
-     "word": "шпион",
-     "hint": "ШП — редкое стечение.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-63.m4a",
-     "imageAsset": "word_lupa"
-    },
-    {
-     "id": "sh-wi-64",
-     "word": "шхуна",
-     "hint": "ШХ — оба шумных согласных.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-64.m4a",
-     "imageAsset": "word_shkhuna"
-    },
-    {
-     "id": "sh-wi-65",
-     "word": "шторка",
-     "hint": "ШТ — два глухих в начале.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-65.m4a",
-     "imageAsset": "word_shtorka"
-    },
-    {
-     "id": "sh-wi-66",
-     "word": "шкварки",
-     "hint": "ШКВ — три согласных + ударный А.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-66.m4a",
-     "imageAsset": "word_shkvarki"
-    },
-    {
-     "id": "sh-wi-67",
-     "word": "шпала",
-     "hint": "ШП + Л — два стечения.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-67.m4a",
-     "imageAsset": "word_relsy"
-    },
-    {
-     "id": "sh-wi-68",
-     "word": "шпилька",
-     "hint": "ШП + ЛЬ — сложная цепочка.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-68.m4a",
-     "imageAsset": "word_shpilka"
-    },
-    {
-     "id": "sh-wi-69",
-     "word": "штора",
-     "hint": "ШТО — мягкий старт после ШТ.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-69.m4a",
-     "imageAsset": "word_shtora"
-    },
-    {
-     "id": "sh-wi-70",
-     "word": "шкурка",
-     "hint": "ШК + РК — двойное стечение.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-70.m4a",
-     "imageAsset": "word_kozhura"
-    },
-    {
-     "id": "sh-wi-71",
-     "word": "шатёр",
-     "hint": "ША+ТЁР — шатёр в цирке или на природе.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-wi-71.m4a",
-     "imageAsset": "word_shatyor"
-    },
-    {
-     "id": "sh-wi-72",
-     "word": "шоссе",
-     "hint": "ШО+ССЕ — дорога.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-wi-72.m4a",
-     "imageAsset": "word_shosse"
-    },
-    {
-     "id": "sh-wi-73",
-     "word": "шифровка",
-     "hint": "ШИ+ФРО+ВКА — секретное сообщение.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-73.m4a",
-     "imageAsset": "word_shifrovka"
-    },
-    {
-     "id": "sh-wi-74",
-     "word": "штанга",
-     "hint": "ШТА+НГА — спортивный инвентарь.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-74.m4a",
-     "imageAsset": "word_shtanga"
-    },
-    {
-     "id": "sh-wi-75",
-     "word": "шасси",
-     "hint": "ША+ССИ — колёса самолёта.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-75.m4a",
-     "imageAsset": "word_shassi"
-    },
-    {
-     "id": "sh-wi-76",
-     "word": "шнурки",
-     "hint": "ШНУ+РКИ — то, чем завязывают ботинки.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-76.m4a",
-     "imageAsset": "word_shnurki"
-    },
-    {
-     "id": "sh-wi-77",
-     "word": "штиль",
-     "hint": "ШТИ+ЛЬ — полная тишина на море.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-77.m4a"
-    },
-    {
-     "id": "sh-wi-78",
-     "word": "шахтёр",
-     "hint": "ШАХ+ТЁР — тот, кто работает в шахте.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-78.m4a",
-     "imageAsset": "word_shakhtyor"
-    },
-    {
-     "id": "sh-wi-79",
-     "word": "шествие",
-     "hint": "ШЕС+ТВИЕ — торжественный поход.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-79.m4a",
-     "imageAsset": "word_shestvie"
-    },
-    {
-     "id": "sh-wi-80",
-     "word": "шпиль",
-     "hint": "ШПИ+ЛЬ — острый верх башни.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-80.m4a",
-     "imageAsset": "word_shpil"
-    },
-    {
-     "id": "sh-wi-81",
-     "word": "шлем",
-     "imageAsset": "word_shlem",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wi-81.m4a"
-    }
-   ]
-  },
-  "wordMed": {
-   "stageId": "wordMed",
-   "note": "[Ш] в середине слова.",
-   "items": [
-    {
-     "id": "sh-wm-0",
-     "word": "каша",
-     "imageAsset": "word_kasha",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-0.m4a"
-    },
-    {
-     "id": "sh-wm-1",
-     "word": "мышка",
-     "imageAsset": "word_myshka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-1.m4a"
-    },
-    {
-     "id": "sh-wm-2",
-     "word": "каша",
-     "imageAsset": "word_kasha",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-2.m4a"
-    },
-    {
-     "id": "sh-wm-3",
-     "word": "шишка",
-     "imageAsset": "word_kasha",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-3.m4a",
-     "hint": "Шиш-ка. [Ш] в середине."
-    },
-    {
-     "id": "sh-wm-4",
-     "word": "опушка",
-     "imageAsset": "word_opushka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-4.m4a",
-     "hint": "о-пуШ-ка. [Ш] в середине."
-    },
-    {
-     "id": "sh-wm-5",
-     "word": "кошка",
-     "imageAsset": "word_koshka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-5.m4a"
-    },
-    {
-     "id": "sh-wm-6",
-     "word": "мышка",
-     "imageAsset": "word_myshka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-6.m4a"
-    },
-    {
-     "id": "sh-wm-7",
-     "word": "пышка",
-     "imageAsset": "word_pyshka",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-7.m4a"
-    },
-    {
-     "id": "sh-wm-8",
-     "word": "ушко",
-     "imageAsset": "word_ushko",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wm-8.m4a"
-    },
-    {
-     "id": "sh-wm-9",
-     "word": "мешок",
-     "imageAsset": "word_meshok",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-9.m4a"
-    },
-    {
-     "id": "sh-wm-10",
-     "word": "пушка",
-     "imageAsset": "word_pushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-10.m4a"
-    },
-    {
-     "id": "sh-wm-11",
-     "word": "машина",
-     "imageAsset": "word_mashina",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-11.m4a"
-    },
-    {
-     "id": "sh-wm-12",
-     "word": "рубашка",
-     "imageAsset": "word_rubashka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-12.m4a"
-    },
-    {
-     "id": "sh-wm-13",
-     "word": "кошка",
-     "imageAsset": "word_cat",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-13.m4a"
-    },
-    {
-     "id": "sh-wm-15",
-     "word": "сушка",
-     "imageAsset": "word_sushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-15.m4a"
-    },
-    {
-     "id": "sh-wm-16",
-     "word": "подушка",
-     "imageAsset": "word_podushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-16.m4a"
-    },
-    {
-     "id": "sh-wm-17",
-     "word": "лягушка",
-     "imageAsset": "word_lyagushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-17.m4a"
-    },
-    {
-     "id": "sh-wm-18",
-     "word": "кукушка",
-     "imageAsset": "word_kukushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-18.m4a"
-    },
-    {
-     "id": "sh-wm-19",
-     "word": "лукошко",
-     "imageAsset": "word_lukoshko",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-19.m4a"
-    },
-    {
-     "id": "sh-wm-20",
-     "word": "горошина",
-     "imageAsset": "word_goroshina",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-20.m4a"
-    },
-    {
-     "id": "sh-wm-21",
-     "word": "окошко",
-     "imageAsset": "word_okoshko",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-21.m4a"
-    },
-    {
-     "id": "sh-wm-22",
-     "word": "пушинка",
-     "imageAsset": "word_pushinka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-22.m4a"
-    },
-    {
-     "id": "sh-wm-23",
-     "word": "мышонок",
-     "imageAsset": "word_myshonok",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-23.m4a"
-    },
-    {
-     "id": "sh-wm-24",
-     "word": "грушевый",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-24.m4a"
-    },
-    {
-     "id": "sh-wm-25",
-     "word": "ошибка",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-25.m4a"
-    },
-    {
-     "id": "sh-wm-26",
-     "word": "пешком",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-26.m4a"
-    },
-    {
-     "id": "sh-wm-27",
-     "word": "дышать",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-27.m4a"
-    },
-    {
-     "id": "sh-wm-28",
-     "word": "лошадь",
-     "imageAsset": "word_loshad",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-28.m4a"
-    },
-    {
-     "id": "sh-wm-29",
-     "word": "нашивка",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-29.m4a"
-    },
-    {
-     "id": "sh-wm-30",
-     "word": "башня",
-     "imageAsset": "word_bashnya",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-30.m4a"
-    },
-    {
-     "id": "sh-wm-31",
-     "word": "кашне",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-31.m4a"
-    },
-    {
-     "id": "sh-wm-32",
-     "word": "дошкольник",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wm-32.m4a"
-    },
-    {
-     "id": "sh-wm-33",
-     "word": "пошатнуться",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 5,
-     "audio_file": "Audio/Content/SH/sh-wm-33.m4a"
-    },
-    {
-     "id": "sh-wm-34",
-     "word": "шашлык",
-     "imageAsset": "word_shashlyk",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-34.m4a"
-    },
-    {
-     "id": "sh-wm-35",
-     "word": "кашель",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-35.m4a"
-    },
-    {
-     "id": "sh-wm-36",
-     "word": "ватрушка",
-     "imageAsset": "word_vatrushka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-36.m4a"
-    },
-    {
-     "id": "sh-wm-37",
-     "word": "петрушка",
-     "imageAsset": "word_petrushka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-37.m4a"
-    },
-    {
-     "id": "sh-wm-38",
-     "word": "рогатушка",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wm-38.m4a"
-    },
-    {
-     "id": "sh-wm-39",
-     "word": "матрёшка",
-     "imageAsset": "word_matryoshka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-39.m4a"
-    },
-    {
-     "id": "sh-wm-40",
-     "word": "картошка",
-     "imageAsset": "word_kartoshka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-40.m4a"
-    },
-    {
-     "id": "sh-wm-41",
-     "word": "кошёлка",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-41.m4a",
-     "hint": "ко-Шёл-ка. [Ш] в середине."
-    },
-    {
-     "id": "sh-wm-42",
-     "word": "кошелёк",
-     "imageAsset": "word_koshelyok",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-42.m4a"
-    },
-    {
-     "id": "sh-wm-43",
-     "word": "мешочек",
-     "imageAsset": "word_meshochek",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-43.m4a"
-    },
-    {
-     "id": "sh-wm-44",
-     "word": "ромашка",
-     "imageAsset": "word_romashka",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-44.m4a"
-    },
-    {
-     "id": "sh-wm-45",
-     "word": "катушка",
-     "imageAsset": "word_sapog",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-45.m4a",
-     "hint": "Ка-туШ-ка. [Ш] в середине."
-    },
-    {
-     "id": "sh-wm-46",
-     "word": "затушить",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wm-46.m4a"
-    },
-    {
-     "id": "sh-wm-47",
-     "word": "мышиный",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-47.m4a"
-    },
-    {
-     "id": "sh-wm-48",
-     "word": "большой",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-48.m4a"
-    },
-    {
-     "id": "sh-wm-49",
-     "word": "хороший",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wm-49.m4a"
-    },
-    {
-     "id": "sh-wm-50",
-     "word": "вспышка",
-     "hint": "ПШК — три согласных в середине.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wm-50.m4a"
-    },
-    {
-     "id": "sh-wm-51",
-     "word": "мышьяк",
-     "hint": "ШЬЯ — Ш с мягким знаком.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wm-51.m4a"
-    },
-    {
-     "id": "sh-wm-52",
-     "word": "прошлое",
-     "hint": "ШЛ — плавный после Ш.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wm-52.m4a"
-    },
-    {
-     "id": "sh-wm-53",
-     "word": "ошмётки",
-     "hint": "ШМ в середине слова.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wm-53.m4a"
-    },
-    {
-     "id": "sh-wm-54",
-     "word": "лошадка",
-     "hint": "Ш между двумя гласными.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-wm-54.m4a"
-    },
-    {
-     "id": "sh-wm-55",
-     "word": "сушёный",
-     "hint": "ШЁ — лабиализованный звук после Ш.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wm-55.m4a"
-    },
-    {
-     "id": "sh-wm-56",
-     "word": "нашествие",
-     "hint": "ШЕС — Ш + шипящий контекст.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wm-56.m4a"
-    },
-    {
-     "id": "sh-wm-60",
-     "word": "башмак",
-     "imageAsset": "word_bashmak",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-60.m4a"
-    },
-    {
-     "id": "sh-wm-61",
-     "word": "ловушка",
-     "imageAsset": "word_lovushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-61.m4a"
-    },
-    {
-     "id": "sh-wm-62",
-     "word": "вишня",
-     "imageAsset": "word_vishnya",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-62.m4a"
-    },
-    {
-     "id": "sh-wm-63",
-     "word": "вешалка",
-     "imageAsset": "word_veshalka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-63.m4a"
-    },
-    {
-     "id": "sh-wm-64",
-     "word": "солнышко",
-     "imageAsset": "word_solnyshko",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-64.m4a"
-    },
-    {
-     "id": "sh-wm-65",
-     "word": "рикша",
-     "imageAsset": "word_riksha",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-65.m4a"
-    },
-    {
-     "id": "sh-wm-66",
-     "word": "каштан",
-     "imageAsset": "word_kashtan",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-66.m4a"
-    },
-    {
-     "id": "sh-wm-67",
-     "word": "грушка",
-     "imageAsset": "word_grushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-67.m4a"
-    },
-    {
-     "id": "sh-wm-68",
-     "word": "индюшонок",
-     "imageAsset": "word_indyushonok",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-68.m4a"
-    },
-    {
-     "id": "sh-wm-69",
-     "word": "индюшка",
-     "imageAsset": "word_indyushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-69.m4a"
-    },
-    {
-     "id": "sh-wm-70",
-     "word": "горбуша",
-     "imageAsset": "word_gorbusha",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-70.m4a"
-    },
-    {
-     "id": "sh-wm-71",
-     "word": "галоши",
-     "imageAsset": "word_galoshi",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-71.m4a"
-    },
-    {
-     "id": "sh-wm-72",
-     "word": "избушка",
-     "imageAsset": "word_izbushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-72.m4a"
-    },
-    {
-     "id": "sh-wm-73",
-     "word": "ракушка",
-     "imageAsset": "word_rakushka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-73.m4a"
-    },
-    {
-     "id": "sh-wm-74",
-     "word": "боярышник",
-     "imageAsset": "word_boyaryshnik",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-74.m4a"
-    },
-    {
-     "id": "sh-wm-75",
-     "word": "лягушонок",
-     "imageAsset": "word_lyagushonok",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-75.m4a"
-    },
-    {
-     "id": "sh-wm-76",
-     "word": "уши",
-     "imageAsset": "word_ushi",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-76.m4a"
-    },
-    {
-     "id": "sh-wm-77",
-     "word": "вишенка",
-     "imageAsset": "word_vishenka",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-77.m4a"
-    },
-    {
-     "id": "sh-wm-78",
-     "word": "кувшин",
-     "imageAsset": "word_kuvshin",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-78.m4a"
-    },
-    {
-     "id": "sh-wm-79",
-     "word": "галоша",
-     "imageAsset": "word_galosha",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-79.m4a"
-    },
-    {
-     "id": "sh-wm-80",
-     "word": "крыша",
-     "imageAsset": "word_krysha",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wm-80.m4a"
-    }
-   ]
-  },
-  "wordFinal": {
-   "stageId": "wordFinal",
-   "note": "[Ш] в конце слова.",
-   "items": [
-    {
-     "id": "sh-wf-0",
-     "word": "малыш",
-     "imageAsset": "word_malysh",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wf-0.m4a"
-    },
-    {
-     "id": "sh-wf-1",
-     "word": "мышь",
-     "imageAsset": "word_mysh",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wf-1.m4a"
-    },
-    {
-     "id": "sh-wf-2",
-     "word": "ковш",
-     "imageAsset": "word_kovsh",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wf-2.m4a"
-    },
-    {
-     "id": "sh-wf-3",
-     "word": "туш",
-     "imageAsset": "word_tush",
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wf-3.m4a"
-    },
-    {
-     "id": "sh-wf-4",
-     "word": "тишь",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-wf-4.m4a"
-    },
-    {
-     "id": "sh-wf-5",
-     "word": "камыш",
-     "imageAsset": "word_kamysh",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-5.m4a"
-    },
-    {
-     "id": "sh-wf-6",
-     "word": "ёрш",
-     "imageAsset": "word_yorsh",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-6.m4a"
-    },
-    {
-     "id": "sh-wf-7",
-     "word": "плюш",
-     "imageAsset": "word_plyush",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-7.m4a"
-    },
-    {
-     "id": "sh-wf-8",
-     "word": "тушь",
-     "imageAsset": "word_tush",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-8.m4a"
-    },
-    {
-     "id": "sh-wf-9",
-     "word": "брошь",
-     "imageAsset": "word_brosh",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-9.m4a"
-    },
-    {
-     "id": "sh-wf-10",
-     "word": "гуашь",
-     "imageAsset": "word_guash",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-10.m4a"
-    },
-    {
-     "id": "sh-wf-11",
-     "word": "малыш",
-     "imageAsset": "word_malysh",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-11.m4a"
-    },
-    {
-     "id": "sh-wf-12",
-     "word": "карандаш",
-     "imageAsset": "word_karandash",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-12.m4a"
-    },
-    {
-     "id": "sh-wf-13",
-     "word": "шалаш",
-     "imageAsset": "word_shalash",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-13.m4a"
-    },
-    {
-     "id": "sh-wf-14",
-     "word": "кругляш",
-     "imageAsset": "word_kruglyash",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-14.m4a",
-     "hint": "кру-гляШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-24",
-     "word": "лаваш",
-     "imageAsset": "word_lavash",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-24.m4a",
-     "hint": "ла-ваШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-25",
-     "word": "ландыш",
-     "imageAsset": "word_landysh",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-25.m4a"
-    },
-    {
-     "id": "sh-wf-26",
-     "word": "финиш",
-     "imageAsset": "word_finish",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-26.m4a",
-     "hint": "фи-ниШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-27",
-     "word": "торопыш",
-     "imageAsset": "word_toropysh",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wf-27.m4a",
-     "hint": "то-ро-пыШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-28",
-     "word": "крепыш",
-     "imageAsset": "word_krepysh",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-28.m4a",
-     "hint": "кре-пыШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-29",
-     "word": "шиш",
-     "imageAsset": "word_shish",
-     "audioAsset": null,
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-wf-29.m4a",
-     "hint": "шиШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-30",
-     "word": "детёныш",
-     "imageAsset": null,
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-30.m4a",
-     "hint": "де-тё-ныШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-31",
-     "word": "голыш",
-     "imageAsset": "word_golysh",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-31.m4a",
-     "hint": "го-лыШ. [Ш] в конце."
-    },
-    {
-     "id": "sh-wf-32",
-     "word": "ландыш",
-     "imageAsset": "word_landysh_b",
-     "audioAsset": null,
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-wf-32.m4a"
-    },
-    {
-     "id": "sh-wf-35",
-     "word": "гуляш",
-     "imageAsset": "word_gulyash",
-     "audioAsset": null,
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-wf-35.m4a"
-    }
-   ]
-  },
-  "phrase": {
-   "stageId": "phrase",
-   "note": "Словосочетания и короткие фразы со звуком [Ш].",
-   "items": [
-    {
-     "id": "sh-ph-0",
-     "word": "шуба на вешалке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-0.m4a"
-    },
-    {
-     "id": "sh-ph-1",
-     "word": "школьник пишет",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-1.m4a"
-    },
-    {
-     "id": "sh-ph-2",
-     "word": "большая шапка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-2.m4a"
-    },
-    {
-     "id": "sh-ph-3",
-     "word": "красивый шарф",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-3.m4a"
-    },
-    {
-     "id": "sh-ph-4",
-     "word": "наша машина",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-4.m4a"
-    },
-    {
-     "id": "sh-ph-5",
-     "word": "кошачий хвост",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-5.m4a"
-    },
-    {
-     "id": "sh-ph-6",
-     "word": "школьная сумка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-6.m4a"
-    },
-    {
-     "id": "sh-ph-7",
-     "word": "пушистая кошка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-7.m4a"
-    },
-    {
-     "id": "sh-ph-8",
-     "word": "шумный малыш",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-8.m4a"
-    },
-    {
-     "id": "sh-ph-9",
-     "word": "мышка в норке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-9.m4a"
-    },
-    {
-     "id": "sh-ph-10",
-     "word": "шар летит",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-ph-10.m4a"
-    },
-    {
-     "id": "sh-ph-11",
-     "word": "машина едет",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-ph-11.m4a"
-    },
-    {
-     "id": "sh-ph-12",
-     "word": "кошка спит",
-     "difficulty": 1,
-     "audio_file": "Audio/Content/SH/sh-ph-12.m4a"
-    },
-    {
-     "id": "sh-ph-13",
-     "word": "широкий шарф",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-13.m4a"
-    },
-    {
-     "id": "sh-ph-14",
-     "word": "шоколадная конфета",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-14.m4a"
-    },
-    {
-     "id": "sh-ph-15",
-     "word": "пышная подушка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-15.m4a"
-    },
-    {
-     "id": "sh-ph-16",
-     "word": "мышиный хвостик",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-16.m4a"
-    },
-    {
-     "id": "sh-ph-17",
-     "word": "шумит лес",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-17.m4a"
-    },
-    {
-     "id": "sh-ph-18",
-     "word": "шагает солдат",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-18.m4a"
-    },
-    {
-     "id": "sh-ph-19",
-     "word": "ошибся мышонок",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-19.m4a"
-    },
-    {
-     "id": "sh-ph-20",
-     "word": "шишка на ёлке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-20.m4a"
-    },
-    {
-     "id": "sh-ph-21",
-     "word": "шелест листьев",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-21.m4a"
-    },
-    {
-     "id": "sh-ph-22",
-     "word": "кушать кашу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-22.m4a"
-    },
-    {
-     "id": "sh-ph-23",
-     "word": "лягушка на кочке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-23.m4a"
-    },
-    {
-     "id": "sh-ph-24",
-     "word": "шиповник цветёт",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-24.m4a"
-    },
-    {
-     "id": "sh-ph-25",
-     "word": "шарики на ёлке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-25.m4a"
-    },
-    {
-     "id": "sh-ph-26",
-     "word": "мышка грызёт сушку",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-26.m4a"
-    },
-    {
-     "id": "sh-ph-27",
-     "word": "большой мешок",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-27.m4a"
-    },
-    {
-     "id": "sh-ph-28",
-     "word": "найти карандаш",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-28.m4a"
-    },
-    {
-     "id": "sh-ph-29",
-     "word": "шалить и прыгать",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-29.m4a"
-    },
-    {
-     "id": "sh-ph-30",
-     "word": "пышный шарик",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-30.m4a"
-    },
-    {
-     "id": "sh-ph-31",
-     "word": "тихая мышь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-31.m4a"
-    },
-    {
-     "id": "sh-ph-32",
-     "word": "шофёр за рулём",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-32.m4a"
-    },
-    {
-     "id": "sh-ph-33",
-     "word": "горячая каша",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-33.m4a"
-    },
-    {
-     "id": "sh-ph-34",
-     "word": "широкая дорожка",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-34.m4a"
-    },
-    {
-     "id": "sh-ph-35",
-     "word": "свежий шиповник",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-35.m4a"
-    },
-    {
-     "id": "sh-ph-36",
-     "word": "кошка и мышка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-36.m4a"
-    },
-    {
-     "id": "sh-ph-37",
-     "word": "красный шар",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-37.m4a"
-    },
-    {
-     "id": "sh-ph-38",
-     "word": "шапка и шарф",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-38.m4a"
-    },
-    {
-     "id": "sh-ph-39",
-     "word": "шума в ушах",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-39.m4a"
-    },
-    {
-     "id": "sh-ph-40",
-     "word": "матрёшка в руках",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-40.m4a"
-    },
-    {
-     "id": "sh-ph-41",
-     "word": "ватрушка с вареньем",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-41.m4a"
-    },
-    {
-     "id": "sh-ph-42",
-     "word": "машина шумит",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-42.m4a"
-    },
-    {
-     "id": "sh-ph-43",
-     "word": "шершень жужжит",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-43.m4a"
-    },
-    {
-     "id": "sh-ph-44",
-     "word": "белая мышь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-44.m4a"
-    },
-    {
-     "id": "sh-ph-45",
-     "word": "подушка на кровати",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-45.m4a"
-    },
-    {
-     "id": "sh-ph-46",
-     "word": "сушки в мешке",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-46.m4a"
-    },
-    {
-     "id": "sh-ph-47",
-     "word": "шина у велосипеда",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-47.m4a"
-    },
-    {
-     "id": "sh-ph-48",
-     "word": "пышный снег",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-ph-48.m4a"
-    },
-    {
-     "id": "sh-ph-49",
-     "word": "шалаш в лесу",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-ph-49.m4a"
-    },
-    {
-     "id": "sh-ph-50",
-     "word": "шкаф у окна",
-     "hint": "ШК в начале фразы.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-ph-50.m4a"
-    },
-    {
-     "id": "sh-ph-51",
-     "word": "шторка задёрнута плотно",
-     "hint": "ШТ + плавное Р.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-51.m4a"
-    },
-    {
-     "id": "sh-ph-52",
-     "word": "большой шкаф с полками",
-     "hint": "Ш в двух позициях: конец + начало.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-ph-52.m4a"
-    },
-    {
-     "id": "sh-ph-53",
-     "word": "шпионская игра",
-     "hint": "ШП + ИГ — сложный ритм.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-53.m4a"
-    },
-    {
-     "id": "sh-ph-54",
-     "word": "сушёная шиповник",
-     "hint": "ШЁ + ШИ — два Ш в фразе.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-54.m4a"
-    },
-    {
-     "id": "sh-ph-55",
-     "word": "дождь прошёл быстро",
-     "hint": "ЖД + ШЁ — звонкий + шипящий.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-55.m4a"
-    },
-    {
-     "id": "sh-ph-56",
-     "word": "вышка над крышей",
-     "hint": "ШК + КР — насыщенная фраза.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-56.m4a"
-    },
-    {
-     "id": "sh-ph-57",
-     "word": "маленький мышонок",
-     "hint": "Ш в середине — картинный образ.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-57.m4a"
-    },
-    {
-     "id": "sh-ph-58",
-     "word": "ошибка в решении",
-     "hint": "Ш + Ш — дифференциация позиций.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-58.m4a"
-    },
-    {
-     "id": "sh-ph-59",
-     "word": "нашла клешнями",
-     "hint": "ШН + КЛ + ШН — ритмическое чередование.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-59.m4a"
-    },
-    {
-     "id": "sh-ph-60",
-     "word": "шприц в кармане",
-     "hint": "ШПР — три согласных в теме.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-60.m4a"
-    },
-    {
-     "id": "sh-ph-61",
-     "word": "прошлой зимой шёл снег",
-     "hint": "ШЛ + ШЁ — нарративный образ.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-61.m4a"
-    },
-    {
-     "id": "sh-ph-62",
-     "word": "шустрый мышонок убежал",
-     "hint": "ШУ + ШО — два Ш в разных слогах.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-62.m4a"
-    },
-    {
-     "id": "sh-ph-63",
-     "word": "вышла кошка из корзинки",
-     "hint": "ШЛА + КШК — плотная Ш-цепочка.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-63.m4a"
-    },
-    {
-     "id": "sh-ph-64",
-     "word": "школьная экскурсия прошла",
-     "hint": "ШК + КС + ШЛ — три стечения.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-64.m4a"
-    },
-    {
-     "id": "sh-ph-65",
-     "word": "шустрый шмель над цветком",
-     "hint": "ШУС+ШМЕ — два Ш-слова.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-65.m4a"
-    },
-    {
-     "id": "sh-ph-66",
-     "word": "шёлковый шарф на плечах",
-     "hint": "ШЁЛ+ША — Ш в двух словах.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-ph-66.m4a"
-    },
-    {
-     "id": "sh-ph-67",
-     "word": "шумная школа во вторник",
-     "hint": "ШУМ+ШКО — ШМ и ШК стечения.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-ph-67.m4a"
-    },
-    {
-     "id": "sh-ph-68",
-     "word": "мышиная нора под крыльцом",
-     "hint": "МЫ+НО+КРЫ — Ш в середине слова.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-ph-68.m4a"
-    },
-    {
-     "id": "sh-ph-69",
-     "word": "шёлковая подушка у дивана",
-     "hint": "ШЁЛ+ПО+ДУ+ШКА — длинная фраза.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-ph-69.m4a"
-    },
-    {
-     "id": "sh-ph-70",
-     "word": "шёлковый платок на шее",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-70.m4a"
-    },
-    {
-     "id": "sh-ph-71",
-     "word": "большой шар над площадью",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-71.m4a"
-    },
-    {
-     "id": "sh-ph-72",
-     "word": "мышиный домик в поле",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-72.m4a"
-    },
-    {
-     "id": "sh-ph-73",
-     "word": "кошачья лапа на подушке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-73.m4a"
-    },
-    {
-     "id": "sh-ph-74",
-     "word": "горошины рассыпались по полу",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-74.m4a"
-    },
-    {
-     "id": "sh-ph-75",
-     "word": "ушки зайца торчат над травой",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-75.m4a"
-    },
-    {
-     "id": "sh-ph-76",
-     "word": "шахматный конь прыгнул вперёд",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-ph-76.m4a"
-    },
-    {
-     "id": "sh-ph-77",
-     "word": "рубашка висит на крючке",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-77.m4a"
-    },
-    {
-     "id": "sh-ph-78",
-     "word": "шустрая мышь под крыльцом",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-78.m4a"
-    },
-    {
-     "id": "sh-ph-79",
-     "word": "пышная шапка на голове",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-ph-79.m4a"
-    }
-   ]
-  },
-  "sentence": {
-   "stageId": "sentence",
-   "note": "Предложения со звуком [Ш].",
-   "items": [
-    {
-     "id": "sh-sen-0",
-     "word": "Маша нашла большой шар.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-0.m4a"
-    },
-    {
-     "id": "sh-sen-1",
-     "word": "Кошка спит на подушке.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-1.m4a"
-    },
-    {
-     "id": "sh-sen-2",
-     "word": "Мыши прячутся в тишине.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-2.m4a"
-    },
-    {
-     "id": "sh-sen-3",
-     "word": "Школьник пишет в тетради.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-3.m4a"
-    },
-    {
-     "id": "sh-sen-4",
-     "word": "Шофёр едет на машине.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-4.m4a"
-    },
-    {
-     "id": "sh-sen-5",
-     "word": "Мышка грызёт сушку.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-5.m4a"
-    },
-    {
-     "id": "sh-sen-6",
-     "word": "Пушистая кошка сидит у окошка.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-6.m4a"
-    },
-    {
-     "id": "sh-sen-7",
-     "word": "Наша лягушка живёт в болоте.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-7.m4a"
-    },
-    {
-     "id": "sh-sen-8",
-     "word": "Бабушка варит кашу для малыша.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-8.m4a"
-    },
-    {
-     "id": "sh-sen-9",
-     "word": "Мишка надел шапку и шарф.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-9.m4a"
-    },
-    {
-     "id": "sh-sen-10",
-     "word": "Шумит лес в ненастную погоду.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-10.m4a"
-    },
-    {
-     "id": "sh-sen-11",
-     "word": "Кукушка кукует в чаще.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-11.m4a"
-    },
-    {
-     "id": "sh-sen-12",
-     "word": "Шмель летит к шиповнику.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-12.m4a"
-    },
-    {
-     "id": "sh-sen-13",
-     "word": "Маша положила карандаш в мешок.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-13.m4a"
-    },
-    {
-     "id": "sh-sen-14",
-     "word": "Паша нашёл ёжика в лесу.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-14.m4a"
-    },
-    {
-     "id": "sh-sen-15",
-     "word": "Широкая дорожка ведёт к школе.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-15.m4a"
-    },
-    {
-     "id": "sh-sen-16",
-     "word": "У кошки пышный хвост.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-sen-16.m4a"
-    },
-    {
-     "id": "sh-sen-17",
-     "word": "Малыш надевает тёплую шубу.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-17.m4a"
-    },
-    {
-     "id": "sh-sen-18",
-     "word": "Мышонок спрятался под подушку.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-18.m4a"
-    },
-    {
-     "id": "sh-sen-19",
-     "word": "На ёлке висят красивые шары.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-19.m4a"
-    },
-    {
-     "id": "sh-sen-20",
-     "word": "Шёл дождь, шумели листья.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-20.m4a"
-    },
-    {
-     "id": "sh-sen-21",
-     "word": "Машина едет по широкой дороге.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-21.m4a"
-    },
-    {
-     "id": "sh-sen-22",
-     "word": "Петрушка любит баловаться.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-22.m4a"
-    },
-    {
-     "id": "sh-sen-23",
-     "word": "Ватрушки пекли в духовке.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-23.m4a"
-    },
-    {
-     "id": "sh-sen-24",
-     "word": "Шмель жужжал над ромашкой.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-24.m4a"
-    },
-    {
-     "id": "sh-sen-25",
-     "word": "Подушка упала с кровати.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-25.m4a"
-    },
-    {
-     "id": "sh-sen-26",
-     "word": "Лошадь скачет по полю.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-sen-26.m4a"
-    },
-    {
-     "id": "sh-sen-27",
-     "word": "Бабушка дала Мише рубашку.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-27.m4a"
-    },
-    {
-     "id": "sh-sen-28",
-     "word": "Дошкольник рисует карандашом.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-28.m4a"
-    },
-    {
-     "id": "sh-sen-29",
-     "word": "Матрёшка стоит на полке в шкафу.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-sen-29.m4a"
-    },
-    {
-     "id": "sh-sen-30",
-     "word": "Шустрый мышонок спрятался под шкафом.",
-     "hint": "ШУ + МШ + ШК — три позиции Ш.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-30.m4a"
-    },
-    {
-     "id": "sh-sen-31",
-     "word": "Шторм прошёл, и вышло солнышко.",
-     "hint": "ШТ + ШЁ + ШЛ + ШЛ + ШН — цепочка.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-31.m4a"
-    },
-    {
-     "id": "sh-sen-32",
-     "word": "Маша нашла шпильку в шкафу.",
-     "hint": "ША + НШ + ШП + ШК — нарратив.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-32.m4a"
-    },
-    {
-     "id": "sh-sen-33",
-     "word": "Большая мышь утащила кусочек сыра.",
-     "hint": "ШЬ в конце + ШК — связный текст.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-33.m4a"
-    },
-    {
-     "id": "sh-sen-34",
-     "word": "Шкаф скрипит, когда его открывают.",
-     "hint": "ШК + КР — придаточное предложение.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-34.m4a"
-    },
-    {
-     "id": "sh-sen-35",
-     "word": "Дождь прошёл, и стало свежее.",
-     "hint": "ЖД + ШЁ — нарративная связка.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-35.m4a"
-    },
-    {
-     "id": "sh-sen-36",
-     "word": "Кошка смотрела на мышку издалека.",
-     "hint": "КШ + МШ — две позиции шипящих.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-sen-36.m4a"
-    },
-    {
-     "id": "sh-sen-37",
-     "word": "Школьники прошли мимо старой вышки.",
-     "hint": "ШК + ШЛ + ШК — тройная связь.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-37.m4a"
-    },
-    {
-     "id": "sh-sen-38",
-     "word": "Шёпот в тишине слышен очень хорошо.",
-     "hint": "ШЁ + ШН + ШН — шёпотная тема.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-38.m4a"
-    },
-    {
-     "id": "sh-sen-39",
-     "word": "Шершавый камень лежал у дорожки.",
-     "hint": "ШРШВ — сложная фонетика слова.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-39.m4a"
-    },
-    {
-     "id": "sh-sen-40",
-     "word": "Наша кошка уже старая, но шустрая.",
-     "hint": "НШ + КШ + ШУ — три Ш-слова.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-40.m4a"
-    },
-    {
-     "id": "sh-sen-41",
-     "word": "Прошлой осенью мы нашли гриб.",
-     "hint": "ШЛ + НШ — два Ш в одном предложении.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-41.m4a"
-    },
-    {
-     "id": "sh-sen-42",
-     "word": "В шкафу лежат шарф и шапка.",
-     "hint": "Три Ш-слова — счёт и называние.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-sen-42.m4a"
-    },
-    {
-     "id": "sh-sen-43",
-     "word": "Шумный поезд промчался мимо станции.",
-     "hint": "ШУМ + ЧШ — шипящий нарратив.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-43.m4a"
-    },
-    {
-     "id": "sh-sen-44",
-     "word": "Миша и Даша делили большую шоколадку.",
-     "hint": "МШ + ДШ + ШО — имена + слово.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-44.m4a"
-    },
-    {
-     "id": "sh-sen-45",
-     "word": "Шура нашёл шишку под большой ёлкой.",
-     "hint": "ШУ+ШИ+ШКУ — три Ш-слова.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-45.m4a"
-    },
-    {
-     "id": "sh-sen-46",
-     "word": "Большая мышь спряталась под деревянным крыльцом.",
-     "hint": "ША+МЫ+КРЫ — Ш в разных позициях.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-46.m4a"
-    },
-    {
-     "id": "sh-sen-47",
-     "word": "Шустрый малыш шлёпал по лужам весело.",
-     "hint": "ШУС+МА+ШЛЁ — нарратив с двумя Ш.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-47.m4a"
-    },
-    {
-     "id": "sh-sen-48",
-     "word": "Наш шофёр ехал по широкому шоссе.",
-     "hint": "ШО+ШИ+ШО — три Ш-слова.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-sen-48.m4a"
-    },
-    {
-     "id": "sh-sen-49",
-     "word": "Шмель жужжал над шиповником у тропинки.",
-     "hint": "ШМЕ+ШИ — Ш в начале двух слов.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-sen-49.m4a"
-    },
-    {
-     "id": "sh-sen-50",
-     "word": "Шарик нашёл шишку под высокой елью.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-50.m4a"
-    },
-    {
-     "id": "sh-sen-51",
-     "word": "Наша кошка любит спать на мягкой подушке.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-51.m4a"
-    },
-    {
-     "id": "sh-sen-52",
-     "word": "Маша смешила малышей смешной шуткой.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-52.m4a"
-    },
-    {
-     "id": "sh-sen-53",
-     "word": "Широкий шарф согревал в морозный день.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-53.m4a"
-    },
-    {
-     "id": "sh-sen-54",
-     "word": "Мышата прятались в стогу соломы.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-54.m4a"
-    },
-    {
-     "id": "sh-sen-55",
-     "word": "Шурик нашёл большого жука под камнем.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-55.m4a"
-    },
-    {
-     "id": "sh-sen-56",
-     "word": "Шоколадный торт стоял на праздничном столе.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-56.m4a"
-    },
-    {
-     "id": "sh-sen-57",
-     "word": "Хорошая лошадь слушалась своего хозяина.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-sen-57.m4a"
-    },
-    {
-     "id": "sh-sen-58",
-     "word": "Дошколята рисовали пышные ёлки карандашами.",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-sen-58.m4a"
-    },
-    {
-     "id": "sh-sen-59",
-     "word": "Кукушка кричала в тишине лесной опушки.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-sen-59.m4a"
-    }
-   ]
-  },
-  "story": {
-   "stageId": "story",
-   "note": "Скороговорки и тексты насыщенные звуком [Ш].",
-   "items": [
-    {
-     "id": "sh-st-0",
-     "word": "Шла Саша по шоссе и сосала сушку.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-st-0.m4a"
-    },
-    {
-     "id": "sh-st-1",
-     "word": "У нашей Маши каша, у Паши шапка.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-st-1.m4a"
-    },
-    {
-     "id": "sh-st-2",
-     "word": "Мышка мышке шепчет: тише, кошка слышит.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-st-2.m4a"
-    },
-    {
-     "id": "sh-st-3",
-     "word": "Шишки на ёлке, шмели на ромашке.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-st-3.m4a"
-    },
-    {
-     "id": "sh-st-4",
-     "word": "Наша Маша пьёт горячую кашу с ложки.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-st-4.m4a"
-    },
-    {
-     "id": "sh-st-5",
-     "word": "Ёжик шуршит в шалаше.",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-st-5.m4a"
-    },
-    {
-     "id": "sh-st-6",
-     "word": "Мышонок нашёл кусочек сушки под подушкой.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-st-6.m4a"
-    },
-    {
-     "id": "sh-st-7",
-     "word": "Кошка Мурка спит на пышной подушке.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-st-7.m4a"
-    },
-    {
-     "id": "sh-st-8",
-     "word": "Шофёр Яша едет на машине по шоссе.",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-st-8.m4a"
-    },
-    {
-     "id": "sh-st-9",
-     "word": "В нашей школе пишут карандашами и красками.",
-     "difficulty": 5,
-     "audio_file": "Audio/Content/SH/sh-st-9.m4a"
-    },
-    {
-     "id": "sh-st-10",
-     "word": "Лягушка прыгнула в болото — буль-буль-шлёп!",
-     "difficulty": 4,
-     "audio_file": "Audio/Content/SH/sh-st-10.m4a"
-    }
-   ]
-  },
-  "diff": {
-   "stageId": "diff",
-   "note": "Дифференциация Ш–С, Ш–Ж, Ш–Щ: реальные минимальные пары и выбор правильного написания.",
-   "items": [
-    {
-     "id": "sh-df-0",
-     "word": "мишка — миска",
-     "hint": "Мишка — медведь; миска — посуда. Ш или С?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-0.m4a"
-    },
-    {
-     "id": "sh-df-1",
-     "word": "крыша — крыса",
-     "hint": "Крыша — над домом; крыса — зверёк. Ш или С?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-1.m4a",
-     "imageAsset": "word_krysha|word_krysa"
-    },
-    {
-     "id": "sh-df-2",
-     "word": "кашка — каска",
-     "hint": "Кашка — кашка; каска — на голове. Ш или С?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-2.m4a"
-    },
-    {
-     "id": "sh-df-3",
-     "word": "уши — усы",
-     "hint": "Уши — слышим; усы — у кота. Ш или С?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-3.m4a",
-     "imageAsset": "word_ushi|word_usy"
-    },
-    {
-     "id": "sh-df-4",
-     "word": "шутки — сутки",
-     "hint": "Шутки — смеёмся; сутки — день и ночь. Ш или С?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-4.m4a"
-    },
-    {
-     "id": "sh-df-5",
-     "word": "сила — шило",
-     "hint": "Сила — сильный; шило — острое. С или Ш?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-5.m4a",
-     "imageAsset": "word_sila|word_shilo"
-    },
-    {
-     "id": "sh-df-6",
-     "word": "Машка — маска",
-     "hint": "Машка — имя; маска на лицо. Ш или С?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-6.m4a"
-    },
-    {
-     "id": "sh-df-7",
-     "word": "жар — шар",
-     "hint": "Жар — горячо; шар — круглый. Ж или Ш?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-7.m4a",
-     "imageAsset": "word_zhar|word_shar"
-    },
-    {
-     "id": "sh-df-8",
-     "word": "жить — шить",
-     "hint": "Жить — живём; шить — иголкой. Ж или Ш?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-8.m4a"
-    },
-    {
-     "id": "sh-df-9",
-     "word": "кожа — Коша",
-     "hint": "Кожа — на руке; Коша — кличка кота. Ж или Ш?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-9.m4a"
-    },
-    {
-     "id": "sh-df-10",
-     "word": "лужа — Луша",
-     "hint": "Лужа — после дождя; Луша — имя. Ж или Ш?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-10.m4a"
-    },
-    {
-     "id": "sh-df-11",
-     "word": "жесть — шесть",
-     "hint": "Жесть — металл; шесть — число. Ж или Ш?",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/SH/sh-df-11.m4a"
-    },
-    {
-     "id": "sh-df-12",
-     "word": "ужи — уши",
-     "hint": "Ужи — змейки; уши — слышим. Ж или Ш?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-12.m4a"
-    },
-    {
-     "id": "sh-df-13",
-     "word": "чаша — чаща",
-     "hint": "Чаша — посуда; чаща — густой лес. Ш или Щ?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-13.m4a",
-     "imageAsset": "word_chasha|word_chashcha2"
-    },
-    {
-     "id": "sh-df-14",
-     "word": "шёлк — щёлк",
-     "hint": "Шёлк — ткань; щёлк — щёлкнуть. Ш или Щ?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-14.m4a"
-    },
-    {
-     "id": "sh-df-15",
-     "word": "шёлка — щёлка",
-     "hint": "Шёлка — ткани; щёлка — узкая щель. Ш или Щ?",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/SH/sh-df-15.m4a"
-    }
-   ]
+  "templateCompatibility": {
+    "prep": [
+      "articulation-imitation",
+      "breathing",
+      "rhythm",
+      "ar-activity"
+    ],
+    "isolated": [
+      "repeat-after-model",
+      "listen-and-choose",
+      "ar-activity"
+    ],
+    "syllable": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "bingo",
+      "rhythm"
+    ],
+    "wordInit": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "minimal-pairs"
+    ],
+    "wordMed": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "minimal-pairs"
+    ],
+    "wordFinal": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "minimal-pairs"
+    ],
+    "phrase": [
+      "story-completion",
+      "drag-and-match",
+      "repeat-after-model",
+      "sorting",
+      "minimal-pairs"
+    ],
+    "sentence": [
+      "story-completion",
+      "drag-and-match",
+      "repeat-after-model",
+      "sorting",
+      "minimal-pairs"
+    ],
+    "story": [
+      "story-completion",
+      "narrative-quest"
+    ],
+    "diff": [
+      "minimal-pairs",
+      "sorting",
+      "listen-and-choose"
+    ]
   }
- },
- "templateCompatibility": {
-  "prep": [
-   "articulation-imitation",
-   "breathing",
-   "rhythm",
-   "ar-activity"
-  ],
-  "isolated": [
-   "repeat-after-model",
-   "listen-and-choose",
-   "ar-activity"
-  ],
-  "syllable": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "bingo",
-   "rhythm"
-  ],
-  "wordInit": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "drag-and-match",
-   "memory",
-   "bingo",
-   "sound-hunter",
-   "puzzle-reveal",
-   "minimal-pairs"
-  ],
-  "wordMed": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "drag-and-match",
-   "memory",
-   "bingo",
-   "sound-hunter",
-   "puzzle-reveal",
-   "minimal-pairs"
-  ],
-  "wordFinal": [
-   "listen-and-choose",
-   "repeat-after-model",
-   "drag-and-match",
-   "memory",
-   "bingo",
-   "sound-hunter",
-   "puzzle-reveal",
-   "minimal-pairs"
-  ],
-  "phrase": [
-   "story-completion",
-   "drag-and-match",
-   "repeat-after-model",
-   "sorting",
-   "minimal-pairs"
-  ],
-  "sentence": [
-   "story-completion",
-   "drag-and-match",
-   "repeat-after-model",
-   "sorting",
-   "minimal-pairs"
-  ],
-  "story": [
-   "story-completion",
-   "narrative-quest"
-  ],
-  "diff": [
-   "minimal-pairs",
-   "sorting",
-   "listen-and-choose"
-  ]
- }
 }

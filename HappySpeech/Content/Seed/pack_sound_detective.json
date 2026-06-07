@@ -1072,7 +1072,7 @@
     {
       "id": "det-shch-kleshchi",
       "word": "клещи",
-      "imageAsset": "word_kleshchi",
+      "imageAsset": null,
       "targetSound": "Щ",
       "soundFamily": "шипящие",
       "position": "middle",
