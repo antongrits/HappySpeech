@@ -67366,6 +67366,125 @@
           }
         }
       }
+    },
+    "settings.section.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступность"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility"
+          }
+        }
+      }
+    },
+    "settings.calmMode.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode"
+          }
+        }
+      }
+    },
+    "settings.calmMode.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Меньше анимаций, частиц и ярких вспышек"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fewer animations, particles and bright flashes"
+          }
+        }
+      }
+    },
+    "settings.calmMode.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помогает детям, чувствительным к ярким анимациям и звукам: фон становится спокойнее, награды появляются мягко, без взрывов конфетти. Можно включить или выключить в любой момент."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Helps children who are sensitive to bright animations and sounds: the background becomes calmer and rewards appear gently, without confetti bursts. You can turn it on or off at any time."
+          }
+        }
+      }
+    },
+    "settings.calmMode.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снижает визуальную и звуковую стимуляцию в детском режиме"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduces visual and audio stimulation in the kids mode"
+          }
+        }
+      }
+    },
+    "settings.calmMode.toast.enabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим включён"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode enabled"
+          }
+        }
+      }
+    },
+    "settings.calmMode.toast.disabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим выключен"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode disabled"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

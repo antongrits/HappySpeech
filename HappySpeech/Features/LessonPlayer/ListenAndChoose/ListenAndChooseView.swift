@@ -59,6 +59,11 @@ struct ListenAndChooseView: View {
     @State private var staggerTask: Task<Void, Never>?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08 «Спокойный режим» — гасит shake/scale-фидбэк наравне с reduceMotion.
+    @Environment(\.calmMode) private var calmMode
+
+    /// A-08: объединённый флаг «без резкого движения» — reduceMotion ИЛИ calmMode.
+    private var calmReduce: Bool { reduceMotion || calmMode }
 
     // MARK: Body
 
@@ -245,9 +250,9 @@ struct ListenAndChooseView: View {
         return LazyVGrid(columns: columns, spacing: SpacingTokens.regular) {
             ForEach(Array(vm.options.enumerated()), id: \.element.id) { idx, option in
                 optionCard(option, index: idx, vm: vm)
-                    .opacity(reduceMotion || idx < visibleCardCount ? 1 : 0)
-                    .offset(y: reduceMotion || idx < visibleCardCount ? 0 : 12)
-                    .animation(reduceMotion ? nil : .spring(duration: 0.45), value: visibleCardCount)
+                    .opacity(calmReduce || idx < visibleCardCount ? 1 : 0)
+                    .offset(y: calmReduce || idx < visibleCardCount ? 0 : 12)
+                    .animation(calmReduce ? nil : .spring(duration: 0.45), value: visibleCardCount)
             }
         }
         .accessibilityElement(children: .contain)
@@ -262,7 +267,7 @@ struct ListenAndChooseView: View {
         let isCorrect = index == vm.correctIndex
         let shouldHighlightCorrect = revealAnswer && isCorrect
         let isWrongSelection = isSelected && feedbackIsCorrect == false && !revealAnswer
-        let shakeOffset: CGFloat = shakeIndex == index && !reduceMotion ? 8 : 0
+        let shakeOffset: CGFloat = shakeIndex == index && !calmReduce ? 8 : 0
 
         return Button {
             selectOption(index: index, vm: vm)
@@ -285,9 +290,9 @@ struct ListenAndChooseView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(cardBorder(isCorrect: shouldHighlightCorrect, isWrong: isWrongSelection), lineWidth: 2)
             )
-            .scaleEffect(isSelected && !reduceMotion ? 0.97 : 1.0)
+            .scaleEffect(isSelected && !calmReduce ? 0.97 : 1.0)
             .offset(x: shakeOffset)
-            .animation(reduceMotion ? nil : .spring(duration: 0.25), value: shakeIndex)
+            .animation(calmReduce ? nil : .spring(duration: 0.25), value: shakeIndex)
         }
         .buttonStyle(.plain)
         .disabled(phase != .choosing || feedbackIsCorrect == true || revealAnswer)

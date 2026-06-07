@@ -139,6 +139,8 @@ struct FeedbackOverlayView: View {
     let mascotState: SessionShellModels.MascotState
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08 «Спокойный режим» — без shake/pulse и с более мягкой цвето-вспышкой.
+    @Environment(\.calmMode) private var calmMode
     @State private var pulseScale: CGFloat = 1.0
     @State private var shakeOffset: CGFloat = 0
 
@@ -164,9 +166,10 @@ struct FeedbackOverlayView: View {
         Group {
             switch state {
             case .correct:
-                ColorTokens.Semantic.success.opacity(0.18)
+                // A-08: мягче вспышка в спокойном режиме (без резкой заливки).
+                ColorTokens.Semantic.success.opacity(calmMode ? 0.08 : 0.18)
             case .incorrect:
-                ColorTokens.Semantic.error.opacity(0.12)
+                ColorTokens.Semantic.error.opacity(calmMode ? 0.06 : 0.12)
             case .none:
                 Color.clear
             }
@@ -218,7 +221,9 @@ struct FeedbackOverlayView: View {
     private var accessibilityText: String { bubbleText }
 
     private func runEntryAnimation() {
-        guard !reduceMotion else { return }
+        // A-08: в спокойном режиме не запускаем pulse/shake — только мягкий fade
+        // самой overlay-вьюхи (управляется снаружи).
+        guard !reduceMotion, !calmMode else { return }
         switch state {
         case .correct:
             withAnimation(.easeOut(duration: 0.18)) { pulseScale = 1.02 }

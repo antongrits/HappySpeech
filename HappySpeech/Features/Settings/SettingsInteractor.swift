@@ -25,6 +25,8 @@ protocol SettingsBusinessLogic: AnyObject {
     func updateHaptics(_ request: SettingsModels.UpdateHaptics.Request)
     /// G (v14): Performance Monitoring opt-in (parent only, COPPA-safe)
     func togglePerformanceMonitoring(_ request: SettingsModels.TogglePerformanceMonitoring.Request)
+    /// A-08: «Спокойный режим» — сниженная сенсорная стимуляция детского контура
+    func toggleCalmMode(_ request: SettingsModels.ToggleCalmMode.Request)
 }
 
 // MARK: - SettingsInteractor
@@ -44,6 +46,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
     private let notificationService: any NotificationService
     private let hapticService: any HapticService
     private let performanceMonitorService: (any PerformanceMonitorService)?
+    private let calmModeManager: CalmModeManager?
     private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
@@ -64,6 +67,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
         hapticService: any HapticService,
         sessionRepository: any SessionRepository,
         performanceMonitorService: (any PerformanceMonitorService)? = nil,
+        calmModeManager: CalmModeManager? = nil,
         whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
         llmModelManager: (any LLMModelManagerProtocol)? = nil,
         defaults: UserDefaults = .standard
@@ -72,6 +76,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
         self.notificationService = notificationService
         self.hapticService = hapticService
         self.performanceMonitorService = performanceMonitorService
+        self.calmModeManager = calmModeManager
         self.whisperKitModelManager = whisperKitModelManager
         self.llmModelManager = llmModelManager
         self.defaults = defaults
@@ -321,6 +326,10 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.performanceMonitoringEnabled = defaults.bool(forKey: SettingsKey.performanceMonitoringEnabled)
         }
 
+        if defaults.object(forKey: SettingsKey.calmModeEnabled) != nil {
+            settings.calmModeEnabled = defaults.bool(forKey: SettingsKey.calmModeEnabled)
+        }
+
         return settings
     }
 
@@ -376,6 +385,18 @@ final class SettingsInteractor: SettingsBusinessLogic {
         performanceMonitorService?.setEnabled(request.enabled)
         logger.info("performanceMonitoring toggled → \(request.enabled, privacy: .public)")
         presenter?.presentTogglePerformanceMonitoring(.init(settings: settings))
+    }
+
+    // MARK: - A-08: Calm Mode
+
+    func toggleCalmMode(_ request: SettingsModels.ToggleCalmMode.Request) {
+        settings.calmModeEnabled = request.enabled
+        defaults.set(request.enabled, forKey: SettingsKey.calmModeEnabled)
+        // Менеджер — источник истины для env `\.calmMode`. Обновление здесь
+        // мгновенно перерисовывает детский контур (childHome/уроки/конфетти).
+        calmModeManager?.isEnabled = request.enabled
+        logger.info("calmMode toggled → \(request.enabled, privacy: .public)")
+        presenter?.presentToggleCalmMode(.init(settings: settings))
     }
 
     // MARK: - Model packs

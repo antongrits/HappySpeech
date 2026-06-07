@@ -298,6 +298,21 @@ enum SettingsModels {
         }
     }
 
+    // MARK: - A-08: ToggleCalmMode
+
+    enum ToggleCalmMode {
+        struct Request: Sendable {
+            let enabled: Bool
+        }
+        struct Response: Sendable {
+            let settings: AppSettings
+        }
+        struct ViewModel: Sendable {
+            let settings: AppSettings
+            let toastMessage: String
+        }
+    }
+
     // MARK: - G v14: TogglePerformanceMonitoring
 
     enum TogglePerformanceMonitoring {
@@ -390,6 +405,9 @@ struct AppSettings: Sendable, Equatable {
     var hapticsLevel: HapticIntensityLevel
     /// G (v14): анонимная аналитика производительности (только parent, COPPA-safe, OFF by default)
     var performanceMonitoringEnabled: Bool
+    /// A-08: «Спокойный режим» — сниженная сенсорная стимуляция детского контура
+    /// (для детей, чувствительных к ярким анимациям и звукам). OFF by default.
+    var calmModeEnabled: Bool
 
     static var `default`: AppSettings {
         var components = DateComponents()
@@ -411,7 +429,8 @@ struct AppSettings: Sendable, Equatable {
             kidDailyReminderEnabled: true,
             weeklyParentSummaryEnabled: true,
             hapticsLevel: .full,
-            performanceMonitoringEnabled: false
+            performanceMonitoringEnabled: false,
+            calmModeEnabled: false
         )
     }
 }
@@ -457,4 +476,6 @@ enum SettingsKey {
     static let hapticsLevel               = "Haptics.intensity"
     /// G (v14): анонимный мониторинг производительности (parent only, COPPA-safe)
     static let performanceMonitoringEnabled = "hs.settings.performanceMonitoringEnabled"
+    /// A-08: «Спокойный режим». Совпадает с ключом `CalmModeManager` — один источник истины.
+    static let calmModeEnabled = "hs.settings.calmModeEnabled"
 }

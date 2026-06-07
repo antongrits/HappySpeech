@@ -82,9 +82,11 @@ final class SettingsInteractorTests: XCTestCase {
         var toggleWeeklyParentSummaryCalled = false
         var updateHapticsCalled = false
         var togglePerformanceMonitoringCalled = false
+        var toggleCalmModeCalled = false
 
         var lastUpdateHaptics: SettingsModels.UpdateHaptics.Response?
         var lastTogglePerformanceMonitoring: SettingsModels.TogglePerformanceMonitoring.Response?
+        var lastToggleCalmMode: SettingsModels.ToggleCalmMode.Response?
 
         func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {
             toggleKidDailyReminderCalled = true
@@ -99,6 +101,10 @@ final class SettingsInteractorTests: XCTestCase {
         func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response) {
             togglePerformanceMonitoringCalled = true
             lastTogglePerformanceMonitoring = response
+        }
+        func presentToggleCalmMode(_ response: SettingsModels.ToggleCalmMode.Response) {
+            toggleCalmModeCalled = true
+            lastToggleCalmMode = response
         }
     }
 
@@ -555,6 +561,76 @@ final class SettingsInteractorTests: XCTestCase {
         sut.loadSettings(.init())
         sut.togglePerformanceMonitoring(.init(enabled: false))
         XCTAssertEqual(spy.lastTogglePerformanceMonitoring?.settings.performanceMonitoringEnabled, false)
+    }
+
+    // MARK: - A-08: Calm Mode
+
+    func test_calmMode_defaultIsOff() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        XCTAssertEqual(spy.lastLoadSettings?.settings.calmModeEnabled, false)
+    }
+
+    func test_toggleCalmMode_enabled_callsPresenterAndPersists() {
+        let defaults = UserDefaults(suiteName: "test-calm-\(UUID().uuidString)")!
+        let manager = CalmModeManager(defaults: defaults)
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
+            sessionRepository: MockSessionRepository(),
+            calmModeManager: manager,
+            defaults: defaults
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.loadSettings(.init())
+
+        sut.toggleCalmMode(.init(enabled: true))
+
+        XCTAssertTrue(spy.toggleCalmModeCalled)
+        XCTAssertEqual(spy.lastToggleCalmMode?.settings.calmModeEnabled, true)
+        XCTAssertTrue(defaults.bool(forKey: SettingsKey.calmModeEnabled))
+        XCTAssertTrue(manager.isEnabled, "Менеджер — источник истины env \\.calmMode")
+    }
+
+    func test_toggleCalmMode_disabled_syncsManager() {
+        let defaults = UserDefaults(suiteName: "test-calm-\(UUID().uuidString)")!
+        let manager = CalmModeManager(defaults: defaults)
+        manager.isEnabled = true
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
+            sessionRepository: MockSessionRepository(),
+            calmModeManager: manager,
+            defaults: defaults
+        )
+        sut.presenter = SpyPresenter()
+        sut.loadSettings(.init())
+
+        sut.toggleCalmMode(.init(enabled: false))
+
+        XCTAssertFalse(manager.isEnabled)
+        XCTAssertFalse(defaults.bool(forKey: SettingsKey.calmModeEnabled))
+    }
+
+    func test_calmMode_persistedValueIsRead() {
+        let defaults = UserDefaults(suiteName: "test-calm-\(UUID().uuidString)")!
+        defaults.set(true, forKey: SettingsKey.calmModeEnabled)
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
+            sessionRepository: MockSessionRepository(),
+            defaults: defaults
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+
+        sut.loadSettings(.init())
+
+        XCTAssertEqual(spy.lastLoadSettings?.settings.calmModeEnabled, true)
     }
 
     // MARK: - 33. exportData CSV / JSON форматы

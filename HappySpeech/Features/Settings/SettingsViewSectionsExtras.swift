@@ -198,6 +198,48 @@ extension SettingsView {
         }
     }
 
+    // MARK: Accessibility — Calm Mode (A-08)
+
+    var calmModeSection: some View {
+        Section {
+            Toggle(isOn: calmModeBinding) {
+                Label {
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.calmMode.label"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "settings.calmMode.subtitle"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                    }
+                } icon: {
+                    // Тёплая иконка (lilac) — спокойствие/мягкость, без off-palette.
+                    SettingsIconLabelX("leaf.fill", color: ColorTokens.Brand.lilac)
+                }
+            }
+            .tint(ColorTokens.Brand.primary)
+            .frame(minHeight: 56)
+            .accessibilityLabel(String(localized: "settings.calmMode.label"))
+            .accessibilityValue(display.settings.calmModeEnabled
+                                ? String(localized: "settings.a11y.on")
+                                : String(localized: "settings.a11y.off"))
+            .accessibilityHint(String(localized: "settings.calmMode.a11y.hint"))
+        } header: {
+            Text(String(localized: "settings.section.accessibility"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
+        } footer: {
+            Text(String(localized: "settings.calmMode.footer"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+        }
+    }
+
     // MARK: Specialist
 
     var specialistSection: some View {
@@ -440,6 +482,13 @@ extension SettingsView {
             set: { newValue in
                 interactor?.togglePerformanceMonitoring(.init(enabled: newValue))
             }
+        )
+    }
+
+    var calmModeBinding: Binding<Bool> {
+        Binding(
+            get: { display.settings.calmModeEnabled },
+            set: { newValue in interactor?.toggleCalmMode(.init(enabled: newValue)) }
         )
     }
 

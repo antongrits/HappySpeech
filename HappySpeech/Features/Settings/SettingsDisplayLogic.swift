@@ -27,6 +27,8 @@ protocol SettingsDisplayLogic: AnyObject {
     func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel)
     /// G (v14): Performance Monitoring opt-in
     func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel)
+    /// A-08: «Спокойный режим»
+    func displayToggleCalmMode(_ viewModel: SettingsModels.ToggleCalmMode.ViewModel)
 }
 
 // MARK: - SettingsDisplay (Observable Store)
@@ -154,6 +156,12 @@ final class SettingsDisplay: SettingsDisplayLogic {
     }
 
     func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel) {
+        settings = viewModel.settings
+        toastMessage = viewModel.toastMessage
+        toastIsError = false
+    }
+
+    func displayToggleCalmMode(_ viewModel: SettingsModels.ToggleCalmMode.ViewModel) {
         settings = viewModel.settings
         toastMessage = viewModel.toastMessage
         toastIsError = false

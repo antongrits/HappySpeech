@@ -26,6 +26,8 @@ protocol SettingsPresentationLogic: AnyObject {
     func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response)
     /// G (v14): Performance Monitoring opt-in
     func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response)
+    /// A-08: «Спокойный режим»
+    func presentToggleCalmMode(_ response: SettingsModels.ToggleCalmMode.Response)
 }
 
 // MARK: - SettingsPresenter
@@ -300,6 +302,16 @@ final class SettingsPresenter: SettingsPresentationLogic {
             ? String(localized: "settings.performance.toast.enabled")
             : String(localized: "settings.performance.toast.disabled")
         display?.displayTogglePerformanceMonitoring(.init(
+            settings: response.settings,
+            toastMessage: message
+        ))
+    }
+
+    func presentToggleCalmMode(_ response: SettingsModels.ToggleCalmMode.Response) {
+        let message = response.settings.calmModeEnabled
+            ? String(localized: "settings.calmMode.toast.enabled")
+            : String(localized: "settings.calmMode.toast.disabled")
+        display?.displayToggleCalmMode(.init(
             settings: response.settings,
             toastMessage: message
         ))

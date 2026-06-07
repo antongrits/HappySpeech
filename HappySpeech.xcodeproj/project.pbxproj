@@ -682,6 +682,7 @@
 		4EF6244C31B5B7E711F5A804 /* FSRSSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D14ACBEAC41DA3E7B1C9E48 /* FSRSSchedulerTests.swift */; };
 		4EF87C531F17C79634938689 /* FirebaseEmulatorTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2F836E56DA84FADB7CF9F /* FirebaseEmulatorTestsBase.swift */; };
 		4F2C7A995EDE2E930B3694D2 /* SileroVAD.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = 193C07CF1E57AA1F55867205 /* SileroVAD.mlpackage */; };
+		4F2D7FA7758C0F8BFB10E700 /* CalmModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F24842332488EE6F736F3E30 /* CalmModeManager.swift */; };
 		4F7E267806EEB7F276D73C98 /* ParentVoiceNotePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 075997A627170B27FB5F5351 /* ParentVoiceNotePresenter.swift */; };
 		4FA3E8DE02CB3BD8CFB42F69 /* SpecialistFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BA175AE6A04C8DE6E1CCAD /* SpecialistFlowUITests.swift */; };
 		4FA923066F73761023F46E39 /* SyllableSnailCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F472FEEDD9F5A2B37C0CA32B /* SyllableSnailCorpus.swift */; };
@@ -4136,6 +4137,7 @@
 		F1D4D6994C5053082700C725 /* BilingualModePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilingualModePresenter.swift; sourceTree = "<group>"; };
 		F21C59013CAB87783582D2A3 /* ColorAndSoundModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAndSoundModels.swift; sourceTree = "<group>"; };
 		F241F4E4C264FBB731FE3E0D /* WeeklyParentTipInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyParentTipInteractorTests.swift; sourceTree = "<group>"; };
+		F24842332488EE6F736F3E30 /* CalmModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalmModeManager.swift; sourceTree = "<group>"; };
 		F27C3268900B40BDD9F7AB4F /* ChildRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildRepository.swift; sourceTree = "<group>"; };
 		F28BE1055F6551A9CF6CF07E /* SpeechNormsEncyclopediaInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechNormsEncyclopediaInteractor.swift; sourceTree = "<group>"; };
 		F2AF6F07B727482AE6AD4171 /* AssignedHomeworkWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedHomeworkWorker.swift; sourceTree = "<group>"; };
@@ -7166,6 +7168,7 @@
 		7B1DD4BDA0456AD028175620 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				F24842332488EE6F736F3E30 /* CalmModeManager.swift */,
 				83CDCDA44E565AFE287E10FB /* ThemeEnvironment.swift */,
 			);
 			path = Theme;
@@ -10889,6 +10892,7 @@
 				31878B184637C093246CEF90 /* ButterflyCatchView.swift in Sources */,
 				CD0A9D4DA522DF8E7994B84D /* CTCDecoder.swift in Sources */,
 				E733A15894C41A8B71464454 /* CacheClearWorker.swift in Sources */,
+				4F2D7FA7758C0F8BFB10E700 /* CalmModeManager.swift in Sources */,
 				2138188911810F874CA19404 /* CanvasViewRepresentable.swift in Sources */,
 				79370EF90D5A97FD8DEEF52A /* CapReachedView.swift in Sources */,
 				576A723F9FE4C23601F13190 /* CardModifier.swift in Sources */,

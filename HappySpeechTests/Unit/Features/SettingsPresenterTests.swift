@@ -27,6 +27,7 @@ final class SettingsPresenterTests: XCTestCase {
         var loadLicensesVM: SettingsModels.LoadLicenses.ViewModel?
         var exportShareVM: SettingsModels.ExportShare.ViewModel?
         var failureVM: SettingsModels.Failure.ViewModel?
+        var toggleCalmModeVM: SettingsModels.ToggleCalmMode.ViewModel?
 
         func displayLoadSettings(_ viewModel: SettingsModels.LoadSettings.ViewModel) { loadSettingsVM = viewModel }
         func displayUpdateTheme(_ viewModel: SettingsModels.UpdateTheme.ViewModel) { updateThemeVM = viewModel }
@@ -47,6 +48,7 @@ final class SettingsPresenterTests: XCTestCase {
         func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel) {}
         func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel) {}
         func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel) {}
+        func displayToggleCalmMode(_ viewModel: SettingsModels.ToggleCalmMode.ViewModel) { toggleCalmModeVM = viewModel }
     }
 
     private func makeSUT() -> (SettingsPresenter, DisplaySpy) {
@@ -375,5 +377,24 @@ final class SettingsPresenterTests: XCTestCase {
         for item in items {
             XCTAssertFalse(item.subtitle.isEmpty, "\(item.title) должен иметь subtitle")
         }
+    }
+
+    // MARK: - A-08: Calm Mode
+
+    func test_presentToggleCalmMode_enabled_setsSettingsAndToast() {
+        let (sut, spy) = makeSUT()
+        var settings = AppSettings.default
+        settings.calmModeEnabled = true
+        sut.presentToggleCalmMode(.init(settings: settings))
+        XCTAssertEqual(spy.toggleCalmModeVM?.settings.calmModeEnabled, true)
+        XCTAssertFalse(spy.toggleCalmModeVM?.toastMessage.isEmpty ?? true)
+    }
+
+    func test_presentToggleCalmMode_disabled_setsSettings() {
+        let (sut, spy) = makeSUT()
+        var settings = AppSettings.default
+        settings.calmModeEnabled = false
+        sut.presentToggleCalmMode(.init(settings: settings))
+        XCTAssertEqual(spy.toggleCalmModeVM?.settings.calmModeEnabled, false)
     }
 }

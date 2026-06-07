@@ -69,6 +69,7 @@ struct SettingsView: View {
                     profileSection
                     notificationsSection
                     hapticsSection
+                    calmModeSection
                     contentSection
                     modelPacksSection
                     dataSection
@@ -264,6 +265,7 @@ struct SettingsView: View {
             hapticService: container.hapticService,
             sessionRepository: container.sessionRepository,
             performanceMonitorService: container.performanceMonitorService,
+            calmModeManager: container.calmModeManager,
             whisperKitModelManager: container.whisperKitModelManager,
             llmModelManager: container.llmModelManager
         )

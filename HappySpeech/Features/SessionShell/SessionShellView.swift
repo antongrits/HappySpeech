@@ -198,6 +198,8 @@ struct SessionShellBinder: View {
     let onSessionFinished: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08 «Спокойный режим» — мягче переходы и фон практической сессии.
+    @Environment(\.calmMode) private var calmMode
     @Environment(AppContainer.self) private var container
     @Environment(\.colorScheme) private var colorScheme
 
@@ -212,9 +214,10 @@ struct SessionShellBinder: View {
             // gradient'a по типу игры. softLight + низкий opacity не перетягивает
             // внимание с game content area, но добавляет глубины и «дыхания» фону
             // фокусной practice-сессии (palette .calm — спокойный mint/sky).
-            HSMeshGradientBackground(palette: .calm, animated: true)
+            // A-08: в спокойном режиме фон не «дышит» и сильнее притушён.
+            HSMeshGradientBackground(palette: .calm, animated: !calmMode)
                 .ignoresSafeArea()
-                .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                .opacity(calmMode ? 0.12 : (colorScheme == .dark ? 0.18 : 0.28))
                 .blendMode(.softLight)
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
@@ -238,14 +241,14 @@ struct SessionShellBinder: View {
                     state: state.feedbackState,
                     mascotState: state.mascotState
                 )
-                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale))
+                .transition((reduceMotion || calmMode) ? .opacity : .opacity.combined(with: .scale))
                 .zIndex(5)
                 .allowsHitTesting(false)
             }
 
             if state.isShowingReward, let vm = state.rewardVM {
                 rewardOverlay(vm)
-                    .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
+                    .transition((reduceMotion || calmMode) ? .opacity : .move(edge: .top).combined(with: .opacity))
                     .zIndex(10)
             }
         }

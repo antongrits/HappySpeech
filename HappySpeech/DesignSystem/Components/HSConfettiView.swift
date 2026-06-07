@@ -35,9 +35,13 @@ public struct HSConfettiView: View {
     @Binding public var isActive: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08: «Спокойный режим» — взрывные частицы заменяются мягкой одиночной
+    // звездой, чтобы не перегружать чувствительного ребёнка стимуляцией.
+    @Environment(\.calmMode) private var calmMode
 
     @State private var particles: [ConfettiParticle] = []
     @State private var animationPhase: Double = 0
+    @State private var calmStarShown: Bool = false
 
     public init(preset: HSConfettiPreset, isActive: Binding<Bool>) {
         self.preset = preset
@@ -47,7 +51,11 @@ public struct HSConfettiView: View {
     public var body: some View {
         GeometryReader { geo in
             if isActive {
-                if reduceMotion {
+                if calmMode {
+                    // A-08: спокойная замена — мягко появляющаяся звезда вместо
+                    // десятков разлетающихся частиц.
+                    calmStar(in: geo.size)
+                } else if reduceMotion {
                     staticConfetti(in: geo.size)
                 } else {
                     animatedConfetti(in: geo.size)
@@ -55,12 +63,37 @@ public struct HSConfettiView: View {
             }
         }
         .onChange(of: isActive) { _, active in
-            if active {
+            if active && !calmMode {
                 particles = makeParticles(preset: preset)
             }
         }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
+    }
+
+    // MARK: - Calm Mode (A-08)
+
+    @ViewBuilder
+    private func calmStar(in size: CGSize) -> some View {
+        Image(systemName: "star.fill")
+            .font(.system(size: 64))
+            .foregroundStyle(ColorTokens.Brand.gold)
+            .opacity(calmStarShown ? 1.0 : 0.0)
+            .scaleEffect(calmStarShown ? 1.0 : 0.85)
+            .frame(width: size.width, height: size.height, alignment: .center)
+            .onAppear {
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
+                    calmStarShown = true
+                }
+            }
+            .task {
+                try? await Task.sleep(for: .seconds(1.4))
+                withAnimation(reduceMotion ? nil : .easeIn(duration: 0.35)) {
+                    calmStarShown = false
+                }
+                try? await Task.sleep(for: .seconds(0.4))
+                isActive = false
+            }
     }
 
     // MARK: - Animated (TimelineView + Canvas)

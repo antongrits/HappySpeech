@@ -57,6 +57,9 @@ struct ChildHomeView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08 «Спокойный режим» — снижает плотность декора и стимуляции на главном
+    // детском экране. Всё под `if calmMode`; при выключенном (default) — без изменений.
+    @Environment(\.calmMode) private var calmMode
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.colorScheme) private var colorScheme
 
@@ -81,7 +84,7 @@ struct ChildHomeView: View {
                         router?.routeToSeasonalLesson(event: event, childId: childId)
                     }
                     .animation(
-                        reduceMotion ? nil : .easeInOut(duration: 0.3),
+                        (reduceMotion || calmMode) ? nil : .easeInOut(duration: 0.3),
                         value: SeasonalEventsManager.shared.activeEvent?.rawValue
                     )
 
@@ -161,7 +164,7 @@ struct ChildHomeView: View {
                 // (на узком iPhone SE слева 24pt, справа 0pt). Фикс. ширина
                 // гарантирует симметричные поля: левое == правое.
                 .containerRelativeFrame(.horizontal)
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
+                .animation((reduceMotion || calmMode) ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.hasAchievement)
             }
             .safeAreaInset(edge: .bottom) { Color.clear.frame(height: SpacingTokens.sp8) }
@@ -270,17 +273,23 @@ struct ChildHomeView: View {
             KidBackgroundView()
                 .ignoresSafeArea()
 
-            HSMeshGradientBackground(palette: .kidWarm, animated: true)
+            // A-08: в спокойном режиме mesh не «дышит» (animated: false) и сильнее
+            // притушён, чтобы фон оставался тихим и однородным.
+            HSMeshGradientBackground(palette: .kidWarm, animated: !calmMode)
                 .ignoresSafeArea()
                 // F.tier1 v21: чуть притушеваем mesh в dark, чтобы не «выгорало» поверх тёмного фона.
-                .opacity(colorScheme == .dark ? 0.22 : 0.35)
+                .opacity(calmMode ? 0.14 : (colorScheme == .dark ? 0.22 : 0.35))
                 .blendMode(.softLight)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
 
-            ChildHomeCloudDecoration()
-                // F.tier1 v21: облака мягче в dark, чтобы не перетягивали внимание.
-                .opacity(colorScheme == .dark ? 0.85 : 1.0)
+            // A-08: плавающие декоративные облака — источник лишнего движения и
+            // визуального шума; в спокойном режиме скрываем полностью.
+            if !calmMode {
+                ChildHomeCloudDecoration()
+                    // F.tier1 v21: облака мягче в dark, чтобы не перетягивали внимание.
+                    .opacity(colorScheme == .dark ? 0.85 : 1.0)
+            }
         }
     }
 
@@ -372,7 +381,8 @@ struct ChildHomeView: View {
                     }
                 }
             } label: {
-                ChildHomeReactiveMascot(mood: viewModel.mascotMood, reduceMotion: reduceMotion)
+                // A-08: спокойный режим останавливает покачивание маскота (как reduceMotion).
+                ChildHomeReactiveMascot(mood: viewModel.mascotMood, reduceMotion: reduceMotion || calmMode)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(String(localized: "child.home.mascot.tap.a11y"))
@@ -389,7 +399,7 @@ struct ChildHomeView: View {
         }
         .padding(.vertical, SpacingTokens.sp3)
         .frame(maxWidth: .infinity)
-        .animation(reduceMotion ? nil : MotionTokens.spring, value: viewModel.mascotTapPhrase)
+        .animation((reduceMotion || calmMode) ? nil : MotionTokens.spring, value: viewModel.mascotTapPhrase)
     }
 
     // MARK: - HomeScreen Widget card preview (L9)
@@ -417,8 +427,8 @@ struct ChildHomeView: View {
             ChildHomeDailyMissionDetailCard(
                 mission: viewModel.dailyMissionDetail
             ) {
-                if reduceMotion {
-                    // Reduced Motion: без hero, сразу в урок.
+                if reduceMotion || calmMode {
+                    // Reduced Motion / A-08 Спокойный режим: без hero-overlay, сразу в урок.
                     guard let interactor, let router else { return }
                     Task { await interactor.recordMissionTap() }
                     router.routeToLesson(
@@ -661,7 +671,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.sky,
                     heroId: "quickaction_worldmap",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     router?.routeToWorldMap(
                         childId: childId,
@@ -674,7 +684,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.lilac,
                     heroId: "quickaction_ar",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     router?.routeToARZone()
                 }
@@ -684,7 +694,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.butter,
                     heroId: "quickaction_rewards",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     router?.routeToRewards(childId: childId)
                 }
@@ -694,7 +704,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.mint,
                     heroId: "quickaction_achievements",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     router?.routeToAchievements(childId: childId)
                 }
@@ -705,7 +715,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.rose,
                     heroId: "quickaction_weekly",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     showWeeklyChallengeSheet = true
                 }
@@ -716,7 +726,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.butter,
                     heroId: "quickaction_cultural",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     showCulturalContentSheet = true
                 }
@@ -727,7 +737,7 @@ struct ChildHomeView: View {
                     color: ColorTokens.Brand.lilac,
                     heroId: "quickaction_grammar",
                     namespace: heroNamespace,
-                    reduceMotion: reduceMotion
+                    reduceMotion: reduceMotion || calmMode
                 ) {
                     router?.routeToGrammarGame(childId: childId)
                 }

@@ -141,6 +141,10 @@ public final class AppContainer {
     // Block L: MascotEyeContactState — singleton eye contact state (Block L)
     public let mascotEyeContactState: MascotEyeContactState = MascotEyeContactState()
 
+    // A-08 «Спокойный режим» — singleton источник истины флага (default OFF).
+    // Персистится в UserDefaults; Settings-VIP и менеджер читают один ключ.
+    public let calmModeManager: CalmModeManager = CalmModeManager()
+
     // Block D v13: PhonemeAnalysisService — фонемный анализ произношения (DTW + CoreML).
     // Actor-typed, lazy. Требует G2PWorker (словарь 7712 слов) + RussianPhonemeClassifier (1.35 MB).
     private var _phonemeAnalysisService: (any PhonemeAnalysisService)?

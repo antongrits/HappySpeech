@@ -21,6 +21,11 @@ struct MemoryView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    // A-08 «Спокойный режим» — мгновенный flip без 3D-вращения (как reduceMotion).
+    @Environment(\.calmMode) private var calmMode
+
+    /// A-08: объединённый флаг «без резкого движения» — reduceMotion ИЛИ calmMode.
+    private var calmReduce: Bool { reduceMotion || calmMode }
 
     // MARK: State
 
@@ -246,19 +251,19 @@ struct MemoryView: View {
             .frame(height: cardHeight)
             .overlay(cardOverlay(card: card, isHinted: isHinted))
             .shadow(color: ColorTokens.Overlay.shadow, radius: 3, y: 1)
-            .scaleEffect(card.isMatched && !reduceMotion ? 1.02 : 1.0)
+            .scaleEffect(card.isMatched && !calmReduce ? 1.02 : 1.0)
             .rotation3DEffect(
-                .degrees(reduceMotion ? 0 : (faceUp ? 0 : 180)),
+                .degrees(calmReduce ? 0 : (faceUp ? 0 : 180)),
                 axis: (0, 1, 0)
             )
             .animation(
-                reduceMotion
+                calmReduce
                     ? nil
                     : .spring(response: 0.35, dampingFraction: 0.7),
                 value: faceUp
             )
             .animation(
-                reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7),
+                calmReduce ? nil : .spring(response: 0.35, dampingFraction: 0.7),
                 value: card.isMatched
             )
         }
@@ -312,7 +317,7 @@ struct MemoryView: View {
                 lineWidth: (isHinted || card.isMatched) ? 3 : 1
             )
             .animation(
-                reduceMotion ? nil : .easeInOut(duration: 0.25),
+                calmReduce ? nil : .easeInOut(duration: 0.25),
                 value: isHinted
             )
     }

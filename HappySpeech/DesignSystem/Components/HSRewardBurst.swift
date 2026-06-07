@@ -9,6 +9,11 @@ public struct HSRewardBurst: View {
     let particleCount: Int
 
     @State private var particles: [BurstParticle] = []
+    // A-08: «Спокойный режим» — мягкая одиночная звезда вместо радиального
+    // разлёта частиц.
+    @State private var calmStarOpacity: Double = 0
+    @Environment(\.calmMode) private var calmMode
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(isShowing: Bool, color: Color = ColorTokens.Brand.primary, particleCount: Int = 20) {
         self.isShowing = isShowing
@@ -18,22 +23,43 @@ public struct HSRewardBurst: View {
 
     public var body: some View {
         ZStack {
-            ForEach(particles) { particle in
-                Circle()
-                    .fill(particle.color)
-                    .frame(width: particle.size, height: particle.size)
-                    .offset(x: particle.x, y: particle.y)
-                    .opacity(particle.opacity)
-                    .animation(
-                        .easeOut(duration: particle.duration).delay(particle.delay),
-                        value: isShowing
-                    )
+            if calmMode {
+                Image(systemName: "star.fill")
+                    .font(.system(size: 40))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .opacity(calmStarOpacity)
+                    .scaleEffect(calmStarOpacity > 0 ? 1.0 : 0.85)
+            } else {
+                ForEach(particles) { particle in
+                    Circle()
+                        .fill(particle.color)
+                        .frame(width: particle.size, height: particle.size)
+                        .offset(x: particle.x, y: particle.y)
+                        .opacity(particle.opacity)
+                        .animation(
+                            .easeOut(duration: particle.duration).delay(particle.delay),
+                            value: isShowing
+                        )
+                }
             }
         }
         .onChange(of: isShowing) { _, showing in
-            if showing { triggerBurst() }
+            if showing {
+                if calmMode { triggerCalmStar() } else { triggerBurst() }
+            }
         }
         .allowsHitTesting(false)
+    }
+
+    private func triggerCalmStar() {
+        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
+            calmStarOpacity = 1
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            withAnimation(reduceMotion ? nil : .easeIn(duration: 0.4)) {
+                calmStarOpacity = 0
+            }
+        }
     }
 
     private func triggerBurst() {

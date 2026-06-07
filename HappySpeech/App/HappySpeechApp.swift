@@ -158,6 +158,11 @@ struct HappySpeechApp: App {
                 .environment(LyalyaCustomizationStorage.shared)
                 .environment(\.mascotLipSyncState, container.mascotLipSyncState)
                 .environment(\.mascotEyeContactState, container.mascotEyeContactState)
+                // A-08 «Спокойный режим» — производное Bool-значение в env.
+                // Чтение `container.calmModeManager.isEnabled` в body делает
+                // инъекцию реактивной: тумблер в Settings меняет UI мгновенно.
+                .environment(container.calmModeManager)
+                .environment(\.calmMode, container.calmModeManager.isEnabled)
                 .preferredColorScheme(Self.resolvedColorScheme(from: container.themeManager))
                 .onAppear {
                     // Plan v22 Block 0.5 — AppLaunch end (first scene visible).
