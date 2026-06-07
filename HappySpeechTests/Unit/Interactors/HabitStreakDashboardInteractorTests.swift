@@ -33,6 +33,14 @@ final class HabitStreakDashboardInteractorTests: XCTestCase {
         XCTAssertNil(sut.state.selected)
     }
 
+    func test_initialState_isEmpty_noPseudoRandomFlash() {
+        // Production first frame must be the honest empty baseline (all 0 min),
+        // not the pseudo-random preview pattern.
+        let sut = makeSUT()
+        XCTAssertTrue(sut.state.days.allSatisfy { $0.minutes == 0 })
+        XCTAssertTrue(sut.state.days.allSatisfy { $0.intensity == 0 })
+    }
+
     func test_initialState_intensityMatchesMinutes() {
         let sut = makeSUT()
         for day in sut.state.days {

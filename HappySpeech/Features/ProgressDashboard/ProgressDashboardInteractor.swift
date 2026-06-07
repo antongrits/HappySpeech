@@ -33,6 +33,7 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
 
     private let llmDecisionService: (any LLMDecisionServiceProtocol)?
     private let worker: (any ProgressDashboardAggregating)?
+    private let childRepository: (any ChildRepository)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ProgressDashboard")
     private lazy var insightsWorker = ParentInsightsWorker(llmService: llmDecisionService)
 
@@ -46,15 +47,19 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
     private var recommendations: [String] = []
     private var currentPeriod: ProgressDashboardModels.TimePeriod = .week
     private var lastChildId: String = "child-default"
+    /// Реальный возраст ребёнка (из профиля), для входа LLM. nil до загрузки.
+    private var lastChildAge: Int?
 
     // MARK: - Init
 
     init(
         worker: (any ProgressDashboardAggregating)? = nil,
-        llmDecisionService: (any LLMDecisionServiceProtocol)? = nil
+        llmDecisionService: (any LLMDecisionServiceProtocol)? = nil,
+        childRepository: (any ChildRepository)? = nil
     ) {
         self.worker = worker
         self.llmDecisionService = llmDecisionService
+        self.childRepository = childRepository
     }
 
     // MARK: - BusinessLogic
@@ -69,6 +74,10 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
 
         Task { @MainActor [weak self] in
             guard let self else { return }
+            // Реальный возраст ребёнка из профиля — для корректного входа LLM.
+            if let childRepository = self.childRepository {
+                self.lastChildAge = try? await childRepository.fetch(id: request.childId).age
+            }
             let aggregate = await worker?.aggregate(childId: request.childId, period: request.period)
                 ?? .empty
             self.apply(aggregate, period: request.period)
@@ -158,7 +167,7 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
                 sessionId: "dashboard-\(Int(Date().timeIntervalSince1970))",
                 childId: self.lastChildId,
                 childName: request.childName,
-                age: 6,
+                age: self.lastChildAge ?? 6,
                 targetSound: topSound?.sound ?? "—",
                 stage: .syllable,
                 totalAttempts: attemptsBasis,

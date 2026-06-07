@@ -3,92 +3,164 @@ import XCTest
 
 // MARK: - SpecialistScheduleInteractorTests
 //
-// SpecialistScheduleInteractor is a thin VIP MVP variant (@Observable). It holds a
-// fixed weekly slot list and a selected weekday; select(_:) updates the selection.
-// Tests cover the seed (well-formedness, weekday coverage), the selection mutation
-// and the slotsFor(_:) filter (incl. an empty weekday).
-// (Weekday.shortTitle map is purely presentational — intentionally skipped.)
+// SpecialistScheduleInteractor loads REAL schedule slots through
+// SpecialistScheduleWorker (children from ChildRepository + assigned homework
+// due dates). No fabricated slots: `.initial` is empty + loading; load() fills
+// from the worker. Tests use a mock worker to cover the empty case, the populated
+// case, weekday auto-selection, the slotsFor filter and the select mutation.
 
 @MainActor
 final class SpecialistScheduleInteractorTests: XCTestCase {
 
     private typealias Weekday = SpecialistScheduleModels.Weekday
 
-    private func makeSUT() -> SpecialistScheduleInteractor {
-        SpecialistScheduleInteractor(specialistId: "spec-1")
+    // MARK: - Mock worker
+
+    private final class MockScheduleWorker: SpecialistScheduleWorkerProtocol {
+        var slots: [SpecialistScheduleModels.Slot] = []
+        private(set) var loadCalledWith: String?
+
+        func loadSlots(specialistId: String) async -> [SpecialistScheduleModels.Slot] {
+            loadCalledWith = specialistId
+            return slots
+        }
     }
 
-    // MARK: - Init / seed
+    private func makeSlot(
+        id: String,
+        weekday: Weekday,
+        name: String,
+        topic: String = "Звук Р"
+    ) -> SpecialistScheduleModels.Slot {
+        // Build a concrete date matching the requested weekday in the current week.
+        let calendar = Calendar.current
+        let now = Date()
+        let interval = calendar.dateInterval(of: .weekOfYear, for: now)?.start ?? now
+        // weekday.rawValue: mon=1 … sun=7 → offset from week start.
+        let date = calendar.date(byAdding: .day, value: weekday.rawValue - 1, to: interval) ?? now
+        return SpecialistScheduleModels.Slot(
+            id: id,
+            weekday: weekday,
+            date: date,
+            time: "10:00",
+            childName: name,
+            topic: topic
+        )
+    }
+
+    private func makeSUT(
+        worker: MockScheduleWorker
+    ) -> SpecialistScheduleInteractor {
+        SpecialistScheduleInteractor(specialistId: "spec-1", worker: worker)
+    }
+
+    // MARK: - Init
 
     func test_init_storesSpecialistId() {
-        let sut = SpecialistScheduleInteractor(specialistId: "s-77")
-        XCTAssertEqual(sut.specialistId, "s-77")
+        let sut = makeSUT(worker: MockScheduleWorker())
+        XCTAssertEqual(sut.specialistId, "spec-1")
     }
 
-    func test_initialState_matchesInitial() {
-        let sut = makeSUT()
-        XCTAssertEqual(sut.state, .initial)
-        XCTAssertEqual(sut.state.selectedWeekday, .mon)
+    func test_initialState_isEmptyAndLoading_noFabrication() {
+        let sut = makeSUT(worker: MockScheduleWorker())
+        XCTAssertTrue(sut.state.slots.isEmpty)
+        XCTAssertTrue(sut.state.isLoading)
     }
 
-    func test_initialState_slotsWellFormed() {
-        let sut = makeSUT()
-        XCTAssertFalse(sut.state.slots.isEmpty)
-        XCTAssertEqual(Set(sut.state.slots.map(\.id)).count, sut.state.slots.count)
-        for slot in sut.state.slots {
-            XCTAssertFalse(slot.time.isEmpty)
-            XCTAssertFalse(slot.childName.isEmpty)
-            XCTAssertFalse(slot.topic.isEmpty)
-        }
+    // MARK: - load (empty)
+
+    func test_load_emptyWorker_keepsEmptyAndStopsLoading() async {
+        let worker = MockScheduleWorker()
+        let sut = makeSUT(worker: worker)
+        await sut.load()
+        XCTAssertTrue(sut.state.slots.isEmpty)
+        XCTAssertFalse(sut.state.isLoading)
+        XCTAssertEqual(worker.loadCalledWith, "spec-1")
+    }
+
+    // MARK: - load (populated)
+
+    func test_load_populatesRealSlots() async {
+        let worker = MockScheduleWorker()
+        worker.slots = [
+            makeSlot(id: "a", weekday: .tue, name: "Real Child"),
+            makeSlot(id: "b", weekday: .tue, name: "Real Child 2"),
+            makeSlot(id: "c", weekday: .thu, name: "Real Child 3")
+        ]
+        let sut = makeSUT(worker: worker)
+        await sut.load()
+        XCTAssertEqual(sut.state.slots.count, 3)
+        XCTAssertFalse(sut.state.isLoading)
+    }
+
+    func test_load_autoSelectsDayWithSlots_whenSelectedEmpty() async {
+        let worker = MockScheduleWorker()
+        worker.slots = [makeSlot(id: "a", weekday: .sat, name: "Real Child")]
+        let sut = makeSUT(worker: worker)
+        await sut.load()
+        XCTAssertEqual(sut.state.slotsFor(.sat).count, 1)
+        XCTAssertFalse(sut.state.slotsFor(sut.state.selectedWeekday).isEmpty)
+    }
+
+    // MARK: - slotsFor
+
+    func test_slotsFor_returnsOnlyThatWeekday() async {
+        let worker = MockScheduleWorker()
+        worker.slots = [
+            makeSlot(id: "a", weekday: .mon, name: "C1"),
+            makeSlot(id: "b", weekday: .wed, name: "C2")
+        ]
+        let sut = makeSUT(worker: worker)
+        await sut.load()
+        XCTAssertEqual(sut.state.slotsFor(.mon).count, 1)
+        XCTAssertTrue(sut.state.slotsFor(.mon).allSatisfy { $0.weekday == .mon })
+        XCTAssertTrue(sut.state.slotsFor(.sun).isEmpty)
+    }
+
+    func test_slotsFor_partitionCoversAllSlots() async {
+        let worker = MockScheduleWorker()
+        worker.slots = [
+            makeSlot(id: "a", weekday: .mon, name: "C1"),
+            makeSlot(id: "b", weekday: .fri, name: "C2"),
+            makeSlot(id: "c", weekday: .fri, name: "C3")
+        ]
+        let sut = makeSUT(worker: worker)
+        await sut.load()
+        let recombined = Weekday.allCases.flatMap { sut.state.slotsFor($0) }
+        XCTAssertEqual(recombined.count, sut.state.slots.count)
     }
 
     // MARK: - select
 
     func test_select_updatesSelectedWeekday() {
-        let sut = makeSUT()
+        let sut = makeSUT(worker: MockScheduleWorker())
         sut.select(.thu)
         XCTAssertEqual(sut.state.selectedWeekday, .thu)
     }
 
-    func test_select_doesNotMutateSlots() {
-        let sut = makeSUT()
+    func test_select_doesNotMutateSlots() async {
+        let worker = MockScheduleWorker()
+        worker.slots = [makeSlot(id: "a", weekday: .mon, name: "C1")]
+        let sut = makeSUT(worker: worker)
+        await sut.load()
         let before = sut.state.slots
         sut.select(.fri)
         XCTAssertEqual(sut.state.slots, before)
     }
 
     func test_select_eachWeekday() {
-        let sut = makeSUT()
+        let sut = makeSUT(worker: MockScheduleWorker())
         for weekday in Weekday.allCases {
             sut.select(weekday)
             XCTAssertEqual(sut.state.selectedWeekday, weekday)
         }
     }
 
-    // MARK: - slotsFor
+    // MARK: - Weekday mapping
 
-    func test_slotsFor_returnsOnlyThatWeekday() {
-        let sut = makeSUT()
-        for weekday in Weekday.allCases {
-            let subset = sut.state.slotsFor(weekday)
-            XCTAssertTrue(subset.allSatisfy { $0.weekday == weekday })
-        }
-    }
-
-    func test_slotsFor_emptyWeekday_returnsEmpty() {
-        let sut = makeSUT()
-        // No slots are seeded for Sunday in the initial schedule.
-        XCTAssertTrue(sut.state.slotsFor(.sun).isEmpty)
-    }
-
-    func test_slotsFor_partitionCoversAllSlots() {
-        let sut = makeSUT()
-        let recombined = Weekday.allCases.flatMap { sut.state.slotsFor($0) }
-        XCTAssertEqual(recombined.count, sut.state.slots.count)
-    }
-
-    func test_slotsFor_mondayHasMultiple() {
-        let sut = makeSUT()
-        XCTAssertGreaterThan(sut.state.slotsFor(.mon).count, 1)
+    func test_weekday_fromCalendarWeekday() {
+        XCTAssertEqual(Weekday.from(calendarWeekday: 1), .sun)
+        XCTAssertEqual(Weekday.from(calendarWeekday: 2), .mon)
+        XCTAssertEqual(Weekday.from(calendarWeekday: 7), .sat)
     }
 }

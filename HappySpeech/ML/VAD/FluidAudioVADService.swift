@@ -10,10 +10,11 @@ import OSLog
 /// production-grade Silero VAD v6 в формате Core ML, исполняемым на Apple Neural Engine.
 ///
 /// ## Зачем
-/// Самописный `LiveSileroVAD` не смог использовать настоящую модель Silero: это
-/// stateful LSTM, требующая прокидывания скрытого состояния между чанками, что
-/// невозможно в нашем stateless-контракте `[1,1,512] → [1,1]` (см. ADR-V32-SILERO-VAD-BLOCKED).
-/// Поэтому основным детектором стал амплитудный `AmplitudeVAD` (~88–92% на чистой речи).
+/// Самописный stateless Core ML-путь Silero (удалён) не мог использовать настоящую
+/// модель Silero: это stateful LSTM, требующая прокидывания скрытого состояния между
+/// чанками, что невозможно в stateless-контракте `[1,1,512] → [1,1]`
+/// (см. ADR-V32-SILERO-VAD-BLOCKED). Поэтому детерминированным fallback-детектором
+/// стал амплитудный `AmplitudeVAD` (~88–92% на чистой речи).
 ///
 /// FluidAudio **решает** эту проблему: его `VadManager` (actor) держит state-threading
 /// внутри (`VadState` hidden/cell/context), работает на ANE и даёт точность реального

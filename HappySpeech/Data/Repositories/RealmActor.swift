@@ -118,9 +118,22 @@ public actor RealmActor {
     // Uses async Realm(actor:) — results are mapped to Sendable inside actor
 
     /// Fetch and map objects using async Realm — result is Sendable.
+    ///
+    /// Использует кэшированный `self.realm` (открытый через `open()`), а если он ещё
+    /// не открыт — мягко поднимает actor-bound `Realm(actor:)`. Сбой открытия не
+    /// глотается тихо: логируется через `HSLogger.realm` и возвращается `[]`.
     public func asyncFetchMapped<T: Object, DTO: Sendable>(_ type: T.Type, map: @escaping (T) -> DTO) async -> [DTO] {
-        let realmInstance = try? await Realm(actor: self)
-        guard let realmInstance else { return [] }
+        let realmInstance: Realm
+        if let cached = realm {
+            realmInstance = cached
+        } else {
+            do {
+                realmInstance = try await Realm(actor: self)
+            } catch {
+                HSLogger.realm.error("asyncFetchMapped: Realm open failed: \(error.localizedDescription, privacy: .public)")
+                return []
+            }
+        }
         return Array(realmInstance.objects(type)).map(map)
     }
 
@@ -136,9 +149,28 @@ public actor RealmActor {
     }
 
     /// Write a block to Realm using async Realm.
+    ///
+    /// Использует кэшированный `self.realm` (открытый через `open()`), иначе мягко
+    /// поднимает actor-bound `Realm(actor:)`. Ошибки открытия И записи больше не
+    /// глотаются `try?` — они логируются через `HSLogger.realm` (раньше тихий сбой
+    /// записи терял данные в SyncService без следа в логах).
     public func asyncWrite(_ block: @escaping (Realm) -> Void) async {
-        guard let realmInstance = try? await Realm(actor: self) else { return }
-        try? realmInstance.write { block(realmInstance) }
+        let realmInstance: Realm
+        if let cached = realm {
+            realmInstance = cached
+        } else {
+            do {
+                realmInstance = try await Realm(actor: self)
+            } catch {
+                HSLogger.realm.error("asyncWrite: Realm open failed: \(error.localizedDescription, privacy: .public)")
+                return
+            }
+        }
+        do {
+            try realmInstance.write { block(realmInstance) }
+        } catch {
+            HSLogger.realm.error("asyncWrite: Realm write failed: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     // MARK: - Default Configuration

@@ -101,16 +101,33 @@ enum RealmMigrations {
 
 public extension RealmActor {
     /// Fetches all objects of given type and returns as array (for use outside actor).
+    /// Сбой открытия Realm логируется (не тихий) и возвращает `[]`.
     func fetch<T: Object>(_ type: T.Type) async -> [T] {
-        let realmInstance = try? await Realm(actor: self)
-        guard let realmInstance else { return [] }
-        return Array(realmInstance.objects(type))
+        do {
+            let realmInstance = try await Realm(actor: self)
+            return Array(realmInstance.objects(type))
+        } catch {
+            HSLogger.realm.error("fetch: Realm open failed: \(error.localizedDescription, privacy: .public)")
+            return []
+        }
     }
 
     /// Writes a block to Realm on the actor.
+    /// Ошибки открытия И записи логируются через `HSLogger.realm` — раньше `try?`
+    /// глотал сбой записи без следа (риск тихой потери данных).
     func write(_ block: @escaping (Realm) -> Void) async {
-        guard let realmInstance = try? await Realm(actor: self) else { return }
-        try? realmInstance.write { block(realmInstance) }
+        let realmInstance: Realm
+        do {
+            realmInstance = try await Realm(actor: self)
+        } catch {
+            HSLogger.realm.error("write: Realm open failed: \(error.localizedDescription, privacy: .public)")
+            return
+        }
+        do {
+            try realmInstance.write { block(realmInstance) }
+        } catch {
+            HSLogger.realm.error("write: Realm write failed: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     /// Fetches FluencySessionObject as value-type DTOs — Sendable-safe.

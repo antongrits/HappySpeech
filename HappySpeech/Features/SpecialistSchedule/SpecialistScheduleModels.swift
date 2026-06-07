@@ -1,8 +1,15 @@
 import Foundation
 
-// MARK: - SpecialistScheduleModels
+// MARK: - SpecialistScheduleModels (Clean Swift: Models)
+//
+// Расписание занятий специалиста. Источник данных РЕАЛЬНЫЙ:
+//   • дети — `ChildRepository` (профили, к которым подключён специалист);
+//   • запланированные занятия — назначенные домашние задания
+//     (`HomeworkAssignment`, общее хранилище с `AssignedHomeworkWorker`):
+//     `dueDate` задания = дата занятия, `childId` → имя ребёнка, набор
+//     упражнений → тема.
+// Никаких выдуманных детей/слотов: при отсутствии заданий — честный empty-state.
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
 enum SpecialistScheduleModels {
 
     enum Weekday: Int, CaseIterable, Hashable, Identifiable {
@@ -21,38 +28,51 @@ enum SpecialistScheduleModels {
             case .sun: return "Вс"
             }
         }
+
+        /// Преобразование из `Calendar.component(.weekday)` (1 = воскресенье).
+        static func from(calendarWeekday: Int) -> Weekday {
+            switch calendarWeekday {
+            case 1: return .sun
+            case 2: return .mon
+            case 3: return .tue
+            case 4: return .wed
+            case 5: return .thu
+            case 6: return .fri
+            default: return .sat
+            }
+        }
     }
 
     struct Slot: Identifiable, Hashable {
         let id: String
         let weekday: Weekday
+        /// Дата занятия (срок назначенного задания).
+        let date: Date
         let time: String
         let childName: String
+        /// Тема — выводится из назначенных упражнений / целевых звуков ребёнка.
         let topic: String
     }
 
     struct ViewState: Equatable {
         var slots: [Slot]
         var selectedWeekday: Weekday
+        var isLoading: Bool
 
         func slotsFor(_ weekday: Weekday) -> [Slot] {
-            slots.filter { $0.weekday == weekday }
+            slots
+                .filter { $0.weekday == weekday }
+                .sorted { $0.date < $1.date }
         }
 
+        /// Нейтральное стартовое состояние — без выдуманных данных.
+        /// Реальные слоты приходят из `SpecialistScheduleWorker.load`.
         static let initial = ViewState(
-            slots: [
-                Slot(id: "s1", weekday: .mon, time: "10:00", childName: "Аня К.", topic: "Звук Р"),
-                Slot(id: "s2", weekday: .mon, time: "11:30", childName: "Миша П.", topic: "Свистящие"),
-                Slot(id: "s3", weekday: .tue, time: "09:00", childName: "Ваня Г.", topic: "Шипящие"),
-                Slot(id: "s4", weekday: .tue, time: "15:00", childName: "Лена С.", topic: "Соноры"),
-                Slot(id: "s5", weekday: .wed, time: "10:00", childName: "Аня К.", topic: "Звук Р"),
-                Slot(id: "s6", weekday: .wed, time: "13:00", childName: "Кирилл М.", topic: "Слоги"),
-                Slot(id: "s7", weekday: .thu, time: "11:00", childName: "Маша Б.", topic: "Фонематика"),
-                Slot(id: "s8", weekday: .fri, time: "10:00", childName: "Миша П.", topic: "Свистящие"),
-                Slot(id: "s9", weekday: .fri, time: "14:00", childName: "Аня К.", topic: "Скороговорки"),
-                Slot(id: "s10", weekday: .sat, time: "11:00", childName: "Ваня Г.", topic: "Рассказ")
-            ],
-            selectedWeekday: .mon
+            slots: [],
+            selectedWeekday: Weekday.from(
+                calendarWeekday: Calendar.current.component(.weekday, from: Date())
+            ),
+            isLoading: true
         )
     }
 }

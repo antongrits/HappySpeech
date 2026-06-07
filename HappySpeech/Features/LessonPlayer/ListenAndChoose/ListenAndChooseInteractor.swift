@@ -223,12 +223,23 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
             return
         }
         speakTask?.cancel()
+        let asset = current.audioAsset
+        let word = current.targetWord
         speakTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            await LessonVoiceWorker.shared.speak(current.targetWord, lessonType: "listen_and_choose")
+            if let asset, !asset.isEmpty {
+                // Пак несёт pre-rendered m4a — играем его, fallback на слово-TTS/Lyalya.
+                await LessonVoiceWorker.shared.speakAsset(
+                    asset,
+                    fallbackText: word,
+                    lessonType: "listen_and_choose"
+                )
+            } else {
+                await LessonVoiceWorker.shared.speak(word, lessonType: "listen_and_choose")
+            }
             self.speakTask = nil
         }
-        logger.debug("Replay Lyalya voice for word='\(current.targetWord, privacy: .private)'")
+        logger.debug("Replay voice for word='\(current.targetWord, privacy: .private)'")
     }
 
     // MARK: - Scoring helpers
@@ -422,6 +433,12 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
         sessionLength: Int
     ) -> [Question] {
         let packWords = packItems.map { $0.word }.filter { !$0.isEmpty }
+        // word → pre-rendered m4a path (Audio/Content/...), если пак его несёт.
+        let audioByWord: [String: String] = packItems.reduce(into: [:]) { acc, item in
+            if let asset = item.audioAsset, !asset.isEmpty, acc[item.word] == nil {
+                acc[item.word] = asset
+            }
+        }
         let catalogWords = fallbackWords(for: soundTarget)
         var targets = Array((packWords + catalogWords).uniqued().prefix(sessionLength))
         if targets.isEmpty {
@@ -464,7 +481,7 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
                 soundGroup: soundGroup,
                 choices: choices,
                 correctIndex: correctIndex,
-                audioAsset: nil
+                audioAsset: audioByWord[word]
             )
         }
     }

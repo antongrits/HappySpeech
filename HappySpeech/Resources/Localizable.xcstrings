@@ -34632,6 +34632,36 @@
         }
       }
     },
+    "practiceReminder.badge.streak": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия"
+          }
+        }
+      }
+    },
+    "practiceReminder.badge.today": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "practiceReminder.snooze": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напомнить позже"
+          }
+        }
+      }
+    },
     "practiceReminder.cta.action": {
       "localizations": {
         "ru": {
@@ -51518,7 +51548,37 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавить слот"
+            "value": "К конструктору заданий"
+          }
+        }
+      }
+    },
+    "specialistSchedule.empty.subtitle": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назначьте ученику домашнее задание со сроком — оно появится в расписании на нужный день."
+          }
+        }
+      }
+    },
+    "specialistSchedule.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет запланированных занятий"
+          }
+        }
+      }
+    },
+    "specialistSchedule.topic.general": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятие"
           }
         }
       }
@@ -51528,7 +51588,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "7 дней × тайм-слоты — выбери день и увидь сессии."
+            "value": "Занятия на этой неделе — выберите день, чтобы увидеть учеников."
           }
         }
       }
@@ -53161,12 +53221,112 @@
         }
       }
     },
-    "storyRetelling.cta.action": {
+    "storyRetelling.record.prompt": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Начать"
+            "value": "Вспомни сказку и расскажи её своими словами — назови как можно больше героев и событий."
+          }
+        }
+      }
+    },
+    "storyRetelling.record.start": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать пересказ"
+          }
+        }
+      }
+    },
+    "storyRetelling.record.listening": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю тебя…"
+          }
+        }
+      }
+    },
+    "storyRetelling.record.stop": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.passed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличный пересказ!"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.tryAgain": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Попробуй вспомнить больше героев."
+          }
+        }
+      }
+    },
+    "storyRetelling.result.coverage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покрытие фактов"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.missed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропущено"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.retry": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "storyRetelling.status.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выполнено"
+          }
+        }
+      }
+    },
+    "storyRetelling.status.todo": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ещё не пройдено"
           }
         }
       }

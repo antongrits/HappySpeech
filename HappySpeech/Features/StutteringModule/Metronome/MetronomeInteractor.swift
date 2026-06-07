@@ -80,7 +80,7 @@ final class MetronomeInteractor {
     private var sessionHistory: [MetronomeSessionRecord] = []
     private static let maxHistoryCount = 10
 
-    // MARK: - Stub word list (16 words, syllable structure 1–4)
+    // MARK: - Кураторский список слов (16 слов, слоговая структура 1–4)
 
     private let easyWords: [(String, [String])] = [
         ("кот", ["КОТ"]),

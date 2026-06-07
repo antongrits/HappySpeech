@@ -278,7 +278,12 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
         PackDescriptor(id: "pack_general_phonemic_v1",      fileName: "pack_general_phonemic",       soundTarget: "Фонематика",  templateType: .soundHunter),
         PackDescriptor(id: "pack_narrative_v1",             fileName: "pack_narrative",              soundTarget: "Рассказ",     templateType: .narrativeQuest),
         PackDescriptor(id: "sound_br_v1",                   fileName: "pack_breathing",              soundTarget: "Дыхание",     templateType: .breathing),
-        PackDescriptor(id: "sound_ag_v1", fileName: "pack_articulation_gymnastics", soundTarget: "Артикуляция", templateType: .articulationImitation)
+        PackDescriptor(id: "sound_ag_v1", fileName: "pack_articulation_gymnastics", soundTarget: "Артикуляция", templateType: .articulationImitation),
+        // Нейролингвистический продвинутый пак: фонематический анализ, рифмовые пары,
+        // слогораздел, скороговорки. 661 pre-rendered m4a (`Audio/Content/NL/`) подключены
+        // через `audio_file` → `ContentItem.audioAsset` → `LessonVoiceWorker.speakAsset`.
+        // Реальный методический материал для родителя/специалиста (Spotlight + loadPack by id).
+        PackDescriptor(id: "pack_neurolinguist_advanced_v1", fileName: "pack_neurolinguist_advanced", soundTarget: "Фонематика", templateType: .soundHunter)
         // NB: pack_lexical (575 слов словаря) НЕ регистрируется как playable-пак, пока
         // не закрыты ~152 картинко-пробела (Image отсутствующего ассета рендерит пусто).
         // +50 свежих слов уже отдают пользу глобально через word_manifest (резолв картинок
@@ -382,6 +387,27 @@ private struct RawItem: Decodable {
     let audioAsset: String?
     let hint: String?
     let difficulty: Int
+
+    private enum CodingKeys: String, CodingKey {
+        case id, word, imageAsset, audioAsset, hint, difficulty
+        case audioFile = "audio_file"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(String.self, forKey: .id)
+        word = try c.decode(String.self, forKey: .word)
+        imageAsset = try c.decodeIfPresent(String.self, forKey: .imageAsset)
+        hint = try c.decodeIfPresent(String.self, forKey: .hint)
+        difficulty = try c.decodeIfPresent(Int.self, forKey: .difficulty) ?? 1
+        // Seed packs ship pre-rendered narration under the `audio_file` key
+        // (relative path под `Resources/Audio/`, напр. `Audio/Content/NL/nl-fs-00.m4a`).
+        // Legacy `audioAsset` (имя ассета в каталоге) тоже поддерживаем; `audio_file`
+        // приоритетнее, т.к. это реальный путь к bundled m4a.
+        let explicitAsset = try c.decodeIfPresent(String.self, forKey: .audioAsset)
+        let bundledFile = try c.decodeIfPresent(String.self, forKey: .audioFile)
+        audioAsset = bundledFile ?? explicitAsset
+    }
 }
 
 // MARK: - LiveAdaptivePlannerService

@@ -97,6 +97,13 @@ public final class MockNotificationService: NotificationService, @unchecked Send
     public func cancelDailyKidReminder(childName: String) async {}
     public func scheduleWeeklyParentSummary(achievementsCount: Int, streakDays: Int) async {}
     public func cancelWeeklyParentSummary() async {}
+    @discardableResult
+    public func scheduleCalendarReminder(
+        identifier: String,
+        title: String,
+        body: String,
+        at dateComponents: DateComponents
+    ) async throws -> String { identifier }
 }
 
 // MARK: MockNetworkMonitor

@@ -97,10 +97,24 @@ public actor LiveVoiceCloneService: VoiceCloneService {
 
     // MARK: - loadReference / cloneVoice
 
+    /// Кэш извлечённых per-speaker сегментов: speakerIndex → URL вырезанного m4a.
+    private var referenceSegmentCache: [Int: URL] = [:]
+
+    /// Длина одного блока диктора в reference-корпусе (сек). Корпус
+    /// `voice_clone_reference.wav` — 10 последовательных блоков по ~155 c (PCM_16,
+    /// 16 кГц, mono), разделённых паузами 0.3 c; индексы блоков совпадают с
+    /// ``VoiceCloneSpeaker``. См. ADR в ``VoiceCloneService/loadReference(speakerIndex:)``.
+    private static let referenceBlockDuration: Double = 155.0
+    private static let referenceBlockGap: Double = 0.3
+
     public func loadReference(speakerIndex: Int) async throws -> URL {
         guard speakerIndex >= 0, speakerIndex < VoiceCloneSpeaker.allCases.count else {
             logger.warning("loadReference: unsupported speakerIndex=\(speakerIndex)")
             throw VoiceCloneError.unsupportedSpeaker(speakerIndex)
+        }
+        if let cached = referenceSegmentCache[speakerIndex],
+           FileManager.default.fileExists(atPath: cached.path) {
+            return cached
         }
         guard let url = Bundle.main.url(
             forResource: "voice_clone_reference",
@@ -110,8 +124,54 @@ public actor LiveVoiceCloneService: VoiceCloneService {
             logger.error("loadReference: voice_clone_reference.wav not found in bundle")
             throw VoiceCloneError.referenceNotFound
         }
-        logger.debug("loadReference: speakerIndex=\(speakerIndex) → \(url.lastPathComponent, privacy: .public)")
-        return url
+        // ИСПРАВЛЕНО: раньше возвращался один и тот же полный 10-трековый WAV для любого
+        // speakerIndex (баг — параметр игнорировался). Теперь честно вырезаем сегмент
+        // запрошенного диктора по его временно́му диапазону в корпусе.
+        let segmentURL = try await extractReferenceSegment(speakerIndex: speakerIndex, sourceURL: url)
+        referenceSegmentCache[speakerIndex] = segmentURL
+        logger.debug("loadReference: speakerIndex=\(speakerIndex) → segment \(segmentURL.lastPathComponent, privacy: .public)")
+        return segmentURL
+    }
+
+    /// Вырезает временно́й диапазон одного диктора из полного reference-WAV в m4a.
+    private func extractReferenceSegment(speakerIndex: Int, sourceURL: URL) async throws -> URL {
+        let asset = AVURLAsset(url: sourceURL)
+        let totalDuration = try await asset.load(.duration).seconds
+        let blockStride = Self.referenceBlockDuration + Self.referenceBlockGap
+        let start = Double(speakerIndex) * blockStride
+        guard start < totalDuration else {
+            logger.error("extractReferenceSegment: start \(start)s beyond duration \(totalDuration)s")
+            throw VoiceCloneError.unsupportedSpeaker(speakerIndex)
+        }
+        // Берём блок без хвостовой паузы; обрезаем по фактической длительности.
+        let length = min(Self.referenceBlockDuration, totalDuration - start)
+        let timeRange = CMTimeRange(
+            start: CMTime(seconds: start, preferredTimescale: 600),
+            duration: CMTime(seconds: length, preferredTimescale: 600)
+        )
+
+        let outputURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("voice_ref_speaker_\(speakerIndex)")
+            .appendingPathExtension("m4a")
+        try? FileManager.default.removeItem(at: outputURL)
+
+        guard let export = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetAppleM4A) else {
+            throw VoiceCloneError.audioConversionFailed
+        }
+        export.outputURL = outputURL
+        export.outputFileType = .m4a
+        export.timeRange = timeRange
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            export.exportAsynchronously {
+                continuation.resume()
+            }
+        }
+        guard export.status == .completed,
+              FileManager.default.fileExists(atPath: outputURL.path) else {
+            logger.error("extractReferenceSegment: export failed status=\(String(describing: export.status))")
+            throw VoiceCloneError.audioConversionFailed
+        }
+        return outputURL
     }
 
     /// Подлинное zero-shot ML-клонирование голоса не реализуется on-device (вне объёма

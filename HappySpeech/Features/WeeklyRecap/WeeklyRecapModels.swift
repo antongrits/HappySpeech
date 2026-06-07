@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - WeeklyRecapModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Компактный VIP-модуль (@Observable Interactor + View) — реализация полная.
 enum WeeklyRecapModels {
 
     struct KPI: Identifiable, Hashable {

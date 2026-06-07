@@ -75,12 +75,23 @@ public protocol VoiceCloneService: Sendable {
     /// Текущий статус авторизации Personal Voice (без запроса диалога).
     var personalVoiceAuthorizationStatus: AVSpeechSynthesizer.PersonalVoiceAuthorizationStatus { get }
 
-    /// Возвращает URL embedded reference audio файла для указанного диктора.
+    /// Возвращает URL аудио-сегмента эталонного диктора (`speakerIndex` 0…9) из
+    /// reference-корпуса `voice_clone_reference.wav`.
+    ///
+    /// ### ADR — Voice Cloning (отложено post-v1.0)
+    /// Reference-корпус (10 синтетических русских дикторов, ~26 мин) — обучающий
+    /// материал для будущего zero-shot voice cloning (XTTS-v2 / Tortoise). On-device
+    /// ML-клонирование **сознательно отложено** post-v1.0: NC-лицензии моделей +
+    /// требования COPPA/152-ФЗ к детским голосам (нужны реальные голоса с согласием
+    /// родителей, синтетику нельзя выдавать за детский голос в клинике). Корпус
+    /// остаётся в репозитории как реальный артефакт запланированной фичи (НЕ фабрикация).
+    /// `loadReference` уже честно режет корпус по `speakerIndex` — точка интеграции
+    /// готова к подключению, когда фича выйдет из отложенного статуса.
     func loadReference(speakerIndex: Int) async throws -> URL
 
-    /// «Клонирование» голоса по тексту. Подлинное zero-shot ML-клонирование не
-    /// реализуется on-device (вне продуктового объёма); вместо немедленного отказа метод
-    /// маршрутизирует синтез в системный TTS (`.systemTTS`) как разумный рабочий путь.
+    /// «Клонирование» голоса по тексту. Подлинное zero-shot ML-клонирование отложено
+    /// post-v1.0 (см. ADR в ``loadReference(speakerIndex:)``); вместо немедленного отказа
+    /// метод маршрутизирует синтез в системный TTS (`.systemTTS`) как разумный рабочий путь.
     func cloneVoice(text: String, speakerIndex: Int) async throws -> Data
 
     /// `true` — синтез речи реально работает (TTS + fallback-цепочка функциональны).

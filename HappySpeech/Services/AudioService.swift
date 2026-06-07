@@ -610,6 +610,18 @@ public protocol NotificationService: Sendable {
 
     /// Отменить еженедельный итог для родителя.
     func cancelWeeklyParentSummary() async
+
+    /// Запланировать одноразовое локальное уведомление на произвольную дату
+    /// через `UNCalendarNotificationTrigger`. Используется семейным календарём
+    /// для напоминаний о занятиях/визитах. Возвращает запланированный
+    /// идентификатор (для последующей отмены).
+    @discardableResult
+    func scheduleCalendarReminder(
+        identifier: String,
+        title: String,
+        body: String,
+        at dateComponents: DateComponents
+    ) async throws -> String
 }
 
 // MARK: - HapticService Protocol

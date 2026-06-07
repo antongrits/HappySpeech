@@ -1,6 +1,10 @@
 import SwiftUI
 
-// MARK: - StoryRetellingProView
+// MARK: - StoryRetellingProView (Clean Swift: View)
+//
+// Реальная активность пересказа: выбор сказки → запись пересказа (микрофон) →
+// ASR-распознавание → скоринг покрытия ключевых фактов → результат. Бейджи
+// «выполнено» отражают РЕАЛЬНУЮ завершённость из Realm (через Interactor.load).
 
 struct StoryRetellingProView: View {
 
@@ -9,14 +13,13 @@ struct StoryRetellingProView: View {
     @State private var interactor: StoryRetellingProInteractor?
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
-                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
-                // фокус-режима «пересказ» (прохладный воздух, мыслительный).
                 ColorTokens.Kid.bg.ignoresSafeArea()
                 HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
                     .ignoresSafeArea()
@@ -41,7 +44,14 @@ struct StoryRetellingProView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = StoryRetellingProInteractor(childId: childId)
+                    let worker = StoryRetellingProWorker(
+                        audioService: container.audioService,
+                        asrService: container.asrService,
+                        realmActor: container.realmActor
+                    )
+                    let new = StoryRetellingProInteractor(childId: childId, worker: worker)
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -51,15 +61,19 @@ struct StoryRetellingProView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero
-                    list(interactor: interactor)
-                    cta
+            if interactor.state.isLoading {
+                ProgressView().controlSize(.large)
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero
+                        list(interactor: interactor)
+                        activityPanel(interactor: interactor)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
@@ -67,7 +81,6 @@ struct StoryRetellingProView: View {
     }
 
     private var hero: some View {
-        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "storyRetelling.hero.title"))
@@ -91,14 +104,11 @@ struct StoryRetellingProView: View {
                     hapticService.impact(.light)
                     interactor.select(story.id)
                 }
-                // Step 10 Batch E — Pattern 3: scrollTransition stagger
-                // fade+scale на story rows.
                 .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                     content
                         .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                         .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
                 }
-                // Step 10 Batch E — Pattern 4: parallax drift на story tiles.
                 .hsParallaxTile(factor: 0.25)
             }
         }
@@ -117,8 +127,6 @@ struct StoryRetellingProView: View {
                         .foregroundStyle(
                             story.isCompleted ? ColorTokens.Brand.primary : ColorTokens.Kid.inkSoft
                         )
-                        // Step 10 Batch E — Pattern 5: checkmark bounce при
-                        // переключении completed.
                         .hsSymbolEffect(.bounce, value: story.isCompleted)
                         .frame(width: 32, height: 32)
                     VStack(alignment: .leading, spacing: 4) {
@@ -136,28 +144,144 @@ struct StoryRetellingProView: View {
                         Text("\(story.keyFactsCount) фактов")
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        Text("\(story.durationSeconds / 60):\(String(format: "%02d", story.durationSeconds % 60))")
-                            .font(TypographyTokens.caption(11))
-                            .foregroundStyle(ColorTokens.Brand.primary)
+                        if story.bestCoverage > 0 {
+                            Text("\(Int((story.bestCoverage * 100).rounded()))%")
+                                .font(TypographyTokens.caption(11))
+                                .foregroundStyle(ColorTokens.Brand.primary)
+                        }
                     }
                 }
             }
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("\(story.title), \(story.keyFactsCount) ключевых фактов"))
+        .accessibilityLabel(Text(rowAccessibilityLabel(story)))
         .accessibilityAddTraits(.isButton)
     }
 
-    private var cta: some View {
-        HSButton(
-            String(localized: "storyRetelling.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "play.fill"
-        ) {
-            hapticService.notification(.success)
-            exitGame()
+    private func rowAccessibilityLabel(_ story: StoryRetellingProModels.Story) -> String {
+        let status = story.isCompleted
+            ? String(localized: "storyRetelling.status.done")
+            : String(localized: "storyRetelling.status.todo")
+        return "\(story.title), \(story.keyFactsCount) ключевых фактов, \(status)"
+    }
+
+    // MARK: - Activity panel (record / scoring / result)
+
+    @ViewBuilder
+    private func activityPanel(interactor: StoryRetellingProInteractor) -> some View {
+        if let storyId = interactor.state.selectedStoryId,
+           let story = interactor.state.stories.first(where: { $0.id == storyId }) {
+            HSCard(style: .elevated) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    switch interactor.state.phase {
+                    case .browsing:
+                        recordPrompt(story: story, interactor: interactor)
+                    case .recording:
+                        recordingPanel(interactor: interactor)
+                    case .scoring:
+                        ProgressView()
+                            .controlSize(.large)
+                            .padding(.vertical, SpacingTokens.sp3)
+                    case let .result(coverage, matched, missed):
+                        resultPanel(
+                            story: story,
+                            coverage: coverage,
+                            matched: matched,
+                            missed: missed,
+                            interactor: interactor
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private func recordPrompt(
+        story: StoryRetellingProModels.Story,
+        interactor: StoryRetellingProInteractor
+    ) -> some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            Text(String(localized: "storyRetelling.record.prompt"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+            HSButton(
+                String(localized: "storyRetelling.record.start"),
+                style: .primary,
+                size: .large,
+                icon: "mic.fill"
+            ) {
+                hapticService.impact(.medium)
+                Task { await interactor.startRecording() }
+            }
+        }
+    }
+
+    private func recordingPanel(interactor: StoryRetellingProInteractor) -> some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: "waveform")
+                .font(.system(size: 36))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.pulse, value: true)
+            Text(String(localized: "storyRetelling.record.listening"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.ink)
+            HSButton(
+                String(localized: "storyRetelling.record.stop"),
+                style: .primary,
+                size: .large,
+                icon: "stop.fill"
+            ) {
+                hapticService.impact(.medium)
+                Task { await interactor.stopAndScore() }
+            }
+        }
+    }
+
+    private func resultPanel(
+        story: StoryRetellingProModels.Story,
+        coverage: Double,
+        matched: [String],
+        missed: [String],
+        interactor: StoryRetellingProInteractor
+    ) -> some View {
+        let passed = coverage >= StoryRetellingProModels.ViewState.passThreshold
+        return VStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: passed ? "checkmark.seal.fill" : "arrow.clockwise.circle.fill")
+                .font(.system(size: 40))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.bounce, value: passed)
+            Text(passed
+                 ? String(localized: "storyRetelling.result.passed")
+                 : String(localized: "storyRetelling.result.tryAgain"))
+                .font(TypographyTokens.headline(17))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+            Text("\(String(localized: "storyRetelling.result.coverage")): \(Int((coverage * 100).rounded()))%")
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Brand.primary)
+            if !missed.isEmpty {
+                Text("\(String(localized: "storyRetelling.result.missed")): \(missed.joined(separator: ", "))")
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            HSButton(
+                String(localized: "storyRetelling.result.retry"),
+                style: .secondary,
+                size: .large,
+                icon: "arrow.clockwise"
+            ) {
+                hapticService.impact(.light)
+                interactor.backToBrowsing()
+            }
         }
     }
 }

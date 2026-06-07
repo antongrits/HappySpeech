@@ -27,6 +27,13 @@ private final class SpyOnboardingNotificationService: NotificationService, @unch
     func cancelDailyKidReminder(childName: String) async {}
     func scheduleWeeklyParentSummary(achievementsCount: Int, streakDays: Int) async {}
     func cancelWeeklyParentSummary() async {}
+    @discardableResult
+    func scheduleCalendarReminder(
+        identifier: String,
+        title: String,
+        body: String,
+        at dateComponents: DateComponents
+    ) async throws -> String { identifier }
 }
 
 // MARK: - Spy Presenter

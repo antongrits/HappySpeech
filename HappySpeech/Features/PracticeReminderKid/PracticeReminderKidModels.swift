@@ -1,19 +1,27 @@
 import Foundation
 
-// MARK: - PracticeReminderKidModels
+// MARK: - PracticeReminderKidModels (Clean Swift: Models)
+//
+// Детское напоминание о практике. Числа РЕАЛЬНЫЕ: минуты сегодня —
+// из сессий ребёнка (`SessionRepository`), серия — из профиля/сессий
+// (паттерн `GoalTrackerKid`). `.initial` нейтрален (нули + loading),
+// никакой фабрикации «Серия 4 / 5 мин».
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
 enum PracticeReminderKidModels {
 
     struct ViewState: Equatable {
-        var estimatedMinutes: Int
+        /// Минуты практики сегодня (реальные).
+        var minutesToday: Int
+        /// Текущая серия активных дней (реальная).
         var streakDays: Int
         var isDismissed: Bool
+        var isLoading: Bool
 
         static let initial = ViewState(
-            estimatedMinutes: 5,
-            streakDays: 4,
-            isDismissed: false
+            minutesToday: 0,
+            streakDays: 0,
+            isDismissed: false,
+            isLoading: true
         )
     }
 }

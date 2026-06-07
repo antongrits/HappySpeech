@@ -7,9 +7,9 @@ import XCTest
 //
 // LiveMLModelWarmupService.warmUp() — genuinely SDK-bound (документировано для
 // ADR-V25-COVERAGE): помимо прогрева Pronunciation + ASR оно вызывает глобальную
-// makeVAD(), которая инициализирует CoreML-runtime (SileroVAD.mlpackage). В
-// headless unit-окружении симулятора этот путь аварийно завершает test-process
-// (CoreML model compilation вне bundle-контекста), поэтому LiveMLModelWarmupService
+// makeVAD(preferFluidAudio:), которая поднимает реальный Silero v6 на ANE
+// (FluidAudio). В headless unit-окружении симулятора этот путь требует загрузки/
+// компиляции CoreML-модели вне bundle-контекста, поэтому LiveMLModelWarmupService
 // не инстанцируется в unit-тестах — его оркестрация проверяется на уровне
 // онбординг-flow интеграционными прогонами.
 //

@@ -34,7 +34,7 @@ final class ObjectDescriptionMapPresenter {
 
     func presentSelectObject(response: ObjectDescriptionMapModels.SelectObject.Response) async {
         guard let object = ObjectDescriptionMapCorpus.object(id: response.objectId) else { return }
-        let hint = "Посмотри на план и расскажи о \(genitive(of: object.title)) по пунктам."
+        let hint = "Посмотри на план и расскажи о \(prepositional(of: object.title)) по пунктам."
         let viewModel = ObjectDescriptionMapModels.SelectObject.ViewModel(
             object: object,
             planItems: object.plan,
@@ -105,12 +105,21 @@ final class ObjectDescriptionMapPresenter {
         return String(format: "%d:%02d", minutes, secs)
     }
 
-    /// Грубая морфология для подсказки «расскажи о груше / о коте».
-    /// На уровне MVP — простые правила, никаких внешних NLP-зависимостей.
-    private func genitive(of word: String) -> String {
+    /// Предложный падеж для подсказки «расскажи о груше / о коте».
+    /// Простые правила склонения + исключения по корпусу фичи
+    /// (`pack_objectdescriptionmap.json`), без внешних NLP-зависимостей.
+    private func prepositional(of word: String) -> String {
         let lower = word.lowercased()
+
+        // Исключения с беглой гласной / нестандартным склонением (корпус фичи).
+        let exceptions: [String: String] = [
+            "заяц": "зайце",      // беглая «е»
+            "корабль": "корабле"  // м.р. на -ль → -е, не -и
+        ]
+        if let exact = exceptions[lower] { return exact }
+
         if lower.hasSuffix("а") {
-            return String(lower.dropLast()) + "е"      // груша → груше
+            return String(lower.dropLast()) + "е"      // груша → груше, лиса → лисе
         }
         if lower.hasSuffix("я") {
             return String(lower.dropLast()) + "е"      // дыня → дыне
@@ -118,7 +127,7 @@ final class ObjectDescriptionMapPresenter {
         if lower.hasSuffix("ь") {
             return String(lower.dropLast()) + "и"      // морковь → моркови
         }
-        // Согласный: машин… → машине. Кот → коте.
+        // Согласный: машин… → машине, кот → коте, мяч → мяче.
         return lower + "е"
     }
 

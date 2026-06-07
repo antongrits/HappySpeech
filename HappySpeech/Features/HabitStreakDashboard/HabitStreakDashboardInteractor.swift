@@ -7,7 +7,7 @@ import OSLog
 ///
 /// При наличии `SessionRepository` раскладывает реальные минуты практики по
 /// 84 дням (12 недель) тепловой карты. Без репозитория (Preview/тесты) —
-/// остаётся на демонстрационном `.initial`.
+/// остаётся на пустой карте (`.empty`) — без псевдослучайного «мигания».
 @MainActor
 @Observable
 final class HabitStreakDashboardInteractor {
@@ -31,7 +31,7 @@ final class HabitStreakDashboardInteractor {
         self.childId = childId
         self.sessionRepository = sessionRepository
         self.calendar = calendar
-        self.state = .initial
+        self.state = .empty
     }
 
     /// Пересобирает карту из реальных сессий. Безопасно без репозитория/childId.

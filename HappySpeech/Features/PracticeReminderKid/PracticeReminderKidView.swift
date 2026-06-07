@@ -10,6 +10,7 @@ struct PracticeReminderKidView: View {
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -38,7 +39,13 @@ struct PracticeReminderKidView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = PracticeReminderKidInteractor(childId: childId)
+                    let new = PracticeReminderKidInteractor(
+                        childId: childId,
+                        sessionRepository: container.sessionRepository,
+                        childRepository: container.childRepository
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -92,14 +99,22 @@ struct PracticeReminderKidView: View {
         HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp3) {
                 HStack(spacing: SpacingTokens.sp4) {
-                    badge(icon: "clock.fill", value: "\(state.estimatedMinutes) мин", label: "Сегодня")
-                    badge(icon: "flame.fill", value: "\(state.streakDays)", label: "Серия")
+                    badge(
+                        icon: "clock.fill",
+                        value: minutesLabel(state),
+                        label: String(localized: "practiceReminder.badge.today")
+                    )
+                    badge(
+                        icon: "flame.fill",
+                        value: streakLabel(state),
+                        label: String(localized: "practiceReminder.badge.streak")
+                    )
                 }
                 Button {
                     hapticService.impact(.light)
                     interactor.snooze()
                 } label: {
-                    Text("Напомнить позже")
+                    Text(String(localized: "practiceReminder.snooze"))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -108,6 +123,20 @@ struct PracticeReminderKidView: View {
                 .disabled(state.isDismissed)
             }
         }
+    }
+
+    /// Минуты: «N мин» при реальных данных, «—» если за сегодня практики нет.
+    private func minutesLabel(_ state: PracticeReminderKidModels.ViewState) -> String {
+        if state.isLoading { return "…" }
+        guard state.minutesToday > 0 else { return "—" }
+        return "\(state.minutesToday) мин"
+    }
+
+    /// Серия: число при реальных данных, «—» если серии ещё нет.
+    private func streakLabel(_ state: PracticeReminderKidModels.ViewState) -> String {
+        if state.isLoading { return "…" }
+        guard state.streakDays > 0 else { return "—" }
+        return "\(state.streakDays)"
     }
 
     private func badge(icon: String, value: String, label: String) -> some View {

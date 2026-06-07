@@ -71,29 +71,6 @@ enum HabitStreakDashboardModels {
             return ViewState(days: days, selected: nil)
         }()
 
-        static let initial: ViewState = {
-            // Deterministic pseudo-random pattern using index seeding —
-            // нужен предсказуемый preview без зависимостей от Calendar.
-            var days: [Day] = []
-            for offset in 0..<totalCells {
-                let seed = (offset * 7 + 3) % 23
-                let minutes: Int
-                switch seed {
-                case 0...4:    minutes = 0
-                case 5...9:    minutes = 3
-                case 10...14:  minutes = 8
-                case 15...19:  minutes = 12
-                default:       minutes = 18
-                }
-                days.append(Day(
-                    id: offset,
-                    intensity: Day.intensityForMinutes(minutes),
-                    minutes: minutes
-                ))
-            }
-            return ViewState(days: days, selected: nil)
-        }()
-
         /// Строит карту из словаря «смещение дня → минуты».
         /// `minutesByOffset` индексируется 0…(totalCells-1), где последний — сегодня.
         static func make(minutesByOffset: [Int: Int]) -> ViewState {

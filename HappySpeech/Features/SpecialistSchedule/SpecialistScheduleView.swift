@@ -9,6 +9,7 @@ struct SpecialistScheduleView: View {
     @State private var interactor: SpecialistScheduleInteractor?
     @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -33,7 +34,15 @@ struct SpecialistScheduleView: View {
             }
             .task {
                 if interactor == nil {
-                    interactor = SpecialistScheduleInteractor(specialistId: specialistId)
+                    let worker = SpecialistScheduleWorker(
+                        childRepository: container.childRepository
+                    )
+                    let new = SpecialistScheduleInteractor(
+                        specialistId: specialistId,
+                        worker: worker
+                    )
+                    interactor = new
+                    await new.load()
                 }
             }
         }
@@ -43,20 +52,52 @@ struct SpecialistScheduleView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    weekStrip(interactor: interactor)
-                    daySlots(interactor: interactor)
-                    cta
+            if interactor.state.isLoading {
+                ProgressView().controlSize(.large)
+            } else if interactor.state.slots.isEmpty {
+                emptyState
+            } else {
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        hero(state: interactor.state)
+                        weekStrip(interactor: interactor)
+                        daySlots(interactor: interactor)
+                        cta
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    /// Честный empty-state: реальных запланированных занятий нет.
+    private var emptyState: some View {
+        VStack(spacing: SpacingTokens.sp4) {
+            Spacer()
+            Image(systemName: "calendar.badge.plus")
+                .font(.system(size: 48))
+                .foregroundStyle(ColorTokens.Spec.accent)
+            Text(String(localized: "specialistSchedule.empty.title"))
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Spec.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+            Text(String(localized: "specialistSchedule.empty.subtitle"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+            cta
+            Spacer()
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.sp6)
     }
 
     private func hero(state: SpecialistScheduleModels.ViewState) -> some View {

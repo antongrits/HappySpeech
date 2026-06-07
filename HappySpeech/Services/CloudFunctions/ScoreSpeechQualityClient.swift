@@ -5,9 +5,11 @@ import Foundation
 
 /// Результат серверной оценки качества речи (aggregate для родительского дашборда).
 ///
-/// > Important: Реальная per-attempt оценка произношения выполняется on-device
-/// > через `PronunciationScorerService`. Этот endpoint возвращает stub-метрику
-/// > для агрегированной аналитики; audio bytes на сервер не загружаются.
+/// > Important: ОСНОВНОЙ путь оценки произношения — on-device, per-attempt, через
+/// > `PronunciationScorerService` (4 пофонемные Core ML-модели). Этот серверный
+/// > endpoint — ДОПОЛНИТЕЛЬНЫЙ (опциональная агрегированная аналитика для
+/// > родительского дашборда), на бэкенде он возвращает stub-метрику и НЕ участвует
+/// > в UI-критичной оценке. Audio bytes на сервер не загружаются (COPPA).
 public struct SpeechQualityScore: Sendable, Equatable {
     /// Оценка качества произношения в диапазоне 0…1.
     public let score: Double

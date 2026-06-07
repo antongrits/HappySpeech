@@ -74,14 +74,23 @@ final class ARStoryQuestInteractorTests: XCTestCase {
         XCTAssertEqual(captured()?.lastScore, 1.0)
     }
 
-    func test_submitAttempt_highConfidenceNonEmpty_passes() async {
+    func test_submitAttempt_highConfidenceButWrongWord_doesNotPass() async {
         let (sut, _, _, captured) = makeSUT()
         await sut.handle(.loadQuest(script: .spaceAdventure))
-        // Несовпадающий transcript, но очень высокая уверенность модели
-        await sut.handle(.submitAttempt(transcript: "абвгде", confidence: 0.95))
+        // Высокая уверенность модели, но слово НЕ совпадает с целевым.
+        // Уверенность сама по себе зачёт не даёт — это методически верно.
+        // Гарантированно непохожий ввод: только согласные (нет гласных →
+        // слоговый overlap = 0) и заведомо другой префикс.
+        let target = QuestScript.spaceAdventure.steps[0].targetWord.lowercased()
+        var unrelated = "пткчшщ"
+        // На всякий случай исключаем совпадение первых 2 букв с целью.
+        if target.hasPrefix(unrelated.prefix(2)) { unrelated = "грдвжз" }
+        await sut.handle(.submitAttempt(transcript: unrelated, confidence: 0.95))
         let display = captured()
-        XCTAssertTrue(display?.canAdvance ?? false)
-        XCTAssertGreaterThanOrEqual(display?.lastScore ?? 0, 0.85)
+        XCTAssertFalse(
+            display?.canAdvance ?? true,
+            "Высокая уверенность без совпадения слова не должна засчитываться"
+        )
     }
 
     func test_submitAttempt_prefixMatch_passesBorderline() async {

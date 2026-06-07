@@ -234,6 +234,37 @@ public final class NotificationServiceLive: NotificationService, @unchecked Send
         return identifier
     }
 
+    /// Одноразовое напоминание на произвольную дату (семейный календарь).
+    /// Реальный `UNCalendarNotificationTrigger` — сработает в назначенное время.
+    @discardableResult
+    public func scheduleCalendarReminder(
+        identifier: String,
+        title: String,
+        body: String,
+        at dateComponents: DateComponents
+    ) async throws -> String {
+        guard !isKidsModeActive else {
+            HSLogger.app.notice("Calendar reminder skipped — Kids mode active")
+            return identifier
+        }
+        guard await isAuthorized else { return identifier }
+
+        let payload = UNMutableNotificationContent()
+        payload.title = title
+        payload.body = body
+        payload.sound = .default
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: payload,
+            trigger: trigger
+        )
+        try await center.add(request)
+        HSLogger.app.info("Calendar reminder scheduled id=\(identifier, privacy: .private)")
+        return identifier
+    }
+
     /// Отмена всех запланированных (pending) уведомлений — используется при
     /// выходе из аккаунта или удалении данных.
     public func cancelAll() async {

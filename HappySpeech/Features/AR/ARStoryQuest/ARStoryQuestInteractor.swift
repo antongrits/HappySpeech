@@ -194,12 +194,13 @@ final class ARStoryQuestInteractor: ARStoryQuestBusinessLogic {
         ))
     }
 
-    /// Простая оценка попытки:
+    /// Оценка попытки по РЕАЛЬНОМУ совпадению со словом-целью
+    /// (уверенность ASR без совпадения слова зачёт НЕ даёт):
     /// - `1.0` если transcript содержит target (case-insensitive)
-    /// - `0.85 + bonus` если совпадают первые 2 буквы + confidence ≥ 0.85
+    /// - `0.9` если совпадают первые 2 буквы + confidence ≥ 0.85
     /// - `0.65` если только первые 2 буквы совпадают
-    /// - `0.4` если overlap слогов > 50%
-    /// - иначе — `max(0.3, confidence × 0.5)`
+    /// - `0.55` (не зачёт) если overlap слогов ≥ 50%
+    /// - иначе — `max(0.3, confidence × 0.5)`, зачёт только при ≥ порога
     private struct AttemptScore {
         let score: Float
         let passed: Bool
@@ -233,23 +234,18 @@ final class ARStoryQuestInteractor: ARStoryQuestBusinessLogic {
             return AttemptScore(score: 0.9, passed: true, feedback: String(localized: "ar.quest.feedback.great"))
         }
 
-        // 3. Высокая уверенность модели — zачёт с бонусом (для MVP когда Mock ASR)
-        if confidence >= highConfidenceThreshold && !cleanTranscript.isEmpty {
-            return AttemptScore(score: 0.85, passed: true, feedback: String(localized: "ar.quest.feedback.good"))
-        }
-
-        // 4. Первые 2 буквы совпадают — пограничный zачёт
+        // 3. Первые 2 буквы совпадают — пограничный зачёт
         if prefixMatch {
             return AttemptScore(score: 0.65, passed: true, feedback: String(localized: "ar.quest.feedback.good"))
         }
 
-        // 5. Частичное совпадение по слогам
+        // 4. Частичное совпадение по слогам
         let overlap = syllableOverlap(cleanTranscript, cleanTarget)
         if overlap >= 0.5 {
             return AttemptScore(score: 0.55, passed: false, feedback: String(localized: "ar.quest.feedback.close"))
         }
 
-        // 6. Для пустого transcript — используем confidence как hint
+        // 5. Для пустого transcript — используем confidence как hint
         if cleanTranscript.isEmpty {
             let score = max(0.3, confidence * 0.5)
             return AttemptScore(

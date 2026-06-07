@@ -3,7 +3,7 @@ import OSLog
 
 // MARK: - LetterPaintingFunInteractor
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Компактный VIP-модуль (@Observable Interactor + View) — реализация полная.
 @MainActor
 @Observable
 final class LetterPaintingFunInteractor {

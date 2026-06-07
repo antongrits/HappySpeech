@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - LetterPaintingFunModels
 
-/// MVP: thin VIP, expand to full Presenter/Router/DisplayLogic post-launch.
+/// Компактный VIP-модуль (@Observable Interactor + View) — реализация полная.
 enum LetterPaintingFunModels {
 
     enum PaintColor: String, CaseIterable, Identifiable, Hashable {

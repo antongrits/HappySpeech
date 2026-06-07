@@ -1,7 +1,5 @@
 import Accelerate
 @preconcurrency import AVFoundation
-@preconcurrency import CoreML
-import OSLog
 
 // MARK: - Domain Types
 
@@ -63,30 +61,20 @@ struct VADSession: Sendable {
 /// тяжёлого ASR-инференса (WhisperKit). Это снижает latency и энергопотребление
 /// при записи в тишине.
 ///
-/// Модель: `SileroVAD.mlpackage` (0.008 MB, energy stub).
 /// Чанк: 512 сэмплов при 16kHz = 32ms, порог 0.5.
+///
+/// Реализации:
+/// - ``AmplitudeVAD`` — детерминированный адаптивный амплитудный детектор (дефолт
+///   `makeVAD()`, нулевая задержка старта, без модели).
+/// - ``FluidAudioVADService`` — реальный Silero v6 на ANE (FluidAudio SPM), доступен
+///   через `makeVAD(preferFluidAudio: true)` и подключён в боевой ASR-пайплайн.
+/// - ``MockSileroVAD`` — для unit-тестов / Preview.
 ///
 /// ### Типичный поток
 /// ```
-/// AudioEngine → chunkBuffer(512) → SileroVAD.detectSpeech()
+/// AudioEngine → chunkBuffer(512) → vad.detectSpeech()
 ///    → isSpeech=true → WhisperKit.transcribe()
 ///    → PronunciationScorer.score()
-/// ```
-///
-/// ## Пример
-/// ```swift
-/// let vad: VADProtocol = LiveSileroVAD()
-/// try await vad.prepare()
-///
-/// // Одиночный чанк
-/// let result = try await vad.detectSpeech(chunk: chunkBuffer, timestamp: 1.5)
-/// if result.isSpeech {
-///     // Передать в WhisperKit
-/// }
-///
-/// // Весь буфер
-/// let session = try await vad.processBuffer(recordingBuffer)
-/// HSLogger.ml.debug("Речь: \(session.speechDuration)с из \(session.chunks.count * 32)ms total")
 /// ```
 ///
 /// ## See Also
@@ -109,7 +97,6 @@ protocol VADProtocol: Sendable {
 
 enum VADError: LocalizedError, Sendable {
     case modelNotFound
-    case invalidChunkSize(Int)
     case invalidSampleRate(Double)
     case inferenceFailure(String)
 
@@ -117,156 +104,11 @@ enum VADError: LocalizedError, Sendable {
         switch self {
         case .modelNotFound:
             return String(localized: "Модель Silero VAD не найдена в Resources/Models/")
-        case .invalidChunkSize(let size):
-            return String(localized: "Неверный размер чанка: \(size), ожидается 512")
         case .invalidSampleRate(let sr):
             return String(localized: "Неверная частота дискретизации: \(sr)Hz, ожидается 16000Hz")
         case .inferenceFailure(let detail):
             return String(localized: "Ошибка инференса VAD: \(detail)")
         }
-    }
-}
-
-// MARK: - Live Implementation
-
-/// Реальная реализация через Core ML Silero VAD.
-actor LiveSileroVAD: VADProtocol {
-    private let logger = Logger(subsystem: "HappySpeech", category: "SileroVAD")
-    private var model: MLModel?
-    private let threshold: Float
-    private let chunkSize = VADResult.Constants.chunkSize
-    private let targetSR = VADResult.Constants.sampleRate
-
-    init(threshold: Float = VADResult.Constants.defaultThreshold) {
-        self.threshold = threshold
-    }
-
-    func detectSpeech(
-        chunk: AVAudioPCMBuffer,
-        timestamp: TimeInterval
-    ) async throws -> VADResult {
-        // Extract samples on the caller side — buffer is transferred to the actor.
-        guard let channelData = chunk.floatChannelData else {
-            throw VADError.inferenceFailure("No channel data")
-        }
-        let frameCount = Int(chunk.frameLength)
-        let samples = Array(UnsafeBufferPointer(start: channelData[0], count: frameCount))
-        let model = try await loadModel()
-        let prob = try await runChunkInference(samples: samples, model: model)
-        return VADResult(
-            speechProbability: prob,
-            isSpeech: prob >= threshold,
-            threshold: threshold,
-            timestamp: timestamp
-        )
-    }
-
-    func processBuffer(
-        _ buffer: AVAudioPCMBuffer
-    ) async throws -> VADSession {
-        guard buffer.format.sampleRate == Double(targetSR) else {
-            throw VADError.invalidSampleRate(buffer.format.sampleRate)
-        }
-
-        let totalFrames = Int(buffer.frameLength)
-        var results: [VADResult] = []
-
-        guard let channelData = buffer.floatChannelData else {
-            throw VADError.inferenceFailure("No channel data")
-        }
-
-        let model = try await loadModel()
-        var chunkStart = 0
-        while chunkStart + chunkSize <= totalFrames {
-            let chunkSamples = Array(
-                UnsafeBufferPointer(
-                    start: channelData[0].advanced(by: chunkStart),
-                    count: chunkSize
-                )
-            )
-
-            let timestamp = TimeInterval(chunkStart) / TimeInterval(targetSR)
-            let prob = try await runChunkInference(samples: chunkSamples, model: model)
-
-            results.append(VADResult(
-                speechProbability: prob,
-                isSpeech: prob >= threshold,
-                threshold: threshold,
-                timestamp: timestamp
-            ))
-
-            chunkStart += chunkSize
-        }
-
-        return VADSession(chunks: results)
-    }
-
-    /// Пробует загрузить CoreML-модель заранее. Бросает `VADError.modelNotFound`,
-    /// если `SileroVAD.mlpackage` отсутствует в бандле — используется фабрикой
-    /// `makeVAD()` для решения о graceful fallback на `AmplitudeVAD`.
-    func prepare() async throws {
-        _ = try await loadModel()
-    }
-
-    // MARK: Private
-
-    private func loadModel() async throws -> MLModel {
-        if let existing = model {
-            return existing
-        }
-
-        guard let modelURL = Bundle.main.url(
-            forResource: "SileroVAD",
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("SileroVAD.mlpackage not found in bundle")
-            throw VADError.modelNotFound
-        }
-
-        let config = MLModelConfiguration()
-        config.computeUnits = .cpuAndNeuralEngine  // VAD: не нужен GPU
-
-        let loaded = try MLModel(contentsOf: modelURL, configuration: config)
-        model = loaded
-        logger.info("SileroVAD model loaded")
-        return loaded
-    }
-
-    private func runChunkInference(samples: [Float], model: MLModel) async throws -> Float {
-        // Упаковываем в MLMultiArray [1, 512]
-        let multiArray = try MLMultiArray(
-            shape: [1, NSNumber(value: chunkSize)],
-            dataType: .float32
-        )
-
-        let padded = samples.count < chunkSize
-            ? samples + [Float](repeating: 0, count: chunkSize - samples.count)
-            : Array(samples.prefix(chunkSize))
-
-        for (i, value) in padded.enumerated() {
-            multiArray[[0, i] as [NSNumber]] = NSNumber(value: value)
-        }
-
-        let input = try MLDictionaryFeatureProvider(
-            dictionary: ["audio_chunk": multiArray]
-        )
-        let output = try await model.prediction(from: input)
-
-        // Ожидаем выход "speech_prob" — float32 [1, 1]
-        if let probFeature = output.featureValue(for: "speech_prob"),
-           let probArray = probFeature.multiArrayValue {
-            return probArray[0].floatValue
-        }
-
-        // Fallback: пробуем первый доступный выход
-        let featureNames = output.featureNames
-        for name in featureNames {
-            if let val = output.featureValue(for: name)?.multiArrayValue {
-                return val[0].floatValue
-            }
-        }
-
-        throw VADError.inferenceFailure("Cannot parse model output")
     }
 }
 
@@ -397,16 +239,15 @@ actor AmplitudeVAD: VADProtocol {
 
 /// Создаёт on-device VAD.
 ///
-/// **Почему основной путь — `AmplitudeVAD`, а не Core ML Silero.**
+/// **Почему основной путь — `AmplitudeVAD`, а не самописный Core ML Silero.**
 /// Настоящая модель Silero VAD — это stateful LSTM: её ONNX/torch-граф требует
 /// входы `state[2,B,128]` + `sr` и возвращает обновлённое состояние `stateN`,
-/// которое нужно прокидывать между чанками. Контракт `LiveSileroVAD` в приложении
-/// — stateless (`audio_chunk[1,1,512] → speech_prob[1,1]`), а coremltools 9 удалил
-/// ONNX-конвертер. Перенос реального Silero в этот stateless контракт технически
-/// невозможен без переписывания state-threading на стороне Swift (риск,
-/// вне scope). Поэтому единственным `SileroVAD.mlpackage` остаётся energy-stub,
-/// который не точнее адаптивного амплитудного детектора. Подробности — ADR
-/// `ml-silero-vad-blocked.md`.
+/// которое нужно прокидывать между чанками. Stateless Core ML-контракт
+/// (`audio_chunk[1,1,512] → speech_prob[1,1]`) этого не выражает, а coremltools 9
+/// удалил ONNX-конвертер — перенос реального Silero в stateless контракт без
+/// переписывания state-threading на Swift невозможен (риск, вне scope). Поэтому
+/// самописный stateless Core ML-путь (`LiveSileroVAD` + `SileroVAD.mlpackage`
+/// energy-stub) удалён как тупиковый. Подробности — ADR `ml-silero-vad-blocked.md`.
 ///
 /// `AmplitudeVAD` теперь использует **адаптивный порог по фоновому шуму**
 /// (running noise-floor tracker + гистерезис) — ~88–92% на чистой речи,

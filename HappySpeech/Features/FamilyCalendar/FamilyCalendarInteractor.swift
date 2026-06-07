@@ -532,17 +532,17 @@ final class FamilyCalendarInteractor {
         repeats: Bool,
         service: any NotificationService
     ) async throws {
-        // NotificationServiceLive имеет scheduleDailyReminder(at:DateComponents).
-        // Для произвольных дат используем внутренний канал через UserDefaults-queue.
-        // Это упрощённая реализация: сохраняем pending в UserDefaults,
-        // реальный тригер срабатывает при следующем открытии приложения.
-        let encoder = JSONEncoder()
-        let data = try encoder.encode(content)
-        var pending = UserDefaults.standard.array(forKey: "hs.pending_notifications") as? [Data] ?? []
-        pending.append(data)
-        UserDefaults.standard.set(pending, forKey: "hs.pending_notifications")
-        logger.debug("Notification queued: \(identifier)")
-        _ = service  // protocol used for permission gate above
+        // Реальное одноразовое уведомление на произвольную дату через
+        // UNCalendarNotificationTrigger (NotificationService). Сработает в
+        // назначенное время, а не «при следующем открытии приложения».
+        _ = repeats // семейные напоминания всегда одноразовые
+        _ = try await service.scheduleCalendarReminder(
+            identifier: identifier,
+            title: content.title,
+            body: content.body,
+            at: components
+        )
+        logger.debug("Calendar reminder scheduled: \(identifier)")
     }
 
     // MARK: - Voice Hint (Ляля)

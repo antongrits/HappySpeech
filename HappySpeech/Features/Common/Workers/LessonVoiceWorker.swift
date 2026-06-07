@@ -106,6 +106,40 @@ final class LessonVoiceWorker: NSObject {
         #endif
     }
 
+    /// Воспроизводит pre-rendered m4a контент-пака по относительному пути из
+    /// `ContentItem.audioAsset` (например `Audio/Content/NL/nl-fs-00.m4a`).
+    /// Эти файлы лежат в bundled folder-reference `Resources/Audio/` (Chirp3-HD-Aoede,
+    /// голос Ляли). Если ассет не найден — graceful fallback на `speak(fallbackText:)`.
+    ///
+    /// - Parameters:
+    ///   - assetPath: относительный путь под `Resources/` (с `Audio/...` или без
+    ///     расширения; принимаем оба варианта).
+    ///   - fallbackText: текст для озвучивания через `speak(_:)`, если ассет
+    ///     отсутствует. `nil` → silent skip.
+    ///   - rate: мультипликатор скорости.
+    ///   - lessonType: опциональная метка для логов.
+    func speakAsset(
+        _ assetPath: String,
+        fallbackText: String? = nil,
+        rate: Float = 1.0,
+        lessonType: String? = nil
+    ) async {
+        ensurePlaybackSession()
+        let logContext = lessonType.map { "[\($0)] " } ?? ""
+
+        if let url = Self.contentAssetURL(forRelativePath: assetPath) {
+            await playFileURL(url, rate: rate, logContext: logContext + "[content] ")
+            return
+        }
+
+        if let fallbackText, !fallbackText.isEmpty {
+            await speak(fallbackText, lessonType: lessonType, rate: rate)
+            return
+        }
+
+        logger.warning("\(logContext, privacy: .public)content asset miss: \(assetPath, privacy: .public) — silent skip")
+    }
+
     /// Воспроизводит готовый curriculum-narration по `bucketId` + `slug`.
     /// Источник — `Resources/Audio/Narration/curriculum/.../{slug}.m4a`
     /// (Google Chirp3-HD-Aoede voice, голос Ляли).
@@ -267,6 +301,26 @@ final class LessonVoiceWorker: NSObject {
 
     private static func curriculumKey(bucketId: String, slug: String) -> String {
         bucketId + "|" + slug
+    }
+
+    /// Резолвит относительный путь контент-ассета (`Audio/Content/NL/nl-fs-00.m4a`
+    /// или `Content/NL/nl-fs-00`) в URL внутри bundled folder-reference `Audio/`.
+    private static func contentAssetURL(forRelativePath relativePath: String) -> URL? {
+        var path = relativePath
+        // Нормализуем: убираем ведущий `Audio/` (folder reference уже подмонтирован
+        // как подкаталог бандла `Audio/`) и расширение.
+        if path.hasPrefix("Audio/") {
+            path = String(path.dropFirst("Audio/".count))
+        }
+        let withoutExt = (path as NSString).deletingPathExtension
+        let subdirectory = "Audio/" + (withoutExt as NSString).deletingLastPathComponent
+        let name = (withoutExt as NSString).lastPathComponent
+        guard !name.isEmpty else { return nil }
+        return Bundle.main.url(
+            forResource: name,
+            withExtension: "m4a",
+            subdirectory: subdirectory
+        )
     }
 
     private static func curriculumURL(forRelativePath relativePath: String) -> URL? {

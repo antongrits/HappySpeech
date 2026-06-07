@@ -660,7 +660,8 @@ struct ProgressDashboardView: View {
         )
         let interactor = ProgressDashboardInteractor(
             worker: worker,
-            llmDecisionService: container.llmDecisionService
+            llmDecisionService: container.llmDecisionService,
+            childRepository: container.childRepository
         )
         let presenter = ProgressDashboardPresenter()
         let router = ProgressDashboardRouter()
