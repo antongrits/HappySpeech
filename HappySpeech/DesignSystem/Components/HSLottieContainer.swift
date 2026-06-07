@@ -33,6 +33,15 @@ public struct HSLottieView: View {
         self.contentMode = contentMode
     }
 
+    /// Семантический инициализатор — загружает анимацию из реестра `HSLottieAsset`.
+    public init(
+        asset: HSLottieAsset,
+        loopMode: LottieLoopMode = .loop,
+        contentMode: UIView.ContentMode = .scaleAspectFit
+    ) {
+        self.init(name: asset.fileName, loopMode: loopMode, contentMode: contentMode)
+    }
+
     public var body: some View {
         if reduceMotion {
             // Reduced Motion: статичный первый кадр без воспроизведения
@@ -67,6 +76,16 @@ public struct HSLottieContainer: View {
         self.name = name
         self.fallback = fallback
         self.size = size
+    }
+
+    /// Семантический инициализатор — загружает анимацию из реестра `HSLottieAsset`.
+    /// При отсутствии файла в бандле отображает `fallback`.
+    public init(
+        asset: HSLottieAsset,
+        fallback: AnyView,
+        size: CGSize = CGSize(width: 200, height: 200)
+    ) {
+        self.init(name: asset.fileName, fallback: fallback, size: size)
     }
 
     public var body: some View {

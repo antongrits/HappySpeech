@@ -478,7 +478,7 @@
     {
      "id": "zh-wi-2",
      "word": "жара",
-     "imageAsset": null,
+     "imageAsset": "word_zhara",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/ZH/zh-wi-2.m4a"
@@ -574,7 +574,7 @@
     {
      "id": "zh-wi-14",
      "word": "жёлтый",
-     "imageAsset": null,
+     "imageAsset": "word_zhyoltyy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/ZH/zh-wi-14.m4a"
@@ -686,7 +686,7 @@
     {
      "id": "zh-wi-28",
      "word": "жестокий",
-     "imageAsset": null,
+     "imageAsset": "word_zhestokiy",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/ZH/zh-wi-28.m4a"
@@ -702,7 +702,7 @@
     {
      "id": "zh-wi-30",
      "word": "жуткий",
-     "imageAsset": null,
+     "imageAsset": "word_zhutkiy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/ZH/zh-wi-30.m4a"
@@ -759,7 +759,7 @@
     {
      "id": "zh-wi-37",
      "word": "жёлоб",
-     "imageAsset": null,
+     "imageAsset": "word_zhyolob",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/ZH/zh-wi-37.m4a"
@@ -831,7 +831,7 @@
     {
      "id": "zh-wi-46",
      "word": "желудок",
-     "imageAsset": null,
+     "imageAsset": "word_zheludok",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/ZH/zh-wi-46.m4a"
@@ -900,7 +900,8 @@
      "word": "жуткий",
      "hint": "ЖУТ — Ж в ударном слоге.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Zh/zh-wi-55.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-55.m4a",
+     "imageAsset": "word_zhutkiy"
     },
     {
      "id": "zh-wi-56",
@@ -935,35 +936,40 @@
      "word": "жаровня",
      "hint": "ЖА+РО+ВНЯ — посуда для жарки.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Zh/zh-wi-60.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-60.m4a",
+     "imageAsset": "word_zharovnya"
     },
     {
      "id": "zh-wi-61",
      "word": "жакет",
      "hint": "Жа-кет. [Ж] в начале.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Zh/zh-wi-61.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-61.m4a",
+     "imageAsset": "word_zhaket"
     },
     {
      "id": "zh-wi-62",
      "word": "жонглёр",
      "hint": "ЖОН+ГЛЁР — цирковой артист.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Zh/zh-wi-62.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-62.m4a",
+     "imageAsset": "word_zhonglyor"
     },
     {
      "id": "zh-wi-63",
      "word": "жеребёнок",
      "hint": "ЖЕ+РЕ+БЁ+НОК — детёныш лошади.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Zh/zh-wi-63.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-63.m4a",
+     "imageAsset": "word_zherebyonok"
     },
     {
      "id": "zh-wi-64",
      "word": "жимолость",
      "hint": "ЖИ+МО+ЛОСТЬ — лесная ягода.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Zh/zh-wi-64.m4a"
+     "audio_file": "Audio/Content/Zh/zh-wi-64.m4a",
+     "imageAsset": "word_zhimolost"
     },
     {
      "id": "zh-wi-65",
@@ -1137,7 +1143,7 @@
     {
      "id": "zh-wm-9",
      "word": "бежать",
-     "imageAsset": null,
+     "imageAsset": "word_bezhat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/ZH/zh-wm-9.m4a"
@@ -1259,7 +1265,7 @@
     {
      "id": "zh-wm-24",
      "word": "рыжий",
-     "imageAsset": null,
+     "imageAsset": "word_ryzhiy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/ZH/zh-wm-24.m4a"
@@ -1275,7 +1281,7 @@
     {
      "id": "zh-wm-26",
      "word": "служба",
-     "imageAsset": null,
+     "imageAsset": "word_sluzhba",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/ZH/zh-wm-26.m4a"
@@ -1379,7 +1385,7 @@
     {
      "id": "zh-wm-39",
      "word": "пирожок",
-     "imageAsset": null,
+     "imageAsset": "word_pirozhok",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/ZH/zh-wm-39.m4a",
@@ -1639,91 +1645,103 @@
   },
   "wordFinal": {
    "stageId": "wordFinal",
-   "note": "[Ж] в середине слова (между гласными звенит, не оглушается).",
+   "note": "[Ж] в середине слова. Внимание: [Ж] — звонкий согласный. В русском языке звонкие оглушаются в конце слова (норма). Поэтому стадия «финальная» содержит слова со звуком в интервокальной позиции (между гласными), где [Ж] звенит чисто. Это методически верно (Фомичёва).",
    "items": [
     {
      "id": "zh-wf-0",
      "word": "пирожок",
      "hint": "Пи-ро-Жок. [Ж] звенит между гласными.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/ZH/zh-wf-0.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-0.m4a",
+     "imageAsset": "word_pirozhok"
     },
     {
      "id": "zh-wf-1",
      "word": "рожок",
      "hint": "Ро-Жок. [Ж] звенит.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/ZH/zh-wf-1.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-1.m4a",
+     "imageAsset": "word_rozhok"
     },
     {
      "id": "zh-wf-2",
      "word": "дорожка",
      "hint": "До-роЖ-ка. [Ж] звенит.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/ZH/zh-wf-2.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-2.m4a",
+     "imageAsset": "word_dorozhka"
     },
     {
      "id": "zh-wf-3",
      "word": "художник",
      "hint": "ху-доЖ-ник. [Ж] звенит.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/ZH/zh-wf-3.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-3.m4a",
+     "imageAsset": "word_khudozhnik"
     },
     {
      "id": "zh-wf-4",
      "word": "пожар",
      "hint": "по-Жар. [Ж] звенит.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/ZH/zh-wf-4.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-4.m4a",
+     "imageAsset": "word_pozhar"
     },
     {
      "id": "zh-wf-5",
      "word": "медвежонок",
      "hint": "мед-ве-Жо-нок. [Ж] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/ZH/zh-wf-5.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-5.m4a",
+     "imageAsset": "word_medvezhonok"
     },
     {
      "id": "zh-wf-6",
      "word": "снежок",
      "hint": "сне-Жок. [Ж] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/ZH/zh-wf-6.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-6.m4a",
+     "imageAsset": "word_snezhok"
     },
     {
      "id": "zh-wf-7",
      "word": "сапожок",
      "hint": "са-по-Жок. [Ж] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/ZH/zh-wf-7.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-7.m4a",
+     "imageAsset": "word_sapozhok"
     },
     {
      "id": "zh-wf-8",
      "word": "флажок",
      "hint": "фла-Жок. [Ж] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/ZH/zh-wf-8.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-8.m4a",
+     "imageAsset": "word_flazhok"
     },
     {
      "id": "zh-wf-9",
      "word": "кружок",
      "hint": "кру-Жок. [Ж] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/ZH/zh-wf-9.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-9.m4a",
+     "imageAsset": "word_kruzhok"
     },
     {
      "id": "zh-wf-10",
      "word": "творожок",
      "hint": "тво-ро-Жок. [Ж] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/ZH/zh-wf-10.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-10.m4a",
+     "imageAsset": "word_tvorozhok"
     },
     {
      "id": "zh-wf-11",
      "word": "дружок",
      "hint": "дру-Жок. [Ж] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/ZH/zh-wf-11.m4a"
+     "audio_file": "Audio/Content/ZH/zh-wf-11.m4a",
+     "imageAsset": "word_druzhok"
     }
    ]
   },

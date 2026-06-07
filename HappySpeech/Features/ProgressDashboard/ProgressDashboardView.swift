@@ -532,11 +532,12 @@ struct ProgressDashboardView: View {
     // MARK: - Empty state
 
     private var emptyStateView: some View {
-        // G.1 v17 — HSEmptyStateView (mascot=explaining), parent-контур.
+        // Анимированный Lottie empty-state «нет данных прогресса», parent-контур.
         HSEmptyStateView(
-            mascot: .explaining,
+            lottie: .emptyNoHistory,
+            fallbackSymbol: "chart.line.uptrend.xyaxis",
             title: display.emptyTitle,
-            subtitle: display.emptyMessage,
+            message: display.emptyMessage,
             actionTitle: String(localized: "progressDashboard.empty.cta"),
             action: {
                 container.hapticService.impact(.medium)

@@ -49,6 +49,9 @@ public struct HSEmptyStateView: View {
         ///   - mascot: Состояние маскота Ляли.
         ///   - tint: Основной тинт-цвет заливки. По умолчанию `Brand.primaryLo`.
         case warmPanel(mascot: LyalyaState, tint: Color = ColorTokens.Brand.primaryLo)
+        /// Lottie-анимация из библиотеки `Animations/EmptyStates/` с graceful-fallback
+        /// на SF Symbol, если файл отсутствует в бандле.
+        case lottie(HSLottieAsset, fallbackSymbol: String)
     }
 
     // MARK: - Public API
@@ -89,6 +92,23 @@ public struct HSEmptyStateView: View {
         self.illustration = .mascot(mascot)
         self.title = title
         self.message = subtitle
+        self.actionTitle = actionTitle
+        self.action = action
+    }
+
+    // MARK: - Init (Lottie — анимированная иллюстрация)
+
+    public init(
+        lottie: HSLottieAsset,
+        fallbackSymbol: String,
+        title: String,
+        message: String,
+        actionTitle: String = String(localized: "empty.custom.cta", defaultValue: "Попробовать"),
+        action: (() -> Void)? = nil
+    ) {
+        self.illustration = .lottie(lottie, fallbackSymbol: fallbackSymbol)
+        self.title = title
+        self.message = message
         self.actionTitle = actionTitle
         self.action = action
     }
@@ -229,6 +249,22 @@ public struct HSEmptyStateView: View {
         case .warmPanel:
             // warmPanel имеет собственный layout — эта ветка никогда не вызывается.
             EmptyView()
+        case .lottie(let asset, let fallbackSymbol):
+            HSLottieContainer(
+                asset: asset,
+                fallback: AnyView(
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.primaryLo.opacity(0.12))
+                            .frame(width: 80, height: 80)
+                        Image(systemName: fallbackSymbol)
+                            .font(.system(size: 36))
+                            .foregroundStyle(ColorTokens.Brand.primary.opacity(0.70))
+                    }
+                    .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
+                ),
+                size: CGSize(width: 120, height: 120)
+            )
         }
     }
 }
@@ -278,11 +314,12 @@ public extension HSEmptyStateView {
         action: (() -> Void)? = nil
     ) -> HSEmptyStateView {
         HSEmptyStateView(
-            icon: "book.closed",
+            lottie: .emptyNoSessions,
+            fallbackSymbol: "book.closed",
             title: String(localized: "empty.lessons.title", defaultValue: "Нет уроков"),
             message: String(localized: "empty.lessons.message", defaultValue: "Добавь первый урок и начни путь"),
-            action: action,
-            actionTitle: actionTitle
+            actionTitle: actionTitle,
+            action: action
         )
     }
 
@@ -292,11 +329,12 @@ public extension HSEmptyStateView {
         action: (() -> Void)? = nil
     ) -> HSEmptyStateView {
         HSEmptyStateView(
-            icon: "list.bullet.clipboard",
+            lottie: .emptyNoHistory,
+            fallbackSymbol: "list.bullet.clipboard",
             title: String(localized: "empty.tasks.title", defaultValue: "Нет заданий"),
             message: String(localized: "empty.tasks.message", defaultValue: "Сегодня заданий нет — отдыхай!"),
-            action: action,
-            actionTitle: actionTitle
+            actionTitle: actionTitle,
+            action: action
         )
     }
 
@@ -306,11 +344,12 @@ public extension HSEmptyStateView {
         action: (() -> Void)? = nil
     ) -> HSEmptyStateView {
         HSEmptyStateView(
-            icon: "trophy",
+            lottie: .emptyNoRewards,
+            fallbackSymbol: "trophy",
             title: String(localized: "empty.achievements.title", defaultValue: "Пока нет наград"),
             message: String(localized: "empty.achievements.message", defaultValue: "Заверши первое занятие, чтобы получить награду"),
-            action: action,
-            actionTitle: actionTitle
+            actionTitle: actionTitle,
+            action: action
         )
     }
 
@@ -338,11 +377,72 @@ public extension HSEmptyStateView {
             ? String(localized: "empty.search.message.generic", defaultValue: "Попробуй другой запрос")
             : String(localized: "empty.search.message.withQuery", defaultValue: "Ничего не найдено по запросу") + " «\(query)»"
         return HSEmptyStateView(
-            icon: "magnifyingglass",
+            lottie: .emptySearchNoResults,
+            fallbackSymbol: "magnifyingglass",
             title: String(localized: "empty.search.title", defaultValue: "Ничего не найдено"),
             message: message,
-            action: action,
-            actionTitle: actionTitle
+            actionTitle: actionTitle,
+            action: action
+        )
+    }
+
+    /// Empty-state для offline-режима.
+    static func offline(
+        actionTitle: String = String(localized: "empty.offline.cta", defaultValue: "Повторить"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            lottie: .emptyOffline,
+            fallbackSymbol: "wifi.slash",
+            title: String(localized: "empty.offline.title", defaultValue: "Нет соединения"),
+            message: String(localized: "empty.offline.message", defaultValue: "Занятия доступны офлайн — синхронизация позже"),
+            actionTitle: actionTitle,
+            action: action
+        )
+    }
+
+    /// Empty-state при ошибке сети.
+    static func networkError(
+        actionTitle: String = String(localized: "empty.network.cta", defaultValue: "Повторить"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            lottie: .emptyNetworkError,
+            fallbackSymbol: "exclamationmark.icloud",
+            title: String(localized: "empty.network.title", defaultValue: "Не удалось загрузить"),
+            message: String(localized: "empty.network.message", defaultValue: "Проверь соединение и попробуй ещё раз"),
+            actionTitle: actionTitle,
+            action: action
+        )
+    }
+
+    /// Empty-state «нет детей в профиле семьи».
+    static func noChildren(
+        actionTitle: String = String(localized: "empty.children.cta", defaultValue: "Добавить ребёнка"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            lottie: .emptyNoChildren,
+            fallbackSymbol: "person.2",
+            title: String(localized: "empty.children.title", defaultValue: "Пока нет профилей"),
+            message: String(localized: "empty.children.message", defaultValue: "Добавь профиль ребёнка, чтобы начать"),
+            actionTitle: actionTitle,
+            action: action
+        )
+    }
+
+    /// Empty-state «нет завершённых занятий / истории».
+    static func history(
+        actionTitle: String = String(localized: "empty.history.cta", defaultValue: "К занятиям"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            lottie: .emptyNoHistory,
+            fallbackSymbol: "clock.arrow.circlepath",
+            title: String(localized: "empty.history.title", defaultValue: "История пуста"),
+            message: String(localized: "empty.history.message", defaultValue: "Заверши первое занятие — оно появится здесь"),
+            actionTitle: actionTitle,
+            action: action
         )
     }
 

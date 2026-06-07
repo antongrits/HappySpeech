@@ -322,7 +322,8 @@
      "id": "g-wi-1",
      "word": "гусь",
      "difficulty": 1,
-     "audio_file": "Audio/Content/G/g-wi-1.m4a"
+     "audio_file": "Audio/Content/G/g-wi-1.m4a",
+     "imageAsset": "word_gus"
     },
     {
      "id": "g-wi-2",
@@ -340,79 +341,92 @@
      "id": "g-wi-4",
      "word": "газон",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-4.m4a"
+     "audio_file": "Audio/Content/G/g-wi-4.m4a",
+     "imageAsset": "word_gazon"
     },
     {
      "id": "g-wi-5",
      "word": "гараж",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-5.m4a"
+     "audio_file": "Audio/Content/G/g-wi-5.m4a",
+     "imageAsset": "word_garazh"
     },
     {
      "id": "g-wi-6",
      "word": "гвоздь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-6.m4a"
+     "audio_file": "Audio/Content/G/g-wi-6.m4a",
+     "imageAsset": "word_gvozd"
     },
     {
      "id": "g-wi-7",
      "word": "глаз",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-7.m4a"
+     "audio_file": "Audio/Content/G/g-wi-7.m4a",
+     "imageAsset": "word_glaz"
     },
     {
      "id": "g-wi-8",
      "word": "гнездо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-8.m4a"
+     "audio_file": "Audio/Content/G/g-wi-8.m4a",
+     "imageAsset": "word_gnezdo"
     },
     {
      "id": "g-wi-9",
      "word": "гора",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-9.m4a"
+     "audio_file": "Audio/Content/G/g-wi-9.m4a",
+     "imageAsset": "word_gora"
     },
     {
      "id": "g-wi-10",
      "word": "горох",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-10.m4a"
+     "audio_file": "Audio/Content/G/g-wi-10.m4a",
+     "imageAsset": "word_gorokh"
     },
     {
      "id": "g-wi-11",
      "word": "горшок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-11.m4a"
+     "audio_file": "Audio/Content/G/g-wi-11.m4a",
+     "imageAsset": "word_gorshok"
     },
     {
      "id": "g-wi-12",
      "word": "гости",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-12.m4a"
+     "audio_file": "Audio/Content/G/g-wi-12.m4a",
+     "imageAsset": "word_gosti"
     },
     {
      "id": "g-wi-13",
      "word": "гриб",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-13.m4a"
+     "audio_file": "Audio/Content/G/g-wi-13.m4a",
+     "imageAsset": "word_grib"
     },
     {
      "id": "g-wi-14",
      "word": "груша",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-14.m4a"
+     "audio_file": "Audio/Content/G/g-wi-14.m4a",
+     "imageAsset": "word_grusha"
     },
     {
      "id": "g-wi-15",
      "word": "губы",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-15.m4a"
+     "audio_file": "Audio/Content/G/g-wi-15.m4a",
+     "imageAsset": "word_guby"
     },
     {
      "id": "g-wi-16",
      "word": "гусеница",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-16.m4a"
+     "audio_file": "Audio/Content/G/g-wi-16.m4a",
+     "imageAsset": "word_gusenitsa"
     },
     {
      "id": "g-wi-17",
@@ -424,13 +438,15 @@
      "id": "g-wi-18",
      "word": "гитара",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-18.m4a"
+     "audio_file": "Audio/Content/G/g-wi-18.m4a",
+     "imageAsset": "word_gitara"
     },
     {
      "id": "g-wi-19",
      "word": "гиря",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-19.m4a"
+     "audio_file": "Audio/Content/G/g-wi-19.m4a",
+     "imageAsset": "word_girya"
     },
     {
      "id": "g-wi-20",
@@ -448,31 +464,29 @@
      "id": "g-wi-22",
      "word": "горилла",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-22.m4a"
+     "audio_file": "Audio/Content/G/g-wi-22.m4a",
+     "imageAsset": "word_gorilla"
     },
     {
      "id": "g-wi-23",
      "word": "горчица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-23.m4a"
+     "audio_file": "Audio/Content/G/g-wi-23.m4a",
+     "imageAsset": "word_gorchitsa"
     },
     {
      "id": "g-wi-24",
      "word": "гречка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-24.m4a"
-    },
-    {
-     "id": "g-wi-25",
-     "word": "гриб",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-25.m4a"
+     "audio_file": "Audio/Content/G/g-wi-24.m4a",
+     "imageAsset": "word_grechka"
     },
     {
      "id": "g-wi-26",
      "word": "глобус",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-26.m4a"
+     "audio_file": "Audio/Content/G/g-wi-26.m4a",
+     "imageAsset": "word_globus"
     },
     {
      "id": "g-wi-27",
@@ -484,31 +498,29 @@
      "id": "g-wi-28",
      "word": "гладкий",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-28.m4a"
+     "audio_file": "Audio/Content/G/g-wi-28.m4a",
+     "imageAsset": "word_gladkiy"
     },
     {
      "id": "g-wi-29",
      "word": "голубь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-29.m4a"
-    },
-    {
-     "id": "g-wi-30",
-     "word": "голубь",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-30.m4a"
+     "audio_file": "Audio/Content/G/g-wi-29.m4a",
+     "imageAsset": "word_golub"
     },
     {
      "id": "g-wi-31",
      "word": "голова",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-31.m4a"
+     "audio_file": "Audio/Content/G/g-wi-31.m4a",
+     "imageAsset": "word_golova"
     },
     {
      "id": "g-wi-32",
      "word": "горка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-32.m4a"
+     "audio_file": "Audio/Content/G/g-wi-32.m4a",
+     "imageAsset": "word_gorka"
     },
     {
      "id": "g-wi-33",
@@ -526,13 +538,15 @@
      "id": "g-wi-35",
      "word": "гиацинт",
      "difficulty": 4,
-     "audio_file": "Audio/Content/G/g-wi-35.m4a"
+     "audio_file": "Audio/Content/G/g-wi-35.m4a",
+     "imageAsset": "word_giatsint"
     },
     {
      "id": "g-wi-36",
      "word": "гирлянда",
      "difficulty": 4,
-     "audio_file": "Audio/Content/G/g-wi-36.m4a"
+     "audio_file": "Audio/Content/G/g-wi-36.m4a",
+     "imageAsset": "word_girlyanda"
     },
     {
      "id": "g-wi-37",
@@ -550,7 +564,8 @@
      "id": "g-wi-39",
      "word": "горсть",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-39.m4a"
+     "audio_file": "Audio/Content/G/g-wi-39.m4a",
+     "imageAsset": "word_gorst"
     },
     {
      "id": "g-wi-40",
@@ -610,14 +625,16 @@
      "id": "g-wi-49",
      "word": "грядка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-49.m4a"
+     "audio_file": "Audio/Content/G/g-wi-49.m4a",
+     "imageAsset": "word_gryadka"
     },
     {
      "id": "g-wi-50",
      "word": "газета",
      "difficulty": 1,
      "audio_file": "Audio/Content/G/g-wi-50.m4a",
-     "hint": "Га-зета. [Г] в начале."
+     "hint": "Га-зета. [Г] в начале.",
+     "imageAsset": "word_gazeta"
     },
     {
      "id": "g-wi-51",
@@ -626,22 +643,10 @@
      "audio_file": "Audio/Content/G/g-wi-51.m4a"
     },
     {
-     "id": "g-wi-52",
-     "word": "глобус",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wi-52.m4a"
-    },
-    {
      "id": "g-wi-53",
      "word": "галерея",
      "difficulty": 4,
      "audio_file": "Audio/Content/G/g-wi-53.m4a"
-    },
-    {
-     "id": "g-wi-54",
-     "word": "гусеница",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wi-54.m4a"
     },
     {
      "id": "g-wi-55",
@@ -823,50 +828,51 @@
      "id": "g-wm-0",
      "word": "вагон",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-0.m4a"
+     "audio_file": "Audio/Content/G/g-wm-0.m4a",
+     "imageAsset": "word_vagon"
     },
     {
      "id": "g-wm-1",
      "word": "дуга",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-1.m4a"
+     "audio_file": "Audio/Content/G/g-wm-1.m4a",
+     "imageAsset": "word_duga"
     },
     {
      "id": "g-wm-2",
      "word": "нога",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-2.m4a"
-    },
-    {
-     "id": "g-wm-3",
-     "word": "нога",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-3.m4a"
+     "audio_file": "Audio/Content/G/g-wm-2.m4a",
+     "imageAsset": "word_noga"
     },
     {
      "id": "g-wm-4",
      "word": "дорога",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-4.m4a"
+     "audio_file": "Audio/Content/G/g-wm-4.m4a",
+     "imageAsset": "word_doroga"
     },
     {
      "id": "g-wm-5",
      "word": "бумага",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-5.m4a"
+     "audio_file": "Audio/Content/G/g-wm-5.m4a",
+     "imageAsset": "word_bumaga"
     },
     {
      "id": "g-wm-6",
      "word": "подруга",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-6.m4a"
+     "audio_file": "Audio/Content/G/g-wm-6.m4a",
+     "imageAsset": "word_podruga"
     },
     {
      "id": "g-wm-7",
      "word": "телега",
      "difficulty": 3,
      "audio_file": "Audio/Content/G/g-wm-7.m4a",
-     "hint": "те-ле-Га. [Г] в середине."
+     "hint": "те-ле-Га. [Г] в середине.",
+     "imageAsset": "word_telega"
     },
     {
      "id": "g-wm-8",
@@ -878,25 +884,29 @@
      "id": "g-wm-9",
      "word": "пирог",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-9.m4a"
+     "audio_file": "Audio/Content/G/g-wm-9.m4a",
+     "imageAsset": "word_pirog"
     },
     {
      "id": "g-wm-10",
      "word": "порог",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-10.m4a"
+     "audio_file": "Audio/Content/G/g-wm-10.m4a",
+     "imageAsset": "word_porog"
     },
     {
      "id": "g-wm-11",
      "word": "берег",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-11.m4a"
+     "audio_file": "Audio/Content/G/g-wm-11.m4a",
+     "imageAsset": "word_bereg"
     },
     {
      "id": "g-wm-12",
      "word": "снег",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-12.m4a"
+     "audio_file": "Audio/Content/G/g-wm-12.m4a",
+     "imageAsset": "word_sneg"
     },
     {
      "id": "g-wm-13",
@@ -908,19 +918,22 @@
      "id": "g-wm-14",
      "word": "пугало",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-14.m4a"
+     "audio_file": "Audio/Content/G/g-wm-14.m4a",
+     "imageAsset": "word_pugalo"
     },
     {
      "id": "g-wm-15",
      "word": "иголка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-15.m4a"
+     "audio_file": "Audio/Content/G/g-wm-15.m4a",
+     "imageAsset": "word_igolka"
     },
     {
      "id": "g-wm-16",
      "word": "ягода",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-16.m4a"
+     "audio_file": "Audio/Content/G/g-wm-16.m4a",
+     "imageAsset": "word_yagoda"
     },
     {
      "id": "g-wm-17",
@@ -932,13 +945,15 @@
      "id": "g-wm-18",
      "word": "огонь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-18.m4a"
+     "audio_file": "Audio/Content/G/g-wm-18.m4a",
+     "imageAsset": "word_ogon"
     },
     {
      "id": "g-wm-19",
      "word": "огород",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-19.m4a"
+     "audio_file": "Audio/Content/G/g-wm-19.m4a",
+     "imageAsset": "word_ogorod"
     },
     {
      "id": "g-wm-20",
@@ -950,13 +965,15 @@
      "id": "g-wm-21",
      "word": "лягушка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-21.m4a"
+     "audio_file": "Audio/Content/G/g-wm-21.m4a",
+     "imageAsset": "word_lyagushka"
     },
     {
      "id": "g-wm-22",
      "word": "бегемот",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-22.m4a"
+     "audio_file": "Audio/Content/G/g-wm-22.m4a",
+     "imageAsset": "word_begemot"
     },
     {
      "id": "g-wm-23",
@@ -974,19 +991,22 @@
      "id": "g-wm-25",
      "word": "стог",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-25.m4a"
+     "audio_file": "Audio/Content/G/g-wm-25.m4a",
+     "imageAsset": "word_stog"
     },
     {
      "id": "g-wm-26",
      "word": "рубаха",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-26.m4a"
+     "audio_file": "Audio/Content/G/g-wm-26.m4a",
+     "imageAsset": "word_rubakha"
     },
     {
      "id": "g-wm-27",
      "word": "сапог",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-27.m4a"
+     "audio_file": "Audio/Content/G/g-wm-27.m4a",
+     "imageAsset": "word_sapog"
     },
     {
      "id": "g-wm-28",
@@ -995,17 +1015,12 @@
      "audio_file": "Audio/Content/G/g-wm-28.m4a"
     },
     {
-     "id": "g-wm-29",
-     "word": "иголка",
-     "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wm-29.m4a"
-    },
-    {
      "id": "g-wm-30",
      "word": "берлога",
      "difficulty": 2,
      "audio_file": "Audio/Content/G/g-wm-30.m4a",
-     "hint": "бер-ло-Га. [Г] в середине."
+     "hint": "бер-ло-Га. [Г] в середине.",
+     "imageAsset": "word_berloga"
     },
     {
      "id": "g-wm-31",
@@ -1023,7 +1038,8 @@
      "id": "g-wm-33",
      "word": "сугроб",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-33.m4a"
+     "audio_file": "Audio/Content/G/g-wm-33.m4a",
+     "imageAsset": "word_sugrob"
     },
     {
      "id": "g-wm-34",
@@ -1042,18 +1058,6 @@
      "word": "горбатый",
      "difficulty": 3,
      "audio_file": "Audio/Content/G/g-wm-36.m4a"
-    },
-    {
-     "id": "g-wm-37",
-     "word": "дорогой",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-37.m4a"
-    },
-    {
-     "id": "g-wm-38",
-     "word": "пирог",
-     "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wm-38.m4a"
     },
     {
      "id": "g-wm-39",
@@ -1169,84 +1173,95 @@
   },
   "wordFinal": {
    "stageId": "wordFinal",
-   "note": "[Г] в середине слова (между гласными звенит, не оглушается).",
+   "note": "[Г] в середине слова. Внимание: [Г] — звонкий согласный. В русском языке звонкие оглушаются в конце слова (норма). Поэтому стадия «финальная» содержит слова со звуком в интервокальной позиции (между гласными), где [Г] звенит чисто. Это методически верно (Фомичёва).",
    "items": [
     {
      "id": "g-wf-0",
      "word": "дорога",
      "hint": "до-ро-Га. [Г] звенит между гласными.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-0.m4a"
+     "audio_file": "Audio/Content/G/g-wf-0.m4a",
+     "imageAsset": "word_doroga"
     },
     {
      "id": "g-wf-1",
      "word": "бумага",
      "hint": "бу-ма-Га. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-1.m4a"
+     "audio_file": "Audio/Content/G/g-wf-1.m4a",
+     "imageAsset": "word_bumaga"
     },
     {
      "id": "g-wf-2",
      "word": "радуга",
      "hint": "ра-ду-Га. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-2.m4a"
+     "audio_file": "Audio/Content/G/g-wf-2.m4a",
+     "imageAsset": "word_raduga"
     },
     {
      "id": "g-wf-3",
      "word": "подруга",
      "hint": "под-ру-Га. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-3.m4a"
+     "audio_file": "Audio/Content/G/g-wf-3.m4a",
+     "imageAsset": "word_podruga"
     },
     {
      "id": "g-wf-4",
      "word": "вагон",
      "hint": "ва-Гон. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-4.m4a"
+     "audio_file": "Audio/Content/G/g-wf-4.m4a",
+     "imageAsset": "word_vagon"
     },
     {
      "id": "g-wf-5",
      "word": "магазин",
      "hint": "ма-Га-зин. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-5.m4a"
+     "audio_file": "Audio/Content/G/g-wf-5.m4a",
+     "imageAsset": "word_magazin"
     },
     {
      "id": "g-wf-6",
      "word": "телега",
      "hint": "те-ле-Га. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-6.m4a"
+     "audio_file": "Audio/Content/G/g-wf-6.m4a",
+     "imageAsset": "word_telega"
     },
     {
      "id": "g-wf-7",
      "word": "берлога",
      "hint": "бер-ло-Га. [Г] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/G/g-wf-7.m4a"
+     "audio_file": "Audio/Content/G/g-wf-7.m4a",
+     "imageAsset": "word_berloga"
     },
     {
      "id": "g-wf-8",
      "word": "дуга",
      "hint": "ду-Га. [Г] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wf-8.m4a"
+     "audio_file": "Audio/Content/G/g-wf-8.m4a",
+     "imageAsset": "word_duga"
     },
     {
      "id": "g-wf-9",
      "word": "нога",
      "hint": "но-Га. [Г] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/G/g-wf-9.m4a"
+     "audio_file": "Audio/Content/G/g-wf-9.m4a",
+     "imageAsset": "word_noga"
     },
     {
      "id": "g-wf-10",
      "word": "газон",
      "hint": "Га-зон. [Г] звенит.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/G/g-wf-10.m4a"
+     "audio_file": "Audio/Content/G/g-wf-10.m4a",
+     "imageAsset": "word_gazon"
     },
     {
      "id": "g-wf-11",

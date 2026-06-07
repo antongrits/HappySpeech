@@ -572,7 +572,7 @@
     {
      "id": "sh-wi-1",
      "word": "шар",
-     "imageAsset": null,
+     "imageAsset": "word_shar",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SH/sh-wi-1.m4a"
@@ -636,7 +636,7 @@
     {
      "id": "sh-wi-9",
      "word": "шутка",
-     "imageAsset": null,
+     "imageAsset": "word_shutka",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-9.m4a"
@@ -644,7 +644,7 @@
     {
      "id": "sh-wi-10",
      "word": "шуметь",
-     "imageAsset": null,
+     "imageAsset": "word_shumet",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-10.m4a"
@@ -708,7 +708,7 @@
     {
      "id": "sh-wi-18",
      "word": "широкий",
-     "imageAsset": null,
+     "imageAsset": "word_shirokiy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-18.m4a"
@@ -748,7 +748,7 @@
     {
      "id": "sh-wi-23",
      "word": "штанга",
-     "imageAsset": null,
+     "imageAsset": "word_shtanga",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-23.m4a"
@@ -804,7 +804,7 @@
     {
      "id": "sh-wi-30",
      "word": "шоколадка",
-     "imageAsset": null,
+     "imageAsset": "word_shokoladka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-30.m4a"
@@ -820,7 +820,7 @@
     {
      "id": "sh-wi-32",
      "word": "шелковица",
-     "imageAsset": null,
+     "imageAsset": "word_shelkovitsa",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-32.m4a"
@@ -828,7 +828,7 @@
     {
      "id": "sh-wi-33",
      "word": "шиловидный",
-     "imageAsset": null,
+     "imageAsset": "word_shilovidnyy",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wi-33.m4a"
@@ -852,7 +852,7 @@
     {
      "id": "sh-wi-36",
      "word": "шнурок",
-     "imageAsset": null,
+     "imageAsset": "word_shnurok",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-36.m4a"
@@ -876,7 +876,7 @@
     {
      "id": "sh-wi-39",
      "word": "шпилька",
-     "imageAsset": null,
+     "imageAsset": "word_shpilka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-39.m4a"
@@ -924,7 +924,7 @@
     {
      "id": "sh-wi-45",
      "word": "шиловатый",
-     "imageAsset": null,
+     "imageAsset": "word_shilovatyy",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wi-45.m4a"
@@ -932,7 +932,7 @@
     {
      "id": "sh-wi-46",
      "word": "ширина",
-     "imageAsset": null,
+     "imageAsset": "word_shirina",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-46.m4a"
@@ -940,7 +940,7 @@
     {
      "id": "sh-wi-47",
      "word": "широта",
-     "imageAsset": null,
+     "imageAsset": "word_shirota",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-47.m4a"
@@ -948,7 +948,7 @@
     {
      "id": "sh-wi-48",
      "word": "шиповка",
-     "imageAsset": null,
+     "imageAsset": "word_shipovka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-48.m4a"
@@ -996,7 +996,7 @@
     {
      "id": "sh-wi-54",
      "word": "шалунья",
-     "imageAsset": null,
+     "imageAsset": "word_shalunya",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-54.m4a"
@@ -1004,7 +1004,7 @@
     {
      "id": "sh-wi-55",
      "word": "шестёрка",
-     "imageAsset": null,
+     "imageAsset": "word_shestyorka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-55.m4a"
@@ -1012,7 +1012,7 @@
     {
      "id": "sh-wi-56",
      "word": "шеренга",
-     "imageAsset": null,
+     "imageAsset": "word_sherenga",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-56.m4a"
@@ -1020,7 +1020,7 @@
     {
      "id": "sh-wi-57",
      "word": "шнырять",
-     "imageAsset": null,
+     "imageAsset": "word_shnyryat",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wi-57.m4a"
@@ -1028,7 +1028,7 @@
     {
      "id": "sh-wi-58",
      "word": "шелестеть",
-     "imageAsset": null,
+     "imageAsset": "word_shelestet",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wi-58.m4a"
@@ -1036,7 +1036,7 @@
     {
      "id": "sh-wi-59",
      "word": "шевелить",
-     "imageAsset": null,
+     "imageAsset": "word_shevelit",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wi-59.m4a"
@@ -1054,7 +1054,8 @@
      "word": "шкаф",
      "hint": "ШК — два согласных в начале.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-61.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-61.m4a",
+     "imageAsset": "word_shkaf"
     },
     {
      "id": "sh-wi-62",
@@ -1068,98 +1069,112 @@
      "word": "шпион",
      "hint": "ШП — редкое стечение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-63.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-63.m4a",
+     "imageAsset": "word_shpion"
     },
     {
      "id": "sh-wi-64",
      "word": "шхуна",
      "hint": "ШХ — оба шумных согласных.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-64.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-64.m4a",
+     "imageAsset": "word_shkhuna"
     },
     {
      "id": "sh-wi-65",
      "word": "шторка",
      "hint": "ШТ — два глухих в начале.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-65.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-65.m4a",
+     "imageAsset": "word_shtorka"
     },
     {
      "id": "sh-wi-66",
      "word": "шкварки",
      "hint": "ШКВ — три согласных + ударный А.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-66.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-66.m4a",
+     "imageAsset": "word_shkvarki"
     },
     {
      "id": "sh-wi-67",
      "word": "шпала",
      "hint": "ШП + Л — два стечения.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-67.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-67.m4a",
+     "imageAsset": "word_shpala"
     },
     {
      "id": "sh-wi-68",
      "word": "шпилька",
      "hint": "ШП + ЛЬ — сложная цепочка.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-68.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-68.m4a",
+     "imageAsset": "word_shpilka"
     },
     {
      "id": "sh-wi-69",
      "word": "штора",
      "hint": "ШТО — мягкий старт после ШТ.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-69.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-69.m4a",
+     "imageAsset": "word_shtora"
     },
     {
      "id": "sh-wi-70",
      "word": "шкурка",
      "hint": "ШК + РК — двойное стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Sh/sh-wi-70.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-70.m4a",
+     "imageAsset": "word_shkurka"
     },
     {
      "id": "sh-wi-71",
      "word": "шатёр",
      "hint": "ША+ТЁР — шатёр в цирке или на природе.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-wi-71.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-71.m4a",
+     "imageAsset": "word_shatyor"
     },
     {
      "id": "sh-wi-72",
      "word": "шоссе",
      "hint": "ШО+ССЕ — дорога.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Sh/sh-wi-72.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-72.m4a",
+     "imageAsset": "word_shosse"
     },
     {
      "id": "sh-wi-73",
      "word": "шифровка",
      "hint": "ШИ+ФРО+ВКА — секретное сообщение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-73.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-73.m4a",
+     "imageAsset": "word_shifrovka"
     },
     {
      "id": "sh-wi-74",
      "word": "штанга",
      "hint": "ШТА+НГА — спортивный инвентарь.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-74.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-74.m4a",
+     "imageAsset": "word_shtanga"
     },
     {
      "id": "sh-wi-75",
      "word": "шасси",
      "hint": "ША+ССИ — колёса самолёта.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-75.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-75.m4a",
+     "imageAsset": "word_shassi"
     },
     {
      "id": "sh-wi-76",
      "word": "шнурки",
      "hint": "ШНУ+РКИ — то, чем завязывают ботинки.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-76.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-76.m4a",
+     "imageAsset": "word_shnurki"
     },
     {
      "id": "sh-wi-77",
@@ -1173,21 +1188,24 @@
      "word": "шахтёр",
      "hint": "ШАХ+ТЁР — тот, кто работает в шахте.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-78.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-78.m4a",
+     "imageAsset": "word_shakhtyor"
     },
     {
      "id": "sh-wi-79",
      "word": "шествие",
      "hint": "ШЕС+ТВИЕ — торжественный поход.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Sh/sh-wi-79.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-79.m4a",
+     "imageAsset": "word_shestvie"
     },
     {
      "id": "sh-wi-80",
      "word": "шпиль",
      "hint": "ШПИ+ЛЬ — острый верх башни.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Sh/sh-wi-80.m4a"
+     "audio_file": "Audio/Content/Sh/sh-wi-80.m4a",
+     "imageAsset": "word_shpil"
     },
     {
      "id": "sh-wi-81",
@@ -1222,7 +1240,7 @@
     {
      "id": "sh-wm-2",
      "word": "каша",
-     "imageAsset": null,
+     "imageAsset": "word_kasha",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SH/sh-wm-2.m4a"
@@ -1239,7 +1257,7 @@
     {
      "id": "sh-wm-4",
      "word": "опушка",
-     "imageAsset": null,
+     "imageAsset": "word_opushka",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SH/sh-wm-4.m4a",
@@ -1545,7 +1563,7 @@
     {
      "id": "sh-wm-43",
      "word": "мешочек",
-     "imageAsset": null,
+     "imageAsset": "word_meshochek",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wm-43.m4a"
@@ -1849,7 +1867,7 @@
     {
      "id": "sh-wf-3",
      "word": "туш",
-     "imageAsset": null,
+     "imageAsset": "word_tush",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SH/sh-wf-3.m4a"
@@ -1913,7 +1931,7 @@
     {
      "id": "sh-wf-11",
      "word": "малыш",
-     "imageAsset": null,
+     "imageAsset": "word_malysh",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wf-11.m4a"
@@ -1937,7 +1955,7 @@
     {
      "id": "sh-wf-14",
      "word": "кругляш",
-     "imageAsset": null,
+     "imageAsset": "word_kruglyash",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wf-14.m4a",
@@ -1946,7 +1964,7 @@
     {
      "id": "sh-wf-24",
      "word": "лаваш",
-     "imageAsset": null,
+     "imageAsset": "word_lavash",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wf-24.m4a",
@@ -1963,7 +1981,7 @@
     {
      "id": "sh-wf-26",
      "word": "финиш",
-     "imageAsset": null,
+     "imageAsset": "word_finish",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wf-26.m4a",
@@ -1972,7 +1990,7 @@
     {
      "id": "sh-wf-27",
      "word": "торопыш",
-     "imageAsset": null,
+     "imageAsset": "word_toropysh",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wf-27.m4a",
@@ -1981,7 +1999,7 @@
     {
      "id": "sh-wf-28",
      "word": "крепыш",
-     "imageAsset": null,
+     "imageAsset": "word_krepysh",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wf-28.m4a",
@@ -1990,7 +2008,7 @@
     {
      "id": "sh-wf-29",
      "word": "шиш",
-     "imageAsset": null,
+     "imageAsset": "word_shish",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/SH/sh-wf-29.m4a",
@@ -2008,7 +2026,7 @@
     {
      "id": "sh-wf-31",
      "word": "голыш",
-     "imageAsset": null,
+     "imageAsset": "word_golysh",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wf-31.m4a",

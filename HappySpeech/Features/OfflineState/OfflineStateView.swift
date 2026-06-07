@@ -120,12 +120,18 @@ struct OfflineStateView: View {
                 .frame(width: 180, height: 180)
                 .shadow(color: ColorTokens.Overlay.shadow, radius: 18, x: 0, y: 8)
 
-            // wifi.slash icon
-            Image(systemName: "wifi.slash")
-                .font(TypographyTokens.kidDisplay(56))
-                .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
-                .hsSymbolEffect(.pulse, value: viewModel.isRetrying)
-                .offset(y: -8)
+            // Анимированный offline-индикатор (Lottie) с fallback на wifi.slash icon.
+            HSLottieContainer(
+                asset: .emptyOffline,
+                fallback: AnyView(
+                    Image(systemName: "wifi.slash")
+                        .font(TypographyTokens.kidDisplay(56))
+                        .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
+                        .hsSymbolEffect(.pulse, value: viewModel.isRetrying)
+                ),
+                size: CGSize(width: 96, height: 96)
+            )
+            .offset(y: -8)
 
             // Lyalya mascot — sits beside the icon
             // F.tier1 v21: mascot мягче в dark.

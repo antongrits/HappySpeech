@@ -598,13 +598,15 @@
      "id": "s-wi-0",
      "word": "сом",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-0.m4a"
+     "audio_file": "Audio/Content/S/s-wi-0.m4a",
+     "imageAsset": "word_som"
     },
     {
      "id": "s-wi-1",
      "word": "сок",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-1.m4a"
+     "audio_file": "Audio/Content/S/s-wi-1.m4a",
+     "imageAsset": "word_sok"
     },
     {
      "id": "s-wi-2",
@@ -616,122 +618,142 @@
      "id": "s-wi-3",
      "word": "сани",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-3.m4a"
+     "audio_file": "Audio/Content/S/s-wi-3.m4a",
+     "imageAsset": "word_sani"
     },
     {
      "id": "s-wi-4",
      "word": "сова",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-4.m4a"
+     "audio_file": "Audio/Content/S/s-wi-4.m4a",
+     "imageAsset": "word_sova"
     },
     {
      "id": "s-wi-5",
      "word": "сухой",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-5.m4a"
+     "audio_file": "Audio/Content/S/s-wi-5.m4a",
+     "imageAsset": "word_sukhoy"
     },
     {
      "id": "s-wi-6",
      "word": "суп",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-6.m4a"
+     "audio_file": "Audio/Content/S/s-wi-6.m4a",
+     "imageAsset": "word_sup"
     },
     {
      "id": "s-wi-7",
      "word": "сом",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-7.m4a"
+     "audio_file": "Audio/Content/S/s-wi-7.m4a",
+     "imageAsset": "word_som"
     },
     {
      "id": "s-wi-8",
      "word": "сыр",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wi-8.m4a"
+     "audio_file": "Audio/Content/S/s-wi-8.m4a",
+     "imageAsset": "word_syr"
     },
     {
      "id": "s-wi-9",
      "word": "сапог",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-9.m4a"
+     "audio_file": "Audio/Content/S/s-wi-9.m4a",
+     "imageAsset": "word_sapog"
     },
     {
      "id": "s-wi-10",
      "word": "салат",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-10.m4a"
+     "audio_file": "Audio/Content/S/s-wi-10.m4a",
+     "imageAsset": "word_salat"
     },
     {
      "id": "s-wi-11",
      "word": "собака",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-11.m4a"
+     "audio_file": "Audio/Content/S/s-wi-11.m4a",
+     "imageAsset": "word_sobaka"
     },
     {
      "id": "s-wi-12",
      "word": "солнце",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-12.m4a"
+     "audio_file": "Audio/Content/S/s-wi-12.m4a",
+     "imageAsset": "word_solntse"
     },
     {
      "id": "s-wi-13",
      "word": "сарафан",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-13.m4a"
+     "audio_file": "Audio/Content/S/s-wi-13.m4a",
+     "imageAsset": "word_sarafan"
     },
     {
      "id": "s-wi-14",
      "word": "самолёт",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-14.m4a"
+     "audio_file": "Audio/Content/S/s-wi-14.m4a",
+     "imageAsset": "word_samolyot"
     },
     {
      "id": "s-wi-15",
      "word": "салют",
      "difficulty": 3,
      "audio_file": "Audio/Content/S/s-wi-15.m4a",
-     "hint": "Са-лют. [С] в начале."
+     "hint": "Са-лют. [С] в начале.",
+     "imageAsset": "word_salyut"
     },
     {
      "id": "s-wi-16",
      "word": "сахар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-16.m4a"
+     "audio_file": "Audio/Content/S/s-wi-16.m4a",
+     "imageAsset": "word_sakhar"
     },
     {
      "id": "s-wi-17",
      "word": "стол",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-17.m4a"
+     "audio_file": "Audio/Content/S/s-wi-17.m4a",
+     "imageAsset": "word_stol"
     },
     {
      "id": "s-wi-18",
      "word": "стул",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-18.m4a"
+     "audio_file": "Audio/Content/S/s-wi-18.m4a",
+     "imageAsset": "word_stul"
     },
     {
      "id": "s-wi-19",
      "word": "слон",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-19.m4a"
+     "audio_file": "Audio/Content/S/s-wi-19.m4a",
+     "imageAsset": "word_slon"
     },
     {
      "id": "s-wi-20",
      "word": "снег",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-20.m4a"
+     "audio_file": "Audio/Content/S/s-wi-20.m4a",
+     "imageAsset": "word_sneg"
     },
     {
      "id": "s-wi-21",
      "word": "скала",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-21.m4a"
+     "audio_file": "Audio/Content/S/s-wi-21.m4a",
+     "imageAsset": "word_skala"
     },
     {
      "id": "s-wi-22",
      "word": "слива",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-22.m4a"
+     "audio_file": "Audio/Content/S/s-wi-22.m4a",
+     "imageAsset": "word_sliva"
     },
     {
      "id": "s-wi-23",
@@ -743,19 +765,22 @@
      "id": "s-wi-24",
      "word": "самокат",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-24.m4a"
+     "audio_file": "Audio/Content/S/s-wi-24.m4a",
+     "imageAsset": "word_samokat"
     },
     {
      "id": "s-wi-25",
      "word": "светофор",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-25.m4a"
+     "audio_file": "Audio/Content/S/s-wi-25.m4a",
+     "imageAsset": "word_svetofor"
     },
     {
      "id": "s-wi-26",
      "word": "страус",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-26.m4a"
+     "audio_file": "Audio/Content/S/s-wi-26.m4a",
+     "imageAsset": "word_straus"
     },
     {
      "id": "s-wi-27",
@@ -767,151 +792,176 @@
      "id": "s-wi-28",
      "word": "собака",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-28.m4a"
+     "audio_file": "Audio/Content/S/s-wi-28.m4a",
+     "imageAsset": "word_sobaka"
     },
     {
      "id": "s-wi-29",
      "word": "смородина",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-29.m4a"
+     "audio_file": "Audio/Content/S/s-wi-29.m4a",
+     "imageAsset": "word_smorodina"
     },
     {
      "id": "s-wi-30",
      "word": "синий",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-30.m4a"
+     "audio_file": "Audio/Content/S/s-wi-30.m4a",
+     "imageAsset": "word_siniy"
     },
     {
      "id": "s-wi-31",
      "word": "сирень",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-31.m4a"
+     "audio_file": "Audio/Content/S/s-wi-31.m4a",
+     "imageAsset": "word_siren"
     },
     {
      "id": "s-wi-32",
      "word": "сено",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-32.m4a"
+     "audio_file": "Audio/Content/S/s-wi-32.m4a",
+     "imageAsset": "word_seno"
     },
     {
      "id": "s-wi-33",
      "word": "серый",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-33.m4a"
+     "audio_file": "Audio/Content/S/s-wi-33.m4a",
+     "imageAsset": "word_seryy"
     },
     {
      "id": "s-wi-34",
      "word": "сила",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-34.m4a"
+     "audio_file": "Audio/Content/S/s-wi-34.m4a",
+     "imageAsset": "word_sila"
     },
     {
      "id": "s-wi-35",
      "word": "сила",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-35.m4a"
+     "audio_file": "Audio/Content/S/s-wi-35.m4a",
+     "imageAsset": "word_sila"
     },
     {
      "id": "s-wi-36",
      "word": "ситец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-36.m4a"
+     "audio_file": "Audio/Content/S/s-wi-36.m4a",
+     "imageAsset": "word_sitets"
     },
     {
      "id": "s-wi-37",
      "word": "сердце",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-37.m4a"
+     "audio_file": "Audio/Content/S/s-wi-37.m4a",
+     "imageAsset": "word_serdtse"
     },
     {
      "id": "s-wi-38",
      "word": "семья",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-38.m4a"
+     "audio_file": "Audio/Content/S/s-wi-38.m4a",
+     "imageAsset": "word_semya"
     },
     {
      "id": "s-wi-39",
      "word": "семья",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-39.m4a"
+     "audio_file": "Audio/Content/S/s-wi-39.m4a",
+     "imageAsset": "word_semya"
     },
     {
      "id": "s-wi-40",
      "word": "серп",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-40.m4a"
+     "audio_file": "Audio/Content/S/s-wi-40.m4a",
+     "imageAsset": "word_serp"
     },
     {
      "id": "s-wi-41",
      "word": "синица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-41.m4a"
+     "audio_file": "Audio/Content/S/s-wi-41.m4a",
+     "imageAsset": "word_sinitsa"
     },
     {
      "id": "s-wi-42",
      "word": "сельдь",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-42.m4a"
+     "audio_file": "Audio/Content/S/s-wi-42.m4a",
+     "imageAsset": "word_seld"
     },
     {
      "id": "s-wi-43",
      "word": "сетка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-43.m4a"
+     "audio_file": "Audio/Content/S/s-wi-43.m4a",
+     "imageAsset": "word_setka"
     },
     {
      "id": "s-wi-44",
      "word": "стакан",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-44.m4a"
+     "audio_file": "Audio/Content/S/s-wi-44.m4a",
+     "imageAsset": "word_stakan"
     },
     {
      "id": "s-wi-45",
      "word": "ступени",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-45.m4a"
+     "audio_file": "Audio/Content/S/s-wi-45.m4a",
+     "imageAsset": "word_stupeni"
     },
     {
      "id": "s-wi-46",
      "word": "сосна",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-46.m4a"
+     "audio_file": "Audio/Content/S/s-wi-46.m4a",
+     "imageAsset": "word_sosna"
     },
     {
      "id": "s-wi-47",
      "word": "совок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-47.m4a"
+     "audio_file": "Audio/Content/S/s-wi-47.m4a",
+     "imageAsset": "word_sovok"
     },
     {
      "id": "s-wi-48",
      "word": "сугроб",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-48.m4a"
+     "audio_file": "Audio/Content/S/s-wi-48.m4a",
+     "imageAsset": "word_sugrob"
     },
     {
      "id": "s-wi-49",
      "word": "слово",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-49.m4a"
+     "audio_file": "Audio/Content/S/s-wi-49.m4a",
+     "imageAsset": "word_slovo"
     },
     {
      "id": "s-wi-50",
      "word": "список",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-50.m4a"
+     "audio_file": "Audio/Content/S/s-wi-50.m4a",
+     "imageAsset": "word_spisok"
     },
     {
      "id": "s-wi-51",
      "word": "скрипка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-51.m4a"
+     "audio_file": "Audio/Content/S/s-wi-51.m4a",
+     "imageAsset": "word_skripka"
     },
     {
      "id": "s-wi-52",
      "word": "сундук",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-52.m4a"
+     "audio_file": "Audio/Content/S/s-wi-52.m4a",
+     "imageAsset": "word_sunduk"
     },
     {
      "id": "s-wi-53",
@@ -929,202 +979,232 @@
      "id": "s-wi-55",
      "word": "служба",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-55.m4a"
+     "audio_file": "Audio/Content/S/s-wi-55.m4a",
+     "imageAsset": "word_sluzhba"
     },
     {
      "id": "s-wi-56",
      "word": "сметана",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-56.m4a"
+     "audio_file": "Audio/Content/S/s-wi-56.m4a",
+     "imageAsset": "word_smetana"
     },
     {
      "id": "s-wi-57",
      "word": "смешной",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-57.m4a"
+     "audio_file": "Audio/Content/S/s-wi-57.m4a",
+     "imageAsset": "word_smeshnoy"
     },
     {
      "id": "s-wi-58",
      "word": "снежок",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-58.m4a"
+     "audio_file": "Audio/Content/S/s-wi-58.m4a",
+     "imageAsset": "word_snezhok"
     },
     {
      "id": "s-wi-59",
      "word": "стол",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-59.m4a"
+     "audio_file": "Audio/Content/S/s-wi-59.m4a",
+     "imageAsset": "word_stol"
     },
     {
      "id": "s-wi-60",
      "word": "сапожник",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-60.m4a"
+     "audio_file": "Audio/Content/S/s-wi-60.m4a",
+     "imageAsset": "word_sapozhnik"
     },
     {
      "id": "s-wi-61",
      "word": "самокат",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-61.m4a"
+     "audio_file": "Audio/Content/S/s-wi-61.m4a",
+     "imageAsset": "word_samokat"
     },
     {
      "id": "s-wi-62",
      "word": "скворец",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-62.m4a"
+     "audio_file": "Audio/Content/S/s-wi-62.m4a",
+     "imageAsset": "word_skvorets"
     },
     {
      "id": "s-wi-63",
      "word": "солнышко",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-63.m4a"
+     "audio_file": "Audio/Content/S/s-wi-63.m4a",
+     "imageAsset": "word_solnyshko"
     },
     {
      "id": "s-wi-64",
      "word": "стрела",
      "hint": "Стечение СТР — язык строго на позиции С.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-64.m4a"
+     "audio_file": "Audio/Content/S/s-wi-64.m4a",
+     "imageAsset": "word_strela"
     },
     {
      "id": "s-wi-65",
      "word": "стружка",
      "hint": "СТР + Ш — два трудных звука.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-65.m4a"
+     "audio_file": "Audio/Content/S/s-wi-65.m4a",
+     "imageAsset": "word_struzhka"
     },
     {
      "id": "s-wi-66",
      "word": "сплетня",
      "hint": "Стечение СПЛ в начале.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-66.m4a"
+     "audio_file": "Audio/Content/S/s-wi-66.m4a",
+     "imageAsset": "word_spletnya"
     },
     {
      "id": "s-wi-67",
      "word": "скрипка",
      "hint": "СКР — три согласных подряд.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-67.m4a"
+     "audio_file": "Audio/Content/S/s-wi-67.m4a",
+     "imageAsset": "word_skripka"
     },
     {
      "id": "s-wi-68",
      "word": "снегирь",
      "hint": "СН в начале слова.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-68.m4a"
+     "audio_file": "Audio/Content/S/s-wi-68.m4a",
+     "imageAsset": "word_snegir"
     },
     {
      "id": "s-wi-69",
      "word": "смородина",
      "hint": "СМ — губно-зубной + С.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-69.m4a"
+     "audio_file": "Audio/Content/S/s-wi-69.m4a",
+     "imageAsset": "word_smorodina"
     },
     {
      "id": "s-wi-70",
      "word": "стрекоза",
      "hint": "СТР — твёрдое трёхбуквенное стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-70.m4a"
+     "audio_file": "Audio/Content/S/s-wi-70.m4a",
+     "imageAsset": "word_strekoza"
     },
     {
      "id": "s-wi-71",
      "word": "спектакль",
      "hint": "СПЕ — мягкое стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-71.m4a"
+     "audio_file": "Audio/Content/S/s-wi-71.m4a",
+     "imageAsset": "word_spektakl"
     },
     {
      "id": "s-wi-72",
      "word": "скворечник",
      "hint": "СКВ — три согласных + Ч.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/S/s-wi-72.m4a"
+     "audio_file": "Audio/Content/S/s-wi-72.m4a",
+     "imageAsset": "word_skvorechnik"
     },
     {
      "id": "s-wi-73",
      "word": "слабость",
      "hint": "СЛ в начале, -СТЬ на конце.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-73.m4a"
+     "audio_file": "Audio/Content/S/s-wi-73.m4a",
+     "imageAsset": "word_slabost"
     },
     {
      "id": "s-wi-74",
      "word": "сосиска",
      "hint": "СО+СИ+СКА — три слога с С.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-74.m4a"
+     "audio_file": "Audio/Content/S/s-wi-74.m4a",
+     "imageAsset": "word_sosiska"
     },
     {
      "id": "s-wi-75",
      "word": "сугроб",
      "hint": "СУ+ГРО — зимнее слово.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-75.m4a"
+     "audio_file": "Audio/Content/S/s-wi-75.m4a",
+     "imageAsset": "word_sugrob"
     },
     {
      "id": "s-wi-76",
      "word": "стрела",
      "hint": "СТР — стечение трёх согласных.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-76.m4a"
+     "audio_file": "Audio/Content/S/s-wi-76.m4a",
+     "imageAsset": "word_strela"
     },
     {
      "id": "s-wi-77",
      "word": "скала",
      "hint": "СКА — стечение СК.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-77.m4a"
+     "audio_file": "Audio/Content/S/s-wi-77.m4a",
+     "imageAsset": "word_skala"
     },
     {
      "id": "s-wi-78",
      "word": "свисток",
      "hint": "СВИ+СТО+К — два стечения с С.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-78.m4a"
+     "audio_file": "Audio/Content/S/s-wi-78.m4a",
+     "imageAsset": "word_svistok"
     },
     {
      "id": "s-wi-79",
      "word": "страница",
      "hint": "СТР+НИ+ЦА — длинное слово.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-79.m4a"
+     "audio_file": "Audio/Content/S/s-wi-79.m4a",
+     "imageAsset": "word_stranitsa"
     },
     {
      "id": "s-wi-80",
      "word": "сарафан",
      "hint": "СА+РА+ФАН — три слога, С в начале.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wi-80.m4a"
+     "audio_file": "Audio/Content/S/s-wi-80.m4a",
+     "imageAsset": "word_sarafan"
     },
     {
      "id": "s-wi-81",
      "word": "спрятать",
      "hint": "СПР — три согласных вместе.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-81.m4a"
+     "audio_file": "Audio/Content/S/s-wi-81.m4a",
+     "imageAsset": "word_spryatat"
     },
     {
      "id": "s-wi-82",
      "word": "скворец",
      "hint": "СКВ+РЕЦ — сложное стечение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wi-82.m4a"
+     "audio_file": "Audio/Content/S/s-wi-82.m4a",
+     "imageAsset": "word_skvorets"
     },
     {
      "id": "s-wi-83",
      "word": "серебро",
      "hint": "СЕ+РЕ+БРО — мягкий С плюс Р.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-83.m4a"
+     "audio_file": "Audio/Content/S/s-wi-83.m4a",
+     "imageAsset": "word_serebro"
     },
     {
      "id": "s-wi-84",
      "word": "стакан",
      "hint": "СТУ+ДЕН+Т — СТ стечение.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-84.m4a"
+     "audio_file": "Audio/Content/S/s-wi-84.m4a",
+     "imageAsset": "word_stakan"
     },
     {
      "id": "s-wi-85",
@@ -1138,7 +1218,8 @@
      "word": "смелость",
      "hint": "СМЕ+ЛОСТЬ — стечение СМ.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wi-86.m4a"
+     "audio_file": "Audio/Content/S/s-wi-86.m4a",
+     "imageAsset": "word_smelost"
     },
     {
      "id": "s-wi-87",
@@ -1177,79 +1258,92 @@
      "id": "s-wm-0",
      "word": "коса",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wm-0.m4a"
+     "audio_file": "Audio/Content/S/s-wm-0.m4a",
+     "imageAsset": "word_kosa"
     },
     {
      "id": "s-wm-1",
      "word": "оса",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wm-1.m4a"
+     "audio_file": "Audio/Content/S/s-wm-1.m4a",
+     "imageAsset": "word_osa"
     },
     {
      "id": "s-wm-2",
      "word": "весна",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-2.m4a"
+     "audio_file": "Audio/Content/S/s-wm-2.m4a",
+     "imageAsset": "word_vesna"
     },
     {
      "id": "s-wm-3",
      "word": "колесо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-3.m4a"
+     "audio_file": "Audio/Content/S/s-wm-3.m4a",
+     "imageAsset": "word_koleso"
     },
     {
      "id": "s-wm-4",
      "word": "посуда",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-4.m4a"
+     "audio_file": "Audio/Content/S/s-wm-4.m4a",
+     "imageAsset": "word_posuda"
     },
     {
      "id": "s-wm-5",
      "word": "масло",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-5.m4a"
+     "audio_file": "Audio/Content/S/s-wm-5.m4a",
+     "imageAsset": "word_maslo"
     },
     {
      "id": "s-wm-6",
      "word": "письмо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-6.m4a"
+     "audio_file": "Audio/Content/S/s-wm-6.m4a",
+     "imageAsset": "word_pismo"
     },
     {
      "id": "s-wm-7",
      "word": "листок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-7.m4a"
+     "audio_file": "Audio/Content/S/s-wm-7.m4a",
+     "imageAsset": "word_listok"
     },
     {
      "id": "s-wm-8",
      "word": "кастрюля",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-8.m4a"
+     "audio_file": "Audio/Content/S/s-wm-8.m4a",
+     "imageAsset": "word_kastryulya"
     },
     {
      "id": "s-wm-9",
      "word": "ластик",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-9.m4a"
+     "audio_file": "Audio/Content/S/s-wm-9.m4a",
+     "imageAsset": "word_lastik"
     },
     {
      "id": "s-wm-10",
      "word": "бусы",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-10.m4a"
+     "audio_file": "Audio/Content/S/s-wm-10.m4a",
+     "imageAsset": "word_busy"
     },
     {
      "id": "s-wm-11",
      "word": "фасоль",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-11.m4a"
+     "audio_file": "Audio/Content/S/s-wm-11.m4a",
+     "imageAsset": "word_fasol"
     },
     {
      "id": "s-wm-12",
      "word": "осина",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-12.m4a"
+     "audio_file": "Audio/Content/S/s-wm-12.m4a",
+     "imageAsset": "word_osina"
     },
     {
      "id": "s-wm-13",
@@ -1261,7 +1355,8 @@
      "id": "s-wm-14",
      "word": "искра",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-14.m4a"
+     "audio_file": "Audio/Content/S/s-wm-14.m4a",
+     "imageAsset": "word_iskra"
     },
     {
      "id": "s-wm-15",
@@ -1285,37 +1380,43 @@
      "id": "s-wm-18",
      "word": "беседка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-18.m4a"
+     "audio_file": "Audio/Content/S/s-wm-18.m4a",
+     "imageAsset": "word_besedka"
     },
     {
      "id": "s-wm-19",
      "word": "роса",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-19.m4a"
+     "audio_file": "Audio/Content/S/s-wm-19.m4a",
+     "imageAsset": "word_rosa"
     },
     {
      "id": "s-wm-20",
      "word": "бусы",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-20.m4a"
+     "audio_file": "Audio/Content/S/s-wm-20.m4a",
+     "imageAsset": "word_busy"
     },
     {
      "id": "s-wm-21",
      "word": "насос",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-21.m4a"
+     "audio_file": "Audio/Content/S/s-wm-21.m4a",
+     "imageAsset": "word_nasos"
     },
     {
      "id": "s-wm-22",
      "word": "лес",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-22.m4a"
+     "audio_file": "Audio/Content/S/s-wm-22.m4a",
+     "imageAsset": "word_les"
     },
     {
      "id": "s-wm-23",
      "word": "сосуд",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-23.m4a"
+     "audio_file": "Audio/Content/S/s-wm-23.m4a",
+     "imageAsset": "word_sosud"
     },
     {
      "id": "s-wm-24",
@@ -1327,7 +1428,8 @@
      "id": "s-wm-25",
      "word": "усы",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wm-25.m4a"
+     "audio_file": "Audio/Content/S/s-wm-25.m4a",
+     "imageAsset": "word_usy"
     },
     {
      "id": "s-wm-26",
@@ -1339,31 +1441,36 @@
      "id": "s-wm-27",
      "word": "доска",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-27.m4a"
+     "audio_file": "Audio/Content/S/s-wm-27.m4a",
+     "imageAsset": "word_doska"
     },
     {
      "id": "s-wm-28",
      "word": "маска",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-28.m4a"
+     "audio_file": "Audio/Content/S/s-wm-28.m4a",
+     "imageAsset": "word_maska"
     },
     {
      "id": "s-wm-29",
      "word": "маска",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-29.m4a"
+     "audio_file": "Audio/Content/S/s-wm-29.m4a",
+     "imageAsset": "word_maska"
     },
     {
      "id": "s-wm-30",
      "word": "носок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-30.m4a"
+     "audio_file": "Audio/Content/S/s-wm-30.m4a",
+     "imageAsset": "word_nosok"
     },
     {
      "id": "s-wm-31",
      "word": "кусок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-31.m4a"
+     "audio_file": "Audio/Content/S/s-wm-31.m4a",
+     "imageAsset": "word_kusok"
     },
     {
      "id": "s-wm-32",
@@ -1375,25 +1482,29 @@
      "id": "s-wm-33",
      "word": "лисица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-33.m4a"
+     "audio_file": "Audio/Content/S/s-wm-33.m4a",
+     "imageAsset": "word_lisitsa"
     },
     {
      "id": "s-wm-34",
      "word": "василёк",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-34.m4a"
+     "audio_file": "Audio/Content/S/s-wm-34.m4a",
+     "imageAsset": "word_vasilyok"
     },
     {
      "id": "s-wm-35",
      "word": "осень",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-35.m4a"
+     "audio_file": "Audio/Content/S/s-wm-35.m4a",
+     "imageAsset": "word_osen"
     },
     {
      "id": "s-wm-36",
      "word": "сосулька",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-36.m4a"
+     "audio_file": "Audio/Content/S/s-wm-36.m4a",
+     "imageAsset": "word_sosulka"
     },
     {
      "id": "s-wm-37",
@@ -1411,13 +1522,15 @@
      "id": "s-wm-39",
      "word": "пастух",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-39.m4a"
+     "audio_file": "Audio/Content/S/s-wm-39.m4a",
+     "imageAsset": "word_pastukh"
     },
     {
      "id": "s-wm-40",
      "word": "костёр",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-40.m4a"
+     "audio_file": "Audio/Content/S/s-wm-40.m4a",
+     "imageAsset": "word_kostyor"
     },
     {
      "id": "s-wm-41",
@@ -1441,19 +1554,22 @@
      "id": "s-wm-44",
      "word": "честный",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-44.m4a"
+     "audio_file": "Audio/Content/S/s-wm-44.m4a",
+     "imageAsset": "word_chestnyy"
     },
     {
      "id": "s-wm-45",
      "word": "капуста",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-45.m4a"
+     "audio_file": "Audio/Content/S/s-wm-45.m4a",
+     "imageAsset": "word_kapusta"
     },
     {
      "id": "s-wm-46",
      "word": "автобус",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-46.m4a"
+     "audio_file": "Audio/Content/S/s-wm-46.m4a",
+     "imageAsset": "word_avtobus"
     },
     {
      "id": "s-wm-47",
@@ -1465,13 +1581,15 @@
      "id": "s-wm-48",
      "word": "лотос",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-48.m4a"
+     "audio_file": "Audio/Content/S/s-wm-48.m4a",
+     "imageAsset": "word_lotos"
     },
     {
      "id": "s-wm-49",
      "word": "кокос",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-49.m4a"
+     "audio_file": "Audio/Content/S/s-wm-49.m4a",
+     "imageAsset": "word_kokos"
     },
     {
      "id": "s-wm-50",
@@ -1506,7 +1624,8 @@
      "word": "рассвет",
      "hint": "СС → СВ — переход через двойную С.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wm-54.m4a"
+     "audio_file": "Audio/Content/S/s-wm-54.m4a",
+     "imageAsset": "word_rassvet"
     },
     {
      "id": "s-wm-55",
@@ -1520,7 +1639,8 @@
      "word": "нарциссы",
      "hint": "Двойная СС на конце основы.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wm-56.m4a"
+     "audio_file": "Audio/Content/S/s-wm-56.m4a",
+     "imageAsset": "word_nartsissy"
     },
     {
      "id": "s-wm-57",
@@ -1555,21 +1675,24 @@
      "word": "капуста",
      "hint": "Ка-пу-Ста. [С] в середине.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wm-61.m4a"
+     "audio_file": "Audio/Content/S/s-wm-61.m4a",
+     "imageAsset": "word_kapusta"
     },
     {
      "id": "s-wm-62",
      "word": "костёр",
      "hint": "КОС+ТЁР — С в середине.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wm-62.m4a"
+     "audio_file": "Audio/Content/S/s-wm-62.m4a",
+     "imageAsset": "word_kostyor"
     },
     {
      "id": "s-wm-63",
      "word": "паспорт",
      "hint": "ПАС+ПОРТ — С дважды.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-63.m4a"
+     "audio_file": "Audio/Content/S/s-wm-63.m4a",
+     "imageAsset": "word_pasport"
     },
     {
      "id": "s-wm-64",
@@ -1583,21 +1706,24 @@
      "word": "перстень",
      "hint": "ПЕР+СТЕНЬ — РСТ стечение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wm-65.m4a"
+     "audio_file": "Audio/Content/S/s-wm-65.m4a",
+     "imageAsset": "word_persten"
     },
     {
      "id": "s-wm-66",
      "word": "список",
      "hint": "СПИ+СОК — С дважды.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wm-66.m4a"
+     "audio_file": "Audio/Content/S/s-wm-66.m4a",
+     "imageAsset": "word_spisok"
     },
     {
      "id": "s-wm-67",
      "word": "свисать",
      "hint": "СВИ+САТЬ — С дважды.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wm-67.m4a"
+     "audio_file": "Audio/Content/S/s-wm-67.m4a",
+     "imageAsset": "word_svisat"
     },
     {
      "id": "s-wm-68",
@@ -1611,7 +1737,8 @@
      "word": "стрелять",
      "hint": "СТР+ЕЛЯ — трёх-согласное стечение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wm-69.m4a"
+     "audio_file": "Audio/Content/S/s-wm-69.m4a",
+     "imageAsset": "word_strelyat"
     },
     {
      "id": "s-wm-70",
@@ -1695,19 +1822,22 @@
      "id": "s-wf-0",
      "word": "нос",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wf-0.m4a"
+     "audio_file": "Audio/Content/S/s-wf-0.m4a",
+     "imageAsset": "word_nos"
     },
     {
      "id": "s-wf-1",
      "word": "лес",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wf-1.m4a"
+     "audio_file": "Audio/Content/S/s-wf-1.m4a",
+     "imageAsset": "word_les"
     },
     {
      "id": "s-wf-2",
      "word": "лиса",
      "difficulty": 1,
-     "audio_file": "Audio/Content/S/s-wf-2.m4a"
+     "audio_file": "Audio/Content/S/s-wf-2.m4a",
+     "imageAsset": "word_lisa"
     },
     {
      "id": "s-wf-3",
@@ -1719,19 +1849,22 @@
      "id": "s-wf-4",
      "word": "квас",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-4.m4a"
+     "audio_file": "Audio/Content/S/s-wf-4.m4a",
+     "imageAsset": "word_kvas"
     },
     {
      "id": "s-wf-5",
      "word": "кокос",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-5.m4a"
+     "audio_file": "Audio/Content/S/s-wf-5.m4a",
+     "imageAsset": "word_kokos"
     },
     {
      "id": "s-wf-6",
      "word": "автобус",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wf-6.m4a"
+     "audio_file": "Audio/Content/S/s-wf-6.m4a",
+     "imageAsset": "word_avtobus"
     },
     {
      "id": "s-wf-7",
@@ -1743,7 +1876,8 @@
      "id": "s-wf-8",
      "word": "лотос",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wf-8.m4a"
+     "audio_file": "Audio/Content/S/s-wf-8.m4a",
+     "imageAsset": "word_lotos"
     },
     {
      "id": "s-wf-9",
@@ -1755,13 +1889,15 @@
      "id": "s-wf-10",
      "word": "хвост",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-10.m4a"
+     "audio_file": "Audio/Content/S/s-wf-10.m4a",
+     "imageAsset": "word_khvost"
     },
     {
      "id": "s-wf-11",
      "word": "мост",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-11.m4a"
+     "audio_file": "Audio/Content/S/s-wf-11.m4a",
+     "imageAsset": "word_most"
     },
     {
      "id": "s-wf-12",
@@ -1773,14 +1909,16 @@
      "id": "s-wf-13",
      "word": "куст",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-13.m4a"
+     "audio_file": "Audio/Content/S/s-wf-13.m4a",
+     "imageAsset": "word_kust"
     },
     {
      "id": "s-wf-14",
      "word": "ананас",
      "difficulty": 3,
      "audio_file": "Audio/Content/S/s-wf-14.m4a",
-     "hint": "А-на-наС. [С] в конце."
+     "hint": "А-на-наС. [С] в конце.",
+     "imageAsset": "word_ananas"
     },
     {
      "id": "s-wf-15",
@@ -1792,19 +1930,22 @@
      "id": "s-wf-16",
      "word": "бусы",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-16.m4a"
+     "audio_file": "Audio/Content/S/s-wf-16.m4a",
+     "imageAsset": "word_busy"
     },
     {
      "id": "s-wf-17",
      "word": "насос",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-17.m4a"
+     "audio_file": "Audio/Content/S/s-wf-17.m4a",
+     "imageAsset": "word_nasos"
     },
     {
      "id": "s-wf-18",
      "word": "класс",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-18.m4a"
+     "audio_file": "Audio/Content/S/s-wf-18.m4a",
+     "imageAsset": "word_klass"
     },
     {
      "id": "s-wf-19",
@@ -1816,19 +1957,22 @@
      "id": "s-wf-20",
      "word": "гусь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-20.m4a"
+     "audio_file": "Audio/Content/S/s-wf-20.m4a",
+     "imageAsset": "word_gus"
     },
     {
      "id": "s-wf-21",
      "word": "лось",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-21.m4a"
+     "audio_file": "Audio/Content/S/s-wf-21.m4a",
+     "imageAsset": "word_los"
     },
     {
      "id": "s-wf-22",
      "word": "рысь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-22.m4a"
+     "audio_file": "Audio/Content/S/s-wf-22.m4a",
+     "imageAsset": "word_rys"
     },
     {
      "id": "s-wf-23",
@@ -1840,7 +1984,8 @@
      "id": "s-wf-24",
      "word": "кость",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-24.m4a"
+     "audio_file": "Audio/Content/S/s-wf-24.m4a",
+     "imageAsset": "word_kost"
     },
     {
      "id": "s-wf-25",
@@ -1850,15 +1995,18 @@
     },
     {
      "id": "s-wf-26",
-     "word": "ость",
+     "word": "лось",
      "difficulty": 2,
-     "audio_file": "Audio/Content/S/s-wf-26.m4a"
+     "audio_file": "Audio/Content/S/s-wf-26.m4a",
+     "imageAsset": "word_los",
+     "hint": "лоСЬ — звук [С] слышен в конце слова (перед мягким знаком)."
     },
     {
      "id": "s-wf-27",
      "word": "грусть",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wf-27.m4a"
+     "audio_file": "Audio/Content/S/s-wf-27.m4a",
+     "imageAsset": "word_grust"
     },
     {
      "id": "s-wf-28",
@@ -1882,13 +2030,15 @@
      "id": "s-wf-31",
      "word": "радость",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wf-31.m4a"
+     "audio_file": "Audio/Content/S/s-wf-31.m4a",
+     "imageAsset": "word_radost"
     },
     {
      "id": "s-wf-32",
      "word": "скорость",
      "difficulty": 3,
-     "audio_file": "Audio/Content/S/s-wf-32.m4a"
+     "audio_file": "Audio/Content/S/s-wf-32.m4a",
+     "imageAsset": "word_skorost"
     },
     {
      "id": "s-wf-33",
@@ -1912,7 +2062,8 @@
      "id": "s-wf-36",
      "word": "смелость",
      "difficulty": 4,
-     "audio_file": "Audio/Content/S/s-wf-36.m4a"
+     "audio_file": "Audio/Content/S/s-wf-36.m4a",
+     "imageAsset": "word_smelost"
     },
     {
      "id": "s-wf-37",

@@ -526,7 +526,7 @@
     {
      "id": "ch-wi-8",
      "word": "чёрный",
-     "imageAsset": null,
+     "imageAsset": "word_chyornyy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-8.m4a"
@@ -534,7 +534,7 @@
     {
      "id": "ch-wi-9",
      "word": "чистый",
-     "imageAsset": null,
+     "imageAsset": "word_chistyy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-9.m4a"
@@ -542,7 +542,7 @@
     {
      "id": "ch-wi-10",
      "word": "чудак",
-     "imageAsset": null,
+     "imageAsset": "word_chudak",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-10.m4a"
@@ -566,7 +566,7 @@
     {
      "id": "ch-wi-13",
      "word": "четыре",
-     "imageAsset": null,
+     "imageAsset": "word_chetyre",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-13.m4a"
@@ -670,7 +670,7 @@
     {
      "id": "ch-wi-26",
      "word": "чистота",
-     "imageAsset": null,
+     "imageAsset": "word_chistota",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-26.m4a"
@@ -694,7 +694,7 @@
     {
      "id": "ch-wi-29",
      "word": "чесать",
-     "imageAsset": null,
+     "imageAsset": "word_chesat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-29.m4a"
@@ -702,7 +702,7 @@
     {
      "id": "ch-wi-30",
      "word": "чувство",
-     "imageAsset": null,
+     "imageAsset": "word_chuvstvo",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-30.m4a"
@@ -710,7 +710,7 @@
     {
      "id": "ch-wi-31",
      "word": "чудовище",
-     "imageAsset": null,
+     "imageAsset": "word_chudovishche",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-31.m4a"
@@ -718,7 +718,7 @@
     {
      "id": "ch-wi-32",
      "word": "чуткий",
-     "imageAsset": null,
+     "imageAsset": "word_chutkiy",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-32.m4a"
@@ -726,7 +726,7 @@
     {
      "id": "ch-wi-33",
      "word": "чертёж",
-     "imageAsset": null,
+     "imageAsset": "word_chertyozh",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-33.m4a"
@@ -734,7 +734,7 @@
     {
      "id": "ch-wi-34",
      "word": "чиновник",
-     "imageAsset": null,
+     "imageAsset": "word_chinovnik",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wi-34.m4a"
@@ -766,7 +766,7 @@
     {
      "id": "ch-wi-38",
      "word": "чудесный",
-     "imageAsset": null,
+     "imageAsset": "word_chudesnyy",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-38.m4a"
@@ -774,7 +774,7 @@
     {
      "id": "ch-wi-39",
      "word": "числа",
-     "imageAsset": null,
+     "imageAsset": "word_chisla",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-39.m4a"
@@ -782,7 +782,7 @@
     {
      "id": "ch-wi-40",
      "word": "чайная",
-     "imageAsset": null,
+     "imageAsset": "word_chaynaya",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-40.m4a"
@@ -807,7 +807,7 @@
     {
      "id": "ch-wi-43",
      "word": "черновик",
-     "imageAsset": null,
+     "imageAsset": "word_chernovik",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-43.m4a"
@@ -815,7 +815,7 @@
     {
      "id": "ch-wi-44",
      "word": "чашелистик",
-     "imageAsset": null,
+     "imageAsset": "word_chashelistik",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wi-44.m4a"
@@ -823,7 +823,7 @@
     {
      "id": "ch-wi-45",
      "word": "чудачка",
-     "imageAsset": null,
+     "imageAsset": "word_chudachka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-45.m4a"
@@ -831,7 +831,7 @@
     {
      "id": "ch-wi-46",
      "word": "чудотворный",
-     "imageAsset": null,
+     "imageAsset": "word_chudotvornyy",
      "audioAsset": null,
      "difficulty": 5,
      "audio_file": "Audio/Content/CH/ch-wi-46.m4a"
@@ -839,7 +839,7 @@
     {
      "id": "ch-wi-47",
      "word": "чернозём",
-     "imageAsset": null,
+     "imageAsset": "word_chernozyom",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-47.m4a"
@@ -847,7 +847,7 @@
     {
      "id": "ch-wi-48",
      "word": "чертополох",
-     "imageAsset": null,
+     "imageAsset": "word_chertopolokh",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wi-48.m4a"
@@ -855,7 +855,7 @@
     {
      "id": "ch-wi-49",
      "word": "чистоплотный",
-     "imageAsset": null,
+     "imageAsset": "word_chistoplotnyy",
      "audioAsset": null,
      "difficulty": 5,
      "audio_file": "Audio/Content/CH/ch-wi-49.m4a"
@@ -880,7 +880,7 @@
     {
      "id": "ch-wi-52",
      "word": "чабрец",
-     "imageAsset": null,
+     "imageAsset": "word_chabrets",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-52.m4a"
@@ -888,7 +888,7 @@
     {
      "id": "ch-wi-53",
      "word": "чайная",
-     "imageAsset": null,
+     "imageAsset": "word_chaynaya",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-53.m4a"
@@ -896,7 +896,7 @@
     {
      "id": "ch-wi-54",
      "word": "чаще",
-     "imageAsset": null,
+     "imageAsset": "word_chashche",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-54.m4a"
@@ -904,7 +904,7 @@
     {
      "id": "ch-wi-55",
      "word": "чернеть",
-     "imageAsset": null,
+     "imageAsset": "word_chernet",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wi-55.m4a"
@@ -912,7 +912,7 @@
     {
      "id": "ch-wi-56",
      "word": "честный",
-     "imageAsset": null,
+     "imageAsset": "word_chestnyy",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-56.m4a"
@@ -920,7 +920,7 @@
     {
      "id": "ch-wi-57",
      "word": "чихать",
-     "imageAsset": null,
+     "imageAsset": "word_chikhat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-57.m4a"
@@ -928,7 +928,7 @@
     {
      "id": "ch-wi-58",
      "word": "чирикать",
-     "imageAsset": null,
+     "imageAsset": "word_chirikat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-58.m4a"
@@ -936,7 +936,7 @@
     {
      "id": "ch-wi-59",
      "word": "чудак",
-     "imageAsset": null,
+     "imageAsset": "word_chudak",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wi-59.m4a"
@@ -946,14 +946,16 @@
      "word": "чревовещатель",
      "hint": "ЧРЕ + ЩА — Ч + трёхсложное стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-60.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-60.m4a",
+     "imageAsset": "word_chrevoveshchatel"
     },
     {
      "id": "ch-wi-61",
      "word": "чрезмерный",
      "hint": "ЧРЕ + ЗМ — сложная начальная группа.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-61.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-61.m4a",
+     "imageAsset": "word_chrezmernyy"
     },
     {
      "id": "ch-wi-62",
@@ -967,119 +969,136 @@
      "word": "чтобы",
      "hint": "ЧТО — функциональное слово с Ч.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Ch/ch-wi-63.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-63.m4a",
+     "imageAsset": "word_chtoby"
     },
     {
      "id": "ch-wi-64",
      "word": "чмокать",
      "hint": "ЧМО — Ч + носовой.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-64.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-64.m4a",
+     "imageAsset": "word_chmokat"
     },
     {
      "id": "ch-wi-65",
      "word": "чернила",
      "hint": "ЧЕ + РН — Ч + сонорный + носовой.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-65.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-65.m4a",
+     "imageAsset": "word_chernila"
     },
     {
      "id": "ch-wi-66",
      "word": "чернозём",
      "hint": "ЧЕ + РН + ЗЁМ — три звуковых группы.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-66.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-66.m4a",
+     "imageAsset": "word_chernozyom"
     },
     {
      "id": "ch-wi-67",
      "word": "чистоплотный",
      "hint": "ЧИС + ТОП + ЛОТ — длинное слово с Ч.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-67.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-67.m4a",
+     "imageAsset": "word_chistoplotnyy"
     },
     {
      "id": "ch-wi-68",
      "word": "чемпион",
      "hint": "ЧЕМ + ПИО — Ч в спортивной теме.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Ch/ch-wi-68.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-68.m4a",
+     "imageAsset": "word_chempion"
     },
     {
      "id": "ch-wi-69",
      "word": "чёрный",
      "hint": "ЧЁ + РН — Ч с мягким контекстом.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-69.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-69.m4a",
+     "imageAsset": "word_chyornyy"
     },
     {
      "id": "ch-wi-70",
      "word": "чулан",
      "hint": "Чу-лан. [Ч] в начале.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Ch/ch-wi-70.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-70.m4a",
+     "imageAsset": "word_chulan"
     },
     {
      "id": "ch-wi-71",
      "word": "чибис",
      "hint": "Чи-бис. [Ч] в начале.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Ch/ch-wi-71.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-71.m4a",
+     "imageAsset": "word_chibis"
     },
     {
      "id": "ch-wi-72",
      "word": "чудовище",
      "hint": "ЧУ+ДО+ВИ+ЩЕ — сказочный герой.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-72.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-72.m4a",
+     "imageAsset": "word_chudovishche"
     },
     {
      "id": "ch-wi-73",
      "word": "чиновник",
      "hint": "ЧИ+НОВ+НИК — служащий.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-73.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-73.m4a",
+     "imageAsset": "word_chinovnik"
     },
     {
      "id": "ch-wi-74",
      "word": "численность",
      "hint": "ЧИС+ЛЕН+НОСТЬ — количество.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-74.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-74.m4a",
+     "imageAsset": "word_chislennost"
     },
     {
      "id": "ch-wi-75",
      "word": "чистота",
      "hint": "ЧИС+ТО+ТА — порядок.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Ch/ch-wi-75.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-75.m4a",
+     "imageAsset": "word_chistota"
     },
     {
      "id": "ch-wi-76",
      "word": "чувствительный",
      "hint": "ЧУВ+СТВИ+ТЕЛЬ+НЫЙ — очень длинное прилагательное с Ч.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Ch/ch-wi-76.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-76.m4a",
+     "imageAsset": "word_chuvstvitelnyy"
     },
     {
      "id": "ch-wi-77",
      "word": "чернослив",
      "hint": "ЧЕР+НО+СЛИВ — сухофрукт.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Ch/ch-wi-77.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-77.m4a",
+     "imageAsset": "word_chernosliv"
     },
     {
      "id": "ch-wi-78",
      "word": "четверть",
      "hint": "ЧЕТ+ВЕРТЬ — часть целого.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Ch/ch-wi-78.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-78.m4a",
+     "imageAsset": "word_chetvert"
     },
     {
      "id": "ch-wi-79",
      "word": "чечевица",
      "hint": "ЧЕ+ЧЕ+ВИ+ЦА — бобовое растение, Ч дважды.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Ch/ch-wi-79.m4a"
+     "audio_file": "Audio/Content/Ch/ch-wi-79.m4a",
+     "imageAsset": "word_chechevitsa"
     },
     {
      "id": "ch-wi-80",
@@ -1114,7 +1133,7 @@
     {
      "id": "ch-wm-0",
      "word": "тучка",
-     "imageAsset": null,
+     "imageAsset": "word_tuchka",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wm-0.m4a"
@@ -1202,7 +1221,7 @@
     {
      "id": "ch-wm-11",
      "word": "задача",
-     "imageAsset": null,
+     "imageAsset": "word_zadacha",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-11.m4a"
@@ -1210,7 +1229,7 @@
     {
      "id": "ch-wm-12",
      "word": "удача",
-     "imageAsset": null,
+     "imageAsset": "word_udacha",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-12.m4a"
@@ -1291,7 +1310,7 @@
     {
      "id": "ch-wm-22",
      "word": "дачка",
-     "imageAsset": null,
+     "imageAsset": "word_dachka",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-22.m4a"
@@ -1307,7 +1326,7 @@
     {
      "id": "ch-wm-24",
      "word": "дача",
-     "imageAsset": null,
+     "imageAsset": "word_dacha",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-24.m4a",
@@ -1325,7 +1344,7 @@
     {
      "id": "ch-wm-26",
      "word": "лечить",
-     "imageAsset": null,
+     "imageAsset": "word_lechit",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-26.m4a"
@@ -1389,7 +1408,7 @@
     {
      "id": "ch-wm-34",
      "word": "значение",
-     "imageAsset": null,
+     "imageAsset": "word_znachenie",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wm-34.m4a"
@@ -1405,7 +1424,7 @@
     {
      "id": "ch-wm-36",
      "word": "печать",
-     "imageAsset": null,
+     "imageAsset": "word_pechat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-36.m4a"
@@ -1429,7 +1448,7 @@
     {
      "id": "ch-wm-39",
      "word": "читать",
-     "imageAsset": null,
+     "imageAsset": "word_chitat",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-39.m4a"
@@ -1437,7 +1456,7 @@
     {
      "id": "ch-wm-40",
      "word": "мяч",
-     "imageAsset": null,
+     "imageAsset": "word_myach",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wm-40.m4a"
@@ -1445,7 +1464,7 @@
     {
      "id": "ch-wm-41",
      "word": "источник",
-     "imageAsset": null,
+     "imageAsset": "word_istochnik",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wm-41.m4a"
@@ -1551,7 +1570,7 @@
     {
      "id": "ch-wm-54",
      "word": "качалка",
-     "imageAsset": null,
+     "imageAsset": "word_kachalka",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wm-54.m4a"
@@ -1566,11 +1585,12 @@
     },
     {
      "id": "ch-wm-56",
-     "word": "ачкастый",
+     "word": "очкастый",
      "imageAsset": null,
      "audioAsset": null,
      "difficulty": 3,
-     "audio_file": "Audio/Content/CH/ch-wm-56.m4a"
+     "audio_file": "Audio/Content/CH/ch-wm-56.m4a",
+     "hint": "оЧКастый — звук [Ч] слышен в середине слова."
     },
     {
      "id": "ch-wm-57",
@@ -1981,7 +2001,7 @@
     {
      "id": "ch-wf-4",
      "word": "ночь",
-     "imageAsset": null,
+     "imageAsset": "word_noch",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wf-4.m4a"
@@ -1989,7 +2009,7 @@
     {
      "id": "ch-wf-5",
      "word": "дочь",
-     "imageAsset": null,
+     "imageAsset": "word_doch",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wf-5.m4a"
@@ -1997,7 +2017,7 @@
     {
      "id": "ch-wf-6",
      "word": "печь",
-     "imageAsset": null,
+     "imageAsset": "word_pech",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wf-6.m4a"
@@ -2085,7 +2105,7 @@
     {
      "id": "ch-wf-17",
      "word": "кулич",
-     "imageAsset": null,
+     "imageAsset": "word_kulich",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wf-17.m4a",
@@ -2094,7 +2114,7 @@
     {
      "id": "ch-wf-18",
      "word": "кирпич",
-     "imageAsset": null,
+     "imageAsset": "word_kirpich",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wf-18.m4a",
@@ -2103,7 +2123,7 @@
     {
      "id": "ch-wf-19",
      "word": "грач",
-     "imageAsset": null,
+     "imageAsset": "word_grach",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-19.m4a",
@@ -2129,7 +2149,7 @@
     {
      "id": "ch-wf-22",
      "word": "задача",
-     "imageAsset": null,
+     "imageAsset": "word_zadacha",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-22.m4a"
@@ -2137,7 +2157,7 @@
     {
      "id": "ch-wf-23",
      "word": "удача",
-     "imageAsset": null,
+     "imageAsset": "word_udacha",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-23.m4a"
@@ -2161,7 +2181,7 @@
     {
      "id": "ch-wf-26",
      "word": "тучка",
-     "imageAsset": null,
+     "imageAsset": "word_tuchka",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wf-26.m4a"
@@ -2169,7 +2189,7 @@
     {
      "id": "ch-wf-27",
      "word": "сургуч",
-     "imageAsset": null,
+     "imageAsset": "word_surguch",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-27.m4a",
@@ -2186,7 +2206,7 @@
     {
      "id": "ch-wf-29",
      "word": "силач",
-     "imageAsset": null,
+     "imageAsset": "word_silach",
      "audioAsset": null,
      "difficulty": 4,
      "audio_file": "Audio/Content/CH/ch-wf-29.m4a",
@@ -2195,7 +2215,7 @@
     {
      "id": "ch-wf-30",
      "word": "мяч",
-     "imageAsset": null,
+     "imageAsset": "word_myach",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/CH/ch-wf-30.m4a"
@@ -2227,7 +2247,7 @@
     {
      "id": "ch-wf-34",
      "word": "врач",
-     "imageAsset": null,
+     "imageAsset": "word_vrach",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wf-34.m4a"
@@ -2235,7 +2255,7 @@
     {
      "id": "ch-wf-35",
      "word": "скрипач",
-     "imageAsset": null,
+     "imageAsset": "word_skripach",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/CH/ch-wf-35.m4a",
@@ -2244,7 +2264,7 @@
     {
      "id": "ch-wf-36",
      "word": "трубач",
-     "imageAsset": null,
+     "imageAsset": "word_trubach",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-36.m4a",
@@ -2253,7 +2273,7 @@
     {
      "id": "ch-wf-37",
      "word": "москвич",
-     "imageAsset": null,
+     "imageAsset": "word_moskvich",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-37.m4a",
@@ -2262,7 +2282,7 @@
     {
      "id": "ch-wf-38",
      "word": "ткач",
-     "imageAsset": null,
+     "imageAsset": "word_tkach",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-38.m4a",
@@ -2271,7 +2291,7 @@
     {
      "id": "ch-wf-39",
      "word": "трюкач",
-     "imageAsset": null,
+     "imageAsset": "word_tryukach",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/CH/ch-wf-39.m4a",

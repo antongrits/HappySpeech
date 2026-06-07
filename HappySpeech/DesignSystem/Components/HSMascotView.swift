@@ -45,12 +45,6 @@ public extension MascotMood {
     /// Маппинг MascotMood → имя 2D-иллюстрации в Assets.xcassets/Illustrations/.
     /// idle → sleep (ближайший аналог покоя; lyalya_idle отсутствует).
     /// encouraging → wave (жест поддержки совпадает с wave-иллюстрацией).
-    ///
-    /// Block I v19: mascot_lyalya_listen удалён из маппинга — этот ассет содержит
-    /// персонажа с другим арт-стилем (медведеобразный, голубые глаза, без антенн),
-    /// несовместимым с остальными 2D иллюстрациями Ляли. Заменён на mascot_lyalya_happy.
-    /// mascot_lyalya_listen остаётся в Assets как legacy — не удаляем, чтобы не сломать
-    /// content-ссылки, но в маппинге не используется.
     var illustrationName: String {
         switch self {
         case .idle:        return "mascot_lyalya_sleep"

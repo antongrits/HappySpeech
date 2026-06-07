@@ -9,10 +9,17 @@
 
 ## Статус коллекции
 
-- **Всего Lottie-файлов:** 58 (≥ 23 required by Block N v18)
+- **Всего Lottie-файлов:** 41 (Tutorials 8 + Celebrations 13 + EmptyStates 10 + Loaders 10)
 - **Procedural python-lottie:** 0 (verified `meta.generator` distribution)
 - **HSLottieView рендер:** airbnb/lottie-ios 4.5.0 native API (см. `DesignSystem/Components/HSLottieContainer.swift`)
-- **Размер:** ~4.3 MB (бюджет 30 MB)
+- **Подключение:** все файлы зарегистрированы в `HSLottieAsset` (Celebrations/EmptyStates/Loaders)
+  и в туториал-загрузке (Tutorials) — 0 неиспользуемых.
+- **Размер:** ~4.0 MB (бюджет 30 MB)
+
+> Cleanup 2026-06-07: удалены неподключённые подпапки `Transitions/` (10) и
+> `MicroInteractions/` (5) — SwiftUI-переходы и микро-взаимодействия реализованы нативно
+> (symbolEffect/haptics/transition), Lottie-дубли не нужны. Удалены 2 сезонные celebration
+> (`celebrate_birthday`, `celebrate_winter_holiday`) — нет точки подключения.
 
 ### Разбивка по generator (top-level `meta.g`)
 
@@ -50,13 +57,12 @@ python-lottie генерация отсутствует.
 | `pose-sequence.json` | Pose Sequence | NO_META |
 | `sound-and-face.json` | Sound and Face | NO_META |
 
-### Celebrations (15) — `Resources/Animations/Celebrations/`
+### Celebrations (13) — `Resources/Animations/Celebrations/`
 
-celebrate_3_stars, celebrate_5_stars, celebrate_birthday, celebrate_collection_complete,
+celebrate_3_stars, celebrate_5_stars, celebrate_collection_complete,
 celebrate_daily_goal, celebrate_first_session, celebrate_level_up, celebrate_new_friend,
 celebrate_new_island_unlocked, celebrate_perfect_round, celebrate_perfect_word,
-celebrate_streak_milestone, celebrate_unlock_achievement, celebrate_weekly_goal,
-celebrate_winter_holiday.
+celebrate_streak_milestone, celebrate_unlock_achievement, celebrate_weekly_goal.
 
 ### Empty States (10) — `Resources/Animations/EmptyStates/`
 
@@ -69,17 +75,6 @@ empty_search_no_results.
 loader_ai_thinking, loader_audio_processing, loader_download_progress,
 loader_generating_report, loader_initializing, loader_loading_lessons, loader_searching,
 loader_syncing, loader_uploading, loader_voice_recording.
-
-### MicroInteractions (5) — `Resources/Animations/MicroInteractions/`
-
-micro_button_hover, micro_error_shake, micro_heart_beat, micro_success_checkmark,
-micro_tap_ripple.
-
-### Transitions (10) — `Resources/Animations/Transitions/`
-
-transition_award_reveal, transition_modal_in, transition_modal_out, transition_page_in,
-transition_page_out, transition_screen_entry, transition_screen_exit,
-transition_session_end, transition_session_start, transition_unlock.
 
 ---
 

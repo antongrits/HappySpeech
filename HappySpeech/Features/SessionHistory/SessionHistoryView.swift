@@ -621,9 +621,10 @@ struct SessionHistoryView: View {
         // Маскот выражает контекст: thinking — фильтр пуст, explaining — нет сессий.
         let isFilterEmpty = display.emptyKind == .noResultsForFilter
         HSEmptyStateView(
-            mascot: isFilterEmpty ? .thinking : .explaining,
+            lottie: isFilterEmpty ? .emptySearchNoResults : .emptyNoHistory,
+            fallbackSymbol: isFilterEmpty ? "line.3.horizontal.decrease.circle" : "clock.arrow.circlepath",
             title: display.emptyTitle,
-            subtitle: display.emptyMessage,
+            message: display.emptyMessage,
             actionTitle: isFilterEmpty
                 ? String(localized: "sessionHistory.empty.cta.clear")
                 : String(localized: "sessionHistory.empty.cta.start"),

@@ -145,7 +145,7 @@
     {
      "id": "dssh-pair-1",
      "word": "косы — кошки",
-     "imageAsset": "word_nos|word_nozh",
+     "imageAsset": "word_kosa|word_koshka",
      "audioAsset": null,
      "hint": "Косы — причёски; кошки — зверьки. С или Ш?",
      "difficulty": 2,
@@ -154,7 +154,7 @@
     {
      "id": "dssh-pair-2",
      "word": "сутки — шутки",
-     "imageAsset": "word_sila|word_shilo",
+     "imageAsset": null,
      "audioAsset": null,
      "hint": "Сутки — день и ночь; шутки — смеёмся. С или Ш?",
      "difficulty": 3,

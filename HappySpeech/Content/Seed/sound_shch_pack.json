@@ -486,7 +486,7 @@
     {
      "id": "shch-wi-3",
      "word": "щель",
-     "imageAsset": null,
+     "imageAsset": "word_shchel",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SHCH/shch-wi-3.m4a"
@@ -654,7 +654,7 @@
     {
      "id": "shch-wi-24",
      "word": "щебёнка",
-     "imageAsset": null,
+     "imageAsset": "word_shchebyonka",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wi-24.m4a"
@@ -838,7 +838,7 @@
     {
      "id": "shch-wi-47",
      "word": "щетина",
-     "imageAsset": null,
+     "imageAsset": "word_shchetina",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wi-47.m4a"
@@ -957,7 +957,7 @@
     {
      "id": "shch-wm-10",
      "word": "ящик",
-     "imageAsset": null,
+     "imageAsset": "word_yashchik",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wm-10.m4a"
@@ -1133,7 +1133,7 @@
     {
      "id": "shch-wm-32",
      "word": "трещина",
-     "imageAsset": null,
+     "imageAsset": "word_treshchina",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wm-32.m4a",
@@ -1262,7 +1262,7 @@
     {
      "id": "shch-wm-48",
      "word": "угощение",
-     "imageAsset": null,
+     "imageAsset": "word_ugoshchenie",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wm-48.m4a",
@@ -1271,7 +1271,7 @@
     {
      "id": "shch-wm-49",
      "word": "площадка",
-     "imageAsset": null,
+     "imageAsset": "word_ploshchadka",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wm-49.m4a"
@@ -1365,7 +1365,7 @@
     {
      "id": "shch-wf-9",
      "word": "хвощ",
-     "imageAsset": null,
+     "imageAsset": "word_khvoshch",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-9.m4a",
@@ -1374,7 +1374,7 @@
     {
      "id": "shch-wf-10",
      "word": "борщ",
-     "imageAsset": null,
+     "imageAsset": "word_borshch",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-10.m4a",
@@ -1391,7 +1391,7 @@
     {
      "id": "shch-wf-12",
      "word": "овощ",
-     "imageAsset": null,
+     "imageAsset": "word_ovoshch",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wf-12.m4a",
@@ -1400,7 +1400,7 @@
     {
      "id": "shch-wf-13",
      "word": "плющик",
-     "imageAsset": null,
+     "imageAsset": "word_plyushchik",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-13.m4a",
@@ -1449,7 +1449,7 @@
     {
      "id": "shch-wf-19",
      "word": "прыщик",
-     "imageAsset": null,
+     "imageAsset": "word_pryshchik",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SHCH/shch-wf-19.m4a",
@@ -1466,7 +1466,7 @@
     {
      "id": "shch-wf-21",
      "word": "хрящ",
-     "imageAsset": null,
+     "imageAsset": "word_khryashch",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-21.m4a"
@@ -1482,7 +1482,7 @@
     {
      "id": "shch-wf-23",
      "word": "трещотка",
-     "imageAsset": null,
+     "imageAsset": "word_treshchotka",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-23.m4a",
@@ -1491,7 +1491,7 @@
     {
      "id": "shch-wf-24",
      "word": "клещ",
-     "imageAsset": null,
+     "imageAsset": "word_kleshch",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SHCH/shch-wf-24.m4a"
@@ -1515,7 +1515,7 @@
     {
      "id": "shch-wf-27",
      "word": "плащ",
-     "imageAsset": null,
+     "imageAsset": "word_plashch",
      "audioAsset": null,
      "difficulty": 1,
      "audio_file": "Audio/Content/SHCH/shch-wf-27.m4a"

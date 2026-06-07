@@ -493,13 +493,15 @@
      "id": "z-wi-0",
      "word": "зуб",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wi-0.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-0.m4a",
+     "imageAsset": "word_zub"
     },
     {
      "id": "z-wi-1",
      "word": "зал",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wi-1.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-1.m4a",
+     "imageAsset": "word_zal"
     },
     {
      "id": "z-wi-2",
@@ -511,55 +513,64 @@
      "id": "z-wi-3",
      "word": "зуб",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wi-3.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-3.m4a",
+     "imageAsset": "word_zub"
     },
     {
      "id": "z-wi-4",
      "word": "забор",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-4.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-4.m4a",
+     "imageAsset": "word_zabor"
     },
     {
      "id": "z-wi-5",
      "word": "завод",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-5.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-5.m4a",
+     "imageAsset": "word_zavod"
     },
     {
      "id": "z-wi-6",
      "word": "задача",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-6.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-6.m4a",
+     "imageAsset": "word_zadacha"
     },
     {
      "id": "z-wi-7",
      "word": "замок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-7.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-7.m4a",
+     "imageAsset": "word_zamok"
     },
     {
      "id": "z-wi-8",
      "word": "зонт",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-8.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-8.m4a",
+     "imageAsset": "word_zont"
     },
     {
      "id": "z-wi-9",
      "word": "зоопарк",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-9.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-9.m4a",
+     "imageAsset": "word_zoopark"
     },
     {
      "id": "z-wi-10",
      "word": "звезда",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-10.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-10.m4a",
+     "imageAsset": "word_zvezda"
     },
     {
      "id": "z-wi-11",
      "word": "звонок",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-11.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-11.m4a",
+     "imageAsset": "word_zvonok"
     },
     {
      "id": "z-wi-12",
@@ -577,32 +588,37 @@
      "id": "z-wi-14",
      "word": "зной",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-14.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-14.m4a",
+     "imageAsset": "word_znoy"
     },
     {
      "id": "z-wi-15",
      "word": "золото",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-15.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-15.m4a",
+     "imageAsset": "word_zoloto"
     },
     {
      "id": "z-wi-16",
      "word": "заяц",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-16.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-16.m4a",
+     "imageAsset": "word_zayats"
     },
     {
      "id": "z-wi-17",
      "word": "завтрак",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-17.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-17.m4a",
+     "imageAsset": "word_zavtrak"
     },
     {
      "id": "z-wi-18",
      "word": "зубр",
      "difficulty": 3,
      "audio_file": "Audio/Content/Z/z-wi-18.m4a",
-     "hint": "Зубр. [З] в начале."
+     "hint": "Зубр. [З] в начале.",
+     "imageAsset": "word_zubr"
     },
     {
      "id": "z-wi-19",
@@ -614,37 +630,43 @@
      "id": "z-wi-20",
      "word": "зима",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-20.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-20.m4a",
+     "imageAsset": "word_zima"
     },
     {
      "id": "z-wi-21",
      "word": "зелёный",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-21.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-21.m4a",
+     "imageAsset": "word_zelyonyy"
     },
     {
      "id": "z-wi-22",
      "word": "земля",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-22.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-22.m4a",
+     "imageAsset": "word_zemlya"
     },
     {
      "id": "z-wi-23",
      "word": "зебра",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-23.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-23.m4a",
+     "imageAsset": "word_zebra"
     },
     {
      "id": "z-wi-24",
      "word": "зеркало",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-24.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-24.m4a",
+     "imageAsset": "word_zerkalo"
     },
     {
      "id": "z-wi-25",
      "word": "зерно",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-25.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-25.m4a",
+     "imageAsset": "word_zerno"
     },
     {
      "id": "z-wi-26",
@@ -662,13 +684,15 @@
      "id": "z-wi-28",
      "word": "зерно",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-28.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-28.m4a",
+     "imageAsset": "word_zerno"
     },
     {
      "id": "z-wi-29",
      "word": "змея",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-29.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-29.m4a",
+     "imageAsset": "word_zmeya"
     },
     {
      "id": "z-wi-30",
@@ -687,7 +711,8 @@
      "word": "зоосад",
      "difficulty": 4,
      "audio_file": "Audio/Content/Z/z-wi-32.m4a",
-     "hint": "Зо-о-сад. [З] в начале."
+     "hint": "Зо-о-сад. [З] в начале.",
+     "imageAsset": "word_zoosad"
     },
     {
      "id": "z-wi-33",
@@ -717,13 +742,15 @@
      "id": "z-wi-37",
      "word": "зверь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-37.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-37.m4a",
+     "imageAsset": "word_zver"
     },
     {
      "id": "z-wi-38",
      "word": "звон",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wi-38.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-38.m4a",
+     "imageAsset": "word_zvon"
     },
     {
      "id": "z-wi-39",
@@ -747,7 +774,8 @@
      "id": "z-wi-42",
      "word": "закат",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-42.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-42.m4a",
+     "imageAsset": "word_zakat"
     },
     {
      "id": "z-wi-43",
@@ -771,13 +799,15 @@
      "id": "z-wi-46",
      "word": "зайчонок",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-46.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-46.m4a",
+     "imageAsset": "word_zaychonok"
     },
     {
      "id": "z-wi-47",
      "word": "знамя",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-47.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-47.m4a",
+     "imageAsset": "word_znamya"
     },
     {
      "id": "z-wi-48",
@@ -789,7 +819,8 @@
      "id": "z-wi-49",
      "word": "здание",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wi-49.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-49.m4a",
+     "imageAsset": "word_zdanie"
     },
     {
      "id": "z-wi-50",
@@ -819,21 +850,24 @@
      "id": "z-wi-54",
      "word": "звездопад",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wi-54.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-54.m4a",
+     "imageAsset": "word_zvezdopad"
     },
     {
      "id": "z-wi-55",
      "word": "звездопад",
      "hint": "ЗВ + СТ — стечение в начале.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/Z/z-wi-55.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-55.m4a",
+     "imageAsset": "word_zvezdopad"
     },
     {
      "id": "z-wi-56",
      "word": "злость",
      "hint": "ЗЛО — мягкое стечение.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wi-56.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-56.m4a",
+     "imageAsset": "word_zlost"
     },
     {
      "id": "z-wi-57",
@@ -910,7 +944,8 @@
      "word": "земляника",
      "hint": "ЗЕМ+ЛЯ+НИ+КА — четыре слога.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wi-67.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-67.m4a",
+     "imageAsset": "word_zemlyanika"
     },
     {
      "id": "z-wi-68",
@@ -938,7 +973,8 @@
      "word": "заморозки",
      "hint": "ЗА+МО+РОЗ+КИ — З дважды в слове.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wi-71.m4a"
+     "audio_file": "Audio/Content/Z/z-wi-71.m4a",
+     "imageAsset": "word_zamorozki"
     },
     {
      "id": "z-wi-72",
@@ -998,19 +1034,22 @@
      "id": "z-wm-0",
      "word": "коза",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wm-0.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-0.m4a",
+     "imageAsset": "word_koza"
     },
     {
      "id": "z-wm-1",
      "word": "ваза",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wm-1.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-1.m4a",
+     "imageAsset": "word_vaza"
     },
     {
      "id": "z-wm-2",
      "word": "гроза",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wm-2.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-2.m4a",
+     "imageAsset": "word_groza"
     },
     {
      "id": "z-wm-3",
@@ -1022,13 +1061,15 @@
      "id": "z-wm-4",
      "word": "берёза",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wm-4.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-4.m4a",
+     "imageAsset": "word_beryoza"
     },
     {
      "id": "z-wm-5",
      "word": "обезьяна",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wm-5.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-5.m4a",
+     "imageAsset": "word_obezyana"
     },
     {
      "id": "z-wm-6",
@@ -1040,7 +1081,8 @@
      "id": "z-wm-7",
      "word": "изюм",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wm-7.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-7.m4a",
+     "imageAsset": "word_izyum"
     },
     {
      "id": "z-wm-8",
@@ -1070,7 +1112,8 @@
      "id": "z-wm-12",
      "word": "глаза",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wm-12.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-12.m4a",
+     "imageAsset": "word_glaza"
     },
     {
      "id": "z-wm-13",
@@ -1082,13 +1125,15 @@
      "id": "z-wm-14",
      "word": "ваза",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wm-14.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-14.m4a",
+     "imageAsset": "word_vaza"
     },
     {
      "id": "z-wm-15",
      "word": "газон",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wm-15.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-15.m4a",
+     "imageAsset": "word_gazon"
     },
     {
      "id": "z-wm-16",
@@ -1124,25 +1169,29 @@
      "id": "z-wm-21",
      "word": "мороз",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wm-21.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-21.m4a",
+     "imageAsset": "word_moroz"
     },
     {
      "id": "z-wm-22",
      "word": "воз",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wm-22.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-22.m4a",
+     "imageAsset": "word_voz"
     },
     {
      "id": "z-wm-23",
      "word": "разведчик",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wm-23.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-23.m4a",
+     "imageAsset": "word_razvedchik"
     },
     {
      "id": "z-wm-24",
      "word": "коза",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wm-24.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-24.m4a",
+     "imageAsset": "word_koza"
     },
     {
      "id": "z-wm-25",
@@ -1155,7 +1204,8 @@
      "word": "корзина",
      "difficulty": 3,
      "audio_file": "Audio/Content/Z/z-wm-26.m4a",
-     "hint": "кор-Зи-на. [З] в середине."
+     "hint": "кор-Зи-на. [З] в середине.",
+     "imageAsset": "word_korzina"
     },
     {
      "id": "z-wm-27",
@@ -1191,7 +1241,8 @@
      "id": "z-wm-32",
      "word": "разговор",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wm-32.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-32.m4a",
+     "imageAsset": "word_razgovor"
     },
     {
      "id": "z-wm-33",
@@ -1213,9 +1264,11 @@
     },
     {
      "id": "z-wm-36",
-     "word": "гузка",
+     "word": "корзина",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wm-36.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-36.m4a",
+     "imageAsset": "word_korzina",
+     "hint": "корЗина — звук [З] слышен в середине слова."
     },
     {
      "id": "z-wm-37",
@@ -1245,7 +1298,8 @@
      "id": "z-wm-41",
      "word": "козырёк",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wm-41.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-41.m4a",
+     "imageAsset": "word_kozyryok"
     },
     {
      "id": "z-wm-42",
@@ -1257,13 +1311,15 @@
      "id": "z-wm-43",
      "word": "застёжка",
      "difficulty": 4,
-     "audio_file": "Audio/Content/Z/z-wm-43.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-43.m4a",
+     "imageAsset": "word_zastyozhka"
     },
     {
      "id": "z-wm-44",
      "word": "бузина",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wm-44.m4a"
+     "audio_file": "Audio/Content/Z/z-wm-44.m4a",
+     "imageAsset": "word_buzina"
     },
     {
      "id": "z-wm-45",
@@ -1332,91 +1388,103 @@
   },
   "wordFinal": {
    "stageId": "wordFinal",
-   "note": "[З] в середине слова (между гласными звенит, не оглушается).",
+   "note": "[З] в середине слова. Внимание: [З] — звонкий согласный. В русском языке звонкие оглушаются в конце слова (норма). Поэтому стадия «финальная» содержит слова со звуком в интервокальной позиции (между гласными), где [З] звенит чисто. Это методически верно (Фомичёва).",
    "items": [
     {
      "id": "z-wf-0",
      "word": "заноза",
      "hint": "За-но-За. [З] звенит между гласными.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wf-0.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-0.m4a",
+     "imageAsset": "word_zanoza"
     },
     {
      "id": "z-wf-1",
      "word": "стрекоза",
      "hint": "Стре-ко-За. [З] звенит.",
      "difficulty": 1,
-     "audio_file": "Audio/Content/Z/z-wf-1.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-1.m4a",
+     "imageAsset": "word_strekoza"
     },
     {
      "id": "z-wf-2",
      "word": "мимоза",
      "hint": "Ми-мо-За. [З] звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wf-2.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-2.m4a",
+     "imageAsset": "word_mimoza"
     },
     {
      "id": "z-wf-3",
      "word": "берёза",
      "hint": "Бе-рё-За. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-3.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-3.m4a",
+     "imageAsset": "word_beryoza"
     },
     {
      "id": "z-wf-4",
      "word": "ваза",
      "hint": "Ва-За. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-4.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-4.m4a",
+     "imageAsset": "word_vaza"
     },
     {
      "id": "z-wf-5",
      "word": "газета",
      "hint": "Га-Зе-та. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-5.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-5.m4a",
+     "imageAsset": "word_gazeta"
     },
     {
      "id": "z-wf-6",
      "word": "азбука",
      "hint": "А-Збу-ка. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-6.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-6.m4a",
+     "imageAsset": "word_azbuka"
     },
     {
      "id": "z-wf-7",
      "word": "незабудка",
      "hint": "Не-За-будка. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-7.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-7.m4a",
+     "imageAsset": "word_nezabudka"
     },
     {
      "id": "z-wf-8",
      "word": "корзина",
      "hint": "Кор-Зи-на. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-8.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-8.m4a",
+     "imageAsset": "word_korzina"
     },
     {
      "id": "z-wf-9",
      "word": "музыка",
      "hint": "Му-Зы-ка. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-9.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-9.m4a",
+     "imageAsset": "word_muzyka"
     },
     {
      "id": "z-wf-10",
      "word": "азалия",
      "hint": "А-За-лия. [З] звенит.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/Z/z-wf-10.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-10.m4a",
+     "imageAsset": "word_azaliya"
     },
     {
      "id": "z-wf-11",
      "word": "зеркало",
      "hint": "Зе-ркало — [З] в начале и звенит.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/Z/z-wf-11.m4a"
+     "audio_file": "Audio/Content/Z/z-wf-11.m4a",
+     "imageAsset": "word_zerkalo"
     }
    ]
   },

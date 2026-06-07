@@ -407,7 +407,8 @@
      "id": "kh-wi-0",
      "word": "хижина",
      "difficulty": 1,
-     "audio_file": "Audio/Content/KH/kh-wi-0.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-0.m4a",
+     "imageAsset": "word_khizhina"
     },
     {
      "id": "kh-wi-1",
@@ -425,7 +426,8 @@
      "id": "kh-wi-3",
      "word": "хобот",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wi-3.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-3.m4a",
+     "imageAsset": "word_khobot"
     },
     {
      "id": "kh-wi-4",
@@ -461,19 +463,22 @@
      "id": "kh-wi-9",
      "word": "хвост",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wi-9.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-9.m4a",
+     "imageAsset": "word_khvost"
     },
     {
      "id": "kh-wi-10",
      "word": "хвоя",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wi-10.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-10.m4a",
+     "imageAsset": "word_khvoya"
     },
     {
      "id": "kh-wi-11",
      "word": "художник",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wi-11.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-11.m4a",
+     "imageAsset": "word_khudozhnik"
     },
     {
      "id": "kh-wi-12",
@@ -485,13 +490,15 @@
      "id": "kh-wi-13",
      "word": "храм",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wi-13.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-13.m4a",
+     "imageAsset": "word_khram"
     },
     {
      "id": "kh-wi-14",
      "word": "хризантема",
      "difficulty": 4,
-     "audio_file": "Audio/Content/KH/kh-wi-14.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-14.m4a",
+     "imageAsset": "word_khrizantema"
     },
     {
      "id": "kh-wi-15",
@@ -521,7 +528,8 @@
      "id": "kh-wi-19",
      "word": "хижина",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wi-19.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-19.m4a",
+     "imageAsset": "word_khizhina"
     },
     {
      "id": "kh-wi-20",
@@ -569,7 +577,8 @@
      "id": "kh-wi-27",
      "word": "халат",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wi-27.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-27.m4a",
+     "imageAsset": "word_khalat"
     },
     {
      "id": "kh-wi-28",
@@ -587,7 +596,8 @@
      "id": "kh-wi-30",
      "word": "хохлатка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wi-30.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-30.m4a",
+     "imageAsset": "word_khokhlatka"
     },
     {
      "id": "kh-wi-31",
@@ -605,7 +615,8 @@
      "id": "kh-wi-33",
      "word": "хворост",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wi-33.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-33.m4a",
+     "imageAsset": "word_khvorost"
     },
     {
      "id": "kh-wi-34",
@@ -617,7 +628,8 @@
      "id": "kh-wi-35",
      "word": "хмель",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wi-35.m4a"
+     "audio_file": "Audio/Content/KH/kh-wi-35.m4a",
+     "imageAsset": "word_khmel"
     },
     {
      "id": "kh-wi-36",
@@ -661,19 +673,22 @@
      "id": "kh-wm-0",
      "word": "ухо",
      "difficulty": 1,
-     "audio_file": "Audio/Content/KH/kh-wm-0.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-0.m4a",
+     "imageAsset": "word_ukho"
     },
     {
      "id": "kh-wm-1",
      "word": "ухо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-1.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-1.m4a",
+     "imageAsset": "word_ukho"
     },
     {
      "id": "kh-wm-2",
      "word": "петух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-2.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-2.m4a",
+     "imageAsset": "word_petukh"
     },
     {
      "id": "kh-wm-3",
@@ -683,15 +698,18 @@
     },
     {
      "id": "kh-wm-4",
-     "word": "лёхи",
+     "word": "сахар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-4.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-4.m4a",
+     "imageAsset": "word_sakhar",
+     "hint": "саХар — звук [Х] слышен в середине слова."
     },
     {
      "id": "kh-wm-5",
      "word": "духи",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-5.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-5.m4a",
+     "imageAsset": "word_dukhi"
     },
     {
      "id": "kh-wm-6",
@@ -703,13 +721,15 @@
      "id": "kh-wm-7",
      "word": "горох",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-7.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-7.m4a",
+     "imageAsset": "word_gorokh"
     },
     {
      "id": "kh-wm-8",
      "word": "мох",
      "difficulty": 1,
-     "audio_file": "Audio/Content/KH/kh-wm-8.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-8.m4a",
+     "imageAsset": "word_mokh"
     },
     {
      "id": "kh-wm-9",
@@ -745,7 +765,8 @@
      "id": "kh-wm-14",
      "word": "орех",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wm-14.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-14.m4a",
+     "imageAsset": "word_orekh"
     },
     {
      "id": "kh-wm-15",
@@ -775,19 +796,22 @@
      "id": "kh-wm-19",
      "word": "рубаха",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wm-19.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-19.m4a",
+     "imageAsset": "word_rubakha"
     },
     {
      "id": "kh-wm-20",
      "word": "лопух",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wm-20.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-20.m4a",
+     "imageAsset": "word_lopukh"
     },
     {
      "id": "kh-wm-21",
      "word": "черепаха",
      "difficulty": 4,
-     "audio_file": "Audio/Content/KH/kh-wm-21.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-21.m4a",
+     "imageAsset": "word_cherepakha"
     },
     {
      "id": "kh-wm-22",
@@ -805,7 +829,8 @@
      "id": "kh-wm-24",
      "word": "монах",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wm-24.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-24.m4a",
+     "imageAsset": "word_monakh"
     },
     {
      "id": "kh-wm-25",
@@ -823,13 +848,15 @@
      "id": "kh-wm-27",
      "word": "охотник",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wm-27.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-27.m4a",
+     "imageAsset": "word_okhotnik"
     },
     {
      "id": "kh-wm-28",
      "word": "пастух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-28.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-28.m4a",
+     "imageAsset": "word_pastukh"
     },
     {
      "id": "kh-wm-29",
@@ -847,7 +874,8 @@
      "id": "kh-wm-31",
      "word": "сухой",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wm-31.m4a"
+     "audio_file": "Audio/Content/KH/kh-wm-31.m4a",
+     "imageAsset": "word_sukhoy"
     },
     {
      "id": "kh-wm-32",
@@ -987,7 +1015,8 @@
      "id": "kh-wf-0",
      "word": "мох",
      "difficulty": 1,
-     "audio_file": "Audio/Content/KH/kh-wf-0.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-0.m4a",
+     "imageAsset": "word_mokh"
     },
     {
      "id": "kh-wf-1",
@@ -999,7 +1028,8 @@
      "id": "kh-wf-2",
      "word": "пух",
      "difficulty": 1,
-     "audio_file": "Audio/Content/KH/kh-wf-2.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-2.m4a",
+     "imageAsset": "word_pukh"
     },
     {
      "id": "kh-wf-3",
@@ -1035,44 +1065,51 @@
      "id": "kh-wf-8",
      "word": "лопух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-8.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-8.m4a",
+     "imageAsset": "word_lopukh"
     },
     {
      "id": "kh-wf-9",
      "word": "петух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-9.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-9.m4a",
+     "imageAsset": "word_petukh"
     },
     {
      "id": "kh-wf-10",
      "word": "монах",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wf-10.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-10.m4a",
+     "imageAsset": "word_monakh"
     },
     {
      "id": "kh-wf-11",
      "word": "горох",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-11.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-11.m4a",
+     "imageAsset": "word_gorokh"
     },
     {
      "id": "kh-wf-12",
      "word": "ворох",
      "difficulty": 3,
-     "audio_file": "Audio/Content/KH/kh-wf-12.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-12.m4a",
+     "imageAsset": "word_vorokh"
     },
     {
      "id": "kh-wf-13",
      "word": "черепаха",
      "difficulty": 4,
-     "audio_file": "Audio/Content/KH/kh-wf-13.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-13.m4a",
+     "imageAsset": "word_cherepakha"
     },
     {
      "id": "kh-wf-14",
      "word": "эпоха",
      "difficulty": 4,
      "audio_file": "Audio/Content/KH/kh-wf-14.m4a",
-     "hint": "э-по-Ха. [Х] в слове."
+     "hint": "э-по-Ха. [Х] в слове.",
+     "imageAsset": "word_epokha"
     },
     {
      "id": "kh-wf-15",
@@ -1091,13 +1128,15 @@
      "id": "kh-wf-17",
      "word": "смех",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-17.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-17.m4a",
+     "imageAsset": "word_smekh"
     },
     {
      "id": "kh-wf-18",
      "word": "орех",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-18.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-18.m4a",
+     "imageAsset": "word_orekh"
     },
     {
      "id": "kh-wf-19",
@@ -1109,32 +1148,37 @@
      "id": "kh-wf-20",
      "word": "пастух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-20.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-20.m4a",
+     "imageAsset": "word_pastukh"
     },
     {
      "id": "kh-wf-21",
      "word": "альманах",
      "difficulty": 3,
      "audio_file": "Audio/Content/KH/kh-wf-21.m4a",
-     "hint": "аль-ма-наХ. [Х] в конце."
+     "hint": "аль-ма-наХ. [Х] в конце.",
+     "imageAsset": "word_almanakh"
     },
     {
      "id": "kh-wf-22",
      "word": "воздух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-22.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-22.m4a",
+     "imageAsset": "word_vozdukh"
     },
     {
      "id": "kh-wf-23",
      "word": "лопух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-23.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-23.m4a",
+     "imageAsset": "word_lopukh"
     },
     {
      "id": "kh-wf-24",
      "word": "пастух",
      "difficulty": 2,
-     "audio_file": "Audio/Content/KH/kh-wf-24.m4a"
+     "audio_file": "Audio/Content/KH/kh-wf-24.m4a",
+     "imageAsset": "word_pastukh"
     },
     {
      "id": "kh-wf-25",

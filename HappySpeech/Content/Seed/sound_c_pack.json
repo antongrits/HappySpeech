@@ -428,55 +428,64 @@
      "id": "c-wi-0",
      "word": "цапля",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-0.m4a"
+     "audio_file": "Audio/Content/C/c-wi-0.m4a",
+     "imageAsset": "word_tsaplya"
     },
     {
      "id": "c-wi-1",
      "word": "цветок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-1.m4a"
+     "audio_file": "Audio/Content/C/c-wi-1.m4a",
+     "imageAsset": "word_tsvetok"
     },
     {
      "id": "c-wi-2",
      "word": "цветок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-2.m4a"
+     "audio_file": "Audio/Content/C/c-wi-2.m4a",
+     "imageAsset": "word_tsvetok"
     },
     {
      "id": "c-wi-3",
      "word": "цена",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-3.m4a"
+     "audio_file": "Audio/Content/C/c-wi-3.m4a",
+     "imageAsset": "word_tsena"
     },
     {
      "id": "c-wi-4",
      "word": "цепь",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-4.m4a"
+     "audio_file": "Audio/Content/C/c-wi-4.m4a",
+     "imageAsset": "word_tsep"
     },
     {
      "id": "c-wi-5",
      "word": "цирк",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-5.m4a"
+     "audio_file": "Audio/Content/C/c-wi-5.m4a",
+     "imageAsset": "word_tsirk"
     },
     {
      "id": "c-wi-6",
      "word": "цифра",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-6.m4a"
+     "audio_file": "Audio/Content/C/c-wi-6.m4a",
+     "imageAsset": "word_tsifra"
     },
     {
      "id": "c-wi-7",
      "word": "цыплёнок",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-7.m4a"
+     "audio_file": "Audio/Content/C/c-wi-7.m4a",
+     "imageAsset": "word_tsyplyonok"
     },
     {
      "id": "c-wi-8",
      "word": "цыпочки",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-8.m4a"
+     "audio_file": "Audio/Content/C/c-wi-8.m4a",
+     "imageAsset": "word_tsypochki"
     },
     {
      "id": "c-wi-9",
@@ -488,7 +497,8 @@
      "id": "c-wi-10",
      "word": "центр",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-10.m4a"
+     "audio_file": "Audio/Content/C/c-wi-10.m4a",
+     "imageAsset": "word_tsentr"
     },
     {
      "id": "c-wi-11",
@@ -506,7 +516,8 @@
      "id": "c-wi-13",
      "word": "цукат",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-13.m4a"
+     "audio_file": "Audio/Content/C/c-wi-13.m4a",
+     "imageAsset": "word_tsukat"
     },
     {
      "id": "c-wi-14",
@@ -550,13 +561,15 @@
      "id": "c-wi-20",
      "word": "цепочка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-20.m4a"
+     "audio_file": "Audio/Content/C/c-wi-20.m4a",
+     "imageAsset": "word_tsepochka"
     },
     {
      "id": "c-wi-21",
      "word": "царапина",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-21.m4a"
+     "audio_file": "Audio/Content/C/c-wi-21.m4a",
+     "imageAsset": "word_tsarapina"
     },
     {
      "id": "c-wi-22",
@@ -593,13 +606,15 @@
      "id": "c-wi-27",
      "word": "цистерна",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-27.m4a"
+     "audio_file": "Audio/Content/C/c-wi-27.m4a",
+     "imageAsset": "word_tsisterna"
     },
     {
      "id": "c-wi-28",
      "word": "циферблат",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-28.m4a"
+     "audio_file": "Audio/Content/C/c-wi-28.m4a",
+     "imageAsset": "word_tsiferblat"
     },
     {
      "id": "c-wi-29",
@@ -641,7 +656,8 @@
      "id": "c-wi-35",
      "word": "цыган",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wi-35.m4a"
+     "audio_file": "Audio/Content/C/c-wi-35.m4a",
+     "imageAsset": "word_tsygan"
     },
     {
      "id": "c-wi-36",
@@ -659,7 +675,8 @@
      "id": "c-wi-38",
      "word": "цирюльник",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-38.m4a"
+     "audio_file": "Audio/Content/C/c-wi-38.m4a",
+     "imageAsset": "word_tsiryulnik"
     },
     {
      "id": "c-wi-39",
@@ -671,13 +688,15 @@
      "id": "c-wi-40",
      "word": "цирюльник",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-40.m4a"
+     "audio_file": "Audio/Content/C/c-wi-40.m4a",
+     "imageAsset": "word_tsiryulnik"
     },
     {
      "id": "c-wi-41",
      "word": "цепочка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wi-41.m4a"
+     "audio_file": "Audio/Content/C/c-wi-41.m4a",
+     "imageAsset": "word_tsepochka"
     },
     {
      "id": "c-wi-42",
@@ -696,13 +715,15 @@
      "word": "циркуль",
      "difficulty": 3,
      "audio_file": "Audio/Content/C/c-wi-44.m4a",
-     "hint": "Цир-куль. [Ц] в начале."
+     "hint": "Цир-куль. [Ц] в начале.",
+     "imageAsset": "word_tsirkul"
     },
     {
      "id": "c-wi-45",
      "word": "цистерна",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wi-45.m4a"
+     "audio_file": "Audio/Content/C/c-wi-45.m4a",
+     "imageAsset": "word_tsisterna"
     },
     {
      "id": "c-wi-46",
@@ -738,19 +759,22 @@
      "id": "c-wm-0",
      "word": "яйцо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wm-0.m4a"
+     "audio_file": "Audio/Content/C/c-wm-0.m4a",
+     "imageAsset": "word_yaytso"
     },
     {
      "id": "c-wm-1",
      "word": "кольцо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wm-1.m4a"
+     "audio_file": "Audio/Content/C/c-wm-1.m4a",
+     "imageAsset": "word_koltso"
     },
     {
      "id": "c-wm-2",
      "word": "лицо",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wm-2.m4a"
+     "audio_file": "Audio/Content/C/c-wm-2.m4a",
+     "imageAsset": "word_litso"
     },
     {
      "id": "c-wm-3",
@@ -763,49 +787,57 @@
      "word": "колодец",
      "difficulty": 2,
      "audio_file": "Audio/Content/C/c-wm-4.m4a",
-     "hint": "Ко-ло-деЦ. [Ц] в слове."
+     "hint": "Ко-ло-деЦ. [Ц] в слове.",
+     "imageAsset": "word_kolodets"
     },
     {
      "id": "c-wm-5",
      "word": "овца",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wm-5.m4a"
+     "audio_file": "Audio/Content/C/c-wm-5.m4a",
+     "imageAsset": "word_ovtsa"
     },
     {
      "id": "c-wm-6",
      "word": "блюдце",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-6.m4a"
+     "audio_file": "Audio/Content/C/c-wm-6.m4a",
+     "imageAsset": "word_blyudtse"
     },
     {
      "id": "c-wm-7",
      "word": "крыльцо",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-7.m4a"
+     "audio_file": "Audio/Content/C/c-wm-7.m4a",
+     "imageAsset": "word_kryltso"
     },
     {
      "id": "c-wm-8",
      "word": "сердце",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-8.m4a"
+     "audio_file": "Audio/Content/C/c-wm-8.m4a",
+     "imageAsset": "word_serdtse"
     },
     {
      "id": "c-wm-9",
      "word": "огурец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-9.m4a"
+     "audio_file": "Audio/Content/C/c-wm-9.m4a",
+     "imageAsset": "word_ogurets"
     },
     {
      "id": "c-wm-10",
      "word": "певец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-10.m4a"
+     "audio_file": "Audio/Content/C/c-wm-10.m4a",
+     "imageAsset": "word_pevets"
     },
     {
      "id": "c-wm-11",
      "word": "танец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-11.m4a"
+     "audio_file": "Audio/Content/C/c-wm-11.m4a",
+     "imageAsset": "word_tanets"
     },
     {
      "id": "c-wm-12",
@@ -841,7 +873,8 @@
      "id": "c-wm-17",
      "word": "дворец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-17.m4a"
+     "audio_file": "Audio/Content/C/c-wm-17.m4a",
+     "imageAsset": "word_dvorets"
     },
     {
      "id": "c-wm-18",
@@ -851,69 +884,81 @@
     },
     {
      "id": "c-wm-19",
-     "word": "лесница",
+     "word": "лестница",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-19.m4a"
+     "audio_file": "Audio/Content/C/c-wm-19.m4a",
+     "imageAsset": "word_lestnitsa",
+     "hint": "лесТниЦа — звук [Ц] в середине слова."
     },
     {
      "id": "c-wm-20",
      "word": "улица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-20.m4a"
+     "audio_file": "Audio/Content/C/c-wm-20.m4a",
+     "imageAsset": "word_ulitsa"
     },
     {
      "id": "c-wm-21",
      "word": "курица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-21.m4a"
+     "audio_file": "Audio/Content/C/c-wm-21.m4a",
+     "imageAsset": "word_kuritsa"
     },
     {
      "id": "c-wm-22",
      "word": "пуговица",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-22.m4a"
+     "audio_file": "Audio/Content/C/c-wm-22.m4a",
+     "imageAsset": "word_pugovitsa"
     },
     {
      "id": "c-wm-23",
      "word": "столица",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-23.m4a"
+     "audio_file": "Audio/Content/C/c-wm-23.m4a",
+     "imageAsset": "word_stolitsa"
     },
     {
      "id": "c-wm-24",
      "word": "граница",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-24.m4a"
+     "audio_file": "Audio/Content/C/c-wm-24.m4a",
+     "imageAsset": "word_granitsa"
     },
     {
      "id": "c-wm-25",
      "word": "станция",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-25.m4a"
+     "audio_file": "Audio/Content/C/c-wm-25.m4a",
+     "imageAsset": "word_stantsiya"
     },
     {
      "id": "c-wm-26",
      "word": "акция",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-26.m4a"
+     "audio_file": "Audio/Content/C/c-wm-26.m4a",
+     "imageAsset": "word_aktsiya"
     },
     {
      "id": "c-wm-27",
      "word": "лисица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-27.m4a"
+     "audio_file": "Audio/Content/C/c-wm-27.m4a",
+     "imageAsset": "word_lisitsa"
     },
     {
      "id": "c-wm-28",
      "word": "синица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-28.m4a"
+     "audio_file": "Audio/Content/C/c-wm-28.m4a",
+     "imageAsset": "word_sinitsa"
     },
     {
      "id": "c-wm-29",
      "word": "страница",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-29.m4a"
+     "audio_file": "Audio/Content/C/c-wm-29.m4a",
+     "imageAsset": "word_stranitsa"
     },
     {
      "id": "c-wm-30",
@@ -925,32 +970,37 @@
      "id": "c-wm-31",
      "word": "умница",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-31.m4a"
+     "audio_file": "Audio/Content/C/c-wm-31.m4a",
+     "imageAsset": "word_umnitsa"
     },
     {
      "id": "c-wm-32",
      "word": "пшеница",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-32.m4a"
+     "audio_file": "Audio/Content/C/c-wm-32.m4a",
+     "imageAsset": "word_pshenitsa"
     },
     {
      "id": "c-wm-33",
      "word": "рукавица",
      "difficulty": 4,
-     "audio_file": "Audio/Content/C/c-wm-33.m4a"
+     "audio_file": "Audio/Content/C/c-wm-33.m4a",
+     "imageAsset": "word_rukavitsa"
     },
     {
      "id": "c-wm-34",
      "word": "певица",
      "difficulty": 3,
      "audio_file": "Audio/Content/C/c-wm-34.m4a",
-     "hint": "Пе-ви-Ца. [Ц] в середине."
+     "hint": "Пе-ви-Ца. [Ц] в середине.",
+     "imageAsset": "word_pevitsa"
     },
     {
      "id": "c-wm-35",
      "word": "пуговица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-35.m4a"
+     "audio_file": "Audio/Content/C/c-wm-35.m4a",
+     "imageAsset": "word_pugovitsa"
     },
     {
      "id": "c-wm-36",
@@ -962,13 +1012,15 @@
      "id": "c-wm-37",
      "word": "больница",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-37.m4a"
+     "audio_file": "Audio/Content/C/c-wm-37.m4a",
+     "imageAsset": "word_bolnitsa"
     },
     {
      "id": "c-wm-38",
      "word": "тигрица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wm-38.m4a"
+     "audio_file": "Audio/Content/C/c-wm-38.m4a",
+     "imageAsset": "word_tigritsa"
     },
     {
      "id": "c-wm-39",
@@ -1013,7 +1065,8 @@
      "id": "c-wf-0",
      "word": "отец",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wf-0.m4a"
+     "audio_file": "Audio/Content/C/c-wf-0.m4a",
+     "imageAsset": "word_otets"
     },
     {
      "id": "c-wf-1",
@@ -1025,13 +1078,15 @@
      "id": "c-wf-2",
      "word": "пловец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-2.m4a"
+     "audio_file": "Audio/Content/C/c-wf-2.m4a",
+     "imageAsset": "word_plovets"
     },
     {
      "id": "c-wf-3",
      "word": "певец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-3.m4a"
+     "audio_file": "Audio/Content/C/c-wf-3.m4a",
+     "imageAsset": "word_pevets"
     },
     {
      "id": "c-wf-4",
@@ -1079,7 +1134,8 @@
      "id": "c-wf-11",
      "word": "огурец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-11.m4a"
+     "audio_file": "Audio/Content/C/c-wf-11.m4a",
+     "imageAsset": "word_ogurets"
     },
     {
      "id": "c-wf-12",
@@ -1091,7 +1147,8 @@
      "id": "c-wf-13",
      "word": "дворец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-13.m4a"
+     "audio_file": "Audio/Content/C/c-wf-13.m4a",
+     "imageAsset": "word_dvorets"
     },
     {
      "id": "c-wf-14",
@@ -1107,9 +1164,11 @@
     },
     {
      "id": "c-wf-16",
-     "word": "леец",
+     "word": "певец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-16.m4a"
+     "audio_file": "Audio/Content/C/c-wf-16.m4a",
+     "imageAsset": null,
+     "hint": "певеЦ — звук [Ц] слышен в конце слова."
     },
     {
      "id": "c-wf-17",
@@ -1151,7 +1210,8 @@
      "id": "c-wf-23",
      "word": "скворец",
      "difficulty": 3,
-     "audio_file": "Audio/Content/C/c-wf-23.m4a"
+     "audio_file": "Audio/Content/C/c-wf-23.m4a",
+     "imageAsset": "word_skvorets"
     },
     {
      "id": "c-wf-24",
@@ -1169,7 +1229,8 @@
      "id": "c-wf-26",
      "word": "пловец",
      "difficulty": 2,
-     "audio_file": "Audio/Content/C/c-wf-26.m4a"
+     "audio_file": "Audio/Content/C/c-wf-26.m4a",
+     "imageAsset": "word_plovets"
     },
     {
      "id": "c-wf-27",

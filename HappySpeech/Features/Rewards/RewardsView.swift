@@ -160,6 +160,18 @@ struct RewardsView: View {
                     .transition(.opacity)
                 }
             }
+            .overlay {
+                // Lottie-салют поверх unlock-оверлея (под Reduced Motion скрыт).
+                if unlockOverlay != nil, !reduceMotion {
+                    HSLottieContainer(
+                        asset: .celebrateUnlockAchievement,
+                        fallback: AnyView(EmptyView()),
+                        size: CGSize(width: 260, height: 260)
+                    )
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
@@ -373,11 +385,12 @@ struct RewardsView: View {
     @ViewBuilder
     private var contentSection: some View {
         if display.isEmpty {
-            // G.1 v17 — kid-контур: маскот Ляля вместо SF Symbol.
+            // kid-контур: анимированный Lottie empty-state «нет наград».
             HSEmptyStateView(
-                mascot: .encouraging,
+                lottie: .emptyNoRewards,
+                fallbackSymbol: "gift",
                 title: display.emptyTitle,
-                subtitle: display.emptyMessage
+                message: display.emptyMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {

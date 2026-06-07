@@ -185,6 +185,18 @@ struct SessionCompleteView: View {
                 .allowsHitTesting(false)
                 .zIndex(12)
                 .accessibilityHidden(true)
+
+            // Lottie-салют по числу звёзд (под Reduced Motion — не показываем, как и конфетти).
+            if confettiVisible, !reduceMotion {
+                HSLottieContainer(
+                    asset: celebrationAsset,
+                    fallback: AnyView(EmptyView()),
+                    size: CGSize(width: 280, height: 280)
+                )
+                .allowsHitTesting(false)
+                .zIndex(13)
+                .accessibilityHidden(true)
+            }
         }
         .navigationBarBackButtonHidden()
         // Fix #15e — на SessionComplete просвечивал системный tab bar
@@ -221,6 +233,15 @@ struct SessionCompleteView: View {
             // count-up не стартует. Запускаем его при появлении кольца счёта.
             guard phase >= .scoreReveal, animatedScore == 0, display.scoreInt > 0 else { return }
             animateScoreCountUp(to: display.scoreInt)
+        }
+    }
+
+    /// Подбирает Lottie-салют по числу заработанных звёзд.
+    private var celebrationAsset: HSLottieAsset {
+        switch display.starsEarned {
+        case 3...: return .celebrate3Stars
+        case 2:    return .celebratePerfectRound
+        default:   return .celebrateFirstSession
         }
     }
 

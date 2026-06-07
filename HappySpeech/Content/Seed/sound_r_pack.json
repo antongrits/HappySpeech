@@ -732,43 +732,50 @@
      "id": "r-wi-0",
      "word": "рак",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-0.m4a"
+     "audio_file": "Audio/Content/R/r-wi-0.m4a",
+     "imageAsset": "word_rak"
     },
     {
      "id": "r-wi-1",
      "word": "рот",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-1.m4a"
+     "audio_file": "Audio/Content/R/r-wi-1.m4a",
+     "imageAsset": "word_rot"
     },
     {
      "id": "r-wi-2",
      "word": "рот",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-2.m4a"
+     "audio_file": "Audio/Content/R/r-wi-2.m4a",
+     "imageAsset": "word_rot"
     },
     {
      "id": "r-wi-3",
      "word": "рог",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-3.m4a"
+     "audio_file": "Audio/Content/R/r-wi-3.m4a",
+     "imageAsset": "word_rog"
     },
     {
      "id": "r-wi-4",
      "word": "рожь",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-4.m4a"
+     "audio_file": "Audio/Content/R/r-wi-4.m4a",
+     "imageAsset": "word_rozh"
     },
     {
      "id": "r-wi-5",
      "word": "рысь",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-5.m4a"
+     "audio_file": "Audio/Content/R/r-wi-5.m4a",
+     "imageAsset": "word_rys"
     },
     {
      "id": "r-wi-6",
      "word": "рыба",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-6.m4a"
+     "audio_file": "Audio/Content/R/r-wi-6.m4a",
+     "imageAsset": "word_ryba"
     },
     {
      "id": "r-wi-7",
@@ -780,7 +787,8 @@
      "id": "r-wi-8",
      "word": "рама",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-8.m4a"
+     "audio_file": "Audio/Content/R/r-wi-8.m4a",
+     "imageAsset": "word_rama"
     },
     {
      "id": "r-wi-9",
@@ -792,7 +800,8 @@
      "id": "r-wi-10",
      "word": "рыба",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-10.m4a"
+     "audio_file": "Audio/Content/R/r-wi-10.m4a",
+     "imageAsset": "word_ryba"
     },
     {
      "id": "r-wi-11",
@@ -804,7 +813,8 @@
      "id": "r-wi-12",
      "word": "руки",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-12.m4a"
+     "audio_file": "Audio/Content/R/r-wi-12.m4a",
+     "imageAsset": "word_ruki"
     },
     {
      "id": "r-wi-13",
@@ -816,73 +826,85 @@
      "id": "r-wi-14",
      "word": "робот",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-14.m4a"
+     "audio_file": "Audio/Content/R/r-wi-14.m4a",
+     "imageAsset": "word_robot"
     },
     {
      "id": "r-wi-15",
      "word": "рынок",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-15.m4a"
+     "audio_file": "Audio/Content/R/r-wi-15.m4a",
+     "imageAsset": "word_rynok"
     },
     {
      "id": "r-wi-16",
      "word": "радуга",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-16.m4a"
+     "audio_file": "Audio/Content/R/r-wi-16.m4a",
+     "imageAsset": "word_raduga"
     },
     {
      "id": "r-wi-17",
      "word": "ракета",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-17.m4a"
+     "audio_file": "Audio/Content/R/r-wi-17.m4a",
+     "imageAsset": "word_raketa"
     },
     {
      "id": "r-wi-18",
      "word": "рубаха",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-18.m4a"
+     "audio_file": "Audio/Content/R/r-wi-18.m4a",
+     "imageAsset": "word_rubakha"
     },
     {
      "id": "r-wi-19",
      "word": "рюкзак",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-19.m4a"
+     "audio_file": "Audio/Content/R/r-wi-19.m4a",
+     "imageAsset": "word_ryukzak"
     },
     {
      "id": "r-wi-20",
      "word": "рябина",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-20.m4a"
+     "audio_file": "Audio/Content/R/r-wi-20.m4a",
+     "imageAsset": "word_ryabina"
     },
     {
      "id": "r-wi-21",
      "word": "ромашка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-21.m4a"
+     "audio_file": "Audio/Content/R/r-wi-21.m4a",
+     "imageAsset": "word_romashka"
     },
     {
      "id": "r-wi-22",
      "word": "рыжий",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-22.m4a"
+     "audio_file": "Audio/Content/R/r-wi-22.m4a",
+     "imageAsset": "word_ryzhiy"
     },
     {
      "id": "r-wi-23",
      "word": "ружьё",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-23.m4a"
+     "audio_file": "Audio/Content/R/r-wi-23.m4a",
+     "imageAsset": "word_ruzhyo"
     },
     {
      "id": "r-wi-24",
      "word": "рубин",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-24.m4a"
+     "audio_file": "Audio/Content/R/r-wi-24.m4a",
+     "imageAsset": "word_rubin"
     },
     {
      "id": "r-wi-25",
      "word": "роса",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-25.m4a"
+     "audio_file": "Audio/Content/R/r-wi-25.m4a",
+     "imageAsset": "word_rosa"
     },
     {
      "id": "r-wi-26",
@@ -895,7 +917,8 @@
      "id": "r-wi-27",
      "word": "родник",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-27.m4a"
+     "audio_file": "Audio/Content/R/r-wi-27.m4a",
+     "imageAsset": "word_rodnik"
     },
     {
      "id": "r-wi-28",
@@ -907,7 +930,8 @@
      "id": "r-wi-29",
      "word": "рукав",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-29.m4a"
+     "audio_file": "Audio/Content/R/r-wi-29.m4a",
+     "imageAsset": "word_rukav"
     },
     {
      "id": "r-wi-30",
@@ -921,129 +945,149 @@
      "word": "река",
      "hint": "Мягкий [Р'].",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-31.m4a"
+     "audio_file": "Audio/Content/R/r-wi-31.m4a",
+     "imageAsset": "word_reka"
     },
     {
      "id": "r-wi-32",
      "word": "репа",
      "hint": "Мягкий [Р'].",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wi-32.m4a"
+     "audio_file": "Audio/Content/R/r-wi-32.m4a",
+     "imageAsset": "word_repa"
     },
     {
      "id": "r-wi-33",
      "word": "рисунок",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-33.m4a"
+     "audio_file": "Audio/Content/R/r-wi-33.m4a",
+     "imageAsset": "word_risunok"
     },
     {
      "id": "r-wi-34",
      "word": "решётка",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-34.m4a"
+     "audio_file": "Audio/Content/R/r-wi-34.m4a",
+     "imageAsset": "word_reshyotka"
     },
     {
      "id": "r-wi-35",
      "word": "редька",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-35.m4a"
+     "audio_file": "Audio/Content/R/r-wi-35.m4a",
+     "imageAsset": "word_redka"
     },
     {
      "id": "r-wi-36",
      "word": "ремень",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-36.m4a"
+     "audio_file": "Audio/Content/R/r-wi-36.m4a",
+     "imageAsset": "word_remen"
     },
     {
      "id": "r-wi-37",
      "word": "рельсы",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-37.m4a"
+     "audio_file": "Audio/Content/R/r-wi-37.m4a",
+     "imageAsset": "word_relsy"
     },
     {
      "id": "r-wi-38",
      "word": "рябчик",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-38.m4a"
+     "audio_file": "Audio/Content/R/r-wi-38.m4a",
+     "imageAsset": "word_ryabchik"
     },
     {
      "id": "r-wi-39",
      "word": "рекорд",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-39.m4a"
+     "audio_file": "Audio/Content/R/r-wi-39.m4a",
+     "imageAsset": "word_rekord"
     },
     {
      "id": "r-wi-40",
      "word": "рассвет",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-40.m4a"
+     "audio_file": "Audio/Content/R/r-wi-40.m4a",
+     "imageAsset": "word_rassvet"
     },
     {
      "id": "r-wi-41",
      "word": "рассказ",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-41.m4a"
+     "audio_file": "Audio/Content/R/r-wi-41.m4a",
+     "imageAsset": "word_rasskaz"
     },
     {
      "id": "r-wi-42",
      "word": "разведчик",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-42.m4a"
+     "audio_file": "Audio/Content/R/r-wi-42.m4a",
+     "imageAsset": "word_razvedchik"
     },
     {
      "id": "r-wi-43",
      "word": "расписание",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-43.m4a"
+     "audio_file": "Audio/Content/R/r-wi-43.m4a",
+     "imageAsset": "word_raspisanie"
     },
     {
      "id": "r-wi-44",
      "word": "рисование",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-44.m4a"
+     "audio_file": "Audio/Content/R/r-wi-44.m4a",
+     "imageAsset": "word_risovanie"
     },
     {
      "id": "r-wi-45",
      "word": "радость",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-45.m4a"
+     "audio_file": "Audio/Content/R/r-wi-45.m4a",
+     "imageAsset": "word_radost"
     },
     {
      "id": "r-wi-46",
      "word": "рубашка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-46.m4a"
+     "audio_file": "Audio/Content/R/r-wi-46.m4a",
+     "imageAsset": "word_rubashka"
     },
     {
      "id": "r-wi-47",
      "word": "рукавица",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-47.m4a"
+     "audio_file": "Audio/Content/R/r-wi-47.m4a",
+     "imageAsset": "word_rukavitsa"
     },
     {
      "id": "r-wi-48",
      "word": "рыбак",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-48.m4a"
+     "audio_file": "Audio/Content/R/r-wi-48.m4a",
+     "imageAsset": "word_rybak"
     },
     {
      "id": "r-wi-49",
      "word": "ракушка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-49.m4a"
+     "audio_file": "Audio/Content/R/r-wi-49.m4a",
+     "imageAsset": "word_rakushka"
     },
     {
      "id": "r-wi-50",
      "word": "рулон",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-50.m4a"
+     "audio_file": "Audio/Content/R/r-wi-50.m4a",
+     "imageAsset": "word_rulon"
     },
     {
      "id": "r-wi-51",
@@ -1055,13 +1099,15 @@
      "id": "r-wi-52",
      "word": "рукоять",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-52.m4a"
+     "audio_file": "Audio/Content/R/r-wi-52.m4a",
+     "imageAsset": "word_rukoyat"
     },
     {
      "id": "r-wi-53",
      "word": "рыночек",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-53.m4a"
+     "audio_file": "Audio/Content/R/r-wi-53.m4a",
+     "imageAsset": "word_rynochek"
     },
     {
      "id": "r-wi-54",
@@ -1073,55 +1119,64 @@
      "id": "r-wi-55",
      "word": "рог",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-55.m4a"
+     "audio_file": "Audio/Content/R/r-wi-55.m4a",
+     "imageAsset": "word_rog"
     },
     {
      "id": "r-wi-56",
      "word": "рогатка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-56.m4a"
+     "audio_file": "Audio/Content/R/r-wi-56.m4a",
+     "imageAsset": "word_rogatka"
     },
     {
      "id": "r-wi-57",
      "word": "родители",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-57.m4a"
+     "audio_file": "Audio/Content/R/r-wi-57.m4a",
+     "imageAsset": "word_roditeli"
     },
     {
      "id": "r-wi-58",
      "word": "рябиновый",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-58.m4a"
+     "audio_file": "Audio/Content/R/r-wi-58.m4a",
+     "imageAsset": "word_ryabinovyy"
     },
     {
      "id": "r-wi-59",
      "word": "рисовый",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-59.m4a"
+     "audio_file": "Audio/Content/R/r-wi-59.m4a",
+     "imageAsset": "word_risovyy"
     },
     {
      "id": "r-wi-60",
      "word": "рыбный",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-60.m4a"
+     "audio_file": "Audio/Content/R/r-wi-60.m4a",
+     "imageAsset": "word_rybnyy"
     },
     {
      "id": "r-wi-61",
      "word": "роботы",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-61.m4a"
+     "audio_file": "Audio/Content/R/r-wi-61.m4a",
+     "imageAsset": "word_roboty"
     },
     {
      "id": "r-wi-62",
      "word": "рукоделие",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-62.m4a"
+     "audio_file": "Audio/Content/R/r-wi-62.m4a",
+     "imageAsset": "word_rukodelie"
     },
     {
      "id": "r-wi-63",
      "word": "раковина",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-63.m4a"
+     "audio_file": "Audio/Content/R/r-wi-63.m4a",
+     "imageAsset": "word_rakovina"
     },
     {
      "id": "r-wi-64",
@@ -1133,52 +1188,60 @@
      "id": "r-wi-65",
      "word": "рыбалка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-65.m4a"
+     "audio_file": "Audio/Content/R/r-wi-65.m4a",
+     "imageAsset": "word_rybalka"
     },
     {
      "id": "r-wi-66",
      "word": "ручеёк",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-66.m4a"
+     "audio_file": "Audio/Content/R/r-wi-66.m4a",
+     "imageAsset": "word_rucheyok"
     },
     {
      "id": "r-wi-67",
      "word": "рюмочка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-67.m4a"
+     "audio_file": "Audio/Content/R/r-wi-67.m4a",
+     "imageAsset": "word_ryumochka"
     },
     {
      "id": "r-wi-68",
      "word": "рычаг",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-68.m4a"
+     "audio_file": "Audio/Content/R/r-wi-68.m4a",
+     "imageAsset": "word_rychag"
     },
     {
      "id": "r-wi-69",
      "word": "рокот",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-69.m4a"
+     "audio_file": "Audio/Content/R/r-wi-69.m4a",
+     "imageAsset": "word_rokot"
     },
     {
      "id": "r-wi-70",
      "word": "ребята",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-70.m4a"
+     "audio_file": "Audio/Content/R/r-wi-70.m4a",
+     "imageAsset": "word_rebyata"
     },
     {
      "id": "r-wi-71",
      "word": "режим",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-71.m4a"
+     "audio_file": "Audio/Content/R/r-wi-71.m4a",
+     "imageAsset": "word_rezhim"
     },
     {
      "id": "r-wi-72",
      "word": "рецепт",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-72.m4a"
+     "audio_file": "Audio/Content/R/r-wi-72.m4a",
+     "imageAsset": "word_retsept"
     },
     {
      "id": "r-wi-73",
@@ -1192,42 +1255,48 @@
      "word": "рельеф",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-74.m4a"
+     "audio_file": "Audio/Content/R/r-wi-74.m4a",
+     "imageAsset": "word_relef"
     },
     {
      "id": "r-wi-75",
      "word": "ремонт",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-75.m4a"
+     "audio_file": "Audio/Content/R/r-wi-75.m4a",
+     "imageAsset": "word_remont"
     },
     {
      "id": "r-wi-76",
      "word": "результат",
      "hint": "Мягкий [Р'].",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-76.m4a"
+     "audio_file": "Audio/Content/R/r-wi-76.m4a",
+     "imageAsset": "word_rezultat"
     },
     {
      "id": "r-wi-77",
      "word": "рябой",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-77.m4a"
+     "audio_file": "Audio/Content/R/r-wi-77.m4a",
+     "imageAsset": "word_ryaboy"
     },
     {
      "id": "r-wi-78",
      "word": "ряска",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wi-78.m4a"
+     "audio_file": "Audio/Content/R/r-wi-78.m4a",
+     "imageAsset": "word_ryaska"
     },
     {
      "id": "r-wi-79",
      "word": "рявкнуть",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-79.m4a"
+     "audio_file": "Audio/Content/R/r-wi-79.m4a",
+     "imageAsset": "word_ryavknut"
     },
     {
      "id": "r-wi-80",
@@ -1241,7 +1310,8 @@
      "word": "трюфель",
      "hint": "ТРЮ + Ф — редкое стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-81.m4a"
+     "audio_file": "Audio/Content/R/r-wi-81.m4a",
+     "imageAsset": "word_tryufel"
     },
     {
      "id": "r-wi-82",
@@ -1255,42 +1325,48 @@
      "word": "ряженка",
      "hint": "РЯ — мягкий [Р'] + Ж.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-83.m4a"
+     "audio_file": "Audio/Content/R/r-wi-83.m4a",
+     "imageAsset": "word_ryazhenka"
     },
     {
      "id": "r-wi-84",
      "word": "рябчик",
      "hint": "РЯ + Ч — мягкий + шипящий.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-84.m4a"
+     "audio_file": "Audio/Content/R/r-wi-84.m4a",
+     "imageAsset": "word_ryabchik"
     },
     {
      "id": "r-wi-85",
      "word": "рыщет",
      "hint": "РЫ + Щ — твёрдый Р + шипящий.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-85.m4a"
+     "audio_file": "Audio/Content/R/r-wi-85.m4a",
+     "imageAsset": "word_ryshchet"
     },
     {
      "id": "r-wi-86",
      "word": "решётка",
      "hint": "РЕ — мягкий + ШТ внутри.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-86.m4a"
+     "audio_file": "Audio/Content/R/r-wi-86.m4a",
+     "imageAsset": "word_reshyotka"
     },
     {
      "id": "r-wi-87",
      "word": "ряска",
      "hint": "РЯ — мягкий с Я.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-87.m4a"
+     "audio_file": "Audio/Content/R/r-wi-87.m4a",
+     "imageAsset": "word_ryaska"
     },
     {
      "id": "r-wi-88",
      "word": "рьяный",
      "hint": "РЬЯ — мягкий знак + Я.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-88.m4a"
+     "audio_file": "Audio/Content/R/r-wi-88.m4a",
+     "imageAsset": "word_ryanyy"
     },
     {
      "id": "r-wi-89",
@@ -1304,119 +1380,136 @@
      "word": "рекорд",
      "hint": "РЕ + КД — Р в начале и конце.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-90.m4a"
+     "audio_file": "Audio/Content/R/r-wi-90.m4a",
+     "imageAsset": "word_rekord"
     },
     {
      "id": "r-wi-91",
      "word": "рикша",
      "hint": "РИ + КШ — экзотическое слово.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-91.m4a"
+     "audio_file": "Audio/Content/R/r-wi-91.m4a",
+     "imageAsset": "word_riksha"
     },
     {
      "id": "r-wi-92",
      "word": "ремонт",
      "hint": "РЕМ — мягкий Р + носовой.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-92.m4a"
+     "audio_file": "Audio/Content/R/r-wi-92.m4a",
+     "imageAsset": "word_remont"
     },
     {
      "id": "r-wi-93",
      "word": "рычаг",
      "hint": "РЫ + Ч — твёрдый Р + шипящий.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-93.m4a"
+     "audio_file": "Audio/Content/R/r-wi-93.m4a",
+     "imageAsset": "word_rychag"
     },
     {
      "id": "r-wi-94",
      "word": "ристалище",
      "hint": "РИ + СТ + Щ — трёхслоговое слово.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-94.m4a"
+     "audio_file": "Audio/Content/R/r-wi-94.m4a",
+     "imageAsset": "word_ristalishche"
     },
     {
      "id": "r-wi-95",
      "word": "рокировка",
      "hint": "РО+КИ+РО+ВКА — шахматный ход с двумя Р.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-95.m4a"
+     "audio_file": "Audio/Content/R/r-wi-95.m4a",
+     "imageAsset": "word_rokirovka"
     },
     {
      "id": "r-wi-96",
      "word": "рукопожатие",
      "hint": "РУ+КО+ПО+ЖА+ТИЕ — пять слогов.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-96.m4a"
+     "audio_file": "Audio/Content/R/r-wi-96.m4a",
+     "imageAsset": "word_rukopozhatie"
     },
     {
      "id": "r-wi-97",
      "word": "роскошный",
      "hint": "РОС+КО+ШНЫ — прилагательное с Р.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-97.m4a"
+     "audio_file": "Audio/Content/R/r-wi-97.m4a",
+     "imageAsset": "word_roskoshnyy"
     },
     {
      "id": "r-wi-98",
      "word": "рукоятка",
      "hint": "РУ+КО+ЯТ+КА — Р в начале длинного слова.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-98.m4a"
+     "audio_file": "Audio/Content/R/r-wi-98.m4a",
+     "imageAsset": "word_rukoyatka"
     },
     {
      "id": "r-wi-99",
      "word": "разноцветный",
      "hint": "РА+ЗНО+ЦВЕТ+НЫ — Р+сложный состав.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-99.m4a"
+     "audio_file": "Audio/Content/R/r-wi-99.m4a",
+     "imageAsset": "word_raznotsvetnyy"
     },
     {
      "id": "r-wi-100",
      "word": "рюкзачок",
      "hint": "РЮ+КЗАЧ+ОК — уменьшительное от рюкзак.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-100.m4a"
+     "audio_file": "Audio/Content/R/r-wi-100.m4a",
+     "imageAsset": "word_ryukzachok"
     },
     {
      "id": "r-wi-101",
      "word": "риторика",
      "hint": "РИ+ТО+РИ+КА — наука о речи, Р дважды.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-101.m4a"
+     "audio_file": "Audio/Content/R/r-wi-101.m4a",
+     "imageAsset": "word_ritorika"
     },
     {
      "id": "r-wi-102",
      "word": "рифмовать",
      "hint": "РИФ+МО+ВАТЬ — подбирать рифмы.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-102.m4a"
+     "audio_file": "Audio/Content/R/r-wi-102.m4a",
+     "imageAsset": "word_rifmovat"
     },
     {
      "id": "r-wi-103",
      "word": "распорядок",
      "hint": "РАС+ПО+РЯ+ДОК — Р дважды в слове.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-103.m4a"
+     "audio_file": "Audio/Content/R/r-wi-103.m4a",
+     "imageAsset": "word_rasporyadok"
     },
     {
      "id": "r-wi-104",
      "word": "раздробить",
      "hint": "РА+ЗДРО+БИТЬ — РЗД стечение.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wi-104.m4a"
+     "audio_file": "Audio/Content/R/r-wi-104.m4a",
+     "imageAsset": "word_razdrobit"
     },
     {
      "id": "r-wi-105",
      "word": "румянец",
      "hint": "РУ+МЯ+НЕЦ — розовые щёки.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-105.m4a"
+     "audio_file": "Audio/Content/R/r-wi-105.m4a",
+     "imageAsset": "word_rumyanets"
     },
     {
      "id": "r-wi-106",
      "word": "рассветный",
      "hint": "РАС+СВЕТ+НЫ — прилагательное.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-106.m4a"
+     "audio_file": "Audio/Content/R/r-wi-106.m4a",
+     "imageAsset": "word_rassvetnyy"
     },
     {
      "id": "r-wi-107",
@@ -1430,14 +1523,16 @@
      "word": "рассеянный",
      "hint": "РАС+СЕ+ЯН+НЫ — прилагательное, два СС.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wi-108.m4a"
+     "audio_file": "Audio/Content/R/r-wi-108.m4a",
+     "imageAsset": "word_rasseyannyy"
     },
     {
      "id": "r-wi-109",
      "word": "рыбак",
      "hint": "РЫ+БО+ЛОВ — тот, кто ловит рыбу.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wi-109.m4a"
+     "audio_file": "Audio/Content/R/r-wi-109.m4a",
+     "imageAsset": "word_rybak"
     },
     {
      "id": "r-wi-110",
@@ -1548,25 +1643,29 @@
      "id": "r-wm-0",
      "word": "арбуз",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wm-0.m4a"
+     "audio_file": "Audio/Content/R/r-wm-0.m4a",
+     "imageAsset": "word_arbuz"
     },
     {
      "id": "r-wm-1",
      "word": "гора",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wm-1.m4a"
+     "audio_file": "Audio/Content/R/r-wm-1.m4a",
+     "imageAsset": "word_gora"
     },
     {
      "id": "r-wm-2",
      "word": "кора",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wm-2.m4a"
+     "audio_file": "Audio/Content/R/r-wm-2.m4a",
+     "imageAsset": "word_kora"
     },
     {
      "id": "r-wm-3",
      "word": "ворона",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wm-3.m4a"
+     "audio_file": "Audio/Content/R/r-wm-3.m4a",
+     "imageAsset": "word_vorona"
     },
     {
      "id": "r-wm-4",
@@ -1578,110 +1677,128 @@
      "id": "r-wm-5",
      "word": "пирог",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-5.m4a"
+     "audio_file": "Audio/Content/R/r-wm-5.m4a",
+     "imageAsset": "word_pirog"
     },
     {
      "id": "r-wm-6",
      "word": "порог",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-6.m4a"
+     "audio_file": "Audio/Content/R/r-wm-6.m4a",
+     "imageAsset": "word_porog"
     },
     {
      "id": "r-wm-7",
      "word": "мороз",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-7.m4a"
+     "audio_file": "Audio/Content/R/r-wm-7.m4a",
+     "imageAsset": "word_moroz"
     },
     {
      "id": "r-wm-8",
      "word": "ворона",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-8.m4a"
+     "audio_file": "Audio/Content/R/r-wm-8.m4a",
+     "imageAsset": "word_vorona"
     },
     {
      "id": "r-wm-9",
      "word": "корова",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-9.m4a"
+     "audio_file": "Audio/Content/R/r-wm-9.m4a",
+     "imageAsset": "word_korova"
     },
     {
      "id": "r-wm-10",
      "word": "дорога",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-10.m4a"
+     "audio_file": "Audio/Content/R/r-wm-10.m4a",
+     "imageAsset": "word_doroga"
     },
     {
      "id": "r-wm-11",
      "word": "берег",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-11.m4a"
+     "audio_file": "Audio/Content/R/r-wm-11.m4a",
+     "imageAsset": "word_bereg"
     },
     {
      "id": "r-wm-12",
      "word": "борода",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-12.m4a"
+     "audio_file": "Audio/Content/R/r-wm-12.m4a",
+     "imageAsset": "word_boroda"
     },
     {
      "id": "r-wm-13",
      "word": "жираф",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-13.m4a"
+     "audio_file": "Audio/Content/R/r-wm-13.m4a",
+     "imageAsset": "word_zhiraf"
     },
     {
      "id": "r-wm-14",
      "word": "барабан",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-14.m4a"
+     "audio_file": "Audio/Content/R/r-wm-14.m4a",
+     "imageAsset": "word_baraban"
     },
     {
      "id": "r-wm-15",
      "word": "журавль",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-15.m4a"
+     "audio_file": "Audio/Content/R/r-wm-15.m4a",
+     "imageAsset": "word_zhuravl"
     },
     {
      "id": "r-wm-16",
      "word": "карман",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-16.m4a"
+     "audio_file": "Audio/Content/R/r-wm-16.m4a",
+     "imageAsset": "word_karman"
     },
     {
      "id": "r-wm-17",
      "word": "паровоз",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-17.m4a"
+     "audio_file": "Audio/Content/R/r-wm-17.m4a",
+     "imageAsset": "word_parovoz"
     },
     {
      "id": "r-wm-18",
      "word": "картошка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-18.m4a"
+     "audio_file": "Audio/Content/R/r-wm-18.m4a",
+     "imageAsset": "word_kartoshka"
     },
     {
      "id": "r-wm-19",
      "word": "морковь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-19.m4a"
+     "audio_file": "Audio/Content/R/r-wm-19.m4a",
+     "imageAsset": "word_morkov"
     },
     {
      "id": "r-wm-20",
      "word": "карандаш",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-20.m4a"
+     "audio_file": "Audio/Content/R/r-wm-20.m4a",
+     "imageAsset": "word_karandash"
     },
     {
      "id": "r-wm-21",
      "word": "горох",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-21.m4a"
+     "audio_file": "Audio/Content/R/r-wm-21.m4a",
+     "imageAsset": "word_gorokh"
     },
     {
      "id": "r-wm-22",
      "word": "огород",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-22.m4a"
+     "audio_file": "Audio/Content/R/r-wm-22.m4a",
+     "imageAsset": "word_ogorod"
     },
     {
      "id": "r-wm-23",
@@ -1693,70 +1810,80 @@
      "id": "r-wm-24",
      "word": "мороженое",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-24.m4a"
+     "audio_file": "Audio/Content/R/r-wm-24.m4a",
+     "imageAsset": "word_morozhenoe"
     },
     {
      "id": "r-wm-25",
      "word": "ракета",
      "difficulty": 2,
      "audio_file": "Audio/Content/R/r-wm-25.m4a",
-     "hint": "Ра-ке-та. [Р] в слове."
+     "hint": "Ра-ке-та. [Р] в слове.",
+     "imageAsset": "word_raketa"
     },
     {
      "id": "r-wm-26",
      "word": "берёза",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-26.m4a"
+     "audio_file": "Audio/Content/R/r-wm-26.m4a",
+     "imageAsset": "word_beryoza"
     },
     {
      "id": "r-wm-27",
      "word": "деревня",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-27.m4a"
+     "audio_file": "Audio/Content/R/r-wm-27.m4a",
+     "imageAsset": "word_derevnya"
     },
     {
      "id": "r-wm-28",
      "word": "дерево",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-28.m4a"
+     "audio_file": "Audio/Content/R/r-wm-28.m4a",
+     "imageAsset": "word_derevo"
     },
     {
      "id": "r-wm-29",
      "word": "зверёк",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-29.m4a"
+     "audio_file": "Audio/Content/R/r-wm-29.m4a",
+     "imageAsset": "word_zveryok"
     },
     {
      "id": "r-wm-30",
      "word": "перо",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-30.m4a"
+     "audio_file": "Audio/Content/R/r-wm-30.m4a",
+     "imageAsset": "word_pero"
     },
     {
      "id": "r-wm-31",
      "word": "скрипка",
      "hint": "Мягкий [Р'] + стечение.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-31.m4a"
+     "audio_file": "Audio/Content/R/r-wm-31.m4a",
+     "imageAsset": "word_skripka"
     },
     {
      "id": "r-wm-32",
      "word": "дерево",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-32.m4a"
+     "audio_file": "Audio/Content/R/r-wm-32.m4a",
+     "imageAsset": "word_derevo"
     },
     {
      "id": "r-wm-33",
      "word": "варенье",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-33.m4a"
+     "audio_file": "Audio/Content/R/r-wm-33.m4a",
+     "imageAsset": "word_varene"
     },
     {
      "id": "r-wm-34",
@@ -1791,7 +1918,8 @@
      "word": "крот",
      "hint": "Стечение КР.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-38.m4a"
+     "audio_file": "Audio/Content/R/r-wm-38.m4a",
+     "imageAsset": "word_krot"
     },
     {
      "id": "r-wm-39",
@@ -1812,61 +1940,70 @@
      "word": "дракон",
      "hint": "Стечение ДР.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-41.m4a"
+     "audio_file": "Audio/Content/R/r-wm-41.m4a",
+     "imageAsset": "word_drakon"
     },
     {
      "id": "r-wm-42",
      "word": "страус",
      "hint": "Стечение СТР.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-42.m4a"
+     "audio_file": "Audio/Content/R/r-wm-42.m4a",
+     "imageAsset": "word_straus"
     },
     {
      "id": "r-wm-43",
      "word": "апрель",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-43.m4a"
+     "audio_file": "Audio/Content/R/r-wm-43.m4a",
+     "imageAsset": "word_aprel"
     },
     {
      "id": "r-wm-44",
      "word": "горилла",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-44.m4a"
+     "audio_file": "Audio/Content/R/r-wm-44.m4a",
+     "imageAsset": "word_gorilla"
     },
     {
      "id": "r-wm-45",
      "word": "гардероб",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-45.m4a"
+     "audio_file": "Audio/Content/R/r-wm-45.m4a",
+     "imageAsset": "word_garderob"
     },
     {
      "id": "r-wm-46",
      "word": "термос",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-46.m4a"
+     "audio_file": "Audio/Content/R/r-wm-46.m4a",
+     "imageAsset": "word_termos"
     },
     {
      "id": "r-wm-47",
      "word": "черепаха",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-47.m4a"
+     "audio_file": "Audio/Content/R/r-wm-47.m4a",
+     "imageAsset": "word_cherepakha"
     },
     {
      "id": "r-wm-48",
      "word": "серебро",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-48.m4a"
+     "audio_file": "Audio/Content/R/r-wm-48.m4a",
+     "imageAsset": "word_serebro"
     },
     {
      "id": "r-wm-49",
      "word": "зеркало",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-49.m4a"
+     "audio_file": "Audio/Content/R/r-wm-49.m4a",
+     "imageAsset": "word_zerkalo"
     },
     {
      "id": "r-wm-50",
@@ -1884,25 +2021,29 @@
      "id": "r-wm-52",
      "word": "бурундук",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-52.m4a"
+     "audio_file": "Audio/Content/R/r-wm-52.m4a",
+     "imageAsset": "word_burunduk"
     },
     {
      "id": "r-wm-53",
      "word": "карусель",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-53.m4a"
+     "audio_file": "Audio/Content/R/r-wm-53.m4a",
+     "imageAsset": "word_karusel"
     },
     {
      "id": "r-wm-54",
      "word": "тарелка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-54.m4a"
+     "audio_file": "Audio/Content/R/r-wm-54.m4a",
+     "imageAsset": "word_tarelka"
     },
     {
      "id": "r-wm-55",
      "word": "ворота",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-55.m4a"
+     "audio_file": "Audio/Content/R/r-wm-55.m4a",
+     "imageAsset": "word_vorota"
     },
     {
      "id": "r-wm-56",
@@ -1915,19 +2056,22 @@
      "id": "r-wm-57",
      "word": "корзина",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-57.m4a"
+     "audio_file": "Audio/Content/R/r-wm-57.m4a",
+     "imageAsset": "word_korzina"
     },
     {
      "id": "r-wm-58",
      "word": "горошек",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-58.m4a"
+     "audio_file": "Audio/Content/R/r-wm-58.m4a",
+     "imageAsset": "word_goroshek"
     },
     {
      "id": "r-wm-59",
      "word": "дорожка",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-59.m4a"
+     "audio_file": "Audio/Content/R/r-wm-59.m4a",
+     "imageAsset": "word_dorozhka"
     },
     {
      "id": "r-wm-60",
@@ -1939,19 +2083,22 @@
      "id": "r-wm-61",
      "word": "курятник",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-61.m4a"
+     "audio_file": "Audio/Content/R/r-wm-61.m4a",
+     "imageAsset": "word_kuryatnik"
     },
     {
      "id": "r-wm-62",
      "word": "кормушка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-62.m4a"
+     "audio_file": "Audio/Content/R/r-wm-62.m4a",
+     "imageAsset": "word_kormushka"
     },
     {
      "id": "r-wm-63",
      "word": "коробка",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-63.m4a"
+     "audio_file": "Audio/Content/R/r-wm-63.m4a",
+     "imageAsset": "word_korobka"
     },
     {
      "id": "r-wm-64",
@@ -1963,7 +2110,8 @@
      "id": "r-wm-65",
      "word": "бородач",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-65.m4a"
+     "audio_file": "Audio/Content/R/r-wm-65.m4a",
+     "imageAsset": "word_borodach"
     },
     {
      "id": "r-wm-66",
@@ -1975,7 +2123,8 @@
      "id": "r-wm-67",
      "word": "город",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-67.m4a"
+     "audio_file": "Audio/Content/R/r-wm-67.m4a",
+     "imageAsset": "word_gorod"
     },
     {
      "id": "r-wm-68",
@@ -1994,7 +2143,8 @@
      "word": "скрипач",
      "hint": "КРИ — Р в стечении с К.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wm-70.m4a"
+     "audio_file": "Audio/Content/R/r-wm-70.m4a",
+     "imageAsset": "word_skripach"
     },
     {
      "id": "r-wm-71",
@@ -2008,7 +2158,8 @@
      "word": "портрет",
      "hint": "Два Р в слове — твёрдый и твёрдый.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wm-72.m4a"
+     "audio_file": "Audio/Content/R/r-wm-72.m4a",
+     "imageAsset": "word_portret"
     },
     {
      "id": "r-wm-73",
@@ -2050,14 +2201,16 @@
      "word": "матрёшка",
      "hint": "ТРЁ — мягкий [Р'] в стечении.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-78.m4a"
+     "audio_file": "Audio/Content/R/r-wm-78.m4a",
+     "imageAsset": "word_matryoshka"
     },
     {
      "id": "r-wm-79",
      "word": "аэропорт",
      "hint": "Два Р — один в середине, один на конце.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wm-79.m4a"
+     "audio_file": "Audio/Content/R/r-wm-79.m4a",
+     "imageAsset": "word_aeroport"
     },
     {
      "id": "r-wm-80",
@@ -2078,7 +2231,8 @@
      "word": "разочарование",
      "hint": "Р в начале + пятислоговое слово.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wm-82.m4a"
+     "audio_file": "Audio/Content/R/r-wm-82.m4a",
+     "imageAsset": "word_razocharovanie"
     },
     {
      "id": "r-wm-83",
@@ -2092,42 +2246,48 @@
      "word": "распорядок",
      "hint": "РСП + РЯД — двойной Р.",
      "difficulty": 5,
-     "audio_file": "Audio/Content/R/r-wm-84.m4a"
+     "audio_file": "Audio/Content/R/r-wm-84.m4a",
+     "imageAsset": "word_rasporyadok"
     },
     {
      "id": "r-wm-85",
      "word": "журавль",
      "hint": "ЖУ+РА+ВЕЛЬ — Р в середине.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-85.m4a"
+     "audio_file": "Audio/Content/R/r-wm-85.m4a",
+     "imageAsset": "word_zhuravl"
     },
     {
      "id": "r-wm-86",
      "word": "кружок",
      "hint": "кру-Жок. [Р] в середине.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-86.m4a"
+     "audio_file": "Audio/Content/R/r-wm-86.m4a",
+     "imageAsset": "word_kruzhok"
     },
     {
      "id": "r-wm-87",
      "word": "берёза",
      "hint": "БЕ+РЁ+ЗА — Р в середине.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-87.m4a"
+     "audio_file": "Audio/Content/R/r-wm-87.m4a",
+     "imageAsset": "word_beryoza"
     },
     {
      "id": "r-wm-88",
      "word": "огурец",
      "hint": "О+ГУ+РЕЦ — Р в последнем слоге.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-88.m4a"
+     "audio_file": "Audio/Content/R/r-wm-88.m4a",
+     "imageAsset": "word_ogurets"
     },
     {
      "id": "r-wm-89",
      "word": "морковь",
      "hint": "МОР+КОВЬ — Р после М.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-89.m4a"
+     "audio_file": "Audio/Content/R/r-wm-89.m4a",
+     "imageAsset": "word_morkov"
     },
     {
      "id": "r-wm-90",
@@ -2141,14 +2301,16 @@
      "word": "сарафан",
      "hint": "СА+РА+ФАН — Р в середине.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-91.m4a"
+     "audio_file": "Audio/Content/R/r-wm-91.m4a",
+     "imageAsset": "word_sarafan"
     },
     {
      "id": "r-wm-92",
      "word": "горошина",
      "hint": "ГО+РО+ШИ+НА — Р дважды.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-92.m4a"
+     "audio_file": "Audio/Content/R/r-wm-92.m4a",
+     "imageAsset": "word_goroshina"
     },
     {
      "id": "r-wm-93",
@@ -2162,7 +2324,8 @@
      "word": "корзина",
      "hint": "КОР+ЗИ+НА — Р после К.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-94.m4a"
+     "audio_file": "Audio/Content/R/r-wm-94.m4a",
+     "imageAsset": "word_korzina"
     },
     {
      "id": "r-wm-95",
@@ -2190,14 +2353,16 @@
      "word": "деревня",
      "hint": "ДЕ+РЕВНЯ — РЕ стечение.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-98.m4a"
+     "audio_file": "Audio/Content/R/r-wm-98.m4a",
+     "imageAsset": "word_derevnya"
     },
     {
      "id": "r-wm-99",
      "word": "марабу",
      "hint": "МА+РА+БУ — Р в середине.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wm-99.m4a"
+     "audio_file": "Audio/Content/R/r-wm-99.m4a",
+     "imageAsset": "word_marabu"
     },
     {
      "id": "r-wm-100",
@@ -2218,7 +2383,8 @@
      "word": "варенье",
      "hint": "ВА+РЕНЬЕ — Р в середине.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wm-102.m4a"
+     "audio_file": "Audio/Content/R/r-wm-102.m4a",
+     "imageAsset": "word_varene"
     },
     {
      "id": "r-wm-103",
@@ -2910,19 +3076,22 @@
      "id": "r-wf-0",
      "word": "забор",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-0.m4a"
+     "audio_file": "Audio/Content/R/r-wf-0.m4a",
+     "imageAsset": "word_zabor"
     },
     {
      "id": "r-wf-1",
      "word": "самовар",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-1.m4a"
+     "audio_file": "Audio/Content/R/r-wf-1.m4a",
+     "imageAsset": "word_samovar"
     },
     {
      "id": "r-wf-2",
      "word": "жар",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-2.m4a"
+     "audio_file": "Audio/Content/R/r-wf-2.m4a",
+     "imageAsset": "word_zhar"
     },
     {
      "id": "r-wf-3",
@@ -2934,7 +3103,8 @@
      "id": "r-wf-4",
      "word": "сыр",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-4.m4a"
+     "audio_file": "Audio/Content/R/r-wf-4.m4a",
+     "imageAsset": "word_syr"
     },
     {
      "id": "r-wf-5",
@@ -2952,56 +3122,65 @@
      "id": "r-wf-7",
      "word": "топор",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-7.m4a"
+     "audio_file": "Audio/Content/R/r-wf-7.m4a",
+     "imageAsset": "word_topor"
     },
     {
      "id": "r-wf-8",
      "word": "двор",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-8.m4a"
+     "audio_file": "Audio/Content/R/r-wf-8.m4a",
+     "imageAsset": "word_dvor"
     },
     {
      "id": "r-wf-9",
      "word": "забор",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-9.m4a"
+     "audio_file": "Audio/Content/R/r-wf-9.m4a",
+     "imageAsset": "word_zabor"
     },
     {
      "id": "r-wf-10",
      "word": "шнур",
      "difficulty": 1,
-     "audio_file": "Audio/Content/R/r-wf-10.m4a"
+     "audio_file": "Audio/Content/R/r-wf-10.m4a",
+     "imageAsset": "word_shnur"
     },
     {
      "id": "r-wf-11",
      "word": "тигр",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-11.m4a"
+     "audio_file": "Audio/Content/R/r-wf-11.m4a",
+     "imageAsset": "word_tigr"
     },
     {
      "id": "r-wf-12",
      "word": "ковёр",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-12.m4a"
+     "audio_file": "Audio/Content/R/r-wf-12.m4a",
+     "imageAsset": "word_kovyor"
     },
     {
      "id": "r-wf-13",
      "word": "топор",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-13.m4a"
+     "audio_file": "Audio/Content/R/r-wf-13.m4a",
+     "imageAsset": "word_topor"
     },
     {
      "id": "r-wf-14",
      "word": "помидор",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-14.m4a"
+     "audio_file": "Audio/Content/R/r-wf-14.m4a",
+     "imageAsset": "word_pomidor"
     },
     {
      "id": "r-wf-15",
      "word": "шар",
      "difficulty": 2,
      "audio_file": "Audio/Content/R/r-wf-15.m4a",
-     "hint": "шаР. [Р] в конце."
+     "hint": "шаР. [Р] в конце.",
+     "imageAsset": "word_shar"
     },
     {
      "id": "r-wf-16",
@@ -3025,13 +3204,15 @@
      "id": "r-wf-19",
      "word": "самовар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-19.m4a"
+     "audio_file": "Audio/Content/R/r-wf-19.m4a",
+     "imageAsset": "word_samovar"
     },
     {
      "id": "r-wf-20",
      "word": "пожар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-20.m4a"
+     "audio_file": "Audio/Content/R/r-wf-20.m4a",
+     "imageAsset": "word_pozhar"
     },
     {
      "id": "r-wf-21",
@@ -3043,20 +3224,23 @@
      "id": "r-wf-22",
      "word": "сахар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-22.m4a"
+     "audio_file": "Audio/Content/R/r-wf-22.m4a",
+     "imageAsset": "word_sakhar"
     },
     {
      "id": "r-wf-23",
      "word": "доктор",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-23.m4a"
+     "audio_file": "Audio/Content/R/r-wf-23.m4a",
+     "imageAsset": "word_doktor"
     },
     {
      "id": "r-wf-24",
      "word": "трактор",
      "hint": "Стечение ТР.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-24.m4a"
+     "audio_file": "Audio/Content/R/r-wf-24.m4a",
+     "imageAsset": "word_traktor"
     },
     {
      "id": "r-wf-25",
@@ -3083,7 +3267,8 @@
      "word": "комар",
      "difficulty": 3,
      "audio_file": "Audio/Content/R/r-wf-28.m4a",
-     "hint": "Ко-маР. [Р] в конце."
+     "hint": "Ко-маР. [Р] в конце.",
+     "imageAsset": "word_komar"
     },
     {
      "id": "r-wf-29",
@@ -3114,7 +3299,8 @@
      "id": "r-wf-33",
      "word": "разговор",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-33.m4a"
+     "audio_file": "Audio/Content/R/r-wf-33.m4a",
+     "imageAsset": "word_razgovor"
     },
     {
      "id": "r-wf-34",
@@ -3132,7 +3318,8 @@
      "id": "r-wf-36",
      "word": "радар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-36.m4a"
+     "audio_file": "Audio/Content/R/r-wf-36.m4a",
+     "imageAsset": "word_radar"
     },
     {
      "id": "r-wf-37",
@@ -3153,14 +3340,16 @@
      "word": "словарь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-39.m4a"
+     "audio_file": "Audio/Content/R/r-wf-39.m4a",
+     "imageAsset": "word_slovar"
     },
     {
      "id": "r-wf-40",
      "word": "пахарь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-40.m4a"
+     "audio_file": "Audio/Content/R/r-wf-40.m4a",
+     "imageAsset": "word_pakhar"
     },
     {
      "id": "r-wf-41",
@@ -3174,7 +3363,8 @@
      "word": "январь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-42.m4a"
+     "audio_file": "Audio/Content/R/r-wf-42.m4a",
+     "imageAsset": "word_yanvar"
     },
     {
      "id": "r-wf-43",
@@ -3195,26 +3385,30 @@
      "word": "пузырь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-45.m4a"
+     "audio_file": "Audio/Content/R/r-wf-45.m4a",
+     "imageAsset": "word_puzyr"
     },
     {
      "id": "r-wf-46",
      "word": "снегирь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-46.m4a"
+     "audio_file": "Audio/Content/R/r-wf-46.m4a",
+     "imageAsset": "word_snegir"
     },
     {
      "id": "r-wf-47",
      "word": "костёр",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-47.m4a"
+     "audio_file": "Audio/Content/R/r-wf-47.m4a",
+     "imageAsset": "word_kostyor"
     },
     {
      "id": "r-wf-48",
      "word": "буксир",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-48.m4a"
+     "audio_file": "Audio/Content/R/r-wf-48.m4a",
+     "imageAsset": "word_buksir"
     },
     {
      "id": "r-wf-49",
@@ -3227,7 +3421,8 @@
      "word": "инженер",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-50.m4a"
+     "audio_file": "Audio/Content/R/r-wf-50.m4a",
+     "imageAsset": "word_inzhener"
     },
     {
      "id": "r-wf-51",
@@ -3247,7 +3442,8 @@
      "id": "r-wf-53",
      "word": "повар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-53.m4a"
+     "audio_file": "Audio/Content/R/r-wf-53.m4a",
+     "imageAsset": "word_povar"
     },
     {
      "id": "r-wf-54",
@@ -3261,21 +3457,24 @@
      "word": "ветер",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-55.m4a"
+     "audio_file": "Audio/Content/R/r-wf-55.m4a",
+     "imageAsset": "word_veter"
     },
     {
      "id": "r-wf-56",
      "word": "катер",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-56.m4a"
+     "audio_file": "Audio/Content/R/r-wf-56.m4a",
+     "imageAsset": "word_kater"
     },
     {
      "id": "r-wf-57",
      "word": "компьютер",
      "hint": "Мягкий [Р'].",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-57.m4a"
+     "audio_file": "Audio/Content/R/r-wf-57.m4a",
+     "imageAsset": "word_kompyuter"
     },
     {
      "id": "r-wf-58",
@@ -3293,26 +3492,30 @@
      "id": "r-wf-60",
      "word": "светофор",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-60.m4a"
+     "audio_file": "Audio/Content/R/r-wf-60.m4a",
+     "imageAsset": "word_svetofor"
     },
     {
      "id": "r-wf-61",
      "word": "коридор",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-61.m4a"
+     "audio_file": "Audio/Content/R/r-wf-61.m4a",
+     "imageAsset": "word_koridor"
     },
     {
      "id": "r-wf-62",
      "word": "реактор",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wf-62.m4a"
+     "audio_file": "Audio/Content/R/r-wf-62.m4a",
+     "imageAsset": "word_reaktor"
     },
     {
      "id": "r-wf-63",
      "word": "трактор",
      "hint": "Стечение ТР.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-63.m4a"
+     "audio_file": "Audio/Content/R/r-wf-63.m4a",
+     "imageAsset": "word_traktor"
     },
     {
      "id": "r-wf-64",
@@ -3325,7 +3528,8 @@
      "id": "r-wf-65",
      "word": "сахар",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-65.m4a"
+     "audio_file": "Audio/Content/R/r-wf-65.m4a",
+     "imageAsset": "word_sakhar"
     },
     {
      "id": "r-wf-66",
@@ -3365,14 +3569,16 @@
      "word": "гитара",
      "hint": "Форма: гитара — Р в конце.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-71.m4a"
+     "audio_file": "Audio/Content/R/r-wf-71.m4a",
+     "imageAsset": "word_gitara"
     },
     {
      "id": "r-wf-72",
      "word": "якорь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-72.m4a"
+     "audio_file": "Audio/Content/R/r-wf-72.m4a",
+     "imageAsset": "word_yakor"
     },
     {
      "id": "r-wf-73",
@@ -3393,7 +3599,8 @@
      "word": "пахарь",
      "hint": "Мягкий [Р'].",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-75.m4a"
+     "audio_file": "Audio/Content/R/r-wf-75.m4a",
+     "imageAsset": "word_pakhar"
     },
     {
      "id": "r-wf-76",
@@ -3407,27 +3614,31 @@
      "word": "сувенир",
      "hint": "су-ве-ниР. [Р] в конце.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-77.m4a"
+     "audio_file": "Audio/Content/R/r-wf-77.m4a",
+     "imageAsset": "word_suvenir"
     },
     {
      "id": "r-wf-78",
      "word": "бобёр",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-78.m4a"
+     "audio_file": "Audio/Content/R/r-wf-78.m4a",
+     "imageAsset": "word_bobyor"
     },
     {
      "id": "r-wf-79",
      "word": "санитар",
      "difficulty": 2,
      "audio_file": "Audio/Content/R/r-wf-79.m4a",
-     "hint": "са-ни-таР. [Р] в конце."
+     "hint": "са-ни-таР. [Р] в конце.",
+     "imageAsset": "word_sanitar"
     },
     {
      "id": "r-wf-80",
      "word": "балагур",
      "hint": "ба-ла-гуР. [Р] в конце.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-80.m4a"
+     "audio_file": "Audio/Content/R/r-wf-80.m4a",
+     "imageAsset": "word_balagur"
     },
     {
      "id": "r-wf-81",
@@ -3441,7 +3652,8 @@
      "word": "компьютер",
      "hint": "ТЕР — Р в западноевропейском слове.",
      "difficulty": 4,
-     "audio_file": "Audio/Content/R/r-wf-82.m4a"
+     "audio_file": "Audio/Content/R/r-wf-82.m4a",
+     "imageAsset": "word_kompyuter"
     },
     {
      "id": "r-wf-83",
@@ -3455,35 +3667,40 @@
      "word": "календарь",
      "hint": "ДАР + Ь — мягкий на конце.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-84.m4a"
+     "audio_file": "Audio/Content/R/r-wf-84.m4a",
+     "imageAsset": "word_kalendar"
     },
     {
      "id": "r-wf-85",
      "word": "фонарь",
      "hint": "НАР + Ь — мягкий [Р'] на конце.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-85.m4a"
+     "audio_file": "Audio/Content/R/r-wf-85.m4a",
+     "imageAsset": "word_fonar"
     },
     {
      "id": "r-wf-86",
      "word": "словарь",
      "hint": "ВАР + Ь — мягкий знак смягчает Р.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-86.m4a"
+     "audio_file": "Audio/Content/R/r-wf-86.m4a",
+     "imageAsset": "word_slovar"
     },
     {
      "id": "r-wf-87",
      "word": "дозор",
      "hint": "до-зоР. [Р] в конце.",
      "difficulty": 3,
-     "audio_file": "Audio/Content/R/r-wf-87.m4a"
+     "audio_file": "Audio/Content/R/r-wf-87.m4a",
+     "imageAsset": "word_dozor"
     },
     {
      "id": "r-wf-88",
      "word": "ветер",
      "hint": "ТЕР — звук в трёхбуквенном окончании.",
      "difficulty": 2,
-     "audio_file": "Audio/Content/R/r-wf-88.m4a"
+     "audio_file": "Audio/Content/R/r-wf-88.m4a",
+     "imageAsset": "word_veter"
     },
     {
      "id": "r-wf-89",
