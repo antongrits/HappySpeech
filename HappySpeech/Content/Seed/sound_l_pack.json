@@ -898,7 +898,7 @@
      "word": "ладонь",
      "difficulty": 2,
      "audio_file": "Audio/Content/L/l-wi-47.m4a",
-     "imageAsset": "word_ladon"
+     "imageAsset": "word_ruki"
     },
     {
      "id": "l-wi-48",
@@ -1072,7 +1072,7 @@
      "hint": "ЛА+ДОНЬ — внутренняя часть руки.",
      "difficulty": 2,
      "audio_file": "Audio/Content/L/l-wi-70.m4a",
-     "imageAsset": "word_ladon"
+     "imageAsset": "word_ruki"
     },
     {
      "id": "l-wi-71",

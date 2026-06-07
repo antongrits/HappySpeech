@@ -650,7 +650,7 @@
     },
     {
       "word": "мама",
-      "asset": "word_mom",
+      "asset": "word_serdtse",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -1692,7 +1692,7 @@
     },
     {
       "word": "ладонь",
-      "asset": "word_ladon",
+      "asset": "word_ruki",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2121,7 +2121,7 @@
     },
     {
       "word": "радость",
-      "asset": "word_radost",
+      "asset": "word_zvezda",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -8849,7 +8849,7 @@
     },
     {
       "word": "шиповка",
-      "asset": "word_shipovka",
+      "asset": "word_kedy",
       "recommendedStages": [
         "word"
       ],
@@ -8882,7 +8882,7 @@
     },
     {
       "word": "ширина",
-      "asset": "word_shirina",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -8893,7 +8893,7 @@
     },
     {
       "word": "широкий",
-      "asset": "word_shirokiy",
+      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -8948,7 +8948,7 @@
     },
     {
       "word": "шкурка",
-      "asset": "word_shkurka",
+      "asset": "word_kozhura",
       "recommendedStages": [
         "word"
       ],
@@ -9003,7 +9003,7 @@
     },
     {
       "word": "шнурок",
-      "asset": "word_shnurok",
+      "asset": "word_shnurki",
       "recommendedStages": [
         "word"
       ],
@@ -9080,7 +9080,7 @@
     },
     {
       "word": "шпала",
-      "asset": "word_shpala",
+      "asset": "word_relsy",
       "recommendedStages": [
         "word"
       ],
@@ -9102,7 +9102,7 @@
     },
     {
       "word": "шпион",
-      "asset": "word_shpion",
+      "asset": "word_lupa",
       "recommendedStages": [
         "word"
       ],
@@ -9168,7 +9168,7 @@
     },
     {
       "word": "шутка",
-      "asset": "word_shutka",
+      "asset": "word_kloun",
       "recommendedStages": [
         "word"
       ],
@@ -15200,7 +15200,7 @@
     },
     {
       "word": "женщина",
-      "asset": "word_zhenshina",
+      "asset": "word_chelovek",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -15326,7 +15326,7 @@
     },
     {
       "word": "пилот",
-      "asset": "word_pilot",
+      "asset": "word_samolyot",
       "recommendedStages": [
         "word"
       ],
@@ -15348,7 +15348,7 @@
     },
     {
       "word": "музыкант",
-      "asset": "word_muzykant",
+      "asset": "word_gitara",
       "recommendedStages": [
         "word"
       ],
@@ -15370,7 +15370,7 @@
     },
     {
       "word": "лето",
-      "asset": "word_leto",
+      "asset": "word_solntse",
       "recommendedStages": [
         "word"
       ],
@@ -22705,7 +22705,7 @@
     },
     {
       "word": "ладонь",
-      "asset": "word_ladon",
+      "asset": "word_ruki",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -23046,7 +23046,7 @@
     },
     {
       "word": "лето",
-      "asset": "word_leto",
+      "asset": "word_solntse",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -23893,7 +23893,7 @@
     },
     {
       "word": "mom",
-      "asset": "word_mom",
+      "asset": "word_serdtse",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24036,7 +24036,7 @@
     },
     {
       "word": "музыкант",
-      "asset": "word_muzykant",
+      "asset": "word_gitara",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24597,7 +24597,7 @@
     },
     {
       "word": "пилот",
-      "asset": "word_pilot",
+      "asset": "word_samolyot",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24817,7 +24817,7 @@
     },
     {
       "word": "radost",
-      "asset": "word_radost",
+      "asset": "word_zvezda",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26104,7 +26104,7 @@
     },
     {
       "word": "shipovka",
-      "asset": "word_shipovka",
+      "asset": "word_kedy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26137,7 +26137,7 @@
     },
     {
       "word": "shirina",
-      "asset": "word_shirina",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26148,7 +26148,7 @@
     },
     {
       "word": "shirokiy",
-      "asset": "word_shirokiy",
+      "asset": null,
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26203,7 +26203,7 @@
     },
     {
       "word": "shkurka",
-      "asset": "word_shkurka",
+      "asset": "word_kozhura",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26258,7 +26258,7 @@
     },
     {
       "word": "shnurok",
-      "asset": "word_shnurok",
+      "asset": "word_shnurki",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26346,7 +26346,7 @@
     },
     {
       "word": "shpala",
-      "asset": "word_shpala",
+      "asset": "word_relsy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26368,7 +26368,7 @@
     },
     {
       "word": "shpion",
-      "asset": "word_shpion",
+      "asset": "word_lupa",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -26445,7 +26445,7 @@
     },
     {
       "word": "shutka",
-      "asset": "word_shutka",
+      "asset": "word_kloun",
       "recommendedStages": [
         "wordInit",
         "wordMid"

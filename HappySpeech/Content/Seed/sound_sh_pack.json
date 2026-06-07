@@ -636,7 +636,7 @@
     {
      "id": "sh-wi-9",
      "word": "шутка",
-     "imageAsset": "word_shutka",
+     "imageAsset": "word_kloun",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-9.m4a"
@@ -708,7 +708,7 @@
     {
      "id": "sh-wi-18",
      "word": "широкий",
-     "imageAsset": "word_shirokiy",
+     "imageAsset": null,
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-18.m4a"
@@ -844,7 +844,7 @@
     {
      "id": "sh-wi-35",
      "word": "шнурок",
-     "imageAsset": "word_shnurok",
+     "imageAsset": "word_shnurki",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-35.m4a"
@@ -852,7 +852,7 @@
     {
      "id": "sh-wi-36",
      "word": "шнурок",
-     "imageAsset": "word_shnurok",
+     "imageAsset": "word_shnurki",
      "audioAsset": null,
      "difficulty": 2,
      "audio_file": "Audio/Content/SH/sh-wi-36.m4a"
@@ -932,7 +932,7 @@
     {
      "id": "sh-wi-46",
      "word": "ширина",
-     "imageAsset": "word_shirina",
+     "imageAsset": null,
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-46.m4a"
@@ -948,7 +948,7 @@
     {
      "id": "sh-wi-48",
      "word": "шиповка",
-     "imageAsset": "word_shipovka",
+     "imageAsset": "word_kedy",
      "audioAsset": null,
      "difficulty": 3,
      "audio_file": "Audio/Content/SH/sh-wi-48.m4a"
@@ -1070,7 +1070,7 @@
      "hint": "ШП — редкое стечение.",
      "difficulty": 4,
      "audio_file": "Audio/Content/Sh/sh-wi-63.m4a",
-     "imageAsset": "word_shpion"
+     "imageAsset": "word_lupa"
     },
     {
      "id": "sh-wi-64",
@@ -1102,7 +1102,7 @@
      "hint": "ШП + Л — два стечения.",
      "difficulty": 4,
      "audio_file": "Audio/Content/Sh/sh-wi-67.m4a",
-     "imageAsset": "word_shpala"
+     "imageAsset": "word_relsy"
     },
     {
      "id": "sh-wi-68",
@@ -1126,7 +1126,7 @@
      "hint": "ШК + РК — двойное стечение.",
      "difficulty": 5,
      "audio_file": "Audio/Content/Sh/sh-wi-70.m4a",
-     "imageAsset": "word_shkurka"
+     "imageAsset": "word_kozhura"
     },
     {
      "id": "sh-wi-71",
