@@ -79,6 +79,9 @@ private final class SpyCustomWordListPresenter:
         previewCount += 1
         lastPreviewCount = response.exercises.count
     }
+
+    func presentAutoPick(response: CustomWordListModels.AutoPick.Response) async {}
+    func presentAutoPickLoading(_ isLoading: Bool) async {}
 }
 
 // MARK: - Interactor Tests

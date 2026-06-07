@@ -40,6 +40,9 @@ final class CustomWordListPresenterTests: XCTestCase {
         func displayPreview(viewModel: CustomWordListModels.Preview.ViewModel) async {
             previewVM = viewModel
         }
+
+        func displayAutoPick(viewModel: CustomWordListModels.AutoPick.ViewModel) async {}
+        func displayAutoPickLoading(_ isLoading: Bool) async {}
     }
 
     private func makeSUT() -> (CustomWordListPresenter, DisplaySpy) {
