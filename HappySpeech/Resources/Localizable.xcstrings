@@ -6938,6 +6938,28 @@
         }
       }
     },
+    "breatheAndSpeak.blow.detected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец, дуешь!"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.blow.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дуй на свечку — сильнее!"
+          }
+        }
+      }
+    },
     "breatheAndSpeak.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -34652,16 +34674,6 @@
         }
       }
     },
-    "practiceReminder.snooze": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Напомнить позже"
-          }
-        }
-      }
-    },
     "practiceReminder.cta.action": {
       "localizations": {
         "ru": {
@@ -34698,6 +34710,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Напоминание"
+          }
+        }
+      }
+    },
+    "practiceReminder.snooze": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напомнить позже"
           }
         }
       }
@@ -46099,6 +46121,108 @@
         }
       }
     },
+    "settings.calmMode.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снижает визуальную и звуковую стимуляцию в детском режиме"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduces visual and audio stimulation in the kids mode"
+          }
+        }
+      }
+    },
+    "settings.calmMode.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помогает детям, чувствительным к ярким анимациям и звукам: фон становится спокойнее, награды появляются мягко, без взрывов конфетти. Можно включить или выключить в любой момент."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Helps children who are sensitive to bright animations and sounds: the background becomes calmer and rewards appear gently, without confetti bursts. You can turn it on or off at any time."
+          }
+        }
+      }
+    },
+    "settings.calmMode.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode"
+          }
+        }
+      }
+    },
+    "settings.calmMode.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Меньше анимаций, частиц и ярких вспышек"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fewer animations, particles and bright flashes"
+          }
+        }
+      }
+    },
+    "settings.calmMode.toast.disabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим выключен"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode disabled"
+          }
+        }
+      }
+    },
+    "settings.calmMode.toast.enabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный режим включён"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calm mode enabled"
+          }
+        }
+      }
+    },
     "settings.content.autoDownload": {
       "extractionState": "manual",
       "localizations": {
@@ -47019,6 +47143,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "О приложении"
+          }
+        }
+      }
+    },
+    "settings.section.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доступность"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accessibility"
           }
         }
       }
@@ -51573,16 +51714,6 @@
         }
       }
     },
-    "specialistSchedule.topic.general": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятие"
-          }
-        }
-      }
-    },
     "specialistSchedule.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -51609,6 +51740,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Расписание"
+          }
+        }
+      }
+    },
+    "specialistSchedule.topic.general": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятие"
           }
         }
       }
@@ -53221,116 +53362,6 @@
         }
       }
     },
-    "storyRetelling.record.prompt": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вспомни сказку и расскажи её своими словами — назови как можно больше героев и событий."
-          }
-        }
-      }
-    },
-    "storyRetelling.record.start": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Записать пересказ"
-          }
-        }
-      }
-    },
-    "storyRetelling.record.listening": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слушаю тебя…"
-          }
-        }
-      }
-    },
-    "storyRetelling.record.stop": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово"
-          }
-        }
-      }
-    },
-    "storyRetelling.result.passed": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отличный пересказ!"
-          }
-        }
-      }
-    },
-    "storyRetelling.result.tryAgain": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Почти! Попробуй вспомнить больше героев."
-          }
-        }
-      }
-    },
-    "storyRetelling.result.coverage": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покрытие фактов"
-          }
-        }
-      }
-    },
-    "storyRetelling.result.missed": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пропущено"
-          }
-        }
-      }
-    },
-    "storyRetelling.result.retry": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ещё раз"
-          }
-        }
-      }
-    },
-    "storyRetelling.status.done": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "выполнено"
-          }
-        }
-      }
-    },
-    "storyRetelling.status.todo": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ещё не пройдено"
-          }
-        }
-      }
-    },
     "storyRetelling.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -53357,6 +53388,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Перескажи сказку"
+          }
+        }
+      }
+    },
+    "storyRetelling.record.listening": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю тебя…"
+          }
+        }
+      }
+    },
+    "storyRetelling.record.prompt": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вспомни сказку и расскажи её своими словами — назови как можно больше героев и событий."
+          }
+        }
+      }
+    },
+    "storyRetelling.record.start": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать пересказ"
+          }
+        }
+      }
+    },
+    "storyRetelling.record.stop": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.coverage": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покрытие фактов"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.missed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропущено"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.passed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличный пересказ!"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.retry": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "storyRetelling.result.tryAgain": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Попробуй вспомнить больше героев."
+          }
+        }
+      }
+    },
+    "storyRetelling.status.done": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выполнено"
+          }
+        }
+      }
+    },
+    "storyRetelling.status.todo": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ещё не пройдено"
           }
         }
       }
@@ -67523,125 +67664,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "settings.section.accessibility": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Доступность"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Accessibility"
-          }
-        }
-      }
-    },
-    "settings.calmMode.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спокойный режим"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calm mode"
-          }
-        }
-      }
-    },
-    "settings.calmMode.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Меньше анимаций, частиц и ярких вспышек"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fewer animations, particles and bright flashes"
-          }
-        }
-      }
-    },
-    "settings.calmMode.footer": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Помогает детям, чувствительным к ярким анимациям и звукам: фон становится спокойнее, награды появляются мягко, без взрывов конфетти. Можно включить или выключить в любой момент."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Helps children who are sensitive to bright animations and sounds: the background becomes calmer and rewards appear gently, without confetti bursts. You can turn it on or off at any time."
-          }
-        }
-      }
-    },
-    "settings.calmMode.a11y.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Снижает визуальную и звуковую стимуляцию в детском режиме"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reduces visual and audio stimulation in the kids mode"
-          }
-        }
-      }
-    },
-    "settings.calmMode.toast.enabled": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спокойный режим включён"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calm mode enabled"
-          }
-        }
-      }
-    },
-    "settings.calmMode.toast.disabled": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спокойный режим выключен"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Calm mode disabled"
           }
         }
       }

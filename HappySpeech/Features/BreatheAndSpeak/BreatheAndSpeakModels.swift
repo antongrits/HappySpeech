@@ -113,6 +113,10 @@ enum BreatheAndSpeakModels {
             let stepLabel: String
             let progressFraction: Double
             let accessibilityLabel: String
+            /// Требует реального акустического выдоха/дутья (дыхательные упражнения):
+            /// прогресс удержания идёт только пока ребёнок реально дует в микрофон.
+            /// Артикуляционные позы (`false`) удерживаются по таймеру без аудио.
+            let requiresBlow: Bool
         }
     }
 

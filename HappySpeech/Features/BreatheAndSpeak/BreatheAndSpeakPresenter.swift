@@ -108,7 +108,8 @@ final class BreatheAndSpeakPresenter: BreatheAndSpeakPresentationLogic {
                 kindLabel,
                 exercise.name,
                 exercise.instruction
-            )
+            ),
+            requiresBlow: exercise.kind == .breathing
         )
     }
 }

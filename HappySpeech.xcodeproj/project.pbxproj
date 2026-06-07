@@ -362,6 +362,7 @@
 		2C2D2A982C7662D83FF53977 /* SiblingDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9212F06ECD85664C8C64283B /* SiblingDisplayLogic.swift */; };
 		2C44825261CD242B317E88DF /* UIApplication+TopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9A5ED6ECF78776CB3C2E09 /* UIApplication+TopVC.swift */; };
 		2C77A721E891D4F10690A255 /* ScreeningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D6678ED090C0F93C08A059 /* ScreeningView.swift */; };
+		2C799D7CC527E5E28E918384 /* BlowDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E22F29284DC73EF48A00A49 /* BlowDetectionService.swift */; };
 		2CB495B099757F1128E30914 /* SpecialistPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC432CB10D55ED624EA95445 /* SpecialistPresenter.swift */; };
 		2CE26418FFC497384D223E8E /* SpeechGrowthDiaryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E969512D3995E31706DBAC3 /* SpeechGrowthDiaryPresenter.swift */; };
 		2CEEE80A85D81D6BBE1A7DC4 /* VisualAcousticPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5D80B6E96276B7630F2862 /* VisualAcousticPresenter.swift */; };
@@ -638,6 +639,7 @@
 		4A8DA6ED0D296641DBE8E752 /* SoftOnsetInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC897B4FBD1438AD25F9849F /* SoftOnsetInteractorTests.swift */; };
 		4ADDF0A19A1432E1B9D380BE /* RetellingWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F8E5271BA442339C1E5E08 /* RetellingWorker.swift */; };
 		4B16556523356A5CD0F5DE58 /* CustomizationSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5E4B88F8F15C6EAD7825A1 /* CustomizationSmokeUITest.swift */; };
+		4B23B8658A4FDD110C966928 /* BlowDetectionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7D6E84CFA1E9D59CF84577 /* BlowDetectionServiceTests.swift */; };
 		4B78F5113AE0FB920CB13834 /* WeeklyChallengeWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69AE26997C257DFAB480085 /* WeeklyChallengeWorkerTests.swift */; };
 		4BA576D4D3FD4B4E65EC0420 /* ParentInsightsTimelineDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF88E9B050AA7F70693209 /* ParentInsightsTimelineDisplayLogic.swift */; };
 		4BBED59938218A0C9632F1B0 /* WorldMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E7EB0EC89BDFA9002E394E /* WorldMapModels.swift */; };
@@ -1163,6 +1165,7 @@
 		87FC2CA797B87F6EB5A393F5 /* HelpCenterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24652CCCFA5490D6DF749A1 /* HelpCenterInteractor.swift */; };
 		8807C9F73B97362FE3DB9CDC /* AssignedHomeworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63640613AC63BC60C0A96D65 /* AssignedHomeworkView.swift */; };
 		883553A6FCE0BE44980EAF88 /* MLIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CD5DCA46987F709A6F874 /* MLIntegrationTests.swift */; };
+		8877C7C28019056278AE0BA7 /* MockBlowDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07026037A2127FE751C63E9D /* MockBlowDetectionService.swift */; };
 		88A6661FC4FB955FA05884D3 /* PrecannedNarrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993650E13BEBEF9114C90A8F /* PrecannedNarrations.swift */; };
 		88A6EB97C50479F637348AD2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0D0D47B432C455E4F6435A2D /* FirebaseDatabase */; };
 		88D4E8DD1D1FC0F92D1E09B3 /* OfflineMiniGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1B616B190628800752A2D2 /* OfflineMiniGameView.swift */; };
@@ -2181,6 +2184,7 @@
 		06ED2449926E2BA141B7B229 /* ComparisonDashboardInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardInteractorTests.swift; sourceTree = "<group>"; };
 		06F03EAB6A17F5DF45F03158 /* AuthFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowTests.swift; sourceTree = "<group>"; };
 		06F14474EA4D43E9222274E3 /* SoundHunterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundHunterView.swift; sourceTree = "<group>"; };
+		07026037A2127FE751C63E9D /* MockBlowDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBlowDetectionService.swift; sourceTree = "<group>"; };
 		07159F11C1103798C1B8BC60 /* pack_diff_voicing_pack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_diff_voicing_pack.json; sourceTree = "<group>"; };
 		071F3281F18681AF9A950B1A /* FamilyCalendarSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarSmokeUITest.swift; sourceTree = "<group>"; };
 		074AF5D02954E43FB60AA803 /* SentenceBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceBuilderView.swift; sourceTree = "<group>"; };
@@ -3004,6 +3008,7 @@
 		6DE378DF35B8CE9ED3D90410 /* ArticulationGymRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationGymRouter.swift; sourceTree = "<group>"; };
 		6DFC97D1DB135EDC4A241D29 /* celebrate_first_session.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_first_session.json; sourceTree = "<group>"; };
 		6E0F22F45952581500B4093C /* LiteracyStartRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteracyStartRouter.swift; sourceTree = "<group>"; };
+		6E22F29284DC73EF48A00A49 /* BlowDetectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowDetectionService.swift; sourceTree = "<group>"; };
 		6E3D64EDE36D05BA9F3E7B14 /* HoldThePoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldThePoseView.swift; sourceTree = "<group>"; };
 		6E83EDF25601B5EFE307697A /* KaraokePitchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokePitchInteractor.swift; sourceTree = "<group>"; };
 		6E969512D3995E31706DBAC3 /* SpeechGrowthDiaryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechGrowthDiaryPresenter.swift; sourceTree = "<group>"; };
@@ -3778,6 +3783,7 @@
 		CF1FEC16FF00C65FF93BEF69 /* SpecialistQuickAssessmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistQuickAssessmentInteractor.swift; sourceTree = "<group>"; };
 		CF2505B2C0579A1767E5A6C7 /* LyalyaMailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaMailView.swift; sourceTree = "<group>"; };
 		CF3867B240FE92845665BD2C /* OralStoryCreatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OralStoryCreatorView.swift; sourceTree = "<group>"; };
+		CF7D6E84CFA1E9D59CF84577 /* BlowDetectionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlowDetectionServiceTests.swift; sourceTree = "<group>"; };
 		CF97D592F03C2063EB6C6A2E /* PlainProgressChartAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainProgressChartAdapterTests.swift; sourceTree = "<group>"; };
 		CFB581BE865E5FC17D387697 /* DailyRitualsLyalyaInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyRitualsLyalyaInteractor.swift; sourceTree = "<group>"; };
 		CFC66CD8BF748ED55F294DDE /* VisualVocabularyFlipModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualVocabularyFlipModels.swift; sourceTree = "<group>"; };
@@ -4540,6 +4546,7 @@
 				D5800FC34C87F3296B3FF444 /* FirebaseSnapshotMocks.swift */,
 				06C8CF4BDC50069CF65B907F /* FirebaseTestSupport.swift */,
 				7C7EB8D292110ED7E5DC59F0 /* MockAudioFileIO.swift */,
+				07026037A2127FE751C63E9D /* MockBlowDetectionService.swift */,
 				BEA54F87350924351E097537 /* MockMLExecutor.swift */,
 				E0095D88757B1EE79E09EEA1 /* MockServices.swift */,
 				CB482E15ADF63FA5D051DC8C /* NetworkTestSupport.swift */,
@@ -5181,6 +5188,7 @@
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
 				00EF543077114B3916857A9C /* BiometricGateService.swift */,
+				6E22F29284DC73EF48A00A49 /* BlowDetectionService.swift */,
 				DE502C21AD382CF9B8153B04 /* ChatRepository.swift */,
 				4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */,
 				028723D537ED28ADEED77DE0 /* DailyUsageTracker.swift */,
@@ -8705,6 +8713,7 @@
 				6B26CFA7082EA8BFC60530ED /* AudioAnalysisServiceTests.swift */,
 				621EF3CD10F9911A758291DD /* AuthServiceContractTests.swift */,
 				B263DE19A6552F56D2158B08 /* BiometricGateServiceTests.swift */,
+				CF7D6E84CFA1E9D59CF84577 /* BlowDetectionServiceTests.swift */,
 				674FC62754BA1B80389F94B6 /* CloudFunctionsServiceTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
 				479E92A0575DCC897740738B /* CutsceneServiceTests.swift */,
@@ -10098,6 +10107,7 @@
 				539BFD8D72BAB742DD476691 /* BingoPresenterTests.swift in Sources */,
 				10BB7EB8C02A0FE7EA852436 /* BiometricGateServiceTests.swift in Sources */,
 				30D8B733230D190CC6AC96D8 /* BlockCComponentsSnapshotTests.swift in Sources */,
+				4B23B8658A4FDD110C966928 /* BlowDetectionServiceTests.swift in Sources */,
 				7F5D7099B56468B392C4DB5A /* BodyPoseWorkerTests.swift in Sources */,
 				1C5901253B8C94C17FD259D7 /* BreatheAndSpeakInteractorTests.swift in Sources */,
 				4BE9580F5DD4DBDBD5090D85 /* BreatheAndSpeakPresenterTests.swift in Sources */,
@@ -10313,6 +10323,7 @@
 				06656D9AFE3E3102C6457DAF /* MinimalPairsInteractorTests.swift in Sources */,
 				C2B8377D119E5EBC9E08998E /* MinimalPairsPresenterTests.swift in Sources */,
 				9816325BCA9F2852E92E7E55 /* MockAudioFileIO.swift in Sources */,
+				8877C7C28019056278AE0BA7 /* MockBlowDetectionService.swift in Sources */,
 				1948CB7E8B822EA424BBBD92 /* MockContainer.swift in Sources */,
 				ADD5B51B9C4A9EDA7AC3680B /* MockMLExecutor.swift in Sources */,
 				CD6AE5AC80C3C2E4339572C1 /* MockRepositoryTests.swift in Sources */,
@@ -10712,6 +10723,7 @@
 				65C42C2C5277F422B29F878B /* BingoView.swift in Sources */,
 				F667F8BE6F86C1DAEC39084C /* BiometricGate.swift in Sources */,
 				956B7F145EE10EB940BEFCDB /* BiometricGateService.swift in Sources */,
+				2C799D7CC527E5E28E918384 /* BlowDetectionService.swift in Sources */,
 				A56A745195B02814E3FE8434 /* BodyPoseWorker.swift in Sources */,
 				72AB7A43366E3397994FC0DF /* BreatheAndSpeakCorpus.swift in Sources */,
 				9F8D6CB6C3B966177F9DD60C /* BreatheAndSpeakDisplayLogic.swift in Sources */,

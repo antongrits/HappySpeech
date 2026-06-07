@@ -57,6 +57,17 @@ struct BreatheAndSpeakView: View {
     /// чтобы счётчик не убывал вдвое быстрее при быстрой смене шагов.
     @State private var holdGeneration: Int = 0
 
+    /// Акустический детектор выдоха/дутья (Apple Sound Analysis + DSP).
+    /// Создаётся лениво при первом дыхательном шаге.
+    @State private var blowDetector: (any BlowDetecting)?
+    /// Живая сила потока 0…1 — управляет пламенем свечи и кольцом таймера.
+    @State private var blowStrength: Float = 0
+    /// Идёт ли сейчас реальный выдох (для подсказки/гаптики).
+    @State private var isBlowing: Bool = false
+    /// Микрофон недоступен (нет разрешения / симулятор без аудиовхода) —
+    /// дыхательный шаг честно откатывается на таймер.
+    @State private var blowUnavailable: Bool = false
+
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
@@ -105,6 +116,9 @@ struct BreatheAndSpeakView: View {
             }
             .task {
                 await setupAndStart()
+            }
+            .onDisappear {
+                teardownBlowDetection()
             }
         }
         .environment(\.circuitContext, .kid)
@@ -197,7 +211,12 @@ struct BreatheAndSpeakView: View {
     }
 
     private func holdCircle(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
-        ZStack {
+        // Для дыхательных шагов с активным микрофоном кольцо «дышит» вместе с
+        // реальной силой выдоха (живой акустический сигнал), для остальных —
+        // ровная заливка прогресса удержания.
+        let usesLiveBlow = step.requiresBlow && isHolding && !blowUnavailable
+        let ringScale = usesLiveBlow ? CGFloat(0.92 + 0.16 * blowStrength) : 1.0
+        return ZStack {
             Circle()
                 .stroke(ColorTokens.Kid.surfaceAlt, lineWidth: 10)
             Circle()
@@ -206,11 +225,24 @@ struct BreatheAndSpeakView: View {
                         style: StrokeStyle(lineWidth: 10, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .animation(reduceMotion ? nil : .linear(duration: 1), value: holdRemaining)
-            Text(isHolding ? "\(holdRemaining)" : "\(step.holdSeconds)")
-                .font(TypographyTokens.title(32).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.ink)
+
+            if usesLiveBlow {
+                // Реальная сила дутья: пламя свечи отклоняется/тает по сигналу.
+                Image(systemName: isBlowing ? "wind" : "flame.fill")
+                    .font(.system(size: 30))
+                    .foregroundStyle(isBlowing ? ColorTokens.Brand.sky : ColorTokens.Brand.gold)
+                    .scaleEffect(reduceMotion ? 1.0 : ringScale)
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: blowStrength)
+                    .accessibilityHidden(true)
+            } else {
+                Text(isHolding ? "\(holdRemaining)" : "\(step.holdSeconds)")
+                    .font(TypographyTokens.title(32).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Kid.ink)
+            }
         }
         .frame(width: 120, height: 120)
+        .scaleEffect(reduceMotion ? 1.0 : ringScale)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: blowStrength)
         .accessibilityLabel(Text("breatheAndSpeak.timer.a11y"))
         .accessibilityValue(Text(verbatim: "\(isHolding ? holdRemaining : step.holdSeconds)"))
     }
@@ -226,10 +258,18 @@ struct BreatheAndSpeakView: View {
     @ViewBuilder
     private func actionButton(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
         if isHolding {
-            Text("breatheAndSpeak.holding")
+            // Для дыхательных шагов с живым микрофоном даём реальную обратную
+            // связь: «дуй сильнее» пока сигнала нет, «молодец» когда реально дует.
+            let holdingText: LocalizedStringKey = (step.requiresBlow && !blowUnavailable)
+                ? (isBlowing ? "breatheAndSpeak.blow.detected" : "breatheAndSpeak.blow.prompt")
+                : "breatheAndSpeak.holding"
+            Text(holdingText)
                 .font(TypographyTokens.headline(17))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .foregroundStyle(isBlowing ? ColorTokens.Brand.primary : ColorTokens.Kid.inkMuted)
                 .frame(maxWidth: .infinity, minHeight: 56)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         } else if holdRemaining == 0 && holdWasStarted {
             Button {
                 Task { await advance() }
@@ -362,7 +402,21 @@ struct BreatheAndSpeakView: View {
         holdRemaining = step.holdSeconds
         isHolding = true
         holdWasStarted = true
+        blowStrength = 0
+        isBlowing = false
         container.hapticService.impact(.light)
+
+        if step.requiresBlow {
+            // Дыхательный шаг — прогресс удержания управляется РЕАЛЬНЫМ выдохом.
+            startBlowGatedHold(step, generation: generation)
+        } else {
+            // Артикуляционная поза — удержание по таймеру (аудио не нужно).
+            startTimerHold(generation: generation)
+        }
+    }
+
+    /// Артикуляционная поза: ровный посекундный отсчёт.
+    private func startTimerHold(generation: Int) {
         Task {
             while holdRemaining > 0 {
                 try? await Task.sleep(for: .seconds(1))
@@ -371,6 +425,78 @@ struct BreatheAndSpeakView: View {
             }
             guard generation == holdGeneration else { return }
             isHolding = false
+            container.hapticService.notification(.success)
+        }
+    }
+
+    /// Дыхательный шаг: запускает live-детекцию выдоха и продвигает отсчёт
+    /// только пока ребёнок реально дует. Если микрофон недоступен (нет
+    /// разрешения / симулятор без аудиовхода) — честно откатывается на таймер.
+    private func startBlowGatedHold(
+        _ step: BreatheAndSpeakModels.Start.StepViewModel,
+        generation: Int
+    ) {
+        let detector = blowDetector ?? LiveBlowDetectionService()
+        blowDetector = detector
+        blowUnavailable = false
+
+        Task {
+            let started = await detector.startLive()
+            guard generation == holdGeneration, isHolding else {
+                await detector.stopLive()
+                return
+            }
+            if !started {
+                // Graceful fallback: без живого аудио ведём шаг по таймеру.
+                blowUnavailable = true
+                startTimerHold(generation: generation)
+                return
+            }
+            await consumeBlowStream(detector, generation: generation)
+        }
+    }
+
+    /// Потребляет поток `BlowSample`: накапливает реальное время выдоха и сводит
+    /// его к целым секундам обратного отсчёта; завершает шаг по достижении нуля.
+    private func consumeBlowStream(
+        _ detector: any BlowDetecting,
+        generation: Int
+    ) async {
+        var accumulatedSeconds: Double = 0
+        var lastTimestamp: TimeInterval?
+        let totalSeconds = Double(holdRemaining)
+
+        for await sample in detector.liveStream {
+            guard generation == holdGeneration, isHolding else { break }
+
+            blowStrength = sample.strength
+            if sample.isBlowing != isBlowing {
+                isBlowing = sample.isBlowing
+                if sample.isBlowing { container.hapticService.impact(.light) }
+            }
+
+            // Накопление РЕАЛЬНОГО времени выдоха по дельте меток времени кадров.
+            if let last = lastTimestamp, sample.isBlowing {
+                let delta = max(0, sample.timestamp - last)
+                accumulatedSeconds += delta
+            }
+            lastTimestamp = sample.timestamp
+
+            let remaining = max(0, Int((totalSeconds - accumulatedSeconds).rounded(.up)))
+            if remaining != holdRemaining { holdRemaining = remaining }
+
+            if accumulatedSeconds >= totalSeconds {
+                holdRemaining = 0
+                break
+            }
+        }
+
+        await detector.stopLive()
+        guard generation == holdGeneration else { return }
+        isHolding = false
+        isBlowing = false
+        blowStrength = 0
+        if holdRemaining == 0 {
             container.hapticService.notification(.success)
         }
     }
@@ -406,6 +532,17 @@ struct BreatheAndSpeakView: View {
         isHolding = false
         holdWasStarted = false
         holdRemaining = 0
+        isBlowing = false
+        blowStrength = 0
+        if let detector = blowDetector {
+            Task { await detector.stopLive() }
+        }
+    }
+
+    /// Останавливает живую детекцию при уходе с экрана (освобождает микрофон).
+    private func teardownBlowDetection() {
+        guard let detector = blowDetector else { return }
+        Task { await detector.stopLive() }
     }
 }
 
