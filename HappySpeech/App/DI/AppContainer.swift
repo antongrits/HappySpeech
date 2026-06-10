@@ -108,10 +108,10 @@ public final class AppContainer {
     // COPPA: childId без PII; familyId = parent uid; доступ parent-auth-gated.
     private var _homeworkRepository: (any HomeworkRepository)?
 
-    // MethodologyAssistantClient — Cloud Function `askMethodologyAssistant`
-    // (Vertex AI Search). Lazy. Live: LiveMethodologyAssistantClient.
-    // Preview/Test: MockMethodologyAssistantClient. COPPA: только
-    // parent / specialist контур за parental gate — НИКОГДА из kid-контекста.
+    // MethodologyAssistantClient — локальный офлайн RAG по методическому
+    // корпусу (BM25 поверх methodology_corpus.json). Lazy.
+    // Live: LocalMethodologyAssistantClient. Preview/Test: Mock.
+    // COPPA: только parent / specialist контур за parental gate.
     private var _methodologyAssistantClient: (any MethodologyAssistantClientProtocol)?
 
     // VideoPlayerService — lazy, реестр видео из Videos/video-manifest.json
@@ -619,16 +619,20 @@ public final class AppContainer {
         _homeworkRepository = repository
     }
 
-    // MARK: - MethodologyAssistantClient (Vertex AI Search)
+    // MARK: - MethodologyAssistantClient (локальный офлайн RAG)
 
-    /// Клиент помощника по методике логопедии (Cloud Function
-    /// `askMethodologyAssistant`, Vertex AI Search / Discovery Engine).
+    /// Помощник по методике логопедии — **локальный, офлайн, бесплатный**.
+    ///
+    /// Поиск по забандленному методическому корпусу (`methodology_corpus.json`,
+    /// 13 документов) методом BM25. Никаких облачных вызовов и затрат ($0).
+    /// Раньше использовался платный Vertex AI Search через Cloud Function —
+    /// зависимость убрана.
     ///
     /// Только parent / specialist контур за parental gate (COPPA). Детский
     /// контур НИКОГДА не должен обращаться к этому клиенту.
     public var methodologyAssistantClient: any MethodologyAssistantClientProtocol {
         if let existing = _methodologyAssistantClient { return existing }
-        let new: any MethodologyAssistantClientProtocol = LiveMethodologyAssistantClient()
+        let new: any MethodologyAssistantClientProtocol = LocalMethodologyAssistantClient()
         _methodologyAssistantClient = new
         return new
     }

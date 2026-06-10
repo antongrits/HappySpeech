@@ -1,11 +1,11 @@
-import FirebaseFunctions
 import Foundation
 
 // MARK: - Models
 
 /// Источник, на который опирался ответ помощника по методике.
 ///
-/// Соответствует документу методического корпуса (Vertex AI Search datastore).
+/// Соответствует документу забандленного методического корпуса
+/// (`methodology_corpus.json`, например `therapy-stages.md`).
 public struct MethodologyCitation: Sendable, Equatable, Identifiable {
     /// Человекочитаемый заголовок документа (для отображения).
     public let title: String
@@ -38,12 +38,13 @@ public struct MethodologyAnswer: Sendable, Equatable {
 
 // MARK: - Protocol
 
-/// Клиент Cloud Function `askMethodologyAssistant`.
-///
 /// Помощник по методике логопедии для **взрослых контуров** (родитель /
-/// специалист), доступен только за parental gate. Принимает текстовый вопрос
-/// взрослого и возвращает обоснованный ответ со ссылками на методический
-/// корпус (Vertex AI Search / Discovery Engine).
+/// специалист), доступен только за parental gate.
+///
+/// Принимает текстовый вопрос взрослого и возвращает обоснованный ответ со
+/// ссылками на методический корпус. Реализация —
+/// ``LocalMethodologyAssistantClient`` (офлайн BM25-поиск по забандленному
+/// корпусу, $0). Прежний облачный путь (Vertex AI Search) убран.
 ///
 /// > Important: COPPA — НИКАКОГО детского аудио или PII. Только текстовые
 /// > методические вопросы взрослого. Показывать исключительно в
@@ -63,67 +64,6 @@ public extension MethodologyAssistantClientProtocol {
     /// Удобный вызов без сессии (новый вопрос).
     func ask(question: String) async throws -> MethodologyAnswer {
         try await ask(question: question, sessionId: nil)
-    }
-}
-
-// MARK: - Live
-
-public final class LiveMethodologyAssistantClient: LiveCloudFunctionsClientBase,
-                                                   MethodologyAssistantClientProtocol,
-                                                   @unchecked Sendable {
-
-    /// Совпадает с серверным `MAX_QUESTION_LENGTH`.
-    private static let maxQuestionLength = 600
-
-    public init(region: String = CloudFunctionsRegion.default) {
-        super.init(region: region, category: "MethodologyAssistant")
-    }
-
-    public func ask(question: String, sessionId: String?) async throws -> MethodologyAnswer {
-        let trimmed = question.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard trimmed.count >= 3 else {
-            throw CloudFunctionsClientError.invalidArgument("question too short")
-        }
-        guard trimmed.count <= Self.maxQuestionLength else {
-            throw CloudFunctionsClientError.invalidArgument("question too long")
-        }
-
-        var payload: [String: Any] = ["question": trimmed]
-        if let sessionId, !sessionId.isEmpty {
-            payload["sessionId"] = sessionId
-        }
-
-        let callable = functions.httpsCallable("askMethodologyAssistant")
-        do {
-            let result = try await callable.call(payload)
-            return try parse(result.data)
-        } catch {
-            // Не логируем текст вопроса — только факт ошибки (PII-free).
-            logger.error("askMethodologyAssistant error: \(error.localizedDescription)")
-            throw mapError(error)
-        }
-    }
-
-    private func parse(_ data: Any) throws -> MethodologyAnswer {
-        let dict = try extractDictionary(from: data)
-        guard let answer = dict["answer"] as? String, !answer.isEmpty else {
-            throw CloudFunctionsClientError.invalidResponse("missing answer")
-        }
-
-        var citations: [MethodologyCitation] = []
-        if let rawCitations = dict["citations"] as? [[String: Any]] {
-            for raw in rawCitations {
-                guard
-                    let title = raw["title"] as? String, !title.isEmpty,
-                    let source = raw["source"] as? String, !source.isEmpty
-                else { continue }
-                citations.append(MethodologyCitation(title: title, source: source))
-            }
-        }
-
-        let sessionId = dict["sessionId"] as? String
-
-        return MethodologyAnswer(answer: answer, citations: citations, sessionId: sessionId)
     }
 }
 

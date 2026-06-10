@@ -16,9 +16,10 @@ protocol MethodologyAssistantBusinessLogic: AnyObject {
 /// Бизнес-логика помощника по методике логопедии.
 ///
 /// Ответственности:
-/// - Валидация вопроса (3…600 символов) перед сетевым вызовом.
-/// - Вызов ``MethodologyAssistantClientProtocol/ask(question:sessionId:)``.
-/// - Хранение `sessionId` для уточняющих (follow-up) вопросов.
+/// - Валидация вопроса (3…600 символов) перед вызовом ответчика.
+/// - Вызов ``MethodologyAssistantClientProtocol/ask(question:sessionId:)``
+///   (локальный офлайн-поиск по корпусу).
+/// - Хранение `sessionId` для уточняющих вопросов, если ответчик его вернёт.
 /// - Маппинг ошибок в user-facing русские сообщения через presenter.
 ///
 /// Контур: только parent / specialist за parental gate (COPPA). Этот
@@ -110,7 +111,7 @@ final class MethodologyAssistantInteractor: MethodologyAssistantBusinessLogic {
                 guard !Task.isCancelled else { return }
                 // Не логируем текст вопроса (PII-free), только факт ошибки.
                 self.logger.error("methodology ask failed: \(error.localizedDescription)")
-                let message = (error as? CloudFunctionsClientError)?.errorDescription
+                let message = (error as? LocalizedError)?.errorDescription
                     ?? String(localized: "methodologyAssistant.error.generic")
                 self.presenter?.presentFailure(
                     .init(message: message, askedQuestion: trimmed)
