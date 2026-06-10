@@ -83,6 +83,9 @@ enum VideoCatalog {
         case articulationShProfile = "articulation_sh_profile"
         case articulationRProfile = "articulation_r_profile"
         case articulationLProfile = "articulation_l_profile"
+        // Озвонченные профили: артикуляция = глухой аналог, отличие — работа голоса
+        case articulationZProfile = "articulation_z_profile"
+        case articulationZhProfile = "articulation_zh_profile"
     }
 
     /// Унифицированная ссылка на видео в каталоге.
@@ -115,7 +118,8 @@ enum VideoCatalog {
             let subdirectory: String
             switch demo {
             case .articulationSProfile, .articulationShProfile,
-                 .articulationRProfile, .articulationLProfile:
+                 .articulationRProfile, .articulationLProfile,
+                 .articulationZProfile, .articulationZhProfile:
                 subdirectory = "Videos/Articulation/programmatic"
             default:
                 subdirectory = "Videos/Articulation"

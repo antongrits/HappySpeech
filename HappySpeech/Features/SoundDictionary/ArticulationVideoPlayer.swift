@@ -124,10 +124,14 @@ extension VideoCatalog.ArticulationDemo {
     /// Возвращает programmatic side-view профиль для данного звука (если есть).
     static func profileDemo(forCyrillic cyrillic: String) -> VideoCatalog.ArticulationDemo? {
         switch cyrillic {
-        case "С", "Сь", "З", "Зь", "Ц":
+        case "С", "Сь", "Ц":
             return .articulationSProfile
-        case "Ш", "Ж", "Ч", "Щ":
+        case "З", "Зь":
+            return .articulationZProfile
+        case "Ш", "Ч", "Щ":
             return .articulationShProfile
+        case "Ж":
+            return .articulationZhProfile
         case "Р", "Рь":
             return .articulationRProfile
         case "Л", "Ль":
