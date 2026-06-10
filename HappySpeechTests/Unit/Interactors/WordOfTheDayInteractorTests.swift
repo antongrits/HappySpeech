@@ -12,6 +12,17 @@ import XCTest
 @MainActor
 final class WordOfTheDayInteractorTests: XCTestCase {
 
+    /// Скорер с управляемым исходом — для проверки FSRS-фида (F1-016).
+    private final class StubScorer: PronunciationScorerService, @unchecked Sendable {
+        let isModelLoaded = true
+        let fixedValue: Double
+        init(value: Double) { self.fixedValue = value }
+        func score(audioURL: URL, targetSound: String) async throws -> PronunciationScore {
+            PronunciationScore(rawValue: fixedValue)
+        }
+        func loadModel() async throws {}
+    }
+
     private func makeSUT(childId: String = "child-1") -> WordOfTheDayInteractor {
         WordOfTheDayInteractor(childId: childId)
     }
@@ -105,6 +116,64 @@ final class WordOfTheDayInteractorTests: XCTestCase {
         sut.startRecording()
         sut.reset()
         XCTAssertEqual(sut.phase, .idle)
+    }
+
+    // MARK: - F1-016 FSRS feed
+
+    func test_highScore_feedsScheduler_withCorrectTrue() async {
+        // ★3 (0.9 ≥ 0.85) — реальный исход скорера → recordItemOutcome(correct: true).
+        let planner = MockAdaptivePlannerService()
+        let sut = WordOfTheDayInteractor(
+            childId: "kid-fsrs",
+            audioService: MockAudioService(),
+            scorer: StubScorer(value: 0.9),
+            adaptivePlanner: planner
+        )
+        let card = sut.card
+
+        sut.startRecording()
+        try? await Task.sleep(for: .milliseconds(2400))
+
+        XCTAssertEqual(planner.recordedItemOutcomes.count, 1)
+        let recorded = planner.recordedItemOutcomes.first
+        XCTAssertEqual(recorded?.childId, "kid-fsrs")
+        XCTAssertEqual(recorded?.itemId, card.word)
+        XCTAssertEqual(recorded?.sound, card.targetSound)
+        XCTAssertEqual(recorded?.correct, true)
+    }
+
+    func test_lowScore_feedsScheduler_withCorrectFalse() async {
+        // ★1 (0.5 → 1 звезда < порога ★2) → recordItemOutcome(correct: false):
+        // слово вернётся на повтор завтра, без наказания.
+        let planner = MockAdaptivePlannerService()
+        let sut = WordOfTheDayInteractor(
+            childId: "kid-low",
+            audioService: MockAudioService(),
+            scorer: StubScorer(value: 0.5),
+            adaptivePlanner: planner
+        )
+
+        sut.startRecording()
+        try? await Task.sleep(for: .milliseconds(2400))
+
+        XCTAssertEqual(planner.recordedItemOutcomes.count, 1)
+        XCTAssertEqual(planner.recordedItemOutcomes.first?.correct, false)
+    }
+
+    func test_withoutPlanner_doesNotCrash_andStillScores() async {
+        // Планировщик опционален: при nil FSRS не фиксируется, но скоринг работает.
+        let sut = WordOfTheDayInteractor(
+            childId: "kid-noplanner",
+            audioService: MockAudioService(),
+            scorer: StubScorer(value: 0.9)
+        )
+        sut.startRecording()
+        try? await Task.sleep(for: .milliseconds(2400))
+        if case .scored(let stars) = sut.phase {
+            XCTAssertEqual(stars, 3)
+        } else {
+            XCTFail("Ожидался .scored при валидном вводе")
+        }
     }
 
     // MARK: - RecordingPhase equality

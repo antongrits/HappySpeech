@@ -1439,6 +1439,7 @@
 		A982D621F75802CF4A43B7D8 /* PhonemeReportAggregator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB2A7815518118A9764DA65 /* PhonemeReportAggregator.swift */; };
 		A988838DD5668BA7956CBDEF /* G2PWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00FC8D18B0659418EA86F02 /* G2PWorker.swift */; };
 		A9981D2ECB5042763A093260 /* ParentGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8EE98B729846DE76DDFCB /* ParentGuideView.swift */; };
+		A9A82C2BEAB3AEF8CED4A027 /* SessionShellFSRSFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563A720ADC98EE7960E7DFC2 /* SessionShellFSRSFeedTests.swift */; };
 		A9CE2AD4A9E0C6FEF22CA6E4 /* AssignedHomeworkPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBEEBE8EC24AE00504EB60 /* AssignedHomeworkPresenterTests.swift */; };
 		A9E0B1E79E739380A31761F1 /* BingoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8A1700B1A30CE315877326 /* BingoInteractor.swift */; };
 		AA0C52890502AA85106CE03F /* SpeechNormsEncyclopediaWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D85549C6DA67126014CCA8B /* SpeechNormsEncyclopediaWorkerTests.swift */; };
@@ -2829,6 +2830,7 @@
 		55FC91B4AA8A39CA1203593F /* RepeatAfterModelPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatAfterModelPresenter.swift; sourceTree = "<group>"; };
 		56145726312E5683F0FB4962 /* ColorTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTokens.swift; sourceTree = "<group>"; };
 		56306B2CB4A88BA793F756D7 /* FamilyAwardsCabinetDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAwardsCabinetDisplayLogic.swift; sourceTree = "<group>"; };
+		563A720ADC98EE7960E7DFC2 /* SessionShellFSRSFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionShellFSRSFeedTests.swift; sourceTree = "<group>"; };
 		563F2B90FC55A40479E53F64 /* BreatheAndSpeakRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheAndSpeakRouter.swift; sourceTree = "<group>"; };
 		5667E2B2C7F50F3653A23C41 /* BreathingInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingInteractorTests.swift; sourceTree = "<group>"; };
 		56E3215AD19192C1149600B9 /* ParentInsightsTimelineInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentInsightsTimelineInteractorTests.swift; sourceTree = "<group>"; };
@@ -8348,6 +8350,7 @@
 				977600B5F0C81F3877664D6E /* SessionReviewInteractorTests.swift */,
 				094D2939B36F7EC1DC87DDA5 /* SessionReviewPresenterTests.swift */,
 				AD8E9A6DF3A1C7FFEE3B7D6D /* SessionShellEmotionTests.swift */,
+				563A720ADC98EE7960E7DFC2 /* SessionShellFSRSFeedTests.swift */,
 				FE18FE14E4D236D979AEE21E /* SessionShellInteractorTests.swift */,
 				7EB37B4997670EA1107AF4BB /* SessionShellPresenterTests.swift */,
 				FDF4ECAC5F9352881B704437 /* SettingsPresenterTests.swift */,
@@ -10462,6 +10465,7 @@
 				A5B9BDCF602F68F5AA47CC3B /* SessionReviewInteractorTests.swift in Sources */,
 				B1413D806BB45777ECF6D601 /* SessionReviewPresenterTests.swift in Sources */,
 				9A1D699BF0ECF98B3B380691 /* SessionShellEmotionTests.swift in Sources */,
+				A9A82C2BEAB3AEF8CED4A027 /* SessionShellFSRSFeedTests.swift in Sources */,
 				AC3B326BA781E72B1ADBB42D /* SessionShellInteractorTests.swift in Sources */,
 				1E28A2613B798ACEE8ED7DFA /* SessionShellPresenterTests.swift in Sources */,
 				93DDDBAB88E79C626B09447F /* SettingsExportWorkerTests.swift in Sources */,

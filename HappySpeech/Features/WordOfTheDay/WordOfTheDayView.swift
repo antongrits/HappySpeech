@@ -44,7 +44,8 @@ struct WordOfTheDayView: View {
                     interactor = WordOfTheDayInteractor(
                         childId: childId,
                         audioService: container.audioService,
-                        scorer: container.pronunciationService
+                        scorer: container.pronunciationService,
+                        adaptivePlanner: container.adaptivePlannerService
                     )
                 }
             }

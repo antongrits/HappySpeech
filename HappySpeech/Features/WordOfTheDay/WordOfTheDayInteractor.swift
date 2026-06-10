@@ -25,17 +25,28 @@ final class WordOfTheDayInteractor {
 
     private let audioService: (any AudioService)?
     private let scorer: (any PronunciationScorerService)?
+    /// F1-016 — единый планировщик интервальных повторов. Слово дня — стандалон-фича
+    /// вне SessionShell, поэтому кормит FSRS напрямую. Опционален: при `nil`
+    /// (Preview/неполная среда) повтор просто не фиксируется.
+    private let adaptivePlanner: (any AdaptivePlannerService)?
     private var scoringTask: Task<Void, Never>?
+
+    /// Порог «зачёта» произношения для интервального повтора: ★≥2 (та же планка
+    /// «good», что используется в остальных контурах). Ниже — слово возвращается на
+    /// повтор завтра, не наказание.
+    private static let passStars = 2
 
     init(
         childId: String,
         audioService: (any AudioService)? = nil,
-        scorer: (any PronunciationScorerService)? = nil
+        scorer: (any PronunciationScorerService)? = nil,
+        adaptivePlanner: (any AdaptivePlannerService)? = nil
     ) {
         self.childId = childId
         self.card = WordOfTheDayModels.wordForToday()
         self.audioService = audioService
         self.scorer = scorer
+        self.adaptivePlanner = adaptivePlanner
     }
 
     func startRecording() {
@@ -94,6 +105,16 @@ final class WordOfTheDayInteractor {
             let stars = Self.stars(for: score.value)
             phase = .scored(stars)
             Self.logger.info("WOTD: '\(self.card.word, privacy: .public)' score=\(score.value) → ★\(stars)")
+
+            // F1-016 — фиксируем реальный исход произнесённого слова в FSRS-лестнице.
+            // correct = ★≥2 (реальная оценка скорера, не хардкод). itemId — слово,
+            // sound — целевой звук слова. Персистит планировщик (per-child UserDefaults).
+            await adaptivePlanner?.recordItemOutcome(
+                childId: childId,
+                itemId: card.word,
+                sound: card.targetSound,
+                correct: stars >= Self.passStars
+            )
         } catch {
             guard !Task.isCancelled else { return }
             Self.logger.warning("WOTD: запись/скоринг упали (\(error.localizedDescription)) — tryAgain")

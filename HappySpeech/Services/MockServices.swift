@@ -191,9 +191,19 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
         public let quality: SM2Quality
     }
 
+    /// Захваченный вызов `recordItemOutcome` (F1-016) — для проверки, что шаблоны
+    /// кормят единый планировщик интервальных повторов реальным исходом попытки.
+    public struct RecordedItemOutcome: Sendable, Equatable {
+        public let childId: String
+        public let itemId: String
+        public let sound: String
+        public let correct: Bool
+    }
+
     public var route: AdaptiveRoute
     public var fatigue: FatigueLevel
     public var recordedQualities: [RecordedQuality] = []
+    public var recordedItemOutcomes: [RecordedItemOutcome] = []
     public var forcedBreak: Bool = false
 
     public init(
@@ -228,6 +238,17 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
         qualityScore: SM2Quality
     ) async throws {
         recordedQualities.append(RecordedQuality(childId: childId, soundTarget: soundTarget, quality: qualityScore))
+    }
+
+    public func recordItemOutcome(
+        childId: String,
+        itemId: String,
+        sound: String,
+        correct: Bool
+    ) async {
+        recordedItemOutcomes.append(
+            RecordedItemOutcome(childId: childId, itemId: itemId, sound: sound, correct: correct)
+        )
     }
 
     public func shouldTakeBreak(

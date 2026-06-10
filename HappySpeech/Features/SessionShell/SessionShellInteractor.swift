@@ -163,6 +163,14 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         let isCorrect = request.score >= 0.5
         let feedback: SessionShellModels.ActivityFeedback = isCorrect ? .correct : .incorrect
 
+        // F1-016 — единый планировщик интервальных повторов. Центральный хук: КАЖДЫЙ
+        // завершённый шаг ЛЮБОГО шаблона (listen-and-choose, repeat-after-model,
+        // minimal-pairs, articulation, sound-hunter, visual-acoustic и др.) проходит
+        // через SessionShell, поэтому результат попытки кормит FSRS-лестницу здесь —
+        // без дублирования в каждом per-template Interactor'е. `correct` берётся из
+        // реального score шаблона, не хардкод.
+        await recordReviewOutcome(for: activities[currentIndex], correct: isCorrect)
+
         if isCorrect {
             consecutiveErrors = 0
             Task { await hapticService.play(pattern: .celebration) }
@@ -309,6 +317,25 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     var currentFatigueHearts: Int { fatigueHearts }
 
     // MARK: - Private
+
+    /// F1-016 — подаёт результат попытки по практикуемому элементу в единый
+    /// планировщик интервальных повторов (`ReviewSchedulerService` через
+    /// `AdaptivePlannerService.recordItemOutcome`). `itemId` — стабильный
+    /// идентификатор практикуемого слова/урока шага (`lessonId`), `sound` — целевой
+    /// звук шага. Верный ответ продвигает слово по лестнице 1→3→7→14→30 дней,
+    /// ошибка сбрасывает на повтор завтра. Данные персистятся планировщиком
+    /// (UserDefaults per-child), затем подмешиваются в начало дневного маршрута.
+    private func recordReviewOutcome(for activity: SessionActivity, correct: Bool) async {
+        let itemId = activity.lessonId
+        let sound = activity.soundTarget
+        guard !itemId.isEmpty, !sound.isEmpty else { return }
+        await adaptivePlannerService.recordItemOutcome(
+            childId: sessionChildId,
+            itemId: itemId,
+            sound: sound,
+            correct: correct
+        )
+    }
 
     private func detectFatigue() -> Bool {
         let elapsed = activeElapsedSeconds / 60
