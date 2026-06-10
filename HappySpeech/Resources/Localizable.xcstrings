@@ -67863,6 +67863,13 @@
         "en": { "stringUnit": { "state": "translated", "value": "3D head cross-section showing tongue position" } }
       }
     },
+    "articulation3d.attribution": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель: Z-Anatomy (CC-BY-SA 4.0)" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D model: Z-Anatomy (CC-BY-SA 4.0)" } }
+      }
+    },
     "articulation3d.indicator.velum": {
       "extractionState": "manual",
       "localizations": {

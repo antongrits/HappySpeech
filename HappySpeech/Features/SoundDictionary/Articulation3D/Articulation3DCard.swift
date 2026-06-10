@@ -108,7 +108,18 @@ struct Articulation3DCard: View {
 
             poseLabel
             indicators
+            attribution
         }
+    }
+
+    // MARK: Attribution (CC-BY-SA 4.0 для исходной 3D-модели)
+
+    private var attribution: some View {
+        Text("articulation3d.attribution")
+            .font(TypographyTokens.caption(9))
+            .foregroundStyle(ColorTokens.Parent.inkMuted)
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     // MARK: Pose label + indicators (SwiftUI-оверлей, не текст внутри 3D)
