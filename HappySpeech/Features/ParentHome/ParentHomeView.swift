@@ -361,6 +361,10 @@ private struct ParentDashboardTab: View {
                     parentGuideCard
                         .hsScrollEffect(.scaleFade)
 
+                    // Словарь звуков: справочник артикуляции со 3D-разрезом.
+                    soundDictionaryCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Cad-task-1 — «Помощник по методике» (Vertex AI Search).
                     methodologyAssistantCard
                         .hsScrollEffect(.scaleFade)
@@ -1268,6 +1272,44 @@ private extension ParentDashboardTab {
         .accessibilityLabel(
             String(localized: "parentGuide.entry.title") + ". " +
             String(localized: "parentGuide.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: — «Словарь звуков» (точка входа на SoundDictionaryView)
+
+    var soundDictionaryCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("character.book.closed.fill", tint: ColorTokens.Brand.rose)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "soundDictionary.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "soundDictionary.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .soundDictionary)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "soundDictionary.entry.title") + ". " +
+            String(localized: "soundDictionary.entry.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)

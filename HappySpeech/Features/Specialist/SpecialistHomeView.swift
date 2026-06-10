@@ -151,6 +151,7 @@ struct SpecChildDashboardView: View {
                         .padding(.top, SpacingTokens.sp2)
                         SpecSoundBreakdownSection(rows: breakdown)
                         phonemeReportCard
+                        soundDictionaryCard
                         SpecSessionsPreviewSection(sessions: sessions) { _ in
                             // Navigation is handled by parent NavigationStack
                         }
@@ -321,6 +322,53 @@ struct SpecChildDashboardView: View {
         )
         .accessibilityAddTraits(.isButton)
         .accessibilityIdentifier("phonemeReport.entryCard")
+    }
+
+    // MARK: - «Словарь звуков» (точка входа для специалиста)
+
+    /// Карточка-вход в справочник артикуляции со 3D-разрезом головы.
+    private var soundDictionaryCard: some View {
+        Button {
+            coordinator.navigate(to: .soundDictionary)
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "character.book.closed.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .frame(width: 44)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "soundDictionary.entry.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "soundDictionary.entry.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Spec.panel)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            Text(String(localized: "soundDictionary.entry.title") + ". " +
+                 String(localized: "soundDictionary.entry.subtitle"))
+        )
+        .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("soundDictionary.entryCard")
     }
 
     // MARK: - v29 Фаза 8: Ф.4 «Домашнее задание от логопеда»

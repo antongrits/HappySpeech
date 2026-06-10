@@ -49002,6 +49002,40 @@
         }
       }
     },
+    "soundDictionary.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How sounds are made — with 3D articulation cross-section"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как ставить язык и губы — с 3D-разрезом артикуляции"
+          }
+        }
+      }
+    },
+    "soundDictionary.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound Dictionary"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарь звуков"
+          }
+        }
+      }
+    },
     "soundDictionary.audio.toast.failed": {
       "extractionState": "manual",
       "localizations": {
