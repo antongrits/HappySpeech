@@ -11161,6 +11161,479 @@
         }
       }
     },
+    "cultural.clean.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка"
+          }
+        }
+      }
+    },
+    "cultural.clean.cha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ч"
+          }
+        }
+      }
+    },
+    "cultural.clean.la.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Л"
+          }
+        }
+      }
+    },
+    "cultural.clean.ra.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Р"
+          }
+        }
+      }
+    },
+    "cultural.clean.sa.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на С"
+          }
+        }
+      }
+    },
+    "cultural.clean.sha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ш"
+          }
+        }
+      }
+    },
+    "cultural.clean.shcha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Щ"
+          }
+        }
+      }
+    },
+    "cultural.clean.za.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на З"
+          }
+        }
+      }
+    },
+    "cultural.clean.zha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ж"
+          }
+        }
+      }
+    },
+    "cultural.poem.barto.bull.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бычок"
+          }
+        }
+      }
+    },
+    "cultural.poem.barto.bunny.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зайка"
+          }
+        }
+      }
+    },
+    "cultural.poem.marsh.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К. И. Чуковский"
+          }
+        }
+      }
+    },
+    "cultural.poem.marsh.washtub.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мойдодыр"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.dojdik.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дождик"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.kotausya.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кот-котик"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.petushok.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Петушок"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.solnyshko.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Солнышко"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.soroka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сорока-ворона"
+          }
+        }
+      }
+    },
+    "cultural.poem.potesh.vodichka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Водичка"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.grib.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про гриб"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.koshka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про кошку"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.med.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про медведя"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.ryba.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про рыбу"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.sneg.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про снег"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.solnce.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про солнце"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.yabloko.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про яблоко"
+          }
+        }
+      }
+    },
+    "cultural.poem.riddle.yolka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загадка про ёлку"
+          }
+        }
+      }
+    },
+    "cultural.poem.schit.ene.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считалка «Эни-бени»"
+          }
+        }
+      }
+    },
+    "cultural.poem.schit.kto.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считалка «На золотом крыльце»"
+          }
+        }
+      }
+    },
+    "cultural.poem.schit.raztri.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считалка «Раз, два, три»"
+          }
+        }
+      }
+    },
+    "cultural.poem.schit.zazhumurki.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считалка «Горшок»"
+          }
+        }
+      }
+    },
+    "cultural.song.folk.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Народная"
+          }
+        }
+      }
+    },
+    "cultural.song.kalinka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Калинка"
+          }
+        }
+      }
+    },
+    "cultural.song.ladushki.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ладушки"
+          }
+        }
+      }
+    },
+    "cultural.song.lullaby.bayu.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Баю-баю-баю-бай"
+          }
+        }
+      }
+    },
+    "cultural.song.lullaby.kotik.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Котик серенький"
+          }
+        }
+      }
+    },
+    "cultural.song.lullaby.spi.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спи, малютка"
+          }
+        }
+      }
+    },
+    "cultural.tale.masha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маша и три медведя"
+          }
+        }
+      }
+    },
+    "cultural.tale.snegurochka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Снегурочка"
+          }
+        }
+      }
+    },
+    "cultural.tale.teremok.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Теремок"
+          }
+        }
+      }
+    },
+    "cultural.tale.turnip.song.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Репка (финал)"
+          }
+        }
+      }
+    },
+    "cultural.tale.zayushkina.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заюшкина избушка"
+          }
+        }
+      }
+    },
+    "cultural.tale.kurochka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курочка Ряба"
+          }
+        }
+      }
+    },
     "cultural.twist.bobry.title": {
       "extractionState": "manual",
       "localizations": {
@@ -11172,6 +11645,72 @@
         }
       }
     },
+    "cultural.twist.chashka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка про чертёнка"
+          }
+        }
+      }
+    },
+    "cultural.twist.greka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ехал Грека"
+          }
+        }
+      }
+    },
+    "cultural.twist.korol.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карл у Клары"
+          }
+        }
+      }
+    },
+    "cultural.twist.lakomka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лара и рояль"
+          }
+        }
+      }
+    },
+    "cultural.twist.prokofy.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка про ворону"
+          }
+        }
+      }
+    },
+    "cultural.twist.sasha2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У Сени и Сани"
+          }
+        }
+      }
+    },
     "cultural.twist.shasha.title": {
       "extractionState": "manual",
       "localizations": {
@@ -11179,6 +11718,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Скороговорка про Сашу"
+          }
+        }
+      }
+    },
+    "cultural.twist.shorstka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка про кошку"
+          }
+        }
+      }
+    },
+    "cultural.twist.zhuzha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жук жужжит"
           }
         }
       }
