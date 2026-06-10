@@ -8,8 +8,10 @@ import SwiftUI
 final class AssignedHomeworkViewModelHolder: AssignedHomeworkDisplayLogic {
 
     var loadVM: AssignedHomeworkModels.Load.ViewModel?
+    var familyLoadVM: AssignedHomeworkModels.FamilyLoad.ViewModel?
     var lastCreateMessage: String?
     var lastCreateSucceeded: Bool?
+    var lastUpdateStatus: AssignedHomeworkModels.UpdateStatus.ViewModel?
     var isLoading: Bool = true
 
     func displayLoad(viewModel: AssignedHomeworkModels.Load.ViewModel) async {
@@ -20,6 +22,15 @@ final class AssignedHomeworkViewModelHolder: AssignedHomeworkDisplayLogic {
     func displayCreate(viewModel: AssignedHomeworkModels.Create.ViewModel) async {
         self.lastCreateMessage = viewModel.message
         self.lastCreateSucceeded = viewModel.didSucceed
+    }
+
+    func displayUpdateStatus(viewModel: AssignedHomeworkModels.UpdateStatus.ViewModel) async {
+        self.lastUpdateStatus = viewModel
+    }
+
+    func displayFamilyLoad(viewModel: AssignedHomeworkModels.FamilyLoad.ViewModel) async {
+        self.familyLoadVM = viewModel
+        self.isLoading = false
     }
 }
 
@@ -366,7 +377,9 @@ struct AssignedHomeworkView: View {
         if interactor == nil {
             let presenter = AssignedHomeworkPresenter(displayLogic: holder)
             let worker = AssignedHomeworkWorker(
-                childRepository: container.childRepository
+                childRepository: container.childRepository,
+                homeworkRepository: container.homeworkRepository,
+                notificationService: container.notificationService
             )
             let interactor = AssignedHomeworkInteractor(
                 specialistId: specialistId,

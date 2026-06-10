@@ -102,6 +102,12 @@ public final class AppContainer {
     // COPPA: только родительский/специалистский контур.
     private var _chatRepository: (any ChatRepository)?
 
+    // HomeworkRepository — реальный Firestore-синк домашних заданий
+    // специалист ↔ родитель/ребёнок. Lazy. Live: FirestoreHomeworkRepository.
+    // Preview/Test: MockHomeworkRepository.
+    // COPPA: childId без PII; familyId = parent uid; доступ parent-auth-gated.
+    private var _homeworkRepository: (any HomeworkRepository)?
+
     // MethodologyAssistantClient — Cloud Function `askMethodologyAssistant`
     // (Vertex AI Search). Lazy. Live: LiveMethodologyAssistantClient.
     // Preview/Test: MockMethodologyAssistantClient. COPPA: только
@@ -595,6 +601,24 @@ public final class AppContainer {
         _chatRepository = repository
     }
 
+    // MARK: - HomeworkRepository
+
+    /// Облачный синк домашних заданий специалист ↔ родитель/ребёнок (Firestore,
+    /// offline-first, real-time). Только родительский/специалистский контур (COPPA).
+    /// См. ``HomeworkRepository``.
+    public var homeworkRepository: any HomeworkRepository {
+        if let existing = _homeworkRepository { return existing }
+        let new: any HomeworkRepository = FirestoreHomeworkRepository()
+        _homeworkRepository = new
+        return new
+    }
+
+    /// Подмена ``homeworkRepository`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `homeworkRepository`.
+    public func overrideHomeworkRepository(_ repository: any HomeworkRepository) {
+        _homeworkRepository = repository
+    }
+
     // MARK: - MethodologyAssistantClient (Vertex AI Search)
 
     /// Клиент помощника по методике логопедии (Cloud Function
@@ -1064,6 +1088,8 @@ public extension AppContainer {
         // снапшотах (shouldPlay=false), видео не грузится.
         container.overrideVideoPlayerService(MockVideoPlayerService())
         container.overrideCutsceneService(MockCutsceneService())
+        // HomeworkRepository — mock без Firestore в preview/tests.
+        container.overrideHomeworkRepository(MockHomeworkRepository())
         return container
     }
 }

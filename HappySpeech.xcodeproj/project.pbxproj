@@ -554,6 +554,7 @@
 		3F6AABE50B2B0F69C369D630 /* EveningReflectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573355A27CE8F42E7F1BCC7 /* EveningReflectionView.swift */; };
 		3FC762A10682CD8843F33ABB /* VisualVocabularyFlipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC66CD8BF748ED55F294DDE /* VisualVocabularyFlipModels.swift */; };
 		3FD29ED3A076D5B5547CDCE7 /* DailyRitualsLyalyaCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3D0D026E9434D8AB836B66 /* DailyRitualsLyalyaCorpus.swift */; };
+		40487B1CD6A27E797ADE7850 /* FirestoreHomeworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9495CC605B865B016EF16A /* FirestoreHomeworkRepository.swift */; };
 		4049695DEC1BE09BD83AA383 /* HSCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65D5A47523D4BA76DCBF6A2 /* HSCard.swift */; };
 		404EAA54386230DFFD2B7174 /* ComparisonDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959859096EF2DB31216F82B3 /* ComparisonDashboardView.swift */; };
 		404EB770B149F5435A023D75 /* ColorAndSoundInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41724E2AD97E4445B19BB101 /* ColorAndSoundInteractor.swift */; };
@@ -887,6 +888,7 @@
 		695E065B7E07B7CACB392EDF /* AudioMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BED9A98AA8595E8C72E98B7 /* AudioMemoryGameView.swift */; };
 		69A148AE93B97A15A92526D5 /* SpeechTempoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB0B5EEE8D433583BBB69C /* SpeechTempoWorker.swift */; };
 		69EC1E29BAB1D7827FEEE029 /* FallbackVoiceSynthesisChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */; };
+		6A061AE87DE556474FD06927 /* HomeworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC2B2B0F3589DDD111CFB8F /* HomeworkRepository.swift */; };
 		6A607D7482F588667E65771D /* ObjectDescriptionMapCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110BA08F49A9A7B9FE57A224 /* ObjectDescriptionMapCorpus.swift */; };
 		6A7C8FAB6A778EF698C289B3 /* BedtimeModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9358A6DBEE41D184CAF8C76 /* BedtimeModePresenter.swift */; };
 		6A97C46979CBBE94452D07D9 /* SyllableConstructorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260825BD9D92F483E4C4797C /* SyllableConstructorInteractor.swift */; };
@@ -1049,6 +1051,7 @@
 		7B7AF97E57C16DC9533629E2 /* GamePlaythroughHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92A7EAAE23C8A38B6055E89 /* GamePlaythroughHelper.swift */; };
 		7BA0B5816EFE0127D19EB193 /* pack_letter_trace.json in Resources */ = {isa = PBXBuildFile; fileRef = CD37F3EA2A4A22E909694A89 /* pack_letter_trace.json */; };
 		7BA4438C3A6BB4F707E1AC7B /* DeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D159F525FB768A8A38D887D1 /* DeepLinkRouter.swift */; };
+		7BA5436F42D4F539308124AD /* HomeworkSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E60BF477278920CC252EBB7 /* HomeworkSyncTests.swift */; };
 		7BAFBCBB5DA9EE1389F62785 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 81CB3F9735B4C0FF7DC2CE68 /* Lottie */; };
 		7BB202984BF2544EABEDB0A4 /* KaraokePitchInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003F5723A5ED3CB8A2C8736 /* KaraokePitchInteractorTests.swift */; };
 		7BDB3E2D9E1DB8ECAB656832 /* GuidedTourModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1228AA9EA10A2A64526AB68A /* GuidedTourModels.swift */; };
@@ -1859,6 +1862,7 @@
 		E3540C7E8085E6B2B6431F9D /* SpeechNormsEncyclopediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28FFA0AEA906A10B141EB9C /* SpeechNormsEncyclopediaView.swift */; };
 		E3799A2CD895E58BE36BD63F /* SoundDoctorKidContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53908FC852A5AC832380E32 /* SoundDoctorKidContent.swift */; };
 		E3C64A9FAA6ECBAD8AB61BE6 /* AchievementCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252E20BA5DED6FFCC1BE724 /* AchievementCardView.swift */; };
+		E3D047B72F3452F8A021B6E2 /* MockHomeworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334C4D9BC5FB692B771AEF9E /* MockHomeworkRepository.swift */; };
 		E3DE36046B8F248C896FC02F /* DailyRitualsLyalyaInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB581BE865E5FC17D387697 /* DailyRitualsLyalyaInteractor.swift */; };
 		E3E10B81158445743E35D6D6 /* FSRSScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E03CDDC54B92ACB00A917E /* FSRSScheduler.swift */; };
 		E3ECC5C2C4571623EC555261 /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */; };
@@ -2539,6 +2543,7 @@
 		331056FF7C2B312ECC198469 /* AchievementsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsInteractor.swift; sourceTree = "<group>"; };
 		33109068630CAED81FC525D6 /* celebrate_weekly_goal.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_weekly_goal.json; sourceTree = "<group>"; };
 		333D1DFA60DC1BF10B94F161 /* DragAndMatchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndMatchInteractor.swift; sourceTree = "<group>"; };
+		334C4D9BC5FB692B771AEF9E /* MockHomeworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeworkRepository.swift; sourceTree = "<group>"; };
 		335DF37AC10B2B426FC17130 /* TonguePostureClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonguePostureClassifier.swift; sourceTree = "<group>"; };
 		3368B48DE6A3FD2ACA0F038E /* LyalyaMailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaMailPresenter.swift; sourceTree = "<group>"; };
 		33A4585C5EB63662AF3A6DCF /* MimicLyalyaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimicLyalyaView.swift; sourceTree = "<group>"; };
@@ -2892,6 +2897,7 @@
 		5D9954BFB87DC6876CB7B82C /* ObjectHuntPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHuntPresenter.swift; sourceTree = "<group>"; };
 		5DB251828294477C1EA25284 /* SessionCompletePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCompletePresenterTests.swift; sourceTree = "<group>"; };
 		5DBB7E6D352FF109D7E948E6 /* CulturalContentInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalContentInteractorTests.swift; sourceTree = "<group>"; };
+		5DC2B2B0F3589DDD111CFB8F /* HomeworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkRepository.swift; sourceTree = "<group>"; };
 		5DC322C62C852AF2E883BF8F /* FaceMaskRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMaskRendererTests.swift; sourceTree = "<group>"; };
 		5DD9140DF58F09A401D21437 /* DailyChallengeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeRouter.swift; sourceTree = "<group>"; };
 		5E1453FA288E52619D233E4F /* AssignedHomeworkModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedHomeworkModels.swift; sourceTree = "<group>"; };
@@ -3153,6 +3159,7 @@
 		7DC4FEA5B578F39F04FAB39E /* ObjectHuntInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHuntInteractor.swift; sourceTree = "<group>"; };
 		7E25811036DB48D2E844A954 /* CoPlayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoPlayInteractor.swift; sourceTree = "<group>"; };
 		7E539029741A39D53C968635 /* BlockCComponentsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockCComponentsSnapshotTests.swift; sourceTree = "<group>"; };
+		7E60BF477278920CC252EBB7 /* HomeworkSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkSyncTests.swift; sourceTree = "<group>"; };
 		7E9776E8D4FDA884978FE9D5 /* OfflineMiniGameModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMiniGameModels.swift; sourceTree = "<group>"; };
 		7EB37B4997670EA1107AF4BB /* SessionShellPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionShellPresenterTests.swift; sourceTree = "<group>"; };
 		7F1F32908951E7AB76F7074D /* FamilyVoiceSpeakerTagWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceSpeakerTagWorker.swift; sourceTree = "<group>"; };
@@ -4164,6 +4171,7 @@
 		FAFF60D25DC03A30E3606A79 /* PhonemeAudioWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAudioWorkerTests.swift; sourceTree = "<group>"; };
 		FB4923599BA9245CB2366506 /* CustomizationVoicePreviewWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationVoicePreviewWorkerTests.swift; sourceTree = "<group>"; };
 		FB8BF94FC5A8CDDD206DDB6D /* VoiceJournalPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceJournalPresenterTests.swift; sourceTree = "<group>"; };
+		FB9495CC605B865B016EF16A /* FirestoreHomeworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreHomeworkRepository.swift; sourceTree = "<group>"; };
 		FBA3C98CEC9AB0F01CE6BF1A /* CustomizationVoicePreviewWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationVoicePreviewWorker.swift; sourceTree = "<group>"; };
 		FBAE3ABC6C717A62615F6B72 /* PhonemicListeningDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemicListeningDisplayLogic.swift; sourceTree = "<group>"; };
 		FBC1F5156C8D2C7496E4E239 /* ReportsAggregatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsAggregatorTests.swift; sourceTree = "<group>"; };
@@ -5228,13 +5236,16 @@
 				DDDAE0340336A3AE2680B1FA /* FamilyInviteService.swift */,
 				6A7AD06E36F98576154F4BA3 /* FCMService.swift */,
 				FA9978CA54FE072A31EA7352 /* FirestoreChatRepository.swift */,
+				FB9495CC605B865B016EF16A /* FirestoreHomeworkRepository.swift */,
 				DF5AA006CB357938F3D6526B /* HapticService.swift */,
+				5DC2B2B0F3589DDD111CFB8F /* HomeworkRepository.swift */,
 				EB662F1E5BE3B84515181365 /* InstallationsService.swift */,
 				1B5A31B335F2D5B7CF93A251 /* LiveAuthService.swift */,
 				F7E39E6D462EC13DD391D2A8 /* LiveServices.swift */,
 				8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */,
 				8ACE4C94F58853CF8FCCA1FB /* MLModelWarmupService.swift */,
 				7990DDA68ED4DB42A512EB61 /* MockChatRepository.swift */,
+				334C4D9BC5FB692B771AEF9E /* MockHomeworkRepository.swift */,
 				AA9B989B699B2B41B5EEE405 /* MockServices.swift */,
 				544D37B6107ECDF496772A0F /* MockVoiceCloneService.swift */,
 				C681CA9E5BE1E1AFD30D038F /* NetworkClient.swift */,
@@ -8973,6 +8984,7 @@
 			children = (
 				F316EDB3F69C6E03BD07D23A /* AssignedHomeworkInteractorTests.swift */,
 				2EFBEEBE8EC24AE00504EB60 /* AssignedHomeworkPresenterTests.swift */,
+				7E60BF477278920CC252EBB7 /* HomeworkSyncTests.swift */,
 			);
 			path = AssignedHomework;
 			sourceTree = "<group>";
@@ -10313,6 +10325,7 @@
 				9F5B77744EDCB4EEC7126789 /* HomeTasksInteractorTests.swift in Sources */,
 				CB8CC881632A3755C3A3BDE0 /* HomeTasksPresenterTests.swift in Sources */,
 				C4C7EA692C5DAB720B13280F /* HomeTasksWorkerTests.swift in Sources */,
+				7BA5436F42D4F539308124AD /* HomeworkSyncTests.swift in Sources */,
 				FD8BDF8C23D8F0DEE222D8E8 /* ImitationLabInteractorTests.swift in Sources */,
 				D1CF2CE2539740C268E9747D /* InsightAggregatorWorkerTests.swift in Sources */,
 				DFBB28440EAC1CF80D8EB9E0 /* InstallationsServiceTests.swift in Sources */,
@@ -11040,6 +11053,7 @@
 				99EFE0F8577628B7426981F1 /* FingerPlayRouter.swift in Sources */,
 				82D961938A0F39914FC22D46 /* FingerPlayView.swift in Sources */,
 				1AC7B86C3F3D9BF0A019AA32 /* FirestoreChatRepository.swift in Sources */,
+				40487B1CD6A27E797ADE7850 /* FirestoreHomeworkRepository.swift in Sources */,
 				EA6176AC8F6CF3A49BDBCC87 /* FluencyAnalyzerWorker.swift in Sources */,
 				8BDE22CB0234125CB8CAB599 /* FluencyDiaryInteractor.swift in Sources */,
 				074189D483D26A40098AD93D /* FluencyDiaryModels.swift in Sources */,
@@ -11159,6 +11173,7 @@
 				CAA3C7D1922CD8EA3D671F57 /* HomeTasksRouter.swift in Sources */,
 				3536AF0CA0172B38CDAA14BA /* HomeTasksView.swift in Sources */,
 				DE998F68CA6FC2EB9E57C83E /* HomeTasksWorker.swift in Sources */,
+				6A061AE87DE556474FD06927 /* HomeworkRepository.swift in Sources */,
 				4511A979279915A86A64BC22 /* IPADictionary.swift in Sources */,
 				4E9E869CE1D033651094BDC8 /* ImitationLabContent.swift in Sources */,
 				961F5FEC31461BE06F10CBDC /* ImitationLabInteractor.swift in Sources */,
@@ -11299,6 +11314,7 @@
 				13F43FD7B288EC7199E1AA8E /* MinimalPairsView.swift in Sources */,
 				20A0441D2AD1A8F7AB0F7BBA /* MinimalPairsViewComponents.swift in Sources */,
 				ED087D6EDE42000D0E2FA2BB /* MockChatRepository.swift in Sources */,
+				E3D047B72F3452F8A021B6E2 /* MockHomeworkRepository.swift in Sources */,
 				7A54C3CF7275DA82375F7DC2 /* MockLLMDecisionService.swift in Sources */,
 				B5B5C7191EE7880DBE139478 /* MockLLMModelManager.swift in Sources */,
 				2F725C4098A8DB8315DEEACB /* MockServices.swift in Sources */,

@@ -14,6 +14,8 @@ private final class SpyAssignedHomeworkDisplay: AssignedHomeworkDisplayLogic, @u
     func displayCreate(viewModel: AssignedHomeworkModels.Create.ViewModel) async {
         createVM = viewModel
     }
+    func displayUpdateStatus(viewModel: AssignedHomeworkModels.UpdateStatus.ViewModel) async {}
+    func displayFamilyLoad(viewModel: AssignedHomeworkModels.FamilyLoad.ViewModel) async {}
 }
 
 // MARK: - Presenter Tests

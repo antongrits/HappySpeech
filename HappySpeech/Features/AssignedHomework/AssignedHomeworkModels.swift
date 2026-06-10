@@ -156,4 +156,47 @@ enum AssignedHomeworkModels {
             let message: String
         }
     }
+
+    // MARK: UpdateStatus
+    //
+    // Используется детским/родительским контуром для отметки выполнения
+    // конкретного упражнения в задании (локально + Firestore).
+
+    enum UpdateStatus {
+        struct Request: Sendable {
+            let assignmentId: String
+            let exerciseId: String
+            let completedRepeats: Int
+        }
+
+        struct Response: Sendable {
+            let didSucceed: Bool
+            let updatedAssignment: HomeworkAssignment?
+        }
+
+        struct ViewModel: Sendable {
+            let didSucceed: Bool
+            let progressLabel: String
+        }
+    }
+
+    // MARK: FamilyLoad
+    //
+    // Загрузка заданий со стороны родителя/ребёнка (реальный Firestore-фетч).
+
+    enum FamilyLoad {
+        struct Request: Sendable {
+            let childId: String
+            let familyId: String
+        }
+
+        struct Response: Sendable {
+            let assignments: [HomeworkAssignment]
+        }
+
+        struct ViewModel: Sendable {
+            let assignments: [Load.AssignmentRowViewModel]
+            let emptyStateText: String
+        }
+    }
 }

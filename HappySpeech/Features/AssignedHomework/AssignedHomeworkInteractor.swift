@@ -5,8 +5,14 @@ import OSLog
 
 @MainActor
 protocol AssignedHomeworkBusinessLogic: AnyObject {
+    /// Загружает экран специалиста (дети + локальные задания).
     func load(request: AssignedHomeworkModels.Load.Request) async
+    /// Создаёт задание (локально + публикует в Firestore).
     func create(request: AssignedHomeworkModels.Create.Request) async
+    /// Обновляет выполнение упражнения (локально + Firestore).
+    func updateExerciseStatus(request: AssignedHomeworkModels.UpdateStatus.Request) async
+    /// Загружает задания для родительского/детского контура из Firestore.
+    func loadForFamily(request: AssignedHomeworkModels.FamilyLoad.Request) async
 }
 
 // MARK: - AssignedHomeworkDataStore
@@ -14,14 +20,22 @@ protocol AssignedHomeworkBusinessLogic: AnyObject {
 @MainActor
 protocol AssignedHomeworkDataStore: AnyObject {
     var specialistId: String { get set }
+    /// familyId для маршрутизации к правильному треду в Firestore.
+    /// Устанавливается из родительского контура перед вызовом `loadForFamily`.
+    var familyId: String { get set }
 }
 
 // MARK: - AssignedHomeworkInteractor (Clean Swift: Interactor)
 //
-// v29 Фаза 8, Функция 4 «Домашнее задание от логопеда».
+// Бизнес-логика конструктора заданий.
 //
-// Бизнес-логика конструктора заданий: загрузка детей и заданий, создание
-// нового задания, перезагрузка списка после создания.
+// Firestore-синк:
+//   1. Специалист создаёт задание → `create()` → Worker.create() (local) +
+//      Worker.publishToCloud() (Firestore, offline-queue при нет сети).
+//   2. Родитель/ребёнок читает → `loadForFamily()` → Worker.fetchAssignments()
+//      (Firestore → merge local). Или подписывается на `assignmentsStream`.
+//   3. Ребёнок отмечает выполнение → `updateExerciseStatus()` → Worker (local
+//      + Firestore transaction). Статус пишется обратно в облако.
 
 @MainActor
 final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedHomeworkDataStore {
@@ -29,6 +43,7 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
     // MARK: - DataStore
 
     var specialistId: String
+    var familyId: String
 
     // MARK: - VIP
 
@@ -48,15 +63,17 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
 
     init(
         specialistId: String,
+        familyId: String = "",
         worker: any AssignedHomeworkWorkerProtocol,
         hapticService: any HapticService
     ) {
         self.specialistId = specialistId
+        self.familyId = familyId
         self.worker = worker
         self.hapticService = hapticService
     }
 
-    // MARK: - Load
+    // MARK: - Load (specialist screen)
 
     func load(request: AssignedHomeworkModels.Load.Request) async {
         specialistId = request.specialistId
@@ -67,7 +84,7 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
         await presenter?.presentLoad(response: response)
     }
 
-    // MARK: - Create
+    // MARK: - Create (specialist assigns → local + Firestore)
 
     func create(request: AssignedHomeworkModels.Create.Request) async {
         let assignment = await worker.create(request: request)
@@ -75,13 +92,46 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
             didSucceed: assignment != nil,
             assignment: assignment
         )
-        if assignment != nil {
+        if let assignment {
             hapticService.notification(.success)
+            // Publish to Firestore so the family can read it.
+            // familyId is '' when not explicitly set (specialist flow);
+            // the document remains queryable by childId alone on the family side.
+            await worker.publishToCloud(
+                assignment: assignment,
+                specialistId: specialistId,
+                familyId: familyId
+            )
         } else {
             hapticService.notification(.error)
         }
         await presenter?.presentCreate(response: response)
-        // Перезагрузка списка заданий после создания.
+        // Reload the specialist's list after creation.
         await load(request: .init(specialistId: specialistId))
+    }
+
+    // MARK: - Update exercise status (child / parent context)
+
+    func updateExerciseStatus(request: AssignedHomeworkModels.UpdateStatus.Request) async {
+        let response = await worker.updateExerciseStatus(request: request)
+        if response.didSucceed {
+            hapticService.notification(.success)
+        }
+        await presenter?.presentUpdateStatus(response: response)
+    }
+
+    // MARK: - Load for family (parent / child context)
+
+    func loadForFamily(request: AssignedHomeworkModels.FamilyLoad.Request) async {
+        familyId = request.familyId
+        let remote = await worker.fetchAssignments(
+            childId: request.childId,
+            familyId: request.familyId
+        )
+        let response = AssignedHomeworkModels.FamilyLoad.Response(assignments: remote)
+        Self.logger.debug(
+            "FamilyLoad: \(remote.count) assignments for child \(request.childId, privacy: .public)"
+        )
+        await presenter?.presentFamilyLoad(response: response)
     }
 }

@@ -27,6 +27,23 @@ private final class StubAssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
     func assignments(forChild childId: String) -> [HomeworkAssignment] {
         loadResponse.assignments.filter { $0.childId == childId }
     }
+    func publishToCloud(
+        assignment: HomeworkAssignment,
+        specialistId: String,
+        familyId: String
+    ) async {}
+    func fetchAssignments(childId: String, familyId: String) async -> [HomeworkAssignment] { [] }
+    func updateExerciseStatus(
+        request: AssignedHomeworkModels.UpdateStatus.Request
+    ) async -> AssignedHomeworkModels.UpdateStatus.Response {
+        .init(didSucceed: true, updatedAssignment: nil)
+    }
+    func assignmentsStream(
+        childId: String,
+        familyId: String
+    ) -> AsyncStream<[HomeworkAssignment]> {
+        AsyncStream { continuation in continuation.finish() }
+    }
 }
 
 // MARK: - Spy Presenter
@@ -44,6 +61,8 @@ private final class SpyAssignedHomeworkPresenter: AssignedHomeworkPresentationLo
         createCount += 1
         lastCreate = response
     }
+    func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async {}
+    func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async {}
 }
 
 // MARK: - Helpers
@@ -181,7 +200,14 @@ final class AssignedHomeworkWorkerTests: XCTestCase {
             ChildProfileDTO(id: "child-1", name: "Миша", age: 6,
                             targetSounds: ["Р"], parentId: "p-1")
         ])
-        return (AssignedHomeworkWorker(childRepository: repo, defaults: defaults), defaults)
+        return (
+            AssignedHomeworkWorker(
+                childRepository: repo,
+                homeworkRepository: MockHomeworkRepository(),
+                defaults: defaults
+            ),
+            defaults
+        )
     }
 
     func test_create_persistsAndQueryable() async {

@@ -7,15 +7,15 @@ import OSLog
 protocol AssignedHomeworkPresentationLogic: AnyObject {
     func presentLoad(response: AssignedHomeworkModels.Load.Response) async
     func presentCreate(response: AssignedHomeworkModels.Create.Response) async
+    func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async
+    func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async
 }
 
 // MARK: - AssignedHomeworkPresenter (Clean Swift: Presenter)
 //
-// v29 Фаза 8, Функция 4 «Домашнее задание от логопеда».
-//
 // Строит ViewModel конструктора заданий: списки детей и шаблонов, строки
 // существующих заданий со статусом, сообщение о результате создания.
-// Все строки — String(localized:).
+// Все строки — String(localized:). Никакой бизнес-логики здесь нет.
 
 @MainActor
 final class AssignedHomeworkPresenter: AssignedHomeworkPresentationLogic {
@@ -38,40 +38,14 @@ final class AssignedHomeworkPresenter: AssignedHomeworkPresentationLogic {
         self.displayLogic = displayLogic
     }
 
-    // MARK: - Load
+    // MARK: - Load (specialist screen)
 
     func presentLoad(response: AssignedHomeworkModels.Load.Response) async {
         let childLookup = Dictionary(
             uniqueKeysWithValues: response.children.map { ($0.id, $0.name) }
         )
         let rows = response.assignments.map { assignment in
-            AssignedHomeworkModels.Load.AssignmentRowViewModel(
-                id: assignment.id,
-                childName: childLookup[assignment.childId]
-                    ?? String(localized: "assignedHomework.unknownChild"),
-                exerciseCountLabel: String(
-                    format: String(localized: "assignedHomework.exerciseCount"),
-                    assignment.exercises.count
-                ),
-                dueLabel: String(
-                    format: String(localized: "assignedHomework.due"),
-                    Self.dateFormatter.string(from: assignment.dueDate)
-                ),
-                statusLabel: assignment.isComplete
-                    ? String(localized: "assignedHomework.status.done")
-                    : String(
-                        format: String(localized: "assignedHomework.status.progress"),
-                        assignment.doneCount,
-                        assignment.exercises.count
-                      ),
-                isComplete: assignment.isComplete,
-                accessibilityLabel: String(
-                    format: String(localized: "assignedHomework.row.a11y"),
-                    childLookup[assignment.childId]
-                        ?? String(localized: "assignedHomework.unknownChild"),
-                    assignment.exercises.count
-                )
-            )
+            makeRowViewModel(assignment: assignment, childLookup: childLookup)
         }
         let viewModel = AssignedHomeworkModels.Load.ViewModel(
             title: String(localized: "assignedHomework.title"),
@@ -95,5 +69,73 @@ final class AssignedHomeworkPresenter: AssignedHomeworkPresentationLogic {
                 : String(localized: "assignedHomework.create.failure")
         )
         await displayLogic?.displayCreate(viewModel: viewModel)
+    }
+
+    // MARK: - Update status
+
+    func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async {
+        let progress: String
+        if let a = response.updatedAssignment {
+            progress = String(
+                format: String(localized: "assignedHomework.status.progress"),
+                a.doneCount,
+                a.exercises.count
+            )
+        } else {
+            progress = ""
+        }
+        let viewModel = AssignedHomeworkModels.UpdateStatus.ViewModel(
+            didSucceed: response.didSucceed,
+            progressLabel: progress
+        )
+        await displayLogic?.displayUpdateStatus(viewModel: viewModel)
+    }
+
+    // MARK: - Family load (parent / child screen)
+
+    func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async {
+        let rows = response.assignments.map { assignment in
+            makeRowViewModel(assignment: assignment, childLookup: [:])
+        }
+        let viewModel = AssignedHomeworkModels.FamilyLoad.ViewModel(
+            assignments: rows,
+            emptyStateText: String(localized: "assignedHomework.family.empty")
+        )
+        await displayLogic?.displayFamilyLoad(viewModel: viewModel)
+    }
+
+    // MARK: - Helpers
+
+    private func makeRowViewModel(
+        assignment: HomeworkAssignment,
+        childLookup: [String: String]
+    ) -> AssignedHomeworkModels.Load.AssignmentRowViewModel {
+        .init(
+            id: assignment.id,
+            childName: childLookup[assignment.childId]
+                ?? String(localized: "assignedHomework.unknownChild"),
+            exerciseCountLabel: String(
+                format: String(localized: "assignedHomework.exerciseCount"),
+                assignment.exercises.count
+            ),
+            dueLabel: String(
+                format: String(localized: "assignedHomework.due"),
+                Self.dateFormatter.string(from: assignment.dueDate)
+            ),
+            statusLabel: assignment.isComplete
+                ? String(localized: "assignedHomework.status.done")
+                : String(
+                    format: String(localized: "assignedHomework.status.progress"),
+                    assignment.doneCount,
+                    assignment.exercises.count
+                  ),
+            isComplete: assignment.isComplete,
+            accessibilityLabel: String(
+                format: String(localized: "assignedHomework.row.a11y"),
+                childLookup[assignment.childId]
+                    ?? String(localized: "assignedHomework.unknownChild"),
+                assignment.exercises.count
+            )
+        )
     }
 }
