@@ -643,6 +643,7 @@ private struct ParentDashboardTab: View {
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(4)
+                        .minimumScaleFactor(0.85)
                         .ctaTextStyle()
                 }
             }

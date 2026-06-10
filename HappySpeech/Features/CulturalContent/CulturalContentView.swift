@@ -212,6 +212,7 @@ struct CulturalContentView: View {
                 Text("cultural.category.all")
                     .font(TypographyTokens.body(13))
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.sp3)
             .frame(minHeight: 44)
@@ -251,6 +252,7 @@ struct CulturalContentView: View {
                 Text(row.title)
                     .font(TypographyTokens.body(13))
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Text(verbatim: "\(row.count)")
                     .font(.caption2)
                     .opacity(0.7)
@@ -359,6 +361,7 @@ struct CulturalContentView: View {
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
 
                     HStack(spacing: SpacingTokens.sp2) {
@@ -535,6 +538,7 @@ private struct CulturalContentReaderView: View {
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
 
                     HStack(spacing: SpacingTokens.sp3) {

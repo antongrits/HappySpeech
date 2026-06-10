@@ -83,6 +83,7 @@ public struct HomeScreenCard: View {
                     .foregroundStyle(ColorTokens.Brand.primary.opacity(0.7))
                     .textCase(.uppercase)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
                 Spacer(minLength: SpacingTokens.micro)
 

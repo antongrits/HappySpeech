@@ -152,6 +152,7 @@ struct SpecialistReportsView: View {
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
@@ -197,6 +198,7 @@ struct SpecialistReportsView: View {
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
@@ -596,6 +598,7 @@ private struct SummaryMetric: View {
                 .foregroundStyle(ColorTokens.Spec.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
@@ -626,6 +629,7 @@ private struct SoundBreakdownRowView: View {
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Spec.ink)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     HStack(spacing: SpacingTokens.sp2) {
                         Text(String(format: String(localized: "reports.row.attempts.format"), row.attempts))
                         Text("·")

@@ -264,6 +264,7 @@ private struct IslandCard: View {
                 .font(TypographyTokens.caption(13).weight(.semibold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
     }
 

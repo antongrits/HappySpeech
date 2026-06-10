@@ -308,6 +308,7 @@ struct FamilyAwardsCabinetView: View {
                     .font(TypographyTokens.caption(10))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, minHeight: 110)
             .padding(SpacingTokens.sp2)
@@ -409,6 +410,7 @@ struct FamilyAwardsCabinetView: View {
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                     }
                     Spacer()
                 }

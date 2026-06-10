@@ -253,6 +253,7 @@ struct SoundDictionaryView: View {
                     .font(TypographyTokens.caption(10).monospaced())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, minHeight: 64)
             .background(

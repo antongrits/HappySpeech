@@ -539,6 +539,7 @@ struct SessionCompleteView: View {
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text(sticker.collectionName)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)

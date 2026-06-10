@@ -266,6 +266,7 @@ struct ParentInsightsTimelineView: View {
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
                 .frame(width: 56)
 
@@ -286,6 +287,7 @@ struct ParentInsightsTimelineView: View {
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 

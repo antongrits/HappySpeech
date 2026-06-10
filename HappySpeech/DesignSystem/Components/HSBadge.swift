@@ -33,6 +33,7 @@ public struct HSBadge: View {
             Text(text)
                 .font(.system(size: 11, weight: .semibold))
                 .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
         .foregroundStyle(foregroundColor)
         .padding(.horizontal, 8)
@@ -99,6 +100,7 @@ public struct HSToast: View {
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(Color.primary)
                 .lineLimit(3)
+                .minimumScaleFactor(0.85)
                 .ctaTextStyle()
 
             Spacer()

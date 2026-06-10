@@ -231,6 +231,7 @@ struct SpeechGrowthDiaryView: View {
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                 }
                 HStack(spacing: SpacingTokens.sp2) {
                     Button {

@@ -596,6 +596,7 @@ struct ObjectDescriptionMapView: View {
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
             Spacer(minLength: 0)

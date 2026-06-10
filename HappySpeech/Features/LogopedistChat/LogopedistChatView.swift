@@ -312,6 +312,7 @@ struct LogopedistChatView: View {
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 // Presence-подпись — только когда специалист реально подключён.
                 if let onlineLabel = viewModel.onlineStatusLabel {
                     Text(onlineLabel)
@@ -322,6 +323,7 @@ struct LogopedistChatView: View {
                                 : ColorTokens.Parent.inkSoft
                         )
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
 
@@ -349,6 +351,7 @@ struct LogopedistChatView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Semantic.warning)
                 .lineLimit(2)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.leading)
             Spacer()
         }
@@ -555,6 +558,7 @@ struct LogopedistChatView: View {
                             : ColorTokens.Parent.ink
                     )
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 if let dur = att.durationLabel {
                     Text(dur)
                         .font(.caption2)

@@ -336,6 +336,7 @@ struct RewardShopView: View {
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                         Text(message)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)

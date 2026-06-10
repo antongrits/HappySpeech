@@ -122,6 +122,7 @@ struct AchievementCalendarView: View {
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(3)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, SpacingTokens.sp2)

@@ -259,6 +259,7 @@ struct SpecSessionRow: View {
                     .font(TypographyTokens.body(14).weight(.semibold))
                     .foregroundStyle(ColorTokens.Spec.ink)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
                 HStack(spacing: SpacingTokens.tiny) {
                     Text(Self.dateFormatter.string(from: session.date))
@@ -436,6 +437,7 @@ struct SpecNoteCard: View {
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Spec.ink)
                         .lineLimit(4)
+                        .minimumScaleFactor(0.85)
                     Text(Self.formatter.string(from: note.createdAt))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)

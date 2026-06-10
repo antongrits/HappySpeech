@@ -202,6 +202,7 @@ struct SpecialistResourcesLibraryView: View {
                                 .font(TypographyTokens.caption(12))
                                 .foregroundStyle(ColorTokens.Spec.inkMuted)
                                 .lineLimit(2)
+                                .minimumScaleFactor(0.85)
                             Text(resource.durationLabel)
                                 .font(TypographyTokens.caption(11))
                                 .foregroundStyle(ColorTokens.Spec.inkMuted)

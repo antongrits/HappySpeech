@@ -156,6 +156,7 @@ struct SessionHistoryDetailView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
                 Spacer()
                 // P1.6: крупное число результата — kidDisplay(36) для читаемости

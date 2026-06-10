@@ -258,6 +258,7 @@ struct LetterTraceView: View {
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp2)

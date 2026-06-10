@@ -89,12 +89,14 @@ struct EveningReflectionView: View {
                                     .font(TypographyTokens.body(13))
                                     .foregroundStyle(ColorTokens.Kid.ink)
                                     .lineLimit(2)
+                                    .minimumScaleFactor(0.85)
                             }
                             if !entry.hard.isEmpty {
                                 Text(entry.hard)
                                     .font(TypographyTokens.body(13))
                                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                                     .lineLimit(2)
+                                    .minimumScaleFactor(0.85)
                             }
                         }
                         Spacer(minLength: 0)

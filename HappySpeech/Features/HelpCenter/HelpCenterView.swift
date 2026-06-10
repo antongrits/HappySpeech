@@ -352,6 +352,7 @@ struct HelpCenterView: View {
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
 

@@ -227,6 +227,7 @@ struct SessionHistoryExportSheet: View {
                         .font(TypographyTokens.body(15).weight(.semibold))
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text(subtitle)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)

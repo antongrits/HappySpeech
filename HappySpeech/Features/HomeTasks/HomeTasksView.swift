@@ -555,6 +555,7 @@ private struct HomeTaskCard: View {
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .lineLimit(3)
+                .minimumScaleFactor(0.85)
                 .lineSpacing(3)
         }
     }

@@ -291,6 +291,7 @@ struct WorldZoneDetailSheet: View {
                             ? ColorTokens.Kid.inkSoft
                             : viewModel.backgroundColor)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
 
                     Text(viewModel.lessonsLabel)
                         .font(TypographyTokens.body(14))

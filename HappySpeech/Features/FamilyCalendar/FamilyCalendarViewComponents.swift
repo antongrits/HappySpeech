@@ -226,6 +226,7 @@ struct WeekGoalCard: View {
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     if card.streakDays > 0 {
                         HStack(spacing: 2) {
                             Image(systemName: "flame.fill")
@@ -451,6 +452,7 @@ struct ChildSummaryCard: View {
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .lineLimit(1)
+                .minimumScaleFactor(0.85)
             HStack(spacing: 4) {
                 Image(systemName: "star.fill")
                     .font(TypographyTokens.caption(12))
@@ -459,6 +461,7 @@ struct ChildSummaryCard: View {
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             if let delta = card.comparisonDelta {
                 let pct = Int(abs(delta) * 100)
@@ -468,6 +471,7 @@ struct ChildSummaryCard: View {
                     .font(TypographyTokens.caption())
                     .foregroundStyle(delta >= 0 ? ColorTokens.Semantic.success : ColorTokens.Semantic.error)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
             }
             Spacer()

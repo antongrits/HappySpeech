@@ -196,6 +196,7 @@ struct CustomWordListView: View {
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Spec.ink)
                 .lineLimit(2)
+                .minimumScaleFactor(0.85)
             HStack(spacing: SpacingTokens.sp2) {
                 Text(row.targetSoundText)
                     .font(TypographyTokens.caption(12))

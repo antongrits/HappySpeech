@@ -141,6 +141,7 @@ struct OnboardingRoleCard: View {
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                     }
                     Spacer()
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")

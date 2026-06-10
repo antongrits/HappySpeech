@@ -381,6 +381,7 @@ private struct SharePlaySessionBannerView: View {
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .lineLimit(1)
+                .minimumScaleFactor(0.85)
 
             Spacer()
 

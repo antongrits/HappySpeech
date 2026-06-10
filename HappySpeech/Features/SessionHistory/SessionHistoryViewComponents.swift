@@ -80,6 +80,7 @@ struct SessionHistoryFilterChipBadge: View {
             Text(label)
                 .font(TypographyTokens.caption(12).weight(.semibold))
                 .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Parent.accent)
         .padding(.horizontal, SpacingTokens.small)

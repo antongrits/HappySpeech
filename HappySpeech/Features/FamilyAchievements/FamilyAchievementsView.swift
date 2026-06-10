@@ -270,6 +270,7 @@ struct FamilyAchievementsView: View {
                         .font(.caption2)
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
             }
 

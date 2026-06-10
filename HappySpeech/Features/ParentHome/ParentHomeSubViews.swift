@@ -92,6 +92,7 @@ struct SessionRow: View {
             .font(TypographyTokens.caption())
             .foregroundStyle(ColorTokens.Parent.inkMuted)
             .lineLimit(2)
+            .minimumScaleFactor(0.85)
         }
     }
 
@@ -336,6 +337,7 @@ struct ParentStatCard: View {
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .ctaTextStyle()
             }
             .frame(maxWidth: .infinity)

@@ -143,6 +143,7 @@ struct SyllableConstructorView: View {
                                 ? ColorTokens.Overlay.onAccent
                                 : ColorTokens.Kid.ink)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                             .padding(.horizontal, SpacingTokens.sp3)
                             .padding(.vertical, SpacingTokens.sp1)
                             .background(

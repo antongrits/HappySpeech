@@ -326,6 +326,7 @@ struct RewardsView: View {
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)
+                                .minimumScaleFactor(0.85)
                             Text("\(tab.count)")
                                 .font(TypographyTokens.mono(11))
                                 .padding(.horizontal, 6)

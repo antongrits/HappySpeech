@@ -76,6 +76,7 @@ public struct HSGlassNavigationBar<Trailing: View>: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(inkColor.opacity(0.7))
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

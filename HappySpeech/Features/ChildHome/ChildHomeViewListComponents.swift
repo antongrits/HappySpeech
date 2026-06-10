@@ -78,6 +78,7 @@ struct ChildHomeRecentSessionRow: View {
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text(formattedDate)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)

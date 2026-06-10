@@ -258,6 +258,7 @@ struct DailyChallengeView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
                 Spacer()
             }

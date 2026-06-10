@@ -262,6 +262,7 @@ struct DailyRitualsLyalyaView: View {
                             .font(TypographyTokens.body(15).weight(.medium))
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                             .fixedSize(horizontal: false, vertical: true)
                         Text(viewModel.reminderToggleSubtitle)
                             .font(TypographyTokens.caption(12))

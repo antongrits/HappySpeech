@@ -216,6 +216,7 @@ extension SettingsView {
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                     }
 
                     Spacer()

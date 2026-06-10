@@ -146,6 +146,7 @@ struct FamilyVoiceMessageHubView: View {
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         Text(message.timeLabel)
                             .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)

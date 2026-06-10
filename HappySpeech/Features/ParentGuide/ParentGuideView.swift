@@ -325,6 +325,7 @@ struct ParentGuideView: View {
                             .font(TypographyTokens.body(14).weight(.medium))
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                             .multilineTextAlignment(.leading)
                         if lesson.isRecommended {
                             Text("parentGuide.lesson.recommendedBadge")
@@ -339,6 +340,7 @@ struct ParentGuideView: View {
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
 

@@ -141,6 +141,7 @@ public struct HSTimelineView: View {
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(.secondary)
                     .lineLimit(3)
+                    .minimumScaleFactor(0.85)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

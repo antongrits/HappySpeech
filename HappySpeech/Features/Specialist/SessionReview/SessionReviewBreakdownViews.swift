@@ -108,6 +108,7 @@ struct AttemptBreakdownRowView: View {
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
                 }
 

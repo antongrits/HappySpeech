@@ -270,6 +270,7 @@ struct ARFaceFilterView: View {
                     .font(.caption2)
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .frame(width: 72, height: 72)
             .background(

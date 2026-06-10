@@ -134,10 +134,12 @@ struct StoryRetellingProView: View {
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         Text(story.summary)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
                     Spacer()
                     VStack(alignment: .trailing, spacing: 2) {
