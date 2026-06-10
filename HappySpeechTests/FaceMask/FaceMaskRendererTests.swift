@@ -103,4 +103,25 @@ final class FaceMaskRendererTests: XCTestCase {
         // Просто убеждаемся что вызов не крашит.
         _ = supported
     }
+
+    // MARK: - RealityKit-реактивность (без устройства)
+    //
+    // Привязка к ARView/ARFaceAnchor требует TrueDepth → ручная верификация на
+    // устройстве. Здесь проверяем, что API безопасны без присоединённой маски.
+
+    func test_react_withoutAttachedMask_isSafeNoOp() {
+        // Не должно крашить, если react вызвали до attachMask.
+        sut.react(to: .smile)
+        sut.react(to: .jawOpenWide)
+        sut.react(to: .neutral)
+    }
+
+    func test_detach_withoutAttachedMask_isSafeNoOp() {
+        sut.detach()
+    }
+
+    func test_react_thenDetach_isSafe() {
+        sut.react(to: FaceBlendshapes(jawOpen: 0.8, mouthSmileLeft: 0.6, mouthSmileRight: 0.6))
+        sut.detach()
+    }
 }

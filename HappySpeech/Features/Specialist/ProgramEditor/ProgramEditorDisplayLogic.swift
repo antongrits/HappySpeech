@@ -13,6 +13,10 @@ protocol ProgramEditorDisplayLogic: AnyObject {
     func displayValidation(_ viewModel: ProgramEditorModels.ValidateProgram.ViewModel)
     func displayValidationWarning(_ message: String)
     func displayAssignToChild(_ viewModel: ProgramEditorModels.AssignToChild.ViewModel)
+    // Import / Export
+    func displayExportTemplate(_ viewModel: ProgramEditorModels.ExportTemplate.ViewModel)
+    func displayImportTemplate(_ viewModel: ProgramEditorModels.ImportTemplate.ViewModel)
+    func displayImportTemplateFailure(_ viewModel: ProgramEditorModels.ImportTemplate.FailureViewModel)
 }
 
 // Note: ValidateProgram and AssignToChild ViewModels are defined inside

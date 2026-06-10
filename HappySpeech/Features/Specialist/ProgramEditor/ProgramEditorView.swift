@@ -1,15 +1,24 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 // MARK: - ProgramEditorView
 //
 // Specialist-facing screen for building a child's daily program.
 // Layout (top → bottom):
 //   1. Header — child id, total minutes, save/cancel.
-//   2. Block list — reorderable via drag, swipe-to-delete.
+//   2. Block list — reorderable via drag handle (always-active edit mode),
+//                   swipe-to-delete.
 //   3. Block palette — tap to append a new block of given type.
 //
-// Uses the parent circuit palette (cooler neutral tones) since the specialist
-// is not the child.
+// Drag-drop reorder: the List is kept in `.active` edit mode so three-line
+// drag handles are always visible. `.onMove` delegates to the interactor via
+// MoveBlock.Request → Interactor → Presenter → displayMoveBlock.
+//
+// Import/Export: toolbar menu offers "Экспортировать шаблон" and
+// "Импортировать шаблон". Export encodes the current program to a
+// versioned JSON (.happyspeech) and opens UIActivityViewController.
+// Import uses SwiftUI .fileImporter to pick a .happyspeech or .json file
+// and loads it via ImportTemplate.Request → Interactor.
 
 struct ProgramEditorView: View {
 
@@ -29,6 +38,17 @@ struct ProgramEditorView: View {
     @State private var isValid: Bool = false
     @State private var notes: String = ""
     @State private var confirmation: String?
+    @State private var importError: String?
+
+    // Export sheet
+    @State private var exportURL: URL?
+    @State private var isShareSheetPresented: Bool = false
+
+    // Import file picker
+    @State private var isFileImporterPresented: Bool = false
+
+    // Import error alert
+    @State private var isImportErrorPresented: Bool = false
 
     @Environment(\.circuitContext) private var circuit
 
@@ -57,7 +77,8 @@ struct ProgramEditorView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(String(localized: "program.editor.cancel"), action: onCancel)
                 }
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    importExportMenu
                     Button(String(localized: "program.editor.save"), action: save)
                         .disabled(!isValid)
                 }
@@ -66,12 +87,34 @@ struct ProgramEditorView: View {
             .environment(\.circuitContext, .specialist)
             .accessibilityIdentifier("ProgramEditorRoot")
             .safeAreaInset(edge: .bottom) {
-                if let confirmation {
-                    Text(confirmation)
-                        .font(TypographyTokens.caption())
-                        .foregroundStyle(ColorTokens.Parent.accent)
-                        .padding(SpacingTokens.small)
+                bottomBanner
+            }
+            // Export share sheet
+            .sheet(isPresented: $isShareSheetPresented) {
+                if let url = exportURL {
+                    ProgramEditorShareSheet(items: [url])
+                        .ignoresSafeArea()
                 }
+            }
+            // Import file picker — accepts .happyspeech (custom) and .json
+            .fileImporter(
+                isPresented: $isFileImporterPresented,
+                allowedContentTypes: [.happySpeechProgram, .json],
+                allowsMultipleSelection: false
+            ) { result in
+                handleImportResult(result)
+            }
+            // Import error alert
+            .alert(
+                String(localized: "program_editor.import.error.title"),
+                isPresented: $isImportErrorPresented,
+                presenting: importError
+            ) { _ in
+                Button(String(localized: "action.ok"), role: .cancel) {}
+            } message: { message in
+                Text(message)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
         }
     }
@@ -107,6 +150,8 @@ struct ProgramEditorView: View {
         .padding(SpacingTokens.medium)
     }
 
+    /// Block list is always in `.active` edit mode so drag handles are visible
+    /// without requiring an explicit EditButton tap.
     private var blockList: some View {
         List {
             ForEach(blocks) { block in
@@ -119,12 +164,17 @@ struct ProgramEditorView: View {
                 }
             }
             .onMove { sources, target in
+                // Capture the dragged block's ID before the local reorder
                 guard let source = sources.first else { return }
                 let id = blocks[source].id
+                // Optimistic local reorder so the list stays responsive
+                blocks.move(fromOffsets: sources, toOffset: target)
                 Task { await interactor?.moveBlock(.init(blockId: id, targetIndex: target)) }
             }
         }
         .listStyle(.plain)
+        // Keep edit mode always active so drag handles are visible
+        .environment(\.editMode, .constant(.active))
     }
 
     private var palette: some View {
@@ -158,7 +208,72 @@ struct ProgramEditorView: View {
         .background(ColorTokens.Parent.bg)
     }
 
-    // MARK: - Helpers
+    @ViewBuilder
+    private var bottomBanner: some View {
+        if let confirmation {
+            Text(confirmation)
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(SpacingTokens.small)
+        }
+    }
+
+    // MARK: - Import/Export menu
+
+    private var importExportMenu: some View {
+        Menu {
+            Button {
+                exportCurrentProgram()
+            } label: {
+                Label(
+                    String(localized: "program_editor.menu.export"),
+                    systemImage: "square.and.arrow.up"
+                )
+            }
+            .accessibilityLabel(String(localized: "program_editor.menu.export"))
+            .accessibilityHint(String(localized: "program_editor.menu.export.hint"))
+
+            Button {
+                isFileImporterPresented = true
+            } label: {
+                Label(
+                    String(localized: "program_editor.menu.import"),
+                    systemImage: "square.and.arrow.down"
+                )
+            }
+            .accessibilityLabel(String(localized: "program_editor.menu.import"))
+            .accessibilityHint(String(localized: "program_editor.menu.import.hint"))
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .accessibilityLabel(String(localized: "program_editor.menu.label"))
+        }
+    }
+
+    // MARK: - Actions
+
+    private func exportCurrentProgram() {
+        Task {
+            await interactor?.exportTemplate(.init(
+                childId: childId,
+                blocks: blocks,
+                notes: notes
+            ))
+        }
+    }
+
+    private func handleImportResult(_ result: Result<[URL], Error>) {
+        switch result {
+        case let .success(urls):
+            guard let url = urls.first else { return }
+            Task { await interactor?.importTemplate(.init(fileURL: url)) }
+        case let .failure(error):
+            importError = error.localizedDescription
+            isImportErrorPresented = true
+        }
+    }
 
     private func defaultMinutes(for type: ProgramBlockType) -> Int {
         switch type {
@@ -201,7 +316,21 @@ struct ProgramEditorView: View {
                 totalMinutes = newTotal
                 isValid = ProgramEditorPresenter.isValid(newBlocks)
             },
-            onSave: { message in confirmation = message }
+            onSave: { message in confirmation = message },
+            onExport: { vm in
+                exportURL = vm.fileURL
+                isShareSheetPresented = true
+            },
+            onImport: { vm in
+                blocks = vm.blocks
+                totalMinutes = vm.totalDurationMinutes
+                isValid = ProgramEditorPresenter.isValid(vm.blocks)
+                confirmation = String(localized: "program_editor.import.success")
+            },
+            onImportFailure: { vm in
+                importError = vm.errorMessage
+                isImportErrorPresented = true
+            }
         )
         presenterInstance.display = bridge
         self.displayBridge = bridge
@@ -214,6 +343,13 @@ struct ProgramEditorView: View {
 
         await interactorInstance.loadProgram(.init(childId: childId))
     }
+}
+
+// MARK: - UTType extension
+
+extension UTType {
+    /// Custom UTType for HappySpeech program template files (.happyspeech).
+    static let happySpeechProgram = UTType(exportedAs: "ru.happyspeech.program-template")
 }
 
 // MARK: - Row
@@ -245,6 +381,17 @@ private struct ProgramBlockRow: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityDescription)
+    }
+
+    private var accessibilityDescription: String {
+        var desc = String(localized: String.LocalizationValue(block.type.titleKey))
+        if let sound = block.targetSound {
+            desc += ", \(sound)"
+        }
+        desc += ", \(block.durationMinutes) " + String(localized: "program.editor.min")
+        return desc
     }
 
     private func symbol(for type: ProgramBlockType) -> String {
@@ -265,6 +412,16 @@ private struct ProgramBlockRow: View {
     }
 }
 
+// MARK: - Share Sheet
+
+private struct ProgramEditorShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+}
+
 // MARK: - Bridge
 
 @MainActor
@@ -272,13 +429,24 @@ private final class ProgramEditorDisplayBridge: ProgramEditorDisplayLogic {
     let onLoad: (ProgramEditorModels.LoadProgram.ViewModel) -> Void
     let onUpdate: ([ProgramBlock], Int) -> Void
     let onSave: (String) -> Void
+    let onExport: (ProgramEditorModels.ExportTemplate.ViewModel) -> Void
+    let onImport: (ProgramEditorModels.ImportTemplate.ViewModel) -> Void
+    let onImportFailure: (ProgramEditorModels.ImportTemplate.FailureViewModel) -> Void
 
-    init(onLoad: @escaping (ProgramEditorModels.LoadProgram.ViewModel) -> Void,
-         onUpdate: @escaping ([ProgramBlock], Int) -> Void,
-         onSave: @escaping (String) -> Void) {
+    init(
+        onLoad: @escaping (ProgramEditorModels.LoadProgram.ViewModel) -> Void,
+        onUpdate: @escaping ([ProgramBlock], Int) -> Void,
+        onSave: @escaping (String) -> Void,
+        onExport: @escaping (ProgramEditorModels.ExportTemplate.ViewModel) -> Void,
+        onImport: @escaping (ProgramEditorModels.ImportTemplate.ViewModel) -> Void,
+        onImportFailure: @escaping (ProgramEditorModels.ImportTemplate.FailureViewModel) -> Void
+    ) {
         self.onLoad = onLoad
         self.onUpdate = onUpdate
         self.onSave = onSave
+        self.onExport = onExport
+        self.onImport = onImport
+        self.onImportFailure = onImportFailure
     }
 
     func displayLoadProgram(_ vm: ProgramEditorModels.LoadProgram.ViewModel) { onLoad(vm) }
@@ -289,4 +457,17 @@ private final class ProgramEditorDisplayBridge: ProgramEditorDisplayLogic {
     func displayValidation(_ vm: ProgramEditorModels.ValidateProgram.ViewModel) {}
     func displayValidationWarning(_ message: String) {}
     func displayAssignToChild(_ vm: ProgramEditorModels.AssignToChild.ViewModel) {}
+    func displayExportTemplate(_ vm: ProgramEditorModels.ExportTemplate.ViewModel) { onExport(vm) }
+    func displayImportTemplate(_ vm: ProgramEditorModels.ImportTemplate.ViewModel) { onImport(vm) }
+    func displayImportTemplateFailure(_ vm: ProgramEditorModels.ImportTemplate.FailureViewModel) { onImportFailure(vm) }
+}
+
+// MARK: - Preview
+
+#Preview {
+    ProgramEditorView(
+        childId: "preview-child",
+        onSaved: { _ in },
+        onCancel: {}
+    )
 }

@@ -29,6 +29,16 @@ final class ProgramEditorPresenterTests: XCTestCase {
         func displayValidation(_ viewModel: ProgramEditorModels.ValidateProgram.ViewModel) { validationVM = viewModel }
         func displayValidationWarning(_ message: String) { validationWarningMessage = message }
         func displayAssignToChild(_ viewModel: ProgramEditorModels.AssignToChild.ViewModel) { assignToChildVM = viewModel }
+
+        // MARK: Import / Export stubs
+
+        var exportTemplateVM: ProgramEditorModels.ExportTemplate.ViewModel?
+        var importTemplateVM: ProgramEditorModels.ImportTemplate.ViewModel?
+        var importTemplateFailureVM: ProgramEditorModels.ImportTemplate.FailureViewModel?
+
+        func displayExportTemplate(_ viewModel: ProgramEditorModels.ExportTemplate.ViewModel) { exportTemplateVM = viewModel }
+        func displayImportTemplate(_ viewModel: ProgramEditorModels.ImportTemplate.ViewModel) { importTemplateVM = viewModel }
+        func displayImportTemplateFailure(_ viewModel: ProgramEditorModels.ImportTemplate.FailureViewModel) { importTemplateFailureVM = viewModel }
     }
 
     private func makeSUT() -> (ProgramEditorPresenter, DisplaySpy) {

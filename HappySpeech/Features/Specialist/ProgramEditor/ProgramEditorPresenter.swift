@@ -13,6 +13,10 @@ protocol ProgramEditorPresentationLogic: AnyObject {
     func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async
     func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async
     func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async
+    // Import / Export
+    func presentExportTemplate(_ response: ProgramEditorModels.ExportTemplate.Response) async
+    func presentImportTemplate(_ response: ProgramEditorModels.ImportTemplate.Response) async
+    func presentImportTemplateFailure(_ response: ProgramEditorModels.ImportTemplate.FailureViewModel) async
 }
 
 // MARK: - ProgramEditorPresenter
@@ -93,6 +97,25 @@ final class ProgramEditorPresenter: ProgramEditorPresentationLogic {
             success: response.success,
             message: message
         ))
+    }
+
+    // MARK: - Import / Export
+
+    func presentExportTemplate(_ response: ProgramEditorModels.ExportTemplate.Response) async {
+        display?.displayExportTemplate(.init(fileURL: response.fileURL))
+    }
+
+    func presentImportTemplate(_ response: ProgramEditorModels.ImportTemplate.Response) async {
+        let total = response.program.blocks.map(\.durationMinutes).reduce(0, +)
+        display?.displayImportTemplate(.init(
+            blocks: response.program.blocks,
+            totalDurationMinutes: total,
+            validationWarnings: response.validationWarnings
+        ))
+    }
+
+    func presentImportTemplateFailure(_ response: ProgramEditorModels.ImportTemplate.FailureViewModel) async {
+        display?.displayImportTemplateFailure(response)
     }
 
     // MARK: - Validation

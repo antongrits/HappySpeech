@@ -50,6 +50,28 @@ final class ProgramEditorInteractorTests: XCTestCase {
             assignCalled = true
             lastAssign = response
         }
+
+        // MARK: Import / Export stubs
+
+        var exportCalled = false
+        var importCalled = false
+        var importFailureCalled = false
+        var lastExport: ProgramEditorModels.ExportTemplate.Response?
+        var lastImport: ProgramEditorModels.ImportTemplate.Response?
+        var lastImportFailure: ProgramEditorModels.ImportTemplate.FailureViewModel?
+
+        func presentExportTemplate(_ response: ProgramEditorModels.ExportTemplate.Response) async {
+            exportCalled = true
+            lastExport = response
+        }
+        func presentImportTemplate(_ response: ProgramEditorModels.ImportTemplate.Response) async {
+            importCalled = true
+            lastImport = response
+        }
+        func presentImportTemplateFailure(_ response: ProgramEditorModels.ImportTemplate.FailureViewModel) async {
+            importFailureCalled = true
+            lastImportFailure = response
+        }
     }
 
     private func makeSUT(

@@ -38,27 +38,39 @@ final class ARFaceFilterViewModelHolder: ARFaceFilterDisplayLogic {
     }
 }
 
-// MARK: - SimpleARFaceView (UIViewRepresentable)
+// MARK: - FaceMaskARView (UIViewRepresentable)
 //
-// Минимальный self-contained ARView. Сессия привязана к жизненному циклу
-// этого View, без global ARSessionService.
+// A-03 / RealityKit: ARView с лицевым трекингом, к которому привязывается
+// 3D-аксессуар маски через `AnchorEntity(.face)` (едет за лицом). Сессией
+// управляет переданный `LiveARSessionService` (даёт и поток blendshapes для
+// реактивности). Смена маски (`mask`) пере-привязывает аксессуар без стака.
 
-struct SimpleARFaceView: UIViewRepresentable {
+struct FaceMaskARView: UIViewRepresentable {
 
-    let isSupported: Bool
+    let session: ARSession?
+    let mask: FaceMaskKind
+    let renderer: FaceMaskRenderer
 
     func makeUIView(context: Context) -> ARView {
         let view = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
         view.backgroundColor = .black
-        guard isSupported else { return view }
-        let config = ARFaceTrackingConfiguration()
-        config.isLightEstimationEnabled = true
-        config.maximumNumberOfTrackedFaces = 1
-        view.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+        if let session {
+            view.session = session
+        }
+        renderer.attachMask(mask, to: view)
         return view
     }
 
-    func updateUIView(_ uiView: ARView, context: Context) {}
+    func updateUIView(_ uiView: ARView, context: Context) {
+        if let session, uiView.session !== session {
+            uiView.session = session
+        }
+        // Маска сменилась в picker — пере-привязываем аксессуар (renderer сам
+        // снимает прежний anchor, чтобы не стакались).
+        if renderer.currentMask != mask {
+            renderer.attachMask(mask, to: uiView)
+        }
+    }
 
     static func dismantleUIView(_ uiView: ARView, coordinator: ()) {
         uiView.session.pause()
@@ -83,6 +95,8 @@ struct ARFaceFilterView: View {
     @State private var interactor: ARFaceFilterInteractor?
     @State private var presenter: ARFaceFilterPresenter?
     @State private var renderer = FaceMaskRenderer()
+    @State private var arSession: LiveARSessionService?
+    @State private var reactLoop: Task<Void, Never>?
     @State private var asrLoop: Task<Void, Never>?
     @State private var isListening = false
 
@@ -97,7 +111,12 @@ struct ARFaceFilterView: View {
     var body: some View {
         ZStack {
             arBackground
-            maskOverlay
+            // 2D-оверлей маски нужен ТОЛЬКО на устройствах без face tracking
+            // (3D-маска там не рендерится). На поддерживаемых устройствах маска —
+            // 3D-аксессуар на face-anchor, поэтому оверлей скрыт.
+            if !FaceMaskRenderer.isFaceTrackingSupported {
+                maskOverlay
+            }
             VStack {
                 topBar
                 Spacer()
@@ -119,7 +138,11 @@ struct ARFaceFilterView: View {
     @ViewBuilder
     private var arBackground: some View {
         if FaceMaskRenderer.isFaceTrackingSupported {
-            SimpleARFaceView(isSupported: true)
+            FaceMaskARView(
+                session: arSession?.underlyingSession,
+                mask: holder.setMaskVM?.mask ?? renderer.currentMask,
+                renderer: renderer
+            )
         } else {
             // Fallback: 2D градиент-фон, fun mode без AR.
             ZStack {
@@ -298,11 +321,38 @@ struct ARFaceFilterView: View {
         }
         await interactor?.setMask(request: .init(mask: .kitten))
 
+        // 3D-маска: запускаем face-tracking сессию и подписываемся на blendshapes,
+        // чтобы аксессуар реагировал на мимику (ушки шевелятся). На устройствах
+        // без TrueDepth / в симуляторе сессия не стартует — это нормально, маска
+        // деградирует в 2D-оверлей.
+        await startFaceTrackingIfPossible()
+
         // Реальный речевой триггер: периодически записываем короткий аудио-чанк
         // и распознаём через ASRService (kid-safe tier). Результат подаётся в
         // processTranscription. Если ASR/микрофон недоступны — остаётся честная
         // ручная кнопка-подтверждение в prompt-карточке (без имитации речи).
         await startListeningIfPossible()
+    }
+
+    private func startFaceTrackingIfPossible() async {
+        guard FaceMaskRenderer.isFaceTrackingSupported else { return }
+        let service = LiveARSessionService()
+        do {
+            try await service.startSession()
+        } catch {
+            // Нет разрешения камеры / сессия не стартовала — маска останется
+            // статичной 3D-аксессуаром без реакции на мимику. Не критично.
+            Self.logger.error("Face tracking start failed: \(error.localizedDescription, privacy: .public)")
+            return
+        }
+        arSession = service
+        reactLoop?.cancel()
+        reactLoop = Task { @MainActor in
+            for await frame in service.blendshapeStream {
+                guard !Task.isCancelled else { break }
+                renderer.react(to: frame)
+            }
+        }
     }
 
     private func startListeningIfPossible() async {
@@ -350,6 +400,12 @@ struct ARFaceFilterView: View {
         if audio.isRecording {
             Task { _ = try? await audio.stopRecording() }
         }
+        // Останавливаем face-tracking и снимаем 3D-маску со сцены.
+        reactLoop?.cancel()
+        reactLoop = nil
+        renderer.detach()
+        arSession?.stopSession()
+        arSession = nil
     }
 }
 

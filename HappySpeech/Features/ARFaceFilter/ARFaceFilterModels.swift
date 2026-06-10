@@ -5,9 +5,12 @@ import SwiftUI
 //
 // Block S.4 v16 — AR Face Filter Mode (fun mode).
 //
-// 5 масок (2D overlay через SF Symbols / emoji над ARSession). Никаких 3D
-// USDZ. Speech trigger через polling-based ASR (1-сек чанки) — если
-// произнесено целевое слово → mask color change + Lyalya celebrates.
+// 5 масок-персонажей (котёнок / лиса / корона / шапка-ушанка / очки). На
+// устройствах с face-tracking (A12+) — 3D-аксессуар на `AnchorEntity(.face)`,
+// собранный из RealityKit-примитивов (см. `FaceMaskEntityBuilder`), едет за
+// лицом и реагирует на мимику. На устройствах без TrueDepth — 2D SF-Symbol
+// оверлей (fallback). Speech trigger через polling-based ASR (1-сек чанки) —
+// если произнесено целевое слово → mask glow + Lyalya celebrates.
 
 // MARK: - FaceMaskKind
 

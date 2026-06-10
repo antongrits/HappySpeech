@@ -108,6 +108,34 @@ enum ProgramEditorModels {
             let confirmationMessage: String
         }
     }
+
+    // MARK: ExportTemplate
+
+    enum ExportTemplate {
+        struct Request { let childId: String; let blocks: [ProgramBlock]; let notes: String }
+        struct Response { let fileURL: URL }
+        struct ViewModel: Equatable {
+            let fileURL: URL
+        }
+    }
+
+    // MARK: ImportTemplate
+
+    enum ImportTemplate {
+        struct Request { let fileURL: URL }
+        struct Response {
+            let program: Program
+            let validationWarnings: [String]
+        }
+        struct ViewModel: Equatable {
+            let blocks: [ProgramBlock]
+            let totalDurationMinutes: Int
+            let validationWarnings: [String]
+        }
+        struct FailureViewModel: Equatable {
+            let errorMessage: String
+        }
+    }
 }
 
 // MARK: - Program / Block

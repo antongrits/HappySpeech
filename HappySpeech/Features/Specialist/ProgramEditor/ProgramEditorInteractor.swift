@@ -13,6 +13,8 @@ protocol ProgramEditorBusinessLogic: AnyObject {
     func validateProgram(_ request: ProgramEditorModels.ValidateProgram.Request) async
     func assignToChild(_ request: ProgramEditorModels.AssignToChild.Request) async
     func duplicateBlock(_ request: ProgramEditorModels.DuplicateBlock.Request) async
+    func exportTemplate(_ request: ProgramEditorModels.ExportTemplate.Request) async
+    func importTemplate(_ request: ProgramEditorModels.ImportTemplate.Request) async
 }
 
 // MARK: - ProgramEditorInteractor
@@ -45,6 +47,7 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
 
     private var currentProgram: Program
     private let childRepository: (any ChildRepository)?
+    private let exportWorker = ProgramTemplateExportWorker()
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ProgramEditor")
 
     // MARK: - Validation constants
@@ -365,6 +368,53 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
 
     private func clampDuration(_ minutes: Int) -> Int {
         max(minBlockDurationMinutes, min(maxBlockDurationMinutes, minutes))
+    }
+
+    // MARK: - Export Template
+
+    func exportTemplate(_ request: ProgramEditorModels.ExportTemplate.Request) async {
+        // Обновляем текущую программу перед экспортом
+        currentProgram = Program(
+            childId: request.childId,
+            blocks: request.blocks,
+            specialistNotes: request.notes,
+            updatedAt: currentProgram.updatedAt
+        )
+        do {
+            let fileURL = try exportWorker.export(program: currentProgram)
+            await presenter?.presentExportTemplate(.init(fileURL: fileURL))
+            logger.info("exportTemplate succeeded: \(fileURL.lastPathComponent, privacy: .public)")
+        } catch {
+            logger.error("exportTemplate failed: \(error.localizedDescription, privacy: .public)")
+            await presenter?.presentValidationWarning(.init(message: error.localizedDescription))
+        }
+    }
+
+    // MARK: - Import Template
+
+    func importTemplate(_ request: ProgramEditorModels.ImportTemplate.Request) async {
+        do {
+            let program = try exportWorker.importProgram(from: request.fileURL)
+            currentProgram = Program(
+                childId: currentProgram.childId,
+                blocks: program.blocks,
+                specialistNotes: program.specialistNotes,
+                updatedAt: Date()
+            )
+            let validation = validateCurrentProgram()
+            await presenter?.presentImportTemplate(.init(
+                program: currentProgram,
+                validationWarnings: validation.warnings
+            ))
+            logger.info(
+                "importTemplate succeeded blocks=\(program.blocks.count, privacy: .public)"
+            )
+        } catch {
+            logger.error("importTemplate failed: \(error.localizedDescription, privacy: .public)")
+            await presenter?.presentImportTemplateFailure(.init(
+                errorMessage: error.localizedDescription
+            ))
+        }
     }
 
     // MARK: - Test hook
