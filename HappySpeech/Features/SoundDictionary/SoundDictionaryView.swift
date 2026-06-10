@@ -318,13 +318,21 @@ struct SoundDictionaryView: View {
                 // только у согласных, для которых задан и реально существует imageset.
                 articulationProfileCard(viewModel)
 
-                // Programmatic side-view articulation video (Remotion, научно корректная схема).
-                // Показывается для С, Ш, Р, Л и их близких пар.
-                if let profileDemo = VideoCatalog.ArticulationDemo.profileDemo(
+                // Артикуляция side-view: для звуков с научной 3D-позой —
+                // интерактивная 3D-модель сагиттального разреза (вращаемая),
+                // с опциональным переключателем на видео-схему. Для остальных
+                // (нет 3D-позы) — программное Remotion-видео как раньше.
+                let articulationVideo = VideoCatalog.ArticulationDemo.profileDemo(
                     forCyrillic: viewModel.title
-                ) {
+                )
+                if ArticulationSound.fromCyrillic(viewModel.title) != nil {
+                    Articulation3DCard(
+                        cyrillic: viewModel.title,
+                        videoSlug: articulationVideo
+                    )
+                } else if let articulationVideo {
                     ArticulationVideoPlayerView(
-                        videoSlug: profileDemo,
+                        videoSlug: articulationVideo,
                         soundLetter: viewModel.title
                     )
                 }

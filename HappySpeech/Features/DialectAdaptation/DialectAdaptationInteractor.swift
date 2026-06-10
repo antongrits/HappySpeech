@@ -53,7 +53,12 @@ final class DialectAdaptationInteractor: DialectAdaptationBusinessLogic, Dialect
 
     private enum Keys {
         static let prefix = "happyspeech.dialect."
-        static func selectedId(_ childId: String) -> String { "\(prefix)\(childId).id" }
+        // ВАЖНО: ключ выбранного диалекта ОБЯЗАН совпадать с
+        // ``DialectProfileStore/selectedKey(childId:)`` — это единый источник
+        // правды, который читают слои скоринга/ASR (диалект-толерантность).
+        static func selectedId(_ childId: String) -> String {
+            DialectProfileStore.selectedKey(childId: childId)
+        }
         static func appliedISO(_ childId: String) -> String { "\(prefix)\(childId).appliedAt" }
     }
 

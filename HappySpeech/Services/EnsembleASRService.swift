@@ -121,6 +121,16 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
     /// (детский контур), т.к. модель тяжёлая и не нужна для on-device скоринга.
     private let wav2Vec2: (any Wav2Vec2Service)?
 
+    /// Источник выбранного регионального диалекта. Применяется в
+    /// `phoneticAccuracy`: нормативные диалектные варианты фонем (южное [ɣ],
+    /// северное оканье, цоканье ц↔ч) не штрафуются. nil → диалект-толерантность
+    /// выключена (литературная норма, прежнее поведение).
+    private let dialectProfileProvider: (any DialectProfileProviding)?
+
+    /// Резолвер активного ребёнка (для выбора его диалекта). Замыкание, чтобы не
+    /// держать сильную ссылку на контейнер. nil/пустая строка → `.default` диалект.
+    private let activeChildIdProvider: (@Sendable () -> String)?
+
     // MARK: - Logger
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "EnsembleASR")
@@ -148,12 +158,24 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
         whisperASR: any ASRService,
         phonemeClassifier: any PhonemeAnalysisService,
         pronunciationScorer: any PronunciationScorerService,
-        wav2Vec2: (any Wav2Vec2Service)? = nil
+        wav2Vec2: (any Wav2Vec2Service)? = nil,
+        dialectProfileProvider: (any DialectProfileProviding)? = nil,
+        activeChildIdProvider: (@Sendable () -> String)? = nil
     ) {
         self.whisperASR = whisperASR
         self.phonemeClassifier = phonemeClassifier
         self.pronunciationScorer = pronunciationScorer
         self.wav2Vec2 = wav2Vec2
+        self.dialectProfileProvider = dialectProfileProvider
+        self.activeChildIdProvider = activeChildIdProvider
+    }
+
+    /// Текущий диалектный ruleset активного ребёнка (или `.none` без провайдеров).
+    private func currentDialectRuleset() -> RegionalDialectPhonetics.Ruleset {
+        guard let dialectProfileProvider, let activeChildIdProvider else { return .none }
+        let childId = activeChildIdProvider()
+        guard !childId.isEmpty else { return .none }
+        return dialectProfileProvider.ruleset(childId: childId)
     }
 
     // MARK: - EnsembleASRServiceProtocol
@@ -215,7 +237,11 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
         // штрафуются мягко (~0.2), а не как «чужая» фонема (0.7–1.0). Так слово
         // остаётся узнанным, а несформированный звук помечается отдельно, без
         // несправедливого занижения phonetic accuracy.
-        let policy = ChildSpeechScoringPolicy()
+        //
+        // Диалект-толерантность: если активный ребёнок выбрал региональный диалект,
+        // его нормативные фонемные варианты (южное [ɣ], северное оканье, цоканье
+        // ц↔ч) не штрафуются вовсе (cost 0.0). Без выбора — литературная норма.
+        let policy = ChildSpeechScoringPolicy(dialectRuleset: currentDialectRuleset())
         var totalDistance: Double = 0
         for i in 0 ..< reference.count {
             totalDistance += policy.childAwareSubstitutionCost(reference[i], child[i])

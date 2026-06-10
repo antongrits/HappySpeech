@@ -291,59 +291,69 @@ struct OnboardingModelDownloadStep: View {
     }
 
     var body: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer()
+        // SE-fix: обёртка в GeometryReader + ScrollView гарантирует, что
+        // footer (Далее / Пропустить) всегда виден на iPhone SE (375×667).
+        // Маскот 220pt + тексты + прогресс-бар = ~480pt контента, footer ~96pt
+        // → суммарно ~576pt > 667-96(safeArea+footer) → без скролла footer уезжал
+        // за нижний край. scrollBounceBehavior(.basedOnSize) скролл показывает
+        // только когда контент реально переполняет (на 16/17 Pro никакого скролла).
+        ScrollView {
+            VStack(spacing: SpacingTokens.large) {
+                Spacer(minLength: SpacingTokens.medium)
 
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: heroState, size: 220)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
+                // Block I v19: scaleEffect убран с 2D Ляли.
+                LyalyaHeroView(state: heroState, size: 200)
+                    .opacity(appeared ? 1 : 0)
+                    .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.small) {
-                Text(String(localized: "onboarding.model.title"))
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
-                Text(String(localized: "onboarding.model.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
-
-            VStack(spacing: SpacingTokens.tiny) {
-                Text(statusLabel)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .frame(maxWidth: .infinity)
-
-                if case .downloading(let progress) = status {
-                    HSProgressBar(value: progress, style: .kid)
+                VStack(spacing: SpacingTokens.small) {
+                    Text(String(localized: "onboarding.model.title"))
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .padding(.horizontal, SpacingTokens.medium)
+                        .accessibilityAddTraits(.isHeader)
+                    Text(String(localized: "onboarding.model.subtitle"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
                         .padding(.horizontal, SpacingTokens.large)
                 }
-            }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(statusLabel)
 
-            if status == .idle {
-                HSButton(
-                    String(localized: "onboarding.cta.startDownload"),
-                    style: .secondary,
-                    size: .medium,
-                    icon: "arrow.down.circle",
-                    action: onStart
-                )
-                .padding(.horizontal, SpacingTokens.xLarge)
-            }
+                VStack(spacing: SpacingTokens.tiny) {
+                    Text(statusLabel)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .frame(maxWidth: .infinity)
 
-            Spacer()
+                    if case .downloading(let progress) = status {
+                        HSProgressBar(value: progress, style: .kid)
+                            .padding(.horizontal, SpacingTokens.large)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(statusLabel)
+
+                if status == .idle {
+                    HSButton(
+                        String(localized: "onboarding.cta.startDownload"),
+                        style: .secondary,
+                        size: .medium,
+                        icon: "arrow.down.circle",
+                        action: onStart
+                    )
+                    .padding(.horizontal, SpacingTokens.xLarge)
+                }
+
+                Spacer(minLength: SpacingTokens.medium)
+            }
+            .frame(maxWidth: .infinity)
         }
+        .scrollBounceBehavior(.basedOnSize)
         .onAppear {
             withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
                 appeared = true
@@ -359,6 +369,10 @@ struct OnboardingModelDownloadStep: View {
 
 struct OnboardingCompletionStep: View {
     let profile: OnboardingProfile
+    /// Текущее состояние чекбокса родительского согласия.
+    let privacyAccepted: Bool
+    /// Callback при изменении состояния чекбокса (вызывает interactor).
+    let onTogglePrivacy: (Bool) -> Void
 
     @State private var confettiAppeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -388,45 +402,59 @@ struct OnboardingCompletionStep: View {
                     .accessibilityHidden(true)
             }
 
-            VStack(spacing: SpacingTokens.large) {
-                Spacer()
+            ScrollView {
+                VStack(spacing: SpacingTokens.large) {
+                    Spacer(minLength: SpacingTokens.small)
 
-                LyalyaHeroView(state: .celebrating, size: 220)
-                    .accessibilityHidden(true)
+                    LyalyaHeroView(state: .celebrating, size: 200)
+                        .accessibilityHidden(true)
 
-                // Block D v16: avatar string is now an Asset name (illustrationName).
-                // Backward-compat: если в строке legacy эмодзи — фолбэк на mascot_lyalya_happy.
-                Image(profile.childAvatar.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
-                      ? profile.childAvatar
-                      : "mascot_lyalya_happy")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-                    .accessibilityHidden(true)
+                    // Block D v16: avatar string is now an Asset name (illustrationName).
+                    // Backward-compat: если в строке legacy эмодзи — фолбэк на mascot_lyalya_happy.
+                    Image(profile.childAvatar.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
+                          ? profile.childAvatar
+                          : "mascot_lyalya_happy")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 72, height: 72)
+                        .clipShape(Circle())
+                        .accessibilityHidden(true)
 
-                VStack(spacing: SpacingTokens.small) {
-                    Text(String(
-                        format: String(localized: "onboarding.completion.title"),
-                        profile.childName.isEmpty
-                            ? String(localized: "onboarding.completion.placeholderName")
-                            : profile.childName
-                    ))
-                    .font(TypographyTokens.title(28))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .accessibilityAddTraits(.isHeader)
-
-                    Text(String(localized: "onboarding.completion.subtitle"))
-                        .font(TypographyTokens.body(15))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    VStack(spacing: SpacingTokens.small) {
+                        Text(String(
+                            format: String(localized: "onboarding.completion.title"),
+                            profile.childName.isEmpty
+                                ? String(localized: "onboarding.completion.placeholderName")
+                                : profile.childName
+                        ))
+                        .font(TypographyTokens.title(26))
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal, SpacingTokens.large)
-                        .lineSpacing(4)
-                }
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .accessibilityAddTraits(.isHeader)
 
-                Spacer()
+                        Text(String(localized: "onboarding.completion.subtitle"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                            .padding(.horizontal, SpacingTokens.large)
+                            .lineSpacing(4)
+                    }
+
+                    // MARK: Родительское согласие (COPPA)
+                    // Чекбокс обязателен: completeOnboarding проверяет profile.privacyAccepted.
+                    // Данные обрабатываются ЛОКАЛЬНО — без облака и внешних сервисов.
+                    privacyConsentToggle
+
+                    Spacer(minLength: SpacingTokens.medium)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .onAppear {
             if reduceMotion {
@@ -437,6 +465,76 @@ struct OnboardingCompletionStep: View {
                 }
             }
         }
+    }
+
+    // MARK: - Privacy consent toggle
+
+    private var privacyConsentToggle: some View {
+        Button {
+            onTogglePrivacy(!privacyAccepted)
+        } label: {
+            HStack(alignment: .top, spacing: SpacingTokens.small) {
+                // Квадратный чекбокс с SF Symbol
+                ZStack {
+                    RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                        .fill(privacyAccepted
+                              ? ColorTokens.Brand.primary
+                              : ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                                .strokeBorder(
+                                    privacyAccepted
+                                        ? ColorTokens.Brand.primary
+                                        : ColorTokens.Kid.line,
+                                    lineWidth: 1.5
+                                )
+                        )
+                        .frame(width: 24, height: 24)
+                    if privacyAccepted {
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 13, weight: .bold))
+                            .foregroundStyle(.white)
+                    }
+                }
+                .animation(
+                    reduceMotion ? nil : MotionTokens.spring,
+                    value: privacyAccepted
+                )
+                .accessibilityHidden(true)
+
+                Text(String(localized: "onboarding.completion.privacyConsent"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(SpacingTokens.medium)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(privacyAccepted
+                          ? ColorTokens.Brand.primary.opacity(0.08)
+                          : ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(
+                                privacyAccepted
+                                    ? ColorTokens.Brand.primary.opacity(0.4)
+                                    : ColorTokens.Kid.line.opacity(0.5),
+                                lineWidth: 1
+                            )
+                    )
+            )
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: privacyAccepted)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "onboarding.completion.privacyConsent"))
+        .accessibilityHint(String(localized: "onboarding.completion.privacyConsent.hint"))
+        .accessibilityValue(privacyAccepted
+                            ? String(localized: "accessibility.checkbox.checked")
+                            : String(localized: "accessibility.checkbox.unchecked"))
+        .accessibilityAddTraits(.isButton)
     }
 }
 

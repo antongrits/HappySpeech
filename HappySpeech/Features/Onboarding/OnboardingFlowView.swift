@@ -312,7 +312,13 @@ struct OnboardingFlowView: View {
                     onStart: { interactor?.startModelDownload(.init()) }
                 )
             case .completion:
-                OnboardingCompletionStep(profile: display.profile)
+                OnboardingCompletionStep(
+                    profile: display.profile,
+                    privacyAccepted: display.profile.privacyAccepted,
+                    onTogglePrivacy: { accepted in
+                        interactor?.acceptPrivacyConsent(.init(accepted: accepted))
+                    }
+                )
             }
         }
         .id(display.currentStep)

@@ -154,12 +154,40 @@ public struct ChildScoringThresholds: Sendable {
 }
 
 /// Политика оценки детской речи. Stateless, чистые функции — легко тестируется.
+///
+/// Диалект-толерантность. Политика принимает набор диалектных фонемных
+/// эквивалентностей (``RegionalDialectPhonetics/Ruleset``). Если ребёнок произнёс
+/// эталонную фонему её НОРМАТИВНЫМ диалектным вариантом (южное фрикативное [ɣ],
+/// северное оканье [o]↔[ʌ], цоканье ц↔ч и т.п.), такая замена стоит 0.0 (как
+/// совпадение) и НЕ штрафуется. По умолчанию ruleset пуст (литературная норма) —
+/// прежнее поведение сохраняется без изменений.
 public struct ChildSpeechScoringPolicy: Sendable {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ChildScoring")
     private let g2p = RussianG2P()
 
-    public init() {}
+    /// Диалектные фонемные эквивалентности. Пустой ruleset → нет диалектных поблажек.
+    private let dialectRuleset: RegionalDialectPhonetics.Ruleset
+
+    /// - Parameter dialectRuleset: набор диалектных правил. По умолчанию `.none`
+    ///   (литературная норма) — поведение идентично прежнему.
+    public init(dialectRuleset: RegionalDialectPhonetics.Ruleset = .none) {
+        self.dialectRuleset = dialectRuleset
+    }
+
+    /// Удобный инициализатор от выбранного диалекта.
+    public init(dialect: RegionalDialect) {
+        self.init(dialectRuleset: RegionalDialectPhonetics.ruleset(for: dialect.id))
+    }
+
+    /// true, если в текущем диалекте `produced` — нормативный вариант `reference`.
+    public func isDialectVariant(reference: String, produced: String) -> Bool {
+        RegionalDialectPhonetics.isPermissibleVariant(
+            reference: reference,
+            produced: produced,
+            ruleset: dialectRuleset
+        )
+    }
 
     // MARK: - Основной вход
 
@@ -218,7 +246,8 @@ public struct ChildSpeechScoringPolicy: Sendable {
                 && Self.targetSoundWasSubstituted(
                     reference: expectedPhonemes,
                     produced: producedPhonemes,
-                    targetSound: targetSound
+                    targetSound: targetSound,
+                    dialectRuleset: dialectRuleset
                 )
         }
 
@@ -328,6 +357,12 @@ public struct ChildSpeechScoringPolicy: Sendable {
     /// «узнанным», а звук помечался как «в работе».
     public func childAwareSubstitutionCost(_ a: String, _ b: String) -> Double {
         if a == b { return 0.0 }
+        // Диалектная норма имеет приоритет над возрастной заменой: нормативный
+        // региональный вариант (южное [ɣ], северное оканье, цоканье ц↔ч) —
+        // НЕ ошибка и НЕ «звук в работе», а равноценное произнесение → cost 0.0.
+        if isDialectVariant(reference: a, produced: b) {
+            return 0.0
+        }
         if Self.isDevelopmentalSubstitution(target: a, produced: b)
             || Self.isDevelopmentalSubstitution(target: b, produced: a) {
             return 0.2
@@ -400,7 +435,8 @@ public struct ChildSpeechScoringPolicy: Sendable {
     static func targetSoundWasSubstituted(
         reference: [String],
         produced: [String],
-        targetSound: String
+        targetSound: String,
+        dialectRuleset: RegionalDialectPhonetics.Ruleset = .none
     ) -> Bool {
         let targets = targetIPA(for: targetSound)
         guard !targets.isEmpty, !reference.isEmpty, !produced.isEmpty else { return false }
@@ -413,6 +449,14 @@ public struct ChildSpeechScoringPolicy: Sendable {
             if producedSet.contains(tIPA) {
                 continue  // произнесён правильно — не замена
             }
+            // Если целевой звук реализован НОРМАТИВНЫМ диалектным вариантом — это
+            // НЕ возрастная замена, а региональная норма. Не помечаем.
+            let realizedByDialect = producedSet.contains { produced in
+                RegionalDialectPhonetics.isPermissibleVariant(
+                    reference: tIPA, produced: produced, ruleset: dialectRuleset
+                )
+            }
+            if realizedByDialect { continue }
             // Целевого звука нет в produced — проверяем, есть ли его детская замена.
             if let subs = developmentalSubstitutions[tIPA], !subs.isDisjoint(with: producedSet) {
                 return true

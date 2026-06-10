@@ -254,8 +254,9 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
         case .modelDownload:
             return true   // модель можно пропустить
         case .completion:
-            // На экране завершения CTA активен всегда (consent проверяется в Interactor)
-            return true
+            // CTA активен только после принятия родительского согласия на обработку данных.
+            // Interactor дополнительно проверяет флаг перед сохранением профиля.
+            return profile.privacyAccepted
         }
     }
 

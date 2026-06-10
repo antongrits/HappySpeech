@@ -413,6 +413,33 @@ final class OnboardingInteractorTests: XCTestCase {
         XCTAssertEqual(spy.privacyConsentCount, 1)
     }
 
+    func test_acceptPrivacyConsent_setsProfileFlag() {
+        let (sut, spy) = makeSUT()
+        sut.loadOnboarding(.init())
+        // До принятия согласия флаг должен быть false.
+        sut.completeOnboarding(.init())
+        XCTAssertEqual(spy.privacyConsentRequiredCount, 1, "completeOnboarding без согласия вызывает presentPrivacyConsentRequired")
+        XCTAssertEqual(spy.completeCount, 0, "completeOnboarding без согласия не завершает онбординг")
+        // После принятия согласия флаг profile.privacyAccepted = true.
+        sut.acceptPrivacyConsent(.init(accepted: true))
+        XCTAssertEqual(spy.privacyConsentCount, 1)
+        // Повторный вызов completeOnboarding должен пройти успешно.
+        sut.completeOnboarding(.init())
+        XCTAssertEqual(spy.completeCount, 1, "completeOnboarding с согласием завершает онбординг")
+        XCTAssertTrue(OnboardingState.isCompleted, "OnboardingState.isCompleted должен быть true")
+    }
+
+    func test_acceptPrivacyConsent_falseDoesNotUnblock() {
+        let (sut, spy) = makeSUT()
+        sut.loadOnboarding(.init())
+        // Принять, затем отозвать согласие.
+        sut.acceptPrivacyConsent(.init(accepted: true))
+        sut.acceptPrivacyConsent(.init(accepted: false))
+        sut.completeOnboarding(.init())
+        XCTAssertEqual(spy.completeCount, 0, "После отзыва согласия completeOnboarding снова заблокирован")
+        XCTAssertEqual(spy.privacyConsentRequiredCount, 1)
+    }
+
     // MARK: - Screening choice
 
     func test_selectScreeningChoice_advances() {

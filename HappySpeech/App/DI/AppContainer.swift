@@ -1,6 +1,7 @@
 import CoreHaptics
 import Foundation
 import Observation
+import os
 import OSLog
 
 // MARK: - AppContainer
@@ -22,7 +23,17 @@ public final class AppContainer {
 
     /// Идентификатор активного ребёнка — устанавливается после выбора профиля.
     /// Используется ARZoneInteractor → AdaptivePlannerService.
-    public var currentChildId: String = ""
+    ///
+    /// При изменении зеркалится в `activeChildIdHolder` — Sendable-снимок,
+    /// который читают не-isolated слои (например `LiveEnsembleASRService` при
+    /// выборе диалектного ruleset во время скоринга).
+    public var currentChildId: String = "" {
+        didSet { activeChildIdHolder.set(currentChildId) }
+    }
+
+    /// Потокобезопасный снимок активного childId для не-MainActor слоёв.
+    /// Заполняется из `currentChildId.didSet`. Sendable.
+    private let activeChildIdHolder = ActiveChildIdHolder()
 
     // M6.16: ScreeningOutcome repository — lazy, инициализируется при первом обращении.
     private var _screeningOutcomeRepository: (any ScreeningOutcomeRepository)?
@@ -759,11 +770,17 @@ public final class AppContainer {
         if let existing = _ensembleASRService { return existing }
         // Tier B (parent/specialist) усилен Wav2Vec2 CTC-декодером как 4-м голосом.
         // Kid circuit использует только Tier A — Wav2Vec2 там не вызывается.
+        // Диалект-толерантность скоринга: читаем выбранный диалект активного
+        // ребёнка (DialectProfileStore поверх тех же UserDefaults, что пишет
+        // DialectAdaptationInteractor) и снимок childId из Sendable-холдера.
+        let dialectHolder = activeChildIdHolder
         let service = LiveEnsembleASRService(
             whisperASR: asrService,
             phonemeClassifier: phonemeAnalysisService,
             pronunciationScorer: pronunciationService,
-            wav2Vec2: wav2Vec2Service
+            wav2Vec2: wav2Vec2Service,
+            dialectProfileProvider: DialectProfileStore(),
+            activeChildIdProvider: { dialectHolder.get() }
         )
         _ensembleASRService = service
         return service

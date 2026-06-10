@@ -221,6 +221,40 @@
         }
       }
     },
+    "accessibility.checkbox.checked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checked"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечено"
+          }
+        }
+      }
+    },
+    "accessibility.checkbox.unchecked": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unchecked"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не отмечено"
+          }
+        }
+      }
+    },
     "accessibility.close": {
       "extractionState": "manual",
       "localizations": {
@@ -28716,6 +28750,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Готово, %@!"
+          }
+        }
+      }
+    },
+    "onboarding.completion.privacyConsent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I, as a parent/guardian, confirm that I have read the Privacy Policy and consent to processing data locally on this device. Data is not sent to external servers."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я, родитель (законный представитель), ознакомлен(а) с политикой конфиденциальности и даю согласие на обработку данных на устройстве. Данные не передаются на внешние серверы."
+          }
+        }
+      }
+    },
+    "onboarding.completion.privacyConsent.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap to give parental consent. Required to continue."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы дать согласие. Необходимо для продолжения."
           }
         }
       }
@@ -67717,6 +67785,118 @@
             "value": "≈ \\(minutes) мин \\(seconds) с"
           }
         }
+      }
+    },
+    "articulation3d.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель произношения" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D pronunciation model" } }
+      }
+    },
+    "articulation3d.mode.picker": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Режим показа" } },
+        "en": { "stringUnit": { "state": "translated", "value": "View mode" } }
+      }
+    },
+    "articulation3d.mode.model": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "3D" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D" } }
+      }
+    },
+    "articulation3d.mode.video": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Видео" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Video" } }
+      }
+    },
+    "articulation3d.hint.rotate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Покрути пальцем" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Drag to rotate" } }
+      }
+    },
+    "articulation3d.a11y.scene": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Объёмная модель разреза головы с положением языка" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D head cross-section showing tongue position" } }
+      }
+    },
+    "articulation3d.indicator.velum": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Мягкое нёбо поднято" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Soft palate raised" } }
+      }
+    },
+    "articulation3d.indicator.voiced": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Звонкий (голос)" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Voiced" } }
+      }
+    },
+    "articulation3d.indicator.voiceless": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Глухой (без голоса)" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Voiceless" } }
+      }
+    },
+    "articulation3d.pose.neutral": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Язык в спокойном положении." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Tongue at rest." } }
+      }
+    },
+    "articulation3d.pose.s": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Кончик языка у нижних зубов, спинка приподнята горкой с желобком — узкая холодная струя по центру." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Tongue tip at the lower teeth, the front arches with a groove — a narrow cool airstream down the centre." } }
+      }
+    },
+    "articulation3d.pose.sh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Широкий кончик «чашечкой» к альвеолам, спинка двугорбая — тёплая широкая струя." } },
+        "en": { "stringUnit": { "state": "translated", "value": "A wide cup-shaped tip rises to the alveolar ridge, the back is double-humped — a warm broad airstream." } }
+      }
+    },
+    "articulation3d.pose.r": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Кончик языка «ложечкой» поднят к альвеолам и вибрирует, края прижаты к коренным зубам." } },
+        "en": { "stringUnit": { "state": "translated", "value": "A spoon-shaped tip rises to the alveolar ridge and vibrates, the edges press the molars." } }
+      }
+    },
+    "articulation3d.pose.l": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Кончик упирается в верхние резцы, спинка прогнута седлом — воздух идёт по бокам." } },
+        "en": { "stringUnit": { "state": "translated", "value": "The tip presses the upper incisors, the body dips like a saddle — air flows along the sides." } }
+      }
+    },
+    "articulation3d.pose.k": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Задняя часть спинки языка смыкается с мягким нёбом." } },
+        "en": { "stringUnit": { "state": "translated", "value": "The back of the tongue closes against the soft palate." } }
+      }
+    },
+    "articulation3d.pose.kh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": { "stringUnit": { "state": "translated", "value": "Задняя часть спинки образует щель с мягким нёбом — воздух проходит со звуком." } },
+        "en": { "stringUnit": { "state": "translated", "value": "The back of the tongue forms a gap with the soft palate — air passes through with friction." } }
       }
     },
     "soundDictionary.detail.articulationVideo.label": {
