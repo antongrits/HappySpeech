@@ -676,7 +676,7 @@
           "word": "цирюльник",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-wi-38.m4a",
-          "imageAsset": "word_nozhnitsy"
+          "imageAsset": "word_tsiryulnik"
         },
         {
           "id": "c-wi-39",
@@ -689,7 +689,7 @@
           "word": "цирюльник",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-wi-40.m4a",
-          "imageAsset": "word_nozhnitsy"
+          "imageAsset": "word_tsiryulnik"
         },
         {
           "id": "c-wi-41",
@@ -923,7 +923,7 @@
           "word": "граница",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-wm-24.m4a",
-          "imageAsset": "word_zabor"
+          "imageAsset": "word_granitsa"
         },
         {
           "id": "c-wm-25",
@@ -937,7 +937,7 @@
           "word": "акция",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-wm-26.m4a",
-          "imageAsset": null
+          "imageAsset": "word_aktsiya"
         },
         {
           "id": "c-wm-27",
@@ -1072,14 +1072,15 @@
           "id": "c-wf-1",
           "word": "боец",
           "difficulty": 2,
-          "audio_file": "Audio/Content/C/c-wf-1.m4a"
+          "audio_file": "Audio/Content/C/c-wf-1.m4a",
+          "imageAsset": "word_boyets"
         },
         {
           "id": "c-wf-2",
           "word": "пловец",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wf-2.m4a",
-          "imageAsset": "word_volna"
+          "imageAsset": "word_plovets"
         },
         {
           "id": "c-wf-3",
@@ -1230,7 +1231,7 @@
           "word": "пловец",
           "difficulty": 2,
           "audio_file": "Audio/Content/C/c-wf-26.m4a",
-          "imageAsset": "word_volna"
+          "imageAsset": "word_plovets"
         },
         {
           "id": "c-wf-27",

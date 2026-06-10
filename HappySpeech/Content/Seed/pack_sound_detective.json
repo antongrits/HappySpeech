@@ -975,7 +975,7 @@
     {
       "id": "det-ch-myach",
       "word": "мяч",
-      "imageAsset": "word_ball",
+      "imageAsset": "word_myach",
       "targetSound": "Ч",
       "soundFamily": "шипящие",
       "position": "end",
@@ -1533,7 +1533,7 @@
     {
       "id": "det-abs-s-myach",
       "word": "мяч",
-      "imageAsset": "word_ball",
+      "imageAsset": "word_myach",
       "targetSound": "С",
       "soundFamily": "свистящие",
       "position": "absent",
@@ -1608,7 +1608,7 @@
     {
       "id": "det-abs-r-myach",
       "word": "мяч",
-      "imageAsset": "word_ball",
+      "imageAsset": "word_myach",
       "targetSound": "Р",
       "soundFamily": "соноры",
       "position": "absent",
@@ -1653,7 +1653,7 @@
     {
       "id": "det-abs-z-myach",
       "word": "мяч",
-      "imageAsset": "word_ball",
+      "imageAsset": "word_myach",
       "targetSound": "З",
       "soundFamily": "свистящие",
       "position": "absent",

@@ -962,7 +962,7 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wi-33.m4a",
-          "imageAsset": "word_albom"
+          "imageAsset": "word_risunok"
         },
         {
           "id": "r-wi-34",
@@ -1031,7 +1031,7 @@
           "word": "разведчик",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-42.m4a",
-          "imageAsset": "word_lupa"
+          "imageAsset": "word_razvedchik"
         },
         {
           "id": "r-wi-43",
@@ -1127,7 +1127,7 @@
           "word": "рогатка",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-56.m4a",
-          "imageAsset": null
+          "imageAsset": "word_rogatka"
         },
         {
           "id": "r-wi-57",
@@ -1217,7 +1217,7 @@
           "word": "рокот",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wi-69.m4a",
-          "imageAsset": null
+          "imageAsset": "word_rokot"
         },
         {
           "id": "r-wi-70",
@@ -1288,7 +1288,7 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wi-78.m4a",
-          "imageAsset": null
+          "imageAsset": "word_ryaska"
         },
         {
           "id": "r-wi-79",
@@ -1358,7 +1358,7 @@
           "hint": "РЯ — мягкий с Я.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-87.m4a",
-          "imageAsset": null
+          "imageAsset": "word_ryaska"
         },
         {
           "id": "r-wi-88",
@@ -1727,7 +1727,7 @@
           "word": "борода",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-12.m4a",
-          "imageAsset": null
+          "imageAsset": "word_boroda"
         },
         {
           "id": "r-wm-13",
@@ -2111,7 +2111,7 @@
           "word": "бородач",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wm-65.m4a",
-          "imageAsset": null
+          "imageAsset": "word_boroda"
         },
         {
           "id": "r-wm-66",
@@ -3300,7 +3300,7 @@
           "word": "разговор",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-33.m4a",
-          "imageAsset": "word_telefon"
+          "imageAsset": "word_razgovor"
         },
         {
           "id": "r-wf-34",

@@ -642,7 +642,8 @@
           "word": "соловей",
           "hint": "Соловей красиво поёт ночью.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-bi-4.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-bi-4.m4a",
+          "imageAsset": "word_solovey"
         },
         {
           "id": "lex-bi-5",
@@ -2717,7 +2718,8 @@
           "word": "осень",
           "hint": "Осенью листья желтеют, идёт дождь.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-sw-0.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-sw-0.m4a",
+          "imageAsset": "word_osen"
         },
         {
           "id": "lex-sw-1",
@@ -2955,7 +2957,8 @@
           "word": "жара",
           "hint": "Летом очень горячо — это жара.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-sw-34.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-sw-34.m4a",
+          "imageAsset": "word_zhara"
         },
         {
           "id": "lex-sw-35",
@@ -3324,7 +3327,8 @@
           "word": "водитель",
           "hint": "Водитель управляет машиной.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-pr-3.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-pr-3.m4a",
+          "imageAsset": "word_voditel"
         },
         {
           "id": "lex-pr-4",
@@ -3478,7 +3482,8 @@
           "word": "архитектор",
           "hint": "Проектирует дома и здания. Рисует чертежи.",
           "difficulty": 3,
-          "audio_file": "Audio/Content/Lexical/lex-pr-25.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-pr-25.m4a",
+          "imageAsset": "word_arkhitektor"
         },
         {
           "id": "lex-pr-26",
@@ -3659,7 +3664,8 @@
           "word": "мяч",
           "hint": "Мяч круглый. Им играют в футбол и бросают друг другу.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-tp-0.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-tp-0.m4a",
+          "imageAsset": "word_myach"
         },
         {
           "id": "lex-tp-1",
@@ -3687,7 +3693,8 @@
           "word": "пазл",
           "hint": "Пазл — картинка из кусочков. Собираем вместе.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-tp-4.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-tp-4.m4a",
+          "imageAsset": "word_pazl"
         },
         {
           "id": "lex-tp-5",
@@ -3862,7 +3869,8 @@
           "word": "обруч",
           "hint": "Обруч круглый. Его крутят на поясе.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-tp-29.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-tp-29.m4a",
+          "imageAsset": "word_obruch"
         },
         {
           "id": "lex-tp-30",
@@ -4092,7 +4100,8 @@
           "word": "осина",
           "hint": "Осина дрожит листьями. Растёт в лесу.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-np-26.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-np-26.m4a",
+          "imageAsset": "word_osina"
         },
         {
           "id": "lex-np-27",
@@ -4378,7 +4387,8 @@
           "word": "творог",
           "hint": "Творог белый. Полезный и нежный.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-fe-29.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-fe-29.m4a",
+          "imageAsset": "word_tvorog"
         },
         {
           "id": "lex-fe-30",
@@ -4489,7 +4499,8 @@
           "word": "семья",
           "hint": "Семья — это мама, папа и дети. Живут вместе.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-fr-6.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-fr-6.m4a",
+          "imageAsset": "word_semya"
         },
         {
           "id": "lex-fr-7",
@@ -4642,7 +4653,8 @@
           "word": "тетрадь",
           "hint": "В тетради пишут. В линейку или в клетку.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-si-2.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-si-2.m4a",
+          "imageAsset": "word_tetrad"
         },
         {
           "id": "lex-si-3",
@@ -6600,7 +6612,8 @@
           "word": "восхищение",
           "hint": "Ты видишь что-то очень красивое и удивительное.",
           "difficulty": 4,
-          "audio_file": "Audio/Content/Lexical/lex-em-35.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-em-35.m4a",
+          "imageAsset": "word_voskhishchenie"
         },
         {
           "id": "lex-em-36",
@@ -6754,7 +6767,8 @@
           "word": "дерзость",
           "hint": "ДЬ мягкое: ДЕрзость.",
           "difficulty": 4,
-          "audio_file": "Audio/Content/Lex/lex-em-58.m4a"
+          "audio_file": "Audio/Content/Lex/lex-em-58.m4a",
+          "imageAsset": "word_derzost"
         },
         {
           "id": "lex-em-59",
@@ -6992,7 +7006,8 @@
           "word": "забота",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-em-92.m4a",
-          "hint": "Помогаю тому, кому нужна помощь."
+          "hint": "Помогаю тому, кому нужна помощь.",
+          "imageAsset": "word_zabota"
         },
         {
           "id": "lex-em-93",
@@ -7538,7 +7553,8 @@
           "word": "осень",
           "hint": "Осенью падают жёлтые листья.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-sea-2.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-sea-2.m4a",
+          "imageAsset": "word_osen"
         },
         {
           "id": "lex-sea-3",
@@ -7663,7 +7679,8 @@
           "word": "жара",
           "hint": "Жара — это сильное тепло.",
           "difficulty": 1,
-          "audio_file": "Audio/Content/Lexical/lex-pog-9.m4a"
+          "audio_file": "Audio/Content/Lexical/lex-pog-9.m4a",
+          "imageAsset": "word_zhara"
         }
       ]
     },

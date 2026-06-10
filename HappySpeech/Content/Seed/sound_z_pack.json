@@ -1184,7 +1184,7 @@
           "word": "разведчик",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-wm-23.m4a",
-          "imageAsset": "word_lupa"
+          "imageAsset": "word_razvedchik"
         },
         {
           "id": "z-wm-24",
@@ -1242,7 +1242,7 @@
           "word": "разговор",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-wm-32.m4a",
-          "imageAsset": "word_telefon"
+          "imageAsset": "word_razgovor"
         },
         {
           "id": "z-wm-33",

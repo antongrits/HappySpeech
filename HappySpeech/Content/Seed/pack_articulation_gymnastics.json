@@ -203,7 +203,8 @@
           "word": "Жёлоб",
           "hint": "Сложи язык трубочкой — края вверх, посередине желобок. Дуй по желобку.",
           "difficulty": 4,
-          "audio_file": "Audio/Content/ArticulationGym/ag-028.m4a"
+          "audio_file": "Audio/Content/ArticulationGym/ag-028.m4a",
+          "imageAsset": "word_zhyolob"
         },
         {
           "id": "ag-029",
@@ -231,7 +232,8 @@
           "word": "Мячик",
           "hint": "Кончик языка ударяет по верхним зубам снизу: д-д-д, как мячик о пол.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/ArticulationGym/ag-032.m4a"
+          "audio_file": "Audio/Content/ArticulationGym/ag-032.m4a",
+          "imageAsset": "word_myach"
         },
         {
           "id": "ag-033",

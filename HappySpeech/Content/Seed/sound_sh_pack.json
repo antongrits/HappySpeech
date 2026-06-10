@@ -996,7 +996,7 @@
         {
           "id": "sh-wi-54",
           "word": "шалунья",
-          "imageAsset": null,
+          "imageAsset": "word_shalunya",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wi-54.m4a"
@@ -1189,7 +1189,7 @@
           "hint": "ШАХ+ТЁР — тот, кто работает в шахте.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Sh/sh-wi-78.m4a",
-          "imageAsset": "word_shlem"
+          "imageAsset": "word_shakhtyor"
         },
         {
           "id": "sh-wi-79",

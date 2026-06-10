@@ -864,7 +864,7 @@
           "word": "подруга",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-6.m4a",
-          "imageAsset": null
+          "imageAsset": "word_podruga"
         },
         {
           "id": "g-wm-7",
@@ -1205,7 +1205,7 @@
           "hint": "под-ру-Га. [Г] звенит.",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wf-3.m4a",
-          "imageAsset": null
+          "imageAsset": "word_podruga"
         },
         {
           "id": "g-wf-4",

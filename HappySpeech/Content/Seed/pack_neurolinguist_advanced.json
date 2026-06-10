@@ -917,7 +917,8 @@
           "word": "подушка",
           "hint": "По-ДУШ-ка. Ш в середине. Мягкая подушка.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/NL/nl-fri-12.m4a"
+          "audio_file": "Audio/Content/NL/nl-fri-12.m4a",
+          "imageAsset": "word_podushka"
         },
         {
           "id": "nl-fri-13",
@@ -1001,7 +1002,8 @@
           "word": "нож",
           "hint": "НОЖ — Ж на конце (звучит как Ш). Нож острый!",
           "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-fri-24.m4a"
+          "audio_file": "Audio/Content/NL/nl-fri-24.m4a",
+          "imageAsset": "word_nozh"
         },
         {
           "id": "nl-fri-25",
@@ -1280,7 +1282,8 @@
           "word": "мяч",
           "hint": "МЯЧ — Ч на конце. Круглый мяч!",
           "difficulty": 1,
-          "audio_file": "Audio/Content/NL/nl-aff-13.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-13.m4a",
+          "imageAsset": "word_myach"
         },
         {
           "id": "nl-aff-14",
@@ -1322,7 +1325,8 @@
           "word": "цепь",
           "hint": "ЦЕПЬ — Ц в начале. Цепь из звеньев.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/NL/nl-aff-19.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-19.m4a",
+          "imageAsset": "word_tsep"
         },
         {
           "id": "nl-aff-20",
@@ -1357,7 +1361,8 @@
           "word": "улица",
           "hint": "У-ли-ца. Ц в конце. Дети гуляют на улице.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/NL/nl-aff-24.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-24.m4a",
+          "imageAsset": "word_ulitsa"
         },
         {
           "id": "nl-aff-25",
@@ -1413,7 +1418,8 @@
           "word": "цепочка",
           "hint": "Це-ПОЧ-ка. Ц и Ч в одном слове!",
           "difficulty": 4,
-          "audio_file": "Audio/Content/NL/nl-aff-32.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-32.m4a",
+          "imageAsset": "word_tsepochka"
         },
         {
           "id": "nl-aff-33",
@@ -1434,7 +1440,8 @@
           "word": "значение",
           "hint": "Зна-ЧЕ-ние. Ч в середине. Какое значение?",
           "difficulty": 4,
-          "audio_file": "Audio/Content/NL/nl-aff-35.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-35.m4a",
+          "imageAsset": "word_znachenie"
         },
         {
           "id": "nl-aff-36",
@@ -1490,14 +1497,16 @@
           "word": "цифра",
           "hint": "ЦИФ-ра. ЦИ — всегда твёрдое! Цифры 1-9.",
           "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-aff-43.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-43.m4a",
+          "imageAsset": "word_tsifra"
         },
         {
           "id": "nl-aff-44",
           "word": "центр",
           "hint": "ЦЕНТР — ЦЕ + НТР. Ц в начале. Центр города.",
           "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-aff-44.m4a"
+          "audio_file": "Audio/Content/NL/nl-aff-44.m4a",
+          "imageAsset": "word_tsentr"
         },
         {
           "id": "nl-aff-45",
@@ -2739,7 +2748,8 @@
           "word": "осень",
           "hint": "О-сень. О в начале. Жёлтая осень!",
           "difficulty": 1,
-          "audio_file": "Audio/Content/NL/nl-vow-38.m4a"
+          "audio_file": "Audio/Content/NL/nl-vow-38.m4a",
+          "imageAsset": "word_osen"
         },
         {
           "id": "nl-vow-39",
@@ -2850,7 +2860,8 @@
           "word": "тетрадь",
           "hint": "Тет-РАДЬ. ТЬ+ДЬ! В тетради пишут буквы.",
           "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-soft-03.m4a"
+          "audio_file": "Audio/Content/NL/nl-soft-03.m4a",
+          "imageAsset": "word_tetrad"
         },
         {
           "id": "nl-soft-04",

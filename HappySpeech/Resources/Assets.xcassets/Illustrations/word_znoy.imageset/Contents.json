@@ -1,19 +1,8 @@
 {
   "images": [
     {
-      "idiom": "universal",
       "filename": "word_znoy.png",
-      "scale": "1x"
-    },
-    {
-      "idiom": "universal",
-      "filename": "word_znoy@2x.png",
-      "scale": "2x"
-    },
-    {
-      "idiom": "universal",
-      "filename": "word_znoy@3x.png",
-      "scale": "3x"
+      "idiom": "universal"
     }
   ],
   "info": {

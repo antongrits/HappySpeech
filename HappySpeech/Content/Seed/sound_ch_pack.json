@@ -199,7 +199,7 @@
           "id": "ch-iso-4",
           "word": "чч-мяч",
           "hint": "Мяч прыгает: чок-чок-чок!",
-          "imageAsset": null,
+          "imageAsset": "word_myach",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-iso-4.m4a"
@@ -1205,7 +1205,7 @@
         {
           "id": "ch-wm-9",
           "word": "мяч",
-          "imageAsset": "word_ball",
+          "imageAsset": "word_myach",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-9.m4a"
@@ -2300,7 +2300,7 @@
         {
           "id": "ch-wf-40",
           "word": "бородач",
-          "imageAsset": null,
+          "imageAsset": "word_boroda",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wf-40.m4a"

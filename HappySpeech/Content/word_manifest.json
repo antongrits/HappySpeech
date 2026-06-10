@@ -1302,7 +1302,7 @@
     },
     {
       "word": "акция",
-      "asset": null,
+      "asset": "word_aktsiya",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2420,7 +2420,7 @@
     },
     {
       "word": "рогатка",
-      "asset": null,
+      "asset": "word_rogatka",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2433,7 +2433,7 @@
     },
     {
       "word": "рокот",
-      "asset": null,
+      "asset": "word_rokot",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2615,7 +2615,7 @@
     },
     {
       "word": "ряска",
-      "asset": null,
+      "asset": "word_ryaska",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -2849,7 +2849,7 @@
     },
     {
       "word": "шалунья",
-      "asset": null,
+      "asset": "word_shalunya",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -6275,7 +6275,7 @@
     },
     {
       "word": "дальнобойщик",
-      "asset": "word_gruzovik",
+      "asset": "word_dalnoboyshchik",
       "recommendedStages": [
         "word"
       ],
@@ -6396,7 +6396,7 @@
     },
     {
       "word": "дерзость",
-      "asset": null,
+      "asset": "word_derzost",
       "recommendedStages": [
         "word"
       ],
@@ -9641,7 +9641,7 @@
     },
     {
       "word": "военный",
-      "asset": "word_shchit",
+      "asset": "word_voennyy",
       "recommendedStages": [
         "word"
       ],
@@ -12875,7 +12875,7 @@
     },
     {
       "word": "борода",
-      "asset": null,
+      "asset": "word_boroda",
       "recommendedStages": [
         "word"
       ],
@@ -12886,7 +12886,7 @@
     },
     {
       "word": "бородач",
-      "asset": null,
+      "asset": "word_boroda",
       "recommendedStages": [
         "word"
       ],
@@ -13062,7 +13062,7 @@
     },
     {
       "word": "хрящ",
-      "asset": null,
+      "asset": "word_hrashch",
       "recommendedStages": [
         "word"
       ],
@@ -14338,7 +14338,7 @@
     },
     {
       "word": "подруга",
-      "asset": null,
+      "asset": "word_podruga",
       "recommendedStages": [
         "word"
       ],
@@ -14349,7 +14349,7 @@
     },
     {
       "word": "охотник",
-      "asset": null,
+      "asset": "word_okhotnik",
       "recommendedStages": [
         "word"
       ],
@@ -16127,7 +16127,7 @@
     },
     {
       "word": "aktsiya",
-      "asset": null,
+      "asset": "word_aktsiya",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -18734,7 +18734,7 @@
     },
     {
       "word": "derzost",
-      "asset": null,
+      "asset": "word_derzost",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24267,7 +24267,7 @@
     },
     {
       "word": "охотник",
-      "asset": null,
+      "asset": "word_okhotnik",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24707,7 +24707,7 @@
     },
     {
       "word": "подруга",
-      "asset": null,
+      "asset": "word_podruga",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25279,7 +25279,7 @@
     },
     {
       "word": "rogatka",
-      "asset": null,
+      "asset": "word_rogatka",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25301,7 +25301,7 @@
     },
     {
       "word": "rokot",
-      "asset": null,
+      "asset": "word_rokot",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25554,7 +25554,7 @@
     },
     {
       "word": "ryaska",
-      "asset": null,
+      "asset": "word_ryaska",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -25906,7 +25906,7 @@
     },
     {
       "word": "shalunya",
-      "asset": null,
+      "asset": "word_shalunya",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -27115,7 +27115,7 @@
       "methodologySource": "Pollinations.ai overnight v3"
     },
     {
-      "word": "tsep",
+      "word": "цепь",
       "asset": "word_tsep",
       "recommendedStages": [
         "wordInit",

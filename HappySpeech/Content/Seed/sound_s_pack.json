@@ -161,7 +161,8 @@
           "word": "мячик",
           "hint": "Кончик языка ударяет по верхним зубам: д-д-д.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/S/s-prep-21.m4a"
+          "audio_file": "Audio/Content/S/s-prep-21.m4a",
+          "imageAsset": "word_myach"
         },
         {
           "id": "s-prep-22",
@@ -223,7 +224,8 @@
           "word": "ссс-мяч",
           "hint": "Мячик сдувается: ссссс-с-с.",
           "difficulty": 2,
-          "audio_file": "Audio/Content/S/s-iso-4.m4a"
+          "audio_file": "Audio/Content/S/s-iso-4.m4a",
+          "imageAsset": "word_myach"
         },
         {
           "id": "s-iso-5",

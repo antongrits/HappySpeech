@@ -849,7 +849,7 @@
           "word": "охотник",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wm-27.m4a",
-          "imageAsset": null
+          "imageAsset": "word_okhotnik"
         },
         {
           "id": "kh-wm-28",

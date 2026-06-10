@@ -876,7 +876,7 @@
         {
           "id": "shch-wm-0",
           "word": "вещи",
-          "imageAsset": "word_chemodan",
+          "imageAsset": "word_veshchi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-0.m4a"
@@ -1466,7 +1466,7 @@
         {
           "id": "shch-wf-21",
           "word": "хрящ",
-          "imageAsset": null,
+          "imageAsset": "word_hrashch",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-21.m4a"

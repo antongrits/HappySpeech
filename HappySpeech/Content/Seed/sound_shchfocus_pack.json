@@ -243,7 +243,7 @@
         {
           "id": "scf-wm-5",
           "word": "вещи",
-          "imageAsset": "word_chemodan",
+          "imageAsset": "word_veshchi",
           "audioAsset": null,
           "hint": "Ве-щи. Одежда в шкафу.",
           "difficulty": 2,
@@ -339,7 +339,7 @@
         {
           "id": "scf-wf-6",
           "word": "хрящ",
-          "imageAsset": null,
+          "imageAsset": "word_hrashch",
           "audioAsset": null,
           "hint": "Хрящ. Твёрдый, в ушке.",
           "difficulty": 3,
