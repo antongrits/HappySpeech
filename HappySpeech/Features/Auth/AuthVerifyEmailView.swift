@@ -153,41 +153,101 @@ struct AuthVerifyEmailView: View {
     }
 
     private var instructionCard: some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(spacing: SpacingTokens.sp3) {
+                // Email header
                 HStack(spacing: SpacingTokens.sp3) {
-                    Image(systemName: "envelope.badge.fill")
-                        .font(TypographyTokens.title(28))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .accessibilityHidden(true)
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.primary.opacity(0.12))
+                            .frame(width: 48, height: 48)
+                        Image(systemName: "envelope.badge.fill")
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
+                    .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                         Text(String(localized: "Мы отправили письмо на"))
-                            .font(TypographyTokens.body(14))
+                            .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                         Text(displayEmail)
-                            .font(TypographyTokens.headline(16))
+                            .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .lineLimit(1)
                             .minimumScaleFactor(0.8)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                Divider()
-                    .background(ColorTokens.Kid.line)
-                Text(String(localized: "Перейдите по ссылке в письме, затем вернитесь сюда."))
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .fixedSize(horizontal: false, vertical: true)
+
+                Divider().background(ColorTokens.Kid.line)
+
+                // Numbered steps
+                VStack(spacing: SpacingTokens.sp2) {
+                    verifyStep(
+                        number: 1,
+                        icon: "envelope.open.fill",
+                        color: ColorTokens.Brand.primary,
+                        text: String(localized: "Откройте письмо в почтовом приложении")
+                    )
+                    verifyStep(
+                        number: 2,
+                        icon: "link.circle.fill",
+                        color: ColorTokens.Brand.lilac,
+                        text: String(localized: "Нажмите на ссылку подтверждения в письме")
+                    )
+                    verifyStep(
+                        number: 3,
+                        icon: "arrow.uturn.left.circle.fill",
+                        color: ColorTokens.Brand.rose,
+                        text: String(localized: "Вернитесь в приложение и нажмите «Я подтвердил»")
+                    )
+                }
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "Письмо отправлено на") + " " +
             displayEmail + ". " +
-            String(localized: "Перейдите по ссылке в письме, затем вернитесь сюда.")
+            String(localized: "Откройте письмо, нажмите ссылку, вернитесь в приложение.")
+        )
+    }
+
+    private func verifyStep(
+        number: Int,
+        icon: String,
+        color: Color,
+        text: String
+    ) -> some View {
+        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            ZStack {
+                Circle()
+                    .fill(color.opacity(0.12))
+                    .frame(width: 36, height: 36)
+                Image(systemName: icon)
+                    .font(.system(size: 16))
+                    .foregroundStyle(color)
+            }
+            .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                Text(String(localized: "Шаг") + " \(number)")
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(color.opacity(0.8))
+                    .textCase(.uppercase)
+                    .tracking(0.5)
+                Text(text)
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(SpacingTokens.sp2)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(color.opacity(0.06))
         )
     }
 

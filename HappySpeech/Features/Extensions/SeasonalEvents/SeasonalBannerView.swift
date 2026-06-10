@@ -38,20 +38,24 @@ struct SeasonalBannerView: View {
             Self.logger.info("Seasonal banner tapped: \(event.rawValue, privacy: .public)")
             onTap()
         }, label: {
-            HSLiquidGlassCard {
+            HSLiquidGlassCard(style: .tinted(event.accentColor)) {
                 HStack(spacing: SpacingTokens.sp3) {
-                    Image(systemName: event.iconName)
-                        .font(.title2)
-                        .foregroundStyle(event.accentColor)
-                        .frame(width: 36, height: 36)
+                    // Mascot Ляля — living, recognisable brand anchor on the banner
+                    LyalyaMascotView(state: .happy, size: 52)
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                        Text(event.localizedTitle)
-                            .font(TypographyTokens.headline())
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(nil)
-                            .minimumScaleFactor(0.75)
+                        HStack(spacing: SpacingTokens.sp2) {
+                            Image(systemName: event.iconName)
+                                .font(.system(size: 14))
+                                .foregroundStyle(event.accentColor)
+                                .accessibilityHidden(true)
+                            Text(event.localizedTitle)
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Kid.ink)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                        }
 
                         Text(String(localized: "seasonal.banner.subtitle"))
                             .font(TypographyTokens.caption())
@@ -62,16 +66,17 @@ struct SeasonalBannerView: View {
 
                     Spacer(minLength: SpacingTokens.sp2)
 
-                    Text(String(localized: "seasonal.banner.cta"))
-                        .font(TypographyTokens.body())
-                        .foregroundStyle(event.accentColor)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-
-                    Image(systemName: "chevron.right")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .accessibilityHidden(true)
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Text(String(localized: "seasonal.banner.cta"))
+                            .font(TypographyTokens.body(13).weight(.semibold))
+                            .foregroundStyle(event.accentColor)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.bold))
+                            .foregroundStyle(event.accentColor)
+                    }
+                    .accessibilityHidden(true)
                 }
             }
         })

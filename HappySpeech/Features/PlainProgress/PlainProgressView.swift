@@ -197,6 +197,8 @@ struct PlainProgressView: View {
     // Charts BarMark. Контракт Presenter'а сохранён (ComparisonViewModel),
     // только View рендерит через `Chart`. Dynamic Type и VoiceOver chart
     // descriptions подключаются автоматически.
+    // v32 Design — обёрнуто в HSLiquidGlassCard(.elevated) вместо голого
+    // RoundedRectangle, добавлен акцент-заголовок с иконкой тренда.
 
     private struct ComparisonBar: Identifiable {
         let id: String
@@ -231,61 +233,66 @@ struct PlainProgressView: View {
             "\(comparison.nowLabel) \(comparison.nowValue). " +
             "\(comparison.deltaText)"
 
-        return VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(comparison.title)
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Parent.ink)
-
-            Chart(bars) { bar in
-                BarMark(
-                    x: .value("share", bar.value),
-                    y: .value("group", bar.label),
-                    height: .ratio(0.5)
-                )
-                .foregroundStyle(bar.tint)
-                .annotation(position: .trailing, alignment: .center) {
-                    Text(bar.displayValue)
-                        .font(TypographyTokens.caption(12).weight(.semibold).monospacedDigit())
+        return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "chart.bar.fill")
+                        .font(.system(size: 15))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                    Text(comparison.title)
+                        .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.75)
                 }
-                .cornerRadius(6)
-            }
-            .chartXScale(domain: 0...1)
-            .chartXAxis {
-                AxisMarks(values: [0, 0.5, 1]) { value in
-                    AxisGridLine().foregroundStyle(ColorTokens.Parent.line)
-                    AxisValueLabel {
-                        if let raw = value.as(Double.self) {
-                            Text(String(format: "%.0f%%", raw * 100))
-                                .font(TypographyTokens.caption(11))
-                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+
+                Chart(bars) { bar in
+                    BarMark(
+                        x: .value("share", bar.value),
+                        y: .value("group", bar.label),
+                        height: .ratio(0.5)
+                    )
+                    .foregroundStyle(bar.tint)
+                    .annotation(position: .trailing, alignment: .center) {
+                        Text(bar.displayValue)
+                            .font(TypographyTokens.caption(12).weight(.semibold).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                    }
+                    .cornerRadius(6)
+                }
+                .chartXScale(domain: 0...1)
+                .chartXAxis {
+                    AxisMarks(values: [0, 0.5, 1]) { value in
+                        AxisGridLine().foregroundStyle(ColorTokens.Parent.line)
+                        AxisValueLabel {
+                            if let raw = value.as(Double.self) {
+                                Text(String(format: "%.0f%%", raw * 100))
+                                    .font(TypographyTokens.caption(11))
+                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            }
                         }
                     }
                 }
-            }
-            .chartYAxis {
-                AxisMarks { _ in
-                    AxisValueLabel()
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .chartYAxis {
+                    AxisMarks { _ in
+                        AxisValueLabel()
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
                 }
-            }
-            .frame(minHeight: 96)
+                .frame(minHeight: 96)
 
-            Text(comparison.deltaText)
-                .font(TypographyTokens.body(13).weight(.medium))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+                Divider().overlay(ColorTokens.Parent.line)
+
+                Text(comparison.deltaText)
+                    .font(TypographyTokens.body(13).weight(.medium))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
+        .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(chartAccessibility)
     }
@@ -296,9 +303,15 @@ struct PlainProgressView: View {
         _ milestones: [PlainProgressModels.Load.MilestoneViewModel]
     ) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text("plainProgress.milestone.sectionTitle")
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Parent.ink)
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "flag.fill")
+                    .font(.system(size: 14))
+                    .foregroundStyle(ColorTokens.Brand.rose)
+                    .accessibilityHidden(true)
+                Text("plainProgress.milestone.sectionTitle")
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+            }
 
             VStack(spacing: SpacingTokens.sp2) {
                 ForEach(Array(milestones.enumerated()), id: \.element.id) { index, milestone in
@@ -373,31 +386,32 @@ struct PlainProgressView: View {
     private func recommendationSection(
         _ viewModel: PlainProgressModels.Load.ViewModel
     ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            HStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: "lightbulb.fill")
-                    .font(.body)
-                    .foregroundStyle(ColorTokens.Brand.butter)
-                    .hsSymbolEffect(.pulse, value: viewModel.recommendationTitle)
+        HSCard(style: .gradientTinted(GradientTokens.cardGold), padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.butter.opacity(0.22))
+                            .frame(width: 32, height: 32)
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 15))
+                            .foregroundStyle(ColorTokens.Brand.butter)
+                            .hsSymbolEffect(.pulse, value: viewModel.recommendationTitle)
+                    }
                     .accessibilityHidden(true)
-                Text(viewModel.recommendationTitle)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-            }
+                    Text(viewModel.recommendationTitle)
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                }
 
-            Text(viewModel.recommendationText)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(viewModel.recommendationText)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Brand.butter.opacity(0.10))
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             "\(viewModel.recommendationTitle). \(viewModel.recommendationText)"

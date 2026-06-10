@@ -119,54 +119,61 @@ struct WeeklySoundReportView: View {
 
     @ViewBuilder
     private func weekNavigator(viewModel: WeeklySoundReportModels.Load.ViewModel) -> some View {
-        HStack {
-            Button {
-                Task { await changeWeek(to: currentWeekOffset - 1) }
-            } label: {
-                Label {
-                    Text("weeklyReport.nav.previous")
+        HSCard(style: .flat, padding: SpacingTokens.sp3) {
+            HStack {
+                Button {
+                    Task { await changeWeek(to: currentWeekOffset - 1) }
+                } label: {
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Image(systemName: "chevron.left")
+                            .font(TypographyTokens.caption(13).weight(.semibold))
+                        Text("weeklyReport.nav.previous")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .frame(minHeight: 44)
+                .accessibilityLabel(Text("weeklyReport.nav.previous.a11y"))
+
+                Spacer()
+
+                VStack(spacing: SpacingTokens.micro) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 12))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .accessibilityHidden(true)
+                    Text(viewModel.dateRangeLabel)
+                        .font(TypographyTokens.headline(14))
+                        .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
-                } icon: {
-                    Image(systemName: "chevron.left")
                 }
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Brand.primary)
-            }
-            .frame(minHeight: 44)
-            .accessibilityLabel(Text("weeklyReport.nav.previous.a11y"))
 
-            Spacer()
+                Spacer()
 
-            Text(viewModel.dateRangeLabel)
-                .font(TypographyTokens.headline(15))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-
-            Spacer()
-
-            Button {
-                Task { await changeWeek(to: currentWeekOffset + 1) }
-            } label: {
-                Label {
-                    Text("weeklyReport.nav.next")
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-                } icon: {
-                    Image(systemName: "chevron.right")
+                Button {
+                    Task { await changeWeek(to: currentWeekOffset + 1) }
+                } label: {
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Text("weeklyReport.nav.next")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                        Image(systemName: "chevron.right")
+                            .font(TypographyTokens.caption(13).weight(.semibold))
+                    }
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(
+                        viewModel.canGoNext
+                            ? ColorTokens.Brand.primary
+                            : ColorTokens.Parent.inkMuted
+                    )
                 }
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(
-                    viewModel.canGoNext
-                        ? ColorTokens.Brand.primary
-                        : ColorTokens.Parent.inkMuted
-                )
-                .labelStyle(.titleAndIcon)
+                .frame(minHeight: 44)
+                .disabled(!viewModel.canGoNext)
+                .accessibilityLabel(Text("weeklyReport.nav.next.a11y"))
             }
-            .frame(minHeight: 44)
-            .disabled(!viewModel.canGoNext)
-            .accessibilityLabel(Text("weeklyReport.nav.next.a11y"))
         }
     }
 
@@ -231,61 +238,79 @@ struct WeeklySoundReportView: View {
     @ViewBuilder
     private func soundCard(_ card: SoundCardViewModel) -> some View {
         let isExpanded = expandedSoundId == card.id
+        let accentColor = soundFamilyColor(for: card.id)
         HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                Button {
-                    Task { await toggleSound(card) }
-                } label: {
-                    HStack(spacing: SpacingTokens.sp3) {
-                        HSProgressRing(
-                            value: card.successRate,
-                            size: 56,
-                            lineWidth: 7,
-                            color: ringColor(for: card.successRate)
-                        )
-                        .accessibilityLabel(
-                            Text(
-                                String(
-                                    format: String(localized: "weeklyReport.ring.a11y"),
-                                    card.id,
-                                    Int((card.successRate * 100).rounded())
+            HStack(spacing: 0) {
+                // Left accent border — colour-coded by sound family
+                RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                    .fill(accentColor)
+                    .frame(width: 4)
+                    .padding(.vertical, SpacingTokens.sp1)
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                    Button {
+                        Task { await toggleSound(card) }
+                    } label: {
+                        HStack(spacing: SpacingTokens.sp3) {
+                            HSProgressRing(
+                                value: card.successRate,
+                                size: 56,
+                                lineWidth: 7,
+                                color: ringColor(for: card.successRate)
+                            )
+                            .accessibilityLabel(
+                                Text(
+                                    String(
+                                        format: String(localized: "weeklyReport.ring.a11y"),
+                                        card.id,
+                                        Int((card.successRate * 100).rounded())
+                                    )
                                 )
                             )
-                        )
 
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(card.soundLabel)
-                                .font(TypographyTokens.headline(17))
-                                .foregroundStyle(ColorTokens.Parent.ink)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.85)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(card.soundLabel)
+                                    .font(TypographyTokens.headline(17))
+                                    .foregroundStyle(ColorTokens.Parent.ink)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.85)
 
-                            Text(
-                                String.localizedStringWithFormat(
-                                    String(localized: "weeklyReport.sound.sessions"),
-                                    card.sessionCount
+                                Text(
+                                    String.localizedStringWithFormat(
+                                        String(localized: "weeklyReport.sound.sessions"),
+                                        card.sessionCount
+                                    )
                                 )
-                            )
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            }
+
+                            Spacer()
+
+                            VStack(spacing: SpacingTokens.sp1) {
+                                Image(systemName: card.trendArrow.symbolName)
+                                    .font(TypographyTokens.headline(16).weight(.bold))
+                                    .foregroundStyle(trendColor(card.trendArrow))
+                                    .hsSymbolEffect(.bounce, value: card.successRate)
+                                    .accessibilityLabel(Text(trendA11y(card.trendArrow)))
+
+                                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                                    .font(.system(size: 11, weight: .medium))
+                                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                                    .accessibilityHidden(true)
+                            }
                         }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityHint(Text("weeklyReport.card.expand.hint"))
 
-                        Spacer()
-
-                        Image(systemName: card.trendArrow.symbolName)
-                            .font(TypographyTokens.headline(16).weight(.bold))
-                            .foregroundStyle(trendColor(card.trendArrow))
-                            .hsSymbolEffect(.bounce, value: card.successRate)
-                            .accessibilityLabel(Text(trendA11y(card.trendArrow)))
+                    if isExpanded, let detail = holder.selectedDetail, detail.soundTarget == card.id {
+                        expandedDetail(detail)
                     }
                 }
-                .buttonStyle(.plain)
-                .accessibilityAddTraits(.isButton)
-                .accessibilityHint(Text("weeklyReport.card.expand.hint"))
-
-                if isExpanded, let detail = holder.selectedDetail, detail.soundTarget == card.id {
-                    expandedDetail(detail)
-                }
+                .padding(.leading, SpacingTokens.sp3)
             }
         }
         .animation(reduceMotion ? nil : .spring(duration: 0.3), value: isExpanded)
@@ -318,25 +343,27 @@ struct WeeklySoundReportView: View {
                 )
             }
 
-            HStack(alignment: .top, spacing: SpacingTokens.sp2) {
-                Image(systemName: "lightbulb.fill")
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .hsSymbolEffect(.variableColor, value: detail.tipText)
+            HSCard(style: .gradientTinted(GradientTokens.cardGold), padding: SpacingTokens.sp3) {
+                HStack(alignment: .top, spacing: SpacingTokens.sp2) {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.butter.opacity(0.20))
+                            .frame(width: 28, height: 28)
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 13))
+                            .foregroundStyle(ColorTokens.Brand.butter)
+                            .hsSymbolEffect(.variableColor, value: detail.tipText)
+                    }
                     .accessibilityHidden(true)
 
-                Text(detail.tipText)
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
+                    Text(detail.tipText)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(SpacingTokens.sp3)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.sm)
-                    .fill(ColorTokens.Parent.bg)
-            )
         }
         .transition(.opacity)
     }
@@ -427,6 +454,17 @@ struct WeeklySoundReportView: View {
     }
 
     // MARK: - Color helpers
+
+    /// Maps a target sound letter to its sound-family accent colour.
+    private func soundFamilyColor(for sound: String) -> Color {
+        let hissing = ["Ш", "Ж", "Ч", "Щ"]
+        let whistling = ["С", "З", "Ц"]
+        let sonorant = ["Р", "Рь", "Л", "Ль"]
+        if hissing.contains(sound) { return ColorTokens.SoundFamilyColors.Hissing.hue }
+        if whistling.contains(sound) { return ColorTokens.SoundFamilyColors.Whistling.hue }
+        if sonorant.contains(sound) { return ColorTokens.SoundFamilyColors.Sonorant.hue }
+        return ColorTokens.SoundFamilyColors.Velar.hue
+    }
 
     private func ringColor(for rate: Double) -> Color {
         switch rate {

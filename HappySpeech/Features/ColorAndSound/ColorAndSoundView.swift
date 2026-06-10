@@ -140,6 +140,9 @@ struct ColorAndSoundView: View {
         let style: HSCardStyle = card.isSelected
             ? (card.belongs ? .tinted(soundColor.color.opacity(0.28)) : .tinted(ColorTokens.Kid.bgSoft))
             : .elevated
+        // Scale: selected correct → немного вырастает; unselected → полный размер.
+        let scale: CGFloat = card.isSelected && card.belongs ? 1.04 : 1.0
+
         return Button(action: action) {
             HSCard(style: style) {
                 VStack(spacing: SpacingTokens.sp2) {
@@ -157,16 +160,20 @@ struct ColorAndSoundView: View {
                         .minimumScaleFactor(0.7)
                     if card.isSelected {
                         Image(systemName: card.belongs ? "checkmark.circle.fill" : "minus.circle.fill")
-                            .font(.system(size: 16))
-                            .foregroundStyle(card.belongs ? ColorTokens.Semantic.success : ColorTokens.Kid.inkSoft)
+                            .font(.system(size: 18))
+                            .foregroundStyle(card.belongs ? soundColor.color : ColorTokens.Kid.inkSoft)
                             .hsSymbolEffect(.bounce, value: card.isSelected)
+                            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, SpacingTokens.sp2)
             }
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
+        .scaleEffect(scale)
+        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6), value: card.isSelected)
         .disabled(card.isSelected)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(card.text))

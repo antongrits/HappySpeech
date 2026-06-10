@@ -172,45 +172,47 @@ struct LexicalThemesView: View {
     private func themeCard(
         _ theme: LexicalThemesModels.LoadThemes.ThemeCardViewModel
     ) -> some View {
-        Button {
+        // v32 Design — replaced bare RoundedRectangle with HSCard(.gradientTinted)
+        // for warmth and depth. Mastered themes get a gold gradient; others coral-butter.
+        let cardStyle: HSCardStyle = theme.isMastered
+            ? .gradientTinted(GradientTokens.cardGold)
+            : .gradientTinted(GradientTokens.cardCoralButter)
+
+        return Button {
             Task { await startTheme(themeId: theme.id) }
         } label: {
-            VStack(spacing: SpacingTokens.sp2) {
-                ZStack(alignment: .topTrailing) {
-                    Image(systemName: theme.symbolName)
-                        .font(.system(size: 38))
-                        .foregroundStyle(ColorTokens.Brand.sky)
+            HSCard(style: cardStyle, padding: SpacingTokens.sp3) {
+                VStack(spacing: SpacingTokens.sp2) {
+                    ZStack(alignment: .topTrailing) {
+                        ZStack {
+                            Circle()
+                                .fill(ColorTokens.Brand.lilac.opacity(0.14))
+                                .frame(width: 60, height: 60)
+                            Image(systemName: theme.symbolName)
+                                .font(.system(size: 30))
+                                .foregroundStyle(ColorTokens.Brand.lilac)
+                        }
                         .frame(maxWidth: .infinity)
-                    if theme.isMastered {
-                        Image(systemName: "star.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Brand.gold)
-                            // Step 10 Batch G — Pattern 5: bounce on mastery star.
-                            .hsSymbolEffect(.bounce, value: theme.isMastered)
-                            .accessibilityHidden(true)
+                        if theme.isMastered {
+                            Image(systemName: "star.fill")
+                                .font(.title3)
+                                .foregroundStyle(ColorTokens.Brand.gold)
+                                .hsSymbolEffect(.bounce, value: theme.isMastered)
+                                .accessibilityHidden(true)
+                        }
                     }
+                    Text(theme.title)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.7)
+                        .multilineTextAlignment(.center)
+                    Text(theme.wordCountLabel)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
-                Text(theme.title)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-                    .multilineTextAlignment(.center)
-                Text(theme.wordCountLabel)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .frame(maxWidth: .infinity, minHeight: 130)
             }
-            .frame(maxWidth: .infinity, minHeight: 130)
-            .padding(SpacingTokens.sp3)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-            )
-            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(theme.accessibilityLabel))
@@ -289,19 +291,18 @@ struct LexicalThemesView: View {
         _ option: LexicalThemesModels.StartTheme.OptionViewModel,
         action: @escaping () -> Void
     ) -> some View {
+        // v32 Design — replaced flat Brand.sky fill with warm Brand.primary gradient pill.
+        // Brand.sky was a large-surface colour fill; Brand.primary (coral) is on-theme.
         Button(action: action) {
-            Text(option.label)
-                .font(TypographyTokens.headline(19))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity, minHeight: 64)
-                .padding(SpacingTokens.sp3)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Brand.sky)
-                )
+            HSCard(style: .gradientTinted(GradientTokens.cardCoralButter), padding: SpacingTokens.sp3) {
+                Text(option.label)
+                    .font(TypographyTokens.headline(19))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, minHeight: 56)
+            }
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(option.label))

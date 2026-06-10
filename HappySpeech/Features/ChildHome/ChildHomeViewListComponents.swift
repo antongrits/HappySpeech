@@ -19,26 +19,43 @@ struct ChildHomeSoundProgressRow: View {
     }
 
     var body: some View {
-        HSCard(style: .flat) {
-            HStack(spacing: SpacingTokens.sp3) {
-                Text(item.sound)
-                    .font(TypographyTokens.title(22).weight(.black))
-                    .foregroundStyle(familyColor)
-                    .frame(width: 36)
+        HSCard(style: .elevated) {
+            HStack(spacing: 0) {
+                // Left colour accent border keyed to sound family
+                RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                    .fill(familyColor)
+                    .frame(width: 4)
+                    .padding(.vertical, SpacingTokens.sp1)
+                    .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text(item.stageName)
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                        Spacer()
-                        Text(formatPercent(item.rate))
-                            .font(TypographyTokens.mono(12))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                HStack(spacing: SpacingTokens.sp3) {
+                    ZStack {
+                        Circle()
+                            .fill(familyColor.opacity(0.14))
+                            .frame(width: 40, height: 40)
+                        Text(item.sound)
+                            .font(TypographyTokens.title(20).weight(.black))
+                            .foregroundStyle(familyColor)
                     }
-                    HSProgressBar(value: item.rate, style: .kid, tint: familyColor)
-                        .frame(height: 8)
+                    .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text(item.stageName)
+                                .font(TypographyTokens.body(13))
+                                .foregroundStyle(ColorTokens.Kid.ink)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.85)
+                            Spacer()
+                            Text(formatPercent(item.rate))
+                                .font(TypographyTokens.mono(12))
+                                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        }
+                        HSProgressBar(value: item.rate, style: .kid, tint: familyColor)
+                            .frame(height: 8)
+                    }
                 }
+                .padding(.leading, SpacingTokens.sp3)
             }
         }
         // Block J v18 — kavsoft-style tilt carousel scroll transition.
@@ -61,39 +78,62 @@ struct ChildHomeRecentSessionRow: View {
 
     let session: ChildHomeModels.RecentSession
 
+    /// Sound-family accent colour for the left border and sound-letter circle.
+    private var familyAccentColor: Color {
+        let hissing = ["Ш", "Ж", "Ч", "Щ"]
+        let whistling = ["С", "З", "Ц"]
+        let sonorant = ["Р", "Рь", "Л", "Ль"]
+        let sound = session.soundTarget
+        if hissing.contains(sound) { return ColorTokens.SoundFamilyColors.Hissing.hue }
+        if whistling.contains(sound) { return ColorTokens.SoundFamilyColors.Whistling.hue }
+        if sonorant.contains(sound) { return ColorTokens.SoundFamilyColors.Sonorant.hue }
+        return ColorTokens.SoundFamilyColors.Velar.hue
+    }
+
     var body: some View {
-        HSCard(style: .flat) {
-            HStack(spacing: SpacingTokens.sp3) {
-                ZStack {
-                    Circle()
-                        .fill(ColorTokens.Brand.mint.opacity(0.15))
-                        .frame(width: 40, height: 40)
-                    Text(session.soundTarget)
-                        .font(TypographyTokens.body(16).weight(.black))
-                        .foregroundStyle(ColorTokens.Brand.mint)
-                }
+        HSCard(style: .elevated) {
+            HStack(spacing: 0) {
+                // Left colour accent border keyed to sound family
+                RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                    .fill(familyAccentColor)
+                    .frame(width: 4)
+                    .padding(.vertical, SpacingTokens.sp1)
+                    .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(session.gameTitle)
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Text(formattedDate)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-
-                Spacer()
-
-                HStack(spacing: 1) {
-                    ForEach(0..<session.scoreStars, id: \.self) { _ in
-                        Image(systemName: "star.fill")
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Brand.gold)
+                HStack(spacing: SpacingTokens.sp3) {
+                    ZStack {
+                        Circle()
+                            .fill(familyAccentColor.opacity(0.15))
+                            .frame(width: 40, height: 40)
+                        Text(session.soundTarget)
+                            .font(TypographyTokens.body(16).weight(.black))
+                            .foregroundStyle(familyAccentColor)
                     }
+                    .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(session.gameTitle)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Text(formattedDate)
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+
+                    Spacer()
+
+                    HStack(spacing: 1) {
+                        ForEach(0..<session.scoreStars, id: \.self) { _ in
+                            Image(systemName: "star.fill")
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Brand.gold)
+                        }
+                    }
+                    .accessibilityHidden(true)
                 }
-                .accessibilityHidden(true)
+                .padding(.leading, SpacingTokens.sp3)
             }
         }
         // Block J v18 — kavsoft-style tilt carousel scroll transition.
