@@ -15,7 +15,8 @@ final class Articulation3DRenderTest: XCTestCase {
             throw XCTSkip("No Metal device (CI without GPU)")
         }
         let sounds: [(ArticulationSound, String)] = [
-            (.r, "r"), (.sh, "sh"), (.s, "s"), (.soundL, "l")
+            (.neutral, "neutral"), (.s, "s"), (.z, "z"), (.sh, "sh"), (.zh, "zh"),
+            (.r, "r"), (.soundL, "l"), (.k, "k"), (.g, "g"), (.kh, "kh")
         ]
         let outDir = "/tmp/sim"
         try? FileManager.default.createDirectory(
@@ -25,7 +26,7 @@ final class Articulation3DRenderTest: XCTestCase {
             let view = ArticulationScene3DView(sound: sound, reduceMotion: true)
             let coord = view.makeCoordinator()
             let scene = coord.makeScene()
-            coord.apply(sound: sound)
+            coord.apply(sound: sound, reduceMotion: true)
 
             let renderer = SCNRenderer(device: device, options: nil)
             renderer.scene = scene

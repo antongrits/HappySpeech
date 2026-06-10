@@ -12,10 +12,15 @@ import UIKit
 //
 // Модель: фронтальный открытый рот (glTF, Y-up). Три меша — губы/дёсны/язык
 // (mouth), зубы (teeth), влажная внутренняя поверхность (wet) — с РЕАЛЬНЫМИ
-// PBR-текстурами. Их сохраняем как есть (свои материалы НЕ навешиваем). Рига и
-// blend-shapes нет, отдельной ноды языка нет — модель ОДИНАКОВА для всех звуков,
-// это объект для рассматривания; позу языка по звуку показывает текстовая
-// подсказка и 2D/видео-схема в карточке.
+// PBR-текстурами. Их сохраняем как есть (свои материалы НЕ навешиваем).
+//
+// Язык СЛИТ с мешем рта и неподвижен, поэтому поверх статичной модели мы строим
+// ОТДЕЛЬНЫЙ процедурный язык (`buildTongueRig`) — объёмный, сегментированный риг
+// из сглаженных капсул (корень → спинка → тело → кончик), с глянцевым розовым
+// материалом (specular + лёгкий subsurface-оттенок). `apply(sound:)` гнёт суставы
+// рига под научно-точный уклад каждого русского звука (отчёт A-06) с плавными
+// переходами; для Р добавляется быстрая вибрация кончика. При Reduced Motion —
+// мгновенная статичная корректная поза без переходов/осцилляций.
 //
 // Камера смотрит фронтально на открытый рот с лёгким наклоном сверху, чтобы было
 // видно язык и нёбо внутри. `allowsCameraControl` включён — вращение/зум жестом.
@@ -32,10 +37,10 @@ private func uiColor(_ name: String) -> UIColor {
 
 struct ArticulationScene3DView: UIViewRepresentable {
 
-    /// Текущий выбранный звук (влияет только на подсказку в карточке; 3D-модель
-    /// одинакова для всех звуков).
+    /// Текущий выбранный звук — задаёт позу процедурного языка.
     let sound: ArticulationSound
-    /// Учитывать Reduced Motion (для совместимости вызова; 3D статична).
+    /// Учитывать Reduced Motion: при `true` поза ставится мгновенно, без
+    /// переходов и вибрации кончика.
     let reduceMotion: Bool
 
     func makeCoordinator() -> Coordinator {
@@ -56,12 +61,12 @@ struct ArticulationScene3DView: UIViewRepresentable {
         scnView.rendersContinuously = false
         context.coordinator.scnView = scnView
 
-        context.coordinator.apply(sound: sound)
+        context.coordinator.apply(sound: sound, reduceMotion: reduceMotion)
         return scnView
     }
 
     func updateUIView(_ uiView: SCNView, context: Context) {
-        context.coordinator.apply(sound: sound)
+        context.coordinator.apply(sound: sound, reduceMotion: reduceMotion)
     }
 
     // MARK: - Coordinator
@@ -70,6 +75,27 @@ struct ArticulationScene3DView: UIViewRepresentable {
     final class Coordinator: NSObject {
 
         weak var scnView: SCNView?
+
+        // MARK: Tongue rig nodes
+        //
+        // Архитектура — минимальная: одна горизонтальная SCNCapsule (тело),
+        // один SCNSphere-эллипсоид кончика (tipBlob), всё в одном узле tongueRoot.
+        // Для поз «тело» вращается через jBody (= родитель capsule-узла),
+        // кончик — через jTip (дочерний узел jBody у переднего торца капсулы).
+        // dorsumSeg = задняя часть тела; для К/Г/Х поднимаем весь jBody назад и
+        // вверх через backRaise на jBack.
+        private weak var tongueRoot: SCNNode?
+        private weak var jBack: SCNNode?   // задняя ось; Y-сдвиг = backRaise
+        private weak var jBody: SCNNode?   // тело + капсула; вращается на bodyArch
+        private weak var jTip: SCNNode?    // кончик; вращается на tipRaise
+        private weak var dorsumSeg: SCNNode? // = jBack (для K/G/KH Y-подъём)
+
+        /// Базовая Y для узла jBack.
+        private let dorsumBaseY: Float = 0
+
+        /// Базовая позиция корня языка в нормированной (2.0-юнит) модели.
+        private let tongueBaseY: Float = 0.06
+        private let tongueBaseZ: Float = -0.08
 
         func makeScene() -> SCNScene {
             let scene = SCNScene()
@@ -85,6 +111,7 @@ struct ArticulationScene3DView: UIViewRepresentable {
                 articulationLog.error("articulation_mouth.usdz not found in bundle — showing empty scene")
             }
 
+            buildTongueRig(in: scene)
             addCamera(to: scene)
             addSoftLighting(to: scene)
             return scene
@@ -253,13 +280,211 @@ struct ArticulationScene3DView: UIViewRepresentable {
             scene.rootNode.addChildNode(ambientNode)
         }
 
-        // MARK: Sound selection
+        // MARK: Procedural tongue rig
 
-        /// 3D-модель рта одинакова для всех звуков (нет ноды языка/рига): поза по
-        /// звуку показывается текстом и 2D/видео-схемой в карточке. Метод сохранён
-        /// для стабильного интерфейса вызова из `ArticulationScene3DView`.
-        func apply(sound: ArticulationSound) {
-            _ = sound
+        /// Строит сплошное объёмное тело языка и помещает его на дно полости рта.
+        ///
+        /// Архитектура — три уровня, каждый гарантированно сплошной (без дыр):
+        ///   1. tongueBody   — одна широкая горизонтальная SCNCapsule, сплюснутая
+        ///                     по Y: главная масса языка от корня до передних зубов.
+        ///                     Единственная капсула всегда даёт сплошной купол.
+        ///   2. dorsumBlob   — SCNSphere-эллипсоид поверх задней части; для К/Г/Х
+        ///                     поднимается вверх как горб-смычка к нёбу.
+        ///   3. tipBlob      — SCNSphere-эллипсоид у переднего края; поворачивается
+        ///                     вверх/вниз для Р/Ш/Л/С.
+        ///
+        /// Все три формы перекрываются с телом, поэтому тёмная модель нигде не
+        /// просвечивает сквозь язык.
+        ///
+        /// Иерархия нод для управления позами:
+        ///   tongueRoot  — позиция языка в полости (rootLift меняет Y)
+        ///     └─ jBack  — задняя ось; bodyArch поворачивает, dorsumBlob движется по Y
+        ///          └─ jBody — тело; bodyArch вращает главную капсулу
+        ///               └─ jTip — кончик; tipRaise вращает tipBlob
+        private func buildTongueRig(in scene: SCNScene) {
+            let mat = tongueMaterial()
+
+            // ── tongueRoot ──────────────────────────────────────────────────────
+            let root = SCNNode()
+            root.name = "tongueRoot"
+            root.position = SCNVector3(0, tongueBaseY, tongueBaseZ)
+
+            // ── jBack ── задняя ось; Y меняется при backRaise (К/Г/Х смычка) ───
+            // Этот узел является «дорсальным» суставом: его Y-подъём поднимает
+            // весь язык сзади к нёбу без создания отдельного плавающего объекта.
+            let back = SCNNode()
+            back.name  = "tongueJBack"
+            back.position = SCNVector3(0, dorsumBaseY, -0.06)
+            dorsumSeg = back   // backRaise двигает back.position.y
+
+            // ── jBody ── тело + главная ЕДИНСТВЕННАЯ капсула ────────────────────
+            let body = SCNNode()
+            body.name = "tongueJBody"
+            // Смещение вперёд от back: суммарно язык оказывается между нижними
+            // зубами (перёд) и задней стенкой глотки (зад).
+            body.position = SCNVector3(0, 0, 0.06)
+
+            // Одна горизонтальная SCNCapsule = гарантированно сплошной купол.
+            // capRadius  — полукруглые торцы по оси Z.
+            // height     — цилиндрическая часть между торцами.
+            // Итоговая длина капсулы вдоль Z = height + 2 × capRadius.
+            // scale(x) → расширяет вбок (язык шире, чем высок).
+            // scale(y) → приплющивает по высоте.
+            // Малый capRadius = скромные полукруглые торцы → не выступают отдельными
+            // горбиками при сильном scale.y-сплющивании.
+            // Длинный height = большое цилиндрическое тело заполняет полость.
+            let capsuleGeo = SCNCapsule(capRadius: 0.20, height: 1.10)
+            capsuleGeo.heightSegmentCount = 24
+            capsuleGeo.radialSegmentCount = 44
+            capsuleGeo.materials = [mat]
+            let capsuleNode = SCNNode(geometry: capsuleGeo)
+            // Повернуть ось капсулы Y → Z (лежит горизонтально вдоль рта).
+            capsuleNode.eulerAngles = SCNVector3(Float.pi / 2, 0, 0)
+            // Расширить по X, приплюснуть по Y, вытянуть по Z — широкий плоский язык.
+            capsuleNode.scale = SCNVector3(1.50, 0.62, 1.10)
+            body.addChildNode(capsuleNode)
+
+            // ── jTip ── кончик ───────────────────────────────────────────────────
+            // Располагается у переднего торца капсулы: от centre body по Z =
+            // height/2 + capRadius = 0.36 + 0.30 = 0.66; ставим чуть меньше,
+            // чтобы tipBlob перекрывал торец (нет щели).
+            let tip = SCNNode()
+            tip.name = "tongueJTip"
+            // Передний торец капсулы: half-length = 1.10/2 + 0.20 = 0.75,
+            // со scale.z=1.10 → ~0.83 от centre body.
+            // tip на z=0.70 → tipBlob врезается в торец на ~0.13.
+            tip.position = SCNVector3(0, 0, 0.70)
+
+            // tipBlob — небольшая сфера, врезается в передний торец капсулы.
+            // Достаточно мал, чтобы не торчать отдельным шаром, и достаточно
+            // широк (scale.x), чтобы перекрыть торец по всей ширине.
+            let tipGeo = SCNSphere(radius: 0.26)
+            tipGeo.segmentCount = 28
+            tipGeo.materials = [mat]
+            let tipBlob = SCNNode(geometry: tipGeo)
+            tipBlob.name = "tipBlob"
+            tipBlob.scale = SCNVector3(1.38, 0.64, 0.90)
+            // z=0 → центр сферы ровно на передней границе tip-узла.
+            tipBlob.position = SCNVector3(0, 0, 0)
+            tip.addChildNode(tipBlob)
+
+            // ── сборка иерархии ─────────────────────────────────────────────────
+            body.addChildNode(tip)
+            back.addChildNode(body)
+            root.addChildNode(back)
+            scene.rootNode.addChildNode(root)
+
+            tongueRoot = root
+            jBack      = back
+            jBody      = body
+            jTip       = tip
+        }
+
+        // capsuleSegment / sphereSegment удалены: риг перестроен на единую капсулу
+        // + два эллипсоида-блоба (см. buildTongueRig).
+
+        /// Глянцевый розовый материал языка: насыщенный diffuse из colorset,
+        /// мягкий specular-блик и лёгкий emission-подсвет (имитация subsurface),
+        /// чтобы тело читалось объёмно, а не плоским пятном.
+        private func tongueMaterial() -> SCNMaterial {
+            let m = SCNMaterial()
+            m.lightingModel = .blinn
+            m.diffuse.contents = uiColor("ArticulationTongue")
+            m.specular.contents = uiColor("ArticulationSpecular")
+            m.shininess = 0.42
+            // Лёгкий тёплый подсвет «изнутри» — subsurface-намёк.
+            m.emission.contents = uiColor("ArticulationTongue")
+            m.emission.intensity = 0.12
+            m.isDoubleSided = false
+            return m
+        }
+
+        // MARK: Sound selection / posing
+
+        /// Научно-точная поза рига языка под русский звук (отчёт A-06).
+        /// Поля — углы суставов (рад) и флаги. Углы подобраны под ориентацию
+        /// рига (поворот +X = наклон сегмента вверх к нёбу).
+        private struct TonguePose {
+            var backRaise: Float = 0   // вертикальный подъём задней спинки к нёбу (К/Г/Х), рига-юниты
+            var bodyArch: Float = 0    // изгиб тела (рад): + опускает перёд (горка), − задирает (чашечка)
+            var tipRaise: Float = 0    // кончик (рад): + вверх, − вниз
+            var rootLift: Float = 0    // общий вертикальный сдвиг языка
+            var lateral: Float = 0     // лёгкий крен тела (латеральность, Л)
+            var trills = false         // вибрация кончика (Р)
+        }
+
+        private func pose(for sound: ArticulationSound) -> TonguePose {
+            switch sound {
+            case .neutral:
+                // Плоско на дне, кончик слегка опущен у нижних резцов.
+                return TonguePose(bodyArch: 0.04, tipRaise: -0.06)
+            case .s, .z:
+                // Свистящие: тело горкой к альвеолам, кончик за нижними резцами
+                // (опущен). Углы умеренные — крупная капсула читается чётко.
+                return TonguePose(bodyArch: 0.20, tipRaise: -0.22, rootLift: 0.02)
+            case .sh, .zh:
+                // Шипящие: кончик вверх к альвеолам, тело «чашечкой».
+                return TonguePose(bodyArch: -0.14, tipRaise: 0.36, rootLift: 0.04)
+            case .r:
+                // Кончик поднят к альвеолам и ВИБРИРУЕТ.
+                return TonguePose(bodyArch: 0.04, tipRaise: 0.40, rootLift: 0.04, trills: true)
+            case .soundL:
+                // Кончик к верхним резцам, тело «ложкой», латеральный крен.
+                return TonguePose(bodyArch: -0.22, tipRaise: 0.46, rootLift: 0.03, lateral: 0.10)
+            case .k, .g:
+                // Задняя часть языка (jBack) поднимается к нёбу — смычка.
+                // Кончик внизу. backRaise двигает весь back-узел вверх.
+                return TonguePose(backRaise: 0.22, bodyArch: -0.05, tipRaise: -0.18, rootLift: 0.02)
+            case .kh:
+                // Задняя часть почти к нёбу (узкая щель = трение).
+                return TonguePose(backRaise: 0.16, bodyArch: -0.04, tipRaise: -0.16, rootLift: 0.02)
+            }
+        }
+
+        /// Применяет позу языка под звук. Плавный переход через SCNTransaction;
+        /// при Reduced Motion — мгновенно, без вибрации Р.
+        func apply(sound: ArticulationSound, reduceMotion: Bool) {
+            guard let root = tongueRoot,
+                  let back = jBack,
+                  let body = jBody,
+                  let tip = jTip,
+                  let dorsum = dorsumSeg else {
+                return
+            }
+            let p = pose(for: sound)
+
+            // Снимаем прежнюю вибрацию кончика.
+            tip.removeAction(forKey: "trill")
+
+            let duration: CFTimeInterval = reduceMotion ? 0 : 0.45
+            SCNTransaction.begin()
+            SCNTransaction.animationDuration = duration
+            SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+
+            root.position = SCNVector3(0, tongueBaseY + p.rootLift, tongueBaseZ)
+            // К/Г/Х: поднимаем jBack вверх по Y — задний конец языка тянется к нёбу.
+            // dorsum == jBack, поэтому меняем его position.y.
+            dorsum.position = SCNVector3(0, dorsumBaseY + p.backRaise, -0.06)
+            back.eulerAngles = SCNVector3(0, 0, 0)
+            body.eulerAngles = SCNVector3(p.bodyArch, 0, p.lateral)
+            tip.eulerAngles  = SCNVector3(p.tipRaise, 0, 0)
+
+            SCNTransaction.commit()
+
+            // Вибрация Р — быстрая мелкая осцилляция кончика поверх позы.
+            if p.trills && !reduceMotion {
+                let base = p.tipRaise
+                let amp: Float = 0.10
+                let up = SCNAction.rotateTo(
+                    x: CGFloat(base + amp), y: 0, z: 0, duration: 0.05, usesShortestUnitArc: true
+                )
+                let down = SCNAction.rotateTo(
+                    x: CGFloat(base - amp), y: 0, z: 0, duration: 0.05, usesShortestUnitArc: true
+                )
+                up.timingMode = .easeInEaseOut
+                down.timingMode = .easeInEaseOut
+                tip.runAction(.repeatForever(.sequence([up, down])), forKey: "trill")
+            }
         }
     }
 }
