@@ -2920,6 +2920,57 @@
         }
       }
     },
+    "ar.soundFace.matched": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great! You did it!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Получилось!"
+          }
+        }
+      }
+    },
+    "ar.soundFace.missed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almost! Try once more"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Попробуй ещё разок"
+          }
+        }
+      }
+    },
+    "ar.soundFace.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound & Face"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук и лицо"
+          }
+        }
+      }
+    },
     "ar.stars": {
       "extractionState": "manual",
       "localizations": {

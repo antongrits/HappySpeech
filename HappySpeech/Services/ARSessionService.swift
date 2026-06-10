@@ -161,6 +161,30 @@ public struct FaceBlendshapes: Sendable, Equatable {
 
     /// Удобная демо-поза «хоботок».
     public static let funnel = FaceBlendshapes(mouthFunnel: 0.8)
+
+    /// «Трубочка» — губы вытянуты вперёд. `mouthPucker` ≥ 0.6, улыбка низкая.
+    public static let pucker = FaceBlendshapes(mouthPucker: 0.7)
+
+    /// «Лопаточка» — язык высунут при почти закрытом рте. `tongueOut` ≥ 0.5, малый `jawOpen`.
+    public static let tongueOut = FaceBlendshapes(jawOpen: 0.1, tongueOut: 0.7)
+
+    /// Широко открытый рот для Р — `jawOpen` ≥ 0.4 с подворотом губ (прокси «грибка»/языка вверх).
+    public static let jawOpenWide = FaceBlendshapes(
+        jawOpen: 0.6,
+        mouthRollLower: 0.6,
+        mouthRollUpper: 0.6
+    )
+
+    /// Приоткрытый рот с высунутым языком — прокси-поза для Р/Л (`tongueUp`).
+    public static let tongueUpProxy = FaceBlendshapes(jawOpen: 0.6, tongueOut: 0.7)
+
+    /// Асимметричная улыбка — левый угол выше правого (тест `lipSymmetry` < 1).
+    public static let asymmetric = FaceBlendshapes(
+        mouthSmileLeft: 0.8,
+        mouthSmileRight: 0.2,
+        mouthStretchLeft: 0.8,
+        mouthStretchRight: 0.2
+    )
 }
 
 // MARK: - ARSessionError
@@ -373,9 +397,32 @@ extension LiveARSessionService: ARSessionDelegate {
 
 // MARK: - MockARSessionService
 
-/// Mock service for SwiftUI previews and tests. Emits animated random blendshapes at ~15fps.
+/// Mock service for SwiftUI previews and tests.
+///
+/// Два режима эмиссии кадров (симулятор не поддерживает ARFaceTracking в принципе —
+/// это единственный способ верифицировать AR-логику без TrueDepth-железа):
+///
+///   * **Синусоида (по умолчанию):** анимированные blendshapes ~15fps для живого превью.
+///   * **Скриптованный (детерминированный):** последовательность `[ScriptedPose]` —
+///     известные позы с длительностями проигрываются по порядку через тот же
+///     `AsyncStream`. Позволяет UI/unit-тестам подавать заранее известный вход
+///     (звёзды/прогресс) без рандома.
 @MainActor
 public final class MockARSessionService: ARSessionService, @unchecked Sendable {
+
+    // MARK: - ScriptedPose
+
+    /// Одна поза детерминированного сценария: что эмитить и как долго удерживать.
+    public struct ScriptedPose: Sendable, Equatable {
+        public let pose: FaceBlendshapes
+        /// Длительность удержания в секундах (сколько кадров будет сэмулировано).
+        public let duration: TimeInterval
+
+        public init(pose: FaceBlendshapes, duration: TimeInterval) {
+            self.pose = pose
+            self.duration = duration
+        }
+    }
 
     public var isSupported: Bool = true
     public private(set) var isRunning: Bool = false
@@ -392,8 +439,16 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
     private var tickTask: Task<Void, Never>?
     private var phase: Float = 0
 
-    public init(isSupported: Bool = true) {
+    /// Детерминированный сценарий поз. Если непустой — `startSession()` проигрывает
+    /// его вместо синусоиды. Можно задать в init или через `setScript(_:)`.
+    private var script: [ScriptedPose]
+
+    /// Период одного эмулированного кадра (~15fps). Кол-во кадров на позу = duration / frameInterval.
+    private let frameInterval: TimeInterval = 1.0 / 15.0
+
+    public init(isSupported: Bool = true, script: [ScriptedPose] = []) {
         self.isSupported = isSupported
+        self.script = script
         let stream = AsyncStream<FaceBlendshapes>.makeStream()
         self.blendshapeStream = stream.stream
         self.continuation = stream.continuation
@@ -404,10 +459,24 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
         continuation.finish()
     }
 
+    /// Задаёт/заменяет детерминированный сценарий поз. Применяется при следующем `startSession()`.
+    public func setScript(_ poses: [ScriptedPose]) {
+        script = poses
+    }
+
     public func startSession() async throws {
         guard isSupported else { throw ARSessionError.notSupported }
         guard !isRunning else { return }
         isRunning = true
+        if script.isEmpty {
+            startSineLoop()
+        } else {
+            startScriptedPlayback()
+        }
+    }
+
+    /// Анимированная синусоида (живое превью, недетерминированно).
+    private func startSineLoop() {
         tickTask = Task { @MainActor [weak self] in
             while let self, !Task.isCancelled, self.isRunning {
                 self.phase += 0.1
@@ -424,6 +493,24 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
                 self.continuation.yield(snapshot)
                 try? await Task.sleep(nanoseconds: 66_000_000)  // ~15fps
             }
+        }
+    }
+
+    /// Детерминированный проигрыватель сценария: эмитит каждую позу `duration/frameInterval` раз.
+    private func startScriptedPlayback() {
+        let poses = script
+        let interval = frameInterval
+        tickTask = Task { @MainActor [weak self] in
+            for scripted in poses {
+                let frameCount = max(1, Int((scripted.duration / interval).rounded()))
+                for _ in 0..<frameCount {
+                    guard let self, !Task.isCancelled, self.isRunning else { return }
+                    self.currentBlendshapes = scripted.pose
+                    self.continuation.yield(scripted.pose)
+                    try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
+                }
+            }
+            // Сценарий завершён — сессия остаётся запущенной, поток ждёт нового скрипта/стопа.
         }
     }
 
