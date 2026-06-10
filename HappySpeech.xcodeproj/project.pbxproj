@@ -1910,7 +1910,6 @@
 		EAC3F33753623935F50FDE22 /* LogopedistChatWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62080CEF6610DA5F2F804BA5 /* LogopedistChatWorkerTests.swift */; };
 		EAD5004E7964F6C353A88B41 /* StutteringPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935D106EED069A4F02C0DF81 /* StutteringPresenterTests.swift */; };
 		EB09419CCB10F5633397780D /* pack_sound_detective.json in Resources */ = {isa = PBXBuildFile; fileRef = 48F1E990D5793D34FE556A88 /* pack_sound_detective.json */; };
-		EB1FCF8A5467E7EAF886971F /* articulation_head.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 04B9CAD771FE29E04D31717E /* articulation_head.usdz */; };
 		EB5EEAB5764AB9B0381B7FBF /* ARSoundHunterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C440758EE49F23AC01F02505 /* ARSoundHunterInteractor.swift */; };
 		EB73CFF4AB7479E81D230F01 /* CustomizationVoicePreviewWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA3C98CEC9AB0F01CE6BF1A /* CustomizationVoicePreviewWorker.swift */; };
 		EB8F1BFB6D8193CDD8172F5B /* DemoPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1CD46AD1FA46C56221CBD1 /* DemoPresenter.swift */; };
@@ -2033,6 +2032,7 @@
 		FA0B495B8895462C8594F217 /* WeeklyChallengeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D4F98637B6C5B1158A6596 /* WeeklyChallengeModels.swift */; };
 		FA29C2E61F3150FBF3B8951F /* DiaryStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945E20395A614A99AFF95CFD /* DiaryStorage.swift */; };
 		FA3117CC30B91F5894F3E8AF /* HSScrollDrivenShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = C788580B737CDA41BC50750F /* HSScrollDrivenShape.swift */; };
+		FA6C772A56B813EE435D1EF4 /* articulation_mouth.usdz in Resources */ = {isa = PBXBuildFile; fileRef = D9A616556A27AC64A75603FC /* articulation_mouth.usdz */; };
 		FA738B23D746E195524CB024 /* FourthExtraInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83157E5C855063F03036694 /* FourthExtraInteractor.swift */; };
 		FA73FE3418FCFDD6B49BCB23 /* Tokenizers in Frameworks */ = {isa = PBXBuildFile; productRef = F403E7352D71111D054BBAC1 /* Tokenizers */; };
 		FA77407C7B82EEDA7C0E67E7 /* PlainProgressModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA54CC04080C713E0322563 /* PlainProgressModels.swift */; };
@@ -2172,7 +2172,6 @@
 		0485717434D848F912720257 /* ARActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityModels.swift; sourceTree = "<group>"; };
 		04A016D5A91A499E12B815C2 /* VisualAcousticInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAcousticInteractorTests.swift; sourceTree = "<group>"; };
 		04AD0EC0AEECDCFA0C4FA09C /* ParentDashboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentDashboardUITests.swift; sourceTree = "<group>"; };
-		04B9CAD771FE29E04D31717E /* articulation_head.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = articulation_head.usdz; sourceTree = "<group>"; };
 		04BD3EC19BD35DD808AEBB85 /* Wave2MechanicsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave2MechanicsSnapshotTests.swift; sourceTree = "<group>"; };
 		04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthBubbleOverlay.swift; sourceTree = "<group>"; };
 		050A39FE693EBF8D146D1ADA /* CulturalContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalContentView.swift; sourceTree = "<group>"; };
@@ -3899,6 +3898,7 @@
 		D9085F9D2AC5A6728D2317F7 /* ObjectDetectionWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetectionWorkerTests.swift; sourceTree = "<group>"; };
 		D919388A682D56CE155A9471 /* pack_word_formation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_word_formation.json; sourceTree = "<group>"; };
 		D9810D2C8BC182A381641375 /* celebrate_streak_milestone.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_streak_milestone.json; sourceTree = "<group>"; };
+		D9A616556A27AC64A75603FC /* articulation_mouth.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = articulation_mouth.usdz; sourceTree = "<group>"; };
 		D9BE332F88629C7B4FD5CE2D /* FourthExtraModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthExtraModels.swift; sourceTree = "<group>"; };
 		D9C033C7A593F0C6CCA8126B /* VoiceOverLabelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOverLabelsTests.swift; sourceTree = "<group>"; };
 		D9CC598A279DE5890974A269 /* SpeechVisualizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechVisualizationView.swift; sourceTree = "<group>"; };
@@ -7263,7 +7263,7 @@
 			isa = PBXGroup;
 			children = (
 				6F0915BEAEB4946886E0FA40 /* Whisper */,
-				04B9CAD771FE29E04D31717E /* articulation_head.usdz */,
+				D9A616556A27AC64A75603FC /* articulation_mouth.usdz */,
 				1C29AB911D45C48131E8CFC8 /* EmotionDetection.mlpackage */,
 				83B6C15D7921988DC5A864EE /* PronunciationScorer_hissing.mlpackage */,
 				6FE2190AEC3F61108941E9FD /* PronunciationScorer_sonants.mlpackage */,
@@ -9939,7 +9939,7 @@
 				9306415C6794FD7446CF198D /* achievementUnlock.ahap in Resources */,
 				7F404E27105CD7B748D5131D /* ar-mirror.json in Resources */,
 				9C084C7C5120429194004FB2 /* ar-story-quest.json in Resources */,
-				EB1FCF8A5467E7EAF886971F /* articulation_head.usdz in Resources */,
+				FA6C772A56B813EE435D1EF4 /* articulation_mouth.usdz in Resources */,
 				072326407F3CB7143681095B /* breathing-ar.json in Resources */,
 				D12A41C5FB49E9D47274CD15 /* breathingExhale.ahap in Resources */,
 				9605CE3D41B937B350AB02FD /* breathingInhale.ahap in Resources */,

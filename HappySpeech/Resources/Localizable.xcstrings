@@ -68385,8 +68385,8 @@
     "articulation3d.title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель произношения" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D pronunciation model" } }
+        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель рта" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D mouth model" } }
       }
     },
     "articulation3d.mode.picker": {
@@ -68420,15 +68420,15 @@
     "articulation3d.a11y.scene": {
       "extractionState": "manual",
       "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Объёмная модель разреза головы с положением языка" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D head cross-section showing tongue position" } }
+        "ru": { "stringUnit": { "state": "translated", "value": "Объёмная 3D-модель рта — покрути пальцем, чтобы рассмотреть" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D mouth model — drag with your finger to explore" } }
       }
     },
     "articulation3d.attribution": {
       "extractionState": "manual",
       "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель: Z-Anatomy (CC-BY-SA 4.0)" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D model: Z-Anatomy (CC-BY-SA 4.0)" } }
+        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель: Human mouth detailed, автор Mince (CC-BY 4.0)" } },
+        "en": { "stringUnit": { "state": "translated", "value": "3D model: Human mouth detailed by Mince (CC-BY 4.0)" } }
       }
     },
     "articulation3d.indicator.velum": {

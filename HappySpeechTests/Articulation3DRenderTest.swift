@@ -25,7 +25,7 @@ final class Articulation3DRenderTest: XCTestCase {
             let view = ArticulationScene3DView(sound: sound, reduceMotion: true)
             let coord = view.makeCoordinator()
             let scene = coord.makeScene()
-            coord.apply(sound: sound, animated: false, reduceMotion: true)
+            coord.apply(sound: sound)
 
             let renderer = SCNRenderer(device: device, options: nil)
             renderer.scene = scene
