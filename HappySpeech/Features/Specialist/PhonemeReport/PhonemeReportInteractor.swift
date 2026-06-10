@@ -54,14 +54,14 @@ final class PhonemeReportInteractor: PhonemeReportBusinessLogic {
                 sessions: sessions
             )
 
-            await presenter?.presentLoad(.init(
+            presenter?.presentLoad(.init(
                 childName: profile.name,
                 targetSounds: profile.targetSounds,
                 sessions: sessions
             ))
         } catch {
             logger.error("load failed: \(error.localizedDescription, privacy: .public)")
-            await presenter?.presentLoad(.init(
+            presenter?.presentLoad(.init(
                 childName: "",
                 targetSounds: [],
                 sessions: [],
