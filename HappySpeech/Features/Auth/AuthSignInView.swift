@@ -272,6 +272,7 @@ struct AuthSignInView: View {
                 .minimumScaleFactor(0.85)
             }
             .accessibilityLabel(String(localized: "accessibility.go_to_signup"))
+            .accessibilityIdentifier("authSignUpLink")
 
             Button {
                 coordinator.navigate(to: .demoMode)

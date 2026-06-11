@@ -195,40 +195,19 @@ struct OnboardingFlowView: View {
     // MARK: - Header
 
     private var progressHeader: some View {
-        // Fix #2 — убран маленький Lyalya pointing над прогресс-баром
-        // (на screenshots она выглядела «приклеенной» и зрительно отвлекала).
-        // Освободившийся слот в центре оставлен пустым через Spacer'ы; счётчик
-        // шагов («Шаг N из 10») переехал в левый угол на место back-кнопки на
-        // welcome-шаге, чтобы строка оставалась сбалансированной.
+        // Fix #2 — убран маленький Lyalya pointing над прогресс-баром.
+        // Контракт онбординга: поток строго линейный, вперёд (forward-only) —
+        // навигации «Назад» нет ни на одном шаге (UX-решение + защита от выхода
+        // из flow). Поэтому back-affordance (chevron-left) удалена; в левом углу
+        // на всех шагах кроме welcome показывается счётчик «Шаг N из 10».
         VStack(spacing: SpacingTokens.tiny) {
             HStack {
-                if display.currentStep != .welcome {
-                    Button {
-                        interactor?.goBack(.init())
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(TypographyTokens.headline(17))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            // Step 10 Batch E — Pattern 5: chevron мягко
-                            // bounce при переключении шага.
-                            .hsSymbolEffect(.bounce, value: display.currentStep)
-                            .frame(width: 44, height: 44)
-                            .contentShape(Rectangle())
-                    }
-                    .accessibilityLabel(String(localized: "onboarding.a11y.back"))
-                } else {
-                    Text(display.progressLabel)
-                        .font(TypographyTokens.mono(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .frame(minWidth: 44, minHeight: 44, alignment: .leading)
-                        .accessibilityLabel(display.progressLabel)
-                }
-                Spacer()
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .opacity(display.currentStep == .welcome ? 0 : 1)
-                    .accessibilityHidden(display.currentStep == .welcome)
+                    .frame(minWidth: 44, minHeight: 44, alignment: .leading)
+                    .accessibilityLabel(display.progressLabel)
+                Spacer()
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.tiny)

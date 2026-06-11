@@ -368,6 +368,11 @@ struct RewardsView: View {
                                     lineWidth: 1.5
                                 )
                         )
+                        // Явная hit-area по форме чипа: без contentShape тап-зона
+                        // .plain-кнопки сводится к непрозрачным пикселям label, из-за
+                        // чего VoiceOver/UI-тесты не могли вычислить activation point
+                        // (chip «Лес» считался невалидным). Capsule = вся капсула кликабельна.
+                        .contentShape(Capsule())
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel(tab.title)
