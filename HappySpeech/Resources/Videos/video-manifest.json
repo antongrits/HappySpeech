@@ -819,8 +819,8 @@
       "title": "Остров Свистящих спит",
       "cutscene_id": "cs-isl-whistling-in",
       "kind": "islandIntro",
-      "duration_sec": 19.0,
-      "size_bytes": 6422057,
+      "duration_sec": 32.0,
+      "size_bytes": 10284343,
       "video_ready": true,
       "has_audio": true
     },
@@ -905,9 +905,9 @@
       "title": "Остров Заднеязычных спит",
       "cutscene_id": "cs-isl-velar-in",
       "kind": "islandIntro",
-      "duration_sec": 21.9,
+      "duration_sec": 32.0,
       "video_ready": true,
-      "size_bytes": 5222962
+      "size_bytes": 8284653
     },
     {
       "id": "cs_isl_velar_out",

@@ -60,5 +60,5 @@ public struct LyalyaHeroView: View {
 #Preview("LyalyaHeroView — celebrating") {
     LyalyaHeroView(state: .celebrating, size: 150)
         .padding(20)
-        .background(Color.yellow.opacity(0.15))
+        .background(ColorTokens.Brand.butter.opacity(0.15))
 }

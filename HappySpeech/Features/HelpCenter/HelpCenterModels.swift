@@ -368,11 +368,11 @@ public enum HelpCenterCorpus {
     /// Значения измерены ffprobe из реальных mp4-файлов в бандле.
     private static let cutsceneDurationSeconds: [String: Int] = [
         "cs-prologue": 48,
-        "cs-isl-whistling-in": 19, "cs-isl-whistling-out": 14,
+        "cs-isl-whistling-in": 32, "cs-isl-whistling-out": 14,
         "cs-isl-hissing-in": 32, "cs-isl-hissing-out": 24,
         "cs-isl-affr-in": 11, "cs-isl-affr-out": 14,
         "cs-isl-sonor-in": 40, "cs-isl-sonor-out": 40,
-        "cs-isl-velar-in": 22, "cs-isl-velar-out": 14,
+        "cs-isl-velar-in": 32, "cs-isl-velar-out": 14,
         "cs-isl-grammar-in": 14, "cs-isl-grammar-out": 14,
         "cs-finale": 56, "cs-streak-7": 6, "cs-streak-30": 6
     ]

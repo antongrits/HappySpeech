@@ -133,7 +133,7 @@ struct SoundExplorerMapView: View {
                 .foregroundStyle(selected
                                  ? ColorTokens.Overlay.onAccent
                                  : ColorTokens.Kid.ink)
-                .padding(.horizontal, 14)
+                .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, 7)
                 .background(
                     Capsule().fill(selected

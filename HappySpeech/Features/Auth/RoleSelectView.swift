@@ -75,7 +75,10 @@ struct RoleSelectView: View {
                 .padding(.top, SpacingTokens.pageTop)
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Spacer(minLength: SpacingTokens.sp8)
+                // Равные гибкие отступы сверху и снизу центрируют блок карточек
+                // в свободном пространстве под шапкой — без «дыры» внизу на
+                // высоких устройствах (17 Pro Max) и без обрезки на SE.
+                Spacer(minLength: SpacingTokens.sectionGap)
 
                 // Role cards
                 VStack(spacing: SpacingTokens.listGap) {
@@ -98,7 +101,7 @@ struct RoleSelectView: View {
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.sectionGap)
             }
         }
         .onAppear { appeared = true }

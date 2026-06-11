@@ -378,6 +378,6 @@ extension LyalyaState: Equatable {}
 #Preview("LyalyaMascotView — celebrating") {
     LyalyaMascotView(state: .celebrating, size: 200)
         .padding(40)
-        .background(Color.yellow.opacity(0.15))
+        .background(ColorTokens.Brand.butter.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
 }

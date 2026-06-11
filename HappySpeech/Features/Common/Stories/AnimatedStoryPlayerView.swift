@@ -124,7 +124,7 @@ struct AnimatedStoryPlayerView: View {
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
+                .padding(.horizontal, SpacingTokens.xLarge)
         }
     }
 
@@ -136,8 +136,8 @@ struct AnimatedStoryPlayerView: View {
             Text(String(localized: "story_player.skip"))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 8)
+                .padding(.horizontal, SpacingTokens.small)
+                .padding(.vertical, SpacingTokens.tiny)
                 .background(
                     Capsule()
                         .fill(ColorTokens.Overlay.dimmer)
@@ -199,13 +199,13 @@ struct AnimatedStoryPlayerView: View {
             Spacer(minLength: 16)
 
             narrativeCard
-                .padding(.horizontal, 20)
+                .padding(.horizontal, SpacingTokens.medium)
 
-            Spacer(minLength: 24)
+            Spacer(minLength: SpacingTokens.large)
 
             actionButton
-                .padding(.horizontal, 32)
-                .padding(.bottom, 48)
+                .padding(.horizontal, SpacingTokens.xLarge)
+                .padding(.bottom, SpacingTokens.xxxLarge)
         }
     }
 
@@ -289,7 +289,7 @@ struct AnimatedStoryPlayerView: View {
                     )
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, SpacingTokens.cardPad)
         .padding(.vertical, 18)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
