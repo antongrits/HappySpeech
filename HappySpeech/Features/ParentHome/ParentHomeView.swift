@@ -325,6 +325,10 @@ private struct ParentDashboardTab: View {
                     weeklyReportCard
                         .hsScrollEffect(.scaleFade)
 
+                    // п.26 — Анимированный видео-отчёт недели (Remotion).
+                    weeklyVideoReportCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Streak & stats
                     statsRow
                         .hsScrollEffect(.scaleFade)
@@ -853,6 +857,43 @@ private struct ParentDashboardTab: View {
         .accessibilityLabel(
             String(localized: "weeklyReport.entry.title") + ". " +
             String(localized: "weeklyReport.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - п.26: Weekly Video Report card (Remotion)
+
+    private var weeklyVideoReportCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("play.rectangle.on.rectangle.fill", tint: ColorTokens.Brand.gold)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "weeklyVideoReport.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "weeklyVideoReport.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .weeklyVideoReport(childId: viewModel.childId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "weeklyVideoReport.entry.title") + ". " +
+            String(localized: "weeklyVideoReport.entry.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)

@@ -285,6 +285,20 @@ enum AppRoute: Hashable {
     /// Только реальные данные из истории сессий (`SessionRepository`); звуки
     /// без сессий помечаются «нет данных». COPPA: только из контура специалиста.
     case phonemeReport(childId: String)
+
+    // MARK: - Stories: каталог анимированных историй («Сказки Ляли»)
+
+    /// StoryLibrary (kid): каталог из 20 анимированных историй
+    /// (`StoryLibrary.shared`). Тап по обложке проигрывает
+    /// `AnimatedStoryPlayerView` (MP4 из `Videos/stories/<id>.mp4`).
+    case storyLibrary(childId: String)
+
+    // MARK: - п.26: Еженедельный видео-отчёт (Remotion)
+
+    /// Анимированный видео-отчёт о прогрессе ребёнка за неделю (parent).
+    /// Видео-фон — пред-рендеренный Remotion-шаблон, поверх — оверлей с
+    /// реальными числами ребёнка из недельной агрегации `SessionRepository`.
+    case weeklyVideoReport(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1209,6 +1223,18 @@ struct AppCoordinatorView: View {
         case .phonemeReport(let childId):
             PhonemeReportView(childId: childId)
                 .environment(\.circuitContext, .specialist)
+
+        // MARK: - Stories: каталог анимированных историй
+
+        case .storyLibrary(let childId):
+            StoryLibraryView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - п.26: Еженедельный видео-отчёт (Remotion)
+
+        case .weeklyVideoReport(let childId):
+            WeeklyVideoReportView(childId: childId)
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -1778,6 +1804,14 @@ extension AppCoordinatorView {
         // MARK: AR Sound Hunter (Vision room object hunting)
         case "arSoundHunter", "soundHunter", "soundHunterRoom":
             return .arSoundHunter(childId: previewChild)
+
+        // MARK: Stories — каталог анимированных историй
+        case "storyLibrary", "stories", "tales", "fairyTales":
+            return .storyLibrary(childId: previewChild)
+
+        // MARK: п.26 — Еженедельный видео-отчёт (Remotion)
+        case "weeklyVideoReport", "videoReport", "reportVideo":
+            return .weeklyVideoReport(childId: previewChild)
 
         default:
             return .auth

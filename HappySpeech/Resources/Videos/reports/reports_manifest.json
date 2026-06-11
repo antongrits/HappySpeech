@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "weekly_report_sample",
+    "category": "weekly-report",
+    "title": "Образец видео-отчёта (Максим)",
+    "duration_seconds": 39,
+    "width": 1080,
+    "height": 1920,
+    "file_size_bytes": 4003063,
+    "source": "Remotion (React → npx remotion render)",
+    "note": "Шаблон-пример. Заставка → бары по звукам → достижения → рекомендация. Реальные числа ребёнка накладываются оверлеем поверх (AVFoundation) из агрегации SessionRepository.",
+    "generated_at": "2026-06-11T13:15:00Z"
+  },
+  {
+    "slug": "weekly_report_sample_2",
+    "category": "weekly-report",
+    "title": "Образец видео-отчёта (Софья)",
+    "duration_seconds": 39,
+    "width": 1080,
+    "height": 1920,
+    "file_size_bytes": 4066067,
+    "source": "Remotion (React → npx remotion render)",
+    "note": "Второй демонстрационный набор данных для того же шаблона композиции.",
+    "generated_at": "2026-06-11T13:15:00Z"
+  }
+]

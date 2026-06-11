@@ -109,10 +109,20 @@ enum VideoCatalog {
         }
     }
 
+    /// Пред-рендеренные шаблоны еженедельного видео-отчёта родителю (Remotion,
+    /// 1080×1920, 39 с). Resources/Videos/reports/, манифест reports_manifest.json.
+    /// Это базовый видео-фон отчёта; реальные числа ребёнка накладываются
+    /// оверлеем поверх средствами AVFoundation (см. WeeklyVideoReport).
+    enum WeeklyReportTemplate: String, CaseIterable, Sendable {
+        case sample = "weekly_report_sample"
+        case sampleTwo = "weekly_report_sample_2"
+    }
+
     /// Унифицированная ссылка на видео в каталоге.
     enum Reference: Sendable {
         case lyalya(LyalyaClip)
         case articulation(ArticulationDemo)
+        case weeklyReport(WeeklyReportTemplate)
     }
 
     /// Метаданные клипа (длительность + размер файла).
@@ -155,6 +165,12 @@ enum VideoCatalog {
                 withExtension: "mp4",
                 subdirectory: subdirectory
             )
+        case .weeklyReport(let template):
+            return Bundle.main.url(
+                forResource: template.rawValue,
+                withExtension: "mp4",
+                subdirectory: "Videos/reports"
+            )
         }
     }
 
@@ -165,6 +181,8 @@ enum VideoCatalog {
             return lyalyaIndex[clip.rawValue]
         case .articulation(let demo):
             return articulationIndex[demo.rawValue]
+        case .weeklyReport(let template):
+            return weeklyReportIndex[template.rawValue]
         }
     }
 
@@ -190,6 +208,16 @@ enum VideoCatalog {
         loadIndex(
             manifestName: "articulation_manifest",
             subdirectory: "Videos/Articulation",
+            slugKey: "slug",
+            durationKey: "duration_seconds",
+            sizeKey: "file_size_bytes"
+        )
+    }()
+
+    private static let weeklyReportIndex: [String: Metadata] = {
+        loadIndex(
+            manifestName: "reports_manifest",
+            subdirectory: "Videos/reports",
             slugKey: "slug",
             durationKey: "duration_seconds",
             sizeKey: "file_size_bytes"

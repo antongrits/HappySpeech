@@ -44,6 +44,7 @@ protocol ChildHomeRoutingLogic {
     func routeToFourthExtra(childId: String)
     func routeToWordFormation(childId: String)
     func routeToWhoseTail(childId: String)
+    func routeToStoryLibrary(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -264,5 +265,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// предлоги; последовательная сборка ленты слов-карточек).
     func routeToSentenceConstructor(childId: String) {
         coordinator?.navigate(to: .sentenceConstructor(childId: childId))
+    }
+
+    /// Stories — «Сказки Ляли» (каталог 20 анимированных историй).
+    func routeToStoryLibrary(childId: String) {
+        coordinator?.navigate(to: .storyLibrary(childId: childId))
     }
 }

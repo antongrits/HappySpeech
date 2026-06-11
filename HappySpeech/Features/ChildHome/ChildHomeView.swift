@@ -1029,6 +1029,16 @@ extension ChildHomeView {
     /// Группа карточек-входов в дополнительные детские режимы.
     @ViewBuilder
     var v25EntryCards: some View {
+        // Stories — «Сказки Ляли» (каталог 20 анимированных историй).
+        ChildHomeV25EntryCard(
+            titleKey: "storyLibrary.entry.title",
+            hintKey: "storyLibrary.entry.hint",
+            iconName: "books.vertical.fill",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToStoryLibrary(childId: childId)
+        }
+
         // F-302 v25 — Articulation Gym «Зарядка для язычка».
         ChildHomeV25EntryCard(
             titleKey: "articulationGym.entry.title",
