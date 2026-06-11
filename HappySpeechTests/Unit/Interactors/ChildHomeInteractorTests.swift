@@ -27,7 +27,8 @@ final class ChildHomeInteractorTests: XCTestCase {
     private func makeSUT() -> (ChildHomeInteractor, SpyPresenter) {
         let interactor = ChildHomeInteractor(
             childRepository: MockChildRepository(),
-            sessionRepository: MockSessionRepository()
+            sessionRepository: MockSessionRepository(),
+            missionSyncService: MockDailyMissionSyncService()
         )
         let spy = SpyPresenter()
         interactor.presenter = spy
@@ -109,7 +110,8 @@ final class ChildHomeInteractorTests: XCTestCase {
     func test_fetchChildData_repositoryError_fallsBackToEmpty() async {
         let interactor = ChildHomeInteractor(
             childRepository: FailingChildRepository(),
-            sessionRepository: MockSessionRepository()
+            sessionRepository: MockSessionRepository(),
+            missionSyncService: MockDailyMissionSyncService()
         )
         let spy = SpyPresenter()
         interactor.presenter = spy

@@ -211,7 +211,7 @@ final class FamilyVoiceInteractor {
         logger.info("Child recording speaker tag=\(speakerTag.rawValue, privacy: .public)")
 
         // Score against word
-        let score = await scoringWorker.score(
+        let outcome = await scoringWorker.score(
             childAudioPath: childPath,
             referenceWord: request.word
         )
@@ -221,9 +221,10 @@ final class FamilyVoiceInteractor {
         childAudioFilePath = nil
 
         presenter?.presentChildScore(.init(
-            score: score,
+            score: outcome.value,
             transcript: nil,
-            word: request.word
+            word: request.word,
+            isApproximate: outcome.isApproximate
         ))
 
         // Auto-dismiss feedback after 2 seconds (NIT 1 fix: cancel previous before creating new)

@@ -223,15 +223,6 @@
           "audio_file": "Audio/Content/SchFocus/scf-wm-2.m4a"
         },
         {
-          "id": "scf-wm-3",
-          "word": "клещи",
-          "imageAsset": null,
-          "audioAsset": null,
-          "hint": "Кле-щи. Ими тянут гвозди.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SchFocus/scf-wm-3.m4a"
-        },
-        {
           "id": "scf-wm-4",
           "word": "овощи",
           "imageAsset": "word_ovoshchi",
@@ -308,15 +299,6 @@
           "hint": "Лещ. Рыба.",
           "difficulty": 2,
           "audio_file": "Audio/Content/SchFocus/scf-wf-2.m4a"
-        },
-        {
-          "id": "scf-wf-3",
-          "word": "клещ",
-          "imageAsset": null,
-          "audioAsset": null,
-          "hint": "Клещ. Маленький, в лесу.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SchFocus/scf-wf-3.m4a"
         },
         {
           "id": "scf-wf-4",

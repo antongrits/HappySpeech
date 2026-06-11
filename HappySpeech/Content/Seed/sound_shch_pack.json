@@ -947,14 +947,6 @@
           "audio_file": "Audio/Content/SHCH/shch-wm-8.m4a"
         },
         {
-          "id": "shch-wm-9",
-          "word": "клещи",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wm-9.m4a"
-        },
-        {
           "id": "shch-wm-10",
           "word": "ящик",
           "imageAsset": "word_yashchik",
@@ -1315,14 +1307,6 @@
           "audio_file": "Audio/Content/SHCH/shch-wf-2.m4a"
         },
         {
-          "id": "shch-wf-3",
-          "word": "клещ",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-3.m4a"
-        },
-        {
           "id": "shch-wf-4",
           "word": "лещ",
           "imageAsset": "word_leshch",
@@ -1487,14 +1471,6 @@
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-23.m4a",
           "hint": "тре-Щот-ка. [Щ] в слове."
-        },
-        {
-          "id": "shch-wf-24",
-          "word": "клещ",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-24.m4a"
         },
         {
           "id": "shch-wf-25",

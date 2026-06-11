@@ -733,7 +733,7 @@
           "hint": "Мягкий [Л'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-25.m4a",
-          "imageAsset": "word_samolyot"
+          "imageAsset": "word_letchik"
         },
         {
           "id": "l-wi-26",
@@ -898,7 +898,7 @@
           "word": "ладонь",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-47.m4a",
-          "imageAsset": "word_ruki"
+          "imageAsset": "word_ladon"
         },
         {
           "id": "l-wi-48",
@@ -1052,7 +1052,7 @@
         },
         {
           "id": "l-wi-68",
-          "word": "ломоносов",
+          "word": "Ломоносов",
           "hint": "ЛО + МО + НО + СО — ритм 4 слогов.",
           "difficulty": 4,
           "audio_file": "Audio/Content/L/l-wi-68.m4a",
@@ -1072,7 +1072,7 @@
           "hint": "ЛА+ДОНЬ — внутренняя часть руки.",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-70.m4a",
-          "imageAsset": "word_ruki"
+          "imageAsset": "word_ladon"
         },
         {
           "id": "l-wi-71",
@@ -1739,15 +1739,6 @@
           "hint": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-68.m4a"
-        },
-        {
-          "id": "l-wm-69",
-          "word": "блоха",
-          "imageAsset": null,
-          "audioAsset": null,
-          "hint": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/L/l-wm-69.m4a"
         },
         {
           "id": "l-wm-70",

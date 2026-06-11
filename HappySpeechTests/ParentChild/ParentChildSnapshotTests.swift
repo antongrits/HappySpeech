@@ -152,7 +152,8 @@ final class ParentChildSnapshotTests: XCTestCase {
                 liveTranscript: nil,
                 showFeedback: false,
                 feedbackIsCorrect: false,
-                toastMessage: nil
+                toastMessage: nil,
+                scoreIsApproximate: false
             )
 
         case .recorderWith3Recordings:
@@ -184,7 +185,8 @@ final class ParentChildSnapshotTests: XCTestCase {
                 liveTranscript: nil,
                 showFeedback: false,
                 feedbackIsCorrect: false,
-                toastMessage: nil
+                toastMessage: nil,
+                scoreIsApproximate: false
             )
         }
     }
@@ -210,7 +212,8 @@ final class ParentChildSnapshotTests: XCTestCase {
                 liveTranscript: nil,
                 showFeedback: false,
                 feedbackIsCorrect: false,
-                toastMessage: nil
+                toastMessage: nil,
+                scoreIsApproximate: false
             )
 
         case .splitWithScore:
@@ -232,7 +235,8 @@ final class ParentChildSnapshotTests: XCTestCase {
                 liveTranscript: "шар",
                 showFeedback: true,
                 feedbackIsCorrect: true,
-                toastMessage: nil
+                toastMessage: nil,
+                scoreIsApproximate: false
             )
         }
     }

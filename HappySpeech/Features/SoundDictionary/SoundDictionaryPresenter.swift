@@ -90,23 +90,12 @@ final class SoundDictionaryPresenter: SoundDictionaryPresentationLogic {
         let groupTitle = String(localized: String.LocalizationValue(entry.group.titleKey))
         let articulation = String(localized: String.LocalizationValue(entry.articulationNoteKey))
 
-        // Схема артикуляции (как ставить язык/губы) — только у согласных,
-        // у которых задан imageset. VoiceOver-метка строится из звука.
-        let profileA11yLabel: String? = entry.articulationProfileAsset.map { _ in
-            String(
-                format: String(localized: "soundDictionary.detail.articulationProfile.a11y"),
-                entry.cyrillic
-            )
-        }
-
         let viewModel = SoundDictionaryModels.SelectPhoneme.ViewModel(
             title: entry.cyrillic,
             ipaLabel: "[\(entry.ipa)]",
             groupTitle: groupTitle,
             exampleWord: entry.exampleWord,
             articulationNote: articulation,
-            articulationProfileAsset: entry.articulationProfileAsset,
-            articulationProfileA11yLabel: profileA11yLabel,
             hasAudio: response.hasAudio,
             practiceCtaLabel: String(localized: "soundDictionary.detail.cta.practice"),
             playAudioLabel: String(localized: "soundDictionary.detail.cta.playAudio")

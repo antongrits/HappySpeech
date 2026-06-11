@@ -44,7 +44,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
     init(
         childRepository: any ChildRepository,
         sessionRepository: any SessionRepository,
-        missionSyncService: any DailyMissionSyncServiceProtocol = MockDailyMissionSyncService()
+        missionSyncService: any DailyMissionSyncServiceProtocol
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository

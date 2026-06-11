@@ -886,13 +886,6 @@
           "imageAsset": "word_ryzhiy"
         },
         {
-          "id": "r-wi-23",
-          "word": "ружьё",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/R/r-wi-23.m4a",
-          "imageAsset": null
-        },
-        {
           "id": "r-wi-24",
           "word": "рубин",
           "difficulty": 2,
@@ -1073,7 +1066,7 @@
           "word": "рыбак",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-48.m4a",
-          "imageAsset": "word_rybalka"
+          "imageAsset": "word_rybak"
         },
         {
           "id": "r-wi-49",
@@ -1532,7 +1525,7 @@
           "hint": "РЫ+БО+ЛОВ — тот, кто ловит рыбу.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-109.m4a",
-          "imageAsset": "word_rybalka"
+          "imageAsset": "word_rybak"
         },
         {
           "id": "r-wi-110",
@@ -2111,7 +2104,7 @@
           "word": "бородач",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wm-65.m4a",
-          "imageAsset": "word_boroda"
+          "imageAsset": "word_borodach"
         },
         {
           "id": "r-wm-66",
@@ -2385,13 +2378,6 @@
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-102.m4a",
           "imageAsset": "word_varene"
-        },
-        {
-          "id": "r-wm-103",
-          "word": "комаровка",
-          "hint": "КО+МА+РО+ВКА — Р в середине.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/R/r-wm-103.m4a"
         },
         {
           "id": "r-wm-104",
@@ -3232,7 +3218,7 @@
           "word": "доктор",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-23.m4a",
-          "imageAsset": "word_vrach"
+          "imageAsset": "word_doktor"
         },
         {
           "id": "r-wf-24",
@@ -3349,7 +3335,7 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-40.m4a",
-          "imageAsset": "word_traktor"
+          "imageAsset": "word_pakhar"
         },
         {
           "id": "r-wf-41",
@@ -3443,7 +3429,7 @@
           "word": "повар",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-53.m4a",
-          "imageAsset": "word_kastryulya"
+          "imageAsset": "word_povar"
         },
         {
           "id": "r-wf-54",
@@ -3600,7 +3586,7 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-75.m4a",
-          "imageAsset": "word_traktor"
+          "imageAsset": "word_pakhar"
         },
         {
           "id": "r-wf-76",

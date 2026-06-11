@@ -156,7 +156,7 @@ public final class FirestoreHomeworkRepository: HomeworkRepository, @unchecked S
         // or by using a transaction. We use a transaction to be concurrent-safe.
         let docRef = firestore.collection(Path.homework).document(assignmentId)
         do {
-            try await firestore.runTransaction { transaction, errorPointer in
+            _ = try await firestore.runTransaction { transaction, errorPointer in
                 let snapshot: DocumentSnapshot
                 do {
                     snapshot = try transaction.getDocument(docRef)

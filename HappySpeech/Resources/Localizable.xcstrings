@@ -4381,6 +4381,312 @@
         }
       }
     },
+    "articulation3d.a11y.scene": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Объёмная 3D-модель рта — покрути пальцем, чтобы рассмотреть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D mouth model — drag with your finger to explore"
+          }
+        }
+      }
+    },
+    "articulation3d.attribution": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D-модель: Human mouth detailed, автор Mince (CC-BY 4.0)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D model: Human mouth detailed by Mince (CC-BY 4.0)"
+          }
+        }
+      }
+    },
+    "articulation3d.hint.rotate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покрути пальцем"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drag to rotate"
+          }
+        }
+      }
+    },
+    "articulation3d.indicator.velum": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкое нёбо поднято"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soft palate raised"
+          }
+        }
+      }
+    },
+    "articulation3d.indicator.voiced": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звонкий (голос)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voiced"
+          }
+        }
+      }
+    },
+    "articulation3d.indicator.voiceless": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Глухой (без голоса)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voiceless"
+          }
+        }
+      }
+    },
+    "articulation3d.mode.model": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D"
+          }
+        }
+      }
+    },
+    "articulation3d.mode.picker": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Режим показа"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "View mode"
+          }
+        }
+      }
+    },
+    "articulation3d.mode.realMouth": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настоящий рот"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Real mouth"
+          }
+        }
+      }
+    },
+    "articulation3d.mode.video": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video"
+          }
+        }
+      }
+    },
+    "articulation3d.pose.k": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задняя часть спинки языка смыкается с мягким нёбом."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The back of the tongue closes against the soft palate."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.kh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задняя часть спинки образует щель с мягким нёбом — воздух проходит со звуком."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The back of the tongue forms a gap with the soft palate — air passes through with friction."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.l": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик упирается в верхние резцы, спинка прогнута седлом — воздух идёт по бокам."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The tip presses the upper incisors, the body dips like a saddle — air flows along the sides."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.neutral": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык в спокойном положении."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue at rest."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.r": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка «ложечкой» поднят к альвеолам и вибрирует, края прижаты к коренным зубам."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A spoon-shaped tip rises to the alveolar ridge and vibrates, the edges press the molars."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.s": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка у нижних зубов, спинка приподнята горкой с желобком — узкая холодная струя по центру."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue tip at the lower teeth, the front arches with a groove — a narrow cool airstream down the centre."
+          }
+        }
+      }
+    },
+    "articulation3d.pose.sh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Широкий кончик «чашечкой» к альвеолам, спинка двугорбая — тёплая широкая струя."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A wide cup-shaped tip rises to the alveolar ridge, the back is double-humped — a warm broad airstream."
+          }
+        }
+      }
+    },
+    "articulation3d.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D-модель рта"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3D mouth model"
+          }
+        }
+      }
+    },
     "articulationGym.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -5006,6 +5312,91 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "articulationSagittal.a11y.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема-разрез рта сбоку: как ставить язык для звука"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Side cross-section of the mouth: how to place the tongue for the sound"
+          }
+        }
+      }
+    },
+    "articulationSagittal.label.lips": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lips"
+          }
+        }
+      }
+    },
+    "articulationSagittal.label.palate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нёбо"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palate"
+          }
+        }
+      }
+    },
+    "articulationSagittal.label.teeth": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зубы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teeth"
+          }
+        }
+      }
+    },
+    "articulationSagittal.label.tongue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue"
           }
         }
       }
@@ -5791,6 +6182,23 @@
         }
       }
     },
+    "assignedHomework.family.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заданий пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No homework yet"
+          }
+        }
+      }
+    },
     "assignedHomework.field.child": {
       "extractionState": "manual",
       "localizations": {
@@ -5956,125 +6364,6 @@
         }
       }
     },
-    "assignedHomework.family.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заданий пока нет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No homework yet"
-          }
-        }
-      }
-    },
-    "homework.error.notAuthenticated": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Необходима авторизация"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Authentication required"
-          }
-        }
-      }
-    },
-    "homework.error.writeFailedOffline": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет соединения. Данные отправятся при восстановлении сети"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Offline. Data will sync when connection is restored"
-          }
-        }
-      }
-    },
-    "homework.error.notFound": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задание не найдено"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Assignment not found"
-          }
-        }
-      }
-    },
-    "homework.error.backendUnavailable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сервер недоступен: %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Server unavailable: %@"
-          }
-        }
-      }
-    },
-    "homework.notification.deadline.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Срок домашнего задания истекает завтра"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Homework due tomorrow"
-          }
-        }
-      }
-    },
-    "homework.notification.deadline.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не забудьте выполнить задание от логопеда"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Don't forget to complete the speech therapist's homework"
-          }
-        }
-      }
-    },
     "audioMemory.a11y.closed": {
       "localizations": {
         "ru": {
@@ -6138,13 +6427,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ходы: %1$lld   Пары: %2$lld/%3$lld"
+            "value": "Ходы: %1$lld Пары: %2$lld/%3$lld"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Moves: %1$lld   Pairs: %2$lld/%3$lld"
+            "value": "Moves: %1$lld Pairs: %2$lld/%3$lld"
           }
         }
       }
@@ -10939,6 +11228,105 @@
         }
       }
     },
+    "cultural.clean.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка"
+          }
+        }
+      }
+    },
+    "cultural.clean.cha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ч"
+          }
+        }
+      }
+    },
+    "cultural.clean.la.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Л"
+          }
+        }
+      }
+    },
+    "cultural.clean.ra.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Р"
+          }
+        }
+      }
+    },
+    "cultural.clean.sa.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на С"
+          }
+        }
+      }
+    },
+    "cultural.clean.sha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ш"
+          }
+        }
+      }
+    },
+    "cultural.clean.shcha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Щ"
+          }
+        }
+      }
+    },
+    "cultural.clean.za.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на З"
+          }
+        }
+      }
+    },
+    "cultural.clean.zha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка на Ж"
+          }
+        }
+      }
+    },
     "cultural.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -11071,314 +11459,6 @@
         }
       }
     },
-    "cultural.poem.chuk.author": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Корней Чуковский"
-          }
-        }
-      }
-    },
-    "cultural.poem.chuk.muha.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Муха-Цокотуха"
-          }
-        }
-      }
-    },
-    "cultural.reader.bookmark.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавить в избранное"
-          }
-        }
-      }
-    },
-    "cultural.reader.close.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Закрыть чтение"
-          }
-        }
-      }
-    },
-    "cultural.reader.navTitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чтение"
-          }
-        }
-      }
-    },
-    "cultural.reader.pause": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пауза"
-          }
-        }
-      }
-    },
-    "cultural.reader.play": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Воспроизвести"
-          }
-        }
-      }
-    },
-    "cultural.reader.play.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прослушать материал вслух"
-          }
-        }
-      }
-    },
-    "cultural.reader.restart.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начать сначала"
-          }
-        }
-      }
-    },
-    "cultural.reader.transcript.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Текст"
-          }
-        }
-      }
-    },
-    "cultural.reader.unbookmark.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Убрать из избранного"
-          }
-        }
-      }
-    },
-    "cultural.screen.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сказки и стихи"
-          }
-        }
-      }
-    },
-    "cultural.song.elka.author": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Раиса Кудашева"
-          }
-        }
-      }
-    },
-    "cultural.song.elka.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "В лесу родилась ёлочка"
-          }
-        }
-      }
-    },
-    "cultural.tale.folk.author": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Народная сказка"
-          }
-        }
-      }
-    },
-    "cultural.tale.kolobok.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Колобок"
-          }
-        }
-      }
-    },
-    "cultural.tale.repka.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Репка"
-          }
-        }
-      }
-    },
-    "cultural.toast.bookmarked": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавлено в избранное"
-          }
-        }
-      }
-    },
-    "cultural.toast.unbookmarked": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалено из избранного"
-          }
-        }
-      }
-    },
-    "cultural.clean.author": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка"
-          }
-        }
-      }
-    },
-    "cultural.clean.cha.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Ч"
-          }
-        }
-      }
-    },
-    "cultural.clean.la.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Л"
-          }
-        }
-      }
-    },
-    "cultural.clean.ra.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Р"
-          }
-        }
-      }
-    },
-    "cultural.clean.sa.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на С"
-          }
-        }
-      }
-    },
-    "cultural.clean.sha.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Ш"
-          }
-        }
-      }
-    },
-    "cultural.clean.shcha.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Щ"
-          }
-        }
-      }
-    },
-    "cultural.clean.za.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на З"
-          }
-        }
-      }
-    },
-    "cultural.clean.zha.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чистоговорка на Ж"
-          }
-        }
-      }
-    },
     "cultural.poem.barto.bull.title": {
       "extractionState": "manual",
       "localizations": {
@@ -11397,6 +11477,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Зайка"
+          }
+        }
+      }
+    },
+    "cultural.poem.chuk.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Корней Чуковский"
+          }
+        }
+      }
+    },
+    "cultural.poem.chuk.muha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Муха-Цокотуха"
           }
         }
       }
@@ -11621,6 +11723,138 @@
         }
       }
     },
+    "cultural.reader.bookmark.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в избранное"
+          }
+        }
+      }
+    },
+    "cultural.reader.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть чтение"
+          }
+        }
+      }
+    },
+    "cultural.reader.navTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтение"
+          }
+        }
+      }
+    },
+    "cultural.reader.pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза"
+          }
+        }
+      }
+    },
+    "cultural.reader.play": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести"
+          }
+        }
+      }
+    },
+    "cultural.reader.play.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прослушать материал вслух"
+          }
+        }
+      }
+    },
+    "cultural.reader.restart.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать сначала"
+          }
+        }
+      }
+    },
+    "cultural.reader.transcript.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текст"
+          }
+        }
+      }
+    },
+    "cultural.reader.unbookmark.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из избранного"
+          }
+        }
+      }
+    },
+    "cultural.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказки и стихи"
+          }
+        }
+      }
+    },
+    "cultural.song.elka.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раиса Кудашева"
+          }
+        }
+      }
+    },
+    "cultural.song.elka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В лесу родилась ёлочка"
+          }
+        }
+      }
+    },
     "cultural.song.folk.author": {
       "extractionState": "manual",
       "localizations": {
@@ -11687,6 +11921,39 @@
         }
       }
     },
+    "cultural.tale.folk.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Народная сказка"
+          }
+        }
+      }
+    },
+    "cultural.tale.kolobok.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Колобок"
+          }
+        }
+      }
+    },
+    "cultural.tale.kurochka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курочка Ряба"
+          }
+        }
+      }
+    },
     "cultural.tale.masha.title": {
       "extractionState": "manual",
       "localizations": {
@@ -11694,6 +11961,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Маша и три медведя"
+          }
+        }
+      }
+    },
+    "cultural.tale.repka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Репка"
           }
         }
       }
@@ -11742,13 +12020,24 @@
         }
       }
     },
-    "cultural.tale.kurochka.title": {
+    "cultural.toast.bookmarked": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Курочка Ряба"
+            "value": "Добавлено в избранное"
+          }
+        }
+      }
+    },
+    "cultural.toast.unbookmarked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалено из избранного"
           }
         }
       }
@@ -23393,6 +23682,108 @@
         }
       }
     },
+    "homework.error.backendUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сервер недоступен: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Server unavailable: %@"
+          }
+        }
+      }
+    },
+    "homework.error.notAuthenticated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Необходима авторизация"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Authentication required"
+          }
+        }
+      }
+    },
+    "homework.error.notFound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание не найдено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Assignment not found"
+          }
+        }
+      }
+    },
+    "homework.error.writeFailedOffline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет соединения. Данные отправятся при восстановлении сети"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline. Data will sync when connection is restored"
+          }
+        }
+      }
+    },
+    "homework.notification.deadline.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не забудьте выполнить задание от логопеда"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don't forget to complete the speech therapist's homework"
+          }
+        }
+      }
+    },
+    "homework.notification.deadline.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Срок домашнего задания истекает завтра"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homework due tomorrow"
+          }
+        }
+      }
+    },
     "homeworkPlanner.cta.confirm": {
       "localizations": {
         "ru": {
@@ -29412,28 +29803,6 @@
         }
       }
     },
-    "onboarding.completion.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Всё настроено. Заходи и начнём весёлые занятия с Лялей."
-          }
-        }
-      }
-    },
-    "onboarding.completion.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово, %@!"
-          }
-        }
-      }
-    },
     "onboarding.completion.privacyConsent": {
       "extractionState": "manual",
       "localizations": {
@@ -29464,6 +29833,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нажмите, чтобы дать согласие. Необходимо для продолжения."
+          }
+        }
+      }
+    },
+    "onboarding.completion.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё настроено. Заходи и начнём весёлые занятия с Лялей."
+          }
+        }
+      }
+    },
+    "onboarding.completion.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово, %@!"
           }
         }
       }
@@ -32718,6 +33109,17 @@
         }
       }
     },
+    "parent_child.split.feedback.approximate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я услышала твой голос!"
+          }
+        }
+      }
+    },
     "parent_child.split.feedback.great": {
       "extractionState": "manual",
       "localizations": {
@@ -32736,6 +33138,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробуй ещё"
+          }
+        }
+      }
+    },
+    "parent_child.split.score.approximate_note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это примерная оценка по громкости — без анализа произношения"
           }
         }
       }
@@ -36054,57 +36467,121 @@
         }
       }
     },
-    "program_editor.validation.valid": {
+    "program_editor.export.error.decoding": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file is not a valid HappySpeech program template"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Корректно"
+            "value": "Файл не является корректным шаблоном программы HappySpeech"
           }
         }
       }
     },
-    "program_editor.warning.adjacent_breaks": {
+    "program_editor.export.error.encoding": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to encode the program"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Внимание"
+            "value": "Не удалось закодировать программу"
           }
         }
       }
     },
-    "program_editor.warning.prereq.syllables_needed": {
+    "program_editor.export.error.invalid_payload": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The template contains no blocks"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Внимание"
+            "value": "Шаблон не содержит блоков"
           }
         }
       }
     },
-    "program_editor.warning.too_many_same_type": {
+    "program_editor.export.error.unreadable": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannot read the selected file"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Внимание"
+            "value": "Не удалось прочитать выбранный файл"
           }
         }
       }
     },
-    "program_editor.warning.too_short": {
+    "program_editor.export.error.version_mismatch": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unsupported file version (%d). Maximum supported: %d"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Внимание"
+            "value": "Файл создан в более новой версии приложения (версия %d, максимум %d)"
+          }
+        }
+      }
+    },
+    "program_editor.import.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import failed"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка импорта"
+          }
+        }
+      }
+    },
+    "program_editor.import.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Template imported"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаблон загружен"
           }
         }
       }
@@ -36194,121 +36671,57 @@
         }
       }
     },
-    "program_editor.import.success": {
+    "program_editor.validation.valid": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Template imported"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Шаблон загружен"
+            "value": "Корректно"
           }
         }
       }
     },
-    "program_editor.import.error.title": {
+    "program_editor.warning.adjacent_breaks": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Import failed"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ошибка импорта"
+            "value": "Внимание"
           }
         }
       }
     },
-    "program_editor.export.error.encoding": {
+    "program_editor.warning.prereq.syllables_needed": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Failed to encode the program"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось закодировать программу"
+            "value": "Внимание"
           }
         }
       }
     },
-    "program_editor.export.error.decoding": {
+    "program_editor.warning.too_many_same_type": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The file is not a valid HappySpeech program template"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Файл не является корректным шаблоном программы HappySpeech"
+            "value": "Внимание"
           }
         }
       }
     },
-    "program_editor.export.error.unreadable": {
+    "program_editor.warning.too_short": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cannot read the selected file"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось прочитать выбранный файл"
-          }
-        }
-      }
-    },
-    "program_editor.export.error.version_mismatch": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unsupported file version (%d). Maximum supported: %d"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Файл создан в более новой версии приложения (версия %d, максимум %d)"
-          }
-        }
-      }
-    },
-    "program_editor.export.error.invalid_payload": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The template contains no blocks"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Шаблон не содержит блоков"
+            "value": "Внимание"
           }
         }
       }
@@ -49886,40 +50299,6 @@
         }
       }
     },
-    "soundDictionary.entry.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "How sounds are made — with 3D articulation cross-section"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Как ставить язык и губы — с 3D-разрезом артикуляции"
-          }
-        }
-      }
-    },
-    "soundDictionary.entry.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sound Dictionary"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Словарь звуков"
-          }
-        }
-      }
-    },
     "soundDictionary.audio.toast.failed": {
       "extractionState": "manual",
       "localizations": {
@@ -49997,6 +50376,159 @@
         }
       }
     },
+    "soundDictionary.detail.articulationVideo.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимированная схема артикуляции звука %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animated articulation diagram for sound %@"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимация"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animated"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема произношения"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Articulation diagram"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка схемы..."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading diagram..."
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положение языка и губ по методике Фомичёвой. Видео зацикленное."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue and lip position by Fomichyova methodology. Looping video."
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.veo.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Professional articulation animation for sound %@: side mouth cross-section"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Профессиональная анимация артикуляции звука %@: разрез рта сбоку"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.veo.badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.veo.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How the tongue moves"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как двигается язык"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulationVideo.veo.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Professional mouth cross-section animation showing the position and movement of the tongue, lips and palate. Tap “Listen” to hear the sound."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Профессиональная анимация разреза рта: видно положение и движение языка, губ и нёба. Чтобы услышать звук — нажмите «Прослушать»."
+          }
+        }
+      }
+    },
     "soundDictionary.detail.cta.playAudio": {
       "extractionState": "manual",
       "localizations": {
@@ -50048,6 +50580,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пример"
+          }
+        }
+      }
+    },
+    "soundDictionary.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How sounds are made — with 3D articulation cross-section"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как ставить язык и губы — с 3D-разрезом артикуляции"
+          }
+        }
+      }
+    },
+    "soundDictionary.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound Dictionary"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарь звуков"
           }
         }
       }
@@ -68701,210 +69267,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "articulation3d.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель рта" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D mouth model" } }
-      }
-    },
-    "articulation3d.mode.picker": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Режим показа" } },
-        "en": { "stringUnit": { "state": "translated", "value": "View mode" } }
-      }
-    },
-    "articulation3d.mode.model": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "3D" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D" } }
-      }
-    },
-    "articulation3d.mode.video": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Видео" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Video" } }
-      }
-    },
-    "articulation3d.hint.rotate": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Покрути пальцем" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Drag to rotate" } }
-      }
-    },
-    "articulation3d.a11y.scene": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Объёмная 3D-модель рта — покрути пальцем, чтобы рассмотреть" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D mouth model — drag with your finger to explore" } }
-      }
-    },
-    "articulation3d.attribution": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "3D-модель: Human mouth detailed, автор Mince (CC-BY 4.0)" } },
-        "en": { "stringUnit": { "state": "translated", "value": "3D model: Human mouth detailed by Mince (CC-BY 4.0)" } }
-      }
-    },
-    "articulation3d.indicator.velum": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Мягкое нёбо поднято" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Soft palate raised" } }
-      }
-    },
-    "articulation3d.indicator.voiced": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Звонкий (голос)" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Voiced" } }
-      }
-    },
-    "articulation3d.indicator.voiceless": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Глухой (без голоса)" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Voiceless" } }
-      }
-    },
-    "articulation3d.pose.neutral": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Язык в спокойном положении." } },
-        "en": { "stringUnit": { "state": "translated", "value": "Tongue at rest." } }
-      }
-    },
-    "articulation3d.pose.s": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Кончик языка у нижних зубов, спинка приподнята горкой с желобком — узкая холодная струя по центру." } },
-        "en": { "stringUnit": { "state": "translated", "value": "Tongue tip at the lower teeth, the front arches with a groove — a narrow cool airstream down the centre." } }
-      }
-    },
-    "articulation3d.pose.sh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Широкий кончик «чашечкой» к альвеолам, спинка двугорбая — тёплая широкая струя." } },
-        "en": { "stringUnit": { "state": "translated", "value": "A wide cup-shaped tip rises to the alveolar ridge, the back is double-humped — a warm broad airstream." } }
-      }
-    },
-    "articulation3d.pose.r": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Кончик языка «ложечкой» поднят к альвеолам и вибрирует, края прижаты к коренным зубам." } },
-        "en": { "stringUnit": { "state": "translated", "value": "A spoon-shaped tip rises to the alveolar ridge and vibrates, the edges press the molars." } }
-      }
-    },
-    "articulation3d.pose.l": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Кончик упирается в верхние резцы, спинка прогнута седлом — воздух идёт по бокам." } },
-        "en": { "stringUnit": { "state": "translated", "value": "The tip presses the upper incisors, the body dips like a saddle — air flows along the sides." } }
-      }
-    },
-    "articulation3d.pose.k": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Задняя часть спинки языка смыкается с мягким нёбом." } },
-        "en": { "stringUnit": { "state": "translated", "value": "The back of the tongue closes against the soft palate." } }
-      }
-    },
-    "articulation3d.pose.kh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": { "stringUnit": { "state": "translated", "value": "Задняя часть спинки образует щель с мягким нёбом — воздух проходит со звуком." } },
-        "en": { "stringUnit": { "state": "translated", "value": "The back of the tongue forms a gap with the soft palate — air passes through with friction." } }
-      }
-    },
-    "soundDictionary.detail.articulationVideo.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Схема произношения"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Articulation diagram"
-          }
-        }
-      }
-    },
-    "soundDictionary.detail.articulationVideo.badge": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анимация"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Animated"
-          }
-        }
-      }
-    },
-    "soundDictionary.detail.articulationVideo.loading": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Загрузка схемы..."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Loading diagram..."
-          }
-        }
-      }
-    },
-    "soundDictionary.detail.articulationVideo.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анимированная схема артикуляции звука %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Animated articulation diagram for sound %@"
-          }
-        }
-      }
-    },
-    "soundDictionary.detail.articulationVideo.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Положение языка и губ по методике Фомичёвой. Видео зацикленное."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tongue and lip position by Fomichyova methodology. Looping video."
           }
         }
       }

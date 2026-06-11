@@ -1,47 +1,64 @@
+import SwiftUI
+import UIKit
 import XCTest
-import SceneKit
-import Metal
 @testable import HappySpeech
 
-/// Render-харнесс (НЕ строгий тест): рендерит реальную сцену `ArticulationScene3DView`
-/// через offscreen `SCNRenderer` в PNG, чтобы оркестратор видел вид 3D-модели без
-/// прохождения онбординга/навигации. Сохраняет кадры в /tmp/sim/ для каждого звука.
-/// Запуск: `-only-testing:HappySpeechTests/Articulation3DRenderTest`.
+/// Проверки метаданных артикуляции (`ArticulationSound`) для всех 10 укладов,
+/// используемых карточкой артикуляции `Articulation3DCard` (режимы «Видео» и
+/// «Настоящий рот» 3D). Тест чисто-логический и детерминированный: убеждается,
+/// что кириллица каждой фонемы маппится на ожидаемый уклад, флаг звонкости верен,
+/// а текстовая подсказка позы непустая. 3D-сцена (Metal/SceneKit) визуально
+/// выверяется вручную на симуляторе — её кадр не снимается в host-render-харнессе.
 @MainActor
 final class Articulation3DRenderTest: XCTestCase {
 
-    func testRenderArticulationPoses() throws {
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            throw XCTSkip("No Metal device (CI without GPU)")
-        }
-        let sounds: [(ArticulationSound, String)] = [
-            (.neutral, "neutral"), (.s, "s"), (.z, "z"), (.sh, "sh"), (.zh, "zh"),
-            (.r, "r"), (.soundL, "l"), (.k, "k"), (.g, "g"), (.kh, "kh")
+    func testCyrillicMapsToExpectedPose() {
+        let cases: [(String, ArticulationSound)] = [
+            ("С", .s), ("Сь", .s), ("Ц", .s),
+            ("З", .z), ("Зь", .z),
+            ("Ш", .sh), ("Ч", .sh), ("Щ", .sh),
+            ("Ж", .zh),
+            ("Р", .r), ("Рь", .r),
+            ("Л", .soundL), ("Ль", .soundL),
+            ("К", .k),
+            ("Г", .g),
+            ("Х", .kh)
         ]
-        let outDir = "/tmp/sim"
-        try? FileManager.default.createDirectory(
-            atPath: outDir, withIntermediateDirectories: true
-        )
-        for (sound, slug) in sounds {
-            let view = ArticulationScene3DView(sound: sound, reduceMotion: true)
-            let coord = view.makeCoordinator()
-            let scene = coord.makeScene()
-            coord.apply(sound: sound, reduceMotion: true)
-
-            let renderer = SCNRenderer(device: device, options: nil)
-            renderer.scene = scene
-            renderer.pointOfView = scene.rootNode.childNode(withName: "camera", recursively: true)
-
-            let image = renderer.snapshot(
-                atTime: 0,
-                with: CGSize(width: 760, height: 570),
-                antialiasingMode: .multisampling4X
+        for (cyrillic, expected) in cases {
+            XCTAssertEqual(
+                ArticulationSound.fromCyrillic(cyrillic), expected,
+                "Кириллица «\(cyrillic)» должна маппиться на уклад \(expected)"
             )
-            if let data = image.pngData() {
-                let path = "\(outDir)/artic3d_\(slug).png"
-                try data.write(to: URL(fileURLWithPath: path))
-            }
-            XCTAssertGreaterThan(image.size.width, 0)
+        }
+    }
+
+    func testNonArticulatorySoundReturnsNil() {
+        // Гласные и прочие звуки без научной позы → nil (показывается видео-фоллбэк).
+        for cyrillic in ["А", "О", "У", "Е", "Б", "М"] {
+            XCTAssertNil(
+                ArticulationSound.fromCyrillic(cyrillic),
+                "Для «\(cyrillic)» научной позы нет — ожидается nil"
+            )
+        }
+    }
+
+    func testVoicingFlags() {
+        let voiced: [ArticulationSound] = [.z, .zh, .r, .soundL, .g]
+        let voiceless: [ArticulationSound] = [.neutral, .s, .sh, .k, .kh]
+        for sound in voiced {
+            XCTAssertTrue(sound.isVoiced, "\(sound) должен быть звонким")
+        }
+        for sound in voiceless {
+            XCTAssertFalse(sound.isVoiced, "\(sound) должен быть глухим")
+        }
+    }
+
+    func testEveryPoseHasNonEmptyHint() {
+        for sound in ArticulationSound.allCases {
+            XCTAssertFalse(
+                sound.localizedHint.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+                "Подсказка позы для \(sound) не должна быть пустой"
+            )
         }
     }
 }

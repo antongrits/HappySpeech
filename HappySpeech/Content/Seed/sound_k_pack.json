@@ -1161,14 +1161,14 @@
           "word": "моряк",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wm-10.m4a",
-          "imageAsset": "word_yakor"
+          "imageAsset": "word_moryak"
         },
         {
           "id": "k-wm-11",
           "word": "рыбак",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wm-11.m4a",
-          "imageAsset": "word_rybalka"
+          "imageAsset": "word_rybak"
         },
         {
           "id": "k-wm-12",
@@ -1658,14 +1658,14 @@
           "word": "моряк",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-23.m4a",
-          "imageAsset": "word_yakor"
+          "imageAsset": "word_moryak"
         },
         {
           "id": "k-wf-24",
           "word": "рыбак",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-24.m4a",
-          "imageAsset": "word_rybalka"
+          "imageAsset": "word_rybak"
         },
         {
           "id": "k-wf-25",

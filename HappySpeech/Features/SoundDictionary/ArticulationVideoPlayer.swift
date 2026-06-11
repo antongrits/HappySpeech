@@ -3,11 +3,16 @@ import SwiftUI
 
 // MARK: - ArticulationVideoPlayerView
 //
-// Встраиваемый плеер side-view артикуляционной схемы.
-// Показывается в SoundDictionary detail sheet для звуков С, Ш, Р, Л.
+// Встраиваемый плеер side-view артикуляционной схемы. Показывается в
+// SoundDictionary detail карточке артикуляции.
 //
-// Видео: Resources/Videos/Articulation/programmatic/*.mp4
-// Источник: Remotion, программная анимация (научно корректные профили по Фомичёвой).
+// Два источника:
+//  • Veo (8 звуков Р/Л/Ш/С/Ж/Ч/Щ/З) — профессиональная 3D-анимация
+//    сагиттального разреза рта (Google Veo 3.1), Resources/Videos/Articulation/veo/.
+//  • Программные профили (Remotion) — Resources/Videos/Articulation/programmatic/.
+//
+// Видео без звука: эталонное произношение (Chirp3) проигрывается отдельной
+// CTA «Прослушать» в detail sheet.
 //
 // Lifecycle: плеер создаётся на месте, auto-play при появлении, зацикленный.
 // Не использует AVPlayerViewController (нет системных контролов — дизайн чистый).
@@ -21,9 +26,11 @@ struct ArticulationVideoPlayerView: View {
 
     @State private var player: AVPlayer?
     @State private var looper: AVPlayerLooper?
-    @State private var isReady: Bool = false
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// Профессиональная Veo-демонстрация → другой заголовок/бейдж/подпись.
+    private var isVeo: Bool { videoSlug.isVeo }
 
     var body: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
@@ -32,16 +39,23 @@ struct ArticulationVideoPlayerView: View {
                 Image(systemName: "mouth.fill")
                     .font(.system(size: 13))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                Text("soundDictionary.detail.articulationVideo.label")
+                Text(isVeo
+                    ? "soundDictionary.detail.articulationVideo.veo.label"
+                    : "soundDictionary.detail.articulationVideo.label")
                     .font(TypographyTokens.caption(11))
                     .textCase(.uppercase)
                     .tracking(0.5)
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Spacer()
-                // «Программная схема» badge
-                Text(String(localized: "soundDictionary.detail.articulationVideo.badge"))
+                Text(isVeo
+                    ? String(localized: "soundDictionary.detail.articulationVideo.veo.badge")
+                    : String(localized: "soundDictionary.detail.articulationVideo.badge"))
                     .font(TypographyTokens.caption(9))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
                     .background(Capsule().fill(ColorTokens.Brand.primary.opacity(0.12)))
@@ -75,17 +89,22 @@ struct ArticulationVideoPlayerView: View {
             .accessibilityLabel(
                 Text(
                     String(
-                        format: String(localized: "soundDictionary.detail.articulationVideo.a11y"),
+                        format: String(localized: isVeo
+                            ? "soundDictionary.detail.articulationVideo.veo.a11y"
+                            : "soundDictionary.detail.articulationVideo.a11y"),
                         soundLetter
                     )
                 )
             )
 
             // Subtitle
-            Text(String(localized: "soundDictionary.detail.articulationVideo.subtitle"))
+            Text(String(localized: isVeo
+                ? "soundDictionary.detail.articulationVideo.veo.subtitle"
+                : "soundDictionary.detail.articulationVideo.subtitle"))
                 .font(TypographyTokens.caption(10))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
                 .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(SpacingTokens.sp4)
         .background(
@@ -121,23 +140,20 @@ struct ArticulationVideoPlayerView: View {
 // MARK: - ArticulationVideoSlug mapping
 
 extension VideoCatalog.ArticulationDemo {
-    /// Возвращает programmatic side-view профиль для данного звука (если есть).
-    static func profileDemo(forCyrillic cyrillic: String) -> VideoCatalog.ArticulationDemo? {
-        switch cyrillic {
-        case "С", "Сь", "Ц":
-            return .articulationSProfile
-        case "З", "Зь":
-            return .articulationZProfile
-        case "Ш", "Ч", "Щ":
-            return .articulationShProfile
-        case "Ж":
-            return .articulationZhProfile
-        case "Р", "Рь":
-            return .articulationRProfile
-        case "Л", "Ль":
-            return .articulationLProfile
-        default:
-            return nil
+    /// Профессиональная Veo-демонстрация «как двигается язык» для звука (если есть).
+    /// Набор из 8 звуков (Р/Л/Ш/С/Ж/Ч/Щ/З) по `veo_manifest.json`. Для остальных
+    /// звуков (мягкие пары, Ц и пр.) — `nil`, показывается только 3D-модель.
+    static func veoDemo(forCyrillic cyrillic: String) -> VideoCatalog.ArticulationDemo? {
+        switch cyrillic.trimmingCharacters(in: .whitespacesAndNewlines) {
+        case "Р": return .veoR
+        case "Л": return .veoL
+        case "Ш": return .veoSh
+        case "С": return .veoS
+        case "Ж": return .veoZh
+        case "Ч": return .veoCh
+        case "Щ": return .veoShch
+        case "З": return .veoZ
+        default: return nil
         }
     }
 }

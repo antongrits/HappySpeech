@@ -280,8 +280,10 @@ struct ARMirrorView: View {
         self.presenter = presenter
         self.router = router
 
-        // Выбираем service: Live на устройстве, Mock на симуляторе/неподдерживаемых.
-        if ARFaceTrackingConfiguration.isSupported {
+        // Live на устройстве с TrueDepth. Симуляция (Mock) — только в превью/тестах.
+        // На реальном устройстве без TrueDepth игра НЕ запускается и не скорит
+        // синтетику: показывается честный ARUnsupportedView (P1-1).
+        if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             do {
@@ -292,15 +294,18 @@ struct ARMirrorView: View {
                 startError = error.localizedDescription
                 HSLogger.ar.error("ARMirror start failed: \(error.localizedDescription)")
             }
-        } else {
+            interactor.startGame(.init())
+        } else if ARDeviceCapability.allowsSimulatedSession {
             let mock = MockARSessionService()
             self.mockSession = mock
             try? await mock.startSession()
             isSessionStarted = true
             startFrameStream(service: mock)
+            interactor.startGame(.init())
+        } else {
+            // Устройство без TrueDepth — упражнение недоступно, прогресс не пишется.
+            HSLogger.ar.info("ARMirror: TrueDepth недоступен — показываем unsupported, без скоринга")
         }
-
-        interactor.startGame(.init())
     }
 
     private func startFrameStream(service: any ARSessionService) {

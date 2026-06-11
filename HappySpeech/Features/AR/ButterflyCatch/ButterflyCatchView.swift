@@ -67,16 +67,24 @@ struct ButterflyCatchView: View {
         self.interactor = interactor
         self.presenter = presenter
 
-        if ARFaceTrackingConfiguration.isSupported {
+        // Бабочка ловится по открытию рта (jawOpen blendshape) — нужен TrueDepth.
+        // На реальном устройстве без TrueDepth игра НЕ запускается и не скорит
+        // синтетику: показывается честный ARUnsupportedView (P1-1). Симуляция
+        // (Mock) допускается только в SwiftUI-превью и под тестами.
+        if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             try? await live.startSession()
             observe(service: live)
-        } else {
+        } else if ARDeviceCapability.allowsSimulatedSession {
             let mock = MockARSessionService()
             self.mockSession = mock
             try? await mock.startSession()
             observe(service: mock)
+        } else {
+            // Устройство без TrueDepth — упражнение недоступно, прогресс не пишется.
+            HSLogger.ar.info("ButterflyCatch: TrueDepth недоступен — unsupported, без скоринга")
+            return
         }
         interactor.startGame(.init(durationSec: 60))
 

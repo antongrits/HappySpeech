@@ -1083,13 +1083,6 @@
           "audio_file": "Audio/Content/NL/nl-fri-35.m4a"
         },
         {
-          "id": "nl-fri-36",
-          "word": "жестокий",
-          "hint": "ЖЕС-то-кий. Ж в начале. Жёсткий урок!",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/NL/nl-fri-36.m4a"
-        },
-        {
           "id": "nl-fri-37",
           "word": "художник",
           "hint": "Ху-ДОЖ-ник. Х+Ж! Художник рисует.",
@@ -1123,13 +1116,6 @@
           "hint": "Два Х — хороший, хозяин. Ж — животных.",
           "difficulty": 5,
           "audio_file": "Audio/Content/NL/nl-fri-41.m4a"
-        },
-        {
-          "id": "nl-fri-42",
-          "word": "широкий",
-          "hint": "ШИ-ро-кий. Ш мягкое + широкий звук И.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/NL/nl-fri-42.m4a"
         },
         {
           "id": "nl-fri-43",
@@ -2243,7 +2229,7 @@
         },
         {
           "id": "nl-lmn-48",
-          "word": "ломоносов",
+          "word": "Ломоносов",
           "hint": "Ло-мо-НО-сов. Л+М+Н — три сонора!",
           "difficulty": 5,
           "audio_file": "Audio/Content/NL/nl-lmn-48.m4a"

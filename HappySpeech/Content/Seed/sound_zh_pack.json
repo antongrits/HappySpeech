@@ -684,14 +684,6 @@
           "audio_file": "Audio/Content/ZH/zh-wi-27.m4a"
         },
         {
-          "id": "zh-wi-28",
-          "word": "жестокий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/ZH/zh-wi-28.m4a"
-        },
-        {
           "id": "zh-wi-29",
           "word": "жительница",
           "imageAsset": null,
@@ -1590,14 +1582,6 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-64.m4a"
-        },
-        {
-          "id": "zh-wm-65",
-          "word": "ружьё",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/ZH/zh-wm-65.m4a"
         },
         {
           "id": "zh-wm-66",

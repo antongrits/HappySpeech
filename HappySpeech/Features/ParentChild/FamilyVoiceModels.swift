@@ -52,6 +52,9 @@ struct FamilyVoiceViewModel: Equatable, Sendable {
     let showFeedback: Bool
     let feedbackIsCorrect: Bool
     let toastMessage: String?
+    /// `true` → текущая оценка приблизительная (RMS, без анализа произношения).
+    /// UI показывает честную пометку рядом со счётом.
+    let scoreIsApproximate: Bool
 
     static func == (lhs: FamilyVoiceViewModel, rhs: FamilyVoiceViewModel) -> Bool {
         lhs.mode == rhs.mode &&
@@ -63,7 +66,8 @@ struct FamilyVoiceViewModel: Equatable, Sendable {
         lhs.canDone == rhs.canDone &&
         lhs.showFeedback == rhs.showFeedback &&
         lhs.feedbackIsCorrect == rhs.feedbackIsCorrect &&
-        lhs.toastMessage == rhs.toastMessage
+        lhs.toastMessage == rhs.toastMessage &&
+        lhs.scoreIsApproximate == rhs.scoreIsApproximate
     }
 }
 
@@ -166,6 +170,8 @@ enum FamilyVoiceModels {
         let score: Float
         let transcript: String?
         let word: String
+        /// `true` → оценка приблизительная (RMS-эвристика без анализа произношения).
+        let isApproximate: Bool
     }
 
     struct WordChangedResponse {

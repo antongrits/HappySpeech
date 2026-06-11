@@ -47,7 +47,8 @@ final class FamilyVoiceDisplay: FamilyVoiceDisplayLogic {
         liveTranscript: nil,
         showFeedback: false,
         feedbackIsCorrect: false,
-        toastMessage: nil
+        toastMessage: nil,
+        scoreIsApproximate: false
     )
     var errorMessage: String?
 

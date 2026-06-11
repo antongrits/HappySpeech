@@ -154,6 +154,27 @@ struct DashboardSummary: Sendable, Equatable {
     let streakDays: Int
     let totalMinutes: Int
     let totalStars: Int
+    /// Суммарное число попыток за период (реальные счётчики из сессий).
+    /// Используется как РЕАЛЬНЫЙ вход для LLM-сводки вместо реконструкции.
+    let totalAttempts: Int
+    /// Суммарное число правильных попыток за период.
+    let correctAttempts: Int
+
+    init(
+        overallAccuracy: Float,
+        streakDays: Int,
+        totalMinutes: Int,
+        totalStars: Int,
+        totalAttempts: Int = 0,
+        correctAttempts: Int = 0
+    ) {
+        self.overallAccuracy = overallAccuracy
+        self.streakDays = streakDays
+        self.totalMinutes = totalMinutes
+        self.totalStars = totalStars
+        self.totalAttempts = totalAttempts
+        self.correctAttempts = correctAttempts
+    }
 }
 
 struct SoundProgress: Sendable, Identifiable, Equatable, Hashable {

@@ -182,19 +182,24 @@ struct PoseSequenceView: View {
             // Body tracking mode: пустой массив поз → Interactor переключится в body-режим
             startBodyTracking()
             interactor.startGame(.init(postures: []))
-        } else if ARFaceTrackingConfiguration.isSupported {
+        } else if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             try? await live.startSession()
             observeFace(service: live)
             interactor.startGame(.init(postures: [.smile, .pucker, .cupShape, .mushroom]))
-        } else {
+        } else if ARDeviceCapability.allowsSimulatedSession {
+            // Симуляция — только превью/тесты (P1-1): даёт детерминированный вход
+            // для верификации VIP-логики без TrueDepth-железа.
             let mock = MockARSessionService()
             self.mockSession = mock
             try? await mock.startSession()
             observeFace(service: mock)
             interactor.startGame(.init(postures: [.smile, .pucker, .cupShape, .mushroom]))
         }
+        // Иначе (реальное устройство без TrueDepth и без body-трекинга): цепочка
+        // поз не запускается и не скорит синтетику — body показывает честный
+        // ARUnsupportedView (P1-1).
     }
 
     private func startBodyTracking() {

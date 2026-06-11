@@ -79,18 +79,23 @@ struct HoldThePoseView: View {
         self.interactor = interactor
         self.presenter = presenter
 
-        if ARFaceTrackingConfiguration.isSupported {
+        // Live на TrueDepth-устройстве. Симуляция — только превью/тесты (P1-1):
+        // на реальном устройстве без TrueDepth игра не запускается и не скорит синтетику.
+        if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             try? await live.startSession()
             observe(service: live)
-        } else {
+            interactor.startGame(.init(targetPosture: .smile, holdDurationSec: 5))
+        } else if ARDeviceCapability.allowsSimulatedSession {
             let mock = MockARSessionService()
             self.mockSession = mock
             try? await mock.startSession()
             observe(service: mock)
+            interactor.startGame(.init(targetPosture: .smile, holdDurationSec: 5))
         }
-        interactor.startGame(.init(targetPosture: .smile, holdDurationSec: 5))
+        // Иначе: устройство без TrueDepth — body показывает ARUnsupportedView,
+        // упражнение не запускается, прогресс не пишется.
     }
 
     private func observe(service: any ARSessionService) {

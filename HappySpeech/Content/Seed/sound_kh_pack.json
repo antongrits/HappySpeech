@@ -830,7 +830,7 @@
           "word": "монах",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wm-24.m4a",
-          "imageAsset": "word_khram"
+          "imageAsset": "word_monakh"
         },
         {
           "id": "kh-wm-25",
@@ -856,7 +856,7 @@
           "word": "пастух",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wm-28.m4a",
-          "imageAsset": "word_ovtsa"
+          "imageAsset": "word_pastukh"
         },
         {
           "id": "kh-wm-29",
@@ -1080,7 +1080,7 @@
           "word": "монах",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wf-10.m4a",
-          "imageAsset": "word_khram"
+          "imageAsset": "word_monakh"
         },
         {
           "id": "kh-wf-11",
@@ -1149,7 +1149,7 @@
           "word": "пастух",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wf-20.m4a",
-          "imageAsset": "word_ovtsa"
+          "imageAsset": "word_pastukh"
         },
         {
           "id": "kh-wf-21",
@@ -1178,7 +1178,7 @@
           "word": "пастух",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wf-24.m4a",
-          "imageAsset": "word_ovtsa"
+          "imageAsset": "word_pastukh"
         },
         {
           "id": "kh-wf-25",

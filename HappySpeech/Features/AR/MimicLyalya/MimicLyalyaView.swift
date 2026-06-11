@@ -104,20 +104,25 @@ struct MimicLyalyaView: View {
         let worker = HandPoseWorker(maxHandCount: 1, confidenceThreshold: 0.6)
         self.handWorker = worker
 
-        if ARFaceTrackingConfiguration.isSupported {
+        // Live на TrueDepth-устройстве. Симуляция — только превью/тесты (P1-1):
+        // на реальном устройстве без TrueDepth игра не запускается и не скорит синтетику.
+        if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             try? await live.startSession()
             observeBlendshapes(service: live)
             // Block J: подписываемся на кадры AR сессии для hand pose
             observeHandPoseFromARSession(live: live, worker: worker)
-        } else {
+            interactor.startGame(.init(rounds: 5))
+        } else if ARDeviceCapability.allowsSimulatedSession {
             let mock = MockARSessionService()
             self.mockSession = mock
             try? await mock.startSession()
             observeBlendshapes(service: mock)
+            interactor.startGame(.init(rounds: 5))
         }
-        interactor.startGame(.init(rounds: 5))
+        // Иначе (реальное устройство без TrueDepth): игра не запускается, прогресс
+        // не пишется — body показывает честный ARUnsupportedView (P1-1).
     }
 
     private func observeBlendshapes(service: any ARSessionService) {

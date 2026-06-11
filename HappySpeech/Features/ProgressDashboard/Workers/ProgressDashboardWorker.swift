@@ -106,12 +106,17 @@ final class ProgressDashboardWorker: ProgressDashboardAggregating {
         let minutes = sessions.reduce(0) { $0 + $1.durationSeconds } / 60
         let stars = sessions.reduce(0) { $0 + Self.stars(for: $1) }
         let streak = await fetchStreak(childId: childId, fallback: Self.streakFromSessions(sessions, calendar: calendar))
+        // Реальные счётчики попыток за период — для честного входа LLM-сводки.
+        let totalAttempts = sessions.reduce(0) { $0 + $1.totalAttempts }
+        let correctAttempts = sessions.reduce(0) { $0 + $1.correctAttempts }
 
         let summary = DashboardSummary(
             overallAccuracy: Float(overall),
             streakDays: streak,
             totalMinutes: minutes,
-            totalStars: stars
+            totalStars: stars,
+            totalAttempts: totalAttempts,
+            correctAttempts: correctAttempts
         )
 
         logger.info(

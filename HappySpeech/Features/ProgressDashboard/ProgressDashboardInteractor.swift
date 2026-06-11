@@ -159,10 +159,21 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
             // (parent) — вызывает HF API под капотом, fallback к Tier C при ошибке.
             let topSound = request.topSound
             let realSummary = self.summary
-            // Восстанавливаем попытки из общей точности и числа сессий по топ-звуку,
-            // чтобы LLM описывал настоящий прогресс, а не нули.
-            let attemptsBasis = max(topSound?.sessions ?? 0, 1) * 10
-            let correctBasis = Int((Double(attemptsBasis) * Double(realSummary.overallAccuracy)).rounded())
+            // Реальные счётчики попыток за период (из накопленных сессий). Если
+            // за период есть записанные попытки — подаём их LLM как есть. Иначе
+            // (агрегат без пер-attempt счётчиков, напр. legacy-данные) выводим
+            // оценочный базис из точности и числа сессий, чтобы текст описывал
+            // настоящий прогресс, а не нули. Эти числа идут ТОЛЬКО на вход
+            // LLM-прозы и не отображаются как метрики.
+            let totalAttempts: Int
+            let correctAttempts: Int
+            if realSummary.totalAttempts > 0 {
+                totalAttempts = realSummary.totalAttempts
+                correctAttempts = realSummary.correctAttempts
+            } else {
+                totalAttempts = max(topSound?.sessions ?? 0, 1) * 10
+                correctAttempts = Int((Double(totalAttempts) * Double(realSummary.overallAccuracy)).rounded())
+            }
             let summaryInput = SessionSummaryInput(
                 sessionId: "dashboard-\(Int(Date().timeIntervalSince1970))",
                 childId: self.lastChildId,
@@ -170,8 +181,8 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
                 age: self.lastChildAge ?? 6,
                 targetSound: topSound?.sound ?? "—",
                 stage: .syllable,
-                totalAttempts: attemptsBasis,
-                correctAttempts: correctBasis,
+                totalAttempts: totalAttempts,
+                correctAttempts: correctAttempts,
                 errorWords: [],
                 durationSec: realSummary.totalMinutes * 60,
                 date: Date()

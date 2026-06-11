@@ -67,11 +67,19 @@ struct BreathingARView: View {
         self.interactor = interactor
         self.presenter = presenter
 
+        // AR-игра требует TrueDepth (cheekPuff/jawOpen усиливают сигнал выдоха).
+        // На реальном устройстве без TrueDepth игра не запускается и не скорит
+        // синтетику — body показывает ARUnsupportedView (P1-1). Симуляция —
+        // только превью/тесты.
+        guard ARDeviceCapability.supportsFaceTracking || ARDeviceCapability.allowsSimulatedSession else {
+            return
+        }
+
         // Запускаем реальную запись микрофона: амплитуда выдоха берётся из
         // живого аудио-потока (RMS буфера), а не из mock-значения.
         await startMicCapture()
 
-        if ARFaceTrackingConfiguration.isSupported {
+        if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
             try? await live.startSession()

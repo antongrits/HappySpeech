@@ -1070,23 +1070,6 @@
       "minLevel": "ternary"
     },
     {
-      "id": "det-shch-kleshchi",
-      "word": "клещи",
-      "imageAsset": null,
-      "targetSound": "Щ",
-      "soundFamily": "шипящие",
-      "position": "middle",
-      "sounds": [
-        "к",
-        "л",
-        "е",
-        "щ",
-        "и"
-      ],
-      "difficulty": 3,
-      "minLevel": "ternary"
-    },
-    {
       "id": "det-shch-ovoshchi",
       "word": "овощи",
       "imageAsset": "word_ovoshchi",

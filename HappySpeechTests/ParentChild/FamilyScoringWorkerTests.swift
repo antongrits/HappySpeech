@@ -1,3 +1,4 @@
+@preconcurrency import AVFoundation
 @testable import HappySpeech
 import XCTest
 
@@ -6,7 +7,7 @@ import XCTest
 // 5 unit-тестов для FamilyVoiceScoringWorker (F4).
 // ScoringWorker тестируется через публичный метод score(childAudioPath:referenceWord:).
 // ML-scorer подменяется SpyPronunciationScorer для изоляции от Core ML.
-// RMS-fallback тестируется через несуществующий / маленький / нормальный файл.
+// RMS-fallback тестируется реальной PCM-записью с измеримой энергией.
 
 final class FamilyScoringWorkerTests: XCTestCase {
 
@@ -30,11 +31,40 @@ final class FamilyScoringWorkerTests: XCTestCase {
     // MARK: - Helpers
 
     /// Создаёт временный m4a-заглушку нужного размера (байты заполнены нулями).
+    /// Используется только для путей, где аудио не декодируется (ML-scorer мок).
     private func makeTempAudioFile(sizeBytes: Int) throws -> URL {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("test_audio_\(UUID().uuidString).m4a")
         let data = Data(repeating: 0, count: sizeBytes)
         try data.write(to: url)
+        return url
+    }
+
+    /// Создаёт реальный декодируемый WAV (синусоида 330 Гц, амплитуда 0.3),
+    /// чтобы RMS-эвристика измерила настоящую энергию сигнала.
+    private func makeRealWAV(durationSec: Double = 1.0) throws -> URL {
+        guard let format = AVAudioFormat(
+            commonFormat: .pcmFormatFloat32,
+            sampleRate: 16_000,
+            channels: 1,
+            interleaved: false
+        ) else {
+            throw NSError(domain: "ScoringTest", code: 1)
+        }
+        let frameCount = AVAudioFrameCount(16_000 * durationSec)
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount) else {
+            throw NSError(domain: "ScoringTest", code: 2)
+        }
+        buffer.frameLength = frameCount
+        if let channel = buffer.floatChannelData?[0] {
+            for index in 0..<Int(frameCount) {
+                channel[index] = sin(2.0 * .pi * 330.0 * Float(index) / 16_000.0) * 0.3
+            }
+        }
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("test_audio_\(UUID().uuidString).wav")
+        let file = try AVAudioFile(forWriting: url, settings: format.settings)
+        try file.write(from: buffer)
         return url
     }
 
@@ -76,8 +106,9 @@ final class FamilyScoringWorkerTests: XCTestCase {
 
         let result = await sut.score(childAudioPath: relativePath, referenceWord: "шар")
 
-        XCTAssertEqual(result, 1.0, accuracy: 0.001,
+        XCTAssertEqual(result.value, 1.0, accuracy: 0.001,
                        "При stubbedScore=1.0 результат должен быть 1.0")
+        XCTAssertFalse(result.isApproximate, "ML-оценка — реальная")
         XCTAssertEqual(mockScorer.callCount, 1,
                        "ML scorer должен вызваться ровно один раз для слова с шипящим")
     }
@@ -95,8 +126,9 @@ final class FamilyScoringWorkerTests: XCTestCase {
 
         let result = await sut.score(childAudioPath: relativePath, referenceWord: "жук")
 
-        XCTAssertEqual(result, 0.0, accuracy: 0.001,
+        XCTAssertEqual(result.value, 0.0, accuracy: 0.001,
                        "При stubbedScore=0.0 результат должен быть 0.0")
+        XCTAssertFalse(result.isApproximate)
     }
 
     // MARK: - 13. score_partialMatch_returnsBetween
@@ -112,10 +144,11 @@ final class FamilyScoringWorkerTests: XCTestCase {
 
         let result = await sut.score(childAudioPath: relativePath, referenceWord: "рыба")
 
-        XCTAssertGreaterThan(result, 0.0, "Частичное совпадение должно давать результат > 0")
-        XCTAssertLessThan(result, 1.0, "Частичное совпадение должно давать результат < 1")
-        XCTAssertEqual(result, 0.72, accuracy: 0.001,
+        XCTAssertGreaterThan(result.value, 0.0, "Частичное совпадение должно давать результат > 0")
+        XCTAssertLessThan(result.value, 1.0, "Частичное совпадение должно давать результат < 1")
+        XCTAssertEqual(result.value, 0.72, accuracy: 0.001,
                        "При stubbedScore=0.72 результат должен быть 0.72")
+        XCTAssertFalse(result.isApproximate)
     }
 
     // MARK: - 14. score_emptyTranscript_handlesGracefully (ML fails → RMS fallback)
@@ -125,17 +158,18 @@ final class FamilyScoringWorkerTests: XCTestCase {
         mockScorer.stubbedError = NSError(domain: "test", code: -1, userInfo: nil)
         let sut = FamilyVoiceScoringWorker(pronunciationScorer: mockScorer)
 
-        // Файл достаточного размера → RMS heuristic вернёт [0.5, 0.95]
-        let tempFile = try makeTempAudioFile(sizeBytes: 10_000)
+        // ML падает → RMS heuristic измеряет реальную энергию записи.
+        let tempFile = try makeRealWAV()
         defer { try? FileManager.default.removeItem(at: tempFile) }
         let relativePath = try relativePathInDocuments(for: tempFile)
 
         let result = await sut.score(childAudioPath: relativePath, referenceWord: "мяч")
 
-        XCTAssertGreaterThanOrEqual(result, 0.5,
-                                    "При ошибке ML RMS heuristic должен вернуть >= 0.5")
-        XCTAssertLessThanOrEqual(result, 0.95,
-                                 "RMS heuristic не должен превышать 0.95")
+        XCTAssertTrue(result.isApproximate,
+                      "При ошибке ML — RMS heuristic, оценка помечается приблизительной")
+        XCTAssertGreaterThan(result.value, 0,
+                             "Реальный сигнал → ненулевая нормированная энергия")
+        XCTAssertLessThanOrEqual(result.value, 1)
     }
 
     // MARK: - 15. score_noMLScorer_usesRMSFallback
@@ -144,15 +178,16 @@ final class FamilyScoringWorkerTests: XCTestCase {
         // Без ML scorer (nil) всегда используется RMS heuristic
         let sut = FamilyVoiceScoringWorker(pronunciationScorer: nil)
 
-        let tempFile = try makeTempAudioFile(sizeBytes: 5_000)
+        let tempFile = try makeRealWAV()
         defer { try? FileManager.default.removeItem(at: tempFile) }
         let relativePath = try relativePathInDocuments(for: tempFile)
 
         let result = await sut.score(childAudioPath: relativePath, referenceWord: "кот")
 
-        XCTAssertGreaterThanOrEqual(result, 0.5,
-                                    "Без ML scorer результат должен быть >= 0.5 (RMS heuristic)")
-        XCTAssertLessThanOrEqual(result, 0.95,
-                                 "Без ML scorer результат не должен превышать 0.95")
+        XCTAssertTrue(result.isApproximate,
+                      "Без ML scorer — RMS heuristic, оценка приблизительная")
+        XCTAssertGreaterThan(result.value, 0,
+                             "Реальный сигнал → ненулевая нормированная энергия (RMS)")
+        XCTAssertLessThanOrEqual(result.value, 1)
     }
 }

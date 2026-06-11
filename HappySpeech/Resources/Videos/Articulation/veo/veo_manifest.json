@@ -1,0 +1,81 @@
+{
+  "generator": "Google Veo 3.1 Fast (veo-3.1-fast-generate-001) via Vertex AI",
+  "project": "happyspeech-illustrations",
+  "generated_at": "2026-06-11",
+  "style": "Educational 3D medical animation, side cross-section profile of the human mouth (lips, teeth, palate, alveolar ridge, tongue). Warm cream/coral palette, plain background, no text, no people/faces. Audio stripped (app overlays Chirp3 reference pronunciation).",
+  "format": { "container": "mp4", "codec": "h264 high yuv420p", "resolution": "1280x720", "fps": 24, "duration_seconds": 8, "audio": "none" },
+  "clips": [
+    {
+      "file": "artic_veo_r.mp4",
+      "sound": "Р",
+      "asset_key": "r",
+      "articulation": "Кончик языка поднимается к альвеолам за верхними резцами и быстро вибрирует (трель).",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    },
+    {
+      "file": "artic_veo_l.mp4",
+      "sound": "Л",
+      "asset_key": "l",
+      "articulation": "Острый кончик языка упирается в заднюю поверхность верхних резцов, боковые края языка опущены.",
+      "verified_view": "side cross-section profile (retry, camera-locked)",
+      "verification": "good",
+      "retry": true
+    },
+    {
+      "file": "artic_veo_sh.mp4",
+      "sound": "Ш",
+      "asset_key": "sh",
+      "articulation": "Язык поднят и собран в широкую «чашу» за альвеолами, губы слегка округлены вперёд.",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    },
+    {
+      "file": "artic_veo_s.mp4",
+      "sound": "С",
+      "asset_key": "s",
+      "articulation": "Кончик языка опущен за нижними резцами, образует узкий желобок для тонкой струи воздуха, губы в лёгкой улыбке.",
+      "verified_view": "side cross-section profile (retry, camera-locked)",
+      "verification": "good",
+      "retry": true
+    },
+    {
+      "file": "artic_veo_zh.mp4",
+      "sound": "Ж",
+      "asset_key": "zh",
+      "articulation": "Язык собран в «чашу» за альвеолами с округлёнными губами (как Ш, но звонкий, с вибрацией).",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    },
+    {
+      "file": "artic_veo_ch.mp4",
+      "sound": "Ч",
+      "asset_key": "ch",
+      "articulation": "Кончик языка смыкается с альвеолами и быстро размыкается в «чашеобразную» щель (мягкая аффриката).",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    },
+    {
+      "file": "artic_veo_shch.mp4",
+      "sound": "Щ",
+      "asset_key": "shch",
+      "articulation": "Тело языка высоко поднято к твёрдому нёбу в мягкой удлинённой «чаше», кончик у нижних зубов (долгий мягкий звук).",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    },
+    {
+      "file": "artic_veo_z.mp4",
+      "sound": "З",
+      "asset_key": "z",
+      "articulation": "Кончик языка опущен за нижними резцами, узкий желобок (как С, но звонкий, с вибрацией).",
+      "verified_view": "side cross-section profile",
+      "verification": "good",
+      "retry": false
+    }
+  ]
+}

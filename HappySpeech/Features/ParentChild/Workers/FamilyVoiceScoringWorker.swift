@@ -1,5 +1,26 @@
+import Accelerate
+import AVFoundation
 import Foundation
 import OSLog
+
+// MARK: - FamilyVoiceScoringOutcome
+
+/// Результат оценки попытки ребёнка в семейном контуре.
+///
+/// `isApproximate` честно сигнализирует, что числовая оценка получена
+/// энергетической эвристикой (RMS), а НЕ анализом произношения. UI обязан
+/// показать пользователю соответствующую пометку, чтобы не выдавать
+/// приблизительную громкость за реальную оценку чёткости звука.
+struct FamilyVoiceScoringOutcome: Sendable, Equatable {
+
+    /// Оценка в диапазоне `[0, 1]`.
+    let value: Float
+
+    /// `true` → значение получено RMS-эвристикой (нет ML-анализа произношения).
+    let isApproximate: Bool
+
+    static let zero = FamilyVoiceScoringOutcome(value: 0, isApproximate: true)
+}
 
 // MARK: - FamilyVoiceScoringWorker
 
@@ -13,7 +34,9 @@ import OSLog
 ///      PronunciationScorer (+ Wav2Vec2 CTC). Точнее всего; используется, если
 ///      `ensembleASR` подключён. COPPA-ok: parent-контур.
 ///   2. **PronunciationScorer** — одиночная CoreML-модель по группе звука.
-///   3. **RMS heuristic** — энергетический фолбэк (демо/без моделей).
+///   3. **RMS heuristic** — энергетический фолбэк. Считает РЕАЛЬНУЮ нормированную
+///      громкость записи (не hash) и помечает результат как приблизительный
+///      (`isApproximate = true`), потому что произношение тут не анализируется.
 final class FamilyVoiceScoringWorker: Sendable {
 
     private let pronunciationScorer: (any PronunciationScorerService)?
@@ -33,11 +56,11 @@ final class FamilyVoiceScoringWorker: Sendable {
     // MARK: - Public API
 
     /// Scores child's attempt against the reference word.
-    /// Returns a score in [0.0, 1.0].
+    /// Возвращает `FamilyVoiceScoringOutcome`: значение `[0, 1]` + флаг `isApproximate`.
     func score(
         childAudioPath: String,
         referenceWord: String
-    ) async -> Float {
+    ) async -> FamilyVoiceScoringOutcome {
         // Determine sound group for ML scorer routing
         let group = soundGroup(for: referenceWord)
 
@@ -55,7 +78,7 @@ final class FamilyVoiceScoringWorker: Sendable {
                 // Для семейного UX используем phonemeAccuracy (calibrated 0…1),
                 // а если он нулевой (нет targetSound) — общую уверенность ансамбля.
                 let value = result.phonemeAccuracy > 0 ? result.phonemeAccuracy : result.confidence
-                return max(0, min(1, value))
+                return FamilyVoiceScoringOutcome(value: max(0, min(1, value)), isApproximate: false)
             } catch {
                 logger.warning("Ensemble Tier B failed, falling back to single scorer: \(error)")
             }
@@ -70,16 +93,17 @@ final class FamilyVoiceScoringWorker: Sendable {
                     targetSound: targetSound
                 )
                 logger.info("ML score for '\(referenceWord)': \(result.value)")
-                return Float(result.value)
+                return FamilyVoiceScoringOutcome(value: Float(result.value), isApproximate: false)
             } catch {
                 logger.warning("ML scorer failed, falling back to RMS heuristic: \(error)")
             }
         }
 
-        // Путь 3: RMS heuristic (always returns a plausible score for demo)
-        let score = await rmsHeuristicScore(childAudioPath: childAudioPath, word: referenceWord)
-        logger.info("RMS heuristic score for '\(referenceWord)': \(score)")
-        return score
+        // Путь 3: RMS heuristic — реальная нормированная громкость записи.
+        // Помечается approximate: произношение здесь НЕ анализируется.
+        let value = await rmsHeuristicScore(childAudioPath: childAudioPath)
+        logger.info("RMS heuristic (approximate) score for '\(referenceWord)': \(value)")
+        return FamilyVoiceScoringOutcome(value: value, isApproximate: true)
     }
 
     // MARK: - Sound group mapping
@@ -98,25 +122,59 @@ final class FamilyVoiceScoringWorker: Sendable {
         return nil
     }
 
-    // MARK: - RMS heuristic fallback
+    // MARK: - RMS heuristic fallback (реальная энергия сигнала)
 
-    /// Simple energy-based heuristic: checks that audio file is non-trivially long and non-silent.
-    /// Returns [0.5, 0.95] range to avoid trivial pass/fail extremes in demo mode.
-    private func rmsHeuristicScore(childAudioPath: String, word: String) async -> Float {
+    /// Энергетическая эвристика: измеряет РЕАЛЬНУЮ среднеквадратичную громкость
+    /// (RMS) записи через PCM-семплы и нормирует её в диапазон уверенного
+    /// «есть осмысленная речь» `[0, 1]`. Это НЕ оценка произношения — лишь
+    /// прокси наличия и силы голосового сигнала, поэтому вызывающий помечает
+    /// результат как `isApproximate`.
+    ///
+    /// Калибровка (типичная речь ребёнка на встроенный микрофон 16 kHz):
+    ///   • RMS ≲ −45 dBFS (почти тишина) → ~0
+    ///   • RMS ≈ −12 dBFS (уверенная речь) → ~1
+    private func rmsHeuristicScore(childAudioPath: String) async -> Float {
         do {
             let url = try FamilyVoiceRecorderWorker.resolveFilePath(childAudioPath)
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            let fileSize = (attributes[.size] as? Int) ?? 0
-            // File size proxy: >4KB is considered non-trivial audio
-            if fileSize < 4_000 {
-                return 0.55
-            }
-            // Deterministic per-word hash to keep demo consistent
-            let wordHash = Float(abs(word.hashValue) % 30) / 100.0
-            return min(0.95, 0.65 + wordHash)
+            let rmsDBFS = try Self.measureRMSdBFS(url: url)
+            // Линейная нормировка по dBFS: [-45, -12] → [0, 1].
+            let lower: Float = -45
+            let upper: Float = -12
+            let normalized = (rmsDBFS - lower) / (upper - lower)
+            return max(0, min(1, normalized))
         } catch {
-            logger.warning("RMS heuristic: cannot read file — \(error)")
-            return 0.60
+            logger.warning("RMS heuristic: cannot measure energy — \(error)")
+            return 0
         }
+    }
+
+    /// Читает аудиофайл, сводит в моно и возвращает RMS в dBFS (−∞…0).
+    private static func measureRMSdBFS(url: URL) throws -> Float {
+        let file = try AVAudioFile(forReading: url)
+        let format = file.processingFormat
+        let frameCount = AVAudioFrameCount(file.length)
+        guard frameCount > 0,
+              let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount) else {
+            return -Float.infinity
+        }
+        try file.read(into: buffer)
+        guard let channelData = buffer.floatChannelData else { return -Float.infinity }
+
+        let channels = Int(buffer.format.channelCount)
+        let frames = Int(buffer.frameLength)
+        guard frames > 0 else { return -Float.infinity }
+
+        // Сводим каналы в моно и считаем сумму квадратов через vDSP.
+        var sumOfSquares: Float = 0
+        for channel in 0..<channels {
+            var channelSquareSum: Float = 0
+            vDSP_measqv(channelData[channel], 1, &channelSquareSum, vDSP_Length(frames))
+            sumOfSquares += channelSquareSum
+        }
+        let meanSquare = sumOfSquares / Float(channels)
+        let rms = sqrt(meanSquare)
+        guard rms > 0 else { return -Float.infinity }
+        // dBFS относительно полной шкалы (1.0).
+        return 20 * log10(rms)
     }
 }

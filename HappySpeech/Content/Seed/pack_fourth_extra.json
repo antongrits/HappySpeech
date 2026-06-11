@@ -92,7 +92,7 @@
         },
         {
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isExtra": true,
           "extraReason": "это животное, а не посуда"
         }
@@ -666,7 +666,7 @@
       "members": [
         {
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isExtra": false
         },
         {

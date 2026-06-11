@@ -180,7 +180,7 @@
         {
           "id": "wt-poss-7-d2",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежий хвост"
         }
@@ -230,7 +230,7 @@
         {
           "id": "wt-poss-9-c",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": true,
           "form": "медвежья лапа"
         },
@@ -404,7 +404,7 @@
         {
           "id": "wt-poss-14-d2",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья лапа"
         }
@@ -500,7 +500,7 @@
         {
           "id": "wt-poss-17-c",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": true,
           "form": "медвежья лапа"
         },
@@ -692,7 +692,7 @@
         {
           "id": "wt-home-3-c",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": true,
           "form": "медвежья берлога"
         },
@@ -724,7 +724,7 @@
         {
           "id": "wt-home-4-d1",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья берлога"
         }
@@ -806,7 +806,7 @@
         {
           "id": "wt-home-7-d2",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья берлога"
         }
@@ -838,7 +838,7 @@
         {
           "id": "wt-home-8-d2",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья берлога"
         }
@@ -856,7 +856,7 @@
         {
           "id": "wt-home-9-c",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": true,
           "form": "медвежья берлога"
         },
@@ -895,7 +895,7 @@
         {
           "id": "wt-home-10-d1",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья берлога"
         },
@@ -1059,7 +1059,7 @@
         {
           "id": "wt-home-16-c",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": true,
           "form": "медвежья берлога"
         },
@@ -1137,7 +1137,7 @@
         {
           "id": "wt-home-18-d2",
           "word": "медведь",
-          "imageAsset": "word_bear",
+          "imageAsset": "word_medved",
           "isCorrect": false,
           "form": "медвежья берлога"
         },

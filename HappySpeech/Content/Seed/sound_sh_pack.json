@@ -706,14 +706,6 @@
           "audio_file": "Audio/Content/SH/sh-wi-17.m4a"
         },
         {
-          "id": "sh-wi-18",
-          "word": "широкий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SH/sh-wi-18.m4a"
-        },
-        {
           "id": "sh-wi-19",
           "word": "шоколад",
           "imageAsset": "word_shokolad",
@@ -844,7 +836,7 @@
         {
           "id": "sh-wi-35",
           "word": "шнурок",
-          "imageAsset": "word_shnurki",
+          "imageAsset": "word_shnurok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SH/sh-wi-35.m4a"
@@ -852,7 +844,7 @@
         {
           "id": "sh-wi-36",
           "word": "шнурок",
-          "imageAsset": "word_shnurki",
+          "imageAsset": "word_shnurok",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SH/sh-wi-36.m4a"
@@ -922,22 +914,6 @@
           "audio_file": "Audio/Content/SH/sh-wi-44.m4a"
         },
         {
-          "id": "sh-wi-45",
-          "word": "шиловатый",
-          "imageAsset": "word_shilovatyy",
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/SH/sh-wi-45.m4a"
-        },
-        {
-          "id": "sh-wi-46",
-          "word": "ширина",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SH/sh-wi-46.m4a"
-        },
-        {
           "id": "sh-wi-47",
           "word": "широта",
           "imageAsset": "word_shirota",
@@ -948,7 +924,7 @@
         {
           "id": "sh-wi-48",
           "word": "шиповка",
-          "imageAsset": "word_kedy",
+          "imageAsset": "word_shipovka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wi-48.m4a"
@@ -1070,7 +1046,7 @@
           "hint": "ШП — редкое стечение.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Sh/sh-wi-63.m4a",
-          "imageAsset": "word_lupa"
+          "imageAsset": "word_shpion"
         },
         {
           "id": "sh-wi-64",
@@ -1102,7 +1078,7 @@
           "hint": "ШП + Л — два стечения.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Sh/sh-wi-67.m4a",
-          "imageAsset": "word_relsy"
+          "imageAsset": "word_shpala"
         },
         {
           "id": "sh-wi-68",
@@ -1126,7 +1102,7 @@
           "hint": "ШК + РК — двойное стечение.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Sh/sh-wi-70.m4a",
-          "imageAsset": "word_kozhura"
+          "imageAsset": "word_shkurka"
         },
         {
           "id": "sh-wi-71",
@@ -1518,14 +1494,6 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wm-37.m4a"
-        },
-        {
-          "id": "sh-wm-38",
-          "word": "рогатушка",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/SH/sh-wm-38.m4a"
         },
         {
           "id": "sh-wm-39",

@@ -54,12 +54,13 @@ final class FamilyVoiceScoringWorkerTests: XCTestCase {
         let path = try makeRecording()
         defer { cleanup(path) }
 
-        let score = await worker.score(childAudioPath: path, referenceWord: "Сова")
+        let outcome = await worker.score(childAudioPath: path, referenceWord: "Сова")
 
         XCTAssertEqual(ensemble.lastTier, .b, "Родительский контур → Tier B")
         XCTAssertEqual(ensemble.lastExpectedWord, "сова", "Реальное слово передаётся в lowercase (не пустая строка)")
         XCTAssertEqual(ensemble.lastTargetSound, "whistling", "Группа звука 'С' → whistling")
-        XCTAssertEqual(score, 0.91, accuracy: 0.0001, "Используется phonemeAccuracy ансамбля")
+        XCTAssertEqual(outcome.value, 0.91, accuracy: 0.0001, "Используется phonemeAccuracy ансамбля")
+        XCTAssertFalse(outcome.isApproximate, "Ансамблевая оценка — реальная, не приблизительная")
     }
 
     func test_ensembleTierB_zeroPhonemeAccuracy_fallsBackToConfidence() async throws {
@@ -71,8 +72,9 @@ final class FamilyVoiceScoringWorkerTests: XCTestCase {
         let path = try makeRecording()
         defer { cleanup(path) }
 
-        let score = await worker.score(childAudioPath: path, referenceWord: "рыба")
-        XCTAssertEqual(score, 0.7, accuracy: 0.0001, "При нулевой phonemeAccuracy используется общая уверенность")
+        let outcome = await worker.score(childAudioPath: path, referenceWord: "рыба")
+        XCTAssertEqual(outcome.value, 0.7, accuracy: 0.0001, "При нулевой phonemeAccuracy используется общая уверенность")
+        XCTAssertFalse(outcome.isApproximate)
         XCTAssertEqual(ensemble.lastTargetSound, "sonants", "'р' → sonants")
     }
 
@@ -86,20 +88,23 @@ final class FamilyVoiceScoringWorkerTests: XCTestCase {
         let path = try makeRecording()
         defer { cleanup(path) }
 
-        let score = await worker.score(childAudioPath: path, referenceWord: "шуба")
+        let outcome = await worker.score(childAudioPath: path, referenceWord: "шуба")
         // MockPronunciationScorerService.score → 0.82
-        XCTAssertEqual(score, 0.82, accuracy: 0.0001, "Без ансамбля — одиночный scorer")
+        XCTAssertEqual(outcome.value, 0.82, accuracy: 0.0001, "Без ансамбля — одиночный scorer")
+        XCTAssertFalse(outcome.isApproximate, "ML-оценка — реальная")
     }
 
-    // MARK: - Полное отсутствие моделей → RMS фолбэк
+    // MARK: - Полное отсутствие моделей → RMS фолбэк (реальная энергия, помечен approximate)
 
     func test_noModels_usesRMSHeuristic() async throws {
         let worker = FamilyVoiceScoringWorker(pronunciationScorer: nil, ensembleASR: nil)
+        // Запись синусоиды 330 Гц амплитудой 0.3 → различимая ненулевая энергия.
         let path = try makeRecording()
         defer { cleanup(path) }
 
-        let score = await worker.score(childAudioPath: path, referenceWord: "кот")
-        XCTAssertGreaterThanOrEqual(score, 0.5, "RMS-фолбэк держится в безопасном диапазоне")
-        XCTAssertLessThanOrEqual(score, 0.95)
+        let outcome = await worker.score(childAudioPath: path, referenceWord: "кот")
+        XCTAssertTrue(outcome.isApproximate, "RMS-фолбэк помечается приблизительным (нет анализа произношения)")
+        XCTAssertGreaterThan(outcome.value, 0, "Ненулевой сигнал → ненулевая нормированная энергия")
+        XCTAssertLessThanOrEqual(outcome.value, 1)
     }
 }

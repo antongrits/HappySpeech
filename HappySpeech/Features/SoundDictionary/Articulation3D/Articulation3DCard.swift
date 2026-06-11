@@ -2,27 +2,41 @@ import SwiftUI
 
 // MARK: - Articulation3DCard
 //
-// Карточка с интерактивной 3D-моделью артикуляции для SoundDictionary detail.
-// Показывает вращаемый сагиттальный разрез головы с позой языка для звука,
-// SwiftUI-оверлей с подсказкой позы и научными индикаторами (звонкость,
-// поднятое мягкое нёбо), а также сегмент-переключатель «3D / Видео», если
-// для звука есть и видео-схема.
+// Карточка артикуляции для SoundDictionary detail. Два режима показа уклада:
+//  • «Видео» — профессиональное Veo-видео (8 звуков Р/Л/Ш/С/Ж/Ч/Щ/З), основной
+//    визуал «как двигается язык» (медицинская демонстрация, Google Veo).
+//  • «Настоящий рот» — интерактивная вращаемая 3D-модель рта для рассматривания.
 //
-// Reduced Motion: морфинг и авто-движения отключаются (поза ставится мгновенно).
+// Если у звука есть Veo-видео — стартуем на «Видео» и показываем сегмент-
+// переключатель с обоими режимами. Если видео нет — показываем только «Настоящий
+// рот» (3D) без переключателя.
+//
+// Reduced Motion: авто-движения и автоплей видео отключаются (учитывается внутри
+// плеера и 3D-сцены).
 
 struct Articulation3DCard: View {
 
     /// Кириллическая буква звука (как в SoundDictionary title), напр. «Ш».
     let cyrillic: String
-    /// Слаг видео-схемы, если есть (для сегмент-переключателя на видео-фоллбэк).
+    /// Слаг видео-демонстрации, если есть (Veo для 8 звуков или nil).
     let videoSlug: VideoCatalog.ArticulationDemo?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var mode: Mode = .model
+    @State private var mode: Mode
 
     private enum Mode: Hashable {
-        case model
         case video
+        case realMouth
+    }
+
+    /// Есть ли профессиональное Veo-видео для этого звука.
+    private var hasVideo: Bool { videoSlug != nil }
+
+    init(cyrillic: String, videoSlug: VideoCatalog.ArticulationDemo?) {
+        self.cyrillic = cyrillic
+        self.videoSlug = videoSlug
+        // Есть видео → оно стартовый визуал; иначе — сразу 3D-модель.
+        _mode = State(initialValue: videoSlug != nil ? .video : .realMouth)
     }
 
     private var sound: ArticulationSound {
@@ -33,10 +47,17 @@ struct Articulation3DCard: View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
             header
 
-            if mode == .model {
-                modelStage
-            } else if let videoSlug {
-                ArticulationVideoPlayerView(videoSlug: videoSlug, soundLetter: cyrillic)
+            switch mode {
+            case .video:
+                if let videoSlug {
+                    ArticulationVideoPlayerView(videoSlug: videoSlug, soundLetter: cyrillic)
+                    poseLabel
+                    indicators
+                } else {
+                    realMouthStage
+                }
+            case .realMouth:
+                realMouthStage
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -48,47 +69,53 @@ struct Articulation3DCard: View {
     }
 
     // MARK: Header
+    //
+    // Заголовок + (если есть видео) полноширинный сегмент-переключатель режимов.
+    // Переключатель вынесен на отдельную строку и растянут на всю ширину, чтобы
+    // оба сегмента (особенно длинный «Настоящий рот») не обрезались на узком SE
+    // (375pt). Без видео переключатель не нужен — показывается только 3D.
 
     private var header: some View {
-        HStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: "cube.transparent.fill")
-                .font(.system(size: 13))
-                .foregroundStyle(ColorTokens.Brand.primary)
-            Text("articulation3d.title")
-                .font(TypographyTokens.caption(11))
-                .textCase(.uppercase)
-                .tracking(0.5)
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.sp1) {
+                Image(systemName: "lungs.fill")
+                    .font(.system(size: 13))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                Text("articulation3d.title")
+                    .font(TypographyTokens.caption(11))
+                    .textCase(.uppercase)
+                    .tracking(0.5)
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                Spacer(minLength: 0)
+            }
 
-            Spacer()
-
-            if videoSlug != nil {
+            if hasVideo {
                 Picker("articulation3d.mode.picker", selection: $mode) {
-                    Text("articulation3d.mode.model").tag(Mode.model)
                     Text("articulation3d.mode.video").tag(Mode.video)
+                    Text("articulation3d.mode.realMouth").tag(Mode.realMouth)
                 }
                 .pickerStyle(.segmented)
-                .fixedSize()
+                .frame(maxWidth: .infinity)
                 .accessibilityLabel(Text("articulation3d.mode.picker"))
             }
         }
     }
 
-    // MARK: 3D model stage
+    // MARK: Real-mouth stage (вращаемая 3D-модель)
 
-    private var modelStage: some View {
+    private var realMouthStage: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
             ZStack(alignment: .bottomLeading) {
                 RoundedRectangle(cornerRadius: RadiusTokens.md)
                     .fill(ColorTokens.Brand.butter.opacity(0.22))
 
-                ArticulationScene3DView(sound: sound, reduceMotion: reduceMotion)
+                ArticulationScene3DView(reduceMotion: reduceMotion)
                     .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md))
                     .accessibilityElement()
                     .accessibilityLabel(Text("articulation3d.a11y.scene"))
-                    .accessibilityValue(Text(sound.localizedHint))
 
-                // Подсказка «вращай пальцем» (мелкая, не мешает).
                 if !reduceMotion {
                     HStack(spacing: 4) {
                         Image(systemName: "hand.draw.fill")
@@ -112,7 +139,7 @@ struct Articulation3DCard: View {
         }
     }
 
-    // MARK: Attribution (CC-BY-SA 4.0 для исходной 3D-модели)
+    // MARK: Attribution (CC-BY 4.0 для исходной 3D-модели)
 
     private var attribution: some View {
         Text("articulation3d.attribution")
@@ -122,7 +149,7 @@ struct Articulation3DCard: View {
             .fixedSize(horizontal: false, vertical: true)
     }
 
-    // MARK: Pose label + indicators (SwiftUI-оверлей, не текст внутри 3D)
+    // MARK: Pose label + indicators
 
     private var poseLabel: some View {
         Text(sound.localizedHint)
@@ -134,20 +161,17 @@ struct Articulation3DCard: View {
 
     private var indicators: some View {
         HStack(spacing: SpacingTokens.sp2) {
-            // Поднятое мягкое нёбо — у всех ротовых русских согласных.
             indicatorChip(
                 systemImage: "arrow.up.circle.fill",
                 titleKey: "articulation3d.indicator.velum",
                 tint: ColorTokens.Brand.lilac
             )
-
-            // Звонкость.
             indicatorChip(
                 systemImage: sound.isVoiced ? "waveform.path" : "waveform",
                 titleKey: sound.isVoiced
                     ? "articulation3d.indicator.voiced"
                     : "articulation3d.indicator.voiceless",
-                tint: sound.isVoiced ? ColorTokens.Brand.rose : ColorTokens.Parent.inkMuted
+                tint: sound.isVoiced ? ColorTokens.Brand.gold : ColorTokens.Parent.inkMuted
             )
         }
     }
@@ -171,4 +195,12 @@ struct Articulation3DCard: View {
         .padding(.vertical, 5)
         .background(Capsule().fill(tint.opacity(0.12)))
     }
+}
+
+// MARK: - Preview
+
+#Preview("Card — Ш") {
+    Articulation3DCard(cyrillic: "Ш", videoSlug: nil)
+        .padding()
+        .background(ColorTokens.Parent.bg)
 }

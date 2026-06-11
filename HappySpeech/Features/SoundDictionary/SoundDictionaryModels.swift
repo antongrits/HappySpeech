@@ -68,7 +68,6 @@ public struct PhonemeEntry: Identifiable, Sendable, Equatable, Hashable {
     public let exampleSyllable: String    // «са»
     public let articulationNoteKey: String // localization key для описания артикуляции
     public let audioResourceName: String? // имя .m4a в Resources/Audio/Content/Phonemic, без расширения
-    public let articulationProfileAsset: String? // имя imageset со схемой артикуляции (как ставить язык/губы), nil — нет схемы
 
     public init(
         id: String,
@@ -78,8 +77,7 @@ public struct PhonemeEntry: Identifiable, Sendable, Equatable, Hashable {
         exampleWord: String,
         exampleSyllable: String,
         articulationNoteKey: String,
-        audioResourceName: String? = nil,
-        articulationProfileAsset: String? = nil
+        audioResourceName: String? = nil
     ) {
         self.id = id
         self.cyrillic = cyrillic
@@ -89,7 +87,6 @@ public struct PhonemeEntry: Identifiable, Sendable, Equatable, Hashable {
         self.exampleSyllable = exampleSyllable
         self.articulationNoteKey = articulationNoteKey
         self.audioResourceName = audioResourceName
-        self.articulationProfileAsset = articulationProfileAsset
     }
 }
 
@@ -147,8 +144,6 @@ enum SoundDictionaryModels {
             let groupTitle: String
             let exampleWord: String
             let articulationNote: String
-            let articulationProfileAsset: String?   // imageset со схемой артикуляции, nil — нет
-            let articulationProfileA11yLabel: String?  // VoiceOver-метка для схемы
             let hasAudio: Bool
             let practiceCtaLabel: String    // «Поупражняться»
             let playAudioLabel: String      // «Прослушать»
@@ -223,8 +218,7 @@ public enum PhonemeCorpus {
         .init(id: "wh-s", cyrillic: "С", ipa: "s", group: .whistling,
               exampleWord: "солнце", exampleSyllable: "са",
               articulationNoteKey: "soundDictionary.phoneme.wh-s.articulation",
-              audioResourceName: "phon-fs-0",
-              articulationProfileAsset: "artic_profile_s"),
+              audioResourceName: "phon-fs-0"),
         .init(id: "wh-s-soft", cyrillic: "Сь", ipa: "sʲ", group: .whistling,
               exampleWord: "сирень", exampleSyllable: "си",
               articulationNoteKey: "soundDictionary.phoneme.wh-s-soft.articulation",
@@ -232,8 +226,7 @@ public enum PhonemeCorpus {
         .init(id: "wh-z", cyrillic: "З", ipa: "z", group: .whistling,
               exampleWord: "звезда", exampleSyllable: "за",
               articulationNoteKey: "soundDictionary.phoneme.wh-z.articulation",
-              audioResourceName: "phon-fs-2",
-              articulationProfileAsset: "artic_profile_z"),
+              audioResourceName: "phon-fs-2"),
         .init(id: "wh-z-soft", cyrillic: "Зь", ipa: "zʲ", group: .whistling,
               exampleWord: "земля", exampleSyllable: "зи",
               articulationNoteKey: "soundDictionary.phoneme.wh-z-soft.articulation",
@@ -241,68 +234,56 @@ public enum PhonemeCorpus {
         .init(id: "wh-ts", cyrillic: "Ц", ipa: "ts", group: .whistling,
               exampleWord: "цапля", exampleSyllable: "ца",
               articulationNoteKey: "soundDictionary.phoneme.wh-ts.articulation",
-              audioResourceName: "phon-fs-4",
-              articulationProfileAsset: "artic_profile_ts"),
+              audioResourceName: "phon-fs-4"),
 
         // MARK: Шипящие (4)
         .init(id: "hs-sh", cyrillic: "Ш", ipa: "ʂ", group: .hissing,
               exampleWord: "шапка", exampleSyllable: "ша",
               articulationNoteKey: "soundDictionary.phoneme.hs-sh.articulation",
-              audioResourceName: "phon-hs-0",
-              articulationProfileAsset: "artic_profile_sh"),
+              audioResourceName: "phon-hs-0"),
         .init(id: "hs-zh", cyrillic: "Ж", ipa: "ʐ", group: .hissing,
               exampleWord: "жираф", exampleSyllable: "жа",
               articulationNoteKey: "soundDictionary.phoneme.hs-zh.articulation",
-              audioResourceName: "phon-hs-1",
-              articulationProfileAsset: "artic_profile_zh"),
+              audioResourceName: "phon-hs-1"),
         .init(id: "hs-ch", cyrillic: "Ч", ipa: "tɕ", group: .hissing,
               exampleWord: "чашка", exampleSyllable: "ча",
               articulationNoteKey: "soundDictionary.phoneme.hs-ch.articulation",
-              audioResourceName: "phon-hs-2",
-              articulationProfileAsset: "artic_profile_ch"),
+              audioResourceName: "phon-hs-2"),
         .init(id: "hs-shch", cyrillic: "Щ", ipa: "ɕː", group: .hissing,
               exampleWord: "щётка", exampleSyllable: "ща",
               articulationNoteKey: "soundDictionary.phoneme.hs-shch.articulation",
-              audioResourceName: "phon-hs-3",
-              articulationProfileAsset: "artic_profile_shch"),
+              audioResourceName: "phon-hs-3"),
 
         // MARK: Соноры (4)
         .init(id: "son-r", cyrillic: "Р", ipa: "r", group: .sonants,
               exampleWord: "рыба", exampleSyllable: "ра",
-              articulationNoteKey: "soundDictionary.phoneme.son-r.articulation",
-              articulationProfileAsset: "artic_profile_r"),
+              articulationNoteKey: "soundDictionary.phoneme.son-r.articulation"),
         .init(id: "son-r-soft", cyrillic: "Рь", ipa: "rʲ", group: .sonants,
               exampleWord: "река", exampleSyllable: "ри",
-              articulationNoteKey: "soundDictionary.phoneme.son-r-soft.articulation",
-              articulationProfileAsset: "artic_profile_r_soft"),
+              articulationNoteKey: "soundDictionary.phoneme.son-r-soft.articulation"),
         .init(id: "son-l", cyrillic: "Л", ipa: "l", group: .sonants,
               exampleWord: "лампа", exampleSyllable: "ла",
-              articulationNoteKey: "soundDictionary.phoneme.son-l.articulation",
-              articulationProfileAsset: "artic_profile_l"),
+              articulationNoteKey: "soundDictionary.phoneme.son-l.articulation"),
         .init(id: "son-l-soft", cyrillic: "Ль", ipa: "lʲ", group: .sonants,
               exampleWord: "лимон", exampleSyllable: "ли",
-              articulationNoteKey: "soundDictionary.phoneme.son-l-soft.articulation",
-              articulationProfileAsset: "artic_profile_l_soft"),
+              articulationNoteKey: "soundDictionary.phoneme.son-l-soft.articulation"),
 
         // MARK: Заднеязычные (6)
         .init(id: "vel-k", cyrillic: "К", ipa: "k", group: .velar,
               exampleWord: "кошка", exampleSyllable: "ка",
-              articulationNoteKey: "soundDictionary.phoneme.vel-k.articulation",
-              articulationProfileAsset: "artic_profile_k"),
+              articulationNoteKey: "soundDictionary.phoneme.vel-k.articulation"),
         .init(id: "vel-k-soft", cyrillic: "Кь", ipa: "kʲ", group: .velar,
               exampleWord: "кисель", exampleSyllable: "ки",
               articulationNoteKey: "soundDictionary.phoneme.vel-k-soft.articulation"),
         .init(id: "vel-g", cyrillic: "Г", ipa: "ɡ", group: .velar,
               exampleWord: "гора", exampleSyllable: "га",
-              articulationNoteKey: "soundDictionary.phoneme.vel-g.articulation",
-              articulationProfileAsset: "artic_profile_g"),
+              articulationNoteKey: "soundDictionary.phoneme.vel-g.articulation"),
         .init(id: "vel-g-soft", cyrillic: "Гь", ipa: "ɡʲ", group: .velar,
               exampleWord: "гитара", exampleSyllable: "ги",
               articulationNoteKey: "soundDictionary.phoneme.vel-g-soft.articulation"),
         .init(id: "vel-h", cyrillic: "Х", ipa: "x", group: .velar,
               exampleWord: "хлеб", exampleSyllable: "ха",
-              articulationNoteKey: "soundDictionary.phoneme.vel-h.articulation",
-              articulationProfileAsset: "artic_profile_h"),
+              articulationNoteKey: "soundDictionary.phoneme.vel-h.articulation"),
         .init(id: "vel-h-soft", cyrillic: "Хь", ipa: "xʲ", group: .velar,
               exampleWord: "хитрый", exampleSyllable: "хи",
               articulationNoteKey: "soundDictionary.phoneme.vel-h-soft.articulation"),

@@ -40,7 +40,7 @@
     },
     {
       "word": "медведь",
-      "asset": "word_bear",
+      "asset": "word_medved",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -650,7 +650,7 @@
     },
     {
       "word": "мама",
-      "asset": "word_serdtse",
+      "asset": "word_mama",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -1102,7 +1102,7 @@
     },
     {
       "word": "зонтик",
-      "asset": "word_umbrella",
+      "asset": "word_zontik",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -1692,7 +1692,7 @@
     },
     {
       "word": "ладонь",
-      "asset": "word_ruki",
+      "asset": "word_ladon",
       "recommendedStages": [
         "wordInit",
         "wordMid",
@@ -4987,7 +4987,7 @@
       "soundFamily": null
     },
     {
-      "word": "апполон",
+      "word": "аполлон",
       "asset": "word_babochka",
       "recommendedStages": [
         "word"
@@ -5439,7 +5439,7 @@
     },
     {
       "word": "батюшка",
-      "asset": "word_svecha",
+      "asset": "word_batyushka",
       "recommendedStages": [
         "word"
       ],
@@ -5462,17 +5462,6 @@
     {
       "word": "базилик",
       "asset": "word_bazilik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "бедро",
-      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -5626,7 +5615,7 @@
     },
     {
       "word": "благодарность",
-      "asset": "word_serdtse",
+      "asset": "word_blagodarnost",
       "recommendedStages": [
         "word"
       ],
@@ -6495,7 +6484,7 @@
     },
     {
       "word": "дисциплина",
-      "asset": "word_chasy",
+      "asset": "word_distsiplina",
       "recommendedStages": [
         "word"
       ],
@@ -6682,7 +6671,7 @@
     },
     {
       "word": "дровосек",
-      "asset": "word_topor",
+      "asset": "word_drovosek",
       "recommendedStages": [
         "word"
       ],
@@ -8431,7 +8420,7 @@
     },
     {
       "word": "кефаль",
-      "asset": "word_karp",
+      "asset": "word_kefal",
       "recommendedStages": [
         "word"
       ],
@@ -8496,17 +8485,6 @@
       "soundFamily": "К"
     },
     {
-      "word": "кишечник",
-      "asset": null,
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
       "word": "кислинка",
       "asset": "word_kislinka",
       "recommendedStages": [
@@ -8542,17 +8520,6 @@
     {
       "word": "кизил",
       "asset": "word_kizil",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "кладбище",
-      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -8641,17 +8608,6 @@
     {
       "word": "шалаш",
       "asset": "word_shalash",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "wordInit",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ш"
-    },
-    {
-      "word": "шалташ",
-      "asset": "word_shaltash",
       "recommendedStages": [
         "word"
       ],
@@ -8804,17 +8760,6 @@
       "soundFamily": "Ш"
     },
     {
-      "word": "шиловатый",
-      "asset": "word_shilovatyy",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "wordInit",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ш"
-    },
-    {
       "word": "шиловидный",
       "asset": "word_shilovidnyy",
       "recommendedStages": [
@@ -8849,7 +8794,7 @@
     },
     {
       "word": "шиповка",
-      "asset": "word_kedy",
+      "asset": "word_shipovka",
       "recommendedStages": [
         "word"
       ],
@@ -8872,28 +8817,6 @@
     {
       "word": "шипы",
       "asset": "word_shipy",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "wordInit",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ш"
-    },
-    {
-      "word": "ширина",
-      "asset": null,
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "wordInit",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ш"
-    },
-    {
-      "word": "широкий",
-      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -8948,7 +8871,7 @@
     },
     {
       "word": "шкурка",
-      "asset": "word_kozhura",
+      "asset": "word_shkurka",
       "recommendedStages": [
         "word"
       ],
@@ -9003,7 +8926,7 @@
     },
     {
       "word": "шнурок",
-      "asset": "word_shnurki",
+      "asset": "word_shnurok",
       "recommendedStages": [
         "word"
       ],
@@ -9080,7 +9003,7 @@
     },
     {
       "word": "шпала",
-      "asset": "word_relsy",
+      "asset": "word_shpala",
       "recommendedStages": [
         "word"
       ],
@@ -9102,7 +9025,7 @@
     },
     {
       "word": "шпион",
-      "asset": "word_lupa",
+      "asset": "word_shpion",
       "recommendedStages": [
         "word"
       ],
@@ -9585,17 +9508,6 @@
       "soundFamily": null
     },
     {
-      "word": "висок",
-      "asset": null,
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "внедорожник",
       "asset": "word_vnedorozhnik",
       "recommendedStages": [
@@ -9872,7 +9784,7 @@
     },
     {
       "word": "встреча",
-      "asset": "word_rukopozhatie",
+      "asset": "word_vstrecha",
       "recommendedStages": [
         "word"
       ],
@@ -10037,7 +9949,7 @@
     },
     {
       "word": "зависть",
-      "asset": "word_grust",
+      "asset": "word_zavist",
       "recommendedStages": [
         "word"
       ],
@@ -10214,17 +10126,6 @@
     {
       "word": "жеребёнок",
       "asset": "word_zherebyonok",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жестокий",
-      "asset": null,
       "recommendedStages": [
         "word"
       ],
@@ -10652,17 +10553,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "блохи",
-      "asset": null,
-      "recommendedStages": [
-        "wordMed"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "curriculum-manifest-v1",
-      "soundFamily": "Х"
-    },
-    {
       "word": "борщ",
       "asset": "word_borshch",
       "recommendedStages": [
@@ -10741,7 +10631,7 @@
     },
     {
       "word": "доктор",
-      "asset": "word_vrach",
+      "asset": "word_doktor",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -11004,28 +10894,6 @@
       "soundFamily": "С"
     },
     {
-      "word": "клещ",
-      "asset": null,
-      "recommendedStages": [
-        "wordFinal"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "curriculum-manifest-v1",
-      "soundFamily": "Щ"
-    },
-    {
-      "word": "клещи",
-      "asset": null,
-      "recommendedStages": [
-        "wordMed"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "curriculum-manifest-v1",
-      "soundFamily": "Щ"
-    },
-    {
       "word": "клён",
       "asset": "word_klon",
       "recommendedStages": [
@@ -11170,7 +11038,7 @@
     },
     {
       "word": "летчик",
-      "asset": "word_samolyot",
+      "asset": "word_letchik",
       "recommendedStages": [
         "wordInit"
       ],
@@ -11258,7 +11126,7 @@
     },
     {
       "word": "монах",
-      "asset": "word_khram",
+      "asset": "word_monakh",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -11401,7 +11269,7 @@
     },
     {
       "word": "пахарь",
-      "asset": "word_traktor",
+      "asset": "word_pakhar",
       "recommendedStages": [
         "wordMed"
       ],
@@ -11632,7 +11500,7 @@
     },
     {
       "word": "рыбак",
-      "asset": "word_rybalka",
+      "asset": "word_rybak",
       "recommendedStages": [
         "wordInit"
       ],
@@ -12886,7 +12754,7 @@
     },
     {
       "word": "бородач",
-      "asset": "word_boroda",
+      "asset": "word_borodach",
       "recommendedStages": [
         "word"
       ],
@@ -13326,7 +13194,7 @@
     },
     {
       "word": "пастух",
-      "asset": "word_ovtsa",
+      "asset": "word_pastukh",
       "recommendedStages": [
         "word"
       ],
@@ -13490,19 +13358,8 @@
       "soundFamily": "Й"
     },
     {
-      "word": "ружьё",
-      "asset": null,
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "pack-align-r2",
-      "soundFamily": "Р"
-    },
-    {
       "word": "сапожник",
-      "asset": "word_sapog",
+      "asset": "word_sapozhnik",
       "recommendedStages": [
         "word"
       ],
@@ -14140,7 +13997,7 @@
     },
     {
       "word": "повар",
-      "asset": "word_kastryulya",
+      "asset": "word_povar",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -14162,7 +14019,7 @@
     },
     {
       "word": "моряк",
-      "asset": "word_yakor",
+      "asset": "word_moryak",
       "recommendedStages": [
         "wordFinal"
       ],
@@ -15259,17 +15116,6 @@
       "soundFamily": "Ж"
     },
     {
-      "word": "блоха",
-      "asset": null,
-      "recommendedStages": [
-        "wordMed"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "orphan-batch-1",
-      "soundFamily": "Л"
-    },
-    {
       "word": "олень",
       "asset": "word_olen",
       "recommendedStages": [
@@ -15326,7 +15172,7 @@
     },
     {
       "word": "пилот",
-      "asset": "word_samolyot",
+      "asset": "word_pilot",
       "recommendedStages": [
         "word"
       ],
@@ -15348,7 +15194,7 @@
     },
     {
       "word": "музыкант",
-      "asset": "word_gitara",
+      "asset": "word_muzykant",
       "recommendedStages": [
         "word"
       ],
@@ -15370,7 +15216,7 @@
     },
     {
       "word": "лето",
-      "asset": "word_solntse",
+      "asset": "word_leto",
       "recommendedStages": [
         "word"
       ],
@@ -22363,17 +22209,6 @@
       "methodologySource": "Pollinations.ai overnight v3"
     },
     {
-      "word": "коричневый",
-      "asset": "word_korichnevyy",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "Pollinations.ai overnight v3"
-    },
-    {
       "word": "koridor",
       "asset": "word_koridor",
       "recommendedStages": [
@@ -23991,28 +23826,6 @@
       "methodologySource": "Pollinations.ai overnight v3"
     },
     {
-      "word": "муха",
-      "asset": "word_mukha",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "Pollinations.ai overnight v3"
-    },
-    {
-      "word": "муравей",
-      "asset": "word_muravey",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "Pollinations.ai overnight v3"
-    },
-    {
       "word": "mushroom",
       "asset": "word_mushroom",
       "recommendedStages": [
@@ -24125,17 +23938,6 @@
     {
       "word": "нога",
       "asset": "word_noga",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "Pollinations.ai overnight v3"
-    },
-    {
-      "word": "ноль",
-      "asset": "word_nol",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -24301,17 +24103,6 @@
     {
       "word": "onion",
       "asset": "word_onion",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "Pollinations.ai overnight v3"
-    },
-    {
-      "word": "оранжевый",
-      "asset": "word_oranzhevyy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -29601,28 +29392,6 @@
       "methodologySource": "GCP Imagen 3 fast 2026-06-03"
     },
     {
-      "word": "муравей",
-      "asset": "word_muravei",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "animals",
-      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
-    },
-    {
-      "word": "огонёк",
-      "asset": "word_ogonek",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
-    },
-    {
       "word": "опушка",
       "asset": "word_opushka",
       "recommendedStages": [
@@ -29669,17 +29438,6 @@
     {
       "word": "прыщик",
       "asset": "word_pryshchik",
-      "recommendedStages": [
-        "wordMid",
-        "wordFinal"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
-    },
-    {
-      "word": "рапира",
-      "asset": "word_rapira",
       "recommendedStages": [
         "wordMid",
         "wordFinal"
@@ -30019,33 +29777,11 @@
       "methodologySource": "GCP Imagen 3 fast 2026-06-03"
     },
     {
-      "word": "шорох",
-      "asset": "word_shoroh",
-      "recommendedStages": [
-        "wordMid",
-        "wordFinal"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "nature",
-      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
-    },
-    {
       "word": "эпоха",
       "asset": "word_epokha",
       "recommendedStages": [
         "wordMid",
         "wordFinal"
-      ],
-      "visualComplexity": "medium",
-      "semanticCategory": "objects",
-      "methodologySource": "GCP Imagen 3 fast 2026-06-03"
-    },
-    {
-      "word": "юбилей",
-      "asset": "word_yubilei",
-      "recommendedStages": [
-        "wordInit",
-        "wordMid"
       ],
       "visualComplexity": "medium",
       "semanticCategory": "objects",

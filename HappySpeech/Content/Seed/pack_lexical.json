@@ -5060,20 +5060,6 @@
           "hint": "Водомерка лёгкая. Бегает прямо по воде.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-ins-28.m4a"
-        },
-        {
-          "id": "lex-ins-29",
-          "word": "клещ",
-          "hint": "Клещ маленький. Живёт в траве.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-ins-29.m4a"
-        },
-        {
-          "id": "lex-ins-30",
-          "word": "блоха",
-          "hint": "Блоха крошечная. Высоко прыгает.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/Lexical/lex-ins-30.m4a"
         }
       ]
     },

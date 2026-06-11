@@ -1,6 +1,5 @@
 import OSLog
 import SwiftUI
-import UIKit
 
 // MARK: - SoundDictionaryViewModelHolder
 
@@ -314,15 +313,11 @@ struct SoundDictionaryView: View {
                         .fill(ColorTokens.Parent.bg)
                 )
 
-                // Articulation profile scheme (как ставить язык/губы) —
-                // только у согласных, для которых задан и реально существует imageset.
-                articulationProfileCard(viewModel)
-
-                // Артикуляция side-view: для звуков с научной 3D-позой —
-                // интерактивная 3D-модель сагиттального разреза (вращаемая),
-                // с опциональным переключателем на видео-схему. Для остальных
-                // (нет 3D-позы) — программное Remotion-видео как раньше.
-                let articulationVideo = VideoCatalog.ArticulationDemo.profileDemo(
+                // Артикуляция: для звуков с научной позой — карточка
+                // (профессиональное Veo-видео «как двигается язык» для 8 звуков
+                // Р/Л/Ш/С/Ж/Ч/Щ/З + вращаемая 3D-модель + схема-разрез). Для
+                // звуков без позы, но с Veo-видео — отдельный плеер.
+                let articulationVideo = VideoCatalog.ArticulationDemo.veoDemo(
                     forCyrillic: viewModel.title
                 )
                 if ArticulationSound.fromCyrillic(viewModel.title) != nil {
@@ -397,47 +392,6 @@ struct SoundDictionaryView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
         }
         .background(ColorTokens.Parent.surface.ignoresSafeArea())
-    }
-
-    // MARK: - Articulation profile scheme
-
-    /// Карточка со схемой артикуляции (как ставить язык/губы). Показывается
-    /// только если у фонемы задан imageset и он реально присутствует в бандле
-    /// (`UIImage(named:) != nil`). У гласных/мягких знаков поле nil → ничего.
-    @ViewBuilder
-    private func articulationProfileCard(
-        _ viewModel: SoundDictionaryModels.SelectPhoneme.ViewModel
-    ) -> some View {
-        if let asset = viewModel.articulationProfileAsset,
-           UIImage(named: asset) != nil {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("soundDictionary.detail.articulationProfile.label")
-                    .font(TypographyTokens.caption(11))
-                    .textCase(.uppercase)
-                    .tracking(0.5)
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-
-                Image(asset)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: .infinity)
-                    .frame(maxHeight: 200)
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.sm)
-                            .fill(ColorTokens.Parent.surface)
-                    )
-                    .accessibilityLabel(
-                        Text(viewModel.articulationProfileA11yLabel
-                            ?? String(localized: "soundDictionary.detail.articulationProfile.label"))
-                    )
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(SpacingTokens.sp4)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.md)
-                    .fill(ColorTokens.Parent.bg)
-            )
-        }
     }
 
     // MARK: - Loading

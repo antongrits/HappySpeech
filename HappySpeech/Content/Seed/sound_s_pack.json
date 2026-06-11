@@ -1017,7 +1017,7 @@
           "word": "сапожник",
           "difficulty": 4,
           "audio_file": "Audio/Content/S/s-wi-60.m4a",
-          "imageAsset": "word_sapog"
+          "imageAsset": "word_sapozhnik"
         },
         {
           "id": "s-wi-61",
@@ -1525,7 +1525,7 @@
           "word": "пастух",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wm-39.m4a",
-          "imageAsset": "word_ovtsa"
+          "imageAsset": "word_pastukh"
         },
         {
           "id": "s-wm-40",

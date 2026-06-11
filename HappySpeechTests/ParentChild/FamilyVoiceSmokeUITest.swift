@@ -61,7 +61,8 @@ final class FamilyVoiceSmokeUITest: XCTestCase {
             liveTranscript: nil,
             showFeedback: false,
             feedbackIsCorrect: false,
-            toastMessage: nil
+            toastMessage: nil,
+            scoreIsApproximate: false
         )
 
         XCTAssertEqual(vm.mode, .recorder, "Начальный режим должен быть .recorder")
@@ -137,7 +138,8 @@ final class FamilyVoiceSmokeUITest: XCTestCase {
             liveTranscript: "мяч",
             showFeedback: true,
             feedbackIsCorrect: true,
-            toastMessage: nil
+            toastMessage: nil,
+            scoreIsApproximate: false
         )
 
         XCTAssertEqual(vm.mode, .split, "Режим должен быть .split")

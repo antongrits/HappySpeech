@@ -23,6 +23,7 @@ final class FamilyVoicePresenter {
     private var showFeedback: Bool = false
     private var feedbackIsCorrect: Bool = false
     private var toastMessage: String?
+    private var scoreIsApproximate: Bool = false
 
     // MARK: - Presentation
 
@@ -78,10 +79,17 @@ final class FamilyVoicePresenter {
     func presentChildScore(_ response: FamilyVoiceModels.ChildScoringResponse) {
         currentScore = response.score
         liveTranscript = response.transcript
+        scoreIsApproximate = response.isApproximate
         feedbackIsCorrect = response.score >= 0.75
-        feedback = feedbackIsCorrect
-            ? String(localized: "parent_child.split.feedback.great")
-            : String(localized: "parent_child.split.feedback.try")
+        // На приблизительной (RMS) оценке избегаем категоричных «отлично/попробуй ещё»:
+        // даём нейтральную честную формулировку про услышанный голос.
+        if response.isApproximate {
+            feedback = String(localized: "parent_child.split.feedback.approximate")
+        } else {
+            feedback = feedbackIsCorrect
+                ? String(localized: "parent_child.split.feedback.great")
+                : String(localized: "parent_child.split.feedback.try")
+        }
         showFeedback = true
         display?.displayChildScore(makeViewModel())
     }
@@ -97,6 +105,7 @@ final class FamilyVoicePresenter {
         liveTranscript = nil
         showFeedback = false
         feedback = nil
+        scoreIsApproximate = false
         display?.displayWordChanged(makeViewModel())
     }
 
@@ -134,7 +143,8 @@ final class FamilyVoicePresenter {
             liveTranscript: liveTranscript,
             showFeedback: showFeedback,
             feedbackIsCorrect: feedbackIsCorrect,
-            toastMessage: toastMessage
+            toastMessage: toastMessage,
+            scoreIsApproximate: scoreIsApproximate
         )
     }
 

@@ -86,6 +86,27 @@ enum VideoCatalog {
         // Озвонченные профили: артикуляция = глухой аналог, отличие — работа голоса
         case articulationZProfile = "articulation_z_profile"
         case articulationZhProfile = "articulation_zh_profile"
+        // Профессиональные Veo-видео (Google Veo 3.1, 1280×720, медицинский
+        // сагиттальный разрез рта, без звука — поверх играет Chirp3-эталон).
+        // Источник: Resources/Videos/Articulation/veo/, манифест veo_manifest.json.
+        case veoR = "artic_veo_r"
+        case veoL = "artic_veo_l"
+        case veoSh = "artic_veo_sh"
+        case veoS = "artic_veo_s"
+        case veoZh = "artic_veo_zh"
+        case veoCh = "artic_veo_ch"
+        case veoShch = "artic_veo_shch"
+        case veoZ = "artic_veo_z"
+
+        /// `true` для профессиональных Veo-демонстраций (8 звуков Р/Л/Ш/С/Ж/Ч/Щ/З).
+        var isVeo: Bool {
+            switch self {
+            case .veoR, .veoL, .veoSh, .veoS, .veoZh, .veoCh, .veoShch, .veoZ:
+                return true
+            default:
+                return false
+            }
+        }
     }
 
     /// Унифицированная ссылка на видео в каталоге.
@@ -114,15 +135,20 @@ enum VideoCatalog {
                 subdirectory: "Videos/Lyalya"
             )
         case .articulation(let demo):
-            // Программные side-view профили лежат в подпапке programmatic/
+            // Профессиональные Veo-видео — подпапка veo/; программные side-view
+            // профили — programmatic/; анатомические demo-ролики — корень Articulation/.
             let subdirectory: String
-            switch demo {
-            case .articulationSProfile, .articulationShProfile,
-                 .articulationRProfile, .articulationLProfile,
-                 .articulationZProfile, .articulationZhProfile:
-                subdirectory = "Videos/Articulation/programmatic"
-            default:
-                subdirectory = "Videos/Articulation"
+            if demo.isVeo {
+                subdirectory = "Videos/Articulation/veo"
+            } else {
+                switch demo {
+                case .articulationSProfile, .articulationShProfile,
+                     .articulationRProfile, .articulationLProfile,
+                     .articulationZProfile, .articulationZhProfile:
+                    subdirectory = "Videos/Articulation/programmatic"
+                default:
+                    subdirectory = "Videos/Articulation"
+                }
             }
             return Bundle.main.url(
                 forResource: demo.rawValue,

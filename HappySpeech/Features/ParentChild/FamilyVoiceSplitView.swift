@@ -264,22 +264,47 @@ struct FamilyVoiceSplitView: View {
     // MARK: - [F] Score Row
 
     private func scoreRow(vm: FamilyVoiceViewModel?) -> some View {
-        HStack {
-            if let score = vm?.currentScore {
-                Text(String(format: String(localized: "parent_child.split.score.format"), Int(score * 100)))
-                    .font(TypographyTokens.mono(13))
-                    .foregroundStyle(ColorTokens.Parent.ink)
+        let isApproximate = vm?.scoreIsApproximate ?? false
+        return VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+            HStack {
+                if let score = vm?.currentScore {
+                    Text(String(format: String(localized: "parent_child.split.score.format"), Int(score * 100)))
+                        .font(TypographyTokens.mono(13))
+                        .foregroundStyle(ColorTokens.Parent.ink)
 
-                HSProgressBar(
-                    value: Double(score),
-                    style: .parent,
-                    tint: score >= 0.75 ? ColorTokens.Brand.mint : ColorTokens.Brand.rose
-                )
-                .frame(maxWidth: 120, maxHeight: 8)
-            } else {
-                Text(String(format: String(localized: "parent_child.split.score.format"), 0))
-                    .font(TypographyTokens.mono(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    HSProgressBar(
+                        value: Double(score),
+                        style: .parent,
+                        // На приблизительной оценке держим нейтральный butter-тон,
+                        // чтобы не сигналить «хорошо/плохо» по громкости.
+                        tint: isApproximate
+                            ? ColorTokens.Brand.butter
+                            : (score >= 0.75 ? ColorTokens.Brand.mint : ColorTokens.Brand.rose)
+                    )
+                    .frame(maxWidth: 120, maxHeight: 8)
+                } else {
+                    Text(String(format: String(localized: "parent_child.split.score.format"), 0))
+                        .font(TypographyTokens.mono(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
+            }
+
+            // Честная пометка: оценка приблизительная (RMS-громкость без анализа
+            // произношения) — не выдаём её за реальную оценку чёткости звука.
+            if isApproximate, vm?.currentScore != nil {
+                HStack(spacing: SpacingTokens.micro) {
+                    Image(systemName: "info.circle")
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .accessibilityHidden(true)
+                    Text("parent_child.split.score.approximate_note")
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(Text("parent_child.split.score.approximate_note"))
             }
         }
     }
