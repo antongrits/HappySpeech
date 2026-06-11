@@ -37,7 +37,7 @@ public typealias SessionCompletePhase = RewardStage
 // MARK: - ScoreBreakdown
 
 /// Детальный разбор счёта за сессию.
-public struct ScoreBreakdown: Sendable, Equatable {
+public struct ScoreBreakdown: Sendable, Equatable, Hashable {
     /// Итоговый счёт (0–100).
     public let total: Int
     /// Базовый счёт за правильные ответы.
@@ -66,8 +66,9 @@ public struct ScoreBreakdown: Sendable, Equatable {
 // MARK: - SessionResult (DTO from caller)
 
 /// Результат сессии, передаваемый в экран извне (из LessonPlayer / координатора).
-/// Чистая Sendable-структура без UI-зависимостей.
-public struct SessionResult: Sendable, Equatable {
+/// Чистая Sendable-структура без UI-зависимостей. `Hashable` — чтобы переносить
+/// реальный результат как ассоциированное значение `AppRoute.sessionComplete`.
+public struct SessionResult: Sendable, Equatable, Hashable {
     public let score: Float          // 0…1 (accuracy)
     public let starsEarned: Int      // 0…3
     public let gameTitle: String
@@ -129,6 +130,14 @@ public struct SessionResult: Sendable, Equatable {
         self.nextLessonTitle = nextLessonTitle
         self.childId = childId
         self.sessionId = sessionId
+    }
+
+    /// Число звёзд по точности 0…1 (без учёта подсказок — для путей, где hints
+    /// не отслеживаются). 1 — выполнено, 2 — ≥60%, 3 — ≥85%.
+    public static func stars(for accuracy: Float) -> Int {
+        if accuracy >= 0.85 { return 3 }
+        if accuracy >= 0.60 { return 2 }
+        return 1
     }
 
     /// Демо-данные для preview / навигации с дефолтным результатом.

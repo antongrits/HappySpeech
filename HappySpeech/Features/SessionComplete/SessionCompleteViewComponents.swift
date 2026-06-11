@@ -134,6 +134,7 @@ struct SessionCompleteShareSheet: UIViewControllerRepresentable {
         onContinue: {},
         onReplay: {}
     )
+    .environment(AppContainer.preview())
 }
 
 #Preview("SessionComplete — Encouraging") {
@@ -152,6 +153,7 @@ struct SessionCompleteShareSheet: UIViewControllerRepresentable {
         onContinue: {},
         onReplay: {}
     )
+    .environment(AppContainer.preview())
 }
 
 #Preview("SessionComplete — 2 Stars") {
@@ -170,4 +172,5 @@ struct SessionCompleteShareSheet: UIViewControllerRepresentable {
         onContinue: {},
         onReplay: {}
     )
+    .environment(AppContainer.preview())
 }

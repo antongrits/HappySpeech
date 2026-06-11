@@ -4,9 +4,19 @@ import SwiftUI
 
 struct RoleSelectView: View {
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @State private var appeared = false
+    @State private var isResolvingChild = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
+
+    /// Действие карточки роли: либо прямой маршрут (родитель/логопед), либо
+    /// асинхронное разрешение активного ребёнка (детская роль — P0-1: больше не
+    /// ведём в фантомный `preview-child-1`).
+    private enum RoleAction {
+        case route(AppRoute)
+        case resolveChild
+    }
 
     private struct RoleEntry: Identifiable {
         let id = UUID()
@@ -14,7 +24,7 @@ struct RoleSelectView: View {
         let subtitle: String
         let icon: String
         let color: Color
-        let route: AppRoute
+        let action: RoleAction
     }
 
     private let roles: [RoleEntry] = [
@@ -23,14 +33,14 @@ struct RoleSelectView: View {
             subtitle: String(localized: "Настройка профиля и наблюдение за прогрессом"),
             icon: "person.2.fill",
             color: ColorTokens.Brand.sky,
-            route: .parentHome
+            action: .route(.parentHome)
         ),
         RoleEntry(
             title: String(localized: "Логопед"),
             subtitle: String(localized: "Специальные инструменты анализа и экспорта"),
             icon: "stethoscope",
             color: ColorTokens.Brand.lilac,
-            route: .specialistHome
+            action: .route(.specialistHome)
         ),
         RoleEntry(
             title: String(localized: "Ребёнок"),
@@ -40,7 +50,7 @@ struct RoleSelectView: View {
             // совпадать с ним, а не быть зелёной (mint). Взрослые роли (родитель/логопед)
             // остаются прохладными sky/lilac как осознанный «взрослый» акцент.
             color: ColorTokens.Brand.primary,
-            route: .childHome(childId: "preview-child-1")
+            action: .resolveChild
         )
     ]
 
@@ -89,7 +99,7 @@ struct RoleSelectView: View {
                             icon: role.icon,
                             accentColor: role.color
                         ) {
-                            coordinator.navigate(to: role.route)
+                            handle(role.action)
                         }
                         .offset(y: appeared ? 0 : 40)
                         .opacity(appeared ? 1 : 0)
@@ -105,6 +115,49 @@ struct RoleSelectView: View {
             }
         }
         .onAppear { appeared = true }
+    }
+
+    // MARK: - Role action handling
+
+    private func handle(_ action: RoleAction) {
+        switch action {
+        case .route(let route):
+            coordinator.navigate(to: route)
+        case .resolveChild:
+            resolveActiveChildAndRoute()
+        }
+    }
+
+    /// P0-1: разрешает РЕАЛЬНЫЙ id активного ребёнка перед входом в детский контур.
+    /// Раньше карточка «Ребёнок» вела в захардкоженный `preview-child-1`, которого
+    /// в live-Realm нет → пустая главная + сессии-сироты. Теперь:
+    ///   1) берём сохранённый `ActiveChildStore.id`, если такой профиль реально есть;
+    ///   2) иначе — первый профиль ребёнка из репозитория;
+    ///   3) если детей нет — ведём родителя в его контур создавать профиль,
+    ///      а не в фантомную детскую главную.
+    private func resolveActiveChildAndRoute() {
+        guard !isResolvingChild else { return }
+        isResolvingChild = true
+        let repository = container.childRepository
+        Task { @MainActor in
+            defer { isResolvingChild = false }
+            let profiles = (try? await repository.fetchAll()) ?? []
+
+            if let storedId = ActiveChildStore.shared.id,
+               profiles.contains(where: { $0.id == storedId }) {
+                coordinator.navigate(to: .childHome(childId: storedId))
+                return
+            }
+
+            if let first = profiles.first {
+                ActiveChildStore.shared.set(first.id)
+                coordinator.navigate(to: .childHome(childId: first.id))
+                return
+            }
+
+            // Детей ещё нет — отправляем создавать профиль в родительском контуре.
+            coordinator.navigate(to: .parentHome)
+        }
     }
 }
 
@@ -192,4 +245,5 @@ private struct RoleCard: View {
 #Preview("Role Select") {
     RoleSelectView()
         .environment(AppCoordinator())
+        .environment(AppContainer.preview())
 }

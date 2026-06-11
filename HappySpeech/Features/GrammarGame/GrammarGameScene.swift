@@ -35,8 +35,22 @@ final class GrammarGameStackHolder {
         router.onDismiss = { [weak coordinator] in
             coordinator?.navigate(to: .childHome(childId: childId))
         }
-        router.onSessionComplete = { [weak coordinator] _, _ in
-            coordinator?.navigate(to: .sessionComplete)
+        router.onSessionComplete = { [weak coordinator] successRate, mode in
+            // Грамматическая игра показывает собственный inline-итог (sessionCompleteLayer),
+            // поэтому этот колбэк в текущем UI не вызывается. Если он будет подключён —
+            // передаём РЕАЛЬНЫЙ результат (childId/score) в live SessionComplete, а не
+            // демо-данные: персистенция стикеров/стрика включится автоматически.
+            let result = SessionResult(
+                score: successRate,
+                starsEarned: SessionResult.stars(for: successRate),
+                gameTitle: mode.localizedTitle,
+                soundTarget: "",
+                attempts: 0,
+                durationSec: 0,
+                nextLessonTitle: nil,
+                childId: childId
+            )
+            coordinator?.navigate(to: .sessionComplete(result: result))
         }
 
         self.presenter = presenter

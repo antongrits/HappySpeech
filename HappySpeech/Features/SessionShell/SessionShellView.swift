@@ -102,7 +102,11 @@ struct SessionShellHost: View {
                 router?.routeBack()
             },
             onSessionFinished: {
-                router?.routeToResults(activities: shellState.activities)
+                // P0-2: переносим РЕАЛЬНЫЙ результат сессии (childId/score/attempts/
+                // duration из interactor) на экран итогов, чтобы там запустилась
+                // персистенция стикеров/стрика/ачивок. Раньше показывался фейк .sample.
+                guard let result = interactor?.buildSessionResult() else { return }
+                router?.routeToResults(result: result)
             }
         )
         .task {

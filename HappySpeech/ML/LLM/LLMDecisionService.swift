@@ -40,6 +40,16 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         self.logRepository = logRepository
     }
 
+    // MARK: - COPPA
+
+    /// Нейтральное обозначение ребёнка для сетевых (Tier B / HuggingFace) запросов.
+    /// Имя ребёнка — PII, которую Kids-Category/COPPA-постура проекта не передаёт
+    /// третьим сторонам (как и в Spotlight/виджете/чате). В промпт уходит это
+    /// обобщённое слово вместо реального имени; родитель видит, чей это отчёт,
+    /// из контекста экрана. On-device путь (Tier A) сети не касается и работает
+    /// с реальным именем.
+    private static let anonymizedChildName = String(localized: "llm.network.childPlaceholder")
+
     // MARK: - Model State
 
     public var isOnDeviceModelReady: Bool {
@@ -159,7 +169,8 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         // Try HF Inference API if we're online (parent circuit)
         if networkMonitor.isConnected, hfClient.isConfigured {
             let prompt = LLMPrompts.render(LLMPrompts.userParentSummaryTemplate, values: [
-                "child_name": session.childName,
+                // COPPA: имя ребёнка не уходит в сеть — подставляем нейтральное слово.
+                "child_name": Self.anonymizedChildName,
                 "age": "\(session.age)",
                 "target_sound": session.targetSound,
                 "stage": session.stage.rawValue,
@@ -276,7 +287,8 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         // Parent/specialist circuit — may use HF.
         if networkMonitor.isConnected, hfClient.isConfigured {
             let prompt = LLMPrompts.render(LLMPrompts.userContentRecommendTemplate, values: [
-                "child_name": profile.name,
+                // COPPA: имя ребёнка не уходит в сеть — подставляем нейтральное слово.
+                "child_name": Self.anonymizedChildName,
                 "age": "\(profile.age)",
                 "target_sounds": profile.targetSounds.joined(separator: ", "),
                 "progress_map": progressJSON(profile.progressSummary),

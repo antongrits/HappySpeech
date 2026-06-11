@@ -481,6 +481,7 @@ public final class AppContainer {
         if let existing = _sessionPersistenceCoordinator { return existing }
         let new = LiveSessionPersistenceCoordinator(
             sessionRepository: sessionRepository,
+            childRepository: childRepository,
             syncService: syncService,
             authService: authService
         )

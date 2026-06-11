@@ -18,6 +18,14 @@ public final class SpyChildRepository: ChildRepository, @unchecked Sendable {
     public private(set) var lastSaved: ChildProfileDTO?
     public private(set) var lastDeletedId: String?
 
+    // P0-3 spy: позволяет тестам проверить, что агрегаты профиля обновляются.
+    public private(set) var updateAggregatesCallCount: Int = 0
+    public private(set) var lastAggregatesChildId: String?
+    public private(set) var lastAggregatesDate: Date?
+    public private(set) var lastAggregatesAddedMinutes: Int?
+    public private(set) var lastAggregatesStreak: Int?
+    public private(set) var lastStreakValue: Int?
+
     public init(children: [ChildProfileDTO] = [TestDataBuilder.childProfile()]) {
         self.children = children
     }
@@ -51,7 +59,41 @@ public final class SpyChildRepository: ChildRepository, @unchecked Sendable {
     }
 
     public func updateProgress(childId: String, sound: String, rate: Double) async throws {}
-    public func updateStreak(childId: String, streak: Int) async throws {}
+
+    public func updateStreak(childId: String, streak: Int) async throws {
+        lastStreakValue = streak
+        guard let idx = children.firstIndex(where: { $0.id == childId }) else { return }
+        let c = children[idx]
+        children[idx] = ChildProfileDTO(
+            id: c.id, name: c.name, age: c.age, targetSounds: c.targetSounds,
+            createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
+            avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
+            totalSessionMinutes: c.totalSessionMinutes, currentStreak: streak, lastSessionAt: c.lastSessionAt
+        )
+    }
+
+    public func updateSessionAggregates(
+        childId: String,
+        lastSessionAt: Date,
+        addedMinutes: Int,
+        streak: Int
+    ) async throws {
+        updateAggregatesCallCount += 1
+        lastAggregatesChildId = childId
+        lastAggregatesDate = lastSessionAt
+        lastAggregatesAddedMinutes = addedMinutes
+        lastAggregatesStreak = streak
+        if shouldFail { throw AppError.realmWriteFailed("SpyChildRepository forced failure") }
+        guard let idx = children.firstIndex(where: { $0.id == childId }) else { return }
+        let c = children[idx]
+        children[idx] = ChildProfileDTO(
+            id: c.id, name: c.name, age: c.age, targetSounds: c.targetSounds,
+            createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
+            avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
+            totalSessionMinutes: c.totalSessionMinutes + max(0, addedMinutes),
+            currentStreak: streak, lastSessionAt: lastSessionAt
+        )
+    }
 }
 
 // MARK: - SpySessionRepository

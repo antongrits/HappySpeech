@@ -1772,23 +1772,6 @@
         }
       }
     },
-    "ar.breathing.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Breathing"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дыхание"
-          }
-        }
-      }
-    },
     "ar.breathing.keepBlowing": {
       "extractionState": "manual",
       "localizations": {
@@ -1814,6 +1797,23 @@
     "ar.breathing.startBlowing": {
       "extractionState": "manual",
       "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхание"
+          }
+        }
+      }
+    },
+    "ar.breathing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breathing"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -2229,6 +2229,17 @@
         }
       }
     },
+    "ar.holdPose.result": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат"
+          }
+        }
+      }
+    },
     "ar.holdPose.title": {
       "extractionState": "manual",
       "localizations": {
@@ -2242,34 +2253,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удержи позу"
-          }
-        }
-      }
-    },
-    "ar.holdPose.result": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат"
-          }
-        }
-      }
-    },
-    "ar.mimic.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mimic Lyalya"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повтори за Лялей"
           }
         }
       }
@@ -2307,19 +2290,19 @@
         }
       }
     },
-    "ar.mirror.title": {
+    "ar.mimic.title": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AR Mirror"
+            "value": "Mimic Lyalya"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "AR-зеркало"
+            "value": "Повтори за Лялей"
           }
         }
       }
@@ -2335,74 +2318,89 @@
         }
       }
     },
-    "ar.mirror.exercise.smile": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Smile" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Улыбочка" } }
-      }
-    },
-    "ar.mirror.exercise.pucker": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Tube" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Трубочка" } }
-      }
-    },
     "ar.mirror.exercise.funnel": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Cup" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Чашечка" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cup"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чашечка"
+          }
+        }
       }
     },
     "ar.mirror.exercise.jawOpen": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Open Wide" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Окошко" } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Wide"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окошко"
+          }
+        }
+      }
+    },
+    "ar.mirror.exercise.pucker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tube"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Трубочка"
+          }
+        }
+      }
+    },
+    "ar.mirror.exercise.smile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smile"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбочка"
+          }
+        }
       }
     },
     "ar.mirror.exercise.tongueOut": {
       "extractionState": "manual",
       "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Tongue Out" } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Лопаточка" } }
-      }
-    },
-    "ar.mirror.instruction.smile": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Stretch your lips into a wide smile." } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Растяни губы в широкой улыбке." } }
-      }
-    },
-    "ar.mirror.instruction.pucker": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Reach your lips forward like a tube." } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Вытяни губы вперёд трубочкой." } }
-      }
-    },
-    "ar.mirror.instruction.funnel": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Round your lips like a little cup." } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Округли губы, как чашечку." } }
-      }
-    },
-    "ar.mirror.instruction.jawOpen": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Open your mouth wide like a window." } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Открой рот широко, как окошко." } }
-      }
-    },
-    "ar.mirror.instruction.tongueOut": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": { "stringUnit": { "state": "translated", "value": "Rest your wide, flat tongue on your lower lip." } },
-        "ru": { "stringUnit": { "state": "translated", "value": "Положи широкий язычок на нижнюю губу." } }
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue Out"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лопаточка"
+          }
+        }
       }
     },
     "ar.mirror.holdProgress": {
@@ -2412,6 +2410,91 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удерживай позу…"
+          }
+        }
+      }
+    },
+    "ar.mirror.instruction.funnel": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round your lips like a little cup."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Округли губы, как чашечку."
+          }
+        }
+      }
+    },
+    "ar.mirror.instruction.jawOpen": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open your mouth wide like a window."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой рот широко, как окошко."
+          }
+        }
+      }
+    },
+    "ar.mirror.instruction.pucker": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reach your lips forward like a tube."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вытяни губы вперёд трубочкой."
+          }
+        }
+      }
+    },
+    "ar.mirror.instruction.smile": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch your lips into a wide smile."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Растяни губы в широкой улыбке."
+          }
+        }
+      }
+    },
+    "ar.mirror.instruction.tongueOut": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rest your wide, flat tongue on your lower lip."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положи широкий язычок на нижнюю губу."
           }
         }
       }
@@ -2489,6 +2572,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Симметрия"
+          }
+        }
+      }
+    },
+    "ar.mirror.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR Mirror"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-зеркало"
           }
         }
       }
@@ -27297,6 +27397,24 @@
         }
       }
     },
+    "llm.network.childPlaceholder": {
+      "extractionState": "manual",
+      "comment": "Neutral noun used in place of the child's name in network LLM prompts (COPPA: no PII to third parties).",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ребёнок"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "the child"
+          }
+        }
+      }
+    },
     "logorhythmics.entry.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -32592,6 +32710,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "Темы"
+          }
+        }
+      }
+    },
+    "parentHome.tab.analytics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analytics"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика"
+          }
+        }
+      }
+    },
+    "parentHome.tab.dashboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overview"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор"
+          }
+        }
+      }
+    },
+    "parentHome.tab.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятия"
+          }
+        }
+      }
+    },
+    "parentHome.tab.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
           }
         }
       }
@@ -53387,6 +53573,91 @@
         }
       }
     },
+    "specialist.tab.children": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дети"
+          }
+        }
+      }
+    },
+    "specialist.tab.reports": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reports"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отчёты"
+          }
+        }
+      }
+    },
+    "specialist.tab.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятия"
+          }
+        }
+      }
+    },
+    "specialist.tab.settings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
+          }
+        }
+      }
+    },
+    "specialist.tab.settings.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё"
+          }
+        }
+      }
+    },
     "specialistNotes.cta.action": {
       "localizations": {
         "ru": {
@@ -60691,6 +60962,237 @@
           "stringUnit": {
             "state": "translated",
             "value": "Week %lld"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда ребёнок начнёт заниматься, здесь появятся его реальные показатели поверх ролика."
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет данных за неделю"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимированный ролик о прогрессе ребёнка за неделю — звуки, серия, достижения."
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео-отчёт недели"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.limitation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео-ролик — единый тёплый шаблон. Персональные числа вашего ребёнка показаны поверх и берутся из реальных занятий."
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.metric.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.metric.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут практики"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.metric.stars": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звёзд"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.metric.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.metric.streakValue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d дн"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.nav.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео-отчёт недели"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.realData.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Реальные показатели из занятий за последние 7 дней."
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.realData.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · неделя %@"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.realData.titleNeutral": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итоги недели"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.sound.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %1$@: точность %2$d процентов"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.sounds.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки недели"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.video.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимированный видео-отчёт о прогрессе за неделю"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.video.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анимированный отчёт"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.video.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим видео…"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.video.replay": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести заново"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.video.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёплый ролик-итог недели: звуки, достижения и рекомендация. Ниже — реальные данные вашего ребёнка."
           }
         }
       }
@@ -69565,390 +70067,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.entry.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Видео-отчёт недели"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.entry.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анимированный ролик о прогрессе ребёнка за неделю — звуки, серия, достижения."
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.nav.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Видео-отчёт недели"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.video.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анимированный отчёт"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.video.replay": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Воспроизвести заново"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.video.loading": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готовим видео…"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.video.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тёплый ролик-итог недели: звуки, достижения и рекомендация. Ниже — реальные данные вашего ребёнка."
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.video.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анимированный видео-отчёт о прогрессе за неделю"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.realData.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ · неделя %@"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.realData.titleNeutral": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Итоги недели"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.realData.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Реальные показатели из занятий за последние 7 дней."
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.sounds.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звуки недели"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.sound.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук %1$@: точность %2$d процентов"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.metric.accuracy": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Точность"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.metric.streak": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Серия"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.metric.streakValue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d дн"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.metric.minutes": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Минут практики"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.metric.stars": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звёзд"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.empty.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пока нет данных за неделю"
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.empty.message": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Когда ребёнок начнёт заниматься, здесь появятся его реальные показатели поверх ролика."
-          }
-        }
-      }
-    },
-    "weeklyVideoReport.limitation": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Видео-ролик — единый тёплый шаблон. Персональные числа вашего ребёнка показаны поверх и берутся из реальных занятий."
-          }
-        }
-      }
-    },
-    "parentHome.tab.dashboard": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Overview"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обзор"
-          }
-        }
-      }
-    },
-    "parentHome.tab.sessions": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sessions"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятия"
-          }
-        }
-      }
-    },
-    "parentHome.tab.analytics": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Analytics"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика"
-          }
-        }
-      }
-    },
-    "parentHome.tab.settings": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Настройки"
-          }
-        }
-      }
-    },
-    "specialist.tab.children": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Children"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дети"
-          }
-        }
-      }
-    },
-    "specialist.tab.sessions": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sessions"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятия"
-          }
-        }
-      }
-    },
-    "specialist.tab.reports": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reports"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отчёты"
-          }
-        }
-      }
-    },
-    "specialist.tab.settings": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Настройки"
-          }
-        }
-      }
-    },
-    "specialist.tab.settings.short": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "More"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ещё"
           }
         }
       }

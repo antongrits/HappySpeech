@@ -11,6 +11,16 @@ public protocol ChildRepository: Sendable {
     func delete(id: String) async throws
     func updateProgress(childId: String, sound: String, rate: Double) async throws
     func updateStreak(childId: String, streak: Int) async throws
+    /// Атомарно обновляет агрегаты профиля по итогам завершённой сессии:
+    /// дату последней сессии, накопленные минуты (инкремент) и серию активных дней.
+    /// Единая точка записи — закрывает «вечно нулевые» lastSessionAt/totalSessionMinutes,
+    /// которые читают ParentHome/Family/Specialist/Sync (P0-3).
+    func updateSessionAggregates(
+        childId: String,
+        lastSessionAt: Date,
+        addedMinutes: Int,
+        streak: Int
+    ) async throws
 }
 
 // MARK: - ChildProfileDTO (DTO — Realm-free domain object)
@@ -119,6 +129,19 @@ public final class LiveChildRepository: ChildRepository, @unchecked Sendable {
             obj.currentStreak = streak
         }
     }
+
+    public func updateSessionAggregates(
+        childId: String,
+        lastSessionAt: Date,
+        addedMinutes: Int,
+        streak: Int
+    ) async throws {
+        try await realmActor.updateField(ChildProfile.self, primaryKey: childId) { obj in
+            obj.lastSessionAt = lastSessionAt
+            obj.totalSessionMinutes += max(0, addedMinutes)
+            obj.currentStreak = streak
+        }
+    }
 }
 
 // MARK: - Realm → DTO Mapping
@@ -175,7 +198,33 @@ public final class MockChildRepository: ChildRepository, @unchecked Sendable {
     }
 
     public func updateProgress(childId: String, sound: String, rate: Double) async throws {}
-    public func updateStreak(childId: String, streak: Int) async throws {}
+    public func updateStreak(childId: String, streak: Int) async throws {
+        guard let idx = children.firstIndex(where: { $0.id == childId }) else { return }
+        let c = children[idx]
+        children[idx] = ChildProfileDTO(
+            id: c.id, name: c.name, age: c.age, targetSounds: c.targetSounds,
+            createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
+            avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
+            totalSessionMinutes: c.totalSessionMinutes, currentStreak: streak, lastSessionAt: c.lastSessionAt
+        )
+    }
+
+    public func updateSessionAggregates(
+        childId: String,
+        lastSessionAt: Date,
+        addedMinutes: Int,
+        streak: Int
+    ) async throws {
+        guard let idx = children.firstIndex(where: { $0.id == childId }) else { return }
+        let c = children[idx]
+        children[idx] = ChildProfileDTO(
+            id: c.id, name: c.name, age: c.age, targetSounds: c.targetSounds,
+            createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
+            avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
+            totalSessionMinutes: c.totalSessionMinutes + max(0, addedMinutes),
+            currentStreak: streak, lastSessionAt: lastSessionAt
+        )
+    }
 }
 
 // MARK: - Preview Data

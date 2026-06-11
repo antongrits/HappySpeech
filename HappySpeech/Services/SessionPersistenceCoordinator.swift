@@ -27,16 +27,19 @@ public protocol SessionPersistenceCoordinating: Sendable {
 public final class LiveSessionPersistenceCoordinator: SessionPersistenceCoordinating, @unchecked Sendable {
 
     private let sessionRepository: any SessionRepository
+    private let childRepository: any ChildRepository
     private let syncService: any SyncService
     private let authService: any AuthService
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionSync")
 
     public init(
         sessionRepository: any SessionRepository,
+        childRepository: any ChildRepository,
         syncService: any SyncService,
         authService: any AuthService
     ) {
         self.sessionRepository = sessionRepository
+        self.childRepository = childRepository
         self.syncService = syncService
         self.authService = authService
     }
@@ -53,6 +56,12 @@ public final class LiveSessionPersistenceCoordinator: SessionPersistenceCoordina
             return
         }
 
+        // 1.5. P0-3: обновляем агрегаты профиля (lastSessionAt / totalSessionMinutes /
+        // currentStreak). Это ЕДИНСТВЕННАЯ точка записи этих полей — раньше они
+        // никогда не обновлялись, и ParentHome/Family/Specialist/Sync читали вечные
+        // нули. Не срывает UX: ошибки логируются, дальше идёт синк.
+        await updateChildAggregates(after: session)
+
         // 2. Синк — только для реального (не анонимного) родителя.
         guard let parent = authService.currentUser, !parent.isAnonymous, !parent.uid.isEmpty else {
             logger.debug("Sync skipped — no authenticated parent (anonymous or signed-out); session stays local")
@@ -63,6 +72,43 @@ public final class LiveSessionPersistenceCoordinator: SessionPersistenceCoordina
     }
 
     // MARK: - Private
+
+    /// P0-3: пересчитывает и сохраняет агрегаты профиля по только что записанной сессии.
+    /// `currentStreak` берётся из РЕАЛЬНЫХ сессий ребёнка (trailing-run `StreakCalculator`,
+    /// тот же источник правды, что и в ChildHome/WorldMap), а не из инкрементной эвристики.
+    /// `addedMinutes` округляется из секунд (минимум 1 минута за непустую сессию).
+    private func updateChildAggregates(after session: SessionDTO) async {
+        guard !session.childId.isEmpty else { return }
+
+        let addedMinutes = session.durationSeconds > 0
+            ? max(1, Int((Double(session.durationSeconds) / 60.0).rounded()))
+            : 0
+
+        // Стрик — по всем сессиям ребёнка (включая только что сохранённую).
+        let streak: Int
+        do {
+            let sessions = try await sessionRepository.fetchAll(childId: session.childId)
+            streak = StreakCalculator.activeDayStreak(in: sessions, referenceDate: session.date)
+        } catch {
+            logger.error("Streak recompute failed: \(error.localizedDescription, privacy: .public)")
+            // Безопасный минимум: только что была активность сегодня.
+            streak = 1
+        }
+
+        do {
+            try await childRepository.updateSessionAggregates(
+                childId: session.childId,
+                lastSessionAt: session.date,
+                addedMinutes: addedMinutes,
+                streak: streak
+            )
+            logger.info(
+                "Child aggregates updated childId=\(session.childId, privacy: .private) +min=\(addedMinutes) streak=\(streak)"
+            )
+        } catch {
+            logger.error("Child aggregates update failed: \(error.localizedDescription, privacy: .public)")
+        }
+    }
 
     private func enqueueAndDrain(_ session: SessionDTO, parentId: String) async {
         guard let payload = Self.sessionPayloadJSON(session, parentId: parentId) else {

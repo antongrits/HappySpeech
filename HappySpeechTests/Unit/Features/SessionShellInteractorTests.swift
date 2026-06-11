@@ -261,4 +261,47 @@ final class SessionShellInteractorTests: XCTestCase {
         // Без пауз reference == sessionStartTime (accumulatedPause = 0)
         XCTAssertLessThanOrEqual(sut.sessionActiveStartReference, Date())
     }
+
+    // MARK: - buildSessionResult (P0-2)
+
+    func test_buildSessionResult_carriesRealChildIdSoundAndScore() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "real-child", targetSoundId: "Ш", sessionType: .quickPractice))
+
+        // Завершаем все шаги с известными score → средняя точность предсказуема.
+        var next = spy.startResponses.first?.activities.first
+        while let activity = next {
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 1.0, durationSeconds: 10, errorCount: 0
+            ))
+            next = spy.completeResponses.last?.nextActivity
+        }
+
+        let result = sut.buildSessionResult()
+        XCTAssertEqual(result.childId, "real-child")
+        XCTAssertEqual(result.soundTarget, "Ш")
+        XCTAssertEqual(result.score, 1.0, accuracy: 0.001)
+        XCTAssertEqual(result.starsEarned, 3)
+        XCTAssertGreaterThan(result.attempts, 0)
+        XCTAssertFalse(result.gameTitle.isEmpty)
+        // Реальный результат НЕ равен демо-образцу (childId/score другие).
+        XCTAssertNotEqual(result.childId, SessionResult.sample.childId)
+    }
+
+    func test_buildSessionResult_lowScore_givesOneStar() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c-low", targetSoundId: "Р", sessionType: .quickPractice))
+
+        var next = spy.startResponses.first?.activities.first
+        while let activity = next {
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 0.2, durationSeconds: 5, errorCount: 1
+            ))
+            next = spy.completeResponses.last?.nextActivity
+        }
+
+        let result = sut.buildSessionResult()
+        XCTAssertEqual(result.starsEarned, 1)
+        XCTAssertLessThan(result.score, 0.6)
+    }
 }

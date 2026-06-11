@@ -101,15 +101,29 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
 
     public func playAudio(url: URL) async throws {
         let file = try AVAudioFile(forReading: url)
-        engine.attach(playerNode)
+
+        // Подключаем playerNode к движку только один раз: повторный attach того же
+        // узла бросает исключение, а лишний connect с другим форматом плодит висячие
+        // соединения. Формат соединения = processingFormat файла.
+        if playerNode.engine == nil {
+            engine.attach(playerNode)
+        }
         engine.connect(playerNode, to: engine.mainMixerNode, format: file.processingFormat)
+
+        // ВАЖНО (P0): движок и узел должны быть запущены ДО ожидания завершения.
+        // `scheduleFile` completion вызывается лишь по факту воспроизведения, поэтому
+        // если ждать его перед `play()`, проигрывание никогда не начнётся и await
+        // зависает навсегда. Порядок: start engine → schedule → play → await.
+        if !engine.isRunning {
+            try engine.start()
+        }
+
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            playerNode.scheduleFile(file, at: nil) {
+            playerNode.scheduleFile(file, at: nil, completionCallbackType: .dataPlayedBack) { _ in
                 continuation.resume()
             }
+            playerNode.play()
         }
-        try engine.start()
-        playerNode.play()
     }
 
     public func stopPlayback() {

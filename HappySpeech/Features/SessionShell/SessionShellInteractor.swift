@@ -67,6 +67,10 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// Гард от двойного сохранения: `completeActivity`→`saveSession` и
     /// `onDisappear`→`endSessionEarly`→`saveSession` могут сработать оба.
     private var didSaveSession: Bool = false
+    /// Стабильный id этого проигрывания. Совпадает с `SessionDTO.id` сохранённой
+    /// сессии, чтобы `buildSessionResult()` и persistence-конвейер SessionComplete
+    /// идемпотентно связывались с одной записью (стикер/награда по sessionId).
+    private let sessionResultId: String = UUID().uuidString
     private var errorCount: Int = 0
     private var consecutiveErrors: Int = 0
     private var isPaused: Bool = false
@@ -316,6 +320,47 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
 
     var currentFatigueHearts: Int { fatigueHearts }
 
+    /// Собирает РЕАЛЬНЫЙ результат завершённой сессии для экрана итогов.
+    ///
+    /// P0-2: раньше координатор показывал `SessionResult.sample` (фейк 86%/3★),
+    /// и persistence-конвейер SessionComplete никогда не запускался в проде. Теперь
+    /// interactor (единственный владелец метаданных сессии — childId, целевой звук,
+    /// длительность, реальные пофрагментные score) отдаёт честный результат, по
+    /// которому SessionComplete пишет стикер/стрик/ачивки в Realm.
+    ///
+    /// Звёзды считаются по средней точности (без учёта подсказок — на уровне
+    /// SessionShell подсказки не агрегируются). `sessionId` — стабильный для этого
+    /// проигрывания, чтобы детерминировать выбор баннера/стикера.
+    func buildSessionResult() -> SessionResult {
+        let completed = activities.filter { $0.isCompleted }
+        let avgScore = avgScoreValue()
+        let totalAttempts = completed.count
+        let correctAttempts = completed.filter { ($0.score ?? 0) >= 0.5 }.count
+        let durationSec = Int(activeElapsedSeconds)
+
+        return SessionResult(
+            score: avgScore,
+            starsEarned: SessionResult.stars(for: avgScore),
+            gameTitle: Self.representativeGameTitle(for: activities),
+            soundTarget: sessionTargetSound,
+            attempts: totalAttempts,
+            correctAttempts: correctAttempts,
+            durationSec: durationSec,
+            nextLessonTitle: nil,
+            childId: sessionChildId,
+            sessionId: sessionResultId
+        )
+    }
+
+    /// Локализованное имя представительного шаблона сессии для экрана итогов.
+    private static func representativeGameTitle(for activities: [SessionActivity]) -> String {
+        let representative = activities.first(where: { $0.isCompleted }) ?? activities.first
+        guard let gameType = representative?.gameType else {
+            return String(localized: "sessionComplete.sample.gameTitle")
+        }
+        return templateType(from: gameType).displayName
+    }
+
     // MARK: - Private
 
     /// F1-016 — подаёт результат попытки по практикуемому элементу в единый
@@ -445,7 +490,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         let correctAttempts = completed.filter { ($0.score ?? 0) >= 0.5 }.count
 
         let dto = SessionDTO(
-            id: UUID().uuidString,
+            id: sessionResultId,
             childId: sessionChildId,
             date: Date(),
             templateType: Self.representativeTemplateType(for: activities),

@@ -881,7 +881,17 @@ struct SessionCompleteView: View {
 
         let presenter = SessionCompletePresenter()
         presenter.display = display
-        let interactor = SessionCompleteInteractor.makePreview()
+        // P0-2: боевой интерактор поверх живого контейнера с включённой
+        // персистенцией. Стикер/стрик/ачивки реально пишутся в Realm. Демо-результат
+        // (скриншот-тур, пустой/preview childId) персистенцию не запускает — иначе
+        // async-обновления гонятся с захватом кадра и пишут мусор в preview-Realm.
+        let isDemoResult = Self.isScreenshotMode
+            || result.childId.isEmpty
+            || result.childId.hasPrefix("preview-")
+        let interactor = SessionCompleteInteractor.live(
+            container: container,
+            skipsPersistence: isDemoResult
+        )
         interactor.presenter = presenter
         let router = SessionCompleteRouter()
         router.onContinue = onContinue

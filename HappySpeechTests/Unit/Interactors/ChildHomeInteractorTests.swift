@@ -163,4 +163,5 @@ private final class FailingChildRepository: ChildRepository, @unchecked Sendable
     func delete(id: String) async throws {}
     func updateProgress(childId: String, sound: String, rate: Double) async throws {}
     func updateStreak(childId: String, streak: Int) async throws {}
+    func updateSessionAggregates(childId: String, lastSessionAt: Date, addedMinutes: Int, streak: Int) async throws {}
 }

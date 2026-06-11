@@ -4,8 +4,9 @@ import SwiftUI
 
 @MainActor
 protocol SessionShellRoutingLogic: AnyObject {
-    /// Final, "session finished" route — moves to the SessionComplete summary.
-    func routeToResults(activities: [SessionActivity])
+    /// Final, "session finished" route — moves to the SessionComplete summary
+    /// carrying the REAL session result (so persistence runs in prod).
+    func routeToResults(result: SessionResult)
     /// Pop back to root (kid home).
     func routeToHome()
     /// Pop one screen back (used by the "Exit" button on the pause sheet
@@ -27,8 +28,8 @@ final class SessionShellRouter: SessionShellRoutingLogic {
         self.coordinator = coordinator
     }
 
-    func routeToResults(activities: [SessionActivity]) {
-        coordinator?.navigate(to: .sessionComplete)
+    func routeToResults(result: SessionResult) {
+        coordinator?.navigate(to: .sessionComplete(result: result))
     }
 
     func routeToHome() {

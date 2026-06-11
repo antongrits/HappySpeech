@@ -463,6 +463,20 @@ extension SessionCompleteInteractor {
             skipsPersistence: true
         )
     }
+
+    /// Боевой интерактор поверх живого `AppContainer` с ВКЛЮЧЁННОЙ персистенцией.
+    /// P0-2: используется на экране итогов реальной сессии, чтобы стикеры/стрик/
+    /// ачивки писались в Realm. `skipsPersistence` оставляем управляемым — для
+    /// preview/screenshot/демо-результата вызывающий передаёт `true`.
+    @MainActor
+    static func live(container: AppContainer, skipsPersistence: Bool) -> SessionCompleteInteractor {
+        SessionCompleteInteractor(
+            realmActor: container.realmActor,
+            sessionRepository: container.sessionRepository,
+            childRepository: container.childRepository,
+            skipsPersistence: skipsPersistence
+        )
+    }
 }
 
 // MARK: - SessionCompletePresentationLogic extension for new stages

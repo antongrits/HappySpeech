@@ -26,7 +26,11 @@ enum AppRoute: Hashable {
     case offlineState
     case permissionFlow(PermissionType)
     case demoMode
-    case sessionComplete
+    /// Итоги завершённой сессии. Несёт РЕАЛЬНЫЙ результат (childId/score/attempts/
+    /// duration) — экран строит live-интерактор с включённой персистенцией
+    /// (стикеры/стрик/ачивки пишутся в Realm). Демо-данные (`.sample`) — только
+    /// для скриншот-тура / preview.
+    case sessionComplete(result: SessionResult)
     case lessonPlayer(templateType: String, childId: String)
     case worldMap(childId: String, targetSound: String)
     case arZone
@@ -583,11 +587,14 @@ struct AppCoordinatorView: View {
         case .demoMode:
             DemoModeView()
 
-        case .sessionComplete:
+        case .sessionComplete(let result):
+            // Реальный результат сессии → live SessionComplete с включённой
+            // персистенцией (стикеры/стрик/ачивки пишутся в Realm). Возврат —
+            // на главную реального ребёнка (childId из результата), а не в пустую.
             SessionCompleteView(
-                result: .sample,
-                onContinue: { coordinator.navigate(to: .childHome(childId: "")) },
-                onReplay: { coordinator.pop() }
+                result: result,
+                onContinue: { coordinator.navigate(to: .childHome(childId: result.childId)) },
+                onReplay: { coordinator.navigate(to: .childHome(childId: result.childId)) }
             )
 
         case .lessonPlayer(let templateType, let childId):
@@ -1331,7 +1338,7 @@ extension AppCoordinatorView {
         case "rewards":             return .rewards(childId: previewChild)
         case "worldMap":            return .worldMap(childId: previewChild, targetSound: "Р")
         case "sessionHistory":      return .sessionHistory(childId: previewChild)
-        case "sessionComplete":     return .sessionComplete
+        case "sessionComplete":     return .sessionComplete(result: .sample)
         case "arZone":              return .arZone
         case "lessonPlayer":        return .lessonPlayer(templateType: "bingo", childId: previewChild)
         case "familyVoice":         return .familyVoice
@@ -1412,7 +1419,7 @@ extension AppCoordinatorView {
         case "sessionDetail":
             return .sessionHistory(childId: previewChild)
         case "celebrationOverlay":
-            return .sessionComplete
+            return .sessionComplete(result: .sample)
         case "rewardDetail",
              "rewardAlbum":
             return .rewards(childId: previewChild)
