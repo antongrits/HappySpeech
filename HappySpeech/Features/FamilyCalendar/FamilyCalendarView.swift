@@ -145,7 +145,7 @@ struct FamilyCalendarView: View {
                 }
                 insightsSection
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.large)
         }
     }
@@ -180,7 +180,7 @@ struct FamilyCalendarView: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     // MARK: - Section 1: ChildrenStrip
@@ -211,10 +211,10 @@ struct FamilyCalendarView: View {
                         scene?.router.routeToAddChild()
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, 4)
             }
-            .padding(.horizontal, -SpacingTokens.regular)
+            .padding(.horizontal, -SpacingTokens.screenEdge)
         }
     }
 
@@ -309,10 +309,10 @@ struct FamilyCalendarView: View {
                         WeekGoalCard(card: card)
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, 4)
             }
-            .padding(.horizontal, -SpacingTokens.regular)
+            .padding(.horizontal, -SpacingTokens.screenEdge)
         }
     }
 
@@ -346,10 +346,10 @@ struct FamilyCalendarView: View {
                         ChildSummaryCard(card: card)
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, 4)
             }
-            .padding(.horizontal, -SpacingTokens.regular)
+            .padding(.horizontal, -SpacingTokens.screenEdge)
         }
     }
 

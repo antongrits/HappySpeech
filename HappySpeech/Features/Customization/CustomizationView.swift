@@ -187,7 +187,7 @@ struct CustomizationView: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.medium)
         .padding(.bottom, SpacingTokens.small)
         .accessibilityElement(children: .ignore)
@@ -214,7 +214,7 @@ struct CustomizationView: View {
                     .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.small)
             .transition(.opacity.combined(with: .scale(scale: 0.95)))
             .animation(reduceMotion ? nil : MotionTokens.spring, value: prompt)
@@ -238,7 +238,7 @@ struct CustomizationView: View {
                     }
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
         .padding(.bottom, SpacingTokens.regular)
     }
@@ -272,7 +272,7 @@ struct CustomizationView: View {
                         }
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
             .frame(height: isCompactWidth ? 160 : 180)
             .padding(.bottom, SpacingTokens.regular)
@@ -292,7 +292,7 @@ struct CustomizationView: View {
                         }
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
             .frame(height: skinScrollHeight)
             .padding(.bottom, SpacingTokens.regular)
@@ -317,7 +317,7 @@ struct CustomizationView: View {
                     }
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
 
             sectionTitle(String(localized: "customization.section.hair"))
@@ -333,7 +333,7 @@ struct CustomizationView: View {
                     }
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
 
             sectionTitle(String(localized: "customization.section.eyes"))
@@ -349,7 +349,7 @@ struct CustomizationView: View {
                     }
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
 
             sectionTitle(String(localized: "customization.section.skintone"))
@@ -365,7 +365,7 @@ struct CustomizationView: View {
                     }
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
         }
     }
@@ -411,7 +411,7 @@ struct CustomizationView: View {
                         }
                     }
                 }
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
             .frame(height: isCompactWidth ? 120 : 140)
             .padding(.bottom, SpacingTokens.regular)
@@ -437,7 +437,7 @@ struct CustomizationView: View {
                     .zIndex(Double(viewModel.accessoryItems.count - index))
                 }
             }
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
         }
     }
@@ -467,7 +467,7 @@ struct CustomizationView: View {
             }
             .disabled(viewModel.isUnchanged)
             .frame(maxWidth: .infinity, minHeight: 56)
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityLabel(String(localized: "customization.cta.save"))
             .accessibilityHint(
                 viewModel.isUnchanged
@@ -501,7 +501,7 @@ struct CustomizationView: View {
             .font(TypographyTokens.headline(18))
             .foregroundStyle(ColorTokens.Kid.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.regular)
             .padding(.bottom, SpacingTokens.tiny)
     }

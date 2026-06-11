@@ -12,11 +12,10 @@ struct SpecialistHomeView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     enum SpecTab: String, CaseIterable {
-        // Block H v21 — labels хранят русские raw values для LocalizedStringKey lookup.
-        case children  = "Дети"
-        case sessions  = "Занятия"
-        case reports   = "Отчёты"
-        case settings  = "Настройки"
+        case children
+        case sessions
+        case reports
+        case settings
 
         var icon: String {
             switch self {
@@ -29,13 +28,14 @@ struct SpecialistHomeView: View {
 
         /// D-11 v27 — короткая подпись для таб-бара: 4 таба должны помещаться
         /// целиком на iPhone SE 3 (320pt). Полное название («Настройки») — это
-        /// заголовок экрана, в таб-баре используется компактный вариант.
+        /// заголовок экрана, в таб-баре используется компактный вариант («Ещё»).
+        /// Метки берутся из String Catalog (ru + en, App Store secondary).
         var tabTitle: LocalizedStringKey {
             switch self {
-            case .children: return "Дети"
-            case .sessions: return "Занятия"
-            case .reports:  return "Отчёты"
-            case .settings: return "Ещё"
+            case .children: return "specialist.tab.children"
+            case .sessions: return "specialist.tab.sessions"
+            case .reports:  return "specialist.tab.reports"
+            case .settings: return "specialist.tab.settings.short"
             }
         }
     }

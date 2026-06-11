@@ -25,6 +25,16 @@ struct ParentHomeView: View {
             case .settings:   return "gearshape.fill"
             }
         }
+
+        /// Локализованная подпись таб-бара (ru + en, App Store secondary).
+        var localizedTitle: String {
+            switch self {
+            case .dashboard:  return String(localized: "parentHome.tab.dashboard")
+            case .sessions:   return String(localized: "parentHome.tab.sessions")
+            case .analytics:  return String(localized: "parentHome.tab.analytics")
+            case .settings:   return String(localized: "parentHome.tab.settings")
+            }
+        }
     }
 
     var body: some View {
@@ -73,9 +83,9 @@ struct ParentHomeView: View {
         NavigationSplitView {
             List(selection: $sidebarSelection) {
                 ForEach(ParentTab.allCases, id: \.self) { tab in
-                    Label(tab.rawValue, systemImage: tab.icon)
+                    Label(tab.localizedTitle, systemImage: tab.icon)
                         .tag(tab)
-                        .accessibilityLabel(tab.rawValue)
+                        .accessibilityLabel(tab.localizedTitle)
                 }
             }
             .navigationTitle(String(localized: "Родитель"))
@@ -114,28 +124,28 @@ struct ParentHomeView: View {
         TabView(selection: $selectedTab) {
             dashboardTab
                 .tabItem {
-                    Label(ParentTab.dashboard.rawValue, systemImage: ParentTab.dashboard.icon)
+                    Label(ParentTab.dashboard.localizedTitle, systemImage: ParentTab.dashboard.icon)
                 }
                 .tag(ParentTab.dashboard)
                 .accessibilityIdentifier("parentDashboardTab")
 
             sessionsTab
                 .tabItem {
-                    Label(ParentTab.sessions.rawValue, systemImage: ParentTab.sessions.icon)
+                    Label(ParentTab.sessions.localizedTitle, systemImage: ParentTab.sessions.icon)
                 }
                 .tag(ParentTab.sessions)
                 .accessibilityIdentifier("parentSessionsTab")
 
             analyticsTab
                 .tabItem {
-                    Label(ParentTab.analytics.rawValue, systemImage: ParentTab.analytics.icon)
+                    Label(ParentTab.analytics.localizedTitle, systemImage: ParentTab.analytics.icon)
                 }
                 .tag(ParentTab.analytics)
                 .accessibilityIdentifier("parentAnalyticsTab")
 
             settingsTab
                 .tabItem {
-                    Label(ParentTab.settings.rawValue, systemImage: ParentTab.settings.icon)
+                    Label(ParentTab.settings.localizedTitle, systemImage: ParentTab.settings.icon)
                 }
                 .tag(ParentTab.settings)
                 .accessibilityIdentifier("parentSettingsTab")

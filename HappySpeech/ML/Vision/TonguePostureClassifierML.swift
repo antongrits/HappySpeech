@@ -121,9 +121,15 @@ public final class TonguePostureClassifierML: ArticulationConfidenceProviding, @
         }
 
         do {
-            let inputArray = try MLMultiArray(shape: [NSNumber(value: Self.featureDimension)], dataType: .float32)
+            // Модель требует вход ранга 2 `[1, featureDimension]` (batch=1).
+            // Ранг-1 `[featureDimension]` отвергается CoreML (`feature must be of
+            // rank 2`), из-за чего ML-ветка раньше всегда уходила в rule-based.
+            let inputArray = try MLMultiArray(
+                shape: [1, NSNumber(value: Self.featureDimension)],
+                dataType: .float32
+            )
             for (i, v) in features.enumerated() {
-                inputArray[i] = NSNumber(value: v)
+                inputArray[[NSNumber(value: 0), NSNumber(value: i)]] = NSNumber(value: v)
             }
             let featureProvider = try MLDictionaryFeatureProvider(dictionary: ["features": inputArray])
             let prediction = try model.prediction(from: featureProvider)
