@@ -113,7 +113,7 @@ final class PoseSequencePresenterTests: XCTestCase {
     // MARK: - presentUpdateFrame
 
     func test_presentUpdateFrame_advanced_advancedTrue() {
-        let (sut, spy) = makeSUT()
+        let (sut, _) = makeSUT()
         // Устанавливаем total через startGame
         sut.presentStartGame(.init(postures: [.smile, .pucker], currentIndex: 0, mode: .face, targetPoses: []))
         let spy2 = DisplaySpy()
@@ -123,7 +123,7 @@ final class PoseSequencePresenterTests: XCTestCase {
     }
 
     func test_presentUpdateFrame_notAdvanced_advancedFalse() {
-        let (sut, spy) = makeSUT()
+        let (sut, _) = makeSUT()
         sut.presentStartGame(.init(postures: [.smile, .pucker], currentIndex: 0, mode: .face, targetPoses: []))
         let spy2 = DisplaySpy()
         sut.display = spy2
@@ -144,7 +144,7 @@ final class PoseSequencePresenterTests: XCTestCase {
     // MARK: - presentUpdateBodyPose
 
     func test_presentUpdateBodyPose_propagatesFields() {
-        let (sut, spy) = makeSUT()
+        let (sut, _) = makeSUT()
         sut.presentStartGame(.init(postures: [], currentIndex: 0, mode: .body, targetPoses: [
             makeTargetPose(id: "p1"), makeTargetPose(id: "p2")
         ]))

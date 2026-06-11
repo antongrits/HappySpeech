@@ -161,7 +161,6 @@ final class RewardsInteractorTests: XCTestCase {
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
         sut.filterByCollection(.init(collection: .animals))
         XCTAssertTrue(spy.filterCalled)
-        let filtered = spy.lastFilter?.stickers.filter { $0.collection != .animals } ?? []
         // Все возвращённые стикеры в правильной коллекции или activeCollection = .all
         // Проверяем что коллекция правильно зафиксирована
         XCTAssertEqual(spy.lastFilter?.activeCollection, .animals)

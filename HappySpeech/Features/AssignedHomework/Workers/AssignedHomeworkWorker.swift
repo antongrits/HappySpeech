@@ -229,13 +229,25 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
             exerciseId: request.exerciseId,
             completedRepeats: request.completedRepeats
         )
-        if case .failure(let error) = cloudResult {
+        let cloudSucceeded: Bool
+        switch cloudResult {
+        case .success:
+            cloudSucceeded = true
+        case .failure(let error):
+            cloudSucceeded = false
             Self.logger.error(
                 "updateExerciseStatus cloud sync failed: \(error.localizedDescription, privacy: .public)"
             )
         }
 
-        return .init(didSucceed: updated != nil, updatedAssignment: updated)
+        // Успех, если статус удалось обновить хотя бы в одном хранилище:
+        // локальный кэш ИЛИ облако. Задание, пришедшее по real-time потоку и
+        // ещё не осевшее в локальном кэше, обновляется через облако — это
+        // валидный сценарий детского/родительского контура.
+        return .init(
+            didSucceed: updated != nil || cloudSucceeded,
+            updatedAssignment: updated
+        )
     }
 
     // MARK: - Real-time stream

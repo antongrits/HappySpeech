@@ -3,10 +3,11 @@ import XCTest
 
 // MARK: - WhisperGameInteractorTests
 //
-// WhisperGameInteractor is a thin VIP MVP variant (@Observable). setMode() picks
-// a mode and simulates a measured currentLevel within ±15% of the mode target;
-// completeRound() counts rounds. Tests verify mode switching, the simulated
-// level bounds, the matchAccuracy computed and round counting.
+// WhisperGameInteractor (@Observable). setMode() only switches the target mode —
+// currentLevel is measured for real from the microphone RMS during a round (no
+// Double.random simulation). Without a recording session currentLevel stays at
+// the initial value. Tests verify mode switching, that setMode does not fabricate
+// a level, the matchAccuracy computed property, and round counting.
 
 @MainActor
 final class WhisperGameInteractorTests: XCTestCase {
@@ -45,14 +46,19 @@ final class WhisperGameInteractorTests: XCTestCase {
         XCTAssertEqual(sut.state.mode, .loud)
     }
 
-    func test_setMode_setsLevelWithinFifteenPercentOfTarget() {
+    func test_setMode_doesNotFabricateLevel() {
+        // setMode только переключает целевой режим. currentLevel НЕ симулируется
+        // (никакого Double.random) — он остаётся прежним до реального замера
+        // микрофона. Без записи он равен начальному значению.
         let sut = makeSUT()
+        let initialLevel = sut.state.currentLevel
         for mode in WhisperGameModels.Mode.allCases {
             sut.setMode(mode)
-            let lower = mode.targetLevel * 0.85
-            let upper = mode.targetLevel * 1.15
-            XCTAssertGreaterThanOrEqual(sut.state.currentLevel, lower, "mode \(mode.rawValue) under range")
-            XCTAssertLessThanOrEqual(sut.state.currentLevel, upper, "mode \(mode.rawValue) over range")
+            XCTAssertEqual(sut.state.mode, mode)
+            XCTAssertEqual(
+                sut.state.currentLevel, initialLevel, accuracy: 0.0001,
+                "setMode не должен подменять измеренный уровень для \(mode.rawValue)"
+            )
         }
     }
 
@@ -93,11 +99,16 @@ final class WhisperGameInteractorTests: XCTestCase {
         XCTAssertEqual(state.matchAccuracy, 0.0, accuracy: 0.0001)
     }
 
-    func test_matchAccuracy_afterSetMode_isHighGivenTightBounds() {
+    func test_matchAccuracy_reflectsMeasuredLevel_notMode() {
+        // matchAccuracy зависит ТОЛЬКО от реально измеренного currentLevel
+        // относительно targetLevel режима. setMode не «подгоняет» уровень, поэтому
+        // после переключения на .normal (target 0.55) при начальном уровне 0.18
+        // точность низкая — это честное поведение без симуляции.
         let sut = makeSUT()
         sut.setMode(.normal)
-        // ±15% on target 0.55 → max delta 0.0825 → accuracy ≥ 1 - 0.165 = 0.835
-        XCTAssertGreaterThanOrEqual(sut.state.matchAccuracy, 0.83)
+        let delta = abs(sut.state.currentLevel - WhisperGameModels.Mode.normal.targetLevel)
+        let expected = max(0, 1 - delta * 2)
+        XCTAssertEqual(sut.state.matchAccuracy, expected, accuracy: 0.0001)
     }
 
     // MARK: - completeRound

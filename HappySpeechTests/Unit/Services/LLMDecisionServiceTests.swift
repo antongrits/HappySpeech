@@ -252,11 +252,10 @@ final class LLMDecisionServiceTests: XCTestCase {
     func testGenerateSpecialistReport_groupsBySound() async {
         let sut = MockLLMDecisionService()
         let s1 = sampleSession(rate: 0.9)
-        var s2 = SessionSummaryInput(sessionId: "s-2", childId: "child-1", childName: "Миша", age: 6,
+        let s2 = SessionSummaryInput(sessionId: "s-2", childId: "child-1", childName: "Миша", age: 6,
                                      targetSound: "С", stage: .wordInit,
                                      totalAttempts: 10, correctAttempts: 3, errorWords: ["сова"],
                                      durationSec: 300, date: Date().addingTimeInterval(-86400))
-        _ = s2  // silence warning
         let outcome = await sut.generateSpecialistReport(sessions30d: [s1, s2])
         XCTAssertFalse(outcome.report.headline.isEmpty)
         XCTAssertFalse(outcome.report.recommendations.isEmpty)

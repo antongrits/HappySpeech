@@ -56,8 +56,8 @@ final class PhonemeAnalysisServiceTests: XCTestCase {
     func testClassifierLoadable() {
         // В тестовом bundle mlpackage может быть недоступен.
         // Проверяем что mock mode работает без исключений.
-        let mockWrapper = try? RussianPhonemeClassifierWrapper(mockMode: true)
-        XCTAssertNotNil(mockWrapper, "MockMode инициализация должна работать")
+        // RussianPhonemeClassifierWrapper(mockMode:) is non-throwing — confirm it initialises without crash.
+        XCTAssertNoThrow({ _ = RussianPhonemeClassifierWrapper(mockMode: true) }())
 
         // Если bundle доступен — проверяем реальную загрузку
         if Bundle.main.url(forResource: "RussianPhonemeClassifier", withExtension: "mlpackage") != nil {

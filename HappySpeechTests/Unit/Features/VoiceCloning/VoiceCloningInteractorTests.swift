@@ -125,10 +125,10 @@ final class VoiceCloningInteractorTests: XCTestCase {
             realmActor: realm
         )
         let pres = VoiceCloningPresenter()
-        pres.viewModel = VoiceCloningViewModel()
         interactor.presenter = pres
         await interactor.load(VoiceCloning.LoadRequest(childId: "child-vc"))
         await interactor.playSample(VoiceCloning.PlaySampleRequest(sampleId: "ghost"))
+        withExtendedLifetime(pres) {}
         XCTAssertTrue(true, "playSample с неизвестным ID — guard, без краша")
     }
 
@@ -139,10 +139,10 @@ final class VoiceCloningInteractorTests: XCTestCase {
             realmActor: realm
         )
         let pres = VoiceCloningPresenter()
-        pres.viewModel = VoiceCloningViewModel()
         interactor.presenter = pres
         await interactor.load(VoiceCloning.LoadRequest(childId: "child-vc"))
         await interactor.delete(VoiceCloning.DeleteSampleRequest(sampleId: "ghost"))
+        withExtendedLifetime(pres) {}
         XCTAssertTrue(true, "delete с неизвестным ID — guard, без краша")
     }
 
@@ -270,11 +270,11 @@ final class VoiceCloningInteractorTests: XCTestCase {
             filePlayer: player
         )
         let pres = VoiceCloningPresenter()
-        pres.viewModel = VoiceCloningViewModel()
         interactor.presenter = pres
 
         await interactor.load(VoiceCloning.LoadRequest(childId: "child-gf"))
         await interactor.playSample(VoiceCloning.PlaySampleRequest(sampleId: "ghost-file"))
+        withExtendedLifetime(pres) {}
         XCTAssertEqual(player.playCallCount, 0, "Отсутствующий файл не воспроизводится")
     }
 

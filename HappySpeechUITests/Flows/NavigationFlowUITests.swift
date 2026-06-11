@@ -69,7 +69,6 @@ final class NavigationFlowUITests: XCTestCase {
             "-UITestOffline"
         ]
         app.launch()
-        let offline = app.otherElements["OfflineStateRoot"]
         // Экран может появиться или нет — зависит от реализации
         // Проверяем только что приложение не крашится с этим флагом
         let anyRoot = app.otherElements.element.waitForExistence(timeout: 8)

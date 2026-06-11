@@ -92,7 +92,7 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
     // MARK: - 2. loadSession инициализирует слова для группы
 
     func test_loadSession_populatesWords() {
-        let (sut, spy) = makeSUT()
+        let (sut, _) = makeSUT()
         sut.loadSession(.init(soundGroup: "whistling", childName: "Тест"))
         XCTAssertFalse(sut.words.isEmpty, "words не должны быть пустыми после loadSession")
         XCTAssertLessThanOrEqual(sut.words.count, 5, "Максимум 5 слов за сессию")

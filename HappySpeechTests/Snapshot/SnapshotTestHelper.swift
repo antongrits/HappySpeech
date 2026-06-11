@@ -168,7 +168,7 @@ enum SnapshotTestHelper {
         referenceURL: URL,
         maxDiffRatio: Double = defaultMaxDiffRatio,
         label: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) throws {
         guard let pngData = image.pngData() else {
@@ -233,7 +233,7 @@ enum SnapshotTestHelper {
         style: UIUserInterfaceStyle = .light,
         reduceMotion: Bool = true,
         label: String,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let image = renderView(view, size: size, style: style, reduceMotion: reduceMotion)

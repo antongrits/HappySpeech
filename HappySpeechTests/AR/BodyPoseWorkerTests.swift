@@ -56,8 +56,7 @@ final class BodyPoseWorkerTests: XCTestCase {
 
     func test_onUpdate_callbackSetBeforeStart_callbackNotNilAfterStart() {
         let worker = BodyPoseWorker()
-        var received = false
-        worker.onUpdate = { _ in received = true }
+        worker.onUpdate = { _ in }
         // Не запускаем start() чтобы не ждать реальный Task
         XCTAssertNotNil(worker.onUpdate, "onUpdate closure должен быть сохранён")
     }

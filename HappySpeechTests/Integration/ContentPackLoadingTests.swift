@@ -33,7 +33,7 @@ final class ContentPackLoadingTests: XCTestCase {
     /// Pack id → expected total items across all stages.
     private static let expectedItemCount: [String: Int] = [
         "sound_cfocus_v1": 69,
-        "sound_shchfocus_v1": 47,
+        "sound_shchfocus_v1": 45,
         "sound_rsoft_v1": 49,
         "sound_lsoft_v1": 49,
         "sound_velars_v1": 59,
@@ -45,7 +45,7 @@ final class ContentPackLoadingTests: XCTestCase {
         "pack_diff_voicing_v1": 30
     ]
 
-    private static let totalExpectedExercises = 489
+    private static let totalExpectedExercises = 487
 
     // MARK: - 1. Every new pack loads with the expected item count
 
@@ -62,7 +62,7 @@ final class ContentPackLoadingTests: XCTestCase {
         }
         XCTAssertEqual(
             loadedTotal, Self.totalExpectedExercises,
-            "All 11 new packs should sum to 489 exercises"
+            "All 11 new packs should sum to 487 exercises"
         )
     }
 

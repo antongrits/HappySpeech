@@ -57,8 +57,9 @@ final class CutsceneServiceTests: XCTestCase {
     }
 
     func testCatalog_videoReadyCutscenes_matchCatalog() {
-        // После волны Veo 3.1 (Sprint 12) готовы 9 кат-сцен:
-        // пролог + 4 острова (whistling/hissing/affr/sonor) × in+out.
+        // После полной генерации Veo 3.1 готовы ВСЕ 16 кат-сцен: пролог +
+        // 6 островов × in+out (whistling/hissing/affr/sonor/velar/grammar) +
+        // финал + 2 майлстоуна. Все видеофайлы присутствуют в бандле.
         // Тест синхронизирован с CutsceneModels.swift (videoReady: true).
         let ready = Set(CutsceneCatalog.all.filter { $0.videoReady }.map(\.id))
         let expected: Set<String> = [
@@ -66,9 +67,14 @@ final class CutsceneServiceTests: XCTestCase {
             "cs-isl-whistling-in", "cs-isl-whistling-out",
             "cs-isl-hissing-in",   "cs-isl-hissing-out",
             "cs-isl-affr-in",      "cs-isl-affr-out",
-            "cs-isl-sonor-in",     "cs-isl-sonor-out"
+            "cs-isl-sonor-in",     "cs-isl-sonor-out",
+            "cs-isl-velar-in",     "cs-isl-velar-out",
+            "cs-isl-grammar-in",   "cs-isl-grammar-out",
+            "cs-finale",
+            "cs-streak-7",         "cs-streak-30"
         ]
         XCTAssertEqual(ready, expected)
+        XCTAssertEqual(ready.count, CutsceneCatalog.all.count)
     }
 
     // MARK: - 2. Маппинг триггер → сцена

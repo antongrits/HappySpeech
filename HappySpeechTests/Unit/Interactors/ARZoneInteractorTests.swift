@@ -226,9 +226,12 @@ final class ARZoneInteractorTests: XCTestCase {
         XCTAssertEqual(ARGameCatalog.game(forDestination: .arStoryQuest)?.id, "ar-story-quest")
     }
 
-    func test_arGameCatalog_hasElevenGames() {
-        // v32 wave 2 — added 3 placeholder tiles (AR-Песни / AR-Сказка / AR-Дыхание)
-        // that route to existing .arMirror. Catalog grew 8 → 11.
-        XCTAssertEqual(ARGameCatalog.all.count, 11)
+    func test_arGameCatalog_hasTwelveGames() {
+        // 8 core face-tracking games + sound-hunter-room (back-camera Vision) +
+        // 3 placeholder tiles (AR-Песни / AR-Сказка / AR-Дыхание) that route to
+        // existing .arMirror. Catalog total = 12. All ids must be unique.
+        XCTAssertEqual(ARGameCatalog.all.count, 12)
+        let uniqueIDs = Set(ARGameCatalog.all.map(\.id))
+        XCTAssertEqual(uniqueIDs.count, 12, "AR game catalog must have no duplicate ids")
     }
 }

@@ -68,7 +68,7 @@ final class NotificationServiceExtTests: XCTestCase {
 
 private func XCTAssertNoThrowAsync(
     _ expression: () async throws -> Void,
-    file: StaticString = #file,
+    file: StaticString = #filePath,
     line: UInt = #line
 ) async {
     do {

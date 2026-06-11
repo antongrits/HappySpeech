@@ -116,11 +116,26 @@ final class AudioMemoryGameInteractorTests: XCTestCase {
         XCTAssertEqual(sut.matchedCount, 0)
         XCTAssertEqual(sut.mismatches, 1)
 
-        try? await Task.sleep(for: .milliseconds(900))
+        // Flip-back наступает через 700мс. Ждём состояние (а не фиксированную
+        // задержку) — под нагрузкой симулятора жёсткий sleep даёт флаки.
+        await waitUntil(timeout: 3.0) { !sut.isResolving }
         XCTAssertFalse(sut.isResolving)
         XCTAssertFalse(sut.tiles[a].isFlipped)
         XCTAssertFalse(sut.tiles[b].isFlipped)
         XCTAssertNil(sut.firstPickIndex)
+    }
+
+    /// Опрашивает условие до выполнения либо до таймаута (шаг 25мс).
+    /// Возвращает управление MainActor между проверками, давая unstructured
+    /// Task интерактора (`@MainActor`) выполнить flip-back.
+    private func waitUntil(
+        timeout: TimeInterval,
+        _ condition: () -> Bool
+    ) async {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() && Date() < deadline {
+            try? await Task.sleep(for: .milliseconds(25))
+        }
     }
 
     // MARK: - Completion

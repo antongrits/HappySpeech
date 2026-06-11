@@ -12,13 +12,13 @@ import XCTest
 
 // MARK: - MockBundle
 
-private final class EmptyBundle: Bundle {
+private final class EmptyBundle: Bundle, @unchecked Sendable {
     override func url(forResource name: String?, withExtension ext: String?) -> URL? {
         nil
     }
 }
 
-private final class MalformedBundle: Bundle {
+private final class MalformedBundle: Bundle, @unchecked Sendable {
     override func url(forResource name: String?, withExtension ext: String?) -> URL? {
         // Возвращаем URL на несуществующий файл, чтобы Data(contentsOf:) бросил ошибку.
         URL(fileURLWithPath: "/tmp/nonexistent_corpus_\(UUID().uuidString).json")

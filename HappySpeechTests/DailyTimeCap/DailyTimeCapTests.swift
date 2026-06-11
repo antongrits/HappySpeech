@@ -131,17 +131,17 @@ struct DailyTimeCapPresenterSuite {
         }
     }
 
-    @Test func zeroUsage_greenTint_notCapped() async {
+    @Test func zeroUsage_greenTint_notCapped() async throws {
         let display = DisplayHolder()
         let presenter = DailyTimeCapPresenter(displayLogic: display)
         await presenter.presentStatus(response: .init(
             isEnabled: true, capMinutes: 30, usedSeconds: 0
         ))
-        let viewModel = try? #require(display.last)
-        #expect(viewModel?.usedMinutes == 0)
-        #expect(viewModel?.progressTint == .green)
-        #expect(viewModel?.isCapped == false)
-        #expect(viewModel?.availableMinuteOptions == [15, 20, 30, 45, 60, 90])
+        let viewModel = try #require(display.last)
+        #expect(viewModel.usedMinutes == 0)
+        #expect(viewModel.progressTint == .green)
+        #expect(viewModel.isCapped == false)
+        #expect(viewModel.availableMinuteOptions == [15, 20, 30, 45, 60, 90])
     }
 
     @Test func halfUsage_greenTint() async {
@@ -215,7 +215,7 @@ struct DailyTimeCapInteractorSuite {
         }
     }
 
-    @Test func setCap_thenRecordUsage_yieldsExpectedStatus() async {
+    @Test func setCap_thenRecordUsage_yieldsExpectedStatus() async throws {
         let display = DisplayHolder()
         let presenter = DailyTimeCapPresenter(displayLogic: display)
         let tracker = MockDailyUsageTracker()
@@ -226,11 +226,11 @@ struct DailyTimeCapInteractorSuite {
         await interactor.recordUsage(seconds: 15 * 60)
         await interactor.loadStatus()
 
-        let viewModel = try? #require(display.last)
-        #expect(viewModel?.isEnabled == true)
-        #expect(viewModel?.capMinutes == 30)
-        #expect(viewModel?.usedMinutes == 15)
-        #expect(viewModel?.isCapped == false)
+        let viewModel = try #require(display.last)
+        #expect(viewModel.isEnabled == true)
+        #expect(viewModel.capMinutes == 30)
+        #expect(viewModel.usedMinutes == 15)
+        #expect(viewModel.isCapped == false)
         #expect(tracker.isOverCap() == false)
     }
 

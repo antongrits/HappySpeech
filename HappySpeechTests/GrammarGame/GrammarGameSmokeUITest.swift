@@ -76,7 +76,7 @@ final class GrammarGameSmokeUITest: XCTestCase {
     func test_scoringWorker_multipleAttempts_doesNotCrash() {
         let sut = GrammarScoringWorker()
         sut.reset(totalRounds: 10)
-        var ids: [UUID] = (0..<10).map { _ in UUID() }
+        let ids: [UUID] = (0..<10).map { _ in UUID() }
 
         for (i, rid) in ids.enumerated() {
             _ = sut.recordAttempt(roundId: rid, isCorrect: i % 2 == 0, difficulty: .medium)

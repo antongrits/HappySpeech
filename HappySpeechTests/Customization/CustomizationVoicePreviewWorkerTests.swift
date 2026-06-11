@@ -1,15 +1,19 @@
 @testable import HappySpeech
+import AVFoundation
 import XCTest
 
 // MARK: - CustomizationVoicePreviewWorkerTests
 //
 // CustomizationVoicePreviewWorker воспроизводит m4a из bundle через AVAudioPlayer.
-// В тест-бандле нет audio-файлов (sound-curator добавит на шаге F2-009),
-// поэтому тестируем наблюдаемую логику:
-//  1. Первый вызов play() устанавливает currentVoice.
-//  2. Повторный вызов play() с тем же голосом останавливает воспроизведение (toggle).
+// Preview-файлы голосов Ляли (Chirp3-HD-Aoede) присутствуют в бандле
+// (Resources/Audio/Voice/lyalya_voice_{classic,soft,cheerful}_preview.m4a),
+// поэтому play() запускает реальное воспроизведение. Тестируем наблюдаемую
+// логику без зависимости от завершения аудио:
+//  1. Первый вызов play() устанавливает currentVoice (воспроизведение начато).
+//  2. Повторный вызов play() с тем же голосом останавливает (toggle → nil).
 //  3. stop() сбрасывает currentVoice.
-//  4. Silent skip path: при отсутствии файла вызывается onPlaybackFinished и currentVoice = nil.
+//  4. onPlaybackFinished вызывается делегатом по завершении (асинхронно), а не
+//     синхронно в play(); проверяется через ожидание состояния.
 
 @MainActor
 final class CustomizationVoicePreviewWorkerTests: XCTestCase {
@@ -34,41 +38,32 @@ final class CustomizationVoicePreviewWorkerTests: XCTestCase {
         XCTAssertNil(sut.currentVoice)
     }
 
-    // MARK: - Silent-skip: файла нет → onPlaybackFinished вызывается
+    // MARK: - play() с существующим preview-файлом → воспроизведение начато
 
-    func test_play_whenFileNotFound_callsOnPlaybackFinishedAndResetsCurrentVoice() {
-        var capturedVoice: LyalyaVoice?
-        sut.onPlaybackFinished = { capturedVoice = $0 }
-
-        // В тест-bundle нет audio-файлов → silent skip path
+    func test_play_setsCurrentVoiceToRequestedVoice() {
         sut.play(voice: .classic)
-
-        // После silent skip: currentVoice должен сброситься и callback вызваться
-        XCTAssertNil(sut.currentVoice,
-                     "После silent skip currentVoice должен быть nil")
-        XCTAssertEqual(capturedVoice, .classic,
-                       "onPlaybackFinished должен вызваться с голосом .classic")
+        // Preview-файл существует → реальное воспроизведение: currentVoice = .classic
+        XCTAssertEqual(sut.currentVoice, .classic,
+                       "play() должен установить currentVoice в запрошенный голос")
     }
 
-    func test_play_whenFileNotFound_allVoicesCallCallback() {
+    func test_play_eachVoice_setsCurrentVoice() {
         for voice in LyalyaVoice.allCases {
-            var callbackCalled = false
-            sut.onPlaybackFinished = { _ in callbackCalled = true }
+            sut.stop()
             sut.play(voice: voice)
-            XCTAssertTrue(callbackCalled,
-                          "onPlaybackFinished должен вызваться для голоса \(voice.rawValue)")
+            XCTAssertEqual(sut.currentVoice, voice,
+                           "play() должен установить currentVoice=\(voice.rawValue)")
         }
     }
 
     // MARK: - Повторный play() с тем же голосом → toggle/stop
 
     func test_play_sameVoiceTwice_stopsAndResetsCurrentVoice() {
-        // Первый вызов — выполним, проверим что внутри была установлена попытка воспроизвести.
-        // Второй с тем же — должен вызвать stop().
-        sut.play(voice: .soft)   // silent skip → currentVoice=nil после
-        // Поскольку currentVoice=nil после silent-skip, второй вызов НЕ является toggle.
-        // Проверяем что нет краша:
-        XCTAssertNoThrow(sut.play(voice: .soft))
+        // Первый вызов запускает воспроизведение (currentVoice=.soft).
+        sut.play(voice: .soft)
+        XCTAssertEqual(sut.currentVoice, .soft)
+        // Второй с тем же голосом — toggle → stop() → currentVoice=nil.
+        sut.play(voice: .soft)
         XCTAssertNil(sut.currentVoice)
     }
 
@@ -81,13 +76,43 @@ final class CustomizationVoicePreviewWorkerTests: XCTestCase {
         XCTAssertNil(sut.currentVoice, "stop() должен сбрасывать currentVoice")
     }
 
-    // MARK: - onPlaybackFinished можно установить
+    // MARK: - onPlaybackFinished вызывается делегатом по завершении
 
-    func test_onPlaybackFinished_canBeSet() {
-        var called = false
-        sut.onPlaybackFinished = { _ in called = true }
+    func test_onPlaybackFinished_firesOnPlaybackCompletion() async {
+        var captured: LyalyaVoice?
+        sut.onPlaybackFinished = { captured = $0 }
         sut.play(voice: .soft)
-        XCTAssertTrue(called, "onPlaybackFinished должен вызываться при silent skip")
+        XCTAssertEqual(sut.currentVoice, .soft)
+
+        // Эмулируем естественное завершение воспроизведения через делегат
+        // AVAudioPlayer (детерминированно, без ожидания реального аудио).
+        let player = try? AVAudioPlayer(
+            contentsOf: Bundle.main.url(
+                forResource: LyalyaVoice.soft.previewFile,
+                withExtension: "m4a",
+                subdirectory: "Audio/Voice"
+            ) ?? URL(fileURLWithPath: "/dev/null")
+        )
+        if let player {
+            sut.audioPlayerDidFinishPlaying(player, successfully: true)
+        }
+        // Делегат хопает на MainActor через Task — ждём состояние.
+        await waitUntil(timeout: 2.0) { self.sut.currentVoice == nil }
+        XCTAssertNil(sut.currentVoice,
+                     "После завершения воспроизведения currentVoice должен сброситься")
+        XCTAssertEqual(captured, .soft,
+                       "onPlaybackFinished должен вызваться с проигранным голосом")
+    }
+
+    /// Опрашивает условие до выполнения либо до таймаута (шаг 20мс).
+    private func waitUntil(
+        timeout: TimeInterval,
+        _ condition: () -> Bool
+    ) async {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() && Date() < deadline {
+            try? await Task.sleep(for: .milliseconds(20))
+        }
     }
 
     // MARK: - LyalyaVoice.previewFile
