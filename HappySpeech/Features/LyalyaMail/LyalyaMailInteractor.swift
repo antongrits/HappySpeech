@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import OSLog
 
@@ -69,7 +70,11 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
         guard let updated = await realmActor.markLyalyaLetterRead(letterId: request.letterId.uuidString) else {
             return
         }
-        await presenter?.presentOpenedLetter(response: .init(letter: updated.asDTO))
+        guard let dto = updated.asDTO() else {
+            logger.error("Opened letter has non-UUID id, skipping present: \(updated.id, privacy: .public)")
+            return
+        }
+        await presenter?.presentOpenedLetter(response: .init(letter: dto))
         // Перезагружаем список — счётчик непрочитанных обновится.
         await loadMail(.init(childId: childId))
     }
@@ -90,7 +95,13 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
     private func fetchLetters(childId: String) async -> [LyalyaLetterDTO] {
         guard let realmActor else { return [] }
         let data = await realmActor.fetchLyalyaLetters(childId: childId)
-        return data.map { $0.asDTO }.sorted { $0.date > $1.date }
+        return data.compactMap { letter -> LyalyaLetterDTO? in
+            guard let dto = letter.asDTO() else {
+                logger.error("Letter with non-UUID id skipped: \(letter.id, privacy: .public)")
+                return nil
+            }
+            return dto
+        }.sorted { $0.date > $1.date }
     }
 
     /// Генерирует письма по реальным событиям и идемпотентно сохраняет их.
@@ -128,9 +139,15 @@ final class LyalyaMailInteractor: LyalyaMailBusinessLogic {
 // MARK: - LyalyaLetterData → DTO
 
 private extension LyalyaLetterData {
-    var asDTO: LyalyaLetterDTO {
-        LyalyaLetterDTO(
-            id: UUID(uuidString: id) ?? UUID(),
+    /// Маппит persisted-письмо в DTO. Возвращает `nil`, если PK письма не парсится
+    /// как UUID — раньше здесь молча минтился НОВЫЙ `UUID()` при каждом чтении, из-за
+    /// чего `openLetter`/`delete` брали `letterId.uuidString`, никогда не совпадавший
+    /// с сохранённым PK → тихий no-op. Теперь рассинхрон не маскируется: malformed-строка
+    /// логируется вызывающим и письмо исключается из выдачи, а не подменяется фантомным id.
+    func asDTO() -> LyalyaLetterDTO? {
+        guard let uuid = UUID(uuidString: id) else { return nil }
+        return LyalyaLetterDTO(
+            id: uuid,
             childId: childId,
             kind: LetterKind(rawValue: kind) ?? .welcome,
             title: title,
@@ -188,14 +205,25 @@ enum LyalyaMailLetters {
     }
 
     /// Детерминированный строковый id (UUID-форма) по триггеру + childId.
+    ///
+    /// `Swift.Hasher` инициализируется случайным per-process seed → один и тот же
+    /// триггер давал РАЗНЫЙ id при каждом запуске приложения: `insertLyalyaLetterIfAbsent`
+    /// (PK `id`) не находил прошлый объект → плодил дубликаты welcome/streak/firstSound,
+    /// а `markRead`/`delete`/soft-delete из прошлой сессии переставали находить письмо.
+    ///
+    /// Теперь id = первые 16 байт `SHA256` от стабильной строки `lyalya.letter.<tag>.<childId>`,
+    /// упакованные в well-formed UUID v5-style (выставлены RFC-4122 version/variant биты,
+    /// чтобы `UUID(uuidString:)` на чтении гарантированно успешно парсил). Хеш
+    /// детерминирован между запусками → идемпотентность вставки и стабильность
+    /// «прочитано»/«удалено» соблюдаются.
     private static func stableId(_ tag: String, childId: String) -> String {
         let combined = "lyalya.letter.\(tag).\(childId)"
-        var hasher = Hasher()
-        hasher.combine(combined)
-        let hash = UInt64(bitPattern: Int64(hasher.finalize()))
-        let bytes: [UInt8] = (0..<16).map { i in
-            UInt8((hash >> UInt64((i % 8) * 8)) & 0xFF)
-        }
+        let digest = SHA256.hash(data: Data(combined.utf8))
+        var bytes = Array(digest.prefix(16))
+        // RFC-4122: version 5 (name-based SHA-1/derived) в старших нибблах байта 6,
+        // variant 0b10 в старших битах байта 8 — корректная UUID-структура.
+        bytes[6] = (bytes[6] & 0x0F) | 0x50
+        bytes[8] = (bytes[8] & 0x3F) | 0x80
         return UUID(uuid: (
             bytes[0], bytes[1], bytes[2], bytes[3],
             bytes[4], bytes[5], bytes[6], bytes[7],

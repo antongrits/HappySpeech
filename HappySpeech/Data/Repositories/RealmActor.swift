@@ -53,8 +53,17 @@ public actor RealmActor {
 
     /// Открывает Realm через `Realm(actor: self)` — actor-safe async инициализация.
     /// Гарантирует, что Realm привязан к executor этого actor, исключая thread mismatch.
+    ///
+    /// Конфигурация по умолчанию — единый `RealmConfig.make()` (v16 + migrationBlock).
+    /// Этот же config выставляется как `Realm.Configuration.defaultConfiguration`, чтобы
+    /// async-хелперы (`asyncFetchMapped`, `fetchLyalyaLetters` и т.д.), открывающие
+    /// Realm через `Realm(actor:)` без явного config, наследовали ту же версию схемы и
+    /// migration-блок. В проде дефолт уже выставлен в `AppContainer.live()` синхронно
+    /// до рендера; здесь дублирующая установка закрывает гонку и поддерживает тесты,
+    /// передающие свой `configuration` (in-memory).
     public func open(configuration: Realm.Configuration? = nil) async throws {
-        let config = configuration ?? defaultConfiguration
+        let config = configuration ?? RealmConfig.make()
+        Realm.Configuration.defaultConfiguration = config
         let opened = try await Realm(configuration: config, actor: self)
         self.realm = opened
         HSLogger.realm.info("Realm opened at: \(opened.configuration.fileURL?.path ?? "memory")")
@@ -171,15 +180,5 @@ public actor RealmActor {
         } catch {
             HSLogger.realm.error("asyncWrite: Realm write failed: \(error.localizedDescription, privacy: .public)")
         }
-    }
-
-    // MARK: - Default Configuration
-
-    private var defaultConfiguration: Realm.Configuration {
-        var config = Realm.Configuration.defaultConfiguration
-        config.schemaVersion = RealmSchemaVersion.current
-        config.migrationBlock = RealmMigrations.migrationBlock
-        config.deleteRealmIfMigrationNeeded = false
-        return config
     }
 }

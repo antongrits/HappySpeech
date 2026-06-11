@@ -905,6 +905,12 @@ public extension AppContainer {
 
     /// Creates the production container with real service implementations.
     static func live() -> AppContainer {
+        // Выставляем каноническую конфигурацию Realm (v16 + migrationBlock) как
+        // глобальный дефолт СИНХРОННО, до создания RealmActor и до первого рендера.
+        // Гарантирует, что любое открытие Realm через `Realm(actor:)` (в т.ч.
+        // хелпер, опередивший `bootstrapApp().open()`) использует правильную схему
+        // и migration-блок — закрывает гонку cold-start и корень «ошибок с id».
+        RealmConfig.installAsDefault()
         let realmActor = RealmActor()
         let childRepo = LiveChildRepository(realmActor: realmActor)
         let sessionRepo = LiveSessionRepository(realmActor: realmActor)
@@ -999,6 +1005,9 @@ public extension AppContainer {
     /// чтобы screenshot tour / демо не показывали пустые экраны на
     /// Leaderboard, FamilyAchievements, SessionHistory, ComparisonDashboard и т.д.
     static func preview() -> AppContainer {
+        // Та же каноническая конфигурация, что и в проде: даже preview/UI-test
+        // открытия Realm через `Realm(actor:)` наследуют v16 + migrationBlock.
+        RealmConfig.installAsDefault()
         let realmActor = RealmActor()
         let childRepo = MockChildRepository(children: ChildProfileDTO.previewList)
         let sessionRepo = MockSessionRepository.seeded()

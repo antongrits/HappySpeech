@@ -42,14 +42,16 @@ final class ButterflyCatchInteractorTests: XCTestCase {
     }
 
     /// Blendshapes, гарантированно дающие confidence >= 0.6 для конкретной позы.
+    /// Бабочка ловится «языковыми» позами (подъём/высовывание языка), поэтому
+    /// фикстуры опираются на реальный blendshape `tongueOut`.
     private func blendshapes(for posture: ArticulationPosture) -> FaceBlendshapes {
         switch posture {
-        case .smile:
-            return FaceBlendshapes(mouthSmileLeft: 1.0, mouthSmileRight: 1.0)
-        case .pucker:
-            return FaceBlendshapes(mouthPucker: 1.0)
-        case .cupShape:
-            return FaceBlendshapes(mouthFunnel: 1.0)
+        case .tongueUp:
+            // «Чашечка»: язык поднят при открытом рте — tongueOut × jawOpen высокий.
+            return FaceBlendshapes(jawOpen: 0.8, tongueOut: 0.9)
+        case .shoveling:
+            // «Лопаточка»: широкий язык высунут при почти закрытом рте.
+            return FaceBlendshapes(jawOpen: 0.1, tongueOut: 0.9)
         default:
             return FaceBlendshapes()
         }
@@ -89,7 +91,8 @@ final class ButterflyCatchInteractorTests: XCTestCase {
         guard let butterfly = spy.spawnedButterflies.first else { return XCTFail("Нет бабочки") }
         XCTAssertTrue((0.1...0.9).contains(butterfly.position.x))
         XCTAssertTrue((0.15...0.45).contains(butterfly.position.y))
-        XCTAssertTrue([.smile, .pucker, .cupShape].contains(butterfly.targetPosture))
+        XCTAssertTrue([.tongueUp, .shoveling].contains(butterfly.targetPosture),
+                      "Бабочка ловится только языковыми позами (подъём/высовывание языка)")
     }
 
     func test_spawnMultipleButterflies_uniqueIds() {

@@ -17,19 +17,31 @@ import OSLog
 //
 // MARK: - ButterflyCatchInteractor
 //
-// AR мини-игра «Поймай бабочку».
+// AR мини-игра «Поймай бабочку языком».
+//
+// Логопедическая основа (Фомичёва, Правдина, Коноваленко): ребёнок «ловит»
+// бабочку, ВЫСОВЫВАЯ и ПОДНИМАЯ язык — это игровая упаковка базовых
+// артикуляционных упражнений подготовительного этапа над сонорами (Р, Л) и
+// шипящими (Ш, Ж):
+//   - .tongueUp  — широкий язык поднят к верхней губе при открытом рте
+//                  («Вкусное варенье» / «Чашечка»);
+//   - .shoveling — широкий распластанный язык высунут наружу при почти
+//                  закрытом рте («Лопаточка»).
+// Обе позы опираются на реальный blendshape `tongueOut` (ARFaceAnchor),
+// а не на положение губ. Это приводит игру в соответствие с описанием в работе
+// (ловля языком, tongueOut), где раньше код ловил позы губ (smile/pucker).
 //
 // Clean Swift поток:
 //   View (ARKit frame) → Interactor → Presenter → ViewModel → View
 //
 // AR зависимости:
 //   - TonguePostureClassifier: Core ML inference на ARFaceAnchor.blendShapes
-//     (jawOpen, mouthLeft, mouthRight и др.)
+//     (tongueOut, jawOpen и др.). Обе целевые позы есть в ML-словаре.
 //   - ARSCNViewDelegate: View передаёт blendshapes через scoreAttempt() на каждый кадр
 //
 // Бизнес-правила:
 //   - Бабочка «поймана» при confidence(blendshapes, posture) >= 0.6
-//   - Позы из цикла: smile / pucker / cupShape (подготовка артикуляции)
+//   - Позы из цикла: tongueUp / shoveling (подъём и высовывание языка)
 //   - Позиции бабочек рандомизируются в диапазоне [0.1..0.9] × [0.15..0.45] экрана
 //
 // COPPA: нет сетевых вызовов, нет PII. Весь ML — on-device Core ML.
@@ -63,8 +75,10 @@ final class ButterflyCatchInteractor: ButterflyCatchBusinessLogic {
     }
 
     func spawnButterfly(_ request: ButterflyCatchModels.SpawnButterfly.Request) {
-        let postures: [ArticulationPosture] = [.smile, .pucker, .cupShape]
-        let posture = postures.randomElement() ?? .smile
+        // Только «языковые» позы: высовывание и подъём языка.
+        // Это профильные артикуляционные упражнения для соноров и шипящих.
+        let postures: [ArticulationPosture] = [.tongueUp, .shoveling]
+        let posture = postures.randomElement() ?? .tongueUp
         let butterfly = ButterflyCatchModels.Butterfly(
             id: UUID(),
             position: CGPoint(x: .random(in: 0.1...0.9), y: .random(in: 0.15...0.45)),

@@ -32,12 +32,13 @@ final class ButterflyCatchPresenterTests: XCTestCase {
         return (presenter, spy)
     }
 
-    private func butterfly(id: UUID = UUID()) -> ButterflyCatchModels.Butterfly {
+    private func butterfly(id: UUID = UUID(),
+                           posture: ArticulationPosture = .tongueUp) -> ButterflyCatchModels.Butterfly {
         .init(
             id: id,
             position: CGPoint(x: 0.5, y: 0.5),
             direction: .left,
-            targetPosture: .smile
+            targetPosture: posture
         )
     }
 
@@ -58,7 +59,19 @@ final class ButterflyCatchPresenterTests: XCTestCase {
         sut.presentSpawnButterfly(.init(butterfly: butterfly(id: id)))
         XCTAssertEqual(spy.spawnVM?.butterfly.id, id)
         XCTAssertEqual(spy.spawnVM?.butterfly.direction, .left)
-        XCTAssertEqual(spy.spawnVM?.butterfly.targetPosture, .smile)
+        XCTAssertEqual(spy.spawnVM?.butterfly.targetPosture, .tongueUp)
+    }
+
+    func test_spawn_providesTongueInstruction() {
+        let (sut, spy) = makeSUT()
+        sut.presentSpawnButterfly(.init(butterfly: butterfly(posture: .tongueUp)))
+        XCTAssertFalse(spy.spawnVM?.instruction.isEmpty ?? true,
+                       "Ребёнок получает подсказку, как ловить бабочку языком")
+        let upCue = spy.spawnVM?.instruction
+        sut.presentSpawnButterfly(.init(butterfly: butterfly(posture: .shoveling)))
+        XCTAssertFalse(spy.spawnVM?.instruction.isEmpty ?? true)
+        XCTAssertNotEqual(upCue, spy.spawnVM?.instruction,
+                          "Подсказка отличается для разных поз языка")
     }
 
     // MARK: - ScoreAttempt

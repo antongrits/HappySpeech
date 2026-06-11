@@ -67,10 +67,10 @@ struct ButterflyCatchView: View {
         self.interactor = interactor
         self.presenter = presenter
 
-        // Бабочка ловится по открытию рта (jawOpen blendshape) — нужен TrueDepth.
-        // На реальном устройстве без TrueDepth игра НЕ запускается и не скорит
-        // синтетику: показывается честный ARUnsupportedView (P1-1). Симуляция
-        // (Mock) допускается только в SwiftUI-превью и под тестами.
+        // Бабочка ловится высовыванием/подъёмом языка (tongueOut blendshape) —
+        // нужен TrueDepth. На реальном устройстве без TrueDepth игра НЕ запускается
+        // и не скорит синтетику: показывается честный ARUnsupportedView (P1-1).
+        // Симуляция (Mock) допускается только в SwiftUI-превью и под тестами.
         if ARDeviceCapability.supportsFaceTracking {
             let live = LiveARSessionService()
             self.session = live
@@ -132,6 +132,7 @@ final class ButterflyCatchDisplay: ButterflyCatchDisplayLogic {
 
     func displaySpawnButterfly(_ viewModel: ButterflyCatchModels.SpawnButterfly.ViewModel) {
         butterflies[viewModel.butterfly.id] = viewModel.butterfly
+        statusMessage = viewModel.instruction
     }
 
     func displayScoreAttempt(_ viewModel: ButterflyCatchModels.ScoreAttempt.ViewModel) {

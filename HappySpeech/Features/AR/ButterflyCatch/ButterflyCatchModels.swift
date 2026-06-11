@@ -5,7 +5,7 @@ import Foundation
 
 enum ButterflyCatchModels {
 
-    /// Направление полёта бабочки — ребёнок "ловит" её открытием рта в нужной точке.
+    /// Направление полёта бабочки — ребёнок «ловит» её, высовывая или поднимая язык.
     enum Direction: String, CaseIterable, Sendable { case left, right, up, down }
 
     struct Butterfly: Sendable, Identifiable, Hashable {
@@ -26,7 +26,12 @@ enum ButterflyCatchModels {
     enum SpawnButterfly {
         struct Request {}
         struct Response { let butterfly: Butterfly }
-        struct ViewModel { let butterfly: Butterfly }
+        struct ViewModel {
+            let butterfly: Butterfly
+            /// Подсказка ребёнку, каким движением языка ловить именно эту бабочку
+            /// (зависит от `butterfly.targetPosture`).
+            let instruction: String
+        }
     }
 
     // MARK: - ScoreAttempt

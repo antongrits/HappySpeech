@@ -620,3 +620,47 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
 enum RealmSchemaVersion {
     static let current: UInt64 = 16
 }
+
+// MARK: - RealmConfig
+
+/// Единственный источник правды для `Realm.Configuration` приложения.
+///
+/// До этого `schemaVersion` + `migrationBlock` собирались только внутри
+/// `RealmActor.open()` и применялись лишь к кэшированному `self.realm`.
+/// Десятки extension-методов открывали Realm через `Realm(actor: self)` без
+/// явного config → RealmSwift подставлял `Realm.Configuration.defaultConfiguration`
+/// (schemaVersion 0, migrationBlock nil). На апгрейде существующей БД это давало
+/// schema-mismatch, который проглатывался `try?` → пустые данные / «потерянные id».
+///
+/// Теперь конфигурация собирается ровно в одном месте (``make()``) и применяется
+/// как `Realm.Configuration.defaultConfiguration` синхронно на старте приложения
+/// (`RealmConfig.installAsDefault()` в `AppContainer.live()`), ДО первого рендера.
+/// Любое открытие Realm — кэш `RealmActor`, async `Realm(actor:)` в хелперах,
+/// preview-инстансы — наследует одну и ту же версию схемы и migration-блок.
+enum RealmConfig {
+
+    /// Собирает каноническую конфигурацию Realm (v16 + migrationBlock).
+    ///
+    /// Стартует от текущего `defaultConfiguration`, поэтому уважает уже
+    /// установленный `fileURL`/`inMemoryIdentifier` (важно для тестов, которые
+    /// задают in-memory identifier ДО вызова), и лишь форсит версию схемы,
+    /// migration-блок и `deleteRealmIfMigrationNeeded = false` (данные на
+    /// апгрейде не теряются молча — миграция выполняется штатно).
+    static func make() -> Realm.Configuration {
+        var config = Realm.Configuration.defaultConfiguration
+        config.schemaVersion = RealmSchemaVersion.current
+        config.migrationBlock = RealmMigrations.migrationBlock
+        config.deleteRealmIfMigrationNeeded = false
+        return config
+    }
+
+    /// Устанавливает каноническую конфигурацию как глобальный дефолт.
+    ///
+    /// Вызывается синхронно на старте (до рендера и до `RealmActor.open()`),
+    /// чтобы закрыть гонку: даже если хелпер-метод опередит `open()` и первым
+    /// откроет файл через `Realm(actor:)`, он откроет его уже с v16 +
+    /// migration-блоком, а не с дефолтной v0.
+    static func installAsDefault() {
+        Realm.Configuration.defaultConfiguration = make()
+    }
+}

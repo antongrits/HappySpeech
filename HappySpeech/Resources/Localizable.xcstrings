@@ -1816,7 +1816,40 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Бабочка"
+            "value": "Поймал! Молодец!"
+          }
+        }
+      }
+    },
+    "ar.butterfly.cue.default": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поймай бабочку язычком"
+          }
+        }
+      }
+    },
+    "ar.butterfly.cue.shoveling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Высунь широкий язычок — поймай бабочку «лопаточкой»"
+          }
+        }
+      }
+    },
+    "ar.butterfly.cue.tongueUp": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними язычок к верхней губе — поймай бабочку «чашечкой»"
           }
         }
       }
@@ -1849,7 +1882,18 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Начать"
+            "value": "Лови бабочек язычком!"
+          }
+        }
+      }
+    },
+    "ar.butterfly.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поймай бабочку"
           }
         }
       }
@@ -35806,7 +35850,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поза"
+            "value": "Лопаточка"
           }
         }
       }
@@ -35861,7 +35905,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поза"
+            "value": "Язычок вверх"
           }
         }
       }

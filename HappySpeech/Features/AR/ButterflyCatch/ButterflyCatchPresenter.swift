@@ -27,7 +27,22 @@ final class ButterflyCatchPresenter: ButterflyCatchPresentationLogic {
     }
 
     func presentSpawnButterfly(_ response: ButterflyCatchModels.SpawnButterfly.Response) {
-        display?.displaySpawnButterfly(.init(butterfly: response.butterfly))
+        display?.displaySpawnButterfly(.init(
+            butterfly: response.butterfly,
+            instruction: instruction(for: response.butterfly.targetPosture)
+        ))
+    }
+
+    /// Подсказка-инструкция для ребёнка по целевой позе языка.
+    private func instruction(for posture: ArticulationPosture) -> String {
+        switch posture {
+        case .tongueUp:
+            return String(localized: "ar.butterfly.cue.tongueUp")
+        case .shoveling:
+            return String(localized: "ar.butterfly.cue.shoveling")
+        default:
+            return String(localized: "ar.butterfly.cue.default")
+        }
     }
 
     func presentScoreAttempt(_ response: ButterflyCatchModels.ScoreAttempt.Response) {
