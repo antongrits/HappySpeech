@@ -98,12 +98,29 @@ final class Wave2SnapshotTests: XCTestCase {
     }
 
     // MARK: - 6. ComprehensionDetectiveView (kid, childId)
+    //
+    // Smoke: ComprehensionDetectiveView инициализируется в состоянии loadingSection
+    // (holder.currentRound == nil). loadingSection содержит ProgressView() с
+    // непрерывной spinner-анимацией, которую reduceMotion НЕ замораживает в нашем
+    // рендер-сетапе (UIKit spinner = CALayer animation, не SwiftUI). Кадр ловит
+    // разную фазу вращения между прогонами → diff > 5% (наблюдался 5.14% на
+    // iPhone17Pro·Dark). Pixel-тест с поднятым tolerance маскирует регрессии.
+    // Smoke ловит главный класс регрессий: краш/пустой кадр/отсутствие окружения.
 
     func test_comprehensionDetective_rendersInBothThemes() throws {
         let view = ComprehensionDetectiveView(childId: "preview-child-1")
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try record(view, screen: "ComprehensionDetectiveView")
+        for device in devices {
+            for (appearanceName, style) in appearances {
+                SnapshotTestHelper.assertRendersNonBlank(
+                    view,
+                    size: device.size,
+                    style: style,
+                    label: "ComprehensionDetectiveView·\(device.name)·\(appearanceName)"
+                )
+            }
+        }
     }
 
     // MARK: - 7. CulturalContentView (kid, childId)

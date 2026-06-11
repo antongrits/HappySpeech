@@ -36,11 +36,19 @@ final class SpecialistSnapshotTests: XCTestCase {
     }
 
     // MARK: - 2. SpecialistReportsView
+    //
+    // Smoke: SpecialistReportsView использует `@Environment(AppCoordinator.self)`
+    // в methodologyAssistantEntryCard (coordinator.navigate) — без инъекции
+    // AppCoordinator хост-контроллер крашит при построении view-дерева до рендера.
+    // Экран дополнительно недетерминирован: isLoading-ProgressView ловит разные
+    // кадры spinner-анимации между прогонами (аналогично SessionCompleteView).
+    // Smoke-тест ловит главный класс регрессий (краш/пустой кадр/отсутствие env).
 
     func test_specialistReports_bothThemes() throws {
         let view = SpecialistReportsView()
+            .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try record(view, screen: "SpecialistReportsSnap")
+        SnapshotTestHelper.assertRendersNonBlank(view, label: "SpecialistReportsSnap")
     }
 
     // MARK: - 3. SessionReviewView

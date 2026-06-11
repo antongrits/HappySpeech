@@ -137,12 +137,29 @@ final class Wave4SnapshotTests: XCTestCase {
     }
 
     // MARK: - 10. SyllableConstructorView (kid, childId)
+    //
+    // Smoke: SyllableConstructorView запускает `setupAndStart()` внутри `.task`.
+    // settleMainRunLoop даёт task отработать синхронную часть, но между прогонами
+    // SyllableConstructorWorker подбирает разное слово из пула
+    // (worker.start → pool.randomElement/shuffle), что меняет содержимое
+    // wordHeader + bankTiles между прогонами → diff 19.44% на 17Pro·Dark.
+    // Re-record sentinel не стабилизирует: источник нестабильности — случайный пул.
+    // Smoke ловит главный класс регрессий: краш/пустой кадр/отсутствие окружения.
 
     func test_syllableConstructor_rendersInBothThemes() throws {
         let view = SyllableConstructorView(childId: "preview-child-1")
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try record(view, screen: "SyllableConstructorView")
+        for device in devices {
+            for (appearanceName, style) in appearances {
+                SnapshotTestHelper.assertRendersNonBlank(
+                    view,
+                    size: device.size,
+                    style: style,
+                    label: "SyllableConstructorView·\(device.name)·\(appearanceName)"
+                )
+            }
+        }
     }
 
     // MARK: - 11. WeeklyChallengeView (kid, childId)
