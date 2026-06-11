@@ -116,14 +116,3 @@ public final class LiveSessionPersistenceCoordinator: SessionPersistenceCoordina
         return json
     }
 }
-
-// MARK: - MockSessionPersistenceCoordinator
-
-/// Мок для Preview / тестов: запоминает переданные сессии, не трогает сеть.
-public final class MockSessionPersistenceCoordinator: SessionPersistenceCoordinating, @unchecked Sendable {
-    public private(set) var persisted: [SessionDTO] = []
-    public init() {}
-    public func persistAndSync(_ session: SessionDTO) async {
-        persisted.append(session)
-    }
-}

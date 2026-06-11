@@ -45,16 +45,3 @@ final class SessionShellRouter: SessionShellRoutingLogic {
         coordinator?.navigate(to: .childHome(childId: ""))
     }
 }
-
-// MARK: - SessionShellRoute
-
-/// Возможные next-step переходы из SessionShell. Используется при сериализации
-/// прогресса в NavigationStack (Sprint 12 follow-up — deep-linking из push'ов).
-enum SessionShellRoute: Equatable {
-    /// Стандартный happy-path: завершение сессии → SessionComplete.
-    case completion(activities: [SessionActivity])
-    /// Принудительный выход (или fatigue alert) → kid home.
-    case home
-    /// Возврат на предыдущий экран (по умолчанию popToRoot для kid-circuit).
-    case back
-}

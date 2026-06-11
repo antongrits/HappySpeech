@@ -522,16 +522,6 @@ final class ObjectHuntDisplayAdapter: ObjectHuntDisplayLogic {
     }
 }
 
-// MARK: - ObjectHuntCameraError (legacy — kept for compatibility)
-
-enum ObjectHuntCameraError: LocalizedError {
-    case deviceNotAvailable
-
-    var errorDescription: String? {
-        String(localized: "object_hunt.permission")
-    }
-}
-
 // MARK: - Preview
 
 #Preview("ObjectHunt") {

@@ -68,7 +68,6 @@ struct VADSession: Sendable {
 ///   `makeVAD()`, нулевая задержка старта, без модели).
 /// - ``FluidAudioVADService`` — реальный Silero v6 на ANE (FluidAudio SPM), доступен
 ///   через `makeVAD(preferFluidAudio: true)` и подключён в боевой ASR-пайплайн.
-/// - ``MockSileroVAD`` — для unit-тестов / Preview.
 ///
 /// ### Типичный поток
 /// ```
@@ -290,40 +289,5 @@ func makeVAD(
             "makeVAD(preferFluidAudio:): FluidAudio недоступен (\(error.localizedDescription, privacy: .public)) — fallback на AmplitudeVAD"
         )
         return AmplitudeVAD(energyThreshold: threshold * 0.02)
-    }
-}
-
-// MARK: - Mock Implementation
-
-/// Мок для unit-тестов и Preview.
-final class MockSileroVAD: VADProtocol, @unchecked Sendable {
-    var speechProbability: Float = 0.9
-    var simulatedLatency: TimeInterval = 0
-
-    func detectSpeech(
-        chunk: AVAudioPCMBuffer,
-        timestamp: TimeInterval
-    ) async throws -> VADResult {
-        if simulatedLatency > 0 {
-            try await Task.sleep(for: .seconds(simulatedLatency))
-        }
-        return VADResult(
-            speechProbability: speechProbability,
-            isSpeech: speechProbability >= VADResult.Constants.defaultThreshold,
-            threshold: VADResult.Constants.defaultThreshold,
-            timestamp: timestamp
-        )
-    }
-
-    func processBuffer(_ buffer: AVAudioPCMBuffer) async throws -> VADSession {
-        let chunks = stride(from: 0, to: Int(buffer.frameLength), by: VADResult.Constants.chunkSize).map { offset in
-            VADResult(
-                speechProbability: speechProbability,
-                isSpeech: speechProbability >= VADResult.Constants.defaultThreshold,
-                threshold: VADResult.Constants.defaultThreshold,
-                timestamp: TimeInterval(offset) / TimeInterval(VADResult.Constants.sampleRate)
-            )
-        }
-        return VADSession(chunks: chunks)
     }
 }

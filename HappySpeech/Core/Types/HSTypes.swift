@@ -1,33 +1,5 @@
 import Foundation
 
-// MARK: - Domain Types
-
-/// Unique identifier wrapper — prevents mixing different entity IDs.
-public struct EntityID<T>: Hashable, Codable, Sendable, CustomStringConvertible {
-    public let rawValue: String
-
-    public init(_ rawValue: String = UUID().uuidString) {
-        self.rawValue = rawValue
-    }
-
-    public var description: String { rawValue }
-}
-
-// MARK: - Type Aliases
-
-public typealias ChildID      = EntityID<ChildProfileTag>
-public typealias SessionID    = EntityID<SessionTag>
-public typealias AttemptID    = EntityID<AttemptTag>
-public typealias ContentPackID = EntityID<ContentPackTag>
-public typealias SpecialistID = EntityID<SpecialistTag>
-
-// Phantom types for type-safe IDs
-public enum ChildProfileTag {}
-public enum SessionTag {}
-public enum AttemptTag {}
-public enum ContentPackTag {}
-public enum SpecialistTag {}
-
 // MARK: - Sound Groups
 
 /// The four main Russian sound families used in therapy.

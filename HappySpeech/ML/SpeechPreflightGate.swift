@@ -188,16 +188,3 @@ private actor VADBox {
         return created
     }
 }
-
-// MARK: - MockSpeechPreflightGate
-
-/// Мок для тестов: всегда `.proceed` (как будто речь есть), либо настраиваемое решение.
-public final class MockSpeechPreflightGate: SpeechPreflightGating, @unchecked Sendable {
-    public var decision: SpeechPreflightDecision
-    public init(decision: SpeechPreflightDecision = .proceed) {
-        self.decision = decision
-    }
-    public func evaluate(url: URL) async -> SpeechPreflightDecision {
-        decision
-    }
-}

@@ -432,25 +432,6 @@ public final class MockAuthService: AuthService, @unchecked Sendable {
     }
 }
 
-// MARK: InMemoryKeychainStore
-
-public final class InMemoryKeychainStore: KeychainStoreProtocol, @unchecked Sendable {
-    private var storage: [String: String] = [:]
-    public init(seed: [String: String] = [:]) { self.storage = seed }
-    public func read(service: String, account: String) -> String? {
-        storage["\(service)|\(account)"]
-    }
-    @discardableResult
-    public func write(_ value: String, service: String, account: String) -> Bool {
-        storage["\(service)|\(account)"] = value
-        return true
-    }
-    @discardableResult
-    public func delete(service: String, account: String) -> Bool {
-        storage.removeValue(forKey: "\(service)|\(account)") != nil
-    }
-}
-
 // MARK: Preview Content Items
 
 public extension ContentItem {

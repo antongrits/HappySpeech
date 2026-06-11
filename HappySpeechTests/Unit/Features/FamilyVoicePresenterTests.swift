@@ -195,25 +195,25 @@ final class FamilyVoicePresenterTests: XCTestCase {
 
     func test_presentChildScore_highScore_feedbackIsCorrect() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.8, transcript: "мяч", word: "мяч"))
+        sut.presentChildScore(.init(score: 0.8, transcript: "мяч", word: "мяч", isApproximate: false))
         XCTAssertTrue(spy.childScoreVM?.feedbackIsCorrect ?? false)
     }
 
     func test_presentChildScore_lowScore_feedbackIsNotCorrect() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.5, transcript: "мяч", word: "мяч"))
+        sut.presentChildScore(.init(score: 0.5, transcript: "мяч", word: "мяч", isApproximate: false))
         XCTAssertFalse(spy.childScoreVM?.feedbackIsCorrect ?? true)
     }
 
     func test_presentChildScore_showFeedbackTrue() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "кот"))
+        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "кот", isApproximate: false))
         XCTAssertTrue(spy.childScoreVM?.showFeedback ?? false)
     }
 
     func test_presentChildScore_scoreSet() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.75, transcript: "мяч", word: "мяч"))
+        sut.presentChildScore(.init(score: 0.75, transcript: "мяч", word: "мяч", isApproximate: false))
         XCTAssertEqual(spy.childScoreVM?.currentScore, 0.75)
     }
 
@@ -221,7 +221,7 @@ final class FamilyVoicePresenterTests: XCTestCase {
 
     func test_presentFeedbackDismissed_showFeedbackFalse() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч"))
+        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч", isApproximate: false))
         sut.presentFeedbackDismissed()
         XCTAssertFalse(spy.childScoreVM?.showFeedback ?? true)
     }
@@ -242,14 +242,14 @@ final class FamilyVoicePresenterTests: XCTestCase {
 
     func test_presentWordChanged_scoreCleared() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч"))
+        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч", isApproximate: false))
         sut.presentWordChanged(.init(newWord: "кот"))
         XCTAssertNil(spy.wordChangedVM?.currentScore)
     }
 
     func test_presentWordChanged_showFeedbackFalse() {
         let (sut, spy) = makeSUT()
-        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч"))
+        sut.presentChildScore(.init(score: 0.9, transcript: nil, word: "мяч", isApproximate: false))
         sut.presentWordChanged(.init(newWord: "кот"))
         XCTAssertFalse(spy.wordChangedVM?.showFeedback ?? true)
     }

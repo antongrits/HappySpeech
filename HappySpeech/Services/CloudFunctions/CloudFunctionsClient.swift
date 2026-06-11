@@ -1,6 +1,4 @@
-import FirebaseFunctions
 import Foundation
-import OSLog
 
 // MARK: - Region
 
@@ -51,59 +49,4 @@ public enum CloudFunctionsClientError: LocalizedError, Sendable {
 public protocol CloudFunctionsClient: AnyObject, Sendable {
     /// Регион Cloud Functions, который использует клиент.
     var region: String { get }
-}
-
-// MARK: - Live base implementation
-
-/// Общая база для Live-реализаций клиентов.
-///
-/// Хранит инстанс `Functions` и предоставляет helpers для маппинга
-/// `FunctionsErrorDomain` → ``CloudFunctionsClientError``.
-public class LiveCloudFunctionsClientBase: @unchecked Sendable {
-
-    public let region: String
-    public let functions: Functions
-    public let logger: Logger
-
-    public init(
-        region: String = CloudFunctionsRegion.default,
-        category: String
-    ) {
-        self.region = region
-        self.functions = Functions.functions(region: region)
-        self.logger = Logger(subsystem: "com.happyspeech", category: category)
-    }
-
-    /// Маппинг NSError из Firebase Functions в типизированную ошибку.
-    public func mapError(_ error: Error) -> CloudFunctionsClientError {
-        let nsError = error as NSError
-        guard nsError.domain == FunctionsErrorDomain else {
-            return .serverError(error.localizedDescription)
-        }
-        let code = FunctionsErrorCode(rawValue: nsError.code) ?? .internal
-        switch code {
-        case .unauthenticated:
-            return .unauthenticated
-        case .permissionDenied:
-            return .permissionDenied(nsError.localizedDescription)
-        case .invalidArgument:
-            return .invalidArgument(nsError.localizedDescription)
-        case .unavailable, .deadlineExceeded:
-            return .networkUnavailable
-        case .failedPrecondition:
-            return .appCheckFailed
-        default:
-            return .serverError(nsError.localizedDescription)
-        }
-    }
-
-    /// Безопасная распаковка `[String: Any]` из callable response.
-    public func extractDictionary(from data: Any) throws -> [String: Any] {
-        guard let dict = data as? [String: Any] else {
-            throw CloudFunctionsClientError.invalidResponse(
-                "ожидался объект, получено: \(type(of: data))"
-            )
-        }
-        return dict
-    }
 }

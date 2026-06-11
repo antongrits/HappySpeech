@@ -5,12 +5,6 @@ import SwiftUI
 
 public enum ShadowTokens {
 
-    // MARK: - Shadow Levels
-
-    public enum Level {
-        case flat, subtle, card, elevated, floating
-    }
-
     public struct ShadowStyle: Sendable {
         public let color: Color
         public let radius: CGFloat

@@ -59,27 +59,6 @@ struct SessionShellView: View {
     }
 }
 
-// MARK: - SessionShellFactory
-
-@MainActor
-enum SessionShellFactory {
-    static func make(
-        container: AppContainer,
-        coordinator: AppCoordinator,
-        childId: String,
-        targetSoundId: String,
-        sessionType: SessionType
-    ) -> some View {
-        SessionShellView(
-            childId: childId,
-            targetSoundId: targetSoundId,
-            sessionType: sessionType,
-            container: container,
-            coordinator: coordinator
-        )
-    }
-}
-
 // MARK: - SessionShellHost
 
 /// Owns the VIP stack and bridges Interactor state into SwiftUI via `SessionShellState`.

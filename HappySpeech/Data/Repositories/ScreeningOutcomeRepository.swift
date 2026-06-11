@@ -139,39 +139,6 @@ private extension ScreeningOutcomeObject {
     }
 }
 
-// MARK: - MockScreeningOutcomeRepository (previews + tests)
-
-public final class MockScreeningOutcomeRepository: ScreeningOutcomeRepository, @unchecked Sendable {
-    public var outcomes: [ScreeningOutcomeDTO] = []
-    public var shouldFail = false
-
-    public init(outcomes: [ScreeningOutcomeDTO] = []) {
-        self.outcomes = outcomes
-    }
-
-    public func save(_ outcome: ScreeningOutcomeDTO) async throws {
-        if shouldFail { throw AppError.realmWriteFailed("Mock failure") }
-        outcomes.removeAll { $0.id == outcome.id }
-        outcomes.append(outcome)
-    }
-
-    public func fetchLatest(childId: String) async throws -> ScreeningOutcomeDTO? {
-        if shouldFail { throw AppError.realmReadFailed("Mock failure") }
-        return outcomes
-            .filter { $0.childId == childId }
-            .max(by: { $0.completedAt < $1.completedAt })
-    }
-
-    public func fetchAll(childId: String) async throws -> [ScreeningOutcomeDTO] {
-        if shouldFail { throw AppError.realmReadFailed("Mock failure") }
-        return outcomes.filter { $0.childId == childId }
-    }
-
-    public func delete(id: String) async throws {
-        outcomes.removeAll { $0.id == id }
-    }
-}
-
 // MARK: - Preview Data
 
 public extension ScreeningOutcomeDTO {
