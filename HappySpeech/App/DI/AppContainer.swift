@@ -222,8 +222,8 @@ public final class AppContainer {
     // Actor-typed, lazy. Требует G2PWorker (словарь 7712 слов) + RussianPhonemeClassifier (1.35 MB).
     private var _phonemeAnalysisService: (any PhonemeAnalysisService)?
 
-    // Block E v13: Wav2Vec2Service — Tier 3 CTC phonemic ASR (Wav2Vec2RuChild.mlpackage, ~302 MB).
-    // Actor-typed, lazy. Загружает модель при первом вызове transcribe. Graceful fallback на mock.
+    // Block E v13: Wav2Vec2Service — Tier 3 CTC phonemic ASR (Wav2Vec2RuChild.mlmodelc, ~302 MB).
+    // Actor-typed, lazy. Загружает модель при первом вызове transcribe. При сбое — throws, не mock.
     private var _wav2Vec2Service: (any Wav2Vec2Service)?
 
     // v17 «Фонемный паспорт»: PhonemePassportIngestor — фоновый приёмник
@@ -861,7 +861,10 @@ public final class AppContainer {
 
     /// Фонемный анализ произношения — DTW alignment + RussianPhonemeClassifier CoreML.
     /// Live: G2PWorker (словарь) + RussianPhonemeClassifierWrapper + MFCCExtractorAdapter.
-    /// Preview/Test: MockPhonemeAnalysisService.
+    /// Preview/Test: MockPhonemeAnalysisService (задаётся через _phonemeAnalysisService = Mock* в .preview).
+    ///
+    /// При сбое инициализации в проде выбрасывает ошибку в лог и возвращает unavailable-
+    /// состояние через PhonemeAnalysisUnavailableService, а не фиктивный mock-score.
     public var phonemeAnalysisService: any PhonemeAnalysisService {
         if let existing = _phonemeAnalysisService { return existing }
         let service: any PhonemeAnalysisService
@@ -874,8 +877,8 @@ public final class AppContainer {
                 mfccExtractor: MFCCExtractorAdapter()
             )
         } catch {
-            HSLogger.ml.error("AppContainer: PhonemeAnalysisService init failed (\(error.localizedDescription)), using mock")
-            service = MockPhonemeAnalysisService()
+            HSLogger.ml.error("AppContainer: PhonemeAnalysisService init failed (\(error.localizedDescription)) — сервис недоступен")
+            service = PhonemeAnalysisUnavailableService(reason: error)
         }
         _phonemeAnalysisService = service
         return service
@@ -883,11 +886,11 @@ public final class AppContainer {
 
     // MARK: - Block E v13: Wav2Vec2Service
 
-    /// Tier 3 CTC phonemic ASR через Wav2Vec2RuChild.mlpackage (~302 MB).
+    /// Tier 3 CTC phonemic ASR через Wav2Vec2RuChild.mlmodelc (~302 MB, скомпилирован Xcode из .mlpackage).
     ///
     /// Используется в ``PhonemeAnalysisServiceLive`` при confidence < 0.70 от Tier 1/2.
     /// Модель загружается лениво при первом вызове — без задержки при запуске приложения.
-    /// Graceful fallback: если модель не найдена в bundle → ``Wav2Vec2ServiceMock``.
+    /// При отсутствии модели в бандле первый вызов transcribe() бросает Wav2Vec2Error.modelNotLoaded.
     public var wav2Vec2Service: any Wav2Vec2Service {
         if let existing = _wav2Vec2Service { return existing }
         let service: any Wav2Vec2Service = Wav2Vec2ServiceLive()

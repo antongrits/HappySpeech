@@ -21,7 +21,7 @@ final class FamilyInvitePresenterTests: XCTestCase {
 
         let expiry = Date().addingTimeInterval(72 * 3600)
         // swiftlint:disable:next force_unwrapping
-        let url = URL(string: "https://happyspeech.mmf.bsu.app/invite?code=ABCDEF")!
+        let url = URL(string: "https://happyspeech.app/invite?code=ABCDEF")!
         presenter.presentCreated(.init(shortCode: "ABCDEF", expiresAt: expiry, shareURL: url, role: .secondary))
 
         XCTAssertFalse(viewModel.isCreating)

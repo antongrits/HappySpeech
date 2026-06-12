@@ -121,7 +121,7 @@ public protocol FamilyInviteServiceProtocol: AnyObject, Sendable {
     /// Разбирает Universal Link URL на параметры приглашения.
     ///
     /// Поддерживаемые форматы URL:
-    /// - `https://happyspeech.mmf.bsu.app/invite?token=<hex>&code=<short>`
+    /// - `https://happyspeech.app/invite?token=<hex>&code=<short>`
     ///
     /// - Parameter url: URL из `NSUserActivity.webpageURL`.
     /// - Returns: `FamilyInviteParams`.
@@ -157,7 +157,8 @@ public protocol FamilyInviteServiceProtocol: AnyObject, Sendable {
 
 private enum InviteConfig {
     /// Универсальный домен (Associated Domain entitlement).
-    static let universalLinkDomain = "happyspeech.mmf.bsu.app"
+    /// Совпадает с `UniversalLinkHandler.expectedHost` (рассинхрон убран).
+    static let universalLinkDomain = "happyspeech.app"
 
     /// Path компонент Universal Link.
     static let invitePath = "/invite"
@@ -398,7 +399,7 @@ public final class MockFamilyInviteService: FamilyInviteServiceProtocol, @unchec
         shortCode: "ABCD23",
         expiresAt: Date().addingTimeInterval(24 * 3600),
         // swiftlint:disable:next force_unwrapping
-        deepLinkURL: URL(string: "https://happyspeech.mmf.bsu.app/invite?token=mock&code=ABCD23")!
+        deepLinkURL: URL(string: "https://happyspeech.app/invite?token=mock&code=ABCD23")!
     )
 
     public var stubbedRedemption: FamilyInviteRedemption = FamilyInviteRedemption(

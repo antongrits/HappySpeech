@@ -124,7 +124,7 @@ extension AppCoordinator: AppCoordinatorBridge {
              .sessionHistory(let childId),
              .worldMap(let childId, _),
              .achievements(let childId),
-             .screening(let childId),
+             .screening(let childId, _),
              .siblingMultiplayer(let childId):
             return childId
         default:

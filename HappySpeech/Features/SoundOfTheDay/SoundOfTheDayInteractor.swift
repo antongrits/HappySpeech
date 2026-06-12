@@ -22,6 +22,10 @@ final class SoundOfTheDayInteractor {
     private let childRepository: any ChildRepository
     private let childId: String
 
+    /// P0-2: звук дня, выбранный планировщиком/профилем в `loadToday`. Передаётся
+    /// в LessonPlayer, чтобы активность тренировала именно его, а не хардкод.
+    private var resolvedTargetSound: String = ""
+
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
         category: "SoundOfTheDay.Interactor"
@@ -49,6 +53,7 @@ final class SoundOfTheDayInteractor {
         let childName = await fetchChildName(childId: request.childId)
         let streakDays = await fetchStreakDays(childId: request.childId)
         let targetSound = await fetchTargetSound(childId: request.childId)
+        resolvedTargetSound = targetSound
         let response = SoundOfTheDayModels.LoadToday.Response(
             childName: childName,
             targetSound: targetSound,
@@ -66,13 +71,13 @@ final class SoundOfTheDayInteractor {
         Self.logger.info(
             "Звук дня: выбрана активность \(request.activity.id, privacy: .public)"
         )
-        router.routeToActivity(request.activity, childId: childId)
+        router.routeToActivity(request.activity, childId: childId, targetSound: resolvedTargetSound)
     }
 
     /// Удобный метод для CTA «Начать день» — берёт первую активность.
     func startDay() {
         let first = ActivityCard.all.first ?? ActivityCard.play
-        router.routeToActivity(first, childId: childId)
+        router.routeToActivity(first, childId: childId, targetSound: resolvedTargetSound)
     }
 
     // MARK: - Private

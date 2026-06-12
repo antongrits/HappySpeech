@@ -483,11 +483,8 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
         }
 
         let modelName = "PronunciationScorer_\(group.rawValue)"
-        guard let modelURL = Bundle.main.url(
-            forResource: modelName,
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("Модель не найдена: \(modelName).mlpackage")
+        guard let modelURL = MLBundle.compiledModelURL(name: modelName) else {
+            logger.error("Модель не найдена: \(modelName).mlmodelc / .mlpackage")
             throw PronunciationScorerError.modelNotFound(group)
         }
 

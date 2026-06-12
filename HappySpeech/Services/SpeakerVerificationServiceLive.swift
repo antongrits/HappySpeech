@@ -133,11 +133,8 @@ public actor LiveSpeakerVerificationService: SpeakerVerificationServiceProtocol 
     // MARK: - Model Loading
 
     private func loadModel() {
-        guard let url = Bundle.main.url(
-            forResource: Self.modelName,
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("SpeakerVerification: модель не найдена в бандле")
+        guard let url = MLBundle.compiledModelURL(name: Self.modelName) else {
+            logger.error("SpeakerVerification: модель '\(Self.modelName).mlmodelc' не найдена в бандле")
             return
         }
         do {

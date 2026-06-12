@@ -36,8 +36,13 @@ final class WordBankRouter: WordBankRoutingLogic {
 
     func routeToPractice(word: String, targetSound: String) {
         guard let coordinator else { return }
+        // P0-2: тренируем реальный звук слова из копилки, а не хардкод «Р».
         coordinator.navigate(
-            to: .lessonPlayer(templateType: "repeat-after-model", childId: childId)
+            to: .lessonPlayer(
+                templateType: "repeat-after-model",
+                childId: childId,
+                targetSound: targetSound
+            )
         )
     }
 

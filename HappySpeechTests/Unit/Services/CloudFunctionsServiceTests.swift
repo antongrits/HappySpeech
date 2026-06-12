@@ -19,7 +19,7 @@ final class CloudFunctionsServiceTests: XCTestCase {
     // MARK: - Result models — value semantics
 
     func test_familyInviteToken_storesShortCodeAndURL() throws {
-        let url = try XCTUnwrap(URL(string: "https://happyspeech.mmf.bsu.app/invite?token=abc"))
+        let url = try XCTUnwrap(URL(string: "https://happyspeech.app/invite?token=abc"))
         let token = FamilyInviteToken(
             token: "abc", shortCode: "K7M2X9", expiresAt: Date(), deepLinkURL: url
         )

@@ -42,10 +42,7 @@ public final class LivePronunciationScorerService: PronunciationScorerService, @
     /// (полностью невалидный бандл). Отсутствие отдельной группы — не ошибка.
     public func loadModel() async throws {
         let available = PronunciationPhonemeGroup.allCases.filter { group in
-            Bundle.main.url(
-                forResource: "PronunciationScorer_\(group.rawValue)",
-                withExtension: "mlpackage"
-            ) != nil
+            MLBundle.compiledModelURL(name: "PronunciationScorer_\(group.rawValue)") != nil
         }
         guard !available.isEmpty else {
             loadedLock.withLock { _isModelLoaded = false }
@@ -67,10 +64,7 @@ public final class LivePronunciationScorerService: PronunciationScorerService, @
         }
 
         // Если модель именно этой группы отсутствует в бандле — graceful notScored.
-        guard Bundle.main.url(
-            forResource: "PronunciationScorer_\(group.rawValue)",
-            withExtension: "mlpackage"
-        ) != nil else {
+        guard MLBundle.compiledModelURL(name: "PronunciationScorer_\(group.rawValue)") != nil else {
             HSLogger.ml.warning("PronunciationScorer: модель группы '\(group.rawValue, privacy: .public)' отсутствует — notScored")
             return .notScored
         }

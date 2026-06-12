@@ -31,7 +31,12 @@ enum AppRoute: Hashable {
     /// (стикеры/стрик/ачивки пишутся в Realm). Демо-данные (`.sample`) — только
     /// для скриншот-тура / preview.
     case sessionComplete(result: SessionResult)
-    case lessonPlayer(templateType: String, childId: String)
+    /// Запуск шаблонного урока. `targetSound` — реальный звук активного ребёнка
+    /// (из `ChildProfile.targetSounds` / daily-mission). Пустая строка означает
+    /// «резолвить из профиля» — `SessionShellInteractor` подставит первый
+    /// `targetSound` активного ребёнка. Раньше звук был захардкожен в «Р» на
+    /// рендере, из-за чего ВСЕ быстрые входы тренировали Р независимо от ребёнка.
+    case lessonPlayer(templateType: String, childId: String, targetSound: String = "")
     case worldMap(childId: String, targetSound: String)
     case arZone
     case rewards(childId: String)
@@ -39,7 +44,11 @@ enum AppRoute: Hashable {
     case sessionHistory(childId: String)
     case homeTasks
     /// M6.16: Повторный скрининг из ParentHome.
-    case screening(childId: String)
+    /// `age` — реальный возраст ребёнка (`ChildProfile.age`); возрастные нормы —
+    /// ядро скоринга скрининга. Дефолт 6 — back-compat для вызовов без возраста
+    /// (deep-link / Siri). Раньше возраст был захардкожен 6 на рендере → нормы
+    /// были неверны для 5/7/8-летних.
+    case screening(childId: String, age: Int = 6)
     case familyCalendar
     case familyVoice
     case familyVoiceSplit
@@ -513,8 +522,11 @@ struct AppCoordinatorView: View {
                     // Единый выход из детских мини-игр: игры запускаются через
                     // navigate(to:) (замена currentRoute), поэтому @Environment(\.dismiss)
                     // в них — no-op. exitGame восстанавливает корень детской главной.
+                    // P1: выход из мини-игры восстанавливает дом РЕАЛЬНОГО активного
+                    // ребёнка (из ActiveChildStore через container.currentChildId),
+                    // а не пустой childId → пустой дом «Дружок» без данных.
                     .environment(\.exitGame, KidGameExitAction {
-                        coordinator.navigate(to: .childHome(childId: ""))
+                        coordinator.navigate(to: .childHome(childId: container.currentChildId))
                     })
                     // Единый выход из полноэкранных parent/specialist-маршрутов:
                     // они тоже запускаются через navigate(to:), поэтому корневой
@@ -626,10 +638,14 @@ struct AppCoordinatorView: View {
                 onReplay: { coordinator.navigate(to: .childHome(childId: result.childId)) }
             )
 
-        case .lessonPlayer(let templateType, let childId):
+        case .lessonPlayer(let templateType, let childId, let targetSound):
+            // P0-2: звук берётся из маршрута (реальный звук ребёнка из daily-mission/
+            // профиля), а не хардкодится «Р». Если маршрут пришёл с пустым звуком
+            // (старые вызовы / Siri / Spotlight), `SessionShellInteractor`
+            // резолвит первый `targetSound` активного ребёнка из профиля.
             SessionShellView(
-                childId: childId,
-                targetSoundId: "Р",
+                childId: childId.isEmpty ? container.currentChildId : childId,
+                targetSoundId: targetSound,
                 sessionType: templateType.isEmpty ? .adaptive : .quickPractice,
                 forcedGameType: GameType.fromTemplateRoute(templateType),
                 container: container,
@@ -659,19 +675,24 @@ struct AppCoordinatorView: View {
 
         case .homeTasks:
             HomeTasksView(
-                onStartGame: { exerciseType, _ in
+                onStartGame: { exerciseType, targetSound in
+                    // P0-2: прокидываем реальный звук задания (из HomeTask.targetSound),
+                    // а не теряем его — иначе урок тренировал бы хардкод-звук.
                     coordinator.navigate(to: .lessonPlayer(
                         templateType: exerciseType,
-                        childId: container.currentChildId
+                        childId: container.currentChildId,
+                        targetSound: targetSound
                     ))
                 }
             )
             .environment(\.circuitContext, .parent)
 
-        case .screening(let childId):
+        case .screening(let childId, let age):
+            // P1: возрастные нормы скрининга берутся из реального возраста ребёнка
+            // (передаётся вызывающей стороной из профиля), а не хардкод 6.
             ScreeningView(
                 childId: childId,
-                childAge: 6,
+                childAge: age,
                 onFinish: { _ in coordinator.navigate(to: .parentHome) },
                 onCancel: { coordinator.navigate(to: .parentHome) }
             )

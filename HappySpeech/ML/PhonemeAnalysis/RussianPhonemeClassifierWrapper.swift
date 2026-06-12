@@ -45,10 +45,7 @@ public actor RussianPhonemeClassifierWrapper {
     /// Загружает модель `RussianPhonemeClassifier.mlpackage` из Bundle.
     /// - Throws: ``PhonemeAnalysisError/modelNotLoaded`` если mlpackage не найден
     public init() throws {
-        guard let modelURL = Bundle.main.url(
-            forResource: "RussianPhonemeClassifier",
-            withExtension: "mlpackage"
-        ) else {
+        guard let modelURL = MLBundle.compiledModelURL(name: "RussianPhonemeClassifier") else {
             throw PhonemeAnalysisError.modelNotLoaded
         }
 

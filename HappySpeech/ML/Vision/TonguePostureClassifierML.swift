@@ -80,11 +80,8 @@ public final class TonguePostureClassifierML: ArticulationConfidenceProviding, @
     // MARK: - Model Loading
 
     private func loadModel() {
-        guard let url = Bundle.main.url(
-            forResource: "TonguePostureClassifier",
-            withExtension: "mlpackage"
-        ) else {
-            logger.info("TonguePostureClassifier.mlpackage не найден — используется rule-based fallback")
+        guard let url = MLBundle.compiledModelURL(name: "TonguePostureClassifier") else {
+            logger.info("TonguePostureClassifier.mlmodelc не найден — используется rule-based fallback")
             return
         }
         do {

@@ -30,7 +30,7 @@ final class CreateInviteInteractorTests: XCTestCase {
             shortCode: "K7M2X9",
             expiresAt: expiry,
             // swiftlint:disable:next force_unwrapping
-            deepLinkURL: URL(string: "https://happyspeech.mmf.bsu.app/invite?code=K7M2X9")!
+            deepLinkURL: URL(string: "https://happyspeech.app/invite?code=K7M2X9")!
         )
         let (sut, _, viewModel) = makeSUT(service: service)
 

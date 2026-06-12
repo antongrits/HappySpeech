@@ -8,7 +8,7 @@ protocol ChildHomeRoutingLogic {
     func routeToWorldMap(childId: String, sound: String)
     func routeToARZone()
     func routeToRewards(childId: String)
-    func routeToLesson(childId: String, template: String)
+    func routeToLesson(childId: String, template: String, targetSound: String)
     func routeToSessionHistory(childId: String)
     func routeToHomeTasks()
     func routeToSiblingMultiplayer(childId: String)
@@ -76,12 +76,19 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
         coordinator?.navigate(to: .rewards(childId: childId))
     }
 
-    func routeToLesson(childId: String, template: String) {
+    /// P0-2: `targetSound` — реальный звук активного ребёнка (из daily-mission).
+    /// Пустая строка → `SessionShellInteractor` резолвит звук из профиля. Раньше
+    /// маршрут не нёс звук вовсе и SessionShell хардкодил «Р».
+    func routeToLesson(childId: String, template: String, targetSound: String = "") {
         if let onStartGame {
             onStartGame(childId, template)
             return
         }
-        coordinator?.navigate(to: .lessonPlayer(templateType: template, childId: childId))
+        coordinator?.navigate(to: .lessonPlayer(
+            templateType: template,
+            childId: childId,
+            targetSound: targetSound
+        ))
     }
 
     func routeToSessionHistory(childId: String) {

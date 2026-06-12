@@ -191,7 +191,7 @@ public final class MockCloudFunctionsService: CloudFunctionsServiceProtocol, @un
         shortCode: "ABCD23",
         expiresAt: Date().addingTimeInterval(24 * 3600),
         // swiftlint:disable:next force_unwrapping
-        deepLinkURL: URL(string: "https://happyspeech.mmf.bsu.app/invite?token=mock&code=ABCD23")!
+        deepLinkURL: URL(string: "https://happyspeech.app/invite?token=mock&code=ABCD23")!
     )
 
     public var shouldThrowError: Bool = false

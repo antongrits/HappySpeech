@@ -14,11 +14,13 @@ final class SoundOfTheDayRouter {
 
     /// Открыть LessonPlayer с указанным шаблоном для активности.
     /// templateRoute совпадает с ключом из `GameType.fromTemplateRoute`
-    /// (см. AppCoordinator + LessonPlayer).
-    func routeToActivity(_ activity: ActivityCard, childId: String) {
+    /// (см. AppCoordinator + LessonPlayer). P0-2: `targetSound` — реальный звук
+    /// дня, чтобы активность тренировала его, а не хардкод «Р».
+    func routeToActivity(_ activity: ActivityCard, childId: String, targetSound: String = "") {
         coordinator?.navigate(to: .lessonPlayer(
             templateType: activity.templateRoute,
-            childId: childId
+            childId: childId,
+            targetSound: targetSound
         ))
     }
 }

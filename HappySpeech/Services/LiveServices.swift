@@ -447,9 +447,13 @@ private struct RawContentPack: Decodable {
     let stages: [String: RawStage]
 
     func toContentPack(requestedID: String) -> ContentPack {
-        // Pick stage items — flatten all stages, preserving stage info.
-        let allItems: [ContentItem] = stages.flatMap { (stageKey, rawStage) -> [ContentItem] in
-            let stageEnum = CorrectionStage(rawValue: stageKey) ?? .isolated
+        // P0-3: разворачиваем стадии в ДЕТЕРМИНИРОВАННОМ методическом порядке
+        // (`CorrectionStage.allCases`: prep → isolated → … → diff), а не в порядке
+        // итерации Swift Dictionary (он случаен per-launch). Раньше из-за этого
+        // потребители брали `prefix(N)` из случайной смеси — в «слова» викторины
+        // попадали артикуляционные инструкции и целые предложения.
+        let allItems: [ContentItem] = CorrectionStage.allCases.flatMap { stageEnum -> [ContentItem] in
+            guard let rawStage = stages[stageEnum.rawValue] else { return [] }
             return rawStage.items.map { raw in
                 ContentItem(
                     id: raw.id,

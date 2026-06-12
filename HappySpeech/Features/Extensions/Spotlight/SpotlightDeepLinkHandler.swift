@@ -42,7 +42,7 @@ extension AppCoordinator {
             return childId
         case .rewards(let childId), .progressDashboard(let childId),
              .sessionHistory(let childId), .worldMap(let childId, _),
-             .achievements(let childId), .screening(let childId),
+             .achievements(let childId), .screening(let childId, _),
              .siblingMultiplayer(let childId):
             return childId
         default:

@@ -124,14 +124,14 @@ final class FamilyInviteServiceTests: XCTestCase {
 
     func test_parseInviteURL_validURLWithToken_returnsParams() throws {
         let sut = makeSUT()
-        let url = try XCTUnwrap(URL(string: "https://happyspeech.mmf.bsu.app/invite?token=abc123"))
+        let url = try XCTUnwrap(URL(string: "https://happyspeech.app/invite?token=abc123"))
         let params = try sut.parseInviteURL(url)
         XCTAssertFalse(params.token.isEmpty)
     }
 
     func test_parseInviteURL_urlWithoutToken_throwsMissingToken() throws {
         let sut = makeSUT()
-        let url = try XCTUnwrap(URL(string: "https://happyspeech.mmf.bsu.app/invite"))
+        let url = try XCTUnwrap(URL(string: "https://happyspeech.app/invite"))
         XCTAssertThrowsError(try sut.parseInviteURL(url)) { error in
             guard case FamilyInviteError.missingToken = error else {
                 return XCTFail("Ожидалась missingToken, получено \(error)")

@@ -14,7 +14,9 @@ final class CreateInviteInteractor {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "CreateInviteInteractor")
     private let inviteService: any FamilyInviteServiceProtocol
-    weak var presenter: CreateInvitePresenter?
+    /// Interactor владеет Presenter (канонический Clean Swift). Presenter держит
+    /// `viewModel` слабо → цикла нет; View дополнительно удерживает обоих через @State.
+    var presenter: CreateInvitePresenter?
 
     init(inviteService: any FamilyInviteServiceProtocol) {
         self.inviteService = inviteService

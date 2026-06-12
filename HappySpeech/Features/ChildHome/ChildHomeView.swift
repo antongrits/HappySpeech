@@ -440,7 +440,8 @@ struct ChildHomeView: View {
                     Task { await interactor.recordMissionTap() }
                     router.routeToLesson(
                         childId: childId,
-                        template: viewModel.dailyMissionDetail.templateType
+                        template: viewModel.dailyMissionDetail.templateType,
+                        targetSound: viewModel.dailyMissionDetail.targetSound
                     )
                 } else {
                     // Hero expand: показываем overlay с matchedGeometryEffect.
@@ -489,7 +490,8 @@ struct ChildHomeView: View {
                     Task { await interactor.recordMissionTap() }
                     router.routeToLesson(
                         childId: childId,
-                        template: viewModel.dailyMissionDetail.templateType
+                        template: viewModel.dailyMissionDetail.templateType,
+                        targetSound: viewModel.dailyMissionDetail.targetSound
                     )
                 }
                 .matchedGeometryEffect(
@@ -507,7 +509,8 @@ struct ChildHomeView: View {
                     Task { await interactor.recordMissionTap() }
                     router.routeToLesson(
                         childId: childId,
-                        template: viewModel.dailyMissionDetail.templateType
+                        template: viewModel.dailyMissionDetail.templateType,
+                        targetSound: viewModel.dailyMissionDetail.targetSound
                     )
                 } label: {
                     HStack(spacing: SpacingTokens.sp2) {

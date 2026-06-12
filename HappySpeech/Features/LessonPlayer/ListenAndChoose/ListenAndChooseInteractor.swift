@@ -327,11 +327,47 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
         let packId = Self.canonicalPackId(for: sound)
         do {
             let pack = try await contentService.loadPack(id: packId)
-            if !pack.items.isEmpty { return pack.items }
+            // P0-3: пак для `sound_*_v1` приходит со ВСЕМИ стадиями вперемешку
+            // (prep-инструкции, isolated-«ссс-насос», phrase/sentence-целые фразы).
+            // Для игры «Слушай и выбери картинку» оставляем ТОЛЬКО словарные
+            // стимулы с картинкой — одно слово, словные стадии. Так инструкции и
+            // предложения больше не становятся «словами» викторины.
+            let wordPictureItems = Self.wordPictureItems(from: pack.items)
+            if !wordPictureItems.isEmpty { return wordPictureItems }
+            logger.notice("Pack \(packId) has no word-picture items, falling back to defaults.")
         } catch {
             logger.notice("Pack \(packId) unavailable, falling back to defaults: \(error.localizedDescription)")
         }
         return Self.defaultItems(for: sound)
+    }
+
+    /// Стадии-слова — стимулы с картинкой для word-picture игр.
+    /// `.diff` исключена: её «слова» — минимальные пары («коса — коза»), не одно слово.
+    private static let wordStages: Set<CorrectionStage> = [.wordInit, .wordMed, .wordFinal]
+
+    /// Отбирает из пака ТОЛЬКО словарные элементы с картинкой, пригодные как цель
+    /// «выбери картинку»: словная стадия, ровно одно слово (без пробелов/дефисов/
+    /// разделителей минимальных пар) и наличие картинки (поле пака или
+    /// ``LessonContentMap``). Порядок входа уже детерминирован (стадии
+    /// разворачиваются по `CorrectionStage.allCases` в `toContentPack`), поэтому
+    /// результат стабилен per-launch.
+    static func wordPictureItems(from items: [ContentItem]) -> [ContentItem] {
+        items.filter { item in
+            guard wordStages.contains(item.stage) else { return false }
+            guard isSingleWord(item.word) else { return false }
+            let hasPackImage = (item.imageAsset?.isEmpty == false)
+            let hasMappedImage = LessonContentMap.asset(for: item.word) != nil
+            return hasPackImage || hasMappedImage
+        }
+    }
+
+    /// Истина, если строка — ровно одно слово: непустое, без пробелов, дефисов и
+    /// разделителя минимальных пар «|». Отсекает фразы/предложения/пары.
+    private static func isSingleWord(_ word: String) -> Bool {
+        let trimmed = word.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return false }
+        let forbidden: Set<Character> = [" ", "-", "—", "–", "|", ",", ".", ":", ";"]
+        return !trimmed.contains(where: { forbidden.contains($0) })
     }
 
     /// Каноничный id пака для звука. Делегирует единому ``SoundRomanizer`` — он

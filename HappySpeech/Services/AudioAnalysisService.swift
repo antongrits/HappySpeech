@@ -197,11 +197,8 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
     private func loadModel() async throws -> MLModel {
         if let existing = model { return existing }
 
-        guard let modelURL = Bundle.main.url(
-            forResource: "SoundClassifier",
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("SoundClassifier.mlpackage не найден в bundle")
+        guard let modelURL = MLBundle.compiledModelURL(name: "SoundClassifier") else {
+            logger.error("SoundClassifier.mlmodelc не найден в bundle")
             throw AudioAnalysisError.modelNotFound
         }
 

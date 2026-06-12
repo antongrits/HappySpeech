@@ -36,13 +36,15 @@ final class SessionShellInteractorTests: XCTestCase {
     // MARK: - SUT
 
     private func makeSUT(
-        adaptivePlanner: MockAdaptivePlannerService = MockAdaptivePlannerService()
+        adaptivePlanner: MockAdaptivePlannerService = MockAdaptivePlannerService(),
+        childRepository: (any ChildRepository)? = nil
     ) -> (SessionShellInteractor, SpyPresenter) {
         let interactor = SessionShellInteractor(
             contentService: MockContentService(),
             adaptivePlannerService: adaptivePlanner,
             sessionRepository: MockSessionRepository(),
-            hapticService: MockHapticService()
+            hapticService: MockHapticService(),
+            childRepository: childRepository
         )
         let spy = SpyPresenter()
         interactor.presenter = spy
@@ -303,5 +305,45 @@ final class SessionShellInteractorTests: XCTestCase {
         let result = sut.buildSessionResult()
         XCTAssertEqual(result.starsEarned, 1)
         XCTAssertLessThan(result.score, 0.6)
+    }
+
+    // MARK: - P0-2: resolve target sound from child profile when route omits it
+
+    func test_startSession_emptyTargetSound_resolvesChildProfileSound() async {
+        // Ребёнок со звуком «С» (НЕ хардкод «Р»). Маршрут не донёс звук (пусто).
+        let child = ChildProfileDTO(
+            id: "child-s", name: "Соня", age: 5, targetSounds: ["С", "З"], parentId: "p1"
+        )
+        let repo = MockChildRepository(children: [child])
+        let (sut, _) = makeSUT(childRepository: repo)
+
+        await sut.startSession(.init(childId: "child-s", targetSoundId: "", sessionType: .quickPractice))
+
+        // Сессия тренирует реальный звук ребёнка «С», а не захардкоженный «Р».
+        let result = sut.buildSessionResult()
+        XCTAssertEqual(result.soundTarget, "С")
+        XCTAssertNotEqual(result.soundTarget, "Р")
+    }
+
+    func test_startSession_explicitTargetSound_isNotOverridden() async {
+        // Если маршрут донёс конкретный звук — резолв из профиля не вмешивается.
+        let child = ChildProfileDTO(
+            id: "child-s", name: "Соня", age: 5, targetSounds: ["С"], parentId: "p1"
+        )
+        let repo = MockChildRepository(children: [child])
+        let (sut, _) = makeSUT(childRepository: repo)
+
+        await sut.startSession(.init(childId: "child-s", targetSoundId: "Ш", sessionType: .quickPractice))
+
+        let result = sut.buildSessionResult()
+        XCTAssertEqual(result.soundTarget, "Ш", "Явный звук маршрута имеет приоритет над профилем")
+    }
+
+    func test_startSession_emptyTargetSound_noRepository_keepsEmpty() async {
+        // Без репозитория (legacy) поведение прежнее — звук остаётся как передан.
+        let (sut, _) = makeSUT(childRepository: nil)
+        await sut.startSession(.init(childId: "c", targetSoundId: "", sessionType: .quickPractice))
+        let result = sut.buildSessionResult()
+        XCTAssertEqual(result.soundTarget, "")
     }
 }

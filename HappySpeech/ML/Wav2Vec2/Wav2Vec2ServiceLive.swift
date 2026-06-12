@@ -165,11 +165,8 @@ public actor Wav2Vec2ServiceLive: Wav2Vec2Service {
 
         logger.info("Wav2Vec2: загрузка модели '\(Self.modelName)'...")
 
-        guard let modelURL = Bundle.main.url(
-            forResource: Self.modelName,
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("Wav2Vec2: модель '\(Self.modelName).mlpackage' не найдена в bundle")
+        guard let modelURL = MLBundle.compiledModelURL(name: Self.modelName) else {
+            logger.error("Wav2Vec2: модель '\(Self.modelName).mlmodelc' не найдена в bundle")
             throw Wav2Vec2Error.modelNotLoaded
         }
 

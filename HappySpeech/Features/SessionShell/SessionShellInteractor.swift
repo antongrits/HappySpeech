@@ -56,6 +56,12 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// ребёнка анализируется после попытки и frustrated/sad ускоряет предложение
     /// перерыва (дренирует сердце усталости). `nil` → поведение без изменений.
     private let emotionDetectionService: (any EmotionDetectionServiceProtocol)?
+    /// P0-2: репозиторий профилей. Когда маршрут пришёл с пустым `targetSoundId`
+    /// (быстрый вход / Siri / Spotlight), резолвим РЕАЛЬНЫЙ целевой звук активного
+    /// ребёнка (`ChildProfile.targetSounds.first`), чтобы forced/quick-сессии не
+    /// тренировали захардкоженный звук. Опционален — в legacy preview/test может
+    /// быть `nil` (тогда поведение прежнее: используется переданный звук как есть).
+    private let childRepository: (any ChildRepository)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionShell")
 
     private var activities: [SessionActivity] = []
@@ -104,7 +110,8 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         sessionRepository: any SessionRepository,
         hapticService: any HapticService,
         emotionDetectionService: (any EmotionDetectionServiceProtocol)? = nil,
-        sessionPersistence: (any SessionPersistenceCoordinating)? = nil
+        sessionPersistence: (any SessionPersistenceCoordinating)? = nil,
+        childRepository: (any ChildRepository)? = nil
     ) {
         self.contentService = contentService
         self.adaptivePlannerService = adaptivePlannerService
@@ -112,6 +119,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         self.hapticService = hapticService
         self.emotionDetectionService = emotionDetectionService
         self.sessionPersistence = sessionPersistence
+        self.childRepository = childRepository
     }
 
     // MARK: - SessionShellBusinessLogic
@@ -127,9 +135,17 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         consecutiveNegativeEmotions = 0
         didSaveSession = false
         sessionChildId = request.childId
-        sessionTargetSound = request.targetSoundId
 
-        let activities = await loadActivities(for: request)
+        // P0-2: если маршрут не донёс целевой звук, берём реальный звук активного
+        // ребёнка из профиля (первый `targetSound`). Это закрывает ВСЕ входы
+        // (daily-mission/quick-play/WordBank/Siri/Spotlight) разом, независимо от
+        // того, передал ли конкретный вызов звук. Для `.adaptive`-сессий звук всё
+        // равно перепланируется по профилю в планировщике — здесь важен лишь
+        // forced/quick путь и метаданные персистенции.
+        let resolvedRequest = await resolveTargetSound(for: request)
+        sessionTargetSound = resolvedRequest.targetSoundId
+
+        let activities = await loadActivities(for: resolvedRequest)
         self.activities = activities
 
         let totalMinutes = max(activities.count * 2, 1)
@@ -145,14 +161,44 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         )
         await presenter?.presentStartSession(response)
 
-        // Запускаем Live Activity (iOS 16.1+, без COPPA-данных)
+        // Запускаем Live Activity (iOS 16.1+, без COPPA-данных).
+        // P0-2: показываем реальный (резолвнутый) звук, а не пустой/чужой.
         if #available(iOS 16.1, *) {
             await LiveActivityManager.shared.start(
-                sessionId: request.childId + "-" + UUID().uuidString,
-                lessonTitle: request.targetSoundId,
-                soundId: request.targetSoundId,
+                sessionId: resolvedRequest.childId + "-" + UUID().uuidString,
+                lessonTitle: resolvedRequest.targetSoundId,
+                soundId: resolvedRequest.targetSoundId,
                 totalRounds: activities.count
             )
+        }
+    }
+
+    /// Резолвит целевой звук сессии. Если `request.targetSoundId` уже задан —
+    /// возвращает запрос без изменений. Иначе подставляет первый `targetSound`
+    /// активного ребёнка из профиля (`childRepository`). Если профиль недоступен
+    /// или у ребёнка нет звуков — возвращает запрос как есть (планировщик в
+    /// `.adaptive` режиме всё равно выберет звук сам).
+    private func resolveTargetSound(
+        for request: SessionShellModels.StartSession.Request
+    ) async -> SessionShellModels.StartSession.Request {
+        let trimmed = request.targetSoundId.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.isEmpty else { return request }
+        guard let childRepository, !request.childId.isEmpty else { return request }
+        do {
+            let profile = try await childRepository.fetch(id: request.childId)
+            guard let sound = profile.targetSounds.first(where: { !$0.isEmpty }) else {
+                return request
+            }
+            logger.info("Resolved empty targetSound → child profile sound=\(sound, privacy: .public)")
+            return SessionShellModels.StartSession.Request(
+                childId: request.childId,
+                targetSoundId: sound,
+                sessionType: request.sessionType,
+                forcedGameType: request.forcedGameType
+            )
+        } catch {
+            logger.notice("resolveTargetSound: profile unavailable (\(error.localizedDescription, privacy: .public)) — keeping request as-is")
+            return request
         }
     }
 

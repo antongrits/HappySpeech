@@ -725,7 +725,8 @@ private struct ParentDashboardTab: View {
                 // Retake button (если актуально)
                 if card.canRetake {
                     Button {
-                        coordinator.navigate(to: .screening(childId: viewModel.childId))
+                        coordinator.navigate(to: .screening(childId: viewModel.childId,
+                                                            age: viewModel.childAge))
                     } label: {
                         Label(String(localized: "screening.card.retake"),
                               systemImage: "arrow.clockwise")

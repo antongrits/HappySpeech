@@ -128,11 +128,8 @@ public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
     // MARK: - Model Loading
 
     private func loadModel() {
-        guard let url = Bundle.main.url(
-            forResource: Self.modelName,
-            withExtension: "mlpackage"
-        ) else {
-            logger.error("EmotionDetection: модель \(Self.modelName).mlpackage не найдена в бандле")
+        guard let url = MLBundle.compiledModelURL(name: Self.modelName) else {
+            logger.error("EmotionDetection: модель '\(Self.modelName).mlmodelc' не найдена в бандле")
             return
         }
         do {

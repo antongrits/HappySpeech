@@ -151,4 +151,41 @@ final class ContentPackLoadingTests: XCTestCase {
             XCTAssertNotNil(pair, "imageAsset \(item.imageAsset ?? "") should split into two assets")
         }
     }
+
+    // MARK: - 7. P0-3: detерминированный порядок стадий + word-picture отбор
+
+    /// `toContentPack` для `sound_*_v1` теперь разворачивает стадии в порядке
+    /// `CorrectionStage.allCases`, поэтому порядок `items` стабилен между загрузками
+    /// (раньше — порядок Swift Dictionary, случайный per-launch).
+    func test_loadPack_soundS_isDeterministicAcrossLoads() async throws {
+        let first = try await service.loadPack(id: "sound_s_v1").items.map { "\($0.stage.rawValue):\($0.id)" }
+        let second = try await service.loadPack(id: "sound_s_v1").items.map { "\($0.stage.rawValue):\($0.id)" }
+        XCTAssertEqual(first, second, "Порядок items пака должен быть детерминирован между загрузками")
+        XCTAssertFalse(first.isEmpty)
+    }
+
+    /// Стадии в развёрнутом паке идут по методической лестнице
+    /// (prep → isolated → … → diff), а не вперемешку.
+    func test_loadPack_soundS_stagesInLadderOrder() async throws {
+        let pack = try await service.loadPack(id: "sound_s_v1")
+        let stageSequence = pack.items.map { $0.stage.stageIndex }
+        // Индекс стадии не убывает по ходу массива (стадии сгруппированы и упорядочены).
+        let isNonDecreasing = zip(stageSequence, stageSequence.dropFirst()).allSatisfy { $0 <= $1 }
+        XCTAssertTrue(isNonDecreasing, "Стадии должны идти по возрастанию stageIndex")
+    }
+
+    /// Word-picture фильтр интерактора, применённый к реальному паку, не выдаёт
+    /// инструкций/предложений/минимальных пар — только одиночные слова с картинкой.
+    @MainActor
+    func test_wordPictureFilter_onRealPack_yieldsOnlySingleWordsWithImages() async throws {
+        let pack = try await service.loadPack(id: "sound_s_v1")
+        let words = ListenAndChooseInteractor.wordPictureItems(from: pack.items)
+        XCTAssertFalse(words.isEmpty, "У пака С есть словные стимулы с картинкой")
+        for item in words {
+            XCTAssertFalse(item.word.contains(" "), "«\(item.word)» — фраза, не должна попасть в word-picture")
+            XCTAssertFalse(item.word.contains("—"), "«\(item.word)» — минимальная пара, не должна попасть")
+            let hasImage = (item.imageAsset?.isEmpty == false) || LessonContentMap.asset(for: item.word) != nil
+            XCTAssertTrue(hasImage, "«\(item.word)» должен иметь картинку")
+        }
+    }
 }
