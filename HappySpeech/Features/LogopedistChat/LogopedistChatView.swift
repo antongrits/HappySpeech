@@ -11,6 +11,8 @@ final class LogopedistChatViewModelHolder: LogopedistChatDisplayLogic {
     var sendVM: LogopedistChatModels.Send.ViewModel?
     var attachVM: LogopedistChatModels.AttachAudio.ViewModel?
     var connectVM: LogopedistChatModels.Connect.ViewModel?
+    var recordingVM: LogopedistChatModels.Recording.ViewModel?
+    var playbackVM: LogopedistChatModels.Playback.ViewModel?
     var showToast: Bool = false
     var isSending: Bool = false
     var isConnecting: Bool = false
@@ -36,6 +38,14 @@ final class LogopedistChatViewModelHolder: LogopedistChatDisplayLogic {
         if viewModel.successMessage != nil {
             self.showToast = true
         }
+    }
+
+    func displayRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async {
+        self.recordingVM = viewModel
+    }
+
+    func displayPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async {
+        self.playbackVM = viewModel
     }
 }
 
@@ -66,8 +76,9 @@ struct LogopedistChatView: View {
     @State private var router: LogopedistChatRouter?
     @State private var composerText: String = ""
     @State private var connectCode: String = ""
-    @State private var attachActionShown: Bool = false
     @State private var subscriptionTask: Task<Void, Never>?
+    /// Пульсация индикатора записи (выключена при Reduced Motion).
+    @State private var recordingPulse: Bool = false
 
     /// DEBUG-only seam: при `true` `.task`-bootstrap делает ранний return и не
     /// перетирает инжектированное состояние async-загрузкой (snapshot-детерминизм).
@@ -158,16 +169,6 @@ struct LogopedistChatView: View {
                 }
             }
             .animation(reduceMotion ? nil : .spring(duration: 0.4), value: holder.showToast)
-            .confirmationDialog(
-                Text("chat.attach.dialog.title"),
-                isPresented: $attachActionShown,
-                titleVisibility: .visible
-            ) {
-                Button(String(localized: "chat.attach.audio")) {
-                    Task { await attachAudio() }
-                }
-                Button(String(localized: "common.cancel"), role: .cancel) {}
-            }
         }
         .environment(\.circuitContext, .parent)
         .task {
@@ -176,6 +177,12 @@ struct LogopedistChatView: View {
         .onDisappear {
             subscriptionTask?.cancel()
             subscriptionTask = nil
+            // Останавливаем запись/воспроизведение и отдаём аудиосессию.
+            let activeInteractor = interactor
+            Task { @MainActor in
+                await activeInteractor?.cancelAudioRecording()
+                await activeInteractor?.stopAudioPlayback()
+            }
         }
     }
 
@@ -539,70 +546,114 @@ struct LogopedistChatView: View {
         att: LogopedistChatModels.Load.AttachmentRow,
         isFromParent: Bool
     ) -> some View {
-        HStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: att.symbolName)
-                .font(.body)
-                .foregroundStyle(
-                    isFromParent
-                        ? ColorTokens.Overlay.onAccent
-                        : ColorTokens.Parent.accent
-                )
-                .accessibilityHidden(true)
+        let isPlaying = holder.playbackVM?.playingMessageId == att.messageId
+        let isPreparing = holder.playbackVM?.preparingMessageId == att.messageId
+        let tint = isFromParent ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.accent
 
-            VStack(alignment: .leading, spacing: 1) {
-                Text(att.title)
-                    .font(TypographyTokens.caption(12).weight(.medium))
-                    .foregroundStyle(
-                        isFromParent
-                            ? ColorTokens.Overlay.onAccent
-                            : ColorTokens.Parent.ink
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-                if let dur = att.durationLabel {
-                    Text(dur)
-                        .font(.caption2)
+        Button {
+            Task { await togglePlayback(messageId: att.messageId) }
+        } label: {
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: att.symbolName)
+                    .font(.body)
+                    .foregroundStyle(tint)
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(att.title)
+                        .font(TypographyTokens.caption(12).weight(.medium))
                         .foregroundStyle(
                             isFromParent
-                                ? ColorTokens.Overlay.onAccent.opacity(0.8)
-                                : ColorTokens.Parent.inkMuted
+                                ? ColorTokens.Overlay.onAccent
+                                : ColorTokens.Parent.ink
                         )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    if let dur = att.durationLabel {
+                        Text(dur)
+                            .font(.caption2)
+                            .foregroundStyle(
+                                isFromParent
+                                    ? ColorTokens.Overlay.onAccent.opacity(0.8)
+                                    : ColorTokens.Parent.inkMuted
+                            )
+                    }
                 }
-            }
 
-            Spacer(minLength: 0)
+                Spacer(minLength: 0)
 
-            Image(systemName: "play.circle.fill")
-                .font(.title3)
-                .foregroundStyle(
-                    isFromParent
-                        ? ColorTokens.Overlay.onAccent
-                        : ColorTokens.Parent.accent
-                )
+                Group {
+                    if isPreparing {
+                        ProgressView()
+                            .controlSize(.small)
+                            .tint(tint)
+                    } else {
+                        Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(tint.opacity(att.isPlayable ? 1 : 0.4))
+                            .contentTransition(.symbolEffect(.replace))
+                    }
+                }
                 .accessibilityHidden(true)
+            }
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.sp2)
+            .frame(minHeight: 44)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(
+                        isFromParent
+                            ? ColorTokens.Parent.accent.opacity(0.85)
+                            : ColorTokens.Parent.bgDeep
+                    )
+            )
         }
-        .padding(.horizontal, SpacingTokens.sp3)
-        .padding(.vertical, SpacingTokens.sp2)
-        .frame(minHeight: 44)
-        .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(
-                    isFromParent
-                        ? ColorTokens.Parent.accent.opacity(0.85)
-                        : ColorTokens.Parent.bgDeep
-                )
-        )
+        .buttonStyle(.plain)
+        .disabled(!att.isPlayable)
+        .accessibilityElement(children: .ignore)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(Text(
+            isPlaying
+                ? String(localized: "chat.audio.stop.a11y")
+                : String(localized: "chat.audio.play.a11y")
+        ))
+        .accessibilityValue(Text(att.durationLabel ?? ""))
+    }
+
+    private func togglePlayback(messageId: String) async {
+        await interactor?.playAttachment(messageId: messageId)
     }
 
     // MARK: - Composer
 
     @ViewBuilder
     private func composerView(viewModel: LogopedistChatModels.Load.ViewModel) -> some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            if let recError = holder.recordingVM?.errorMessage {
+                composerNotice(text: recError)
+            } else if let playError = holder.playbackVM?.errorMessage {
+                composerNotice(text: playError)
+            }
+
+            if holder.recordingVM?.isRecording == true {
+                recordingBar
+            } else {
+                inputRow(viewModel: viewModel)
+            }
+        }
+        .padding(.horizontal, SpacingTokens.sp3)
+        .padding(.vertical, SpacingTokens.sp2)
+        .background(ColorTokens.Parent.surface)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: holder.recordingVM?.isRecording)
+    }
+
+    @ViewBuilder
+    private func inputRow(viewModel: LogopedistChatModels.Load.ViewModel) -> some View {
         HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
             Button {
-                attachActionShown = true
+                Task { await startRecording() }
             } label: {
-                Image(systemName: "paperclip")
+                Image(systemName: "mic.fill")
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Parent.accent)
                     .frame(width: 44, height: 44)
@@ -613,7 +664,7 @@ struct LogopedistChatView: View {
             }
             .buttonStyle(.plain)
             .disabled(!viewModel.composerEnabled || holder.isSending)
-            .accessibilityLabel(Text("chat.composer.attach.a11y"))
+            .accessibilityLabel(Text("chat.composer.record.a11y"))
 
             HStack {
                 TextField(
@@ -653,9 +704,83 @@ struct LogopedistChatView: View {
             .disabled(!canSend)
             .accessibilityLabel(Text("chat.composer.send.a11y"))
         }
-        .padding(.horizontal, SpacingTokens.sp3)
-        .padding(.vertical, SpacingTokens.sp2)
-        .background(ColorTokens.Parent.surface)
+    }
+
+    /// Полоса активной записи: пульсирующая точка + таймер + отмена/отправка.
+    @ViewBuilder
+    private var recordingBar: some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            Button {
+                Task { await cancelRecording() }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .frame(width: 44, height: 44)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text("chat.audio.cancel.a11y"))
+
+            HStack(spacing: SpacingTokens.sp2) {
+                Circle()
+                    .fill(ColorTokens.Semantic.warning)
+                    .frame(width: 10, height: 10)
+                    .opacity(reduceMotion ? 1 : (recordingPulse ? 0.3 : 1))
+                    .animation(
+                        reduceMotion ? nil : .easeInOut(duration: 0.7).repeatForever(autoreverses: true),
+                        value: recordingPulse
+                    )
+                    .onAppear { if !reduceMotion { recordingPulse = true } }
+                    .onDisappear { recordingPulse = false }
+                    .accessibilityHidden(true)
+                Text(holder.recordingVM?.durationLabel ?? "0:00")
+                    .font(TypographyTokens.headline(16).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Text("chat.audio.recording")
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .background(
+                RoundedRectangle(cornerRadius: 22)
+                    .fill(ColorTokens.Parent.bgDeep)
+            )
+
+            Button {
+                Task { await finishRecording() }
+            } label: {
+                Image(systemName: "arrow.up.circle.fill")
+                    .font(.system(size: 36))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .frame(width: 44, height: 44)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text("chat.audio.send.a11y"))
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    @ViewBuilder
+    private func composerNotice(text: String) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Image(systemName: "exclamationmark.circle")
+                .font(.caption)
+                .foregroundStyle(ColorTokens.Semantic.warning)
+                .accessibilityHidden(true)
+            Text(text)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Semantic.warning)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.leading)
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, SpacingTokens.sp2)
+        .accessibilityElement(children: .combine)
     }
 
     private var canSend: Bool {
@@ -745,14 +870,16 @@ struct LogopedistChatView: View {
         ))
     }
 
-    private func attachAudio() async {
-        await interactor?.attachAudio(request: .init(
-            parentId: parentId,
-            specialistId: specialistId,
-            attachmentTitle: String(localized: "chat.attachment.audio.title"),
-            durationSeconds: 30,
-            now: Date()
-        ))
+    private func startRecording() async {
+        await interactor?.startAudioRecording()
+    }
+
+    private func finishRecording() async {
+        await interactor?.finishAudioRecording()
+    }
+
+    private func cancelRecording() async {
+        await interactor?.cancelAudioRecording()
     }
 }
 

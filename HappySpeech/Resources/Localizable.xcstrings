@@ -8533,17 +8533,6 @@
         }
       }
     },
-    "chat.attach.audio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прикрепить аудио"
-          }
-        }
-      }
-    },
     "chat.attach.confirmation": {
       "extractionState": "manual",
       "localizations": {
@@ -8551,17 +8540,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Аудио прикреплено к сообщению"
-          }
-        }
-      }
-    },
-    "chat.attach.dialog.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прикрепить аудиозапись"
           }
         }
       }
@@ -8588,6 +8566,159 @@
         }
       }
     },
+    "chat.audio.cancel.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel recording"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отменить запись"
+          }
+        }
+      }
+    },
+    "chat.audio.error.micDenied": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone access is needed to record a voice message. Enable it in Settings."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для записи голосового сообщения нужен доступ к микрофону. Включите его в «Настройках»."
+          }
+        }
+      }
+    },
+    "chat.audio.error.playFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not play the recording. Check your connection and try again."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось воспроизвести запись. Проверьте соединение и попробуйте снова."
+          }
+        }
+      }
+    },
+    "chat.audio.error.recordFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not start recording. Please try again."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось начать запись. Попробуйте ещё раз."
+          }
+        }
+      }
+    },
+    "chat.audio.play.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play recording"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести запись"
+          }
+        }
+      }
+    },
+    "chat.audio.recording": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идёт запись…"
+          }
+        }
+      }
+    },
+    "chat.audio.send.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send recording"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить запись"
+          }
+        }
+      }
+    },
+    "chat.audio.stop.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop playback"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить воспроизведение"
+          }
+        }
+      }
+    },
+    "chat.composer.record.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Record a voice message"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать голосовое сообщение"
+          }
+        }
+      }
+    },
     "chat.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -8595,17 +8726,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Закрыть чат"
-          }
-        }
-      }
-    },
-    "chat.composer.attach.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прикрепить аудиозапись"
           }
         }
       }

@@ -10,10 +10,14 @@ protocol LogopedistChatDisplayLogic: AnyObject {
     func displaySend(viewModel: LogopedistChatModels.Send.ViewModel) async
     func displayAttachAudio(viewModel: LogopedistChatModels.AttachAudio.ViewModel) async
     func displayConnect(viewModel: LogopedistChatModels.Connect.ViewModel) async
+    func displayRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async
+    func displayPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async
 }
 
 // Default no-op so existing display doubles (test spies) keep conforming
-// without implementing the new connect surface.
+// without implementing the new connect / recording / playback surfaces.
 extension LogopedistChatDisplayLogic {
     func displayConnect(viewModel: LogopedistChatModels.Connect.ViewModel) async {}
+    func displayRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async {}
+    func displayPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async {}
 }

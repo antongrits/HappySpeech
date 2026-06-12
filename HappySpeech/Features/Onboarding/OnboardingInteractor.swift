@@ -71,6 +71,14 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
     var presenter: (any OnboardingPresentationLogic)?
 
     private let notificationService: any NotificationService
+
+    /// Создаёт реальный ``ChildProfileDTO`` в Realm и делает его активным по
+    /// завершении онбординга. Опционален: в превью/юнит-тестах не передаётся
+    /// (`nil` → шаг провижининга пропускается, остальной онбординг работает как
+    /// раньше). В проде внедряется ``LiveOnboardingChildProvisioner`` из View,
+    /// владеющей `AppContainer` (Interactor не импортирует Data-слой напрямую).
+    private let childProvisioner: (any OnboardingChildProvisioning)?
+
     private let logger = Logger(subsystem: "ru.happyspeech", category: "OnboardingInteractor")
 
     // MARK: - State
@@ -96,10 +104,12 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
 
     init(
         notificationService: any NotificationService = NotificationServiceLive(),
-        variant: OnboardingVariant = .a
+        variant: OnboardingVariant = .a,
+        childProvisioner: (any OnboardingChildProvisioning)? = nil
     ) {
         self.notificationService = notificationService
         self.variant = variant
+        self.childProvisioner = childProvisioner
         logger.info("OnboardingInteractor init variant=\(variant.analyticsLabel, privacy: .public)")
     }
 
@@ -400,6 +410,12 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         // 4. Seeding AdaptivePlanner начальными приоритетами
         seedAdaptivePlanner()
 
+        // 5. Создаём РЕАЛЬНЫЙ ChildProfile в Realm и помечаем активным.
+        // Fire-and-forget — как планирование напоминания: запись в Realm не
+        // блокирует переход на экран завершения (presenter вызывается ниже
+        // синхронно). Идемпотентно и no-op для специалиста/пустого имени.
+        provisionChildIfNeeded()
+
         let roleStr = profile.role.rawValue
         let genderStr = profile.childGender.rawValue
         let countsStr = "age=\(profile.childAge) goals=\(profile.goals.count) sounds=\(profile.difficultSounds.count)"
@@ -479,6 +495,21 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
             } catch {
                 logger.error("scheduleDailyReminder failed: \(error.localizedDescription, privacy: .public)")
             }
+        }
+    }
+
+    // MARK: - Private: Child profile provisioning
+
+    /// Создаёт реальный профиль ребёнка из собранных в онбординге данных и делает
+    /// его активным. Делегируется ``OnboardingChildProvisioning``; при отсутствии
+    /// провижинера (превью/тесты без Realm) — no-op. Запускается асинхронно,
+    /// чтобы не задерживать переход на экран завершения.
+    private func provisionChildIfNeeded() {
+        guard let childProvisioner else { return }
+        let snapshot = profile
+        Task { @MainActor [weak self] in
+            await childProvisioner.provisionChild(from: snapshot)
+            self?.logger.info("provisionChildIfNeeded finished")
         }
     }
 

@@ -187,7 +187,8 @@ final class Wave3SnapshotTests: XCTestCase {
                 timeLabel: "10:21", statusLabel: "Отправлено", statusSymbol: "checkmark",
                 isRead: false,
                 attachment: LogopedistChatModels.Load.AttachmentRow(
-                    id: "att", title: "Запись занятия", symbolName: "waveform", durationLabel: "28 сек"
+                    id: "att", title: "Запись занятия", symbolName: "waveform",
+                    durationLabel: "28 сек", messageId: "p2", isPlayable: true
                 ),
                 accessibilityLabel: "Вы, запись занятия, 10:21"
             )

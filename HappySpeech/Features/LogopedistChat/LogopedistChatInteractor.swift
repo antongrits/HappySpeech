@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import OSLog
 
@@ -13,6 +14,27 @@ protocol LogopedistChatBusinessLogic: AnyObject {
     /// Подписаться на real-time обновления треда. Цикл работает до отмены
     /// задачи (View отменяет при исчезновении). Каждое изменение → новый load.
     func subscribe() async
+
+    // MARK: Audio recording (голосовое сообщение логопеду)
+
+    /// Запрашивает доступ к микрофону, настраивает `AVAudioSession` и стартует
+    /// запись m4a во временный файл. Презентует состояние записи в View.
+    func startAudioRecording() async
+    /// Останавливает запись, измеряет реальную длительность и отправляет аудио
+    /// логопеду (выгрузка в Storage внутри репозитория). Пустую/слишком
+    /// короткую запись отбрасывает без отправки.
+    func finishAudioRecording() async
+    /// Прерывает запись без отправки (удаляет временный файл).
+    func cancelAudioRecording() async
+
+    // MARK: Audio playback (воспроизведение вложения)
+
+    /// Проигрывает аудио-вложение сообщения. Для входящих — скачивает удалённый
+    /// файл из Storage; для исходящих — проигрывает локальный путь. Повторный
+    /// вызов на играющей дорожке останавливает воспроизведение.
+    func playAttachment(messageId: String) async
+    /// Останавливает текущее воспроизведение.
+    func stopAudioPlayback() async
 }
 
 // MARK: - LogopedistChatDataStore
@@ -61,12 +83,37 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
 
     private let repository: any ChatRepository
     private let hapticService: any HapticService
+    /// Запись голосового сообщения логопеду (m4a, 16 kHz mono). Сам `AVAudioSession`
+    /// и разрешение микрофона настраиваются здесь, в Interactor (рекордер их не трогает).
+    private let audioRecorder: any AudioFileRecording
+    /// Воспроизведение аудио-вложений. `activatesPlaybackSession` переводит сессию
+    /// в `.playback` перед стартом.
+    private let audioPlayer: any AudioFilePlaying
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "LogopedistChat")
 
     // MARK: - State
 
     /// Текущая связь (обновляется в `load` / `connect`).
     private var linkState: ChatLinkState = .notConnected
+
+    // MARK: - Audio state
+
+    /// URL текущей/последней записи в песочнице (`nil`, когда запись не идёт).
+    private var recordingURL: URL?
+    /// Момент старта записи — для измерения реальной длительности.
+    private var recordingStartedAt: Date?
+    /// Тикающий таймер, обновляющий длительность записи в UI каждые 0.2 с.
+    private var recordingTickTask: Task<Void, Never>?
+    private var isRecordingAudio: Bool = false
+    /// Минимальная длительность записи, чтобы её отправлять (короче — шум/случайный тап).
+    private let minRecordingSeconds: TimeInterval = 0.7
+    /// Максимальная длительность голосового сообщения (защита от «забытой» записи).
+    private let maxRecordingSeconds: TimeInterval = 120
+
+    /// Идентификатор сообщения, чьё аудио сейчас проигрывается (`nil` — тишина).
+    private var playingMessageId: String?
+    /// Сторож автоостановки: завершает проигрывание по окончании файла.
+    private var playbackWatchTask: Task<Void, Never>?
 
     private var identity: ChatIdentity {
         ChatIdentity(familyId: parentId, specialistId: specialistId)
@@ -84,17 +131,25 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
 
     // MARK: - Init
 
+    /// Кэш последних загруженных сообщений — нужен для resolve'а аудио-источника
+    /// по `messageId` при воспроизведении (без повторного обращения к репозиторию).
+    private var cachedMessages: [ChatMessage] = []
+
     /// Designated init с инъекцией `ChatRepository`.
     init(
         parentId: String,
         specialistId: String,
         repository: any ChatRepository,
-        hapticService: any HapticService
+        hapticService: any HapticService,
+        audioRecorder: any AudioFileRecording = LiveAudioFileRecorder(),
+        audioPlayer: any AudioFilePlaying = LiveAudioFilePlayer(activatesPlaybackSession: true)
     ) {
         self.parentId = parentId
         self.specialistId = specialistId
         self.repository = repository
         self.hapticService = hapticService
+        self.audioRecorder = audioRecorder
+        self.audioPlayer = audioPlayer
     }
 
     /// Совместимый init без репозитория — для существующих тестов и кода,
@@ -126,6 +181,8 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         let messages = isConnected ? await repository.loadHistory(identity: identity) : []
         let unread = isConnected ? await repository.unreadCount(identity: identity) : 0
         let pending = isConnected ? await repository.pendingOutboxCount(identity: identity) : 0
+        // Кэшируем тред для resolve'а аудио-источника при воспроизведении.
+        cachedMessages = messages
 
         let response = LogopedistChatModels.Load.Response(
             specialist: specialist,
@@ -199,16 +256,261 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
 
         let created = await repository.sendAudio(
             identity: identity,
-            localAudioPath: "",
+            localAudioPath: request.localAudioPath,
             durationSeconds: request.durationSeconds,
             titleKey: "chat.attachment.audio.title",
             now: request.now
         )
-        Self.logger.info("Audio attachment sent (\(request.durationSeconds)s, status=\(created.status.rawValue))")
+        // Длительность и путь не логируем как PII; статус — безопасный rawValue.
+        Self.logger.info("Audio attachment sent (status=\(created.status.rawValue, privacy: .public))")
 
         let response = LogopedistChatModels.AttachAudio.Response(createdMessage: created)
         await presenter?.presentAttachAudio(response: response)
         await load(request: .init(parentId: parentId, specialistId: specialistId))
+    }
+
+    // MARK: - Audio recording
+
+    func startAudioRecording() async {
+        guard isConnected, !isRecordingAudio else { return }
+
+        // 1. Разрешение микрофона (iOS 17+ API).
+        let granted = await AVAudioApplication.requestRecordPermission()
+        guard granted else {
+            Self.logger.info("Mic permission denied for chat voice message")
+            await presenter?.presentRecording(viewModel: .init(
+                isRecording: false,
+                durationLabel: "0:00",
+                errorMessage: String(localized: "chat.audio.error.micDenied")
+            ))
+            return
+        }
+
+        // 2. Настраиваем AVAudioSession под запись (как в LiveAudioService).
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try session.setActive(true, options: [])
+        } catch {
+            Self.logger.error("Chat recording session setup failed: \(error.localizedDescription, privacy: .public)")
+            await presenter?.presentRecording(viewModel: .init(
+                isRecording: false,
+                durationLabel: "0:00",
+                errorMessage: String(localized: "chat.audio.error.recordFailed")
+            ))
+            return
+        }
+
+        // 3. Старт записи во временный m4a.
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("chat_voice_\(UUID().uuidString).m4a")
+        guard audioRecorder.startRecording(to: url) else {
+            Self.logger.error("Chat AVAudioRecorder failed to start")
+            try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+            await presenter?.presentRecording(viewModel: .init(
+                isRecording: false,
+                durationLabel: "0:00",
+                errorMessage: String(localized: "chat.audio.error.recordFailed")
+            ))
+            return
+        }
+
+        recordingURL = url
+        recordingStartedAt = Date()
+        isRecordingAudio = true
+        hapticService.impact(.medium)
+        await presentRecordingTick()
+        startRecordingTimer()
+    }
+
+    func finishAudioRecording() async {
+        guard isRecordingAudio else { return }
+        stopRecordingTimer()
+        audioRecorder.stopRecording()
+        isRecordingAudio = false
+        try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+
+        let duration = recordingStartedAt.map { Date().timeIntervalSince($0) } ?? 0
+        let url = recordingURL
+        recordingURL = nil
+        recordingStartedAt = nil
+
+        // Сбрасываем индикатор записи в UI.
+        await presenter?.presentRecording(viewModel: .init(
+            isRecording: false, durationLabel: "0:00", errorMessage: nil
+        ))
+
+        // Слишком короткая запись — отбрасываем без отправки (защита от случайного тапа).
+        guard let url, duration >= minRecordingSeconds,
+              FileManager.default.fileExists(atPath: url.path) else {
+            if let url { try? FileManager.default.removeItem(at: url) }
+            Self.logger.info("Chat voice message discarded (too short)")
+            return
+        }
+
+        await attachAudio(request: .init(
+            parentId: parentId,
+            specialistId: specialistId,
+            attachmentTitle: String(localized: "chat.attachment.audio.title"),
+            durationSeconds: min(duration, maxRecordingSeconds),
+            localAudioPath: url.path,
+            now: Date()
+        ))
+    }
+
+    func cancelAudioRecording() async {
+        guard isRecordingAudio else { return }
+        stopRecordingTimer()
+        audioRecorder.stopRecording()
+        isRecordingAudio = false
+        try? AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+        if let url = recordingURL { try? FileManager.default.removeItem(at: url) }
+        recordingURL = nil
+        recordingStartedAt = nil
+        await presenter?.presentRecording(viewModel: .init(
+            isRecording: false, durationLabel: "0:00", errorMessage: nil
+        ))
+    }
+
+    private func startRecordingTimer() {
+        recordingTickTask?.cancel()
+        recordingTickTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(200))
+                if Task.isCancelled { break }
+                guard let self else { break }
+                await self.tickRecording()
+            }
+        }
+    }
+
+    private func tickRecording() async {
+        guard isRecordingAudio, let start = recordingStartedAt else { return }
+        let elapsed = Date().timeIntervalSince(start)
+        // Авто-стоп по достижению лимита.
+        if elapsed >= maxRecordingSeconds {
+            await finishAudioRecording()
+            return
+        }
+        await presentRecordingTick()
+    }
+
+    private func presentRecordingTick() async {
+        let elapsed = recordingStartedAt.map { Date().timeIntervalSince($0) } ?? 0
+        await presenter?.presentRecording(viewModel: .init(
+            isRecording: true,
+            durationLabel: Self.durationLabel(elapsed),
+            errorMessage: nil
+        ))
+    }
+
+    private func stopRecordingTimer() {
+        recordingTickTask?.cancel()
+        recordingTickTask = nil
+    }
+
+    /// Форматирует длительность записи в «м:сс» для таймера composer'а.
+    private static func durationLabel(_ seconds: TimeInterval) -> String {
+        let total = max(0, Int(seconds.rounded()))
+        return String(format: "%d:%02d", total / 60, total % 60)
+    }
+
+    // MARK: - Audio playback
+
+    func playAttachment(messageId: String) async {
+        // Повторный тап по играющей дорожке — стоп.
+        if playingMessageId == messageId {
+            await stopAudioPlayback()
+            return
+        }
+        // Переключение на другую дорожку — сначала остановим текущую.
+        if playingMessageId != nil {
+            await stopAudioPlayback()
+        }
+
+        guard let message = cachedMessages.first(where: { $0.id == messageId }) else { return }
+
+        // Источник: локальный путь (исходящее) приоритетнее; иначе — скачиваем
+        // удалённый файл из Storage (входящее).
+        var localURL: URL?
+        if let path = message.localAudioPath, !path.isEmpty,
+           FileManager.default.fileExists(atPath: path) {
+            localURL = URL(fileURLWithPath: path)
+        } else if let remoteURL = message.attachment?.remoteURL {
+            // Показываем «подготовку» (скачивание) в UI.
+            await presenter?.presentPlayback(viewModel: .init(
+                playingMessageId: nil, preparingMessageId: messageId, errorMessage: nil
+            ))
+            localURL = await repository.downloadAudio(remoteURL: remoteURL)
+        }
+
+        guard let url = localURL else {
+            await presenter?.presentPlayback(viewModel: .init(
+                playingMessageId: nil,
+                preparingMessageId: nil,
+                errorMessage: String(localized: "chat.audio.error.playFailed")
+            ))
+            return
+        }
+
+        do {
+            try audioPlayer.play(contentsOf: url)
+            playingMessageId = messageId
+            hapticService.selection()
+            await presenter?.presentPlayback(viewModel: .init(
+                playingMessageId: messageId, preparingMessageId: nil, errorMessage: nil
+            ))
+            startPlaybackWatch(messageId: messageId)
+        } catch {
+            Self.logger.error("Chat audio playback failed: \(error.localizedDescription, privacy: .public)")
+            playingMessageId = nil
+            await presenter?.presentPlayback(viewModel: .init(
+                playingMessageId: nil,
+                preparingMessageId: nil,
+                errorMessage: String(localized: "chat.audio.error.playFailed")
+            ))
+        }
+    }
+
+    func stopAudioPlayback() async {
+        playbackWatchTask?.cancel()
+        playbackWatchTask = nil
+        audioPlayer.stop()
+        playingMessageId = nil
+        await presenter?.presentPlayback(viewModel: .init(
+            playingMessageId: nil, preparingMessageId: nil, errorMessage: nil
+        ))
+    }
+
+    /// Следит за окончанием воспроизведения (плеер сам не уведомляет Interactor):
+    /// как только `isPlaying` сбрасывается — снимаем подсветку дорожки.
+    private func startPlaybackWatch(messageId: String) {
+        playbackWatchTask?.cancel()
+        playbackWatchTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(250))
+                if Task.isCancelled { break }
+                guard let self else { break }
+                let finished = self.isPlaybackFinished(for: messageId)
+                if finished {
+                    await self.handlePlaybackFinished(messageId: messageId)
+                    break
+                }
+            }
+        }
+    }
+
+    private func isPlaybackFinished(for messageId: String) -> Bool {
+        playingMessageId == messageId && !audioPlayer.isPlaying
+    }
+
+    private func handlePlaybackFinished(messageId: String) async {
+        guard playingMessageId == messageId else { return }
+        audioPlayer.stop()
+        playingMessageId = nil
+        await presenter?.presentPlayback(viewModel: .init(
+            playingMessageId: nil, preparingMessageId: nil, errorMessage: nil
+        ))
     }
 
     // MARK: - MarkAsRead

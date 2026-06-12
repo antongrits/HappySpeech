@@ -9,11 +9,17 @@ protocol LogopedistChatPresentationLogic: AnyObject, Sendable {
     func presentSend(response: LogopedistChatModels.Send.Response) async
     func presentAttachAudio(response: LogopedistChatModels.AttachAudio.Response) async
     func presentConnect(response: LogopedistChatModels.Connect.Response) async
+    /// Презентует состояние записи голосового сообщения (индикатор + таймер).
+    func presentRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async
+    /// Презентует состояние воспроизведения вложения (play↔stop, ошибки).
+    func presentPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async
 }
 
 // Default no-op so existing presenter doubles (test spies) keep conforming.
 extension LogopedistChatPresentationLogic {
     func presentConnect(response: LogopedistChatModels.Connect.Response) async {}
+    func presentRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async {}
+    func presentPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async {}
 }
 
 // MARK: - LogopedistChatPresenter (Clean Swift: Presenter)
@@ -244,6 +250,18 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
         await displayLogic?.displayAttachAudio(viewModel: viewModel)
     }
 
+    // MARK: - Recording
+
+    func presentRecording(viewModel: LogopedistChatModels.Recording.ViewModel) async {
+        await displayLogic?.displayRecording(viewModel: viewModel)
+    }
+
+    // MARK: - Playback
+
+    func presentPlayback(viewModel: LogopedistChatModels.Playback.ViewModel) async {
+        await displayLogic?.displayPlayback(viewModel: viewModel)
+    }
+
     // MARK: - Helpers
 
     private func mapMessage(_ msg: ChatMessage) -> LogopedistChatModels.Load.MessageRow {
@@ -259,11 +277,17 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
             let durationLabel = att.durationSeconds.flatMap {
                 durationFormatter.string(from: $0)
             }
+            // Проиграть можно, если есть удалённый URL (входящее/выгруженное)
+            // или локальный путь (исходящее до выгрузки). `failed`-аудио без
+            // источника — непроигрываемо (честно: иконка приглушена).
+            let isPlayable = att.remoteURL != nil || (msg.localAudioPath?.isEmpty == false)
             attachment = LogopedistChatModels.Load.AttachmentRow(
                 id: att.id,
                 title: attTitle,
                 symbolName: att.symbolName,
-                durationLabel: durationLabel
+                durationLabel: durationLabel,
+                messageId: msg.id,
+                isPlayable: isPlayable
             )
         } else {
             attachment = nil

@@ -386,7 +386,17 @@ struct OnboardingFlowView: View {
 
         let presenter = OnboardingPresenter()
         presenter.display = display
-        let interactor = OnboardingInteractor(variant: variant)
+        // Провижинер создаёт реальный ChildProfile в Realm по завершении
+        // онбординга и фиксирует активного ребёнка. View владеет AppContainer,
+        // поэтому резолюция Data-слоя живёт здесь (Interactor чист от Data).
+        let provisioner = LiveOnboardingChildProvisioner(
+            childRepository: container.childRepository,
+            authService: container.authService,
+            setActiveChild: { [container] childId in
+                container.currentChildId = childId
+            }
+        )
+        let interactor = OnboardingInteractor(variant: variant, childProvisioner: provisioner)
         interactor.presenter = presenter
         let router = OnboardingRouter()
         router.coordinator = coordinator
@@ -398,7 +408,17 @@ struct OnboardingFlowView: View {
             guard let coordinator else { return }
             let repository = container.childRepository
             Task { @MainActor in
-                let profiles = (try? await repository.fetchAll()) ?? []
+                // Провижинер создаёт профиль fire-and-forget из completeOnboarding,
+                // поэтому к моменту resolve запись в Realm может быть ещё в полёте.
+                // Кратко (≤~1 c) ждём её появления, прежде чем решать маршрут —
+                // иначе свежесозданный ребёнок не найдётся и мы уведём в parentHome.
+                var profiles = (try? await repository.fetchAll()) ?? []
+                var attempts = 0
+                while profiles.isEmpty && attempts < 10 {
+                    try? await Task.sleep(nanoseconds: 100_000_000)
+                    profiles = (try? await repository.fetchAll()) ?? []
+                    attempts += 1
+                }
                 if let storedId = ActiveChildStore.shared.id,
                    profiles.contains(where: { $0.id == storedId }) {
                     coordinator.navigate(to: .childHome(childId: storedId))

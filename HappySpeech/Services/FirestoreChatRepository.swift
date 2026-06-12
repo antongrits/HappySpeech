@@ -225,7 +225,10 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
             text: String(localized: "chat.attachment.audio.placeholder"),
             createdAt: now,
             status: status,
-            attachment: attachment
+            attachment: attachment,
+            // Сохраняем локальный путь только если файл реально существует —
+            // отправитель проиграет запись с диска сразу, без обращения к Storage.
+            localAudioPath: localAudioPath.isEmpty ? nil : localAudioPath
         )
         await write(
             message,
@@ -235,6 +238,42 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
             durationSeconds: durationSeconds
         )
         return message
+    }
+
+    // MARK: - Download (для воспроизведения входящего аудио)
+
+    public func downloadAudio(remoteURL: URL) async -> URL? {
+        // Кэш в caches-директории по имени файла Storage (стабильно между
+        // запусками — повторное воспроизведение не качает заново).
+        let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
+        let chatCache = cacheDir.appendingPathComponent("chat_audio", isDirectory: true)
+        try? FileManager.default.createDirectory(at: chatCache, withIntermediateDirectories: true)
+
+        // Детерминированное имя файла из полного URL: остаётся стабильным между
+        // запусками (в отличие от `hashValue`), поэтому кэш реально переиспользуется.
+        let safeName = remoteURL.absoluteString.unicodeScalars
+            .map { CharacterSet.alphanumerics.contains($0) ? Character($0) : "_" }
+        let trimmed = String(String(safeName).suffix(80))
+        let localURL = chatCache.appendingPathComponent("\(trimmed).m4a")
+
+        if FileManager.default.fileExists(atPath: localURL.path) {
+            return localURL
+        }
+
+        do {
+            let (data, response) = try await URLSession.shared.data(from: remoteURL)
+            if let http = response as? HTTPURLResponse, !(200...299).contains(http.statusCode) {
+                logger.error("downloadAudio: HTTP \(http.statusCode)")
+                return nil
+            }
+            try data.write(to: localURL, options: .atomic)
+            logger.info("downloadAudio: cached \(data.count, privacy: .public) bytes")
+            return localURL
+        } catch {
+            logger.error("downloadAudio failed: \(error.localizedDescription)")
+            return nil
+        }
     }
 
     /// Результат выгрузки аудио в Storage: путь-ref и публичный download-URL.

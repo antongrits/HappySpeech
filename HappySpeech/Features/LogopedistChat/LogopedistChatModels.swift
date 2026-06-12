@@ -87,6 +87,11 @@ public struct ChatMessage: Identifiable, Sendable, Equatable {
     public let status: MessageStatus
     public let attachment: MessageAttachment?
     public let isOptional: Bool   // для seed/preview сообщений
+    /// Локальный путь к m4a в песочнице отправителя. Заполнен только для
+    /// исходящих аудио-сообщений и пока выгрузка в Storage идёт — позволяет
+    /// проиграть запись локально, не дожидаясь download-URL. Для входящих
+    /// сообщений и текста — `nil` (источник воспроизведения — `attachment.remoteURL`).
+    public let localAudioPath: String?
 
     public init(
         id: String,
@@ -95,7 +100,8 @@ public struct ChatMessage: Identifiable, Sendable, Equatable {
         createdAt: Date,
         status: MessageStatus = .sent,
         attachment: MessageAttachment? = nil,
-        isOptional: Bool = false
+        isOptional: Bool = false,
+        localAudioPath: String? = nil
     ) {
         self.id = id
         self.sender = sender
@@ -104,6 +110,7 @@ public struct ChatMessage: Identifiable, Sendable, Equatable {
         self.status = status
         self.attachment = attachment
         self.isOptional = isOptional
+        self.localAudioPath = localAudioPath
     }
 }
 
@@ -259,6 +266,30 @@ enum LogopedistChatModels {
             let title: String
             let symbolName: String
             let durationLabel: String?
+            /// Идентификатор сообщения-владельца вложения. Используется View, чтобы
+            /// запросить воспроизведение у Interactor (`playAttachment(messageId:)`)
+            /// и сопоставить активную проигрываемую дорожку.
+            let messageId: String
+            /// Можно ли вообще проиграть вложение (есть локальный файл или
+            /// удалённый URL). Для `failed`-аудио без источника — `false`.
+            let isPlayable: Bool
+        }
+    }
+
+    // MARK: Playback (воспроизведение аудио-вложения)
+
+    enum Playback {
+
+        /// Состояние плеера, поднимаемое в View для подсветки активной дорожки
+        /// и переключения иконки play↔stop.
+        struct ViewModel: Sendable {
+            /// Идентификатор сообщения, чьё аудио сейчас играет. `nil` — ничего
+            /// не воспроизводится.
+            let playingMessageId: String?
+            /// Идёт ли подготовка (скачивание входящего аудио из Storage).
+            let preparingMessageId: String?
+            /// Сообщение об ошибке воспроизведения (`nil` — нет ошибки).
+            let errorMessage: String?
         }
     }
 
@@ -325,7 +356,12 @@ enum LogopedistChatModels {
             let parentId: String
             let specialistId: String
             let attachmentTitle: String
+            /// Реальная длительность записанного m4a (секунды), измеренная при
+            /// остановке записи. Больше не хардкод.
             let durationSeconds: Double
+            /// Путь к локальному m4a в песочнице. Репозиторий выгрузит его в
+            /// Storage и пришлёт download-URL. Пусто → честный `.failed`.
+            let localAudioPath: String
             let now: Date
         }
 
@@ -335,6 +371,21 @@ enum LogopedistChatModels {
 
         struct ViewModel: Sendable {
             let confirmationMessage: String
+        }
+    }
+
+    // MARK: Recording (запись голосового сообщения)
+
+    enum Recording {
+
+        /// Состояние записи в composer'е (мигающий индикатор + таймер).
+        struct ViewModel: Sendable {
+            let isRecording: Bool
+            /// Текущая длительность записи, отформатированная («0:07»).
+            let durationLabel: String
+            /// Сообщение об ошибке записи (`nil` — нет ошибки; например, отказ
+            /// в доступе к микрофону).
+            let errorMessage: String?
         }
     }
 

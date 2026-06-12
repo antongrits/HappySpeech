@@ -140,6 +140,10 @@ public protocol ChatRepository: Sendable {
     ) async -> ChatMessage
 
     /// Отправляет сообщение с аудио-вложением (запись занятия).
+    ///
+    /// Локальный m4a выгружается в Firebase Storage (parental-gated путь), а в
+    /// возвращённом сообщении сохраняется `localAudioPath` — отправитель может
+    /// проиграть запись локально сразу, не дожидаясь download-URL.
     @discardableResult
     func sendAudio(
         identity: ChatIdentity,
@@ -148,6 +152,15 @@ public protocol ChatRepository: Sendable {
         titleKey: String,
         now: Date
     ) async -> ChatMessage
+
+    /// Скачивает удалённое аудио-вложение (Firebase Storage download-URL) в
+    /// локальный кэш-файл для воспроизведения. `AVAudioPlayer` не умеет
+    /// стримить HTTP напрямую, поэтому входящее аудио сначала материализуется
+    /// на диск. Возвращает локальный URL готового файла или `nil` при сбое.
+    ///
+    /// Реализация кэширует по имени файла: повторное воспроизведение того же
+    /// вложения не качает его заново.
+    func downloadAudio(remoteURL: URL) async -> URL?
 
     /// Помечает входящие (от специалиста) сообщения прочитанными.
     /// Возвращает идентификаторы реально обновлённых сообщений.
@@ -159,4 +172,18 @@ public protocol ChatRepository: Sendable {
 
     /// Кол-во сообщений, ожидающих отправки в offline-очереди (для индикатора).
     func pendingOutboxCount(identity: ChatIdentity) async -> Int
+}
+
+// MARK: - ChatRepository defaults
+
+public extension ChatRepository {
+
+    /// Дефолт: воспроизведение по file:// (исходящее, проигрывается локально)
+    /// без обращения к сети. Удалённые HTTP-URL должны переопределяться в
+    /// продакшн-реализации (`FirestoreChatRepository`). Сохраняет совместимость
+    /// тестовых дублей, не реализующих скачивание.
+    func downloadAudio(remoteURL: URL) async -> URL? {
+        guard remoteURL.isFileURL else { return nil }
+        return FileManager.default.fileExists(atPath: remoteURL.path) ? remoteURL : nil
+    }
 }

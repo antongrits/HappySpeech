@@ -91,7 +91,8 @@ final class LogopedistChatInteractorTests: XCTestCase {
         await sut.load(request: loadRequest())
         await sut.attachAudio(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1",
-            attachmentTitle: "Запись", durationSeconds: 5, now: Date()
+            attachmentTitle: "Запись", durationSeconds: 5,
+            localAudioPath: "/tmp/test.m4a", now: Date()
         ))
         XCTAssertFalse(spyPresenter.presentAttachAudioCalled,
                        "Без подключённого специалиста аудио отправлять некому")
@@ -169,7 +170,8 @@ final class LogopedistChatInteractorTests: XCTestCase {
         await sut.load(request: loadRequest())
         await sut.attachAudio(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1",
-            attachmentTitle: "Запись занятия", durationSeconds: 12.5, now: Date()
+            attachmentTitle: "Запись занятия", durationSeconds: 12.5,
+            localAudioPath: "/tmp/lesson.m4a", now: Date()
         ))
         XCTAssertTrue(spyPresenter.presentAttachAudioCalled)
         let message = spyPresenter.lastAttachResponse?.createdMessage

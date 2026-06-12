@@ -210,11 +210,15 @@ public actor MockChatRepository: ChatRepository {
         titleKey: String,
         now: Date
     ) async -> ChatMessage {
+        // В мок-режиме remoteURL выводим из локального пути (file://) — это
+        // позволяет воспроизвести запись в preview/UI-тесте без реальной сети.
+        let remoteURL = localAudioPath.isEmpty ? nil : URL(fileURLWithPath: localAudioPath)
         let attachment = MessageAttachment(
             id: UUID().uuidString,
             kind: .audioRecording,
             titleKey: titleKey,
-            durationSeconds: durationSeconds
+            durationSeconds: durationSeconds,
+            remoteURL: remoteURL
         )
         let message = ChatMessage(
             id: UUID().uuidString,
@@ -222,11 +226,15 @@ public actor MockChatRepository: ChatRepository {
             text: String(localized: "chat.attachment.audio.placeholder"),
             createdAt: now,
             status: isOnline ? .sent : .sending,
-            attachment: attachment
+            attachment: attachment,
+            localAudioPath: localAudioPath.isEmpty ? nil : localAudioPath
         )
         deliver(message, identity: identity)
         return message
     }
+
+    // `downloadAudio(remoteURL:)` — наследуем дефолт протокола: в мок-режиме
+    // remoteURL это file:// на локальную запись, который и проигрывается.
 
     @discardableResult
     public func markAsRead(identity: ChatIdentity, messageIds: [String]) async -> [String] {
