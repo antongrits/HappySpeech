@@ -288,22 +288,27 @@ final class FamilyVoiceLibraryInteractor {
     // MARK: - Private
 
     private let parentId: String
-    private let realmActor: RealmActor
+    /// Персистентность записей за Realm-границей (DTO-only). Features → Worker.
+    private let recordingStore: any FamilyRecordingStoring
     private var player: AVAudioPlayer?
     private var playbackTask: Task<Void, Never>?
     private let logger = Logger(subsystem: "ru.happyspeech.app", category: "FamilyVoiceLibraryInteractor")
 
     // MARK: - Init
 
-    init(parentId: String, realmActor: RealmActor) {
+    init(
+        parentId: String,
+        realmActor: RealmActor,
+        recordingStore: (any FamilyRecordingStoring)? = nil
+    ) {
         self.parentId = parentId
-        self.realmActor = realmActor
+        self.recordingStore = recordingStore ?? FamilyRecordingStoreWorker(realmActor: realmActor)
     }
 
     // MARK: - Load
 
     func load() async {
-        let dtos = await FamilyRecordingStore.fetchAll(parentId: parentId, realmActor: realmActor)
+        let dtos = await recordingStore.fetchAll(parentId: parentId)
         recordings = dtos
             .sorted { $0.recordedAt > $1.recordedAt }
             .map { dto in
@@ -369,7 +374,7 @@ final class FamilyVoiceLibraryInteractor {
             try? FileManager.default.removeItem(at: url)
         }
 
-        await FamilyRecordingStore.delete(id: recordingId, realmActor: realmActor)
+        await recordingStore.delete(id: recordingId)
         recordings.removeAll { $0.id == recordingId }
         logger.info("Deleted family recording: \(recordingId, privacy: .public)")
     }

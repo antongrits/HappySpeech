@@ -1,7 +1,6 @@
 import AVFoundation
 import Foundation
 import OSLog
-import RealmSwift
 
 // MARK: - FamilyVoiceInteractor
 
@@ -18,7 +17,8 @@ final class FamilyVoiceInteractor {
     private let scoringWorker: FamilyVoiceScoringWorker
     /// COPPA: помечает записи как parent / child через SpeakerVerification.
     private let speakerTagWorker: FamilyVoiceSpeakerTagWorker
-    private let realmActor: RealmActor
+    /// Персистентность записей за Realm-границей (DTO-only). Features → Worker.
+    private let recordingStore: any FamilyRecordingStoring
 
     /// Resolves the current microphone permission. Injectable so unit tests can
     /// exercise the recording paths without the real `AVAudioApplication`.
@@ -56,10 +56,11 @@ final class FamilyVoiceInteractor {
         speakerVerification: (any SpeakerVerificationServiceProtocol)? = nil,
         passportIngestor: (any PhonemePassportIngesting)? = nil,
         recorderWorker: (any FamilyVoiceRecording)? = nil,
+        recordingStore: (any FamilyRecordingStoring)? = nil,
         micPermissionProvider: (@Sendable () async -> Bool)? = nil,
         activeChildIdProvider: (@Sendable () -> String?)? = nil
     ) {
-        self.realmActor = realmActor
+        self.recordingStore = recordingStore ?? FamilyRecordingStoreWorker(realmActor: realmActor)
         self.recorderWorker = recorderWorker ?? FamilyVoiceRecorderWorker()
         self.scoringWorker = FamilyVoiceScoringWorker(
             pronunciationScorer: pronunciationScorer,
@@ -330,18 +331,18 @@ final class FamilyVoiceInteractor {
         }
     }
 
-    // MARK: - Realm persistence
+    // MARK: - Persistence (delegated to Worker — no direct Realm access)
 
     private func loadRecordingsFromRealm(parentId: String) async -> [RecordingDTO] {
-        await FamilyRecordingStore.fetchAll(parentId: parentId, realmActor: realmActor)
+        await recordingStore.fetchAll(parentId: parentId)
     }
 
     private func saveRecordingToRealm(dto: RecordingDTO, replacingId: String?) async {
-        await FamilyRecordingStore.save(dto: dto, replacingId: replacingId, realmActor: realmActor)
+        await recordingStore.save(dto, replacingId: replacingId)
     }
 
     private func deleteRecordingFromRealm(id: String) async {
-        await FamilyRecordingStore.delete(id: id, realmActor: realmActor)
+        await recordingStore.delete(id: id)
     }
 
     // MARK: - Cleanup
@@ -353,54 +354,5 @@ final class FamilyVoiceInteractor {
         feedbackTask?.cancel()
         feedbackTask = nil
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-    }
-}
-
-// MARK: - FamilyRecordingStore (actor-isolated helpers)
-
-/// Nonisolated static helpers that run on RealmActor — avoids @MainActor → actor boundary closure issues.
-enum FamilyRecordingStore {
-
-    static func fetchAll(parentId: String, realmActor: RealmActor) async -> [RecordingDTO] {
-        let predicate = NSPredicate(format: "parentProfileId == %@", parentId)
-        return (try? await realmActor.fetchFilteredMappedAsync(
-            FamilyRecordingObject.self,
-            predicate: predicate,
-            map: { obj in
-                RecordingDTO(
-                    id: obj.id,
-                    word: obj.word,
-                    audioFilePath: obj.audioFilePath,
-                    recordedAt: obj.recordedAt,
-                    durationSeconds: obj.durationSeconds,
-                    parentProfileId: obj.parentProfileId
-                )
-            }
-        )) ?? []
-    }
-
-    static func save(dto: RecordingDTO, replacingId: String?, realmActor: RealmActor) async {
-        await realmActor.asyncWrite { realm in
-            if let oldId = replacingId,
-               let old = realm.object(ofType: FamilyRecordingObject.self, forPrimaryKey: oldId) {
-                realm.delete(old)
-            }
-            let obj = FamilyRecordingObject()
-            obj.id = dto.id
-            obj.word = dto.word
-            obj.audioFilePath = dto.audioFilePath
-            obj.recordedAt = dto.recordedAt
-            obj.durationSeconds = dto.durationSeconds
-            obj.parentProfileId = dto.parentProfileId
-            realm.add(obj, update: .modified)
-        }
-    }
-
-    static func delete(id: String, realmActor: RealmActor) async {
-        await realmActor.asyncWrite { realm in
-            if let obj = realm.object(ofType: FamilyRecordingObject.self, forPrimaryKey: id) {
-                realm.delete(obj)
-            }
-        }
     }
 }

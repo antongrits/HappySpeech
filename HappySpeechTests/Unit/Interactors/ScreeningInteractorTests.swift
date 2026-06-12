@@ -61,6 +61,23 @@ private final class ScreeningMockScorer: PronunciationScorerService, @unchecked 
     }
 }
 
+/// Хранилище outcomes с управляемым поведением — заменяет прямой Realm-доступ.
+/// Записывает аргументы saveOutcome для верификации и отдаёт стаб для fetchLatest.
+private final class ScreeningMockOutcomeStore: ScreeningOutcomeStoring, @unchecked Sendable {
+    private(set) var savedDrafts: [ScreeningOutcomeDraft] = []
+    private(set) var fetchLatestCount = 0
+    var stubbedLatest: ScreeningPersistedOutcome?
+
+    func saveOutcome(_ draft: ScreeningOutcomeDraft) async {
+        savedDrafts.append(draft)
+    }
+
+    func fetchLatest(childId: String) async -> ScreeningPersistedOutcome? {
+        fetchLatestCount += 1
+        return stubbedLatest
+    }
+}
+
 /// ASRService с управляемым транскриптом.
 private final class ScreeningMockASR: ASRService, @unchecked Sendable {
     var isReady: Bool = true
@@ -564,39 +581,54 @@ final class ScreeningInteractorTests: XCTestCase {
         XCTAssertTrue(true)
     }
 
-    func test_completeScreening_withRealmActorPersistsOutcome() async {
-        // Уникальный childId изолирует запись от других тестов.
-        let childId = "screening-persist-\(UUID().uuidString)"
-        let realm = RealmActor()
-        let sut = ScreeningInteractor(realmActor: realm, audioService: ScreeningMockAudioService())
+    func test_completeScreening_withStorePersistsOutcomeWithCorrectArgs() async {
+        let store = ScreeningMockOutcomeStore()
+        let sut = ScreeningInteractor(
+            outcomeStore: store,
+            audioService: ScreeningMockAudioService()
+        )
         let router = ScreeningRouter()
         var routed = false
         router.onRouteToParentHome = { routed = true }
         sut.router = router
-        await sut.startScreening(.init(childId: childId, childAge: 6))
+        await sut.startScreening(.init(childId: "child-persist", childAge: 6))
         let ids = sut.testState().prompts.map(\.id)
         await sut.submitAnswer(.init(promptId: ids[0], score: 0.2, attemptCount: 1))
         await sut.completeScreening(.init(
-            childId: childId,
+            childId: "child-persist",
             severity: "moderate",
             problematicSounds: ["С"],
             recommendedPacks: ["sound_s_pack"],
             notes: "проверка",
             isRescreening: false
         ))
-        // Persist выполнен (через nonisolated writeOutcome), навигация вызвана.
+        // Interactor вызвал Worker ровно один раз с верными аргументами.
+        XCTAssertEqual(store.savedDrafts.count, 1)
+        let saved = store.savedDrafts.first
+        XCTAssertEqual(saved?.childId, "child-persist")
+        XCTAssertEqual(saved?.severity, "moderate")
+        XCTAssertEqual(saved?.problematicSounds, ["С"])
+        XCTAssertEqual(saved?.recommendedPacks, ["sound_s_pack"])
+        XCTAssertEqual(saved?.notes, "проверка")
+        XCTAssertEqual(saved?.screeningVersion, 2)
+        // perSoundJSON содержит первый ответ (звук "С" → 0.2).
+        XCTAssertTrue(saved?.perSoundJSON.contains("\"С\":0.2") ?? false)
         XCTAssertTrue(routed)
     }
 
-    // MARK: - checkRescreeningEligibility (with RealmActor)
+    // MARK: - checkRescreeningEligibility (with Worker)
 
-    func test_checkRescreening_withRealmActorNoPriorOutcomeIsEligible() async {
-        let childId = "rescreening-none-\(UUID().uuidString)"
-        let realm = RealmActor()
-        let sut = ScreeningInteractor(realmActor: realm, audioService: ScreeningMockAudioService())
+    func test_checkRescreening_withStoreNoPriorOutcomeIsEligible() async {
+        let store = ScreeningMockOutcomeStore()
+        store.stubbedLatest = nil
+        let sut = ScreeningInteractor(
+            outcomeStore: store,
+            audioService: ScreeningMockAudioService()
+        )
         let spy = SpyScreeningPresenter()
         sut.presenter = spy
-        await sut.checkRescreeningEligibility(.init(childId: childId))
+        await sut.checkRescreeningEligibility(.init(childId: "child-rs"))
+        XCTAssertEqual(store.fetchLatestCount, 1)
         XCTAssertEqual(spy.rescreeningCheckCount, 1)
         // Нет предыдущей записи → eligible, daysSince == nil.
         XCTAssertEqual(spy.lastRescreening?.isEligible, true)
@@ -604,25 +636,68 @@ final class ScreeningInteractorTests: XCTestCase {
     }
 
     func test_checkRescreening_recentOutcomeNotEligible() async {
-        // Свежая запись создаётся через completeScreening (completedAt == сейчас).
-        let childId = "rescreening-recent-\(UUID().uuidString)"
-        let realm = RealmActor()
-        let sut = ScreeningInteractor(realmActor: realm, audioService: ScreeningMockAudioService())
-        await sut.completeScreening(.init(
-            childId: childId,
-            severity: "mild",
+        let store = ScreeningMockOutcomeStore()
+        // Запись «сегодня» — менее 90 дней назад.
+        store.stubbedLatest = ScreeningPersistedOutcome(
+            childId: "child-rs",
+            completedAt: Date(),
+            overallSeverity: "mild",
             problematicSounds: ["Р"],
-            recommendedPacks: [],
             notes: "",
-            isRescreening: false
-        ))
+            screeningVersion: 2
+        )
+        let sut = ScreeningInteractor(
+            outcomeStore: store,
+            audioService: ScreeningMockAudioService()
+        )
         let spy = SpyScreeningPresenter()
         sut.presenter = spy
-        await sut.checkRescreeningEligibility(.init(childId: childId))
+        await sut.checkRescreeningEligibility(.init(childId: "child-rs"))
         // Менее 90 дней с последнего скрининга → не eligible.
         XCTAssertEqual(spy.lastRescreening?.isEligible, false)
         XCTAssertNotNil(spy.lastRescreening?.previousOutcomeSummary)
         XCTAssertEqual(spy.lastRescreening?.daysSinceLastScreening, 0)
+        XCTAssertEqual(spy.lastRescreening?.previousOutcomeSummary?.problematicSounds, ["Р"])
+    }
+
+    func test_checkRescreening_oldOutcomeIsEligible() async {
+        let store = ScreeningMockOutcomeStore()
+        // Запись 120 дней назад — старше порога 90 → eligible.
+        store.stubbedLatest = ScreeningPersistedOutcome(
+            childId: "child-rs",
+            completedAt: Date().addingTimeInterval(-120 * 86_400),
+            overallSeverity: "moderate",
+            problematicSounds: ["Ш"],
+            notes: "",
+            screeningVersion: 2
+        )
+        let sut = ScreeningInteractor(
+            outcomeStore: store,
+            audioService: ScreeningMockAudioService()
+        )
+        let spy = SpyScreeningPresenter()
+        sut.presenter = spy
+        await sut.checkRescreeningEligibility(.init(childId: "child-rs"))
+        XCTAssertEqual(spy.lastRescreening?.isEligible, true)
+        XCTAssertEqual(spy.lastRescreening?.daysSinceLastScreening, 120)
+    }
+
+    func test_completeScreening_withoutStoreSkipsPersistButRoutes() async {
+        // Без хранилища (preview/тесты) — persist пропускается, навигация всё равно идёт.
+        let (sut, _) = makeSUT()
+        let router = ScreeningRouter()
+        var routed = false
+        router.onRouteToParentHome = { routed = true }
+        sut.router = router
+        await sut.completeScreening(.init(
+            childId: "c",
+            severity: "mild",
+            problematicSounds: [],
+            recommendedPacks: [],
+            notes: "",
+            isRescreening: false
+        ))
+        XCTAssertTrue(routed)
     }
 
     // MARK: - requestMicrophonePermission

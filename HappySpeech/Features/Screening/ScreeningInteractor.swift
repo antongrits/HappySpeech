@@ -1,6 +1,5 @@
 import Foundation
 import OSLog
-import RealmSwift
 
 // MARK: - ScreeningBusinessLogic
 
@@ -55,7 +54,9 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
     var router: ScreeningRouter?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Screening")
-    private let realmActor: RealmActor?
+    /// Персистентность outcomes за Realm-границей (DTO-only). Features → Worker.
+    /// nil — preview / тесты без хранилища: persist пропускается.
+    private let outcomeStore: (any ScreeningOutcomeStoring)?
     private let audioService: (any AudioService)?
     private let pronunciationScorer: (any PronunciationScorerService)?
     private let asrService: (any ASRService)?
@@ -88,11 +89,14 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
 
     init(
         realmActor: RealmActor? = nil,
+        outcomeStore: (any ScreeningOutcomeStoring)? = nil,
         audioService: (any AudioService)? = nil,
         pronunciationScorer: (any PronunciationScorerService)? = nil,
         asrService: (any ASRService)? = nil
     ) {
-        self.realmActor = realmActor
+        // Если хранилище не передано явно, но есть RealmActor — поднимаем live-Worker.
+        // Так Features-слой не знает про Realm: доступ всегда через протокол Worker'а.
+        self.outcomeStore = outcomeStore ?? realmActor.map(ScreeningOutcomeStoreWorker.init)
         self.audioService = audioService
         self.pronunciationScorer = pronunciationScorer
         self.asrService = asrService
@@ -338,7 +342,7 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
     // MARK: - ScreeningBusinessLogic: Re-screening check
 
     func checkRescreeningEligibility(_ request: ScreeningModels.CheckRescreening.Request) async {
-        guard let realm = realmActor else {
+        guard let outcomeStore else {
             await presenter?.presentRescreeningCheck(.init(
                 isEligible: true,
                 daysSinceLastScreening: nil,
@@ -347,20 +351,19 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
             return
         }
 
-        let lastObject = await Self.fetchLastOutcome(childId: request.childId, realmActor: realm)
+        let lastOutcome = await outcomeStore.fetchLatest(childId: request.childId)
         let response: ScreeningModels.CheckRescreening.Response
 
-        if let lastDate = lastObject?.completedAt {
+        if let lastOutcome {
+            let lastDate = lastOutcome.completedAt
             let daysSince = Calendar.current.dateComponents([.day], from: lastDate, to: Date()).day ?? 0
             let eligible = daysSince >= Threshold.rescreeningMinDays
-            let summary = lastObject.map { obj in
-                ScreeningModels.PreviousOutcomeSummary(
-                    completedAt: obj.completedAt,
-                    severity: obj.overallSeverity,
-                    problematicSounds: Array(obj.problematicSounds),
-                    daysSince: daysSince
-                )
-            }
+            let summary = ScreeningModels.PreviousOutcomeSummary(
+                completedAt: lastOutcome.completedAt,
+                severity: lastOutcome.overallSeverity,
+                problematicSounds: lastOutcome.problematicSounds,
+                daysSince: daysSince
+            )
             previousOutcome = summary
             logger.info("screening rescreening check daysSince=\(daysSince, privacy: .public) eligible=\(eligible, privacy: .public)")
             response = .init(
@@ -501,24 +504,29 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
         await handleScoredResult(score: 0.55, promptId: prompt.id, stageIndex: currentStageIndex)
     }
 
-    // MARK: - Private: Realm persist
+    // MARK: - Private: Persist (delegated to Worker — no direct Realm access)
+
+    private static let screeningVersion: Int = 2
 
     private func persistOutcomeToRealm(_ request: ScreeningModels.CompleteRequest) async {
-        guard let realmActor else {
-            logger.notice("screening persist skipped — realmActor not provided")
+        guard let outcomeStore else {
+            logger.notice("screening persist skipped — outcome store not provided")
             return
         }
 
-        let perSoundJSON = buildPerSoundJSON()
-        await Self.writeOutcome(
-            request: request,
-            perSoundJSON: perSoundJSON,
-            realmActor: realmActor
-        )
+        await outcomeStore.saveOutcome(ScreeningOutcomeDraft(
+            childId: request.childId,
+            severity: request.severity,
+            problematicSounds: request.problematicSounds,
+            recommendedPacks: request.recommendedPacks,
+            notes: request.notes,
+            perSoundJSON: buildPerSoundJSON(),
+            screeningVersion: Self.screeningVersion
+        ))
     }
 
     private func buildPerSoundJSON() -> String {
-        // Serialize per-sound scores as JSON string for Realm notes field
+        // Serialize per-sound scores as JSON string for the outcome notes field.
         var dict: [String: Float] = [:]
         for prompt in prompts {
             if let score = scores[prompt.id] {
@@ -530,71 +538,6 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
             .map { "\"\($0.key)\":\($0.value)" }
             .joined(separator: ",")
         return "{\(pairs)}"
-    }
-
-    nonisolated private static func writeOutcome(
-        request: ScreeningModels.CompleteRequest,
-        perSoundJSON: String,
-        realmActor: RealmActor
-    ) async {
-        await realmActor.asyncWrite { realm in
-            let outcome = ScreeningOutcomeObject()
-            outcome.childId = request.childId
-            outcome.completedAt = Date()
-            outcome.overallSeverity = request.severity
-            outcome.problematicSounds.removeAll()
-            outcome.problematicSounds.append(objectsIn: request.problematicSounds)
-            outcome.recommendedPacks.removeAll()
-            outcome.recommendedPacks.append(objectsIn: request.recommendedPacks)
-            let notesPrefix = perSoundJSON.isEmpty ? "" : "scores:\(perSoundJSON);"
-            outcome.notes = notesPrefix + request.notes
-            outcome.screeningVersion = 2
-            realm.add(outcome, update: .modified)
-        }
-    }
-
-    // MARK: - Private: Re-screening — fetch last outcome
-
-    private struct OutcomeSnapshot: Sendable {
-        let childId: String
-        let completedAt: Date
-        let overallSeverity: String
-        let problematicSounds: [String]
-        let notes: String
-        let screeningVersion: Int
-    }
-
-    nonisolated private static func fetchLastOutcome(
-        childId: String,
-        realmActor: RealmActor
-    ) async -> ScreeningOutcomeObject? {
-        let predicate = NSPredicate(format: "childId == %@", childId)
-        let snapshots: [OutcomeSnapshot] = (try? await realmActor.fetchFilteredMappedAsync(
-            ScreeningOutcomeObject.self,
-            predicate: predicate
-        ) { obj in
-            OutcomeSnapshot(
-                childId: obj.childId,
-                completedAt: obj.completedAt,
-                overallSeverity: obj.overallSeverity,
-                problematicSounds: Array(obj.problematicSounds),
-                notes: obj.notes,
-                screeningVersion: obj.screeningVersion
-            )
-        }) ?? []
-
-        guard let latest = snapshots.sorted(by: { $0.completedAt > $1.completedAt }).first else {
-            return nil
-        }
-
-        let copy = ScreeningOutcomeObject()
-        copy.childId = latest.childId
-        copy.completedAt = latest.completedAt
-        copy.overallSeverity = latest.overallSeverity
-        copy.problematicSounds.append(objectsIn: latest.problematicSounds)
-        copy.notes = latest.notes
-        copy.screeningVersion = latest.screeningVersion
-        return copy
     }
 
     // MARK: - Testing helpers

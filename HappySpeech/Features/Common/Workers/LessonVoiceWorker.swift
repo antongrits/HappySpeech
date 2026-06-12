@@ -216,7 +216,8 @@ final class LessonVoiceWorker: NSObject {
     private func familyRecordingURL(for text: String) async -> URL? {
         guard let realm = realmActor else { return nil }
         let normalized = Self.normalize(text)
-        let dtos = await FamilyRecordingStore.fetchAll(parentId: familyParentId, realmActor: realm)
+        let store = FamilyRecordingStoreWorker(realmActor: realm)
+        let dtos = await store.fetchAll(parentId: familyParentId)
         guard let match = dtos.first(where: { Self.normalize($0.word) == normalized }) else {
             return nil
         }

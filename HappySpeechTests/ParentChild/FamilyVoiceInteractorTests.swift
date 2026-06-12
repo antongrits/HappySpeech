@@ -81,6 +81,12 @@ final class FamilyVoiceInteractorTests: XCTestCase {
         return actor
     }
 
+    /// Store-Worker поверх того же RealmActor, что инжектится в Interactor —
+    /// засев/чтение записей в тестах идёт через тот же путь персистентности.
+    private func makeStore(_ realmActor: RealmActor) -> FamilyRecordingStoreWorker {
+        FamilyRecordingStoreWorker(realmActor: realmActor)
+    }
+
     /// Создаёт минимальный стек: Interactor + Presenter + SpyDisplay.
     private func makeSUT(realmActor: RealmActor) -> (
         sut: FamilyVoiceInteractor,
@@ -336,7 +342,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_fetchRecordings_afterRealmSave_returnsStoredDTO() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "fv-rt-1", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
 
         let (sut, display) = makeSUT(realmActor: realm)
         await sut.fetchRecordings(.init(parentId: "parent-test"))
@@ -348,12 +354,12 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_familyRecordingStore_saveReplacingId_removesOld() async throws {
         let realm = try await makeRealmActor()
         let old = makeDTO(id: "old-rec", word: "мяч")
-        await FamilyRecordingStore.save(dto: old, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(old, replacingId: nil)
 
         let new = makeDTO(id: "new-rec", word: "мяч")
-        await FamilyRecordingStore.save(dto: new, replacingId: "old-rec", realmActor: realm)
+        await makeStore(realm).save(new, replacingId: "old-rec")
 
-        let all = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        let all = await makeStore(realm).fetchAll(parentId: "parent-test")
         XCTAssertEqual(all.count, 1, "replacingId должен удалить старую запись")
         XCTAssertEqual(all.first?.id, "new-rec")
     }
@@ -361,17 +367,17 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_familyRecordingStore_delete_removesRecord() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "del-fv", word: "собака")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
 
-        await FamilyRecordingStore.delete(id: "del-fv", realmActor: realm)
-        let all = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        await makeStore(realm).delete(id: "del-fv")
+        let all = await makeStore(realm).fetchAll(parentId: "parent-test")
         XCTAssertTrue(all.isEmpty)
     }
 
     func test_deleteRecording_existingId_removesFromList() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "fv-del-2", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
 
         let (sut, display) = makeSUT(realmActor: realm)
         await sut.fetchRecordings(.init(parentId: "parent-test"))
@@ -384,7 +390,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_playRecording_existingDTO_butMissingFile_presentsFailure() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "fv-play-1", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
 
         let (sut, display) = makeSUT(realmActor: realm)
         await sut.fetchRecordings(.init(parentId: "parent-test"))
@@ -441,10 +447,10 @@ final class FamilyVoiceInteractorTests: XCTestCase {
             id: "b1", word: "мяч", audioFilePath: "p/b1.m4a",
             recordedAt: Date(), durationSeconds: 1, parentProfileId: "parent-B"
         )
-        await FamilyRecordingStore.save(dto: dtoA, replacingId: nil, realmActor: realm)
-        await FamilyRecordingStore.save(dto: dtoB, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dtoA, replacingId: nil)
+        await makeStore(realm).save(dtoB, replacingId: nil)
 
-        let onlyA = await FamilyRecordingStore.fetchAll(parentId: "parent-A", realmActor: realm)
+        let onlyA = await makeStore(realm).fetchAll(parentId: "parent-A")
         XCTAssertEqual(onlyA.count, 1)
         XCTAssertEqual(onlyA.first?.id, "a1")
     }
@@ -549,7 +555,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
         await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
         XCTAssertEqual(recorder.stopCallCount, 1)
         XCTAssertTrue(display.displayRecordingStoppedCalled)
-        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        let stored = await makeStore(realm).fetchAll(parentId: "parent-test")
         XCTAssertEqual(stored.count, 1)
     }
 
@@ -572,7 +578,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
         await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
         await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
         await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
-        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        let stored = await makeStore(realm).fetchAll(parentId: "parent-test")
         XCTAssertEqual(stored.count, 1, "Повторная запись того же слова заменяет старую")
     }
 
@@ -584,7 +590,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
                 id: "max-\(i)", word: "мяч", audioFilePath: "p/max-\(i).m4a",
                 recordedAt: Date(), durationSeconds: 1, parentProfileId: "parent-test"
             )
-            await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+            await makeStore(realm).save(dto, replacingId: nil)
         }
         let recorder = MockRecorder()
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
@@ -597,7 +603,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_playRecording_existingDTO_presentsSuccessPlayback() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "play-ok", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
         await sut.fetchRecordings(.init(parentId: "parent-test"))
@@ -610,7 +616,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_playRecording_workerThrows_presentsFailurePlayback() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "play-fail", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         recorder.playShouldThrow = true
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
@@ -624,21 +630,21 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_deleteRecording_existingDTO_removesAndPresents() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "del-ok", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
         await sut.fetchRecordings(.init(parentId: "parent-test"))
         await sut.deleteRecording(.init(recordingId: "del-ok"))
         XCTAssertEqual(recorder.deleteCallCount, 1)
         XCTAssertTrue(display.displayDeletionCalled)
-        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        let stored = await makeStore(realm).fetchAll(parentId: "parent-test")
         XCTAssertTrue(stored.isEmpty)
     }
 
     func test_deleteRecording_workerThrows_presentsFailure() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "del-fail", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         recorder.deleteShouldThrow = true
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
@@ -724,7 +730,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_playRecording_schedulesPlaybackEnd() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "play-end", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         recorder.stopDuration = 0.15 // короткая запись → быстрый playback-end
         let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
@@ -741,7 +747,7 @@ final class FamilyVoiceInteractorTests: XCTestCase {
     func test_startRecording_thenStartNewRecording_cancelsPlayback() async throws {
         let realm = try await makeRealmActor()
         let dto = makeDTO(id: "pb-cancel", word: "мяч")
-        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        await makeStore(realm).save(dto, replacingId: nil)
         let recorder = MockRecorder()
         recorder.stopDuration = 5.0
         let (sut, _) = makeSUTWithMock(realmActor: realm, recorder: recorder)
