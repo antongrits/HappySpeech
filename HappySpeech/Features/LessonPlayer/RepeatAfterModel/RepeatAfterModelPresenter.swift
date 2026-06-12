@@ -71,7 +71,8 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
             : String(localized: "repeat.mic.tap_to_record")
         let vm = RepeatAfterModelModels.RecordAttempt.ViewModel(
             isRecording: response.isRecording,
-            micLabel: label
+            micLabel: label,
+            phase: response.phase
         )
         viewModel?.displayRecordAttempt(vm)
     }

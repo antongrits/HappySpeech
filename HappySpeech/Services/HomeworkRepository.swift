@@ -94,4 +94,14 @@ public protocol HomeworkRepository: Sendable {
 
     /// Кол-во невыполненных заданий по childId (для бейджа в ParentHome).
     func pendingCount(childId: String, familyId: String) async -> Int
+
+    /// Удаляет задание из облака. Вызывается специалистом-создателем
+    /// (Firestore rules ограничивают удаление: только admin или автор).
+    /// Offline-first: при отсутствии сети Firestore SDK ставит удаление в
+    /// очередь и применяет его при восстановлении соединения.
+    ///
+    /// - Returns: `.success` / `.failure(HomeworkRepositoryError)`
+    func delete(
+        assignmentId: String
+    ) async -> Result<Void, HomeworkRepositoryError>
 }

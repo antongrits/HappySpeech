@@ -34,6 +34,7 @@ private final class SpyOnboardingNotificationService: NotificationService, @unch
         body: String,
         at dateComponents: DateComponents
     ) async throws -> String { identifier }
+    func cancelCalendarReminder(identifier: String) async {}
 }
 
 // MARK: - Spy Presenter

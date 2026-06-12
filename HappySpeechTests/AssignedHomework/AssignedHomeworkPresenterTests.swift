@@ -7,6 +7,7 @@ import XCTest
 private final class SpyAssignedHomeworkDisplay: AssignedHomeworkDisplayLogic, @unchecked Sendable {
     var loadVM: AssignedHomeworkModels.Load.ViewModel?
     var createVM: AssignedHomeworkModels.Create.ViewModel?
+    var deleteVM: AssignedHomeworkModels.Delete.ViewModel?
 
     func displayLoad(viewModel: AssignedHomeworkModels.Load.ViewModel) async {
         loadVM = viewModel
@@ -15,6 +16,9 @@ private final class SpyAssignedHomeworkDisplay: AssignedHomeworkDisplayLogic, @u
         createVM = viewModel
     }
     func displayUpdateStatus(viewModel: AssignedHomeworkModels.UpdateStatus.ViewModel) async {}
+    func displayDelete(viewModel: AssignedHomeworkModels.Delete.ViewModel) async {
+        deleteVM = viewModel
+    }
     func displayFamilyLoad(viewModel: AssignedHomeworkModels.FamilyLoad.ViewModel) async {}
 }
 

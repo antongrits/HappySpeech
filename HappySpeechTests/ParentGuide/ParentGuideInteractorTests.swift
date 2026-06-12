@@ -122,6 +122,28 @@ final class ParentGuideCorpusTests: XCTestCase {
         XCTAssertEqual(ids.count, Set(ids).count)
     }
 
+    func test_corpus_hasExpandedLibrary() {
+        // После методического расширения (gap #9): 59 базовых + 73 новых статьи.
+        XCTAssertEqual(ParentGuideCorpus.lessons.count, 132,
+                       "Библиотека статей должна содержать 132 урока")
+    }
+
+    func test_corpus_expansionLessonsDecodeNonEmpty() {
+        // Новые статьи (namespace guide-ext-*) декодируются и непустые.
+        let expansion = ParentGuideCorpus.lessons.filter { $0.id.hasPrefix("guide-ext-") }
+        XCTAssertEqual(expansion.count, 73, "Должно быть 73 новых статьи")
+        for lesson in expansion {
+            XCTAssertFalse(lesson.title.isEmpty, "\(lesson.id): пустой заголовок")
+            XCTAssertFalse(lesson.summary.isEmpty, "\(lesson.id): пустой анонс")
+            XCTAssertFalse(lesson.body.isEmpty, "\(lesson.id): пустой текст")
+            XCTAssertTrue((1...3).contains(lesson.readMinutes), "\(lesson.id): readMinutes вне 1–3")
+            for group in lesson.relevantSoundGroups {
+                XCTAssertTrue(["whistling", "hissing", "sonants", "velar"].contains(group),
+                              "\(lesson.id): недопустимая группа звуков \(group)")
+            }
+        }
+    }
+
     func test_soundGroup_mapsKnownSounds() {
         XCTAssertEqual(ParentGuideCorpus.soundGroup(for: "Р"), "sonants")
         XCTAssertEqual(ParentGuideCorpus.soundGroup(for: "С"), "whistling")

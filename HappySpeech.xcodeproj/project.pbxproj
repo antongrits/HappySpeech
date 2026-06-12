@@ -285,6 +285,7 @@
 		21FC04A0E043AC6694D5900C /* MethodologyCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DCE16CF6C764AF75AFCD0A /* MethodologyCorpus.swift */; };
 		22290E109A3755609DE83039 /* WeeklyVideoReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44879AFFB8AAEC29BA9B01E1 /* WeeklyVideoReportView.swift */; };
 		227A8DFCE0EAC0753D9F9871 /* GuidedTourCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8716B6D61BE26A5C971005EB /* GuidedTourCoordinatorTests.swift */; };
+		228053ABFB6528317EE00A79 /* CulturalContentPackLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A4BDEEB7FE0CEC80EDAF3E /* CulturalContentPackLoader.swift */; };
 		229826716592B27ED5AFDA6F /* Wav2Vec2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C1AB87484D7C2029084 /* Wav2Vec2Models.swift */; };
 		22CBB83949B0736F3CA8BCB5 /* ComprehensionDetectiveInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB60ECEF6C16B10D55E9D3E /* ComprehensionDetectiveInteractorTests.swift */; };
 		22D05D5DC06815D91D3FFCF9 /* PhonemicListeningCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1D9C7CDF7F72B147035274 /* PhonemicListeningCorpus.swift */; };
@@ -445,6 +446,7 @@
 		325CE0A7E2C9CA2E69869EF6 /* ProgressDashboardDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB3D7BD8F40C832747D6BA /* ProgressDashboardDisplayLogic.swift */; };
 		32852FAFB512B5D2A2C63A26 /* SessionShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A3D7B7B600A7FE49CE242C /* SessionShellView.swift */; };
 		328D3E7016526B2064607C91 /* PermissionsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FCFB327A844D035AE57F8 /* PermissionsModels.swift */; };
+		32986B9FB5322AB6D6ED25B3 /* HomeworkDeadlineNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7B6A571E63694E6447054AC /* HomeworkDeadlineNotificationTests.swift */; };
 		32C57D07900F2BC33A186127 /* CustomizationVoicePreviewWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4923599BA9245CB2366506 /* CustomizationVoicePreviewWorkerTests.swift */; };
 		32E03C042CA51FC132424AD6 /* ArticulationGymRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE378DF35B8CE9ED3D90410 /* ArticulationGymRouter.swift */; };
 		33255F0F419D6FE9BE0431DD /* ProsodyDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F976B1F1658BC22144A3ACE6 /* ProsodyDisplayLogic.swift */; };
@@ -1691,6 +1693,7 @@
 		C3A63AFD8A3A3D411A236958 /* ReadAloudStoryWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6A4504310752D85A61F28 /* ReadAloudStoryWorkerTests.swift */; };
 		C3E662C00ECCE46FF4CE54E1 /* WordBankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F40AA9D19E2D6C95A5795F /* WordBankView.swift */; };
 		C3EA1495859F08D900246E3D /* cardSelect.ahap in Resources */ = {isa = PBXBuildFile; fileRef = DC21E4EF8FF53451C1D560DD /* cardSelect.ahap */; };
+		C406DACE1736861DAB486948 /* pack_cultural.json in Resources */ = {isa = PBXBuildFile; fileRef = FD420A05A697521B40C3435A /* pack_cultural.json */; };
 		C418DB16FFA3D07A8BED088C /* DragAndMatchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C467E9DC559280802B43B7B /* DragAndMatchPresenter.swift */; };
 		C451E0EE24296D489E98D111 /* FamilyCalendarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449D2826F05B661E8D5E8122 /* FamilyCalendarInteractorTests.swift */; };
 		C47636A2AFF7670E380956D3 /* ParentVoiceNoteWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29797DBE9F33971BA21EE0BE /* ParentVoiceNoteWorker.swift */; };
@@ -2242,6 +2245,7 @@
 		04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeModels.swift; sourceTree = "<group>"; };
 		0485717434D848F912720257 /* ARActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityModels.swift; sourceTree = "<group>"; };
 		04A016D5A91A499E12B815C2 /* VisualAcousticInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAcousticInteractorTests.swift; sourceTree = "<group>"; };
+		04A4BDEEB7FE0CEC80EDAF3E /* CulturalContentPackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalContentPackLoader.swift; sourceTree = "<group>"; };
 		04AD0EC0AEECDCFA0C4FA09C /* ParentDashboardUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentDashboardUITests.swift; sourceTree = "<group>"; };
 		04BD3EC19BD35DD808AEBB85 /* Wave2MechanicsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave2MechanicsSnapshotTests.swift; sourceTree = "<group>"; };
 		04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthBubbleOverlay.swift; sourceTree = "<group>"; };
@@ -4141,6 +4145,7 @@
 		E74AD87E91167088238F1EFA /* AmbientSoundServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientSoundServiceTests.swift; sourceTree = "<group>"; };
 		E7727D02A465AEDE100BA875 /* FamilyAchievementsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAchievementsPresenter.swift; sourceTree = "<group>"; };
 		E775612948F85CBF88E881BC /* SiblingGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiblingGameView.swift; sourceTree = "<group>"; };
+		E7B6A571E63694E6447054AC /* HomeworkDeadlineNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkDeadlineNotificationTests.swift; sourceTree = "<group>"; };
 		E81CE90EC6F0E1B54CB2D039 /* ScreeningRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreeningRouter.swift; sourceTree = "<group>"; };
 		E81FF31167CB69DA4C44140B /* PhonemicListeningPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemicListeningPresenterTests.swift; sourceTree = "<group>"; };
 		E82C3FC6728EEB04698CEC1E /* DailyStreakRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStreakRouter.swift; sourceTree = "<group>"; };
@@ -4312,6 +4317,7 @@
 		FCF992171698F083AE6099FC /* WeeklyParentTipInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyParentTipInteractor.swift; sourceTree = "<group>"; };
 		FCFA7A59F4474B22DFC9B514 /* SharePlayPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayPresenterTests.swift; sourceTree = "<group>"; };
 		FD017F028138E0285415700C /* ChildHomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomePresenter.swift; sourceTree = "<group>"; };
+		FD420A05A697521B40C3435A /* pack_cultural.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_cultural.json; sourceTree = "<group>"; };
 		FD8C8B5651134991D29F2651 /* AssignedHomeworkInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignedHomeworkInteractor.swift; sourceTree = "<group>"; };
 		FDB81E483092E405B049552C /* EnvironmentValues+MascotLipSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+MascotLipSync.swift"; sourceTree = "<group>"; };
 		FDF4ECAC5F9352881B704437 /* SettingsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenterTests.swift; sourceTree = "<group>"; };
@@ -5069,6 +5075,7 @@
 				774DE0EB04B6F7EECC00EE2C /* CulturalContentDisplayLogic.swift */,
 				C777E734E704659DF170C0B1 /* CulturalContentInteractor.swift */,
 				8F09D87A700C5422EE2FFACB /* CulturalContentModels.swift */,
+				04A4BDEEB7FE0CEC80EDAF3E /* CulturalContentPackLoader.swift */,
 				24B30D0EF831DD95ECCF39A7 /* CulturalContentPresenter.swift */,
 				730EB73179D77A9EF56DB3CA /* CulturalContentRouter.swift */,
 				050A39FE693EBF8D146D1ADA /* CulturalContentView.swift */,
@@ -9233,6 +9240,7 @@
 			children = (
 				F316EDB3F69C6E03BD07D23A /* AssignedHomeworkInteractorTests.swift */,
 				2EFBEEBE8EC24AE00504EB60 /* AssignedHomeworkPresenterTests.swift */,
+				E7B6A571E63694E6447054AC /* HomeworkDeadlineNotificationTests.swift */,
 				7E60BF477278920CC252EBB7 /* HomeworkSyncTests.swift */,
 			);
 			path = AssignedHomework;
@@ -9439,6 +9447,7 @@
 				391258066C6D93156622EA87 /* pack_bedtime_stories.json */,
 				268DEB3F418B2AC6B6E3E964 /* pack_bilingual_vocabulary.json */,
 				4A3F6BEE81CA638C1351F635 /* pack_breathing.json */,
+				FD420A05A697521B40C3435A /* pack_cultural.json */,
 				1CAE2B52F2B5504EB35553DE /* pack_diff_paronyms_pack.json */,
 				06335C98F2C838292E4AE23D /* pack_diff_r_l_pack.json */,
 				B6788104ABF12936EB70F070 /* pack_diff_s_sh_pack.json */,
@@ -10262,6 +10271,7 @@
 				39F0830699A7CB5ED7925F5F /* pack_bedtime_stories.json in Resources */,
 				C0B74771AF614877E7D5F60F /* pack_bilingual_vocabulary.json in Resources */,
 				BC1DDA6B5BAEA37BCA0A11D5 /* pack_breathing.json in Resources */,
+				C406DACE1736861DAB486948 /* pack_cultural.json in Resources */,
 				B10AD0EF35D6A0C8EB7E8788 /* pack_diff_paronyms_pack.json in Resources */,
 				38388625AB7682F59869E3CE /* pack_diff_r_l_pack.json in Resources */,
 				B18CD770BF9E0337DB83BCC9 /* pack_diff_s_sh_pack.json in Resources */,
@@ -10591,6 +10601,7 @@
 				9F5B77744EDCB4EEC7126789 /* HomeTasksInteractorTests.swift in Sources */,
 				CB8CC881632A3755C3A3BDE0 /* HomeTasksPresenterTests.swift in Sources */,
 				C4C7EA692C5DAB720B13280F /* HomeTasksWorkerTests.swift in Sources */,
+				32986B9FB5322AB6D6ED25B3 /* HomeworkDeadlineNotificationTests.swift in Sources */,
 				7BA5436F42D4F539308124AD /* HomeworkSyncTests.swift in Sources */,
 				FD8BDF8C23D8F0DEE222D8E8 /* ImitationLabInteractorTests.swift in Sources */,
 				D1CF2CE2539740C268E9747D /* InsightAggregatorWorkerTests.swift in Sources */,
@@ -11186,6 +11197,7 @@
 				E06B5012230EA57308853BA1 /* CulturalContentDisplayLogic.swift in Sources */,
 				2D94EEEA60E52230527B355D /* CulturalContentInteractor.swift in Sources */,
 				F46C4CBD0C653E394D98F8CC /* CulturalContentModels.swift in Sources */,
+				228053ABFB6528317EE00A79 /* CulturalContentPackLoader.swift in Sources */,
 				F3C6A1AA5FC0643240E6B1E5 /* CulturalContentPresenter.swift in Sources */,
 				A2B3366DE62D0FB1E6A8241B /* CulturalContentRouter.swift in Sources */,
 				B2E7200BCFD9861474EE1191 /* CulturalContentView.swift in Sources */,

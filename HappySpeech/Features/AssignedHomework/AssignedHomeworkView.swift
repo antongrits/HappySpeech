@@ -12,6 +12,7 @@ final class AssignedHomeworkViewModelHolder: AssignedHomeworkDisplayLogic {
     var lastCreateMessage: String?
     var lastCreateSucceeded: Bool?
     var lastUpdateStatus: AssignedHomeworkModels.UpdateStatus.ViewModel?
+    var lastDeleteMessage: String?
     var isLoading: Bool = true
 
     func displayLoad(viewModel: AssignedHomeworkModels.Load.ViewModel) async {
@@ -26,6 +27,10 @@ final class AssignedHomeworkViewModelHolder: AssignedHomeworkDisplayLogic {
 
     func displayUpdateStatus(viewModel: AssignedHomeworkModels.UpdateStatus.ViewModel) async {
         self.lastUpdateStatus = viewModel
+    }
+
+    func displayDelete(viewModel: AssignedHomeworkModels.Delete.ViewModel) async {
+        self.lastDeleteMessage = viewModel.message
     }
 
     func displayFamilyLoad(viewModel: AssignedHomeworkModels.FamilyLoad.ViewModel) async {
@@ -62,6 +67,9 @@ struct AssignedHomeworkView: View {
     @State private var repeatsPerExercise: Int = 3
     @State private var dueInDays: Int = 3
     @State private var comment: String = ""
+
+    // Подтверждение удаления задания.
+    @State private var pendingDeleteAssignmentId: String?
 
     @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(AppContainer.self) private var container
@@ -108,8 +116,41 @@ struct AssignedHomeworkView: View {
             .task {
                 await setup()
             }
+            .confirmationDialog(
+                Text("assignedHomework.delete.confirm.title"),
+                isPresented: deleteDialogBinding,
+                titleVisibility: .visible
+            ) {
+                Button(role: .destructive) {
+                    // Capture the id synchronously at tap time; SwiftUI clears the
+                    // binding on dismissal, so the async delete must not re-read it.
+                    let assignmentId = pendingDeleteAssignmentId
+                    pendingDeleteAssignmentId = nil
+                    if let assignmentId {
+                        Task { await confirmDelete(assignmentId: assignmentId) }
+                    }
+                } label: {
+                    Text("assignedHomework.delete.confirm.action")
+                }
+                Button(role: .cancel) {
+                    pendingDeleteAssignmentId = nil
+                } label: {
+                    Text("assignedHomework.delete.confirm.cancel")
+                }
+            } message: {
+                Text("assignedHomework.delete.confirm.message")
+            }
         }
         .environment(\.circuitContext, .specialist)
+    }
+
+    private var deleteDialogBinding: Binding<Bool> {
+        Binding(
+            get: { pendingDeleteAssignmentId != nil },
+            set: { isPresented in
+                if !isPresented { pendingDeleteAssignmentId = nil }
+            }
+        )
     }
 
     // MARK: - Content
@@ -350,6 +391,20 @@ struct AssignedHomeworkView: View {
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(row.accessibilityLabel + ". " + row.statusLabel))
+        .contextMenu {
+            Button(role: .destructive) {
+                pendingDeleteAssignmentId = row.id
+            } label: {
+                Label {
+                    Text("assignedHomework.delete.action")
+                } icon: {
+                    Image(systemName: "trash")
+                }
+            }
+        }
+        .accessibilityAction(named: Text("assignedHomework.delete.action")) {
+            pendingDeleteAssignmentId = row.id
+        }
     }
 
     // MARK: - Loading
@@ -406,6 +461,10 @@ struct AssignedHomeworkView: View {
             selectedTemplateIds = []
             comment = ""
         }
+    }
+
+    private func confirmDelete(assignmentId: String) async {
+        await interactor?.delete(request: .init(assignmentId: assignmentId))
     }
 }
 

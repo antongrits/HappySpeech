@@ -8,6 +8,7 @@ protocol AssignedHomeworkPresentationLogic: AnyObject {
     func presentLoad(response: AssignedHomeworkModels.Load.Response) async
     func presentCreate(response: AssignedHomeworkModels.Create.Response) async
     func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async
+    func presentDelete(response: AssignedHomeworkModels.Delete.Response) async
     func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async
 }
 
@@ -89,6 +90,18 @@ final class AssignedHomeworkPresenter: AssignedHomeworkPresentationLogic {
             progressLabel: progress
         )
         await displayLogic?.displayUpdateStatus(viewModel: viewModel)
+    }
+
+    // MARK: - Delete
+
+    func presentDelete(response: AssignedHomeworkModels.Delete.Response) async {
+        let viewModel = AssignedHomeworkModels.Delete.ViewModel(
+            didSucceed: response.didSucceed,
+            message: response.didSucceed
+                ? String(localized: "assignedHomework.delete.success")
+                : String(localized: "assignedHomework.delete.failure")
+        )
+        await displayLogic?.displayDelete(viewModel: viewModel)
     }
 
     // MARK: - Family load (parent / child screen)

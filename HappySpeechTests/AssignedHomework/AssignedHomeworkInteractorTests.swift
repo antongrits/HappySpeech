@@ -44,6 +44,14 @@ private final class StubAssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
     ) -> AsyncStream<[HomeworkAssignment]> {
         AsyncStream { continuation in continuation.finish() }
     }
+    private(set) var deleteCount = 0
+    private(set) var lastDeletedId: String?
+    var deleteResult = true
+    func delete(assignmentId: String) async -> Bool {
+        deleteCount += 1
+        lastDeletedId = assignmentId
+        return deleteResult
+    }
 }
 
 // MARK: - Spy Presenter
@@ -52,7 +60,9 @@ private final class StubAssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
 private final class SpyAssignedHomeworkPresenter: AssignedHomeworkPresentationLogic, @unchecked Sendable {
     var loadCount = 0
     var createCount = 0
+    var deleteCount = 0
     var lastCreate: AssignedHomeworkModels.Create.Response?
+    var lastDelete: AssignedHomeworkModels.Delete.Response?
 
     func presentLoad(response: AssignedHomeworkModels.Load.Response) async {
         loadCount += 1
@@ -62,6 +72,10 @@ private final class SpyAssignedHomeworkPresenter: AssignedHomeworkPresentationLo
         lastCreate = response
     }
     func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async {}
+    func presentDelete(response: AssignedHomeworkModels.Delete.Response) async {
+        deleteCount += 1
+        lastDelete = response
+    }
     func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async {}
 }
 

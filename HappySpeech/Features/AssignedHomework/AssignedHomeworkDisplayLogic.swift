@@ -9,5 +9,6 @@ protocol AssignedHomeworkDisplayLogic: AnyObject {
     func displayLoad(viewModel: AssignedHomeworkModels.Load.ViewModel) async
     func displayCreate(viewModel: AssignedHomeworkModels.Create.ViewModel) async
     func displayUpdateStatus(viewModel: AssignedHomeworkModels.UpdateStatus.ViewModel) async
+    func displayDelete(viewModel: AssignedHomeworkModels.Delete.ViewModel) async
     func displayFamilyLoad(viewModel: AssignedHomeworkModels.FamilyLoad.ViewModel) async
 }

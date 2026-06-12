@@ -35,14 +35,11 @@ struct NarrativeQuestView: View {
     // MARK: - Local UI state
 
     @State private var bootstrapped = false
-    @State private var asrTask: Task<Void, Never>?
-    @State private var autoStopTask: Task<Void, Never>?
     @State private var overlayTask: Task<Void, Never>?
     @State private var micPulse = false
 
     // MARK: - Constants
 
-    private static let autoStopAfter: Duration = .seconds(3)
     private static let successOverlayDuration: Duration = .milliseconds(1300)
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "NarrativeQuest")
@@ -83,10 +80,14 @@ struct NarrativeQuestView: View {
         .onChange(of: display.pendingFinalScore) { _, newScore in
             if let newScore { onComplete(newScore) }
         }
+        .onChange(of: display.showSuccessOverlay) { _, isShown in
+            // gap #10: оверлей показывает StoreBridge из EvaluateWord — здесь
+            // лишь чистая UI-анимация авто-скрытия (без доступа к сервисам).
+            if isShown { scheduleOverlayDismiss() }
+        }
         .onDisappear {
-            asrTask?.cancel()
-            autoStopTask?.cancel()
             overlayTask?.cancel()
+            // recordingTask/autoStopTask отменяются в interactor.cancel() (gap #10).
             interactor.cancel()
         }
         .accessibilityElement(children: .contain)
@@ -196,8 +197,8 @@ struct NarrativeQuestView: View {
 
             HSButton(String(localized: "Я готов!"), style: .primary, icon: "mic.fill") {
                 container.soundService.playUISound(.tap)
-                interactor.recordWord(.init(stageIndex: display.stageNumber - 1))
-                startListening()
+                // gap #10: запись/ASR в Interactor — View шлёт только интент.
+                interactor.startListeningIntent(stageIndex: display.stageNumber - 1)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityHint(String(localized: "Начнёт запись голоса"))
@@ -249,7 +250,7 @@ struct NarrativeQuestView: View {
             Spacer(minLength: 0)
 
             HSButton(String(localized: "Готово"), style: .secondary, icon: "stop.fill") {
-                stopListeningEarly()
+                interactor.stopListeningEarlyIntent()
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityHint(String(localized: "Остановить запись раньше"))
@@ -513,6 +514,11 @@ struct NarrativeQuestView: View {
         // F1-016: планировщик повторов из контейнера — исход слова на каждом
         // этапе попадает в дневное расписание повторений.
         interactor.connect(reviewScheduler: container.reviewScheduler)
+        // gap #10: запись/ASR живут в Interactor — внедряем сервисы по DI.
+        interactor.connect(
+            audioService: container.audioService,
+            asrService: container.asrService
+        )
         interactor.loadQuest(.init(
             soundTarget: activity.soundTarget,
             childName: "",
@@ -521,74 +527,12 @@ struct NarrativeQuestView: View {
         logger.debug("NarrativeQuest bootstrap soundTarget=\(activity.soundTarget, privacy: .public)")
     }
 
-    // MARK: - Recording pipeline
-
-    private func startListening() {
-        asrTask?.cancel()
-        let audioService = container.audioService
-        asrTask = Task { @MainActor in
-            // Разрешение на микрофон обычно уже выдано на PermissionsView.
-            if !audioService.isPermissionGranted {
-                let granted = await audioService.requestPermission()
-                if !granted {
-                    handleNoInput(reason: .micDenied)
-                    return
-                }
-            }
-            do {
-                try await audioService.startRecording()
-                scheduleAutoStop()
-            } catch {
-                logger.error("NarrativeQuest startRecording failed: \(error.localizedDescription)")
-                handleNoInput(reason: .recordingFailed)
-            }
-        }
-    }
-
-    private func scheduleAutoStop() {
-        autoStopTask?.cancel()
-        autoStopTask = Task { @MainActor in
-            try? await Task.sleep(for: Self.autoStopAfter)
-            guard !Task.isCancelled else { return }
-            stopListening()
-        }
-    }
-
-    private func stopListeningEarly() {
-        autoStopTask?.cancel()
-        stopListening()
-    }
-
-    private func stopListening() {
-        let audioService = container.audioService
-        let asrService = container.asrService
-        asrTask?.cancel()
-        asrTask = Task { @MainActor in
-            do {
-                let url = try await audioService.stopRecording()
-                let result = try await asrService.transcribe(url: url)
-                submitTranscript(
-                    transcript: result.transcript,
-                    confidence: Float(result.confidence)
-                )
-            } catch {
-                logger.error("NarrativeQuest stopRecording/transcribe failed: \(error.localizedDescription)")
-                handleNoInput(reason: .asrFailed)
-            }
-        }
-    }
-
-    private func submitTranscript(transcript: String, confidence: Float) {
-        interactor.evaluateWord(.init(transcript: transcript, confidence: confidence))
-        scheduleOverlayDismiss()
-    }
-
-    /// Нет реального аудио/транскрипта (отказ микрофона, сбой записи/ASR).
-    /// НЕ фабрикуем оценку: просим повторить через Interactor (балл/награда не
-    /// начисляются, этап не продвигается).
-    private func handleNoInput(reason: NarrativeQuestModels.NoInput.Request.Reason) {
-        interactor.handleNoInput(.init(reason: reason))
-    }
+    // MARK: - Success overlay dismissal
+    //
+    // gap #10: пайплайн записи/ASR вынесен в Interactor — View лишь шлёт
+    // интенты (startListeningIntent/stopListeningEarlyIntent). Авто-скрытие
+    // success-оверлея — чистая UI-анимация: при появлении (`showSuccessOverlay`
+    // выставляет StoreBridge из EvaluateWord) запускаем таймер и убираем его.
 
     private func scheduleOverlayDismiss() {
         overlayTask?.cancel()

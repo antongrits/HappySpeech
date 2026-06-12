@@ -351,6 +351,137 @@ final class NarrativeQuestInteractorTests: XCTestCase {
         XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "velar"), "К")
         XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "other"), "other")
     }
+
+    // MARK: - gap #10: recording/ASR pipeline moved into Interactor
+
+    private func makeRecordingSUT(
+        audio: QuestSpyAudio,
+        asr: QuestSpyASR
+    ) -> (NarrativeQuestInteractor, SpyNarrativePresenter) {
+        let spy = SpyNarrativePresenter()
+        let sut = NarrativeQuestInteractor(presenter: spy)
+        sut.connect(audioService: audio, asrService: asr)
+        return (sut, spy)
+    }
+
+    /// startListeningIntent: помечает этап записываемым (recordWord) и стартует
+    /// запись с микрофона в Interactor (не во View).
+    func test_startListeningIntent_marksRecording_andStartsAudio() async {
+        let audio = QuestSpyAudio()
+        let (sut, spy) = makeRecordingSUT(audio: audio, asr: QuestSpyASR())
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+
+        sut.startListeningIntent(stageIndex: 0)
+        XCTAssertTrue(spy.recordWordCalled, "Этап помечается записываемым синхронно")
+        await waitUntil { audio.startRecordingCalled }
+        XCTAssertTrue(audio.startRecordingCalled, "Запись стартует в Interactor")
+    }
+
+    /// stopListeningEarlyIntent: останавливает запись, ASR → evaluateWord.
+    func test_stopListeningEarlyIntent_transcribesAndEvaluates() async {
+        let audio = QuestSpyAudio()
+        let asr = QuestSpyASR(transcript: "сова", confidence: 0.95)
+        let (sut, spy) = makeRecordingSUT(audio: audio, asr: asr)
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.startListeningIntent(stageIndex: 0)
+        await waitUntil { audio.startRecordingCalled }
+
+        sut.stopListeningEarlyIntent()
+        await waitUntil { spy.evaluateWordCalled }
+
+        XCTAssertTrue(audio.stopRecordingCalled)
+        XCTAssertTrue(spy.evaluateWordCalled, "Транскрипт ушёл в скоринг")
+        XCTAssertEqual(spy.lastEvaluate?.passed, true)
+    }
+
+    /// Отказ микрофона → noInput, без фабрикации оценки.
+    func test_startListeningIntent_permissionDenied_presentsNoInput() async {
+        let audio = QuestSpyAudio()
+        audio.isPermissionGranted = false
+        audio.permissionResult = false
+        let (sut, spy) = makeRecordingSUT(audio: audio, asr: QuestSpyASR())
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+
+        sut.startListeningIntent(stageIndex: 0)
+        await waitUntil { spy.noInputCalled }
+
+        XCTAssertTrue(spy.noInputCalled, "Отказ микрофона → noInput")
+        XCTAssertFalse(spy.evaluateWordCalled, "Оценка не фабрикуется без ввода")
+        XCTAssertFalse(audio.startRecordingCalled)
+    }
+
+    /// Сбой ASR → noInput (этап не продвигается, балл не начислен).
+    func test_stopListeningEarlyIntent_asrFailure_presentsNoInput() async {
+        let audio = QuestSpyAudio()
+        let asr = QuestSpyASR()
+        asr.shouldThrow = true
+        let (sut, spy) = makeRecordingSUT(audio: audio, asr: asr)
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.startListeningIntent(stageIndex: 0)
+        await waitUntil { audio.startRecordingCalled }
+
+        sut.stopListeningEarlyIntent()
+        await waitUntil { spy.noInputCalled }
+
+        XCTAssertTrue(spy.noInputCalled, "Сбой ASR → noInput")
+        XCTAssertFalse(spy.evaluateWordCalled, "Без транскрипта оценка не выставляется")
+    }
+
+    /// Утилита: ждёт условие до ~1 с (для fire-and-forget recordingTask).
+    private func waitUntil(_ condition: @MainActor () -> Bool) async {
+        for _ in 0..<100 {
+            if condition() { return }
+            try? await Task.sleep(nanoseconds: 10_000_000)
+        }
+    }
+}
+
+// MARK: - Local mocks (gap #10 recording/ASR path)
+
+private final class QuestSpyAudio: AudioService, @unchecked Sendable {
+    var isPermissionGranted: Bool = true
+    var amplitude: Float = 0
+    var isRecording: Bool = false
+    var permissionResult: Bool = true
+    private(set) var startRecordingCalled = false
+    private(set) var stopRecordingCalled = false
+
+    func requestPermission() async -> Bool { permissionResult }
+    func startRecording() async throws {
+        startRecordingCalled = true
+        isRecording = true
+    }
+    func stopRecording() async throws -> URL {
+        stopRecordingCalled = true
+        isRecording = false
+        return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("quest.m4a")
+    }
+    func playAudio(url: URL) async throws {}
+    func stopPlayback() {}
+    func amplitudeBuffer() -> [Float] { [] }
+}
+
+private final class QuestSpyASR: ASRService, @unchecked Sendable {
+    var isReady: Bool = true
+    var transcript: String
+    var confidence: Double
+    var shouldThrow = false
+
+    init(transcript: String = "сова", confidence: Double = 0.9) {
+        self.transcript = transcript
+        self.confidence = confidence
+    }
+
+    func transcribe(url: URL) async throws -> ASRResult {
+        if shouldThrow { throw AppError.asrTranscriptionFailed("mock asr fail") }
+        return ASRResult(transcript: transcript, confidence: confidence, wordTimestamps: [])
+    }
+    func loadModel() async throws {}
+    func loadModel(tier: ASRTier) async throws {}
 }
 
 // MARK: - Record-spy presenter (batch 1)

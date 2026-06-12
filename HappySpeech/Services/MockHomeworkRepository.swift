@@ -24,12 +24,15 @@ public actor MockHomeworkRepository: HomeworkRepository {
 
     // Pending publish outbox when offline.
     private var publishOutbox: [HomeworkAssignment] = []
+    // Pending delete outbox when offline (assignmentId).
+    private var deleteOutbox: [String] = []
 
     private var lastPublishedSpecialistId: String?
     private var lastPublishedFamilyId: String?
 
     private(set) var publishCallCount = 0
     private(set) var updateStatusCallCount = 0
+    private(set) var deleteCallCount = 0
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -127,9 +130,27 @@ public actor MockHomeworkRepository: HomeworkRepository {
             .count
     }
 
+    public func delete(
+        assignmentId: String
+    ) async -> Result<Void, HomeworkRepositoryError> {
+        deleteCallCount += 1
+        guard !assignmentId.isEmpty else {
+            return .failure(.assignmentNotFound)
+        }
+        if isOnline {
+            removeAndBroadcast(assignmentId: assignmentId)
+            Self.logger.info("Mock delete: assignment \(assignmentId, privacy: .public) removed")
+        } else {
+            deleteOutbox.append(assignmentId)
+            Self.logger.info("Mock delete: assignment queued offline")
+        }
+        return .success(())
+    }
+
     // MARK: - Test helpers
 
-    /// Переводит mock в online и доставляет содержимое outbox.
+    /// Переводит mock в online и доставляет содержимое outbox
+    /// (сначала отложенные публикации, затем отложенные удаления).
     public func goOnlineAndFlush() {
         isOnline = true
         for a in publishOutbox {
@@ -137,13 +158,22 @@ public actor MockHomeworkRepository: HomeworkRepository {
             broadcastAssignment(a)
         }
         publishOutbox.removeAll()
-        Self.logger.info("Mock outbox flushed (\(self.publishOutbox.count) items)")
+        for id in deleteOutbox {
+            removeAndBroadcast(assignmentId: id)
+        }
+        deleteOutbox.removeAll()
+        Self.logger.info("Mock outbox flushed")
     }
 
     /// Симулирует входящее задание от специалиста (для real-time тестов).
     public func injectAssignment(_ assignment: HomeworkAssignment, familyId: String) {
         assignments[assignment.id] = assignment
         broadcast(childId: assignment.childId, familyId: familyId)
+    }
+
+    /// Переводит mock в offline (для тестов offline-очереди публикаций/удалений).
+    public func setOfflineForTest() {
+        isOnline = false
     }
 
     // MARK: - Private
@@ -178,6 +208,16 @@ public actor MockHomeworkRepository: HomeworkRepository {
     private func broadcastAssignment(_ assignment: HomeworkAssignment) {
         let snapshot = assignments.values
             .filter { $0.childId == assignment.childId }
+            .sorted { $0.createdAt > $1.createdAt }
+        for continuation in continuations.values {
+            continuation.yield(snapshot)
+        }
+    }
+
+    private func removeAndBroadcast(assignmentId: String) {
+        guard let removed = assignments.removeValue(forKey: assignmentId) else { return }
+        let snapshot = assignments.values
+            .filter { $0.childId == removed.childId }
             .sorted { $0.createdAt > $1.createdAt }
         for continuation in continuations.values {
             continuation.yield(snapshot)

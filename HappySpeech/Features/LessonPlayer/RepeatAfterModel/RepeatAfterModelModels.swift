@@ -201,13 +201,24 @@ enum RepeatAfterModelModels {
 
     // MARK: RecordAttempt
     enum RecordAttempt {
+        /// UI-фаза записи, которой управляет Interactor: запись началась
+        /// (`.recording`), идёт ASR/scoring (`.processing`) или нейтральное
+        /// состояние (`.idle`). Заменяет прямое выставление `display.phase`
+        /// во View — пайплайн записи/ASR живёт целиком в Interactor (VIP).
+        enum Phase: Sendable, Equatable {
+            case idle
+            case recording
+            case processing
+        }
         struct Request: Sendable {}
         struct Response: Sendable {
             let isRecording: Bool
+            let phase: Phase
         }
         struct ViewModel: Sendable {
             let isRecording: Bool
             let micLabel: String
+            let phase: Phase
         }
     }
 

@@ -1003,5 +1003,16 @@ extension CulturalItem {
     // MARK: — Собранный каталог
 
     // Собирает все под-массивы в единый каталог для Interactor.
-    static let catalog: [CulturalItem] = fairyTales + songs + poems + tongueTwisters
+    //
+    // Базовый статический набор (сказки/песни/стихи/скороговорки) дополняется
+    // элементами из бандл-пака `pack_cultural.json` (фольклор и чистоговорки
+    // от методиста, gap #7) через `CulturalContentPackLoader`. Идентификаторы
+    // пака изолированы префиксом `cult.` и не пересекаются со статическими.
+    static let catalog: [CulturalItem] = {
+        let base = fairyTales + songs + poems + tongueTwisters
+        let existingIDs = Set(base.map(\.id))
+        let packItems = CulturalContentPackLoader.shared.items
+            .filter { !existingIDs.contains($0.id) }
+        return base + packItems
+    }()
 }

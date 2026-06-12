@@ -265,6 +265,16 @@ public final class NotificationServiceLive: NotificationService, @unchecked Send
         return identifier
     }
 
+    /// Отмена одного запланированного уведомления по идентификатору.
+    /// Снимает и pending-, и уже доставленное уведомление: если задание
+    /// выполнено/удалено — напоминание о его дедлайне больше не показываем.
+    /// Идемпотентно: для неизвестного идентификатора ничего не делает.
+    public func cancelCalendarReminder(identifier: String) async {
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        center.removeDeliveredNotifications(withIdentifiers: [identifier])
+        HSLogger.app.info("Calendar reminder cancelled id=\(identifier, privacy: .private)")
+    }
+
     /// Отмена всех запланированных (pending) уведомлений — используется при
     /// выходе из аккаунта или удалении данных.
     public func cancelAll() async {

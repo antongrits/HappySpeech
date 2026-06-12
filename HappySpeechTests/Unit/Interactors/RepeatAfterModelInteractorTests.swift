@@ -439,4 +439,151 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: SoundFamily.velar.rawValue), "К")
         XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: "unknown"), "unknown")
     }
+
+    // MARK: - gap #10: recording/ASR pipeline moved into Interactor
+
+    /// beginRecording: idle → recording фаза, реально стартует запись.
+    func test_beginRecording_emitsRecordingPhase_andStartsAudio() async {
+        let (sut, spy) = makeSUT()
+        let audio = RecordingSpyAudio()
+        let asr = SpyTranscribeASR(transcript: "сова", confidence: 0.9)
+        sut.connect(audioService: audio, asrService: asr)
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+
+        await sut.beginRecording()
+
+        XCTAssertTrue(sut.isRecording)
+        XCTAssertTrue(audio.startRecordingCalled, "Запись должна стартовать в Interactor")
+        XCTAssertEqual(spy.lastRecordAttempt?.phase, .recording)
+        XCTAssertEqual(spy.lastRecordAttempt?.isRecording, true)
+    }
+
+    /// stopAndTranscribe: recording → processing фаза, ASR → submitTranscript.
+    func test_stopAndTranscribe_processingThenEvaluate_withExpectedWord() async {
+        let (sut, spy) = makeSUT()
+        let audio = RecordingSpyAudio()
+        let asr = SpyTranscribeASR(transcript: "сова", confidence: 0.95)
+        sut.connect(audioService: audio, asrService: asr)
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        let expected = sut.words.first?.word
+
+        await sut.beginRecording()
+        await sut.stopAndTranscribe()
+
+        XCTAssertFalse(sut.isRecording)
+        XCTAssertTrue(audio.stopRecordingCalled)
+        XCTAssertEqual(spy.lastRecordAttempt?.phase, .processing)
+        // Word-list biasing: ожидаемое слово урока проброшено в ASR.
+        XCTAssertEqual(asr.lastExpectedWord, expected)
+        // Транскрипт ушёл в скоринг → результат презентован.
+        XCTAssertTrue(spy.evaluateAttemptCalled)
+        XCTAssertEqual(spy.lastEvaluateAttempt?.passed, true)
+    }
+
+    /// Отказ микрофона → noInput, без фабрикации оценки (балл не начислен).
+    func test_beginRecording_permissionDenied_presentsNoInput() async {
+        let (sut, spy) = makeSUT()
+        let audio = RecordingSpyAudio()
+        audio.isPermissionGranted = false
+        audio.permissionResult = false
+        sut.connect(audioService: audio, asrService: SpyTranscribeASR())
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+
+        await sut.beginRecording()
+
+        XCTAssertTrue(spy.noInputCalled, "Отказ микрофона → мягкий noInput")
+        XCTAssertFalse(spy.evaluateAttemptCalled, "Оценка не фабрикуется без ввода")
+        XCTAssertFalse(audio.startRecordingCalled)
+    }
+
+    /// Сбой ASR → noInput (балл/попытка не трогаются).
+    func test_stopAndTranscribe_asrFailure_presentsNoInput() async {
+        let (sut, spy) = makeSUT()
+        let audio = RecordingSpyAudio()
+        let asr = SpyTranscribeASR()
+        asr.shouldThrow = true
+        sut.connect(audioService: audio, asrService: asr)
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+
+        await sut.beginRecording()
+        await sut.stopAndTranscribe()
+
+        XCTAssertTrue(spy.noInputCalled, "Сбой ASR → noInput")
+        XCTAssertFalse(spy.evaluateAttemptCalled, "Без транскрипта оценка не выставляется")
+    }
+
+    /// Пустой транскрипт → omission-диагностика, попытка списана, не passed.
+    func test_stopAndTranscribe_emptyTranscript_evaluatesAsNotPassed() async {
+        let (sut, spy) = makeSUT()
+        let audio = RecordingSpyAudio()
+        let asr = SpyTranscribeASR(transcript: "", confidence: 0.1)
+        sut.connect(audioService: audio, asrService: asr)
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+
+        await sut.beginRecording()
+        await sut.stopAndTranscribe()
+
+        XCTAssertTrue(spy.evaluateAttemptCalled)
+        XCTAssertEqual(spy.lastEvaluateAttempt?.passed, false)
+        XCTAssertEqual(spy.lastEvaluateAttempt?.diagnostic, .omission)
+    }
+}
+
+// MARK: - Local mocks (gap #10 recording/ASR path)
+
+/// AudioService-мок со счётчиками вызовов записи и управляемым разрешением.
+private final class RecordingSpyAudio: AudioService, @unchecked Sendable {
+    var isPermissionGranted: Bool = true
+    var amplitude: Float = 0
+    var isRecording: Bool = false
+    var permissionResult: Bool = true
+    private(set) var startRecordingCalled = false
+    private(set) var stopRecordingCalled = false
+
+    func requestPermission() async -> Bool { permissionResult }
+    func startRecording() async throws {
+        startRecordingCalled = true
+        isRecording = true
+    }
+    func stopRecording() async throws -> URL {
+        stopRecordingCalled = true
+        isRecording = false
+        return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("spy.m4a")
+    }
+    func playAudio(url: URL) async throws {}
+    func stopPlayback() {}
+    func amplitudeBuffer() -> [Float] { [] }
+}
+
+/// ASR-мок со счётчиком и захватом ожидаемого слова (word-list biasing).
+private final class SpyTranscribeASR: ASRService, @unchecked Sendable {
+    var isReady: Bool = true
+    var transcript: String
+    var confidence: Double
+    var shouldThrow = false
+    private(set) var lastExpectedWord: String?
+
+    init(transcript: String = "сова", confidence: Double = 0.9) {
+        self.transcript = transcript
+        self.confidence = confidence
+    }
+
+    func transcribe(url: URL) async throws -> ASRResult {
+        if shouldThrow { throw AppError.asrTranscriptionFailed("mock asr fail") }
+        return ASRResult(transcript: transcript, confidence: confidence, wordTimestamps: [])
+    }
+
+    func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult {
+        lastExpectedWord = expectedWord
+        if shouldThrow { throw AppError.asrTranscriptionFailed("mock asr fail") }
+        return ASRResult(transcript: transcript, confidence: confidence, wordTimestamps: [])
+    }
+
+    func loadModel() async throws {}
+    func loadModel(tier: ASRTier) async throws {}
 }

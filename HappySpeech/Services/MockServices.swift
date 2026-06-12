@@ -90,6 +90,14 @@ public final class MockHapticService: HapticService, @unchecked Sendable {
 // MARK: MockNotificationService
 
 public final class MockNotificationService: NotificationService, @unchecked Sendable {
+
+    /// Идентификаторы запланированных календарных напоминаний (наблюдаемо в тестах).
+    public private(set) var scheduledCalendarIdentifiers: [String] = []
+    /// Идентификаторы отменённых календарных напоминаний (наблюдаемо в тестах).
+    public private(set) var cancelledCalendarIdentifiers: [String] = []
+
+    public init() {}
+
     public func scheduleDailyReminder(at hour: Int, minute: Int) async throws {}
     public func cancelAllReminders() async {}
     public func requestPermission() async -> Bool { true }
@@ -103,7 +111,13 @@ public final class MockNotificationService: NotificationService, @unchecked Send
         title: String,
         body: String,
         at dateComponents: DateComponents
-    ) async throws -> String { identifier }
+    ) async throws -> String {
+        scheduledCalendarIdentifiers.append(identifier)
+        return identifier
+    }
+    public func cancelCalendarReminder(identifier: String) async {
+        cancelledCalendarIdentifiers.append(identifier)
+    }
 }
 
 // MARK: MockNetworkMonitor

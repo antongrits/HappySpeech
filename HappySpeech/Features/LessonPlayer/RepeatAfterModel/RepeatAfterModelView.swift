@@ -42,7 +42,6 @@ struct RepeatAfterModelView: View {
     @State private var micPulse: Bool = false
     @State private var ringPulse: Bool = false
     @State private var sessionStarted: Bool = false
-    @State private var asrTask: Task<Void, Never>?
     @State private var letterHighlightTask: Task<Void, Never>?
     @State private var highlightedLetterIndex: Int = -1
     @State private var modelPlaybackTask: Task<Void, Never>?
@@ -82,12 +81,11 @@ struct RepeatAfterModelView: View {
             handlePhaseChange(newPhase)
         }
         .onDisappear {
-            asrTask?.cancel()
-            asrTask = nil
             letterHighlightTask?.cancel()
             letterHighlightTask = nil
             modelPlaybackTask?.cancel()
             modelPlaybackTask = nil
+            // recordingTask отменяется внутри interactor.cancel() (gap #10).
             interactor.cancel()
         }
         .accessibilityElement(children: .contain)
@@ -704,63 +702,18 @@ struct RepeatAfterModelView: View {
     }
 
     // MARK: - Recording control
+    //
+    // gap #10: пайплайн записи/ASR вынесен в Interactor — View лишь шлёт
+    // интенты. Фазы .recording/.processing и обработка отказа/сбоя
+    // (noInput, без фабрикации оценки) приходят обратно через Presenter.
 
     private func startRecording() {
         container.soundService.playUISound(.tap)
-        interactor.toggleRecording()
-        display.phase = .recording
-
-        asrTask?.cancel()
-        let audioService = container.audioService
-        asrTask = Task { @MainActor in
-            // Запрашиваем разрешение лениво; в продакшене оно уже дано
-            // на PermissionsView. При отказе — сразу fallback-оценка.
-            if !audioService.isPermissionGranted {
-                let granted = await audioService.requestPermission()
-                if !granted {
-                    handleNoInput(reason: .micDenied)
-                    return
-                }
-            }
-            do {
-                try await audioService.startRecording()
-            } catch {
-                handleNoInput(reason: .recordingFailed)
-            }
-        }
+        interactor.startRecordingIntent()
     }
 
     private func stopRecording() {
-        let audioService = container.audioService
-        let asrService = container.asrService
-        interactor.toggleRecording()
-        // Переключаемся в processing на время ASR — пользователь видит
-        // «Проверяю...» пока не пришёл ответ.
-        display.phase = .processing
-
-        asrTask?.cancel()
-        asrTask = Task { @MainActor in
-            do {
-                let url = try await audioService.stopRecording()
-                // Word-list biasing: подсказываем декодеру ожидаемое слово урока,
-                // чтобы устойчивее распознавать искажённую детскую речь.
-                let expected = display.currentWord?.word
-                let result = try await asrService.transcribe(url: url, expectedWord: expected)
-                interactor.submitTranscript(.init(
-                    transcript: result.transcript,
-                    confidence: Float(result.confidence)
-                ))
-            } catch {
-                handleNoInput(reason: .asrFailed)
-            }
-        }
-    }
-
-    /// Нет реального аудио/транскрипта (отказ микрофона, сбой записи или ASR).
-    /// НЕ фабрикуем оценку: просим повторить через Interactor (балл/звёзды не
-    /// начисляются, попытка не списывается, статистика не засоряется).
-    private func handleNoInput(reason: RepeatAfterModelModels.NoInput.Request.Reason) {
-        interactor.handleNoInput(.init(reason: reason))
+        interactor.stopRecordingIntent()
     }
 
     // MARK: - Phase change handler (LetterHighlight + auto-progression)
@@ -824,6 +777,11 @@ struct RepeatAfterModelView: View {
         // F1-016: планировщик повторов из контейнера — исход каждого слова
         // попадает в дневное расписание повторений.
         interactor.connect(reviewScheduler: container.reviewScheduler)
+        // gap #10: запись/ASR живут в Interactor — внедряем сервисы по DI.
+        interactor.connect(
+            audioService: container.audioService,
+            asrService: container.asrService
+        )
         let soundGroup = Self.soundGroup(for: activity.soundTarget)
         interactor.loadSession(.init(
             soundGroup: soundGroup,

@@ -10,150 +10,5198 @@
       "tier": 1,
       "title": "Одно поручение",
       "items": [
-        { "id": "t1-myach",  "minAge": 5, "instruction": "Покажи мяч",      "correct": "soccerball",         "distractors": ["car.fill", "leaf.fill", "house.fill"], "labels": {"soccerball": "мяч", "car.fill": "машина", "leaf.fill": "лист", "house.fill": "дом"} },
-        { "id": "t1-koshka", "minAge": 5, "instruction": "Покажи кошку",     "correct": "cat.fill",           "distractors": ["pawprint.fill", "bird.fill", "ant.fill"], "labels": {"cat.fill": "кошка", "pawprint.fill": "лапа", "bird.fill": "птица", "ant.fill": "муравей"} },
-        { "id": "t1-yabloko","minAge": 5, "instruction": "Покажи яблоко",    "correct": "apple.logo",         "distractors": ["leaf.fill", "drop.fill", "flame.fill"], "labels": {"apple.logo": "яблоко", "leaf.fill": "лист", "drop.fill": "капля", "flame.fill": "огонь"} },
-        { "id": "t1-solnce", "minAge": 5, "instruction": "Покажи солнце",    "correct": "sun.max.fill",       "distractors": ["moon.fill", "cloud.fill", "snowflake"], "labels": {"sun.max.fill": "солнце", "moon.fill": "луна", "cloud.fill": "облако", "snowflake": "снежинка"} },
-        { "id": "t1-zvezda", "minAge": 5, "instruction": "Покажи звезду",    "correct": "star.fill",          "distractors": ["heart.fill", "circle.fill", "square.fill"], "labels": {"star.fill": "звезда", "heart.fill": "сердце", "circle.fill": "круг", "square.fill": "квадрат"} },
-        { "id": "t1-kniga",  "minAge": 5, "instruction": "Покажи книгу",     "correct": "book.fill",          "distractors": ["pencil", "scissors", "paintbrush.fill"], "labels": {"book.fill": "книга", "pencil": "карандаш", "scissors": "ножницы", "paintbrush.fill": "кисть"} },
-        { "id": "t1-mashina","minAge": 5, "instruction": "Покажи машину",    "correct": "car.fill",           "distractors": ["bicycle", "airplane", "tram.fill"], "labels": {"car.fill": "машина", "bicycle": "велосипед", "airplane": "самолёт", "tram.fill": "трамвай"} },
-        { "id": "t1-dom",    "minAge": 5, "instruction": "Покажи дом",       "correct": "house.fill",         "distractors": ["building.2.fill", "tent.fill", "lighthouse.fill"], "labels": {"house.fill": "дом", "building.2.fill": "здание", "tent.fill": "палатка", "lighthouse.fill": "маяк"} },
-        { "id": "t1-list",   "minAge": 5, "instruction": "Покажи листок",    "correct": "leaf.fill",          "distractors": ["tree.fill", "snowflake", "drop.fill"], "labels": {"leaf.fill": "листок", "tree.fill": "дерево", "snowflake": "снежинка", "drop.fill": "капля"} },
-        { "id": "t1-luna",   "minAge": 5, "instruction": "Покажи луну",      "correct": "moon.fill",          "distractors": ["sun.max.fill", "star.fill", "cloud.fill"], "labels": {"moon.fill": "луна", "sun.max.fill": "солнце", "star.fill": "звезда", "cloud.fill": "облако"} },
-        { "id": "t1-ryba",   "minAge": 5, "instruction": "Покажи рыбу",      "correct": "fish.fill",          "distractors": ["bird.fill", "ant.fill", "pawprint.fill"], "labels": {"fish.fill": "рыба", "bird.fill": "птица", "ant.fill": "муравей", "pawprint.fill": "след"} },
-        { "id": "t1-derevo", "minAge": 5, "instruction": "Покажи дерево",    "correct": "tree.fill",          "distractors": ["leaf.fill", "mountain.2.fill", "flame.fill"], "labels": {"tree.fill": "дерево", "leaf.fill": "лист", "mountain.2.fill": "гора", "flame.fill": "огонь"} },
-        { "id": "t1-stul",   "minAge": 5, "instruction": "Покажи стул",      "correct": "chair.fill",         "distractors": ["table.furniture.fill", "bed.double.fill", "lamp.desk.fill"], "labels": {"chair.fill": "стул", "table.furniture.fill": "стол", "bed.double.fill": "кровать", "lamp.desk.fill": "лампа"} },
-        { "id": "t1-kruzhka","minAge": 5, "instruction": "Покажи кружку",    "correct": "cup.and.saucer.fill","distractors": ["fork.knife", "drop.fill", "leaf.fill"], "labels": {"cup.and.saucer.fill": "кружка", "fork.knife": "вилка", "drop.fill": "капля", "leaf.fill": "лист"} },
-        { "id": "t1-kluch",  "minAge": 5, "instruction": "Покажи ключ",      "correct": "key.fill",           "distractors": ["lock.fill", "house.fill", "envelope.fill"], "labels": {"key.fill": "ключ", "lock.fill": "замок", "house.fill": "дом", "envelope.fill": "конверт"} },
-        { "id": "t1-pismo",  "minAge": 5, "instruction": "Покажи письмо",    "correct": "envelope.fill",      "distractors": ["paperplane.fill", "book.fill", "newspaper.fill"], "labels": {"envelope.fill": "письмо", "paperplane.fill": "самолётик", "book.fill": "книга", "newspaper.fill": "газета"} },
-        { "id": "t1-zont",   "minAge": 5, "instruction": "Покажи зонт",      "correct": "umbrella.fill",      "distractors": ["cloud.rain.fill", "sun.max.fill", "wind"], "labels": {"umbrella.fill": "зонт", "cloud.rain.fill": "дождь", "sun.max.fill": "солнце", "wind": "ветер"} },
-        { "id": "t1-flag",   "minAge": 5, "instruction": "Покажи флаг",      "correct": "flag.fill",          "distractors": ["star.fill", "heart.fill", "leaf.fill"], "labels": {"flag.fill": "флаг", "star.fill": "звезда", "heart.fill": "сердце", "leaf.fill": "лист"} },
-        { "id": "t1-podarok","minAge": 5, "instruction": "Покажи подарок",   "correct": "gift.fill",          "distractors": ["bag.fill", "shippingbox.fill", "envelope.fill"], "labels": {"gift.fill": "подарок", "bag.fill": "сумка", "shippingbox.fill": "коробка", "envelope.fill": "конверт"} },
-        { "id": "t1-velo",   "minAge": 5, "instruction": "Покажи велосипед", "correct": "bicycle",            "distractors": ["car.fill", "airplane", "tram.fill"], "labels": {"bicycle": "велосипед", "car.fill": "машина", "airplane": "самолёт", "tram.fill": "трамвай"} },
-        { "id": "t1-ptica",  "minAge": 5, "instruction": "Покажи птицу",     "correct": "bird.fill",          "distractors": ["fish.fill", "cat.fill", "ant.fill"], "labels": {"bird.fill": "птица", "fish.fill": "рыба", "cat.fill": "кошка", "ant.fill": "муравей"} },
-        { "id": "t1-ogon",   "minAge": 5, "instruction": "Покажи огонь",     "correct": "flame.fill",         "distractors": ["drop.fill", "snowflake", "wind"], "labels": {"flame.fill": "огонь", "drop.fill": "вода", "snowflake": "снежинка", "wind": "ветер"} },
-        { "id": "t1-snezh",  "minAge": 5, "instruction": "Покажи снежинку",  "correct": "snowflake",          "distractors": ["sun.max.fill", "cloud.fill", "leaf.fill"], "labels": {"snowflake": "снежинка", "sun.max.fill": "солнце", "cloud.fill": "облако", "leaf.fill": "лист"} },
-        { "id": "t1-poezd",  "minAge": 5, "instruction": "Покажи поезд",     "correct": "tram.fill",          "distractors": ["airplane", "car.fill", "bicycle"], "labels": {"tram.fill": "поезд", "airplane": "самолёт", "car.fill": "машина", "bicycle": "велосипед"} },
-        { "id": "t1-okno",   "minAge": 5, "instruction": "Покажи окно",      "correct": "macwindow",          "distractors": ["door.left.hand.open", "house.fill", "lightbulb.fill"], "labels": {"macwindow": "окно", "door.left.hand.open": "дверь", "house.fill": "дом", "lightbulb.fill": "лампа"} },
-        { "id": "t1-dver",   "minAge": 5, "instruction": "Покажи дверь",     "correct": "door.left.hand.open","distractors": ["house.fill", "macwindow", "key.fill"], "labels": {"door.left.hand.open": "дверь", "house.fill": "дом", "macwindow": "окно", "key.fill": "ключ"} },
-        { "id": "t1-glaz",   "minAge": 5, "instruction": "Покажи глаз",      "correct": "eye.fill",           "distractors": ["ear.fill", "mouth.fill", "hand.raised.fill"], "labels": {"eye.fill": "глаз", "ear.fill": "ухо", "mouth.fill": "рот", "hand.raised.fill": "рука"} },
-        { "id": "t1-ucho",   "minAge": 5, "instruction": "Покажи ухо",       "correct": "ear.fill",           "distractors": ["eye.fill", "mouth.fill", "nose.fill"], "labels": {"ear.fill": "ухо", "eye.fill": "глаз", "mouth.fill": "рот", "nose.fill": "нос"} },
-        { "id": "t1-ruka",   "minAge": 5, "instruction": "Покажи руку",      "correct": "hand.raised.fill",   "distractors": ["figure.walk", "eye.fill", "ear.fill"], "labels": {"hand.raised.fill": "рука", "figure.walk": "нога", "eye.fill": "глаз", "ear.fill": "ухо"} },
-        { "id": "t1-chasy",  "minAge": 5, "instruction": "Покажи часы",      "correct": "clock.fill",         "distractors": ["calendar", "sun.max.fill", "moon.fill"], "labels": {"clock.fill": "часы", "calendar": "календарь", "sun.max.fill": "солнце", "moon.fill": "луна"} },
-        { "id": "t1-tsvetok","minAge": 5, "instruction": "Покажи цветок",    "correct": "camera.macro",       "distractors": ["tree.fill", "leaf.fill", "drop.fill"], "labels": {"camera.macro": "цветок", "tree.fill": "дерево", "leaf.fill": "лист", "drop.fill": "капля"} },
-        { "id": "t1-kolco",  "minAge": 5, "instruction": "Покажи колокольчик","correct": "bell.fill",         "distractors": ["star.fill", "heart.fill", "flag.fill"], "labels": {"bell.fill": "колокольчик", "star.fill": "звезда", "heart.fill": "сердце", "flag.fill": "флаг"} },
-        { "id": "t1-lampa",  "minAge": 5, "instruction": "Покажи лампу",     "correct": "lightbulb.fill",     "distractors": ["sun.max.fill", "flame.fill", "bolt.fill"], "labels": {"lightbulb.fill": "лампа", "sun.max.fill": "солнце", "flame.fill": "огонь", "bolt.fill": "молния"} },
-        { "id": "t1-lodka",  "minAge": 5, "instruction": "Покажи лодку",     "correct": "sailboat.fill",      "distractors": ["car.fill", "airplane", "tram.fill"], "labels": {"sailboat.fill": "лодка", "car.fill": "машина", "airplane": "самолёт", "tram.fill": "поезд"} },
-        { "id": "t1-cherepaha","minAge": 5, "instruction": "Покажи черепаху","correct": "tortoise.fill",      "distractors": ["hare.fill", "ant.fill", "fish.fill"], "labels": {"tortoise.fill": "черепаха", "hare.fill": "заяц", "ant.fill": "муравей", "fish.fill": "рыба"} },
-        { "id": "t1-zayac",  "minAge": 5, "instruction": "Покажи зайца",     "correct": "hare.fill",          "distractors": ["tortoise.fill", "cat.fill", "bird.fill"], "labels": {"hare.fill": "заяц", "tortoise.fill": "черепаха", "cat.fill": "кошка", "bird.fill": "птица"} }
+        {
+          "id": "t1-myach",
+          "minAge": 5,
+          "instruction": "Покажи мяч",
+          "correct": "soccerball",
+          "distractors": [
+            "car.fill",
+            "leaf.fill",
+            "house.fill"
+          ],
+          "labels": {
+            "soccerball": "мяч",
+            "car.fill": "машина",
+            "leaf.fill": "лист",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t1-koshka",
+          "minAge": 5,
+          "instruction": "Покажи кошку",
+          "correct": "cat.fill",
+          "distractors": [
+            "pawprint.fill",
+            "bird.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "pawprint.fill": "лапа",
+            "bird.fill": "птица",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t1-yabloko",
+          "minAge": 5,
+          "instruction": "Покажи яблоко",
+          "correct": "apple.logo",
+          "distractors": [
+            "leaf.fill",
+            "drop.fill",
+            "flame.fill"
+          ],
+          "labels": {
+            "apple.logo": "яблоко",
+            "leaf.fill": "лист",
+            "drop.fill": "капля",
+            "flame.fill": "огонь"
+          }
+        },
+        {
+          "id": "t1-solnce",
+          "minAge": 5,
+          "instruction": "Покажи солнце",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "moon.fill",
+            "cloud.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна",
+            "cloud.fill": "облако",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t1-zvezda",
+          "minAge": 5,
+          "instruction": "Покажи звезду",
+          "correct": "star.fill",
+          "distractors": [
+            "heart.fill",
+            "circle.fill",
+            "square.fill"
+          ],
+          "labels": {
+            "star.fill": "звезда",
+            "heart.fill": "сердце",
+            "circle.fill": "круг",
+            "square.fill": "квадрат"
+          }
+        },
+        {
+          "id": "t1-kniga",
+          "minAge": 5,
+          "instruction": "Покажи книгу",
+          "correct": "book.fill",
+          "distractors": [
+            "pencil",
+            "scissors",
+            "paintbrush.fill"
+          ],
+          "labels": {
+            "book.fill": "книга",
+            "pencil": "карандаш",
+            "scissors": "ножницы",
+            "paintbrush.fill": "кисть"
+          }
+        },
+        {
+          "id": "t1-mashina",
+          "minAge": 5,
+          "instruction": "Покажи машину",
+          "correct": "car.fill",
+          "distractors": [
+            "bicycle",
+            "airplane",
+            "tram.fill"
+          ],
+          "labels": {
+            "car.fill": "машина",
+            "bicycle": "велосипед",
+            "airplane": "самолёт",
+            "tram.fill": "трамвай"
+          }
+        },
+        {
+          "id": "t1-dom",
+          "minAge": 5,
+          "instruction": "Покажи дом",
+          "correct": "house.fill",
+          "distractors": [
+            "building.2.fill",
+            "tent.fill",
+            "light.beacon.max.fill"
+          ],
+          "labels": {
+            "house.fill": "дом",
+            "building.2.fill": "здание",
+            "tent.fill": "палатка",
+            "light.beacon.max.fill": "маяк"
+          }
+        },
+        {
+          "id": "t1-list",
+          "minAge": 5,
+          "instruction": "Покажи листок",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "snowflake",
+            "drop.fill"
+          ],
+          "labels": {
+            "leaf.fill": "листок",
+            "tree.fill": "дерево",
+            "snowflake": "снежинка",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-luna",
+          "minAge": 5,
+          "instruction": "Покажи луну",
+          "correct": "moon.fill",
+          "distractors": [
+            "sun.max.fill",
+            "star.fill",
+            "cloud.fill"
+          ],
+          "labels": {
+            "moon.fill": "луна",
+            "sun.max.fill": "солнце",
+            "star.fill": "звезда",
+            "cloud.fill": "облако"
+          }
+        },
+        {
+          "id": "t1-ryba",
+          "minAge": 5,
+          "instruction": "Покажи рыбу",
+          "correct": "fish.fill",
+          "distractors": [
+            "bird.fill",
+            "ant.fill",
+            "pawprint.fill"
+          ],
+          "labels": {
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "ant.fill": "муравей",
+            "pawprint.fill": "след"
+          }
+        },
+        {
+          "id": "t1-derevo",
+          "minAge": 5,
+          "instruction": "Покажи дерево",
+          "correct": "tree.fill",
+          "distractors": [
+            "leaf.fill",
+            "mountain.2.fill",
+            "flame.fill"
+          ],
+          "labels": {
+            "tree.fill": "дерево",
+            "leaf.fill": "лист",
+            "mountain.2.fill": "гора",
+            "flame.fill": "огонь"
+          }
+        },
+        {
+          "id": "t1-stul",
+          "minAge": 5,
+          "instruction": "Покажи стул",
+          "correct": "chair.fill",
+          "distractors": [
+            "table.furniture.fill",
+            "bed.double.fill",
+            "lamp.desk.fill"
+          ],
+          "labels": {
+            "chair.fill": "стул",
+            "table.furniture.fill": "стол",
+            "bed.double.fill": "кровать",
+            "lamp.desk.fill": "лампа"
+          }
+        },
+        {
+          "id": "t1-kruzhka",
+          "minAge": 5,
+          "instruction": "Покажи кружку",
+          "correct": "cup.and.saucer.fill",
+          "distractors": [
+            "fork.knife",
+            "drop.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка",
+            "drop.fill": "капля",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-kluch",
+          "minAge": 5,
+          "instruction": "Покажи ключ",
+          "correct": "key.fill",
+          "distractors": [
+            "lock.fill",
+            "house.fill",
+            "envelope.fill"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "lock.fill": "замок",
+            "house.fill": "дом",
+            "envelope.fill": "конверт"
+          }
+        },
+        {
+          "id": "t1-pismo",
+          "minAge": 5,
+          "instruction": "Покажи письмо",
+          "correct": "envelope.fill",
+          "distractors": [
+            "paperplane.fill",
+            "book.fill",
+            "newspaper.fill"
+          ],
+          "labels": {
+            "envelope.fill": "письмо",
+            "paperplane.fill": "самолётик",
+            "book.fill": "книга",
+            "newspaper.fill": "газета"
+          }
+        },
+        {
+          "id": "t1-zont",
+          "minAge": 5,
+          "instruction": "Покажи зонт",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "cloud.rain.fill",
+            "sun.max.fill",
+            "wind"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "cloud.rain.fill": "дождь",
+            "sun.max.fill": "солнце",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t1-flag",
+          "minAge": 5,
+          "instruction": "Покажи флаг",
+          "correct": "flag.fill",
+          "distractors": [
+            "star.fill",
+            "heart.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "flag.fill": "флаг",
+            "star.fill": "звезда",
+            "heart.fill": "сердце",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-podarok",
+          "minAge": 5,
+          "instruction": "Покажи подарок",
+          "correct": "gift.fill",
+          "distractors": [
+            "bag.fill",
+            "shippingbox.fill",
+            "envelope.fill"
+          ],
+          "labels": {
+            "gift.fill": "подарок",
+            "bag.fill": "сумка",
+            "shippingbox.fill": "коробка",
+            "envelope.fill": "конверт"
+          }
+        },
+        {
+          "id": "t1-velo",
+          "minAge": 5,
+          "instruction": "Покажи велосипед",
+          "correct": "bicycle",
+          "distractors": [
+            "car.fill",
+            "airplane",
+            "tram.fill"
+          ],
+          "labels": {
+            "bicycle": "велосипед",
+            "car.fill": "машина",
+            "airplane": "самолёт",
+            "tram.fill": "трамвай"
+          }
+        },
+        {
+          "id": "t1-ptica",
+          "minAge": 5,
+          "instruction": "Покажи птицу",
+          "correct": "bird.fill",
+          "distractors": [
+            "fish.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t1-ogon",
+          "minAge": 5,
+          "instruction": "Покажи огонь",
+          "correct": "flame.fill",
+          "distractors": [
+            "drop.fill",
+            "snowflake",
+            "wind"
+          ],
+          "labels": {
+            "flame.fill": "огонь",
+            "drop.fill": "вода",
+            "snowflake": "снежинка",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t1-snezh",
+          "minAge": 5,
+          "instruction": "Покажи снежинку",
+          "correct": "snowflake",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "snowflake": "снежинка",
+            "sun.max.fill": "солнце",
+            "cloud.fill": "облако",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-poezd",
+          "minAge": 5,
+          "instruction": "Покажи поезд",
+          "correct": "tram.fill",
+          "distractors": [
+            "airplane",
+            "car.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "tram.fill": "поезд",
+            "airplane": "самолёт",
+            "car.fill": "машина",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t1-okno",
+          "minAge": 5,
+          "instruction": "Покажи окно",
+          "correct": "macwindow",
+          "distractors": [
+            "door.left.hand.open",
+            "house.fill",
+            "lightbulb.fill"
+          ],
+          "labels": {
+            "macwindow": "окно",
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом",
+            "lightbulb.fill": "лампа"
+          }
+        },
+        {
+          "id": "t1-dver",
+          "minAge": 5,
+          "instruction": "Покажи дверь",
+          "correct": "door.left.hand.open",
+          "distractors": [
+            "house.fill",
+            "macwindow",
+            "key.fill"
+          ],
+          "labels": {
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом",
+            "macwindow": "окно",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t1-glaz",
+          "minAge": 5,
+          "instruction": "Покажи глаз",
+          "correct": "eye.fill",
+          "distractors": [
+            "ear.fill",
+            "mouth.fill",
+            "hand.raised.fill"
+          ],
+          "labels": {
+            "eye.fill": "глаз",
+            "ear.fill": "ухо",
+            "mouth.fill": "рот",
+            "hand.raised.fill": "рука"
+          }
+        },
+        {
+          "id": "t1-ucho",
+          "minAge": 5,
+          "instruction": "Покажи ухо",
+          "correct": "ear.fill",
+          "distractors": [
+            "eye.fill",
+            "mouth.fill",
+            "nose.fill"
+          ],
+          "labels": {
+            "ear.fill": "ухо",
+            "eye.fill": "глаз",
+            "mouth.fill": "рот",
+            "nose.fill": "нос"
+          }
+        },
+        {
+          "id": "t1-ruka",
+          "minAge": 5,
+          "instruction": "Покажи руку",
+          "correct": "hand.raised.fill",
+          "distractors": [
+            "figure.walk",
+            "eye.fill",
+            "ear.fill"
+          ],
+          "labels": {
+            "hand.raised.fill": "рука",
+            "figure.walk": "нога",
+            "eye.fill": "глаз",
+            "ear.fill": "ухо"
+          }
+        },
+        {
+          "id": "t1-chasy",
+          "minAge": 5,
+          "instruction": "Покажи часы",
+          "correct": "clock.fill",
+          "distractors": [
+            "calendar",
+            "sun.max.fill",
+            "moon.fill"
+          ],
+          "labels": {
+            "clock.fill": "часы",
+            "calendar": "календарь",
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна"
+          }
+        },
+        {
+          "id": "t1-tsvetok",
+          "minAge": 5,
+          "instruction": "Покажи цветок",
+          "correct": "camera.macro",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "camera.macro": "цветок",
+            "tree.fill": "дерево",
+            "leaf.fill": "лист",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-kolco",
+          "minAge": 5,
+          "instruction": "Покажи колокольчик",
+          "correct": "bell.fill",
+          "distractors": [
+            "star.fill",
+            "heart.fill",
+            "flag.fill"
+          ],
+          "labels": {
+            "bell.fill": "колокольчик",
+            "star.fill": "звезда",
+            "heart.fill": "сердце",
+            "flag.fill": "флаг"
+          }
+        },
+        {
+          "id": "t1-lampa",
+          "minAge": 5,
+          "instruction": "Покажи лампу",
+          "correct": "lightbulb.fill",
+          "distractors": [
+            "sun.max.fill",
+            "flame.fill",
+            "bolt.fill"
+          ],
+          "labels": {
+            "lightbulb.fill": "лампа",
+            "sun.max.fill": "солнце",
+            "flame.fill": "огонь",
+            "bolt.fill": "молния"
+          }
+        },
+        {
+          "id": "t1-lodka",
+          "minAge": 5,
+          "instruction": "Покажи лодку",
+          "correct": "sailboat.fill",
+          "distractors": [
+            "car.fill",
+            "airplane",
+            "tram.fill"
+          ],
+          "labels": {
+            "sailboat.fill": "лодка",
+            "car.fill": "машина",
+            "airplane": "самолёт",
+            "tram.fill": "поезд"
+          }
+        },
+        {
+          "id": "t1-cherepaha",
+          "minAge": 5,
+          "instruction": "Покажи черепаху",
+          "correct": "tortoise.fill",
+          "distractors": [
+            "hare.fill",
+            "ant.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "tortoise.fill": "черепаха",
+            "hare.fill": "заяц",
+            "ant.fill": "муравей",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t1-zayac",
+          "minAge": 5,
+          "instruction": "Покажи зайца",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "cat.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "tortoise.fill": "черепаха",
+            "cat.fill": "кошка",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t1-grib",
+          "minAge": 5,
+          "instruction": "Покажи гриб",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "leaf.fill": "гриб",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t1-morkov",
+          "minAge": 5,
+          "instruction": "Покажи морковку",
+          "correct": "carrot.fill",
+          "distractors": [
+            "apple.logo",
+            "leaf.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "carrot.fill": "морковка",
+            "apple.logo": "яблоко",
+            "leaf.fill": "лист",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-bochka",
+          "minAge": 5,
+          "instruction": "Покажи бочку",
+          "correct": "cylinder.fill",
+          "distractors": [
+            "shippingbox.fill",
+            "basket.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "cylinder.fill": "бочка",
+            "shippingbox.fill": "коробка",
+            "basket.fill": "корзина",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t1-koltso",
+          "minAge": 5,
+          "instruction": "Покажи кольцо",
+          "correct": "circle.circle",
+          "distractors": [
+            "circle.fill",
+            "square.fill",
+            "triangle.fill"
+          ],
+          "labels": {
+            "circle.circle": "кольцо",
+            "circle.fill": "круг",
+            "square.fill": "квадрат",
+            "triangle.fill": "треугольник"
+          }
+        },
+        {
+          "id": "t1-myach2",
+          "minAge": 5,
+          "instruction": "Покажи мячик",
+          "correct": "basketball.fill",
+          "distractors": [
+            "soccerball",
+            "tennis.racket",
+            "figure.run"
+          ],
+          "labels": {
+            "basketball.fill": "мячик",
+            "soccerball": "футбольный мяч",
+            "tennis.racket": "ракетка",
+            "figure.run": "бег"
+          }
+        },
+        {
+          "id": "t1-konfeta",
+          "minAge": 5,
+          "instruction": "Покажи конфету",
+          "correct": "birthday.cake.fill",
+          "distractors": [
+            "gift.fill",
+            "cup.and.saucer.fill",
+            "fork.knife"
+          ],
+          "labels": {
+            "birthday.cake.fill": "тортик",
+            "gift.fill": "подарок",
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка"
+          }
+        },
+        {
+          "id": "t1-vorota",
+          "minAge": 5,
+          "instruction": "Покажи ворота",
+          "correct": "door.left.hand.open",
+          "distractors": [
+            "macwindow",
+            "house.fill",
+            "key.fill"
+          ],
+          "labels": {
+            "door.left.hand.open": "дверь",
+            "macwindow": "окно",
+            "house.fill": "дом",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t1-most",
+          "minAge": 5,
+          "instruction": "Покажи мост",
+          "correct": "road.lanes",
+          "distractors": [
+            "car.fill",
+            "tram.fill",
+            "sailboat.fill"
+          ],
+          "labels": {
+            "road.lanes": "дорога",
+            "car.fill": "машина",
+            "tram.fill": "поезд",
+            "sailboat.fill": "лодка"
+          }
+        },
+        {
+          "id": "t1-gora",
+          "minAge": 5,
+          "instruction": "Покажи гору",
+          "correct": "mountain.2.fill",
+          "distractors": [
+            "tree.fill",
+            "cloud.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "mountain.2.fill": "гора",
+            "tree.fill": "дерево",
+            "cloud.fill": "облако",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-reka",
+          "minAge": 5,
+          "instruction": "Покажи реку",
+          "correct": "water.waves",
+          "distractors": [
+            "drop.fill",
+            "cloud.rain.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "water.waves": "река",
+            "drop.fill": "капля",
+            "cloud.rain.fill": "дождь",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t1-listik",
+          "minAge": 5,
+          "instruction": "Покажи листик",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "flame.fill"
+          ],
+          "labels": {
+            "leaf.fill": "листик",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "flame.fill": "огонь"
+          }
+        },
+        {
+          "id": "t1-grusha",
+          "minAge": 5,
+          "instruction": "Покажи грушу",
+          "correct": "oval.fill",
+          "distractors": [
+            "apple.logo",
+            "carrot.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "oval.fill": "груша",
+            "apple.logo": "яблоко",
+            "carrot.fill": "морковка",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-loshad",
+          "minAge": 5,
+          "instruction": "Покажи лошадку",
+          "correct": "dog.fill",
+          "distractors": [
+            "hare.fill",
+            "cat.fill",
+            "tortoise.fill"
+          ],
+          "labels": {
+            "dog.fill": "лошадка",
+            "hare.fill": "заяц",
+            "cat.fill": "кошка",
+            "tortoise.fill": "черепаха"
+          }
+        },
+        {
+          "id": "t1-myshka",
+          "minAge": 5,
+          "instruction": "Покажи мышку",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "cat.fill",
+            "bird.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "мышка",
+            "cat.fill": "кошка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t1-utka",
+          "minAge": 5,
+          "instruction": "Покажи утку",
+          "correct": "bird.fill",
+          "distractors": [
+            "fish.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "bird.fill": "утка",
+            "fish.fill": "рыба",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t1-pchela",
+          "minAge": 5,
+          "instruction": "Покажи пчелу",
+          "correct": "ant.fill",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "tortoise.fill"
+          ],
+          "labels": {
+            "ant.fill": "пчела",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "tortoise.fill": "черепаха"
+          }
+        },
+        {
+          "id": "t1-babochka",
+          "minAge": 5,
+          "instruction": "Покажи бабочку",
+          "correct": "sparkles",
+          "distractors": [
+            "bird.fill",
+            "ant.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "sparkles": "бабочка",
+            "bird.fill": "птица",
+            "ant.fill": "муравей",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-medved",
+          "minAge": 5,
+          "instruction": "Покажи медведя",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "hare.fill",
+            "cat.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "медведь",
+            "hare.fill": "заяц",
+            "cat.fill": "кошка",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t1-sneg",
+          "minAge": 5,
+          "instruction": "Покажи снег",
+          "correct": "snowflake",
+          "distractors": [
+            "cloud.rain.fill",
+            "sun.max.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "snowflake": "снег",
+            "cloud.rain.fill": "дождь",
+            "sun.max.fill": "солнце",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-tucha",
+          "minAge": 5,
+          "instruction": "Покажи тучу",
+          "correct": "cloud.fill",
+          "distractors": [
+            "sun.max.fill",
+            "moon.fill",
+            "star.fill"
+          ],
+          "labels": {
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна",
+            "star.fill": "звезда"
+          }
+        },
+        {
+          "id": "t1-veter",
+          "minAge": 5,
+          "instruction": "Покажи ветер",
+          "correct": "wind",
+          "distractors": [
+            "drop.fill",
+            "flame.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "wind": "ветер",
+            "drop.fill": "капля",
+            "flame.fill": "огонь",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t1-molniya",
+          "minAge": 5,
+          "instruction": "Покажи молнию",
+          "correct": "bolt.fill",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "flame.fill"
+          ],
+          "labels": {
+            "bolt.fill": "молния",
+            "sun.max.fill": "солнце",
+            "cloud.fill": "облако",
+            "flame.fill": "огонь"
+          }
+        },
+        {
+          "id": "t1-raduga",
+          "minAge": 5,
+          "instruction": "Покажи радугу",
+          "correct": "rainbow",
+          "distractors": [
+            "cloud.fill",
+            "sun.max.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "rainbow": "радуга",
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-vedro",
+          "minAge": 5,
+          "instruction": "Покажи ведро",
+          "correct": "archivebox.fill",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "basket.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "archivebox.fill": "ведро",
+            "cup.and.saucer.fill": "кружка",
+            "basket.fill": "корзина",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t1-lozhka",
+          "minAge": 5,
+          "instruction": "Покажи ложку",
+          "correct": "fork.knife",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "drop.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "fork.knife": "ложка",
+            "cup.and.saucer.fill": "кружка",
+            "drop.fill": "капля",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t1-tarelka",
+          "minAge": 5,
+          "instruction": "Покажи тарелку",
+          "correct": "circle.fill",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "fork.knife",
+            "square.fill"
+          ],
+          "labels": {
+            "circle.fill": "тарелка",
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка",
+            "square.fill": "квадрат"
+          }
+        },
+        {
+          "id": "t1-noj",
+          "minAge": 5,
+          "instruction": "Покажи нож",
+          "correct": "scissors",
+          "distractors": [
+            "fork.knife",
+            "pencil",
+            "paintbrush.fill"
+          ],
+          "labels": {
+            "scissors": "ножницы",
+            "fork.knife": "вилка",
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть"
+          }
+        },
+        {
+          "id": "t1-shapka",
+          "minAge": 5,
+          "instruction": "Покажи шапку",
+          "correct": "tshirt.fill",
+          "distractors": [
+            "bag.fill",
+            "umbrella.fill",
+            "shoe"
+          ],
+          "labels": {
+            "bag.fill": "сумка",
+            "umbrella.fill": "зонт",
+            "shoe": "ботинок",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t1-botinok",
+          "minAge": 5,
+          "instruction": "Покажи ботинок",
+          "correct": "shoe",
+          "distractors": [
+            "tshirt.fill",
+            "bag.fill",
+            "umbrella.fill"
+          ],
+          "labels": {
+            "shoe": "ботинок",
+            "bag.fill": "сумка",
+            "umbrella.fill": "зонт",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t1-sumka",
+          "minAge": 5,
+          "instruction": "Покажи сумку",
+          "correct": "bag.fill",
+          "distractors": [
+            "shippingbox.fill",
+            "basket.fill",
+            "gift.fill"
+          ],
+          "labels": {
+            "bag.fill": "сумка",
+            "shippingbox.fill": "коробка",
+            "basket.fill": "корзина",
+            "gift.fill": "подарок"
+          }
+        },
+        {
+          "id": "t1-korzina",
+          "minAge": 5,
+          "instruction": "Покажи корзину",
+          "correct": "basket.fill",
+          "distractors": [
+            "bag.fill",
+            "shippingbox.fill",
+            "archivebox.fill"
+          ],
+          "labels": {
+            "basket.fill": "корзина",
+            "bag.fill": "сумка",
+            "shippingbox.fill": "коробка",
+            "archivebox.fill": "ведро"
+          }
+        },
+        {
+          "id": "t1-karandash",
+          "minAge": 5,
+          "instruction": "Покажи карандаш",
+          "correct": "pencil",
+          "distractors": [
+            "paintbrush.fill",
+            "scissors",
+            "book.fill"
+          ],
+          "labels": {
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть",
+            "scissors": "ножницы",
+            "book.fill": "книга"
+          }
+        },
+        {
+          "id": "t1-kist",
+          "minAge": 5,
+          "instruction": "Покажи кисточку",
+          "correct": "paintbrush.fill",
+          "distractors": [
+            "pencil",
+            "scissors",
+            "key.fill"
+          ],
+          "labels": {
+            "paintbrush.fill": "кисть",
+            "pencil": "карандаш",
+            "scissors": "ножницы",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t1-zamok",
+          "minAge": 5,
+          "instruction": "Покажи замок",
+          "correct": "lock.fill",
+          "distractors": [
+            "key.fill",
+            "door.left.hand.open",
+            "house.fill"
+          ],
+          "labels": {
+            "lock.fill": "замок",
+            "key.fill": "ключ",
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t1-svecha",
+          "minAge": 5,
+          "instruction": "Покажи свечку",
+          "correct": "flame.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "sun.max.fill",
+            "bolt.fill"
+          ],
+          "labels": {
+            "flame.fill": "свечка",
+            "lightbulb.fill": "лампа",
+            "sun.max.fill": "солнце",
+            "bolt.fill": "молния"
+          }
+        },
+        {
+          "id": "t1-termometr",
+          "minAge": 5,
+          "instruction": "Покажи градусник",
+          "correct": "thermometer.medium",
+          "distractors": [
+            "clock.fill",
+            "calendar",
+            "bolt.fill"
+          ],
+          "labels": {
+            "thermometer.medium": "градусник",
+            "clock.fill": "часы",
+            "calendar": "календарь",
+            "bolt.fill": "молния"
+          }
+        },
+        {
+          "id": "t1-myach3",
+          "minAge": 5,
+          "instruction": "Покажи воздушный шарик",
+          "correct": "balloon.fill",
+          "distractors": [
+            "soccerball",
+            "circle.fill",
+            "gift.fill"
+          ],
+          "labels": {
+            "balloon.fill": "шарик",
+            "soccerball": "мяч",
+            "circle.fill": "круг",
+            "gift.fill": "подарок"
+          }
+        },
+        {
+          "id": "t1-koleso",
+          "minAge": 5,
+          "instruction": "Покажи колесо",
+          "correct": "circle.circle",
+          "distractors": [
+            "car.fill",
+            "circle.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "circle.circle": "колесо",
+            "car.fill": "машина",
+            "circle.fill": "круг",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t1-yaytso",
+          "minAge": 5,
+          "instruction": "Покажи яйцо",
+          "correct": "oval.fill",
+          "distractors": [
+            "circle.fill",
+            "apple.logo",
+            "drop.fill"
+          ],
+          "labels": {
+            "oval.fill": "яйцо",
+            "circle.fill": "круг",
+            "apple.logo": "яблоко",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t1-svetofor",
+          "minAge": 5,
+          "instruction": "Покажи светофор",
+          "correct": "light.beacon.max.fill",
+          "distractors": [
+            "car.fill",
+            "lamp.desk.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "light.beacon.max.fill": "светофор",
+            "car.fill": "машина",
+            "lamp.desk.fill": "лампа",
+            "sun.max.fill": "солнце"
+          }
+        }
       ]
     },
     {
       "tier": 2,
       "title": "Два поручения",
       "items": [
-        { "id": "t2-sun-moon",  "minAge": 5, "instruction": "Найди солнце, а потом луну",         "correct": "sun.max.fill",          "distractors": ["moon.fill", "star.fill", "cloud.fill"], "labels": {"sun.max.fill": "солнце", "moon.fill": "луна", "star.fill": "звезда", "cloud.fill": "облако"} },
-        { "id": "t2-cat-fish",  "minAge": 5, "instruction": "Сначала кошку, потом рыбку",          "correct": "cat.fill",              "distractors": ["fish.fill", "bird.fill", "ant.fill"], "labels": {"cat.fill": "кошка", "fish.fill": "рыба", "bird.fill": "птица", "ant.fill": "муравей"} },
-        { "id": "t2-apple-cup", "minAge": 5, "instruction": "Возьми яблоко и кружку",              "correct": "apple.logo",            "distractors": ["cup.and.saucer.fill", "leaf.fill", "fork.knife"], "labels": {"apple.logo": "яблоко", "cup.and.saucer.fill": "кружка", "leaf.fill": "лист", "fork.knife": "вилка"} },
-        { "id": "t2-car-house", "minAge": 5, "instruction": "Покажи машину, а потом дом",          "correct": "car.fill",              "distractors": ["house.fill", "tree.fill", "bicycle"], "labels": {"car.fill": "машина", "house.fill": "дом", "tree.fill": "дерево", "bicycle": "велосипед"} },
-        { "id": "t2-book-pencil","minAge": 5, "instruction": "Сначала книгу, потом карандаш",       "correct": "book.fill",             "distractors": ["pencil", "scissors", "paintbrush.fill"], "labels": {"book.fill": "книга", "pencil": "карандаш", "scissors": "ножницы", "paintbrush.fill": "кисть"} },
-        { "id": "t2-star-flag", "minAge": 5, "instruction": "Найди звезду и флаг",                  "correct": "star.fill",             "distractors": ["flag.fill", "heart.fill", "bell.fill"], "labels": {"star.fill": "звезда", "flag.fill": "флаг", "heart.fill": "сердце", "bell.fill": "колокольчик"} },
-        { "id": "t2-rain-umbr", "minAge": 5, "instruction": "Покажи дождь, а потом зонт",           "correct": "cloud.rain.fill",       "distractors": ["umbrella.fill", "sun.max.fill", "snowflake"], "labels": {"cloud.rain.fill": "дождь", "umbrella.fill": "зонт", "sun.max.fill": "солнце", "snowflake": "снежинка"} },
-        { "id": "t2-key-lock",  "minAge": 5, "instruction": "Сначала ключ, потом замок",           "correct": "key.fill",              "distractors": ["lock.fill", "door.left.hand.open", "envelope.fill"], "labels": {"key.fill": "ключ", "lock.fill": "замок", "door.left.hand.open": "дверь", "envelope.fill": "конверт"} },
-        { "id": "t2-bird-tree", "minAge": 5, "instruction": "Найди птицу и дерево",                 "correct": "bird.fill",             "distractors": ["tree.fill", "leaf.fill", "fish.fill"], "labels": {"bird.fill": "птица", "tree.fill": "дерево", "leaf.fill": "лист", "fish.fill": "рыба"} },
-        { "id": "t2-gift-bell", "minAge": 5, "instruction": "Покажи подарок, потом колокольчик",    "correct": "gift.fill",             "distractors": ["bell.fill", "star.fill", "bag.fill"], "labels": {"gift.fill": "подарок", "bell.fill": "колокольчик", "star.fill": "звезда", "bag.fill": "сумка"} },
-        { "id": "t2-fire-water","minAge": 6, "instruction": "Сначала огонь, потом воду",            "correct": "flame.fill",            "distractors": ["drop.fill", "snowflake", "wind"], "labels": {"flame.fill": "огонь", "drop.fill": "вода", "snowflake": "снежинка", "wind": "ветер"} },
-        { "id": "t2-clock-lamp","minAge": 6, "instruction": "Покажи часы, а потом лампу",           "correct": "clock.fill",            "distractors": ["lightbulb.fill", "calendar", "bell.fill"], "labels": {"clock.fill": "часы", "lightbulb.fill": "лампа", "calendar": "календарь", "bell.fill": "колокольчик"} },
-        { "id": "t2-boat-fish", "minAge": 6, "instruction": "Найди лодку и рыбку",                  "correct": "sailboat.fill",         "distractors": ["fish.fill", "drop.fill", "bird.fill"], "labels": {"sailboat.fill": "лодка", "fish.fill": "рыба", "drop.fill": "капля", "bird.fill": "птица"} },
-        { "id": "t2-hare-turt", "minAge": 6, "instruction": "Сначала зайца, потом черепаху",        "correct": "hare.fill",             "distractors": ["tortoise.fill", "cat.fill", "ant.fill"], "labels": {"hare.fill": "заяц", "tortoise.fill": "черепаха", "cat.fill": "кошка", "ant.fill": "муравей"} },
-        { "id": "t2-train-plane","minAge": 6, "instruction": "Покажи поезд, а потом самолёт",       "correct": "tram.fill",             "distractors": ["airplane", "car.fill", "sailboat.fill"], "labels": {"tram.fill": "поезд", "airplane": "самолёт", "car.fill": "машина", "sailboat.fill": "лодка"} },
-        { "id": "t2-eye-ear",   "minAge": 6, "instruction": "Найди глаз и ухо",                     "correct": "eye.fill",              "distractors": ["ear.fill", "mouth.fill", "nose.fill"], "labels": {"eye.fill": "глаз", "ear.fill": "ухо", "mouth.fill": "рот", "nose.fill": "нос"} },
-        { "id": "t2-flower-tree","minAge": 6, "instruction": "Сначала цветок, потом дерево",        "correct": "camera.macro",          "distractors": ["tree.fill", "leaf.fill", "drop.fill"], "labels": {"camera.macro": "цветок", "tree.fill": "дерево", "leaf.fill": "лист", "drop.fill": "капля"} },
-        { "id": "t2-snow-sun",  "minAge": 6, "instruction": "Покажи снежинку, а потом солнце",      "correct": "snowflake",             "distractors": ["sun.max.fill", "cloud.fill", "moon.fill"], "labels": {"snowflake": "снежинка", "sun.max.fill": "солнце", "cloud.fill": "облако", "moon.fill": "луна"} },
-        { "id": "t2-letter-stamp","minAge": 6, "instruction": "Найди письмо и ключ",                "correct": "envelope.fill",         "distractors": ["key.fill", "book.fill", "paperplane.fill"], "labels": {"envelope.fill": "письмо", "key.fill": "ключ", "book.fill": "книга", "paperplane.fill": "самолётик"} },
-        { "id": "t2-chair-table","minAge": 6, "instruction": "Сначала стул, потом стол",            "correct": "chair.fill",            "distractors": ["table.furniture.fill", "bed.double.fill", "lamp.desk.fill"], "labels": {"chair.fill": "стул", "table.furniture.fill": "стол", "bed.double.fill": "кровать", "lamp.desk.fill": "лампа"} },
-        { "id": "t2-leaf-tree", "minAge": 5, "instruction": "Найди листок, а потом дерево",          "correct": "leaf.fill",             "distractors": ["tree.fill", "camera.macro", "mountain.2.fill"], "labels": {"leaf.fill": "листок", "tree.fill": "дерево", "camera.macro": "цветок", "mountain.2.fill": "гора"} },
-        { "id": "t2-ball-bike", "minAge": 5, "instruction": "Сначала мяч, потом велосипед",          "correct": "soccerball",            "distractors": ["bicycle", "car.fill", "airplane"], "labels": {"soccerball": "мяч", "bicycle": "велосипед", "car.fill": "машина", "airplane": "самолёт"} },
-        { "id": "t2-bag-box",   "minAge": 6, "instruction": "Покажи сумку, а потом коробку",          "correct": "bag.fill",              "distractors": ["shippingbox.fill", "basket.fill", "gift.fill"], "labels": {"bag.fill": "сумка", "shippingbox.fill": "коробка", "basket.fill": "корзина", "gift.fill": "подарок"} },
-        { "id": "t2-moon-cloud","minAge": 6, "instruction": "Найди луну и облако",                    "correct": "moon.fill",             "distractors": ["cloud.fill", "sun.max.fill", "star.fill"], "labels": {"moon.fill": "луна", "cloud.fill": "облако", "sun.max.fill": "солнце", "star.fill": "звезда"} }
+        {
+          "id": "t2-sun-moon",
+          "minAge": 5,
+          "instruction": "Найди солнце, а потом луну",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "moon.fill",
+            "star.fill",
+            "cloud.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна",
+            "star.fill": "звезда",
+            "cloud.fill": "облако"
+          }
+        },
+        {
+          "id": "t2-cat-fish",
+          "minAge": 5,
+          "instruction": "Сначала кошку, потом рыбку",
+          "correct": "cat.fill",
+          "distractors": [
+            "fish.fill",
+            "bird.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t2-apple-cup",
+          "minAge": 5,
+          "instruction": "Возьми яблоко и кружку",
+          "correct": "apple.logo",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "leaf.fill",
+            "fork.knife"
+          ],
+          "labels": {
+            "apple.logo": "яблоко",
+            "cup.and.saucer.fill": "кружка",
+            "leaf.fill": "лист",
+            "fork.knife": "вилка"
+          }
+        },
+        {
+          "id": "t2-car-house",
+          "minAge": 5,
+          "instruction": "Покажи машину, а потом дом",
+          "correct": "car.fill",
+          "distractors": [
+            "house.fill",
+            "tree.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "car.fill": "машина",
+            "house.fill": "дом",
+            "tree.fill": "дерево",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t2-book-pencil",
+          "minAge": 5,
+          "instruction": "Сначала книгу, потом карандаш",
+          "correct": "book.fill",
+          "distractors": [
+            "pencil",
+            "scissors",
+            "paintbrush.fill"
+          ],
+          "labels": {
+            "book.fill": "книга",
+            "pencil": "карандаш",
+            "scissors": "ножницы",
+            "paintbrush.fill": "кисть"
+          }
+        },
+        {
+          "id": "t2-star-flag",
+          "minAge": 5,
+          "instruction": "Найди звезду и флаг",
+          "correct": "star.fill",
+          "distractors": [
+            "flag.fill",
+            "heart.fill",
+            "bell.fill"
+          ],
+          "labels": {
+            "star.fill": "звезда",
+            "flag.fill": "флаг",
+            "heart.fill": "сердце",
+            "bell.fill": "колокольчик"
+          }
+        },
+        {
+          "id": "t2-rain-umbr",
+          "minAge": 5,
+          "instruction": "Покажи дождь, а потом зонт",
+          "correct": "cloud.rain.fill",
+          "distractors": [
+            "umbrella.fill",
+            "sun.max.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "cloud.rain.fill": "дождь",
+            "umbrella.fill": "зонт",
+            "sun.max.fill": "солнце",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t2-key-lock",
+          "minAge": 5,
+          "instruction": "Сначала ключ, потом замок",
+          "correct": "key.fill",
+          "distractors": [
+            "lock.fill",
+            "door.left.hand.open",
+            "envelope.fill"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "lock.fill": "замок",
+            "door.left.hand.open": "дверь",
+            "envelope.fill": "конверт"
+          }
+        },
+        {
+          "id": "t2-bird-tree",
+          "minAge": 5,
+          "instruction": "Найди птицу и дерево",
+          "correct": "bird.fill",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "tree.fill": "дерево",
+            "leaf.fill": "лист",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t2-gift-bell",
+          "minAge": 5,
+          "instruction": "Покажи подарок, потом колокольчик",
+          "correct": "gift.fill",
+          "distractors": [
+            "bell.fill",
+            "star.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "gift.fill": "подарок",
+            "bell.fill": "колокольчик",
+            "star.fill": "звезда",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t2-fire-water",
+          "minAge": 6,
+          "instruction": "Сначала огонь, потом воду",
+          "correct": "flame.fill",
+          "distractors": [
+            "drop.fill",
+            "snowflake",
+            "wind"
+          ],
+          "labels": {
+            "flame.fill": "огонь",
+            "drop.fill": "вода",
+            "snowflake": "снежинка",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t2-clock-lamp",
+          "minAge": 6,
+          "instruction": "Покажи часы, а потом лампу",
+          "correct": "clock.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "calendar",
+            "bell.fill"
+          ],
+          "labels": {
+            "clock.fill": "часы",
+            "lightbulb.fill": "лампа",
+            "calendar": "календарь",
+            "bell.fill": "колокольчик"
+          }
+        },
+        {
+          "id": "t2-boat-fish",
+          "minAge": 6,
+          "instruction": "Найди лодку и рыбку",
+          "correct": "sailboat.fill",
+          "distractors": [
+            "fish.fill",
+            "drop.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "sailboat.fill": "лодка",
+            "fish.fill": "рыба",
+            "drop.fill": "капля",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t2-hare-turt",
+          "minAge": 6,
+          "instruction": "Сначала зайца, потом черепаху",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "tortoise.fill": "черепаха",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t2-train-plane",
+          "minAge": 6,
+          "instruction": "Покажи поезд, а потом самолёт",
+          "correct": "tram.fill",
+          "distractors": [
+            "airplane",
+            "car.fill",
+            "sailboat.fill"
+          ],
+          "labels": {
+            "tram.fill": "поезд",
+            "airplane": "самолёт",
+            "car.fill": "машина",
+            "sailboat.fill": "лодка"
+          }
+        },
+        {
+          "id": "t2-eye-ear",
+          "minAge": 6,
+          "instruction": "Найди глаз и ухо",
+          "correct": "eye.fill",
+          "distractors": [
+            "ear.fill",
+            "mouth.fill",
+            "nose.fill"
+          ],
+          "labels": {
+            "eye.fill": "глаз",
+            "ear.fill": "ухо",
+            "mouth.fill": "рот",
+            "nose.fill": "нос"
+          }
+        },
+        {
+          "id": "t2-flower-tree",
+          "minAge": 6,
+          "instruction": "Сначала цветок, потом дерево",
+          "correct": "camera.macro",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "camera.macro": "цветок",
+            "tree.fill": "дерево",
+            "leaf.fill": "лист",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t2-snow-sun",
+          "minAge": 6,
+          "instruction": "Покажи снежинку, а потом солнце",
+          "correct": "snowflake",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "moon.fill"
+          ],
+          "labels": {
+            "snowflake": "снежинка",
+            "sun.max.fill": "солнце",
+            "cloud.fill": "облако",
+            "moon.fill": "луна"
+          }
+        },
+        {
+          "id": "t2-letter-stamp",
+          "minAge": 6,
+          "instruction": "Найди письмо и ключ",
+          "correct": "envelope.fill",
+          "distractors": [
+            "key.fill",
+            "book.fill",
+            "paperplane.fill"
+          ],
+          "labels": {
+            "envelope.fill": "письмо",
+            "key.fill": "ключ",
+            "book.fill": "книга",
+            "paperplane.fill": "самолётик"
+          }
+        },
+        {
+          "id": "t2-chair-table",
+          "minAge": 6,
+          "instruction": "Сначала стул, потом стол",
+          "correct": "chair.fill",
+          "distractors": [
+            "table.furniture.fill",
+            "bed.double.fill",
+            "lamp.desk.fill"
+          ],
+          "labels": {
+            "chair.fill": "стул",
+            "table.furniture.fill": "стол",
+            "bed.double.fill": "кровать",
+            "lamp.desk.fill": "лампа"
+          }
+        },
+        {
+          "id": "t2-leaf-tree",
+          "minAge": 5,
+          "instruction": "Найди листок, а потом дерево",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "leaf.fill": "листок",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t2-ball-bike",
+          "minAge": 5,
+          "instruction": "Сначала мяч, потом велосипед",
+          "correct": "soccerball",
+          "distractors": [
+            "bicycle",
+            "car.fill",
+            "airplane"
+          ],
+          "labels": {
+            "soccerball": "мяч",
+            "bicycle": "велосипед",
+            "car.fill": "машина",
+            "airplane": "самолёт"
+          }
+        },
+        {
+          "id": "t2-bag-box",
+          "minAge": 6,
+          "instruction": "Покажи сумку, а потом коробку",
+          "correct": "bag.fill",
+          "distractors": [
+            "shippingbox.fill",
+            "basket.fill",
+            "gift.fill"
+          ],
+          "labels": {
+            "bag.fill": "сумка",
+            "shippingbox.fill": "коробка",
+            "basket.fill": "корзина",
+            "gift.fill": "подарок"
+          }
+        },
+        {
+          "id": "t2-moon-cloud",
+          "minAge": 6,
+          "instruction": "Найди луну и облако",
+          "correct": "moon.fill",
+          "distractors": [
+            "cloud.fill",
+            "sun.max.fill",
+            "star.fill"
+          ],
+          "labels": {
+            "moon.fill": "луна",
+            "cloud.fill": "облако",
+            "sun.max.fill": "солнце",
+            "star.fill": "звезда"
+          }
+        },
+        {
+          "id": "t2-krasn-yablo",
+          "minAge": 5,
+          "instruction": "Покажи красное яблоко",
+          "correct": "apple.logo",
+          "distractors": [
+            "leaf.fill",
+            "carrot.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "apple.logo": "красное яблоко",
+            "leaf.fill": "зелёный лист",
+            "carrot.fill": "оранжевая морковка",
+            "drop.fill": "синяя капля"
+          }
+        },
+        {
+          "id": "t2-zhelt-solnce",
+          "minAge": 5,
+          "instruction": "Покажи жёлтое солнышко",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "moon.fill",
+            "cloud.fill",
+            "star.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "жёлтое солнце",
+            "moon.fill": "белая луна",
+            "cloud.fill": "серая туча",
+            "star.fill": "звезда"
+          }
+        },
+        {
+          "id": "t2-zelen-list",
+          "minAge": 5,
+          "instruction": "Покажи зелёный листок",
+          "correct": "leaf.fill",
+          "distractors": [
+            "apple.logo",
+            "carrot.fill",
+            "flame.fill"
+          ],
+          "labels": {
+            "leaf.fill": "зелёный лист",
+            "apple.logo": "красное яблоко",
+            "carrot.fill": "морковка",
+            "flame.fill": "огонь"
+          }
+        },
+        {
+          "id": "t2-siniy-zont",
+          "minAge": 6,
+          "instruction": "Покажи синий зонт",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "cloud.rain.fill",
+            "sun.max.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "umbrella.fill": "синий зонт",
+            "cloud.rain.fill": "дождь",
+            "sun.max.fill": "солнце",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t2-bolsh-myach",
+          "minAge": 5,
+          "instruction": "Покажи большой мяч",
+          "correct": "soccerball",
+          "distractors": [
+            "basketball.fill",
+            "circle.fill",
+            "balloon.fill"
+          ],
+          "labels": {
+            "soccerball": "большой мяч",
+            "basketball.fill": "маленький мячик",
+            "circle.fill": "круг",
+            "balloon.fill": "шарик"
+          }
+        },
+        {
+          "id": "t2-malen-myach",
+          "minAge": 5,
+          "instruction": "Покажи маленький мячик",
+          "correct": "basketball.fill",
+          "distractors": [
+            "soccerball",
+            "balloon.fill",
+            "circle.fill"
+          ],
+          "labels": {
+            "basketball.fill": "маленький мячик",
+            "soccerball": "большой мяч",
+            "balloon.fill": "шарик",
+            "circle.fill": "круг"
+          }
+        },
+        {
+          "id": "t2-bolsh-dom",
+          "minAge": 6,
+          "instruction": "Покажи большой дом",
+          "correct": "building.2.fill",
+          "distractors": [
+            "house.fill",
+            "tent.fill",
+            "light.beacon.max.fill"
+          ],
+          "labels": {
+            "building.2.fill": "большой дом",
+            "house.fill": "маленький домик",
+            "tent.fill": "палатка",
+            "light.beacon.max.fill": "маяк"
+          }
+        },
+        {
+          "id": "t2-malen-dom",
+          "minAge": 6,
+          "instruction": "Покажи маленький домик",
+          "correct": "house.fill",
+          "distractors": [
+            "building.2.fill",
+            "tent.fill",
+            "light.beacon.max.fill"
+          ],
+          "labels": {
+            "house.fill": "маленький домик",
+            "building.2.fill": "большой дом",
+            "tent.fill": "палатка",
+            "light.beacon.max.fill": "маяк"
+          }
+        },
+        {
+          "id": "t2-krasn-cvetok",
+          "minAge": 5,
+          "instruction": "Покажи красный цветок",
+          "correct": "camera.macro",
+          "distractors": [
+            "leaf.fill",
+            "tree.fill",
+            "carrot.fill"
+          ],
+          "labels": {
+            "camera.macro": "красный цветок",
+            "leaf.fill": "лист",
+            "tree.fill": "дерево",
+            "carrot.fill": "морковка"
+          }
+        },
+        {
+          "id": "t2-belaya-snezh",
+          "minAge": 6,
+          "instruction": "Покажи белую снежинку",
+          "correct": "snowflake",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "snowflake": "белая снежинка",
+            "sun.max.fill": "солнце",
+            "cloud.fill": "туча",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t2-bystr-zayac",
+          "minAge": 6,
+          "instruction": "Покажи быстрого зайца",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "hare.fill": "быстрый заяц",
+            "tortoise.fill": "медленная черепаха",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t2-vysok-derevo",
+          "minAge": 6,
+          "instruction": "Покажи высокое дерево",
+          "correct": "tree.fill",
+          "distractors": [
+            "camera.macro",
+            "leaf.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "tree.fill": "высокое дерево",
+            "camera.macro": "низкий цветок",
+            "leaf.fill": "лист",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t2-tolst-kniga",
+          "minAge": 6,
+          "instruction": "Покажи толстую книгу",
+          "correct": "books.vertical.fill",
+          "distractors": [
+            "book.fill",
+            "pencil",
+            "newspaper.fill"
+          ],
+          "labels": {
+            "books.vertical.fill": "толстая книга",
+            "book.fill": "тонкая книжка",
+            "pencil": "карандаш",
+            "newspaper.fill": "газета"
+          }
+        },
+        {
+          "id": "t2-yark-zvezda",
+          "minAge": 6,
+          "instruction": "Покажи яркую звезду",
+          "correct": "star.fill",
+          "distractors": [
+            "moon.fill",
+            "sun.max.fill",
+            "sparkles"
+          ],
+          "labels": {
+            "star.fill": "яркая звезда",
+            "moon.fill": "луна",
+            "sun.max.fill": "солнце",
+            "sparkles": "искры"
+          }
+        },
+        {
+          "id": "t2-orang-morkov",
+          "minAge": 5,
+          "instruction": "Покажи оранжевую морковку",
+          "correct": "carrot.fill",
+          "distractors": [
+            "apple.logo",
+            "leaf.fill",
+            "oval.fill"
+          ],
+          "labels": {
+            "carrot.fill": "оранжевая морковка",
+            "apple.logo": "красное яблоко",
+            "leaf.fill": "зелёный лист",
+            "oval.fill": "груша"
+          }
+        },
+        {
+          "id": "t2-kruglyy-myach",
+          "minAge": 5,
+          "instruction": "Покажи круглый мяч",
+          "correct": "soccerball",
+          "distractors": [
+            "square.fill",
+            "triangle.fill",
+            "book.fill"
+          ],
+          "labels": {
+            "soccerball": "круглый мяч",
+            "square.fill": "квадрат",
+            "triangle.fill": "треугольник",
+            "book.fill": "книга"
+          }
+        },
+        {
+          "id": "t2-dlinnyy-poezd",
+          "minAge": 6,
+          "instruction": "Покажи длинный поезд",
+          "correct": "tram.fill",
+          "distractors": [
+            "car.fill",
+            "bicycle",
+            "airplane"
+          ],
+          "labels": {
+            "tram.fill": "длинный поезд",
+            "car.fill": "короткая машина",
+            "bicycle": "велосипед",
+            "airplane": "самолёт"
+          }
+        },
+        {
+          "id": "t2-pushistyy-kot",
+          "minAge": 6,
+          "instruction": "Покажи пушистого кота",
+          "correct": "cat.fill",
+          "distractors": [
+            "fish.fill",
+            "bird.fill",
+            "tortoise.fill"
+          ],
+          "labels": {
+            "cat.fill": "пушистый кот",
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "tortoise.fill": "черепаха"
+          }
+        },
+        {
+          "id": "t2-grib-derevo",
+          "minAge": 5,
+          "instruction": "Сначала гриб, потом дерево",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "leaf.fill": "гриб",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t2-morkov-yablo",
+          "minAge": 5,
+          "instruction": "Возьми морковку и яблоко",
+          "correct": "carrot.fill",
+          "distractors": [
+            "apple.logo",
+            "oval.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "carrot.fill": "морковка",
+            "apple.logo": "яблоко",
+            "oval.fill": "груша",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t2-myshka-koshka",
+          "minAge": 5,
+          "instruction": "Найди мышку, а потом кошку",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "cat.fill",
+            "bird.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "мышка",
+            "cat.fill": "кошка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t2-utka-ryba",
+          "minAge": 5,
+          "instruction": "Сначала утку, потом рыбку",
+          "correct": "bird.fill",
+          "distractors": [
+            "fish.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "bird.fill": "утка",
+            "fish.fill": "рыба",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t2-snezh-tucha",
+          "minAge": 6,
+          "instruction": "Покажи снежинку, а потом тучу",
+          "correct": "snowflake",
+          "distractors": [
+            "cloud.fill",
+            "sun.max.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "snowflake": "снежинка",
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t2-vedro-lopata",
+          "minAge": 5,
+          "instruction": "Возьми ведро и лопатку",
+          "correct": "archivebox.fill",
+          "distractors": [
+            "fork.knife",
+            "basket.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "archivebox.fill": "ведро",
+            "fork.knife": "лопатка/вилка",
+            "basket.fill": "корзина",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t2-shapka-botin",
+          "minAge": 6,
+          "instruction": "Найди шапку, потом ботинок",
+          "correct": "tshirt.fill",
+          "distractors": [
+            "shoe",
+            "bag.fill",
+            "umbrella.fill"
+          ],
+          "labels": {
+            "shoe": "ботинок",
+            "bag.fill": "сумка",
+            "umbrella.fill": "зонт",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t2-zamok-kluch",
+          "minAge": 5,
+          "instruction": "Сначала замок, потом ключ",
+          "correct": "lock.fill",
+          "distractors": [
+            "key.fill",
+            "door.left.hand.open",
+            "house.fill"
+          ],
+          "labels": {
+            "lock.fill": "замок",
+            "key.fill": "ключ",
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t2-loshad-zayac",
+          "minAge": 6,
+          "instruction": "Покажи лошадку, а потом зайца",
+          "correct": "dog.fill",
+          "distractors": [
+            "hare.fill",
+            "cat.fill",
+            "tortoise.fill"
+          ],
+          "labels": {
+            "dog.fill": "лошадка",
+            "hare.fill": "заяц",
+            "cat.fill": "кошка",
+            "tortoise.fill": "черепаха"
+          }
+        },
+        {
+          "id": "t2-svecha-lampa",
+          "minAge": 6,
+          "instruction": "Найди свечку и лампу",
+          "correct": "flame.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "sun.max.fill",
+            "bolt.fill"
+          ],
+          "labels": {
+            "flame.fill": "свечка",
+            "lightbulb.fill": "лампа",
+            "sun.max.fill": "солнце",
+            "bolt.fill": "молния"
+          }
+        },
+        {
+          "id": "t2-grusha-konfeta",
+          "minAge": 5,
+          "instruction": "Сначала грушу, потом конфету",
+          "correct": "oval.fill",
+          "distractors": [
+            "birthday.cake.fill",
+            "apple.logo",
+            "carrot.fill"
+          ],
+          "labels": {
+            "oval.fill": "груша",
+            "birthday.cake.fill": "конфета",
+            "apple.logo": "яблоко",
+            "carrot.fill": "морковка"
+          }
+        },
+        {
+          "id": "t2-most-reka",
+          "minAge": 6,
+          "instruction": "Покажи мост, а потом реку",
+          "correct": "road.lanes",
+          "distractors": [
+            "water.waves",
+            "tree.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "road.lanes": "мост",
+            "water.waves": "река",
+            "tree.fill": "дерево",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t2-gora-reka",
+          "minAge": 6,
+          "instruction": "Найди гору и реку",
+          "correct": "mountain.2.fill",
+          "distractors": [
+            "water.waves",
+            "cloud.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "mountain.2.fill": "гора",
+            "water.waves": "река",
+            "cloud.fill": "облако",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t2-pchela-babochka",
+          "minAge": 6,
+          "instruction": "Сначала пчелу, потом бабочку",
+          "correct": "ant.fill",
+          "distractors": [
+            "sparkles",
+            "bird.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "ant.fill": "пчела",
+            "sparkles": "бабочка",
+            "bird.fill": "птица",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t2-koleso-mashina",
+          "minAge": 6,
+          "instruction": "Покажи колесо, а потом машину",
+          "correct": "circle.circle",
+          "distractors": [
+            "car.fill",
+            "bicycle",
+            "tram.fill"
+          ],
+          "labels": {
+            "circle.circle": "колесо",
+            "car.fill": "машина",
+            "bicycle": "велосипед",
+            "tram.fill": "поезд"
+          }
+        },
+        {
+          "id": "t2-svetofor-mashina",
+          "minAge": 6,
+          "instruction": "Найди светофор и машину",
+          "correct": "light.beacon.max.fill",
+          "distractors": [
+            "car.fill",
+            "road.lanes",
+            "lamp.desk.fill"
+          ],
+          "labels": {
+            "light.beacon.max.fill": "светофор",
+            "car.fill": "машина",
+            "road.lanes": "дорога",
+            "lamp.desk.fill": "лампа"
+          }
+        },
+        {
+          "id": "t2-yaytso-ptica",
+          "minAge": 5,
+          "instruction": "Сначала яйцо, потом птицу",
+          "correct": "oval.fill",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "circle.fill"
+          ],
+          "labels": {
+            "oval.fill": "яйцо",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "circle.fill": "круг"
+          }
+        },
+        {
+          "id": "t2-medved-myshka",
+          "minAge": 6,
+          "instruction": "Покажи медведя, а потом мышку",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "cat.fill",
+            "hare.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "медведь",
+            "cat.fill": "кошка",
+            "hare.fill": "заяц",
+            "bird.fill": "птица"
+          }
+        }
       ]
     },
     {
       "tier": 3,
       "title": "Три поручения",
       "items": [
-        { "id": "t3-sun-moon-star","minAge": 6, "instruction": "Сначала солнце, потом луну, потом звезду", "correct": "sun.max.fill",   "distractors": ["moon.fill", "star.fill", "cloud.fill"], "labels": {"sun.max.fill": "солнце", "moon.fill": "луна", "star.fill": "звезда", "cloud.fill": "облако"} },
-        { "id": "t3-cat-fish-bird","minAge": 6, "instruction": "Найди кошку, потом рыбку, потом птицу",     "correct": "cat.fill",       "distractors": ["fish.fill", "bird.fill", "ant.fill"], "labels": {"cat.fill": "кошка", "fish.fill": "рыба", "bird.fill": "птица", "ant.fill": "муравей"} },
-        { "id": "t3-apple-cup-book","minAge": 6, "instruction": "Возьми яблоко, кружку и книгу",            "correct": "apple.logo",     "distractors": ["cup.and.saucer.fill", "book.fill", "pencil"], "labels": {"apple.logo": "яблоко", "cup.and.saucer.fill": "кружка", "book.fill": "книга", "pencil": "карандаш"} },
-        { "id": "t3-car-house-tree","minAge": 6, "instruction": "Покажи машину, потом дом, потом дерево",   "correct": "car.fill",       "distractors": ["house.fill", "tree.fill", "bicycle"], "labels": {"car.fill": "машина", "house.fill": "дом", "tree.fill": "дерево", "bicycle": "велосипед"} },
-        { "id": "t3-key-lock-door","minAge": 6, "instruction": "Сначала ключ, потом замок, потом дверь",    "correct": "key.fill",       "distractors": ["lock.fill", "door.left.hand.open", "macwindow"], "labels": {"key.fill": "ключ", "lock.fill": "замок", "door.left.hand.open": "дверь", "macwindow": "окно"} },
-        { "id": "t3-star-flag-bell","minAge": 6, "instruction": "Найди звезду, флаг и колокольчик",         "correct": "star.fill",      "distractors": ["flag.fill", "bell.fill", "heart.fill"], "labels": {"star.fill": "звезда", "flag.fill": "флаг", "bell.fill": "колокольчик", "heart.fill": "сердце"} },
-        { "id": "t3-rain-umbr-cloud","minAge": 7, "instruction": "Покажи дождь, потом зонт, потом тучу",     "correct": "cloud.rain.fill","distractors": ["umbrella.fill", "cloud.fill", "sun.max.fill"], "labels": {"cloud.rain.fill": "дождь", "umbrella.fill": "зонт", "cloud.fill": "туча", "sun.max.fill": "солнце"} },
-        { "id": "t3-bird-tree-leaf","minAge": 7, "instruction": "Сначала птицу, потом дерево, потом листок", "correct": "bird.fill",      "distractors": ["tree.fill", "leaf.fill", "fish.fill"], "labels": {"bird.fill": "птица", "tree.fill": "дерево", "leaf.fill": "листок", "fish.fill": "рыба"} },
-        { "id": "t3-gift-bell-flag","minAge": 7, "instruction": "Найди подарок, колокольчик и флаг",        "correct": "gift.fill",      "distractors": ["bell.fill", "flag.fill", "star.fill"], "labels": {"gift.fill": "подарок", "bell.fill": "колокольчик", "flag.fill": "флаг", "star.fill": "звезда"} },
-        { "id": "t3-fire-water-snow","minAge": 7, "instruction": "Покажи огонь, потом воду, потом снежинку", "correct": "flame.fill",     "distractors": ["drop.fill", "snowflake", "wind"], "labels": {"flame.fill": "огонь", "drop.fill": "вода", "snowflake": "снежинка", "wind": "ветер"} },
-        { "id": "t3-clock-lamp-bell","minAge": 7, "instruction": "Сначала часы, потом лампу, потом колокольчик","correct": "clock.fill",  "distractors": ["lightbulb.fill", "bell.fill", "calendar"], "labels": {"clock.fill": "часы", "lightbulb.fill": "лампа", "bell.fill": "колокольчик", "calendar": "календарь"} },
-        { "id": "t3-boat-fish-drop","minAge": 7, "instruction": "Найди лодку, рыбку и каплю",               "correct": "sailboat.fill",  "distractors": ["fish.fill", "drop.fill", "bird.fill"], "labels": {"sailboat.fill": "лодка", "fish.fill": "рыба", "drop.fill": "капля", "bird.fill": "птица"} },
-        { "id": "t3-hare-turt-cat","minAge": 7, "instruction": "Сначала зайца, потом черепаху, потом кошку", "correct": "hare.fill",      "distractors": ["tortoise.fill", "cat.fill", "ant.fill"], "labels": {"hare.fill": "заяц", "tortoise.fill": "черепаха", "cat.fill": "кошка", "ant.fill": "муравей"} },
-        { "id": "t3-train-plane-car","minAge": 7, "instruction": "Покажи поезд, потом самолёт, потом машину","correct": "tram.fill",     "distractors": ["airplane", "car.fill", "sailboat.fill"], "labels": {"tram.fill": "поезд", "airplane": "самолёт", "car.fill": "машина", "sailboat.fill": "лодка"} },
-        { "id": "t3-eye-ear-nose","minAge": 7, "instruction": "Найди глаз, ухо и нос",                     "correct": "eye.fill",       "distractors": ["ear.fill", "nose.fill", "mouth.fill"], "labels": {"eye.fill": "глаз", "ear.fill": "ухо", "nose.fill": "нос", "mouth.fill": "рот"} },
-        { "id": "t3-flower-tree-leaf","minAge": 7, "instruction": "Сначала цветок, потом дерево, потом листок","correct": "camera.macro","distractors": ["tree.fill", "leaf.fill", "drop.fill"], "labels": {"camera.macro": "цветок", "tree.fill": "дерево", "leaf.fill": "листок", "drop.fill": "капля"} },
-        { "id": "t3-ball-bike-car","minAge": 6, "instruction": "Покажи мяч, потом велосипед, потом машину","correct": "soccerball",   "distractors": ["bicycle", "car.fill", "airplane"], "labels": {"soccerball": "мяч", "bicycle": "велосипед", "car.fill": "машина", "airplane": "самолёт"} },
-        { "id": "t3-bag-box-basket","minAge": 7, "instruction": "Найди сумку, коробку и корзину",          "correct": "bag.fill",       "distractors": ["shippingbox.fill", "basket.fill", "gift.fill"], "labels": {"bag.fill": "сумка", "shippingbox.fill": "коробка", "basket.fill": "корзина", "gift.fill": "подарок"} },
-        { "id": "t3-umbr-zont-rain","minAge": 7, "instruction": "Сначала зонт, потом тучу, потом солнце",  "correct": "umbrella.fill",  "distractors": ["cloud.fill", "sun.max.fill", "cloud.rain.fill"], "labels": {"umbrella.fill": "зонт", "cloud.fill": "туча", "sun.max.fill": "солнце", "cloud.rain.fill": "дождь"} },
-        { "id": "t3-cup-fork-apple","minAge": 6, "instruction": "Возьми кружку, вилку и яблоко",          "correct": "cup.and.saucer.fill","distractors": ["fork.knife", "apple.logo", "drop.fill"], "labels": {"cup.and.saucer.fill": "кружка", "fork.knife": "вилка", "apple.logo": "яблоко", "drop.fill": "капля"} }
+        {
+          "id": "t3-sun-moon-star",
+          "minAge": 6,
+          "instruction": "Сначала солнце, потом луну, потом звезду",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "moon.fill",
+            "star.fill",
+            "cloud.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна",
+            "star.fill": "звезда",
+            "cloud.fill": "облако"
+          }
+        },
+        {
+          "id": "t3-cat-fish-bird",
+          "minAge": 6,
+          "instruction": "Найди кошку, потом рыбку, потом птицу",
+          "correct": "cat.fill",
+          "distractors": [
+            "fish.fill",
+            "bird.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t3-apple-cup-book",
+          "minAge": 6,
+          "instruction": "Возьми яблоко, кружку и книгу",
+          "correct": "apple.logo",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "book.fill",
+            "pencil"
+          ],
+          "labels": {
+            "apple.logo": "яблоко",
+            "cup.and.saucer.fill": "кружка",
+            "book.fill": "книга",
+            "pencil": "карандаш"
+          }
+        },
+        {
+          "id": "t3-car-house-tree",
+          "minAge": 6,
+          "instruction": "Покажи машину, потом дом, потом дерево",
+          "correct": "car.fill",
+          "distractors": [
+            "house.fill",
+            "tree.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "car.fill": "машина",
+            "house.fill": "дом",
+            "tree.fill": "дерево",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t3-key-lock-door",
+          "minAge": 6,
+          "instruction": "Сначала ключ, потом замок, потом дверь",
+          "correct": "key.fill",
+          "distractors": [
+            "lock.fill",
+            "door.left.hand.open",
+            "macwindow"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "lock.fill": "замок",
+            "door.left.hand.open": "дверь",
+            "macwindow": "окно"
+          }
+        },
+        {
+          "id": "t3-star-flag-bell",
+          "minAge": 6,
+          "instruction": "Найди звезду, флаг и колокольчик",
+          "correct": "star.fill",
+          "distractors": [
+            "flag.fill",
+            "bell.fill",
+            "heart.fill"
+          ],
+          "labels": {
+            "star.fill": "звезда",
+            "flag.fill": "флаг",
+            "bell.fill": "колокольчик",
+            "heart.fill": "сердце"
+          }
+        },
+        {
+          "id": "t3-rain-umbr-cloud",
+          "minAge": 7,
+          "instruction": "Покажи дождь, потом зонт, потом тучу",
+          "correct": "cloud.rain.fill",
+          "distractors": [
+            "umbrella.fill",
+            "cloud.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "cloud.rain.fill": "дождь",
+            "umbrella.fill": "зонт",
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t3-bird-tree-leaf",
+          "minAge": 7,
+          "instruction": "Сначала птицу, потом дерево, потом листок",
+          "correct": "bird.fill",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "tree.fill": "дерево",
+            "leaf.fill": "листок",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t3-gift-bell-flag",
+          "minAge": 7,
+          "instruction": "Найди подарок, колокольчик и флаг",
+          "correct": "gift.fill",
+          "distractors": [
+            "bell.fill",
+            "flag.fill",
+            "star.fill"
+          ],
+          "labels": {
+            "gift.fill": "подарок",
+            "bell.fill": "колокольчик",
+            "flag.fill": "флаг",
+            "star.fill": "звезда"
+          }
+        },
+        {
+          "id": "t3-fire-water-snow",
+          "minAge": 7,
+          "instruction": "Покажи огонь, потом воду, потом снежинку",
+          "correct": "flame.fill",
+          "distractors": [
+            "drop.fill",
+            "snowflake",
+            "wind"
+          ],
+          "labels": {
+            "flame.fill": "огонь",
+            "drop.fill": "вода",
+            "snowflake": "снежинка",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t3-clock-lamp-bell",
+          "minAge": 7,
+          "instruction": "Сначала часы, потом лампу, потом колокольчик",
+          "correct": "clock.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "bell.fill",
+            "calendar"
+          ],
+          "labels": {
+            "clock.fill": "часы",
+            "lightbulb.fill": "лампа",
+            "bell.fill": "колокольчик",
+            "calendar": "календарь"
+          }
+        },
+        {
+          "id": "t3-boat-fish-drop",
+          "minAge": 7,
+          "instruction": "Найди лодку, рыбку и каплю",
+          "correct": "sailboat.fill",
+          "distractors": [
+            "fish.fill",
+            "drop.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "sailboat.fill": "лодка",
+            "fish.fill": "рыба",
+            "drop.fill": "капля",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t3-hare-turt-cat",
+          "minAge": 7,
+          "instruction": "Сначала зайца, потом черепаху, потом кошку",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "cat.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "tortoise.fill": "черепаха",
+            "cat.fill": "кошка",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t3-train-plane-car",
+          "minAge": 7,
+          "instruction": "Покажи поезд, потом самолёт, потом машину",
+          "correct": "tram.fill",
+          "distractors": [
+            "airplane",
+            "car.fill",
+            "sailboat.fill"
+          ],
+          "labels": {
+            "tram.fill": "поезд",
+            "airplane": "самолёт",
+            "car.fill": "машина",
+            "sailboat.fill": "лодка"
+          }
+        },
+        {
+          "id": "t3-eye-ear-nose",
+          "minAge": 7,
+          "instruction": "Найди глаз, ухо и нос",
+          "correct": "eye.fill",
+          "distractors": [
+            "ear.fill",
+            "nose.fill",
+            "mouth.fill"
+          ],
+          "labels": {
+            "eye.fill": "глаз",
+            "ear.fill": "ухо",
+            "nose.fill": "нос",
+            "mouth.fill": "рот"
+          }
+        },
+        {
+          "id": "t3-flower-tree-leaf",
+          "minAge": 7,
+          "instruction": "Сначала цветок, потом дерево, потом листок",
+          "correct": "camera.macro",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "camera.macro": "цветок",
+            "tree.fill": "дерево",
+            "leaf.fill": "листок",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t3-ball-bike-car",
+          "minAge": 6,
+          "instruction": "Покажи мяч, потом велосипед, потом машину",
+          "correct": "soccerball",
+          "distractors": [
+            "bicycle",
+            "car.fill",
+            "airplane"
+          ],
+          "labels": {
+            "soccerball": "мяч",
+            "bicycle": "велосипед",
+            "car.fill": "машина",
+            "airplane": "самолёт"
+          }
+        },
+        {
+          "id": "t3-bag-box-basket",
+          "minAge": 7,
+          "instruction": "Найди сумку, коробку и корзину",
+          "correct": "bag.fill",
+          "distractors": [
+            "shippingbox.fill",
+            "basket.fill",
+            "gift.fill"
+          ],
+          "labels": {
+            "bag.fill": "сумка",
+            "shippingbox.fill": "коробка",
+            "basket.fill": "корзина",
+            "gift.fill": "подарок"
+          }
+        },
+        {
+          "id": "t3-umbr-zont-rain",
+          "minAge": 7,
+          "instruction": "Сначала зонт, потом тучу, потом солнце",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "cloud.fill",
+            "sun.max.fill",
+            "cloud.rain.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце",
+            "cloud.rain.fill": "дождь"
+          }
+        },
+        {
+          "id": "t3-cup-fork-apple",
+          "minAge": 6,
+          "instruction": "Возьми кружку, вилку и яблоко",
+          "correct": "cup.and.saucer.fill",
+          "distractors": [
+            "fork.knife",
+            "apple.logo",
+            "drop.fill"
+          ],
+          "labels": {
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка",
+            "apple.logo": "яблоко",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t3-grib-derevo-list",
+          "minAge": 6,
+          "instruction": "Сначала гриб, потом дерево, потом листок",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "leaf.fill": "гриб",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t3-morkov-yablo-grusha",
+          "minAge": 6,
+          "instruction": "Возьми морковку, яблоко и грушу",
+          "correct": "carrot.fill",
+          "distractors": [
+            "apple.logo",
+            "oval.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "carrot.fill": "морковка",
+            "apple.logo": "яблоко",
+            "oval.fill": "груша",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t3-koshka-myshka-ryba",
+          "minAge": 6,
+          "instruction": "Найди кошку, потом мышку, потом рыбку",
+          "correct": "cat.fill",
+          "distractors": [
+            "pawprint.fill",
+            "fish.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "pawprint.fill": "мышка",
+            "fish.fill": "рыба",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t3-loshad-zayac-cherep",
+          "minAge": 7,
+          "instruction": "Сначала лошадку, потом зайца, потом черепаху",
+          "correct": "dog.fill",
+          "distractors": [
+            "hare.fill",
+            "tortoise.fill",
+            "cat.fill"
+          ],
+          "labels": {
+            "dog.fill": "лошадка",
+            "hare.fill": "заяц",
+            "tortoise.fill": "черепаха",
+            "cat.fill": "кошка"
+          }
+        },
+        {
+          "id": "t3-snezh-tucha-veter",
+          "minAge": 7,
+          "instruction": "Покажи снежинку, потом тучу, потом ветер",
+          "correct": "snowflake",
+          "distractors": [
+            "cloud.fill",
+            "wind",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "snowflake": "снежинка",
+            "cloud.fill": "туча",
+            "wind": "ветер",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t3-zamok-kluch-dver",
+          "minAge": 6,
+          "instruction": "Сначала замок, потом ключ, потом дверь",
+          "correct": "lock.fill",
+          "distractors": [
+            "key.fill",
+            "door.left.hand.open",
+            "house.fill"
+          ],
+          "labels": {
+            "lock.fill": "замок",
+            "key.fill": "ключ",
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t3-vedro-lopata-myach",
+          "minAge": 6,
+          "instruction": "Возьми ведро, лопатку и мяч",
+          "correct": "archivebox.fill",
+          "distractors": [
+            "fork.knife",
+            "soccerball",
+            "basket.fill"
+          ],
+          "labels": {
+            "archivebox.fill": "ведро",
+            "fork.knife": "лопатка",
+            "soccerball": "мяч",
+            "basket.fill": "корзина"
+          }
+        },
+        {
+          "id": "t3-shapka-botinok-sumka",
+          "minAge": 7,
+          "instruction": "Найди шапку, ботинок и сумку",
+          "correct": "tshirt.fill",
+          "distractors": [
+            "shoe",
+            "bag.fill",
+            "umbrella.fill"
+          ],
+          "labels": {
+            "shoe": "ботинок",
+            "bag.fill": "сумка",
+            "umbrella.fill": "зонт",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t3-svecha-lampa-bolt",
+          "minAge": 7,
+          "instruction": "Покажи свечку, потом лампу, потом молнию",
+          "correct": "flame.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "bolt.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "flame.fill": "свечка",
+            "lightbulb.fill": "лампа",
+            "bolt.fill": "молния",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t3-gora-reka-most",
+          "minAge": 7,
+          "instruction": "Сначала гору, потом реку, потом мост",
+          "correct": "mountain.2.fill",
+          "distractors": [
+            "water.waves",
+            "road.lanes",
+            "tree.fill"
+          ],
+          "labels": {
+            "mountain.2.fill": "гора",
+            "water.waves": "река",
+            "road.lanes": "мост",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t3-pchela-babochka-ptica",
+          "minAge": 7,
+          "instruction": "Найди пчелу, бабочку и птицу",
+          "correct": "ant.fill",
+          "distractors": [
+            "sparkles",
+            "bird.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "ant.fill": "пчела",
+            "sparkles": "бабочка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t3-koleso-mashina-poezd",
+          "minAge": 7,
+          "instruction": "Покажи колесо, потом машину, потом поезд",
+          "correct": "circle.circle",
+          "distractors": [
+            "car.fill",
+            "tram.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "circle.circle": "колесо",
+            "car.fill": "машина",
+            "tram.fill": "поезд",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t3-yaytso-ptica-gnezdo",
+          "minAge": 7,
+          "instruction": "Сначала яйцо, потом птицу, потом гнездо",
+          "correct": "oval.fill",
+          "distractors": [
+            "bird.fill",
+            "basket.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "oval.fill": "яйцо",
+            "bird.fill": "птица",
+            "basket.fill": "гнездо",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t3-svetofor-mashina-doroga",
+          "minAge": 7,
+          "instruction": "Найди светофор, машину и дорогу",
+          "correct": "light.beacon.max.fill",
+          "distractors": [
+            "car.fill",
+            "road.lanes",
+            "house.fill"
+          ],
+          "labels": {
+            "light.beacon.max.fill": "светофор",
+            "car.fill": "машина",
+            "road.lanes": "дорога",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t3-konfeta-tort-podarok",
+          "minAge": 6,
+          "instruction": "Возьми конфету, тортик и подарок",
+          "correct": "birthday.cake.fill",
+          "distractors": [
+            "gift.fill",
+            "balloon.fill",
+            "cup.and.saucer.fill"
+          ],
+          "labels": {
+            "birthday.cake.fill": "тортик",
+            "gift.fill": "подарок",
+            "balloon.fill": "шарик",
+            "cup.and.saucer.fill": "кружка"
+          }
+        },
+        {
+          "id": "t3-medved-myshka-zayac",
+          "minAge": 7,
+          "instruction": "Сначала медведя, потом мышку, потом зайца",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "cat.fill",
+            "hare.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "медведь",
+            "cat.fill": "кошка",
+            "hare.fill": "заяц",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t3-grusha-konfeta-yablo",
+          "minAge": 6,
+          "instruction": "Покажи грушу, потом конфету, потом яблоко",
+          "correct": "oval.fill",
+          "distractors": [
+            "birthday.cake.fill",
+            "apple.logo",
+            "carrot.fill"
+          ],
+          "labels": {
+            "oval.fill": "груша",
+            "birthday.cake.fill": "конфета",
+            "apple.logo": "яблоко",
+            "carrot.fill": "морковка"
+          }
+        },
+        {
+          "id": "t3-list-grib-tucha",
+          "minAge": 7,
+          "instruction": "Найди листок, гриб и тучу",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "cloud.fill",
+            "camera.macro"
+          ],
+          "labels": {
+            "leaf.fill": "листок",
+            "tree.fill": "гриб/дерево",
+            "cloud.fill": "туча",
+            "camera.macro": "цветок"
+          }
+        },
+        {
+          "id": "t3-zont-shapka-botinok",
+          "minAge": 7,
+          "instruction": "Сначала зонт, потом шапку, потом ботинок",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "tshirt.fill",
+            "shoe",
+            "bag.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "shoe": "ботинок",
+            "bag.fill": "сумка",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t3-utka-ryba-lodka",
+          "minAge": 7,
+          "instruction": "Покажи утку, потом рыбку, потом лодку",
+          "correct": "bird.fill",
+          "distractors": [
+            "fish.fill",
+            "sailboat.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "bird.fill": "утка",
+            "fish.fill": "рыба",
+            "sailboat.fill": "лодка",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t3-cvetok-pchela-list",
+          "minAge": 7,
+          "instruction": "Найди цветок, пчелу и листок",
+          "correct": "camera.macro",
+          "distractors": [
+            "ant.fill",
+            "leaf.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "camera.macro": "цветок",
+            "ant.fill": "пчела",
+            "leaf.fill": "листок",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t3-myach-koleso-shar",
+          "minAge": 6,
+          "instruction": "Возьми мяч, колесо и шарик",
+          "correct": "soccerball",
+          "distractors": [
+            "circle.circle",
+            "balloon.fill",
+            "circle.fill"
+          ],
+          "labels": {
+            "soccerball": "мяч",
+            "circle.circle": "колесо",
+            "balloon.fill": "шарик",
+            "circle.fill": "круг"
+          }
+        },
+        {
+          "id": "t3-luna-zvezda-tucha",
+          "minAge": 7,
+          "instruction": "Сначала луну, потом звезду, потом тучу",
+          "correct": "moon.fill",
+          "distractors": [
+            "star.fill",
+            "cloud.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "moon.fill": "луна",
+            "star.fill": "звезда",
+            "cloud.fill": "туча",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t3-noj-lozhka-tarelka",
+          "minAge": 7,
+          "instruction": "Покажи нож, потом ложку, потом тарелку",
+          "correct": "scissors",
+          "distractors": [
+            "fork.knife",
+            "circle.fill",
+            "cup.and.saucer.fill"
+          ],
+          "labels": {
+            "scissors": "нож",
+            "fork.knife": "ложка",
+            "circle.fill": "тарелка",
+            "cup.and.saucer.fill": "кружка"
+          }
+        },
+        {
+          "id": "t3-kniga-karandash-kist",
+          "minAge": 6,
+          "instruction": "Найди книгу, карандаш и кисточку",
+          "correct": "book.fill",
+          "distractors": [
+            "pencil",
+            "paintbrush.fill",
+            "scissors"
+          ],
+          "labels": {
+            "book.fill": "книга",
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть",
+            "scissors": "ножницы"
+          }
+        },
+        {
+          "id": "t3-dom-derevo-cvetok",
+          "minAge": 6,
+          "instruction": "Сначала дом, потом дерево, потом цветок",
+          "correct": "house.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "leaf.fill"
+          ],
+          "labels": {
+            "house.fill": "дом",
+            "tree.fill": "дерево",
+            "camera.macro": "цветок",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t3-solnce-tucha-dozhd",
+          "minAge": 7,
+          "instruction": "Покажи солнце, потом тучу, потом дождь",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "cloud.fill",
+            "cloud.rain.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце",
+            "cloud.fill": "туча",
+            "cloud.rain.fill": "дождь",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t3-myshka-syr-norka",
+          "minAge": 7,
+          "instruction": "Найди мышку, сыр и норку",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "triangle.fill",
+            "house.fill",
+            "cat.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "мышка",
+            "triangle.fill": "сыр",
+            "house.fill": "норка",
+            "cat.fill": "кошка"
+          }
+        },
+        {
+          "id": "t3-zayac-morkov-kapusta",
+          "minAge": 7,
+          "instruction": "Сначала зайца, потом морковку, потом капусту",
+          "correct": "hare.fill",
+          "distractors": [
+            "carrot.fill",
+            "leaf.fill",
+            "apple.logo"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "carrot.fill": "морковка",
+            "leaf.fill": "капуста",
+            "apple.logo": "яблоко"
+          }
+        },
+        {
+          "id": "t3-loshad-trava-zabor",
+          "minAge": 7,
+          "instruction": "Покажи лошадку, потом траву, потом забор",
+          "correct": "dog.fill",
+          "distractors": [
+            "leaf.fill",
+            "rectangle.split.3x1",
+            "tree.fill"
+          ],
+          "labels": {
+            "dog.fill": "лошадка",
+            "leaf.fill": "трава",
+            "rectangle.split.3x1": "забор",
+            "tree.fill": "дерево"
+          }
+        }
       ]
     },
     {
       "tier": 4,
       "title": "Где спрятался предмет",
       "items": [
-        { "id": "t4-na-stole",   "minAge": 5, "instruction": "Покажи, где книга лежит на столе",        "correct": "books.vertical.fill",  "distractors": ["table.furniture.fill", "book.fill", "chair.fill"], "labels": {"books.vertical.fill": "книга на столе", "table.furniture.fill": "пустой стол", "book.fill": "книга в руке", "chair.fill": "стул"} },
-        { "id": "t4-pod-stolom", "minAge": 5, "instruction": "Покажи, где кошка сидит под столом",      "correct": "pawprint.fill",        "distractors": ["table.furniture.fill", "cat.fill", "chair.fill"], "labels": {"pawprint.fill": "кошка под столом", "table.furniture.fill": "пустой стол", "cat.fill": "кошка на стуле", "chair.fill": "стул"} },
-        { "id": "t4-v-korobke",  "minAge": 5, "instruction": "Покажи, где игрушка лежит в коробке",     "correct": "shippingbox.fill",     "distractors": ["gift.fill", "basket.fill", "bag.fill"], "labels": {"shippingbox.fill": "игрушка в коробке", "gift.fill": "подарок снаружи", "basket.fill": "пустая корзина", "bag.fill": "сумка"} },
-        { "id": "t4-na-dereve",  "minAge": 5, "instruction": "Покажи, где птица сидит на дереве",       "correct": "bird.fill",            "distractors": ["tree.fill", "leaf.fill", "cloud.fill"], "labels": {"bird.fill": "птица на дереве", "tree.fill": "дерево без птицы", "leaf.fill": "листок", "cloud.fill": "облако"} },
-        { "id": "t4-v-dome",     "minAge": 5, "instruction": "Покажи, где мышка спряталась в домике",   "correct": "house.fill",           "distractors": ["tent.fill", "pawprint.fill", "tree.fill"], "labels": {"house.fill": "мышка в домике", "tent.fill": "палатка", "pawprint.fill": "мышка на улице", "tree.fill": "дерево"} },
-        { "id": "t4-pod-krovat", "minAge": 6, "instruction": "Покажи, где мяч закатился под кровать",   "correct": "bed.double.fill",      "distractors": ["soccerball", "chair.fill", "house.fill"], "labels": {"bed.double.fill": "мяч под кроватью", "soccerball": "мяч на полу", "chair.fill": "стул", "house.fill": "дом"} },
-        { "id": "t4-nad-oknom",  "minAge": 6, "instruction": "Покажи, где солнце светит над окном",     "correct": "sun.max.fill",         "distractors": ["macwindow", "cloud.fill", "moon.fill"], "labels": {"sun.max.fill": "солнце над окном", "macwindow": "пустое окно", "cloud.fill": "облако", "moon.fill": "луна"} },
-        { "id": "t4-za-domom",   "minAge": 6, "instruction": "Покажи, где дерево растёт за домом",       "correct": "tree.fill",            "distractors": ["house.fill", "leaf.fill", "mountain.2.fill"], "labels": {"tree.fill": "дерево за домом", "house.fill": "дом без дерева", "leaf.fill": "листок", "mountain.2.fill": "гора"} },
-        { "id": "t4-pered-dver", "minAge": 6, "instruction": "Покажи, где коврик лежит перед дверью",    "correct": "rectangle.portrait.fill","distractors": ["door.left.hand.open", "key.fill", "house.fill"], "labels": {"rectangle.portrait.fill": "коврик у двери", "door.left.hand.open": "дверь без коврика", "key.fill": "ключ", "house.fill": "дом"} },
-        { "id": "t4-okolo-knigi","minAge": 6, "instruction": "Покажи, где кружка стоит около книги",     "correct": "cup.and.saucer.fill",  "distractors": ["book.fill", "fork.knife", "drop.fill"], "labels": {"cup.and.saucer.fill": "кружка у книги", "book.fill": "одна книга", "fork.knife": "вилка", "drop.fill": "капля"} },
-        { "id": "t4-mezhdu-derev","minAge": 7, "instruction": "Покажи, где грибок вырос между деревьями","correct": "leaf.fill",            "distractors": ["tree.fill", "mountain.2.fill", "camera.macro"], "labels": {"leaf.fill": "грибок между деревьями", "tree.fill": "одно дерево", "mountain.2.fill": "гора", "camera.macro": "цветок"} },
-        { "id": "t4-v-vode",     "minAge": 6, "instruction": "Покажи, где рыбка плавает в воде",         "correct": "drop.fill",            "distractors": ["fish.fill", "sailboat.fill", "bird.fill"], "labels": {"drop.fill": "рыбка в воде", "fish.fill": "рыбка на берегу", "sailboat.fill": "лодка", "bird.fill": "птица"} },
-        { "id": "t4-na-stule",   "minAge": 5, "instruction": "Покажи, где кошка сидит на стуле",         "correct": "chair.fill",           "distractors": ["cat.fill", "table.furniture.fill", "bed.double.fill"], "labels": {"chair.fill": "кошка на стуле", "cat.fill": "кошка на полу", "table.furniture.fill": "стол", "bed.double.fill": "кровать"} },
-        { "id": "t4-za-oknom",   "minAge": 7, "instruction": "Покажи, где дождь идёт за окном",          "correct": "cloud.rain.fill",      "distractors": ["macwindow", "umbrella.fill", "sun.max.fill"], "labels": {"cloud.rain.fill": "дождь за окном", "macwindow": "ясное окно", "umbrella.fill": "зонт", "sun.max.fill": "солнце"} },
-        { "id": "t4-pod-zontom", "minAge": 6, "instruction": "Покажи, где девочка стоит под зонтом",     "correct": "umbrella.fill",        "distractors": ["cloud.rain.fill", "figure.walk", "sun.max.fill"], "labels": {"umbrella.fill": "девочка под зонтом", "cloud.rain.fill": "дождь без зонта", "figure.walk": "девочка идёт", "sun.max.fill": "солнце"} },
-        { "id": "t4-nad-derev",  "minAge": 7, "instruction": "Покажи, где облако плывёт над деревом",    "correct": "cloud.fill",           "distractors": ["tree.fill", "sun.max.fill", "bird.fill"], "labels": {"cloud.fill": "облако над деревом", "tree.fill": "дерево без облака", "sun.max.fill": "солнце", "bird.fill": "птица"} },
-        { "id": "t4-v-sumke",    "minAge": 6, "instruction": "Покажи, где книга лежит в сумке",          "correct": "bag.fill",             "distractors": ["book.fill", "shippingbox.fill", "basket.fill"], "labels": {"bag.fill": "книга в сумке", "book.fill": "книга в руке", "shippingbox.fill": "коробка", "basket.fill": "корзина"} },
-        { "id": "t4-za-derevom", "minAge": 7, "instruction": "Покажи, где зайчик спрятался за деревом",  "correct": "tree.fill",            "distractors": ["hare.fill", "leaf.fill", "mountain.2.fill"], "labels": {"tree.fill": "зайчик за деревом", "hare.fill": "зайчик на поляне", "leaf.fill": "листок", "mountain.2.fill": "гора"} },
-        { "id": "t4-mezhdu-cup", "minAge": 7, "instruction": "Покажи, где ложка лежит между кружками",   "correct": "fork.knife",           "distractors": ["cup.and.saucer.fill", "drop.fill", "leaf.fill"], "labels": {"fork.knife": "ложка между кружками", "cup.and.saucer.fill": "одна кружка", "drop.fill": "капля", "leaf.fill": "лист"} },
-        { "id": "t4-pered-domom","minAge": 6, "instruction": "Покажи, где машина стоит перед домом",     "correct": "car.fill",             "distractors": ["house.fill", "tram.fill", "bicycle"], "labels": {"car.fill": "машина у дома", "house.fill": "дом без машины", "tram.fill": "поезд", "bicycle": "велосипед"} }
+        {
+          "id": "t4-na-stole",
+          "minAge": 5,
+          "instruction": "Покажи, где книга лежит на столе",
+          "correct": "books.vertical.fill",
+          "distractors": [
+            "table.furniture.fill",
+            "book.fill",
+            "chair.fill"
+          ],
+          "labels": {
+            "books.vertical.fill": "книга на столе",
+            "table.furniture.fill": "пустой стол",
+            "book.fill": "книга в руке",
+            "chair.fill": "стул"
+          }
+        },
+        {
+          "id": "t4-pod-stolom",
+          "minAge": 5,
+          "instruction": "Покажи, где кошка сидит под столом",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "table.furniture.fill",
+            "cat.fill",
+            "chair.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "кошка под столом",
+            "table.furniture.fill": "пустой стол",
+            "cat.fill": "кошка на стуле",
+            "chair.fill": "стул"
+          }
+        },
+        {
+          "id": "t4-v-korobke",
+          "minAge": 5,
+          "instruction": "Покажи, где игрушка лежит в коробке",
+          "correct": "shippingbox.fill",
+          "distractors": [
+            "gift.fill",
+            "basket.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "shippingbox.fill": "игрушка в коробке",
+            "gift.fill": "подарок снаружи",
+            "basket.fill": "пустая корзина",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t4-na-dereve",
+          "minAge": 5,
+          "instruction": "Покажи, где птица сидит на дереве",
+          "correct": "bird.fill",
+          "distractors": [
+            "tree.fill",
+            "leaf.fill",
+            "cloud.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица на дереве",
+            "tree.fill": "дерево без птицы",
+            "leaf.fill": "листок",
+            "cloud.fill": "облако"
+          }
+        },
+        {
+          "id": "t4-v-dome",
+          "minAge": 5,
+          "instruction": "Покажи, где мышка спряталась в домике",
+          "correct": "house.fill",
+          "distractors": [
+            "tent.fill",
+            "pawprint.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "house.fill": "мышка в домике",
+            "tent.fill": "палатка",
+            "pawprint.fill": "мышка на улице",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t4-pod-krovat",
+          "minAge": 6,
+          "instruction": "Покажи, где мяч закатился под кровать",
+          "correct": "bed.double.fill",
+          "distractors": [
+            "soccerball",
+            "chair.fill",
+            "house.fill"
+          ],
+          "labels": {
+            "bed.double.fill": "мяч под кроватью",
+            "soccerball": "мяч на полу",
+            "chair.fill": "стул",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t4-nad-oknom",
+          "minAge": 6,
+          "instruction": "Покажи, где солнце светит над окном",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "macwindow",
+            "cloud.fill",
+            "moon.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце над окном",
+            "macwindow": "пустое окно",
+            "cloud.fill": "облако",
+            "moon.fill": "луна"
+          }
+        },
+        {
+          "id": "t4-za-domom",
+          "minAge": 6,
+          "instruction": "Покажи, где дерево растёт за домом",
+          "correct": "tree.fill",
+          "distractors": [
+            "house.fill",
+            "leaf.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "tree.fill": "дерево за домом",
+            "house.fill": "дом без дерева",
+            "leaf.fill": "листок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-pered-dver",
+          "minAge": 6,
+          "instruction": "Покажи, где коврик лежит перед дверью",
+          "correct": "rectangle.portrait.fill",
+          "distractors": [
+            "door.left.hand.open",
+            "key.fill",
+            "house.fill"
+          ],
+          "labels": {
+            "rectangle.portrait.fill": "коврик у двери",
+            "door.left.hand.open": "дверь без коврика",
+            "key.fill": "ключ",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t4-okolo-knigi",
+          "minAge": 6,
+          "instruction": "Покажи, где кружка стоит около книги",
+          "correct": "cup.and.saucer.fill",
+          "distractors": [
+            "book.fill",
+            "fork.knife",
+            "drop.fill"
+          ],
+          "labels": {
+            "cup.and.saucer.fill": "кружка у книги",
+            "book.fill": "одна книга",
+            "fork.knife": "вилка",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t4-mezhdu-derev",
+          "minAge": 7,
+          "instruction": "Покажи, где грибок вырос между деревьями",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "mountain.2.fill",
+            "camera.macro"
+          ],
+          "labels": {
+            "leaf.fill": "грибок между деревьями",
+            "tree.fill": "одно дерево",
+            "mountain.2.fill": "гора",
+            "camera.macro": "цветок"
+          }
+        },
+        {
+          "id": "t4-v-vode",
+          "minAge": 6,
+          "instruction": "Покажи, где рыбка плавает в воде",
+          "correct": "drop.fill",
+          "distractors": [
+            "fish.fill",
+            "sailboat.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "drop.fill": "рыбка в воде",
+            "fish.fill": "рыбка на берегу",
+            "sailboat.fill": "лодка",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t4-na-stule",
+          "minAge": 5,
+          "instruction": "Покажи, где кошка сидит на стуле",
+          "correct": "chair.fill",
+          "distractors": [
+            "cat.fill",
+            "table.furniture.fill",
+            "bed.double.fill"
+          ],
+          "labels": {
+            "chair.fill": "кошка на стуле",
+            "cat.fill": "кошка на полу",
+            "table.furniture.fill": "стол",
+            "bed.double.fill": "кровать"
+          }
+        },
+        {
+          "id": "t4-za-oknom",
+          "minAge": 7,
+          "instruction": "Покажи, где дождь идёт за окном",
+          "correct": "cloud.rain.fill",
+          "distractors": [
+            "macwindow",
+            "umbrella.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "cloud.rain.fill": "дождь за окном",
+            "macwindow": "ясное окно",
+            "umbrella.fill": "зонт",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t4-pod-zontom",
+          "minAge": 6,
+          "instruction": "Покажи, где девочка стоит под зонтом",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "cloud.rain.fill",
+            "figure.walk",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "девочка под зонтом",
+            "cloud.rain.fill": "дождь без зонта",
+            "figure.walk": "девочка идёт",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t4-nad-derev",
+          "minAge": 7,
+          "instruction": "Покажи, где облако плывёт над деревом",
+          "correct": "cloud.fill",
+          "distractors": [
+            "tree.fill",
+            "sun.max.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "cloud.fill": "облако над деревом",
+            "tree.fill": "дерево без облака",
+            "sun.max.fill": "солнце",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t4-v-sumke",
+          "minAge": 6,
+          "instruction": "Покажи, где книга лежит в сумке",
+          "correct": "bag.fill",
+          "distractors": [
+            "book.fill",
+            "shippingbox.fill",
+            "basket.fill"
+          ],
+          "labels": {
+            "bag.fill": "книга в сумке",
+            "book.fill": "книга в руке",
+            "shippingbox.fill": "коробка",
+            "basket.fill": "корзина"
+          }
+        },
+        {
+          "id": "t4-za-derevom",
+          "minAge": 7,
+          "instruction": "Покажи, где зайчик спрятался за деревом",
+          "correct": "tree.fill",
+          "distractors": [
+            "hare.fill",
+            "leaf.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "tree.fill": "зайчик за деревом",
+            "hare.fill": "зайчик на поляне",
+            "leaf.fill": "листок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-mezhdu-cup",
+          "minAge": 7,
+          "instruction": "Покажи, где ложка лежит между кружками",
+          "correct": "fork.knife",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "drop.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "fork.knife": "ложка между кружками",
+            "cup.and.saucer.fill": "одна кружка",
+            "drop.fill": "капля",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t4-pered-domom",
+          "minAge": 6,
+          "instruction": "Покажи, где машина стоит перед домом",
+          "correct": "car.fill",
+          "distractors": [
+            "house.fill",
+            "tram.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "car.fill": "машина у дома",
+            "house.fill": "дом без машины",
+            "tram.fill": "поезд",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t4-na-polke",
+          "minAge": 5,
+          "instruction": "Покажи, где книга стоит на полке",
+          "correct": "books.vertical.fill",
+          "distractors": [
+            "book.fill",
+            "shippingbox.fill",
+            "table.furniture.fill"
+          ],
+          "labels": {
+            "books.vertical.fill": "книга на полке",
+            "book.fill": "книга в руке",
+            "shippingbox.fill": "книга в коробке",
+            "table.furniture.fill": "полка"
+          }
+        },
+        {
+          "id": "t4-pod-derevom",
+          "minAge": 6,
+          "instruction": "Покажи, где гриб вырос под деревом",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "camera.macro",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "leaf.fill": "гриб под деревом",
+            "tree.fill": "дерево без гриба",
+            "camera.macro": "цветок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-v-vedre",
+          "minAge": 5,
+          "instruction": "Покажи, где вода налита в ведро",
+          "correct": "archivebox.fill",
+          "distractors": [
+            "drop.fill",
+            "cup.and.saucer.fill",
+            "basket.fill"
+          ],
+          "labels": {
+            "archivebox.fill": "вода в ведре",
+            "drop.fill": "лужа на полу",
+            "cup.and.saucer.fill": "кружка",
+            "basket.fill": "корзина"
+          }
+        },
+        {
+          "id": "t4-na-tarelke",
+          "minAge": 5,
+          "instruction": "Покажи, где яблоко лежит на тарелке",
+          "correct": "circle.fill",
+          "distractors": [
+            "apple.logo",
+            "fork.knife",
+            "cup.and.saucer.fill"
+          ],
+          "labels": {
+            "circle.fill": "яблоко на тарелке",
+            "apple.logo": "яблоко в руке",
+            "fork.knife": "вилка",
+            "cup.and.saucer.fill": "кружка"
+          }
+        },
+        {
+          "id": "t4-pod-stulom",
+          "minAge": 6,
+          "instruction": "Покажи, где мячик закатился под стул",
+          "correct": "chair.fill",
+          "distractors": [
+            "soccerball",
+            "table.furniture.fill",
+            "bed.double.fill"
+          ],
+          "labels": {
+            "chair.fill": "мяч под стулом",
+            "soccerball": "мяч на полу",
+            "table.furniture.fill": "стол",
+            "bed.double.fill": "кровать"
+          }
+        },
+        {
+          "id": "t4-v-vode2",
+          "minAge": 6,
+          "instruction": "Покажи, где утка плавает в воде",
+          "correct": "water.waves",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "sailboat.fill"
+          ],
+          "labels": {
+            "water.waves": "утка в воде",
+            "bird.fill": "утка на берегу",
+            "fish.fill": "рыба",
+            "sailboat.fill": "лодка"
+          }
+        },
+        {
+          "id": "t4-na-vetke",
+          "minAge": 6,
+          "instruction": "Покажи, где птица сидит на ветке",
+          "correct": "tree.fill",
+          "distractors": [
+            "bird.fill",
+            "leaf.fill",
+            "cloud.fill"
+          ],
+          "labels": {
+            "tree.fill": "птица на ветке",
+            "bird.fill": "птица летит",
+            "leaf.fill": "листок",
+            "cloud.fill": "облако"
+          }
+        },
+        {
+          "id": "t4-pod-zontom2",
+          "minAge": 6,
+          "instruction": "Покажи, где мишка прячется под зонтом",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "cloud.rain.fill",
+            "pawprint.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "мишка под зонтом",
+            "cloud.rain.fill": "дождь без зонта",
+            "pawprint.fill": "мишка под дождём",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t4-v-norke",
+          "minAge": 6,
+          "instruction": "Покажи, где мышка сидит в норке",
+          "correct": "house.fill",
+          "distractors": [
+            "pawprint.fill",
+            "cat.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "house.fill": "мышка в норке",
+            "pawprint.fill": "мышка на поляне",
+            "cat.fill": "кошка",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t4-na-kryshe",
+          "minAge": 6,
+          "instruction": "Покажи, где кот сидит на крыше",
+          "correct": "house.fill",
+          "distractors": [
+            "cat.fill",
+            "pawprint.fill",
+            "chair.fill"
+          ],
+          "labels": {
+            "house.fill": "кот на крыше",
+            "cat.fill": "кот на земле",
+            "pawprint.fill": "след",
+            "chair.fill": "стул"
+          }
+        },
+        {
+          "id": "t4-v-gnezde",
+          "minAge": 6,
+          "instruction": "Покажи, где яйцо лежит в гнезде",
+          "correct": "basket.fill",
+          "distractors": [
+            "oval.fill",
+            "bird.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "basket.fill": "яйцо в гнезде",
+            "oval.fill": "яйцо на земле",
+            "bird.fill": "птица",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t4-na-stene",
+          "minAge": 6,
+          "instruction": "Покажи, где часы висят на стене",
+          "correct": "clock.fill",
+          "distractors": [
+            "calendar",
+            "macwindow",
+            "lightbulb.fill"
+          ],
+          "labels": {
+            "clock.fill": "часы на стене",
+            "calendar": "календарь",
+            "macwindow": "окно",
+            "lightbulb.fill": "лампа"
+          }
+        },
+        {
+          "id": "t4-nad-domom",
+          "minAge": 6,
+          "instruction": "Покажи, где солнце светит над домом",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "house.fill",
+            "cloud.fill",
+            "moon.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце над домом",
+            "house.fill": "дом без солнца",
+            "cloud.fill": "туча",
+            "moon.fill": "луна"
+          }
+        },
+        {
+          "id": "t4-nad-rekoy",
+          "minAge": 7,
+          "instruction": "Покажи, где мост стоит над рекой",
+          "correct": "road.lanes",
+          "distractors": [
+            "water.waves",
+            "sailboat.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "road.lanes": "мост над рекой",
+            "water.waves": "река без моста",
+            "sailboat.fill": "лодка",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-za-zaborom",
+          "minAge": 7,
+          "instruction": "Покажи, где собака сидит за забором",
+          "correct": "rectangle.split.3x1",
+          "distractors": [
+            "pawprint.fill",
+            "house.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "rectangle.split.3x1": "собака за забором",
+            "pawprint.fill": "собака на улице",
+            "house.fill": "дом",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t4-za-gory",
+          "minAge": 7,
+          "instruction": "Покажи, где солнце спряталось за горой",
+          "correct": "mountain.2.fill",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "moon.fill"
+          ],
+          "labels": {
+            "mountain.2.fill": "солнце за горой",
+            "sun.max.fill": "солнце в небе",
+            "cloud.fill": "туча",
+            "moon.fill": "луна"
+          }
+        },
+        {
+          "id": "t4-pered-domom2",
+          "minAge": 6,
+          "instruction": "Покажи, где цветок растёт перед домом",
+          "correct": "house.fill",
+          "distractors": [
+            "camera.macro",
+            "tree.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "house.fill": "цветок перед домом",
+            "camera.macro": "цветок в поле",
+            "tree.fill": "дерево",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t4-pered-vorotami",
+          "minAge": 7,
+          "instruction": "Покажи, где машина стоит перед воротами",
+          "correct": "door.left.hand.open",
+          "distractors": [
+            "car.fill",
+            "road.lanes",
+            "house.fill"
+          ],
+          "labels": {
+            "door.left.hand.open": "машина перед воротами",
+            "car.fill": "машина на дороге",
+            "road.lanes": "дорога",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t4-za-derevom2",
+          "minAge": 7,
+          "instruction": "Покажи, где зайчик спрятался за деревом",
+          "correct": "tree.fill",
+          "distractors": [
+            "hare.fill",
+            "leaf.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "tree.fill": "зайчик за деревом",
+            "hare.fill": "зайчик на поляне",
+            "leaf.fill": "листок",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-nad-vodoy",
+          "minAge": 7,
+          "instruction": "Покажи, где птица летит над водой",
+          "correct": "water.waves",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "sailboat.fill"
+          ],
+          "labels": {
+            "water.waves": "птица над водой",
+            "bird.fill": "птица на ветке",
+            "fish.fill": "рыба",
+            "sailboat.fill": "лодка"
+          }
+        },
+        {
+          "id": "t4-pered-zerkalom",
+          "minAge": 7,
+          "instruction": "Покажи, где стоит лампа перед зеркалом",
+          "correct": "lamp.desk.fill",
+          "distractors": [
+            "lightbulb.fill",
+            "macwindow",
+            "clock.fill"
+          ],
+          "labels": {
+            "lamp.desk.fill": "лампа перед зеркалом",
+            "lightbulb.fill": "лампа",
+            "macwindow": "зеркало/окно",
+            "clock.fill": "часы"
+          }
+        },
+        {
+          "id": "t4-za-tuchey",
+          "minAge": 7,
+          "instruction": "Покажи, где луна спряталась за тучей",
+          "correct": "cloud.fill",
+          "distractors": [
+            "moon.fill",
+            "star.fill",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "cloud.fill": "луна за тучей",
+            "moon.fill": "луна в небе",
+            "star.fill": "звезда",
+            "sun.max.fill": "солнце"
+          }
+        },
+        {
+          "id": "t4-mezhdu-domami",
+          "minAge": 7,
+          "instruction": "Покажи, где дерево растёт между домами",
+          "correct": "building.2.fill",
+          "distractors": [
+            "tree.fill",
+            "house.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "building.2.fill": "дерево между домами",
+            "tree.fill": "одно дерево",
+            "house.fill": "один дом",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t4-mezhdu-knigami",
+          "minAge": 7,
+          "instruction": "Покажи, где закладка лежит между книгами",
+          "correct": "books.vertical.fill",
+          "distractors": [
+            "book.fill",
+            "pencil",
+            "newspaper.fill"
+          ],
+          "labels": {
+            "books.vertical.fill": "закладка между книгами",
+            "book.fill": "одна книга",
+            "pencil": "карандаш",
+            "newspaper.fill": "газета"
+          }
+        },
+        {
+          "id": "t4-okolo-doma",
+          "minAge": 6,
+          "instruction": "Покажи, где машина стоит около дома",
+          "correct": "house.fill",
+          "distractors": [
+            "car.fill",
+            "tram.fill",
+            "tree.fill"
+          ],
+          "labels": {
+            "house.fill": "машина около дома",
+            "car.fill": "машина на дороге",
+            "tram.fill": "поезд",
+            "tree.fill": "дерево"
+          }
+        },
+        {
+          "id": "t4-okolo-dereva",
+          "minAge": 6,
+          "instruction": "Покажи, где скамейка стоит около дерева",
+          "correct": "tree.fill",
+          "distractors": [
+            "chair.fill",
+            "leaf.fill",
+            "camera.macro"
+          ],
+          "labels": {
+            "tree.fill": "скамейка около дерева",
+            "chair.fill": "стул в комнате",
+            "leaf.fill": "лист",
+            "camera.macro": "цветок"
+          }
+        },
+        {
+          "id": "t4-ryadom-myshka",
+          "minAge": 6,
+          "instruction": "Покажи, где мышка сидит рядом с сыром",
+          "correct": "triangle.fill",
+          "distractors": [
+            "pawprint.fill",
+            "cat.fill",
+            "house.fill"
+          ],
+          "labels": {
+            "triangle.fill": "мышка рядом с сыром",
+            "pawprint.fill": "мышка одна",
+            "cat.fill": "кошка",
+            "house.fill": "норка"
+          }
+        },
+        {
+          "id": "t4-mezhdu-derev2",
+          "minAge": 7,
+          "instruction": "Покажи, где грибок вырос между двумя деревьями",
+          "correct": "leaf.fill",
+          "distractors": [
+            "tree.fill",
+            "mountain.2.fill",
+            "camera.macro"
+          ],
+          "labels": {
+            "leaf.fill": "грибок между деревьями",
+            "tree.fill": "одно дерево",
+            "mountain.2.fill": "гора",
+            "camera.macro": "цветок"
+          }
+        },
+        {
+          "id": "t4-okolo-okna",
+          "minAge": 6,
+          "instruction": "Покажи, где цветок стоит около окна",
+          "correct": "macwindow",
+          "distractors": [
+            "camera.macro",
+            "tree.fill",
+            "lamp.desk.fill"
+          ],
+          "labels": {
+            "macwindow": "цветок около окна",
+            "camera.macro": "цветок в поле",
+            "tree.fill": "дерево",
+            "lamp.desk.fill": "лампа"
+          }
+        },
+        {
+          "id": "t4-mezhdu-cup2",
+          "minAge": 7,
+          "instruction": "Покажи, где ложка лежит между двумя тарелками",
+          "correct": "fork.knife",
+          "distractors": [
+            "circle.fill",
+            "cup.and.saucer.fill",
+            "drop.fill"
+          ],
+          "labels": {
+            "fork.knife": "ложка между тарелками",
+            "circle.fill": "одна тарелка",
+            "cup.and.saucer.fill": "кружка",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t4-dozhd-zont",
+          "minAge": 6,
+          "instruction": "Идёт дождь. Покажи, что нужно взять с собой",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "sun.max.fill",
+            "tshirt.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "sun.max.fill": "солнце",
+            "bag.fill": "сумка",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t4-holodno-shapka",
+          "minAge": 6,
+          "instruction": "На улице холодно. Покажи, что надо надеть",
+          "correct": "tshirt.fill",
+          "distractors": [
+            "umbrella.fill",
+            "shoe",
+            "sun.max.fill"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "shoe": "ботинок без шапки",
+            "sun.max.fill": "солнце",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t4-temno-lampa",
+          "minAge": 7,
+          "instruction": "Стало темно. Покажи, что надо включить",
+          "correct": "lightbulb.fill",
+          "distractors": [
+            "sun.max.fill",
+            "clock.fill",
+            "flame.fill"
+          ],
+          "labels": {
+            "lightbulb.fill": "лампа",
+            "sun.max.fill": "солнце",
+            "clock.fill": "часы",
+            "flame.fill": "свечка/огонь"
+          }
+        },
+        {
+          "id": "t4-zhazhda-voda",
+          "minAge": 6,
+          "instruction": "Малыш хочет пить. Покажи, что ему дать",
+          "correct": "cup.and.saucer.fill",
+          "distractors": [
+            "apple.logo",
+            "book.fill",
+            "soccerball"
+          ],
+          "labels": {
+            "cup.and.saucer.fill": "кружка с водой",
+            "apple.logo": "яблоко",
+            "book.fill": "книга",
+            "soccerball": "мяч"
+          }
+        },
+        {
+          "id": "t4-griaznye-ruki",
+          "minAge": 7,
+          "instruction": "Руки грязные. Покажи, что нужно сделать",
+          "correct": "drop.fill",
+          "distractors": [
+            "gift.fill",
+            "clock.fill",
+            "bag.fill"
+          ],
+          "labels": {
+            "drop.fill": "вода/помыть",
+            "gift.fill": "подарок",
+            "clock.fill": "часы",
+            "bag.fill": "сумка"
+          }
+        },
+        {
+          "id": "t4-sneg-sanki",
+          "minAge": 7,
+          "instruction": "Выпал снег. Покажи, на чём можно покататься",
+          "correct": "snowflake",
+          "distractors": [
+            "sailboat.fill",
+            "bicycle",
+            "umbrella.fill"
+          ],
+          "labels": {
+            "snowflake": "санки/снег",
+            "sailboat.fill": "лодка",
+            "bicycle": "велосипед",
+            "umbrella.fill": "зонт"
+          }
+        },
+        {
+          "id": "t4-noch-spat",
+          "minAge": 6,
+          "instruction": "Наступила ночь. Покажи, что пора делать",
+          "correct": "bed.double.fill",
+          "distractors": [
+            "sun.max.fill",
+            "soccerball",
+            "book.fill"
+          ],
+          "labels": {
+            "bed.double.fill": "кровать/спать",
+            "sun.max.fill": "солнце",
+            "soccerball": "мяч",
+            "book.fill": "книга"
+          }
+        },
+        {
+          "id": "t4-cvetok-polit",
+          "minAge": 7,
+          "instruction": "Цветок засыхает. Покажи, что ему нужно",
+          "correct": "drop.fill",
+          "distractors": [
+            "flame.fill",
+            "snowflake",
+            "wind"
+          ],
+          "labels": {
+            "drop.fill": "вода",
+            "flame.fill": "огонь",
+            "snowflake": "снег",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t4-zamok-kluch2",
+          "minAge": 6,
+          "instruction": "Дверь закрыта на замок. Покажи, что её откроет",
+          "correct": "key.fill",
+          "distractors": [
+            "lock.fill",
+            "door.left.hand.open",
+            "house.fill"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "lock.fill": "замок",
+            "door.left.hand.open": "дверь",
+            "house.fill": "дом"
+          }
+        },
+        {
+          "id": "t4-rvanaya-knopka",
+          "minAge": 7,
+          "instruction": "Бумага порвалась. Покажи, чем её склеить",
+          "correct": "bandage.fill",
+          "distractors": [
+            "scissors",
+            "pencil",
+            "paintbrush.fill"
+          ],
+          "labels": {
+            "bandage.fill": "клей/пластырь",
+            "scissors": "ножницы",
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть"
+          }
+        },
+        {
+          "id": "t4-temno-svecha",
+          "minAge": 7,
+          "instruction": "Погас свет. Покажи, что зажечь",
+          "correct": "flame.fill",
+          "distractors": [
+            "snowflake",
+            "drop.fill",
+            "clock.fill"
+          ],
+          "labels": {
+            "flame.fill": "свечка",
+            "snowflake": "снег",
+            "drop.fill": "вода",
+            "clock.fill": "часы"
+          }
+        },
+        {
+          "id": "t4-zharko-veer",
+          "minAge": 7,
+          "instruction": "На улице жарко. Покажи, что охладит",
+          "correct": "drop.fill",
+          "distractors": [
+            "flame.fill",
+            "tshirt.fill",
+            "umbrella.fill"
+          ],
+          "labels": {
+            "drop.fill": "вода/мороженое",
+            "flame.fill": "огонь",
+            "umbrella.fill": "зонт",
+            "tshirt.fill": "тёплая шапка"
+          }
+        }
       ]
     },
     {
       "tier": 5,
       "title": "Загадки-перевёртыши",
       "items": [
-        { "id": "t5-chem-risuyut","minAge": 6, "instruction": "Покажи то, чем рисуют",                "correct": "paintbrush.fill",  "distractors": ["scissors", "fork.knife", "key.fill"], "labels": {"paintbrush.fill": "кисть", "scissors": "ножницы", "fork.knife": "вилка", "key.fill": "ключ"} },
-        { "id": "t5-chem-pishut","minAge": 6, "instruction": "Покажи то, чем пишут",                  "correct": "pencil",           "distractors": ["paintbrush.fill", "scissors", "key.fill"], "labels": {"pencil": "карандаш", "paintbrush.fill": "кисть", "scissors": "ножницы", "key.fill": "ключ"} },
-        { "id": "t5-chem-rezhut","minAge": 6, "instruction": "Покажи то, чем режут",                  "correct": "scissors",         "distractors": ["pencil", "paintbrush.fill", "fork.knife"], "labels": {"scissors": "ножницы", "pencil": "карандаш", "paintbrush.fill": "кисть", "fork.knife": "вилка"} },
-        { "id": "t5-iz-chego-pyut","minAge": 6, "instruction": "Покажи то, из чего пьют",             "correct": "cup.and.saucer.fill","distractors": ["fork.knife", "drop.fill", "leaf.fill"], "labels": {"cup.and.saucer.fill": "кружка", "fork.knife": "вилка", "drop.fill": "лужа", "leaf.fill": "лист"} },
-        { "id": "t5-na-chem-spyat","minAge": 6, "instruction": "Покажи то, на чём спят",              "correct": "bed.double.fill",  "distractors": ["chair.fill", "table.furniture.fill", "lamp.desk.fill"], "labels": {"bed.double.fill": "кровать", "chair.fill": "стул", "table.furniture.fill": "стол", "lamp.desk.fill": "лампа"} },
-        { "id": "t5-kto-letaet","minAge": 6, "instruction": "Покажи того, кто умеет летать",          "correct": "bird.fill",        "distractors": ["fish.fill", "cat.fill", "tortoise.fill"], "labels": {"bird.fill": "птица", "fish.fill": "рыба", "cat.fill": "кошка", "tortoise.fill": "черепаха"} },
-        { "id": "t5-kto-plavaet","minAge": 6, "instruction": "Покажи того, кто умеет плавать",         "correct": "fish.fill",        "distractors": ["bird.fill", "hare.fill", "ant.fill"], "labels": {"fish.fill": "рыба", "bird.fill": "птица", "hare.fill": "заяц", "ant.fill": "муравей"} },
-        { "id": "t5-mama-docha","minAge": 7, "instruction": "Покажи маму дочки",                      "correct": "figure.and.child.holdinghands","distractors": ["figure.dress", "figure.child", "person.2.fill"], "labels": {"figure.and.child.holdinghands": "взрослая мама с дочкой", "figure.dress": "девочка-дочка", "figure.child": "маленький ребёнок", "person.2.fill": "двое взрослых"} },
-        { "id": "t5-docha-mamy","minAge": 7, "instruction": "Покажи дочку мамы",                      "correct": "figure.child",     "distractors": ["figure.dress", "figure.and.child.holdinghands", "person.2.fill"], "labels": {"figure.child": "маленькая дочка", "figure.dress": "взрослая женщина", "figure.and.child.holdinghands": "мама с дочкой вместе", "person.2.fill": "двое взрослых"} },
-        { "id": "t5-hozyain-sobaki","minAge": 7, "instruction": "Покажи хозяина собаки",             "correct": "figure.walk",      "distractors": ["pawprint.fill", "dog.fill", "cat.fill"], "labels": {"figure.walk": "человек-хозяин", "pawprint.fill": "след собаки", "dog.fill": "сама собака", "cat.fill": "кошка"} },
-        { "id": "t5-sobaka-hozyaina","minAge": 7, "instruction": "Покажи собаку хозяина",            "correct": "dog.fill",         "distractors": ["figure.walk", "pawprint.fill", "cat.fill"], "labels": {"dog.fill": "сама собака", "figure.walk": "человек-хозяин", "pawprint.fill": "след", "cat.fill": "кошка"} },
-        { "id": "t5-bolshoy-dom","minAge": 7, "instruction": "Покажи дом, который выше",              "correct": "building.2.fill",  "distractors": ["house.fill", "tent.fill", "lighthouse.fill"], "labels": {"building.2.fill": "высокий дом", "house.fill": "низкий домик", "tent.fill": "палатка", "lighthouse.fill": "маяк"} },
-        { "id": "t5-malenkiy-dom","minAge": 7, "instruction": "Покажи дом, который ниже",             "correct": "house.fill",       "distractors": ["building.2.fill", "lighthouse.fill", "tent.fill"], "labels": {"house.fill": "низкий домик", "building.2.fill": "высокий дом", "lighthouse.fill": "маяк", "tent.fill": "палатка"} },
-        { "id": "t5-bystree","minAge": 7, "instruction": "Покажи того, кто бегает быстрее",           "correct": "hare.fill",        "distractors": ["tortoise.fill", "ant.fill", "fish.fill"], "labels": {"hare.fill": "быстрый заяц", "tortoise.fill": "медленная черепаха", "ant.fill": "муравей", "fish.fill": "рыба"} },
-        { "id": "t5-medlennee","minAge": 7, "instruction": "Покажи того, кто ползёт медленнее",       "correct": "tortoise.fill",    "distractors": ["hare.fill", "bird.fill", "car.fill"], "labels": {"tortoise.fill": "медленная черепаха", "hare.fill": "быстрый заяц", "bird.fill": "птица", "car.fill": "машина"} },
-        { "id": "t5-chem-otkr","minAge": 6, "instruction": "Покажи то, чем открывают замок",          "correct": "key.fill",         "distractors": ["lock.fill", "door.left.hand.open", "envelope.fill"], "labels": {"key.fill": "ключ", "lock.fill": "замок", "door.left.hand.open": "дверь", "envelope.fill": "конверт"} },
-        { "id": "t5-svetit-nochyu","minAge": 6, "instruction": "Покажи то, что светит ночью",         "correct": "moon.fill",        "distractors": ["sun.max.fill", "cloud.fill", "snowflake"], "labels": {"moon.fill": "луна", "sun.max.fill": "солнце", "cloud.fill": "облако", "snowflake": "снежинка"} },
-        { "id": "t5-greet-zimoy","minAge": 7, "instruction": "Покажи то, что греет зимой",            "correct": "flame.fill",       "distractors": ["snowflake", "wind", "drop.fill"], "labels": {"flame.fill": "печка-огонь", "snowflake": "снежинка", "wind": "ветер", "drop.fill": "капля"} },
-        { "id": "t5-pokazyvaet-vremya","minAge": 7, "instruction": "Покажи то, что показывает время","correct": "clock.fill",       "distractors": ["calendar", "sun.max.fill", "thermometer.medium"], "labels": {"clock.fill": "часы", "calendar": "календарь", "sun.max.fill": "солнце", "thermometer.medium": "термометр"} },
-        { "id": "t5-na-chem-ezdyat","minAge": 6, "instruction": "Покажи то, на чём ездят по дороге",  "correct": "car.fill",         "distractors": ["sailboat.fill", "airplane", "chair.fill"], "labels": {"car.fill": "машина", "sailboat.fill": "лодка", "airplane": "самолёт", "chair.fill": "стул"} }
+        {
+          "id": "t5-chem-risuyut",
+          "minAge": 6,
+          "instruction": "Покажи то, чем рисуют",
+          "correct": "paintbrush.fill",
+          "distractors": [
+            "scissors",
+            "fork.knife",
+            "key.fill"
+          ],
+          "labels": {
+            "paintbrush.fill": "кисть",
+            "scissors": "ножницы",
+            "fork.knife": "вилка",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t5-chem-pishut",
+          "minAge": 6,
+          "instruction": "Покажи то, чем пишут",
+          "correct": "pencil",
+          "distractors": [
+            "paintbrush.fill",
+            "scissors",
+            "key.fill"
+          ],
+          "labels": {
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть",
+            "scissors": "ножницы",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t5-chem-rezhut",
+          "minAge": 6,
+          "instruction": "Покажи то, чем режут",
+          "correct": "scissors",
+          "distractors": [
+            "pencil",
+            "paintbrush.fill",
+            "fork.knife"
+          ],
+          "labels": {
+            "scissors": "ножницы",
+            "pencil": "карандаш",
+            "paintbrush.fill": "кисть",
+            "fork.knife": "вилка"
+          }
+        },
+        {
+          "id": "t5-iz-chego-pyut",
+          "minAge": 6,
+          "instruction": "Покажи то, из чего пьют",
+          "correct": "cup.and.saucer.fill",
+          "distractors": [
+            "fork.knife",
+            "drop.fill",
+            "leaf.fill"
+          ],
+          "labels": {
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка",
+            "drop.fill": "лужа",
+            "leaf.fill": "лист"
+          }
+        },
+        {
+          "id": "t5-na-chem-spyat",
+          "minAge": 6,
+          "instruction": "Покажи то, на чём спят",
+          "correct": "bed.double.fill",
+          "distractors": [
+            "chair.fill",
+            "table.furniture.fill",
+            "lamp.desk.fill"
+          ],
+          "labels": {
+            "bed.double.fill": "кровать",
+            "chair.fill": "стул",
+            "table.furniture.fill": "стол",
+            "lamp.desk.fill": "лампа"
+          }
+        },
+        {
+          "id": "t5-kto-letaet",
+          "minAge": 6,
+          "instruction": "Покажи того, кто умеет летать",
+          "correct": "bird.fill",
+          "distractors": [
+            "fish.fill",
+            "cat.fill",
+            "tortoise.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "cat.fill": "кошка",
+            "tortoise.fill": "черепаха"
+          }
+        },
+        {
+          "id": "t5-kto-plavaet",
+          "minAge": 6,
+          "instruction": "Покажи того, кто умеет плавать",
+          "correct": "fish.fill",
+          "distractors": [
+            "bird.fill",
+            "hare.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "hare.fill": "заяц",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t5-mama-docha",
+          "minAge": 7,
+          "instruction": "Покажи маму дочки",
+          "correct": "figure.and.child.holdinghands",
+          "distractors": [
+            "figure.dress.line.vertical.figure",
+            "figure.child",
+            "person.2.fill"
+          ],
+          "labels": {
+            "figure.and.child.holdinghands": "взрослая мама с дочкой",
+            "figure.child": "маленький ребёнок",
+            "person.2.fill": "двое взрослых",
+            "figure.dress.line.vertical.figure": "девочка-дочка"
+          }
+        },
+        {
+          "id": "t5-docha-mamy",
+          "minAge": 7,
+          "instruction": "Покажи дочку мамы",
+          "correct": "figure.child",
+          "distractors": [
+            "figure.dress.line.vertical.figure",
+            "figure.and.child.holdinghands",
+            "person.2.fill"
+          ],
+          "labels": {
+            "figure.child": "маленькая дочка",
+            "figure.and.child.holdinghands": "мама с дочкой вместе",
+            "person.2.fill": "двое взрослых",
+            "figure.dress.line.vertical.figure": "взрослая женщина"
+          }
+        },
+        {
+          "id": "t5-hozyain-sobaki",
+          "minAge": 7,
+          "instruction": "Покажи хозяина собаки",
+          "correct": "figure.walk",
+          "distractors": [
+            "pawprint.fill",
+            "dog.fill",
+            "cat.fill"
+          ],
+          "labels": {
+            "figure.walk": "человек-хозяин",
+            "pawprint.fill": "след собаки",
+            "dog.fill": "сама собака",
+            "cat.fill": "кошка"
+          }
+        },
+        {
+          "id": "t5-sobaka-hozyaina",
+          "minAge": 7,
+          "instruction": "Покажи собаку хозяина",
+          "correct": "dog.fill",
+          "distractors": [
+            "figure.walk",
+            "pawprint.fill",
+            "cat.fill"
+          ],
+          "labels": {
+            "dog.fill": "сама собака",
+            "figure.walk": "человек-хозяин",
+            "pawprint.fill": "след",
+            "cat.fill": "кошка"
+          }
+        },
+        {
+          "id": "t5-bolshoy-dom",
+          "minAge": 7,
+          "instruction": "Покажи дом, который выше",
+          "correct": "building.2.fill",
+          "distractors": [
+            "house.fill",
+            "tent.fill",
+            "light.beacon.max.fill"
+          ],
+          "labels": {
+            "building.2.fill": "высокий дом",
+            "house.fill": "низкий домик",
+            "tent.fill": "палатка",
+            "light.beacon.max.fill": "маяк"
+          }
+        },
+        {
+          "id": "t5-malenkiy-dom",
+          "minAge": 7,
+          "instruction": "Покажи дом, который ниже",
+          "correct": "house.fill",
+          "distractors": [
+            "building.2.fill",
+            "light.beacon.max.fill",
+            "tent.fill"
+          ],
+          "labels": {
+            "house.fill": "низкий домик",
+            "building.2.fill": "высокий дом",
+            "tent.fill": "палатка",
+            "light.beacon.max.fill": "маяк"
+          }
+        },
+        {
+          "id": "t5-bystree",
+          "minAge": 7,
+          "instruction": "Покажи того, кто бегает быстрее",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "ant.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "hare.fill": "быстрый заяц",
+            "tortoise.fill": "медленная черепаха",
+            "ant.fill": "муравей",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t5-medlennee",
+          "minAge": 7,
+          "instruction": "Покажи того, кто ползёт медленнее",
+          "correct": "tortoise.fill",
+          "distractors": [
+            "hare.fill",
+            "bird.fill",
+            "car.fill"
+          ],
+          "labels": {
+            "tortoise.fill": "медленная черепаха",
+            "hare.fill": "быстрый заяц",
+            "bird.fill": "птица",
+            "car.fill": "машина"
+          }
+        },
+        {
+          "id": "t5-chem-otkr",
+          "minAge": 6,
+          "instruction": "Покажи то, чем открывают замок",
+          "correct": "key.fill",
+          "distractors": [
+            "lock.fill",
+            "door.left.hand.open",
+            "envelope.fill"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "lock.fill": "замок",
+            "door.left.hand.open": "дверь",
+            "envelope.fill": "конверт"
+          }
+        },
+        {
+          "id": "t5-svetit-nochyu",
+          "minAge": 6,
+          "instruction": "Покажи то, что светит ночью",
+          "correct": "moon.fill",
+          "distractors": [
+            "sun.max.fill",
+            "cloud.fill",
+            "snowflake"
+          ],
+          "labels": {
+            "moon.fill": "луна",
+            "sun.max.fill": "солнце",
+            "cloud.fill": "облако",
+            "snowflake": "снежинка"
+          }
+        },
+        {
+          "id": "t5-greet-zimoy",
+          "minAge": 7,
+          "instruction": "Покажи то, что греет зимой",
+          "correct": "flame.fill",
+          "distractors": [
+            "snowflake",
+            "wind",
+            "drop.fill"
+          ],
+          "labels": {
+            "flame.fill": "печка-огонь",
+            "snowflake": "снежинка",
+            "wind": "ветер",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t5-pokazyvaet-vremya",
+          "minAge": 7,
+          "instruction": "Покажи то, что показывает время",
+          "correct": "clock.fill",
+          "distractors": [
+            "calendar",
+            "sun.max.fill",
+            "thermometer.medium"
+          ],
+          "labels": {
+            "clock.fill": "часы",
+            "calendar": "календарь",
+            "sun.max.fill": "солнце",
+            "thermometer.medium": "термометр"
+          }
+        },
+        {
+          "id": "t5-na-chem-ezdyat",
+          "minAge": 6,
+          "instruction": "Покажи то, на чём ездят по дороге",
+          "correct": "car.fill",
+          "distractors": [
+            "sailboat.fill",
+            "airplane",
+            "chair.fill"
+          ],
+          "labels": {
+            "car.fill": "машина",
+            "sailboat.fill": "лодка",
+            "airplane": "самолёт",
+            "chair.fill": "стул"
+          }
+        },
+        {
+          "id": "t5-chem-kopayut",
+          "minAge": 6,
+          "instruction": "Покажи то, чем копают",
+          "correct": "archivebox.fill",
+          "distractors": [
+            "paintbrush.fill",
+            "scissors",
+            "pencil"
+          ],
+          "labels": {
+            "archivebox.fill": "лопатка/ведро",
+            "paintbrush.fill": "кисть",
+            "scissors": "ножницы",
+            "pencil": "карандаш"
+          }
+        },
+        {
+          "id": "t5-chem-edyat",
+          "minAge": 6,
+          "instruction": "Покажи то, чем едят суп",
+          "correct": "fork.knife",
+          "distractors": [
+            "pencil",
+            "key.fill",
+            "paintbrush.fill"
+          ],
+          "labels": {
+            "fork.knife": "ложка",
+            "pencil": "карандаш",
+            "key.fill": "ключ",
+            "paintbrush.fill": "кисть"
+          }
+        },
+        {
+          "id": "t5-chem-zvonyat",
+          "minAge": 6,
+          "instruction": "Покажи то, чем звонят",
+          "correct": "bell.fill",
+          "distractors": [
+            "flag.fill",
+            "star.fill",
+            "lightbulb.fill"
+          ],
+          "labels": {
+            "bell.fill": "колокольчик",
+            "flag.fill": "флаг",
+            "star.fill": "звезда",
+            "lightbulb.fill": "лампа"
+          }
+        },
+        {
+          "id": "t5-chem-osveshchayut",
+          "minAge": 7,
+          "instruction": "Покажи то, чем освещают комнату",
+          "correct": "lightbulb.fill",
+          "distractors": [
+            "flame.fill",
+            "clock.fill",
+            "thermometer.medium"
+          ],
+          "labels": {
+            "lightbulb.fill": "лампа",
+            "flame.fill": "огонь",
+            "clock.fill": "часы",
+            "thermometer.medium": "градусник"
+          }
+        },
+        {
+          "id": "t5-chem-ukryvayutsya",
+          "minAge": 7,
+          "instruction": "Покажи то, чем укрываются от дождя",
+          "correct": "umbrella.fill",
+          "distractors": [
+            "tshirt.fill",
+            "bag.fill",
+            "shoe"
+          ],
+          "labels": {
+            "umbrella.fill": "зонт",
+            "bag.fill": "сумка",
+            "shoe": "ботинок",
+            "tshirt.fill": "шапка"
+          }
+        },
+        {
+          "id": "t5-iz-chego-edyat",
+          "minAge": 6,
+          "instruction": "Покажи то, из чего едят кашу",
+          "correct": "circle.fill",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "bag.fill",
+            "archivebox.fill"
+          ],
+          "labels": {
+            "circle.fill": "тарелка",
+            "cup.and.saucer.fill": "кружка",
+            "bag.fill": "сумка",
+            "archivebox.fill": "ведро"
+          }
+        },
+        {
+          "id": "t5-na-chem-ezdyat-snegu",
+          "minAge": 7,
+          "instruction": "Покажи то, на чём ездят по снегу",
+          "correct": "snowflake",
+          "distractors": [
+            "sailboat.fill",
+            "bicycle",
+            "airplane"
+          ],
+          "labels": {
+            "snowflake": "санки",
+            "sailboat.fill": "лодка",
+            "bicycle": "велосипед",
+            "airplane": "самолёт"
+          }
+        },
+        {
+          "id": "t5-na-chem-plavayut",
+          "minAge": 6,
+          "instruction": "Покажи то, на чём плавают по реке",
+          "correct": "sailboat.fill",
+          "distractors": [
+            "car.fill",
+            "tram.fill",
+            "bicycle"
+          ],
+          "labels": {
+            "sailboat.fill": "лодка",
+            "car.fill": "машина",
+            "tram.fill": "поезд",
+            "bicycle": "велосипед"
+          }
+        },
+        {
+          "id": "t5-chem-vytirayut",
+          "minAge": 7,
+          "instruction": "Покажи то, чем вытирают руки",
+          "correct": "rectangle.portrait.fill",
+          "distractors": [
+            "scissors",
+            "pencil",
+            "key.fill"
+          ],
+          "labels": {
+            "rectangle.portrait.fill": "полотенце",
+            "scissors": "ножницы",
+            "pencil": "карандаш",
+            "key.fill": "ключ"
+          }
+        },
+        {
+          "id": "t5-chem-zakryvayut",
+          "minAge": 6,
+          "instruction": "Покажи то, чем закрывают банку",
+          "correct": "circle.fill",
+          "distractors": [
+            "key.fill",
+            "fork.knife",
+            "drop.fill"
+          ],
+          "labels": {
+            "circle.fill": "крышка",
+            "key.fill": "ключ",
+            "fork.knife": "вилка",
+            "drop.fill": "капля"
+          }
+        },
+        {
+          "id": "t5-kto-prygaet",
+          "minAge": 6,
+          "instruction": "Покажи того, кто умеет прыгать",
+          "correct": "hare.fill",
+          "distractors": [
+            "fish.fill",
+            "tortoise.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "fish.fill": "рыба",
+            "tortoise.fill": "черепаха",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t5-kto-polzaet",
+          "minAge": 6,
+          "instruction": "Покажи того, кто ползает",
+          "correct": "tortoise.fill",
+          "distractors": [
+            "bird.fill",
+            "hare.fill",
+            "dog.fill"
+          ],
+          "labels": {
+            "tortoise.fill": "черепаха",
+            "bird.fill": "птица",
+            "hare.fill": "заяц",
+            "dog.fill": "лошадь"
+          }
+        },
+        {
+          "id": "t5-kto-myaukaet",
+          "minAge": 6,
+          "instruction": "Покажи того, кто мяукает",
+          "correct": "cat.fill",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "hare.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "hare.fill": "заяц"
+          }
+        },
+        {
+          "id": "t5-kto-zhuzhzhit",
+          "minAge": 7,
+          "instruction": "Покажи того, кто жужжит",
+          "correct": "ant.fill",
+          "distractors": [
+            "cat.fill",
+            "fish.fill",
+            "bird.fill"
+          ],
+          "labels": {
+            "ant.fill": "пчела",
+            "cat.fill": "кошка",
+            "fish.fill": "рыба",
+            "bird.fill": "птица"
+          }
+        },
+        {
+          "id": "t5-kto-zhivet-vode",
+          "minAge": 7,
+          "instruction": "Покажи того, кто живёт в воде",
+          "correct": "fish.fill",
+          "distractors": [
+            "bird.fill",
+            "cat.fill",
+            "hare.fill"
+          ],
+          "labels": {
+            "fish.fill": "рыба",
+            "bird.fill": "птица",
+            "cat.fill": "кошка",
+            "hare.fill": "заяц"
+          }
+        },
+        {
+          "id": "t5-kto-zhivet-norke",
+          "minAge": 7,
+          "instruction": "Покажи того, кто живёт в норке",
+          "correct": "pawprint.fill",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "dog.fill"
+          ],
+          "labels": {
+            "pawprint.fill": "мышка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "dog.fill": "лошадь"
+          }
+        },
+        {
+          "id": "t5-kto-letaet2",
+          "minAge": 6,
+          "instruction": "Покажи того, у кого есть крылья",
+          "correct": "bird.fill",
+          "distractors": [
+            "cat.fill",
+            "tortoise.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "cat.fill": "кошка",
+            "tortoise.fill": "черепаха",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t5-kto-bystree-cherep",
+          "minAge": 7,
+          "instruction": "Покажи того, кто бегает быстрее черепахи",
+          "correct": "hare.fill",
+          "distractors": [
+            "tortoise.fill",
+            "ant.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "hare.fill": "заяц",
+            "tortoise.fill": "черепаха",
+            "ant.fill": "муравей",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t5-vyshe-vsekh",
+          "minAge": 7,
+          "instruction": "Покажи то, что выше всех",
+          "correct": "mountain.2.fill",
+          "distractors": [
+            "tree.fill",
+            "house.fill",
+            "camera.macro"
+          ],
+          "labels": {
+            "mountain.2.fill": "гора",
+            "tree.fill": "дерево",
+            "house.fill": "дом",
+            "camera.macro": "цветок"
+          }
+        },
+        {
+          "id": "t5-nizhe-vsekh",
+          "minAge": 7,
+          "instruction": "Покажи то, что ниже всех",
+          "correct": "camera.macro",
+          "distractors": [
+            "tree.fill",
+            "house.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "camera.macro": "цветок",
+            "tree.fill": "дерево",
+            "house.fill": "дом",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t5-bolshe-vsekh",
+          "minAge": 7,
+          "instruction": "Покажи самый большой мяч",
+          "correct": "soccerball",
+          "distractors": [
+            "basketball.fill",
+            "tennis.racket",
+            "circle.fill"
+          ],
+          "labels": {
+            "soccerball": "большой мяч",
+            "basketball.fill": "средний",
+            "tennis.racket": "ракетка",
+            "circle.fill": "точка"
+          }
+        },
+        {
+          "id": "t5-menshe-vsekh",
+          "minAge": 7,
+          "instruction": "Покажи самый маленький предмет",
+          "correct": "ant.fill",
+          "distractors": [
+            "hare.fill",
+            "dog.fill",
+            "mountain.2.fill"
+          ],
+          "labels": {
+            "ant.fill": "муравей",
+            "hare.fill": "заяц",
+            "dog.fill": "лошадь",
+            "mountain.2.fill": "гора"
+          }
+        },
+        {
+          "id": "t5-teplee",
+          "minAge": 7,
+          "instruction": "Покажи то, что греет",
+          "correct": "flame.fill",
+          "distractors": [
+            "snowflake",
+            "drop.fill",
+            "wind"
+          ],
+          "labels": {
+            "flame.fill": "огонь",
+            "snowflake": "снежинка",
+            "drop.fill": "вода",
+            "wind": "ветер"
+          }
+        },
+        {
+          "id": "t5-holodnee",
+          "minAge": 7,
+          "instruction": "Покажи то, что холодное",
+          "correct": "snowflake",
+          "distractors": [
+            "flame.fill",
+            "sun.max.fill",
+            "lightbulb.fill"
+          ],
+          "labels": {
+            "snowflake": "лёд/снег",
+            "flame.fill": "огонь",
+            "sun.max.fill": "солнце",
+            "lightbulb.fill": "лампа"
+          }
+        },
+        {
+          "id": "t5-svetit-dnem",
+          "minAge": 6,
+          "instruction": "Покажи то, что светит днём",
+          "correct": "sun.max.fill",
+          "distractors": [
+            "moon.fill",
+            "star.fill",
+            "lightbulb.fill"
+          ],
+          "labels": {
+            "sun.max.fill": "солнце",
+            "moon.fill": "луна",
+            "star.fill": "звезда",
+            "lightbulb.fill": "лампа"
+          }
+        },
+        {
+          "id": "t5-mokroe",
+          "minAge": 7,
+          "instruction": "Покажи то, что мокрое",
+          "correct": "drop.fill",
+          "distractors": [
+            "flame.fill",
+            "snowflake",
+            "leaf.fill"
+          ],
+          "labels": {
+            "drop.fill": "вода",
+            "flame.fill": "огонь",
+            "snowflake": "снег",
+            "leaf.fill": "сухой лист"
+          }
+        },
+        {
+          "id": "t5-hvost-koshki",
+          "minAge": 7,
+          "instruction": "Покажи, чей это хвост — у кого пушистый хвост",
+          "correct": "cat.fill",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "ant.fill"
+          ],
+          "labels": {
+            "cat.fill": "кошка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "ant.fill": "муравей"
+          }
+        },
+        {
+          "id": "t5-dom-pticy",
+          "minAge": 7,
+          "instruction": "Покажи, чей это домик — кто живёт в гнезде",
+          "correct": "bird.fill",
+          "distractors": [
+            "cat.fill",
+            "fish.fill",
+            "hare.fill"
+          ],
+          "labels": {
+            "bird.fill": "птица",
+            "cat.fill": "кошка",
+            "fish.fill": "рыба",
+            "hare.fill": "заяц"
+          }
+        },
+        {
+          "id": "t5-ne-zhivotnoe",
+          "minAge": 7,
+          "instruction": "Покажи то, что не живое",
+          "correct": "car.fill",
+          "distractors": [
+            "cat.fill",
+            "bird.fill",
+            "fish.fill"
+          ],
+          "labels": {
+            "car.fill": "машина",
+            "cat.fill": "кошка",
+            "bird.fill": "птица",
+            "fish.fill": "рыба"
+          }
+        },
+        {
+          "id": "t5-ne-eda",
+          "minAge": 7,
+          "instruction": "Покажи то, что нельзя есть",
+          "correct": "key.fill",
+          "distractors": [
+            "apple.logo",
+            "carrot.fill",
+            "oval.fill"
+          ],
+          "labels": {
+            "key.fill": "ключ",
+            "apple.logo": "яблоко",
+            "carrot.fill": "морковка",
+            "oval.fill": "груша"
+          }
+        },
+        {
+          "id": "t5-vse-krome-myacha",
+          "minAge": 7,
+          "instruction": "Здесь спорт. Покажи то, что лишнее — не для игры",
+          "correct": "book.fill",
+          "distractors": [
+            "soccerball",
+            "basketball.fill",
+            "tennis.racket"
+          ],
+          "labels": {
+            "book.fill": "книга",
+            "soccerball": "мяч",
+            "basketball.fill": "мячик",
+            "tennis.racket": "ракетка"
+          }
+        },
+        {
+          "id": "t5-ne-transport",
+          "minAge": 7,
+          "instruction": "Покажи то, что не ездит и не летает",
+          "correct": "tree.fill",
+          "distractors": [
+            "car.fill",
+            "airplane",
+            "tram.fill"
+          ],
+          "labels": {
+            "tree.fill": "дерево",
+            "car.fill": "машина",
+            "airplane": "самолёт",
+            "tram.fill": "поезд"
+          }
+        },
+        {
+          "id": "t5-ne-posuda",
+          "minAge": 7,
+          "instruction": "Покажи то, что не посуда",
+          "correct": "book.fill",
+          "distractors": [
+            "cup.and.saucer.fill",
+            "fork.knife",
+            "circle.fill"
+          ],
+          "labels": {
+            "book.fill": "книга",
+            "cup.and.saucer.fill": "кружка",
+            "fork.knife": "вилка",
+            "circle.fill": "тарелка"
+          }
+        },
+        {
+          "id": "t5-tolko-frukt",
+          "minAge": 7,
+          "instruction": "Покажи фрукт, а не овощ",
+          "correct": "apple.logo",
+          "distractors": [
+            "carrot.fill",
+            "leaf.fill",
+            "archivebox.fill"
+          ],
+          "labels": {
+            "apple.logo": "яблоко",
+            "carrot.fill": "морковка",
+            "leaf.fill": "капуста",
+            "archivebox.fill": "ведро"
+          }
+        },
+        {
+          "id": "t5-tolko-ovoshch",
+          "minAge": 7,
+          "instruction": "Покажи овощ, а не фрукт",
+          "correct": "carrot.fill",
+          "distractors": [
+            "apple.logo",
+            "oval.fill",
+            "birthday.cake.fill"
+          ],
+          "labels": {
+            "carrot.fill": "морковка",
+            "apple.logo": "яблоко",
+            "oval.fill": "груша",
+            "birthday.cake.fill": "тортик"
+          }
+        },
+        {
+          "id": "t5-letaet-ne-ptica",
+          "minAge": 7,
+          "instruction": "Покажи то, что летает, но это не птица",
+          "correct": "airplane",
+          "distractors": [
+            "bird.fill",
+            "fish.fill",
+            "car.fill"
+          ],
+          "labels": {
+            "airplane": "самолёт",
+            "bird.fill": "птица",
+            "fish.fill": "рыба",
+            "car.fill": "машина"
+          }
+        }
       ]
     }
   ]

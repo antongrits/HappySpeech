@@ -36,6 +36,12 @@ protocol AssignedHomeworkWorkerProtocol: AnyObject {
         childId: String,
         familyId: String
     ) -> AsyncStream<[HomeworkAssignment]>
+
+    /// Удаляет задание: из локального кэша, из Firestore и отменяет
+    /// запланированное уведомление о дедлайне. Вызывается специалистом.
+    ///
+    /// - Returns: `true`, если задание удалено хотя бы из одного хранилища.
+    func delete(assignmentId: String) async -> Bool
 }
 
 // MARK: - AssignedHomeworkWorker (Clean Swift: Worker)
@@ -240,6 +246,12 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
             )
         }
 
+        // Если задание полностью выполнено — снимаем дедлайн-уведомление:
+        // напоминать о сроке выполненной домашки незачем.
+        if let updated, updated.isComplete {
+            await cancelDeadlineNotification(forAssignmentId: updated.id)
+        }
+
         // Успех, если статус удалось обновить хотя бы в одном хранилище:
         // локальный кэш ИЛИ облако. Задание, пришедшее по real-time потоку и
         // ещё не осевшее в локальном кэше, обновляется через облако — это
@@ -248,6 +260,37 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
             didSucceed: updated != nil || cloudSucceeded,
             updatedAssignment: updated
         )
+    }
+
+    // MARK: - Delete (specialist removes assignment)
+
+    func delete(assignmentId: String) async -> Bool {
+        // 1. Remove from local cache.
+        var all = loadAllLocal()
+        let before = all.count
+        all.removeAll { $0.id == assignmentId }
+        let removedLocally = all.count < before
+        if removedLocally {
+            persistLocal(all)
+        }
+
+        // 2. Cancel the scheduled deadline notification.
+        await cancelDeadlineNotification(forAssignmentId: assignmentId)
+
+        // 3. Remove from Firestore (offline-safe: SDK queues the delete).
+        let cloudResult = await homeworkRepository.delete(assignmentId: assignmentId)
+        let cloudSucceeded: Bool
+        switch cloudResult {
+        case .success:
+            cloudSucceeded = true
+        case .failure(let error):
+            cloudSucceeded = false
+            Self.logger.error(
+                "delete cloud sync failed: \(error.localizedDescription, privacy: .public)"
+            )
+        }
+        Self.logger.debug("Deleted assignment \(assignmentId, privacy: .public)")
+        return removedLocally || cloudSucceeded
     }
 
     // MARK: - Real-time stream
@@ -261,8 +304,22 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
 
     // MARK: - Notification
 
+    /// Префикс идентификатора дедлайн-уведомления домашнего задания.
+    nonisolated static let deadlineNotificationPrefix = "hs.homework.deadline."
+
+    /// Идентификатор локального уведомления о дедлайне конкретного задания.
+    /// Стабилен (на основе `assignment.id`), чтобы планировать и отменять
+    /// одно и то же уведомление.
+    nonisolated static func deadlineNotificationIdentifier(
+        forAssignmentId assignmentId: String
+    ) -> String {
+        deadlineNotificationPrefix + assignmentId
+    }
+
     private func scheduleDeadlineNotification(for assignment: HomeworkAssignment) async {
         guard let notificationService else { return }
+        // Already complete on creation (degenerate case) — no reminder needed.
+        guard !assignment.isComplete else { return }
         // Fire 1 day before due date.
         let notifDate = assignment.dueDate.addingTimeInterval(-86_400)
         guard notifDate > Date() else { return }
@@ -270,7 +327,7 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
             [.year, .month, .day, .hour, .minute],
             from: notifDate
         )
-        let identifier = "hs.homework.deadline.\(assignment.id)"
+        let identifier = Self.deadlineNotificationIdentifier(forAssignmentId: assignment.id)
         do {
             try await notificationService.scheduleCalendarReminder(
                 identifier: identifier,
@@ -286,6 +343,17 @@ final class AssignedHomeworkWorker: AssignedHomeworkWorkerProtocol {
                 "Deadline notification scheduling failed: \(error.localizedDescription, privacy: .public)"
             )
         }
+    }
+
+    /// Отменяет ранее запланированное дедлайн-уведомление задания.
+    /// Идемпотентно: для незапланированного идентификатора — без эффекта.
+    private func cancelDeadlineNotification(forAssignmentId assignmentId: String) async {
+        guard let notificationService else { return }
+        let identifier = Self.deadlineNotificationIdentifier(forAssignmentId: assignmentId)
+        await notificationService.cancelCalendarReminder(identifier: identifier)
+        Self.logger.info(
+            "Deadline notification cancelled for assignment \(assignmentId, privacy: .public)"
+        )
     }
 
     // MARK: - Local UserDefaults storage

@@ -629,6 +629,12 @@ public protocol NotificationService: Sendable {
         body: String,
         at dateComponents: DateComponents
     ) async throws -> String
+
+    /// Отменить запланированное одноразовое уведомление по идентификатору.
+    /// Используется, когда напоминание потеряло смысл: например, домашнее
+    /// задание выполнено или удалено специалистом — дедлайн-напоминание о нём
+    /// больше не нужно. Безопасно вызывать для несуществующего идентификатора.
+    func cancelCalendarReminder(identifier: String) async
 }
 
 // MARK: - HapticService Protocol

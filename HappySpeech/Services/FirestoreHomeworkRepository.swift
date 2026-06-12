@@ -224,6 +224,31 @@ public final class FirestoreHomeworkRepository: HomeworkRepository, @unchecked S
         }
     }
 
+    // MARK: - Delete (specialist removes assignment)
+
+    public func delete(
+        assignmentId: String
+    ) async -> Result<Void, HomeworkRepositoryError> {
+        guard !assignmentId.isEmpty else {
+            return .failure(.assignmentNotFound)
+        }
+        let docRef = firestore.collection(Path.homework).document(assignmentId)
+        do {
+            try await docRef.delete()
+            logger.info("Deleted homework \(assignmentId, privacy: .public)")
+            return .success(())
+        } catch {
+            logger.error("delete failed: \(error.localizedDescription, privacy: .public)")
+            // Firestore SDK queues the delete offline and applies it on reconnect —
+            // report success so the specialist sees the row removed immediately.
+            if (error as NSError).domain == FirestoreErrorDomain,
+               (error as NSError).code == FirestoreErrorCode.unavailable.rawValue {
+                return .success(())
+            }
+            return .failure(.backendUnavailable(error.localizedDescription))
+        }
+    }
+
     // MARK: - Encoding
 
     private func encode(

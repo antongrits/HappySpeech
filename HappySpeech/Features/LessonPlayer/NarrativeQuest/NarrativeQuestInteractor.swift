@@ -8,6 +8,8 @@ protocol NarrativeQuestBusinessLogic: AnyObject {
     func loadQuest(_ request: NarrativeQuestModels.LoadQuest.Request)
     func startStage(_ request: NarrativeQuestModels.StartStage.Request)
     func recordWord(_ request: NarrativeQuestModels.RecordWord.Request)
+    func startListeningIntent(stageIndex: Int)
+    func stopListeningEarlyIntent()
     func evaluateWord(_ request: NarrativeQuestModels.EvaluateWord.Request)
     func handleNoInput(_ request: NarrativeQuestModels.NoInput.Request)
     func advanceStage(_ request: NarrativeQuestModels.AdvanceStage.Request)
@@ -44,6 +46,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     /// каждом этапе квеста в дневном расписании повторений.
     private var reviewScheduler: (any ReviewSchedulerService)?
 
+    /// gap #10: запись/ASR живут в Interactor (Clean Swift / VIP), не во View.
+    /// Внедряются по DI из View при bootstrap.
+    private var audioService: (any AudioService)?
+    private var asrService: (any ASRService)?
+
     // MARK: - State
 
     private var script: NarrativeQuestScript?
@@ -62,12 +69,18 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     private var speakTask: Task<Void, Never>?
     private var narrationPrefetchTask: Task<Void, Never>?
 
+    // gap #10: задачи записи/ASR и авто-стопа (вынесены из View).
+    private var recordingTask: Task<Void, Never>?
+    private var autoStopTask: Task<Void, Never>?
+
     private let logger = Logger(subsystem: "ru.happyspeech", category: "NarrativeQuest")
 
     // Constants
     private let passThreshold: Float = 0.6
     private let feedbackDelay: Duration = .milliseconds(1500)
     private let stageIntroDelay: Duration = .milliseconds(600)
+    /// gap #10: авто-стоп записи (раньше жил во View как `autoStopAfter`).
+    private let autoStopAfter: Duration = .seconds(3)
 
     // MARK: - Init
 
@@ -85,6 +98,8 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         pendingTask?.cancel()
         speakTask?.cancel()
         narrationPrefetchTask?.cancel()
+        recordingTask?.cancel()
+        autoStopTask?.cancel()
     }
 
     // MARK: - Block H: подключение narrationService из View (после init)
@@ -97,6 +112,15 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     func connect(reviewScheduler: any ReviewSchedulerService) {
         self.reviewScheduler = reviewScheduler
+    }
+
+    // MARK: - gap #10: подключение записи/ASR из View
+
+    /// Внедряет сервисы записи и распознавания. Вызывается из View при
+    /// bootstrap. До подключения интенты записи мягко уходят в noInput.
+    func connect(audioService: any AudioService, asrService: any ASRService) {
+        self.audioService = audioService
+        self.asrService = asrService
     }
 
     // MARK: - LoadQuest
@@ -191,6 +215,83 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         stopSpeaking()
         presenter?.presentRecordWord(.init(isListening: true))
         logger.debug("NarrativeQuest start recording stage=\(self.currentStageIndex)")
+    }
+
+    // MARK: - Recording pipeline (gap #10: вынесено из View → Interactor)
+
+    /// Интент «я готов!» из View: помечает этап записываемым (`recordWord`),
+    /// затем запускает запись с микрофона и таймер авто-стопа. Владеет
+    /// жизненным циклом задач — отменяются в cancel()/onDisappear.
+    func startListeningIntent(stageIndex: Int) {
+        recordWord(.init(stageIndex: stageIndex))
+        recordingTask?.cancel()
+        recordingTask = Task { @MainActor [weak self] in
+            await self?.beginListening()
+        }
+    }
+
+    /// Интент «Готово» из View: ранняя остановка (отменяет авто-стоп) и ASR.
+    func stopListeningEarlyIntent() {
+        autoStopTask?.cancel()
+        recordingTask?.cancel()
+        recordingTask = Task { @MainActor [weak self] in
+            await self?.stopAndTranscribe()
+        }
+    }
+
+    /// Запускает запись и планирует авто-стоп через `autoStopAfter`.
+    /// Разрешение микрофона обычно уже выдано на PermissionsView.
+    private func beginListening() async {
+        guard let audioService else {
+            handleNoInput(.init(reason: .recordingFailed))
+            return
+        }
+        if !audioService.isPermissionGranted {
+            let granted = await audioService.requestPermission()
+            if !granted {
+                handleNoInput(.init(reason: .micDenied))
+                return
+            }
+        }
+        do {
+            try await audioService.startRecording()
+            scheduleAutoStop()
+        } catch {
+            logger.error("NarrativeQuest startRecording failed: \(error.localizedDescription)")
+            handleNoInput(.init(reason: .recordingFailed))
+        }
+    }
+
+    private func scheduleAutoStop() {
+        autoStopTask?.cancel()
+        autoStopTask = Task { @MainActor [weak self] in
+            try? await Task.sleep(for: self?.autoStopAfter ?? .seconds(3))
+            guard let self, !Task.isCancelled else { return }
+            self.recordingTask?.cancel()
+            self.recordingTask = Task { @MainActor [weak self] in
+                await self?.stopAndTranscribe()
+            }
+        }
+    }
+
+    /// Останавливает запись, распознаёт речь и передаёт транскрипт в
+    /// `evaluateWord`. При сбое — мягкий noInput, без фабрикации оценки.
+    private func stopAndTranscribe() async {
+        guard let audioService, let asrService else {
+            handleNoInput(.init(reason: .asrFailed))
+            return
+        }
+        do {
+            let url = try await audioService.stopRecording()
+            let result = try await asrService.transcribe(url: url)
+            evaluateWord(.init(
+                transcript: result.transcript,
+                confidence: Float(result.confidence)
+            ))
+        } catch {
+            logger.error("NarrativeQuest stopRecording/transcribe failed: \(error.localizedDescription)")
+            handleNoInput(.init(reason: .asrFailed))
+        }
     }
 
     // MARK: - EvaluateWord
@@ -320,6 +421,10 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         pendingTask = nil
         speakTask?.cancel()
         speakTask = nil
+        recordingTask?.cancel()
+        recordingTask = nil
+        autoStopTask?.cancel()
+        autoStopTask = nil
         isListening = false
         LessonVoiceWorker.shared.stop()
     }

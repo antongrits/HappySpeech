@@ -1,0 +1,2204 @@
+{
+  "id": "pack_cultural_v1",
+  "version": 1,
+  "description": "Фольклор и чистоговорки для автоматизации/дифференциации звуков, речевого ритма и дыхания (gap #7). Потешки и народные скороговорки — public domain; чистоговорки и часть скороговорок — оригинальные тексты HappySpeech. Методическая основа: Коноваленко, Ткаченко, Фомичёва + русская фольклорная традиция. Декодируется CulturalContentPackLoader и сливается в CulturalItem.catalog. titleKey хранит готовый ru-текст (одноязычный контент-пак).",
+  "items": [
+    {
+      "id": "cult.poem.vodichka",
+      "category": "poem",
+      "titleKey": "Водичка, водичка",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Ч",
+        "Ц"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Водичка, водичка,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Умой моё личико,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Чтобы глазки блестели,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Чтобы щёчки краснели,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Чтоб смеялся роток,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Чтоб кусался зубок."
+        }
+      ],
+      "symbolName": "drop.fill"
+    },
+    {
+      "id": "cult.poem.soroka",
+      "category": "poem",
+      "titleKey": "Сорока-белобока",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 35.0,
+      "targetSounds": [
+        "С",
+        "К"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Сорока-белобока"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Кашку варила,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Деток кормила:"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Этому дала, этому дала,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "А этому не дала —"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Ты дров не носил,"
+        },
+        {
+          "id": 6,
+          "startSeconds": 30.0,
+          "endSeconds": 35.0,
+          "text": "Воды не носил."
+        }
+      ],
+      "symbolName": "bird.fill"
+    },
+    {
+      "id": "cult.poem.koza",
+      "category": "poem",
+      "titleKey": "Идёт коза рогатая",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 35.0,
+      "targetSounds": [
+        "К",
+        "Г",
+        "З"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Идёт коза рогатая,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Идёт коза бодатая,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Ножками топ-топ,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Глазками хлоп-хлоп."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Кто кашки не ест,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Кто молочка не пьёт —"
+        },
+        {
+          "id": 6,
+          "startSeconds": 30.0,
+          "endSeconds": 35.0,
+          "text": "Того забодаю, забодаю!"
+        }
+      ],
+      "symbolName": "pawprint.fill"
+    },
+    {
+      "id": "cult.poem.petushok",
+      "category": "poem",
+      "titleKey": "Петушок, петушок",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 35.0,
+      "targetSounds": [
+        "Ш",
+        "К"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Петушок, петушок,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Золотой гребешок,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Масляна головушка,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Шёлкова бородушка,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Что ты рано встаёшь,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Голосисто поёшь,"
+        },
+        {
+          "id": 6,
+          "startSeconds": 30.0,
+          "endSeconds": 35.0,
+          "text": "Деткам спать не даёшь?"
+        }
+      ],
+      "symbolName": "bird.fill"
+    },
+    {
+      "id": "cult.poem.tilibom",
+      "category": "poem",
+      "titleKey": "Тили-бом, тили-бом",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Б",
+        "М",
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Тили-бом, тили-бом,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Загорелся кошкин дом!"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Кошка выскочила,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Глаза выпучила."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Бежит курочка с ведром"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Заливать кошкин дом."
+        }
+      ],
+      "symbolName": "flame.fill"
+    },
+    {
+      "id": "cult.poem.kot",
+      "category": "poem",
+      "titleKey": "Как у нашего кота",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "К",
+        "Т",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Как у нашего кота"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Шубка очень хороша,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Как у котика усы"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Удивительной красы,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Глазки смелые,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Зубки белые."
+        }
+      ],
+      "symbolName": "pawprint.fill"
+    },
+    {
+      "id": "cult.poem.zainka",
+      "category": "poem",
+      "titleKey": "Заинька, попляши",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "З",
+        "Й",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Заинька, попляши,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Серенький, попляши."
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Вот так, эдак попляши!"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Заинька, повернись,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Серенький, повернись."
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Вот так, эдак повернись!"
+        }
+      ],
+      "symbolName": "hare.fill"
+    },
+    {
+      "id": "cult.poem.ladushki",
+      "category": "poem",
+      "titleKey": "Ладушки-ладушки",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Л",
+        "Д",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Ладушки-ладушки,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Где были? У бабушки."
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Что ели? Кашку."
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Что пили? Бражку."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Кашка масленька,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Бражка сладенька."
+        }
+      ],
+      "symbolName": "hands.clap.fill"
+    },
+    {
+      "id": "cult.poem.dozhdik",
+      "category": "poem",
+      "titleKey": "Дождик, дождик, пуще",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Д",
+        "Ж",
+        "Щ"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Дождик, дождик, пуще,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Дам тебе гущи,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Выйду на крылечко,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Дам огуречка."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Дам и хлеба каравай —"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Дождик, пуще поливай!"
+        }
+      ],
+      "symbolName": "cloud.rain.fill"
+    },
+    {
+      "id": "cult.poem.solnyshko",
+      "category": "poem",
+      "titleKey": "Солнышко-вёдрышко",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "С",
+        "Л",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Солнышко-вёдрышко,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Выгляни в окошко!"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Солнышко, нарядись,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Красное, покажись!"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Твои детки плачут,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "По камушкам скачут."
+        }
+      ],
+      "symbolName": "sun.max.fill"
+    },
+    {
+      "id": "cult.poem.gusi",
+      "category": "poem",
+      "titleKey": "Гуси, гуси",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Г",
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "— Гуси, гуси!"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "— Га-га-га!"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "— Есть хотите?"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "— Да-да-да!"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "— Так летите же домой!"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "— Серый волк под горой!"
+        }
+      ],
+      "symbolName": "bird.fill"
+    },
+    {
+      "id": "cult.poem.kisonka",
+      "category": "poem",
+      "titleKey": "Кисонька-мурысенька",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "С",
+        "К",
+        "Н"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "— Кисонька-мурысенька,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Ты где была?"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "— На мельнице."
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "— Кисонька-мурысенька,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Что там делала?"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "— Муку молола."
+        }
+      ],
+      "symbolName": "pawprint.fill"
+    },
+    {
+      "id": "cult.poem.travka",
+      "category": "poem",
+      "titleKey": "Травка-муравка",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 25.0,
+      "targetSounds": [
+        "Т",
+        "Р",
+        "В"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Травка-муравка со сна поднялась,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Птица-синица за зёрна взялась,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Зайки — за капустку,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Мышки — за корку,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Детки — за молоко."
+        }
+      ],
+      "symbolName": "leaf.fill"
+    },
+    {
+      "id": "cult.poem.kotikkotok",
+      "category": "poem",
+      "titleKey": "Котик-коток",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "К",
+        "Т",
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Котик-коток,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Серенький лобок,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Приди, котик, ночевать,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Нашу деточку качать."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Уж как я тебе, коту,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "За работу заплачу."
+        }
+      ],
+      "symbolName": "moon.fill"
+    },
+    {
+      "id": "cult.poem.dudu",
+      "category": "poem",
+      "titleKey": "Ой ду-ду, ду-ду, ду-ду",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 20.0,
+      "targetSounds": [
+        "Д",
+        "У",
+        "П"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Ой ду-ду, ду-ду, ду-ду,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Потерял пастух дуду."
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "А я дудочку нашла,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Пастушку отдала."
+        }
+      ],
+      "symbolName": "music.note"
+    },
+    {
+      "id": "cult.poem.belka",
+      "category": "poem",
+      "titleKey": "Сидит белка на тележке",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "С",
+        "Л",
+        "К"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Сидит белка на тележке,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Продаёт она орешки:"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Лисичке-сестричке,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Воробью, синичке,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Мишке толстопятому,"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Заиньке усатому."
+        }
+      ],
+      "symbolName": "pawprint.fill"
+    },
+    {
+      "id": "cult.poem.ehali",
+      "category": "poem",
+      "titleKey": "Ехали мы, ехали",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Х",
+        "Л",
+        "Е"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Ехали мы, ехали"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "В лес за орехами,"
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "По кочкам, по кочкам,"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "По маленьким пенёчкам,"
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "В ямку — бух!"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Раздавили сорок мух."
+        }
+      ],
+      "symbolName": "tree.fill"
+    },
+    {
+      "id": "cult.poem.kosa",
+      "category": "poem",
+      "titleKey": "Расти, коса, до пояса",
+      "authorKey": "cultural.tale.folk.author",
+      "durationSeconds": 30.0,
+      "targetSounds": [
+        "Р",
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 5.0,
+          "text": "Расти, коса, до пояса,"
+        },
+        {
+          "id": 1,
+          "startSeconds": 5.0,
+          "endSeconds": 10.0,
+          "text": "Не вырони ни волоса."
+        },
+        {
+          "id": 2,
+          "startSeconds": 10.0,
+          "endSeconds": 15.0,
+          "text": "Расти, косонька, до пят —"
+        },
+        {
+          "id": 3,
+          "startSeconds": 15.0,
+          "endSeconds": 20.0,
+          "text": "Все волосоньки в ряд."
+        },
+        {
+          "id": 4,
+          "startSeconds": 20.0,
+          "endSeconds": 25.0,
+          "text": "Расти, коса, не путайся —"
+        },
+        {
+          "id": 5,
+          "startSeconds": 25.0,
+          "endSeconds": 30.0,
+          "text": "Маму, дочка, слушайся."
+        }
+      ],
+      "symbolName": "sparkles"
+    },
+    {
+      "id": "cult.twist.sk-s1",
+      "category": "tongueTwister",
+      "titleKey": "У Сени и Сани в сетях сом с усами.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "У Сени и Сани в сетях сом с усами."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-s2",
+      "category": "tongueTwister",
+      "titleKey": "Сидел воробей на сосне, заснул — и свалился во сне.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Сидел воробей на сосне, заснул — и свалился во сне."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-s3",
+      "category": "tongueTwister",
+      "titleKey": "Синица свистнула в саду, а сойка села на сосну.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "С",
+        "Сь"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Синица свистнула в саду, а сойка села на сосну."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-z1",
+      "category": "tongueTwister",
+      "titleKey": "У зайки Бубы заболели зубы.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "З"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "У зайки Бубы заболели зубы."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-z2",
+      "category": "tongueTwister",
+      "titleKey": "Зелёный зонт у Зины звонко зазвенел в грозу.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "З"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Зелёный зонт у Зины звонко зазвенел в грозу."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-ts1",
+      "category": "tongueTwister",
+      "titleKey": "Молодец у молодца попросил огурца.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ц"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Молодец у молодца попросил огурца."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-ts2",
+      "category": "tongueTwister",
+      "titleKey": "У колодца курица напилась водицы.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ц",
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "У колодца курица напилась водицы."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-sh1",
+      "category": "tongueTwister",
+      "titleKey": "Тише, мыши, кот на крыше, а котята — ещё выше.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Тише, мыши, кот на крыше, а котята — ещё выше."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-sh2",
+      "category": "tongueTwister",
+      "titleKey": "Шесть мышат в шалаше шуршат.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Шесть мышат в шалаше шуршат."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-zh1",
+      "category": "tongueTwister",
+      "titleKey": "Лежебока рыжий кот отлежал себе живот.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ж"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Лежебока рыжий кот отлежал себе живот."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-zh2",
+      "category": "tongueTwister",
+      "titleKey": "Жук жужжал в кружке, а уж лежал на подушке.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ж",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Жук жужжал в кружке, а уж лежал на подушке."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-ch1",
+      "category": "tongueTwister",
+      "titleKey": "Четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ч"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-ch2",
+      "category": "tongueTwister",
+      "titleKey": "У бочки дочка качала на качелях мячик и ключик.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Ч"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "У бочки дочка качала на качелях мячик и ключик."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-shch1",
+      "category": "tongueTwister",
+      "titleKey": "Два щенка щека к щеке щиплют щётку в уголке.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Щ"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Два щенка щека к щеке щиплют щётку в уголке."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-shch2",
+      "category": "tongueTwister",
+      "titleKey": "Щука в роще не живёт, щука в речке щи везёт.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Щ",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Щука в роще не живёт, щука в речке щи везёт."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-r1",
+      "category": "tongueTwister",
+      "titleKey": "На горе Арарат рвала Варвара виноград.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Р"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "На горе Арарат рвала Варвара виноград."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-r2",
+      "category": "tongueTwister",
+      "titleKey": "Три вороны на воротах, три сороки на пороге.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Р"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Три вороны на воротах, три сороки на пороге."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-r3",
+      "category": "tongueTwister",
+      "titleKey": "Рыжий рак на берегу разрыл нору в горе.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Р"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Рыжий рак на берегу разрыл нору в горе."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-l1",
+      "category": "tongueTwister",
+      "titleKey": "Около кола колокола, около ворот коловорот.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Около кола колокола, около ворот коловорот."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-l2",
+      "category": "tongueTwister",
+      "titleKey": "Лола ела сладкий мёд, Луша лук и лимонад.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Лола ела сладкий мёд, Луша лук и лимонад."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-rl1",
+      "category": "tongueTwister",
+      "titleKey": "Король орёл, орёл король",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Р",
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Король орёл, орёл король"
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-rl2",
+      "category": "tongueTwister",
+      "titleKey": "Рая мыла раму мылом, Лара мыла пол метлой.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Р",
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Рая мыла раму мылом, Лара мыла пол метлой."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-kgh1",
+      "category": "tongueTwister",
+      "titleKey": "Около кола три хохлатки, под колом — три хохолка.",
+      "authorKey": null,
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "К",
+        "Г"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Около кола три хохлатки, под колом — три хохолка."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.twist.sk-kgh2",
+      "category": "tongueTwister",
+      "titleKey": "Хохотушка хохотала, хомячку хвалу хвалила.",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 7.0,
+      "targetSounds": [
+        "Х",
+        "К"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 7.0,
+          "text": "Хохотушка хохотала, хомячку хвалу хвалила."
+        }
+      ],
+      "symbolName": "mouth.fill"
+    },
+    {
+      "id": "cult.clean.cg-с1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: С",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Са-са-са — в лесу бежит лиса."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Со-со-со — у Сони колесо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Су-су-су — было холодно в лесу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Сы-сы-сы — у сома усы."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-с2",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: С",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "С"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ас-ас-ас — мы пили дома квас."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ос-ос-ос — у собаки чёрный нос."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ус-ус-ус — на ветке толстый гусь."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ыс-ыс-ыс — на полке сладкий рис."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-з1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: З",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "З"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "За-за-за — вот идёт коза."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Зо-зо-зо — у Зои новое зерно."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Зу-зу-зу — мы ведём домой козу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Зы-зы-зы — нет водички у козы."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-зь1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Зь",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "Зь"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Зи-зи-зи — корзину привези."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Зе-зе-зе — травы дай козе."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Зя-зя-зя — нам без дела быть нельзя."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ц1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ц",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ц"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ца-ца-ца — вот сидит овца."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Цо-цо-цо — мы умыли всё лицо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Цу-цу-цу — дали зёрнышки птенцу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Цы-цы-цы — поспевают огурцы."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ш1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ш",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ша-ша-ша — наша Маша хороша."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Шо-шо-шо — говорим мы хорошо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Шу-шу-шу — я письмо тебе пишу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ши-ши-ши — на поляне камыши."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ш2",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ш",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Аш-аш-аш — у Паши карандаш."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ош-ош-ош — у меня хороший грош."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Уш-уш-уш — мы пойдём сегодня в душ."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Иш-иш-иш — почему ты так шалишь?"
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ж1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ж",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ж"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Жа-жа-жа — мы нашли в траве ежа."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Жо-жо-жо — на дворе уже свежо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Жу-жу-жу — я флажок тебе вяжу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Жи-жи-жи — под сосной живут ежи."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ч1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ч",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ч"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ча-ча-ча — горит в комнате свеча."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Чо-чо-чо — ой, как плечику горячо!"
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Чу-чу-чу — молоточком я стучу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Чи-чи-чи — испекли мы калачи."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-щ1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Щ",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Щ"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ща-ща-ща — мы несём домой леща."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Що-що-що — я хожу в плаще, а не в пальто."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Щу-щу-щу — я тебя в саду ищу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Щи-щи-щи — мы на ужин ели щи."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-л1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Л",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ла-ла-ла — на столе стоит пила."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ло-ло-ло — на дворе уже тепло."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Лу-лу-лу — наточили мы пилу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Лы-лы-лы — мы помыли все полы."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-ль1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ль",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Ль"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ли-ли-ли — мы малину собрали."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ле-ле-ле — стоит лебедь на скале."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Лю-лю-лю — я лужок водой полью."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ля-ля-ля — зеленеют все поля."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-р1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Р",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Р"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ра-ра-ра — начинается игра."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ро-ро-ро — потеряли мы перо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ру-ру-ру — мы пускаем кенгуру."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ры-ры-ры — комары да комары."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-р2",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Р",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Р"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ар-ар-ар — кипит наш самовар."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ор-ор-ор — мы пришли во двор."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ур-ур-ур — не гоняй ты наших кур."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ир-ир-ир — мой папа — командир."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-рь1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Рь",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Рь"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ря-ря-ря — синие моря."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Рё-рё-рё — серое перо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Рю-рю-рю — репку я в саду варю."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ри-ри-ри — на ветках снегири."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-к1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: К",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "К"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ка-ка-ка — у меня течёт река."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ко-ко-ко — пьём парное молоко."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ку-ку-ку — кукушка на суку."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Кы-кы-кы — у меня в саду быки."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-г1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Г",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Г"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Га-га-га — у козы рога."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Го-го-го — не догнал я никого."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Гу-гу-гу — гуси на лугу."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Ги-ги-ги — ты, дружок, нам помоги."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-х1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Х",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 24.0,
+      "targetSounds": [
+        "Х"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ха-ха-ха — не поймать нам петуха."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Хо-хо-хо — на дворе нам не плохо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ху-ху-ху — мы помчались наверху."
+        },
+        {
+          "id": 3,
+          "startSeconds": 18.0,
+          "endSeconds": 24.0,
+          "text": "Хи-хи-хи — испекли мы пирожки."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-сш1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: С–Ш",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "С",
+        "Ш"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Са-ша, са-ша — наша каша хороша."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Со-шо, со-шо — нам сегодня хорошо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Су-шу, су-шу — я письмо в саду пишу."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-зж1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: З–Ж",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "З",
+        "Ж"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "За-жа, за-жа — мы поймали в луже ужа."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Зо-жо, зо-жо — у козы под кожей зёрнышко."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Зу-жу, зу-жу — я козу к ежу везу."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-рл1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Р–Л",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "Р",
+        "Л"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ра-ла, ра-ла — рыба в лужице плыла."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Ро-ло, ро-ло — на дворе совсем тепло."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Ру-лу, ру-лу — мы несём домой пилу."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-чщ1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ч–Щ",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "Ч",
+        "Щ"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ча-ща, ча-ща — мы поймали в речке леща."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Чу-щу, чу-щу — я тебя в саду ищу."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Чи-щи, чи-щи — мы на ужин ели щи."
+        }
+      ],
+      "symbolName": "waveform"
+    },
+    {
+      "id": "cult.clean.cg-цч1",
+      "category": "tongueTwister",
+      "titleKey": "Чистоговорка: Ц–Ч",
+      "authorKey": "cultural.clean.author",
+      "durationSeconds": 18.0,
+      "targetSounds": [
+        "Ц",
+        "Ч"
+      ],
+      "lines": [
+        {
+          "id": 0,
+          "startSeconds": 0.0,
+          "endSeconds": 6.0,
+          "text": "Ца-ча, ца-ча — мы зажгли в окне свечу."
+        },
+        {
+          "id": 1,
+          "startSeconds": 6.0,
+          "endSeconds": 12.0,
+          "text": "Цо-чо, цо-чо — стало горячо плечо."
+        },
+        {
+          "id": 2,
+          "startSeconds": 12.0,
+          "endSeconds": 18.0,
+          "text": "Цы-чи, цы-чи — поспевают калачи."
+        }
+      ],
+      "symbolName": "waveform"
+    }
+  ]
+}

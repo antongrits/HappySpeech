@@ -158,6 +158,21 @@ final class ComprehensionDetectiveCorpusTests: XCTestCase {
                                     "Корпус должен содержать ≥120 пунктов (F2-014)")
     }
 
+    func test_corpus_loadsFullExpandedSet() {
+        // После методического расширения (gap #2): 304 инструкции на 5 уровней.
+        XCTAssertEqual(ComprehensionDetectiveCorpus.allItems.count, 304,
+                       "Расширенный корпус должен содержать 304 инструкции")
+    }
+
+    func test_corpus_everyTierWellPopulated() {
+        // Каждый уровень получил методическое наполнение (минимум 40 пунктов).
+        for tier in GrammarTier.allCases {
+            let count = ComprehensionDetectiveCorpus.items(for: tier).count
+            XCTAssertGreaterThanOrEqual(count, 40,
+                                        "Уровень \(tier) должен содержать ≥40 пунктов, найдено \(count)")
+        }
+    }
+
     func test_corpus_hasAllFiveTiers() {
         let tiers = Set(ComprehensionDetectiveCorpus.allItems.map(\.tier))
         XCTAssertEqual(tiers, Set(GrammarTier.allCases),

@@ -11,6 +11,8 @@ protocol AssignedHomeworkBusinessLogic: AnyObject {
     func create(request: AssignedHomeworkModels.Create.Request) async
     /// Обновляет выполнение упражнения (локально + Firestore).
     func updateExerciseStatus(request: AssignedHomeworkModels.UpdateStatus.Request) async
+    /// Удаляет задание (локально + Firestore + отмена дедлайн-уведомления).
+    func delete(request: AssignedHomeworkModels.Delete.Request) async
     /// Загружает задания для родительского/детского контура из Firestore.
     func loadForFamily(request: AssignedHomeworkModels.FamilyLoad.Request) async
 }
@@ -118,6 +120,24 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
             hapticService.notification(.success)
         }
         await presenter?.presentUpdateStatus(response: response)
+    }
+
+    // MARK: - Delete (specialist removes assignment)
+
+    func delete(request: AssignedHomeworkModels.Delete.Request) async {
+        let didSucceed = await worker.delete(assignmentId: request.assignmentId)
+        if didSucceed {
+            hapticService.notification(.success)
+        } else {
+            hapticService.notification(.error)
+        }
+        let response = AssignedHomeworkModels.Delete.Response(
+            didSucceed: didSucceed,
+            deletedAssignmentId: request.assignmentId
+        )
+        await presenter?.presentDelete(response: response)
+        // Reload the specialist's list after deletion.
+        await load(request: .init(specialistId: specialistId))
     }
 
     // MARK: - Load for family (parent / child context)

@@ -159,9 +159,11 @@ private final class SpyAssignedHomeworkPresenterExt:
     var loadCount = 0
     var createCount = 0
     var updateStatusCount = 0
+    var deleteCount = 0
     var familyLoadCount = 0
     var lastCreate: AssignedHomeworkModels.Create.Response?
     var lastUpdateStatus: AssignedHomeworkModels.UpdateStatus.Response?
+    var lastDelete: AssignedHomeworkModels.Delete.Response?
     var lastFamilyLoad: AssignedHomeworkModels.FamilyLoad.Response?
 
     func presentLoad(response: AssignedHomeworkModels.Load.Response) async {
@@ -174,6 +176,10 @@ private final class SpyAssignedHomeworkPresenterExt:
     func presentUpdateStatus(response: AssignedHomeworkModels.UpdateStatus.Response) async {
         updateStatusCount += 1
         lastUpdateStatus = response
+    }
+    func presentDelete(response: AssignedHomeworkModels.Delete.Response) async {
+        deleteCount += 1
+        lastDelete = response
     }
     func presentFamilyLoad(response: AssignedHomeworkModels.FamilyLoad.Response) async {
         familyLoadCount += 1
@@ -233,6 +239,15 @@ private final class SpyAssignedHomeworkWorkerExt: AssignedHomeworkWorkerProtocol
         familyId: String
     ) -> AsyncStream<[HomeworkAssignment]> {
         AsyncStream { continuation in continuation.finish() }
+    }
+
+    private(set) var deleteCallCount = 0
+    private(set) var lastDeletedAssignmentId: String?
+    var deleteResult = true
+    func delete(assignmentId: String) async -> Bool {
+        deleteCallCount += 1
+        lastDeletedAssignmentId = assignmentId
+        return deleteResult
     }
 }
 

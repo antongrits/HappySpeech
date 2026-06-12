@@ -124,6 +124,14 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
     func displayRecordAttempt(_ viewModel: RepeatAfterModelModels.RecordAttempt.ViewModel) {
         display.isRecording = viewModel.isRecording
         display.micLabel = viewModel.micLabel
+        // Фаза записи теперь приходит из Interactor (пайплайн записи/ASR
+        // вынесен из View): .recording при старте, .processing на время ASR.
+        // .idle — нейтральная фаза, не трогаем текущий экран.
+        switch viewModel.phase {
+        case .recording:  display.phase = .recording
+        case .processing: display.phase = .processing
+        case .idle:       break
+        }
     }
 
     func displayEvaluateAttempt(_ viewModel: RepeatAfterModelModels.EvaluateAttempt.ViewModel) {

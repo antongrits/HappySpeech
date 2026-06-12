@@ -8,6 +8,8 @@ protocol RepeatAfterModelBusinessLogic: AnyObject {
     func loadSession(_ request: RepeatAfterModelModels.LoadSession.Request)
     func startWord(_ request: RepeatAfterModelModels.StartWord.Request)
     func toggleRecording()
+    func startRecordingIntent()
+    func stopRecordingIntent()
     func submitTranscript(_ request: RepeatAfterModelModels.EvaluateAttempt.Request)
     func handleNoInput(_ request: RepeatAfterModelModels.NoInput.Request)
     func submitMLScore(_ request: RepeatAfterModelModels.MLEvaluate.Request)
@@ -49,6 +51,13 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     /// F1-016: планировщик интервальных повторов — фиксируем исход каждой
     /// зачтённой/незачтённой попытки слова в дневном расписании повторов.
     private var reviewScheduler: (any ReviewSchedulerService)?
+    /// Запись с микрофона. Внедряется по DI из View (gap #10) — пайплайн
+    /// записи/ASR живёт в Interactor, не во View (Clean Swift / VIP).
+    private var audioService: (any AudioService)?
+    /// Распознавание речи (WhisperKit + word-list biasing на ожидаемое слово).
+    private var asrService: (any ASRService)?
+    /// Активная задача записи/ASR. Отменяется при cancel() и повторном старте.
+    private var recordingTask: Task<Void, Never>?
     private let logger = HSLogger.asr
 
     // MARK: - Tunables
@@ -119,6 +128,16 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         self.reviewScheduler = reviewScheduler
     }
 
+    // MARK: - gap #10: подключение записи/ASR из View
+
+    /// Внедряет сервисы записи и распознавания. Вызывается из View при
+    /// bootstrap (`startSessionOnce`). До подключения `beginRecording`/
+    /// `stopAndTranscribe` мягко переходят в noInput, не фабрикуя оценку.
+    func connect(audioService: any AudioService, asrService: any ASRService) {
+        self.audioService = audioService
+        self.asrService = asrService
+    }
+
     // MARK: - loadSession
 
     func loadSession(_ request: RepeatAfterModelModels.LoadSession.Request) {
@@ -176,8 +195,87 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
 
     func toggleRecording() {
         isRecording.toggle()
-        let response = RepeatAfterModelModels.RecordAttempt.Response(isRecording: isRecording)
+        let response = RepeatAfterModelModels.RecordAttempt.Response(
+            isRecording: isRecording,
+            phase: .idle
+        )
         presenter?.presentRecordAttempt(response)
+    }
+
+    // MARK: - Recording intents (gap #10: пайплайн записи из View → Interactor)
+
+    /// Интент «начать запись» из View. Владеет жизненным циклом задачи записи —
+    /// отменяется в cancel()/onDisappear, поэтому View не держит Task сам.
+    func startRecordingIntent() {
+        recordingTask?.cancel()
+        recordingTask = Task { @MainActor [weak self] in
+            await self?.beginRecording()
+        }
+    }
+
+    /// Интент «остановить и распознать» из View.
+    func stopRecordingIntent() {
+        recordingTask?.cancel()
+        recordingTask = Task { @MainActor [weak self] in
+            await self?.stopAndTranscribe()
+        }
+    }
+
+    /// Запускает запись с микрофона. Лениво запрашивает разрешение (в проде
+    /// оно уже выдано на PermissionsView). Переводит UI в фазу `.recording`.
+    /// При отказе/сбое — мягкий noInput, без фабрикации оценки.
+    func beginRecording() async {
+        guard let audioService else {
+            handleNoInput(.init(reason: .recordingFailed))
+            return
+        }
+        isRecording = true
+        // Фаза .recording — экран записи (то же, что раньше делал View).
+        presenter?.presentRecordAttempt(.init(isRecording: true, phase: .recording))
+
+        if !audioService.isPermissionGranted {
+            let granted = await audioService.requestPermission()
+            if !granted {
+                handleNoInput(.init(reason: .micDenied))
+                return
+            }
+        }
+        do {
+            try await audioService.startRecording()
+        } catch {
+            logger.error("repeat beginRecording failed: \(error.localizedDescription, privacy: .public)")
+            handleNoInput(.init(reason: .recordingFailed))
+        }
+    }
+
+    // MARK: - stopAndTranscribe
+
+    /// Останавливает запись, распознаёт речь с word-list biasing на ожидаемое
+    /// слово урока и передаёт транскрипт в скоринг (`submitTranscript`).
+    /// Переводит UI в фазу `.processing` на время ASR. При сбое — noInput.
+    func stopAndTranscribe() async {
+        guard let audioService, let asrService else {
+            handleNoInput(.init(reason: .asrFailed))
+            return
+        }
+        isRecording = false
+        // Фаза .processing — «Проверяю…» пока идёт ASR (то же, что делал View).
+        presenter?.presentRecordAttempt(.init(isRecording: false, phase: .processing))
+
+        do {
+            let url = try await audioService.stopRecording()
+            // Word-list biasing: ожидаемое слово урока повышает устойчивость
+            // распознавания искажённой детской речи.
+            let expected = currentIndex < words.count ? words[currentIndex].word : nil
+            let result = try await asrService.transcribe(url: url, expectedWord: expected)
+            submitTranscript(.init(
+                transcript: result.transcript,
+                confidence: Float(result.confidence)
+            ))
+        } catch {
+            logger.error("repeat stopAndTranscribe failed: \(error.localizedDescription, privacy: .public)")
+            handleNoInput(.init(reason: .asrFailed))
+        }
     }
 
     // MARK: - replayModel
@@ -450,6 +548,8 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     func cancel() {
         llmFeedbackTask?.cancel()
         llmFeedbackTask = nil
+        recordingTask?.cancel()
+        recordingTask = nil
         isRecording = false
         pendingMLScore = nil
     }

@@ -180,6 +180,27 @@ enum AssignedHomeworkModels {
         }
     }
 
+    // MARK: Delete
+    //
+    // Удаление задания специалистом: локально + Firestore + отмена дедлайн-
+    // уведомления (через Worker).
+
+    enum Delete {
+        struct Request: Sendable {
+            let assignmentId: String
+        }
+
+        struct Response: Sendable {
+            let didSucceed: Bool
+            let deletedAssignmentId: String
+        }
+
+        struct ViewModel: Sendable {
+            let didSucceed: Bool
+            let message: String
+        }
+    }
+
     // MARK: FamilyLoad
     //
     // Загрузка заданий со стороны родителя/ребёнка (реальный Firestore-фетч).

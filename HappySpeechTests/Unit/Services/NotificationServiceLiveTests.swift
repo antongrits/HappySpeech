@@ -186,6 +186,12 @@ final class NotificationServiceLiveTests: XCTestCase {
         await sut.cancelWeeklyParentSummary()
     }
 
+    func test_cancelCalendarReminder_doesNotThrow() async {
+        let sut = makeSUT()
+        // Idempotent: cancelling an unknown identifier is a safe no-op.
+        await sut.cancelCalendarReminder(identifier: "hs.homework.deadline.unknown")
+    }
+
     func test_pendingRequests_returnsArray() async {
         let sut = makeSUT()
         let pending = await sut.pendingRequests()

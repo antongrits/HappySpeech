@@ -116,16 +116,24 @@ final class RepeatAfterModelPresenterTests: XCTestCase {
 
     func test_presentRecordAttempt_isRecording_setsLabel() {
         let (sut, spy) = makeSUT()
-        sut.presentRecordAttempt(RepeatAfterModelModels.RecordAttempt.Response(isRecording: true))
+        sut.presentRecordAttempt(RepeatAfterModelModels.RecordAttempt.Response(
+            isRecording: true,
+            phase: .recording
+        ))
         XCTAssertTrue(spy.recordAttemptVM?.isRecording ?? false)
         XCTAssertFalse(spy.recordAttemptVM?.micLabel.isEmpty ?? true)
+        XCTAssertEqual(spy.recordAttemptVM?.phase, .recording)
     }
 
     func test_presentRecordAttempt_notRecording_setsLabel() {
         let (sut, spy) = makeSUT()
-        sut.presentRecordAttempt(RepeatAfterModelModels.RecordAttempt.Response(isRecording: false))
+        sut.presentRecordAttempt(RepeatAfterModelModels.RecordAttempt.Response(
+            isRecording: false,
+            phase: .processing
+        ))
         XCTAssertFalse(spy.recordAttemptVM?.isRecording ?? true)
         XCTAssertFalse(spy.recordAttemptVM?.micLabel.isEmpty ?? true)
+        XCTAssertEqual(spy.recordAttemptVM?.phase, .processing)
     }
 
     // MARK: - presentEvaluateAttempt

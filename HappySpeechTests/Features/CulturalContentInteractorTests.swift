@@ -216,4 +216,40 @@ final class CulturalContentInteractorTests: XCTestCase {
 
         XCTAssertFalse(spy.lastLoad?.bookmarkedItemIDs.contains(itemId) ?? true)
     }
+
+    // MARK: - 16. pack_cultural.json — фольклор/чистоговорки от методиста (gap #7)
+
+    func test_culturalPack_loads65Items() {
+        let pack = CulturalContentPackLoader.shared.items
+        XCTAssertEqual(pack.count, 65, "pack_cultural.json должен содержать 65 единиц")
+    }
+
+    func test_culturalPack_itemsDecodeNonEmpty() {
+        for item in CulturalContentPackLoader.shared.items {
+            XCTAssertTrue(item.id.hasPrefix("cult."), "\(item.id): неожиданный namespace")
+            XCTAssertFalse(item.titleKey.isEmpty, "\(item.id): пустой заголовок")
+            XCTAssertFalse(item.lines.isEmpty, "\(item.id): нет строк караоке")
+            XCTAssertFalse(item.targetSounds.isEmpty, "\(item.id): нет целевых звуков")
+            XCTAssertFalse(item.symbolName.isEmpty, "\(item.id): пустой символ")
+            XCTAssertGreaterThan(item.durationSeconds, 0, "\(item.id): нулевая длительность")
+            for line in item.lines {
+                XCTAssertFalse(line.text.isEmpty, "\(item.id): пустая строка")
+            }
+        }
+    }
+
+    func test_culturalPack_mergedIntoCatalogWithoutCollision() {
+        let ids = CulturalItem.catalog.map(\.id)
+        XCTAssertEqual(ids.count, Set(ids).count, "Идентификаторы каталога уникальны")
+        let packIds = Set(CulturalContentPackLoader.shared.items.map(\.id))
+        let catalogIds = Set(ids)
+        XCTAssertTrue(packIds.isSubset(of: catalogIds), "Все элементы пака попали в каталог")
+    }
+
+    func test_culturalPack_categoriesPresent() {
+        // Потешки → poem; скороговорки и чистоговорки → tongueTwister.
+        let cats = Set(CulturalContentPackLoader.shared.items.map(\.category))
+        XCTAssertTrue(cats.contains(.poem))
+        XCTAssertTrue(cats.contains(.tongueTwister))
+    }
 }
