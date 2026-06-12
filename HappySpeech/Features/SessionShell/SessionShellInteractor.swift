@@ -330,7 +330,9 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
                     round: currentIndex,
                     score: Int(avgScoreValue() * 100),
                     elapsed: elapsed,
-                    streak: consecutiveErrors == 0 ? (currentIndex - errorCount) : 0
+                    // P2-3/P2-5: серия = пройденные шаги минус ошибки минус пропуски,
+                    // зажата в 0 — раньше могла уйти в минус при произвольных errorCount.
+                    streak: consecutiveErrors == 0 ? max(0, currentIndex - errorCount - skippedCount) : 0
                 )
             }
         }
@@ -357,18 +359,57 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         isPaused = false
     }
 
+    /// P2-3 (Fable): пропуск шага — НЕЙТРАЛЬНОЕ событие. Раньше skip шёл через
+    /// `completeActivity(score: 0)` → `isCorrect=false` → `consecutiveErrors += 1`,
+    /// дренаж сердца, FSRS-исход «неверно», запись ошибочной попытки и `score 0` в
+    /// среднем (3 пропуска подряд → «усталость», сессия завершалась). Теперь skip
+    /// НЕ трогает серию/фатиг/FSRS/попытки/средний балл: шаг помечается `skipped`
+    /// (score остаётся nil, не попадает в подсчёт точности) и мы просто переходим
+    /// к следующему шагу. Серия НЕ обнуляется (пропуск — не ошибка), но и НЕ
+    /// засчитывается (пропуск — не верный ответ).
     func skipCurrentActivity() async {
         guard currentIndex < activities.count else { return }
         activities[currentIndex].isCompleted = true
-        activities[currentIndex].score = 0
+        activities[currentIndex].skipped = true
+        // score намеренно остаётся nil — пропуск не влияет на средний балл.
         let skippedId = activities[currentIndex].id
-        logger.info("Skipped activity id=\(skippedId)")
-        await completeActivity(SessionShellModels.CompleteActivity.Request(
-            activityId: skippedId,
-            score: 0,
-            durationSeconds: 0,
-            errorCount: 0
-        ))
+        logger.info("Skipped activity id=\(skippedId) (neutral — no error/streak/FSRS impact)")
+
+        // Время сессии по-прежнему ограничивает её длину, но пропуск сам по себе
+        // НЕ дренирует сердца и НЕ инкрементит ошибки — `detectFatigue` остаётся
+        // честным (срабатывает только по реальным подряд-ошибкам / лимиту времени).
+        let fatigueDetected = detectFatigue()
+        let nextActivity: SessionActivity? = {
+            let nextIdx = currentIndex + 1
+            guard nextIdx < activities.count else { return nil }
+            return activities[nextIdx]
+        }()
+        currentIndex += 1
+
+        let response = SessionShellModels.CompleteActivity.Response(
+            nextActivity: fatigueDetected ? nil : nextActivity,
+            isSessionComplete: nextActivity == nil || fatigueDetected,
+            earnedReward: nil,
+            fatigueDetected: fatigueDetected,
+            fatigueHearts: fatigueHearts,
+            feedback: .skipped
+        )
+
+        if response.isSessionComplete {
+            await saveSession()
+            if #available(iOS 16.1, *) {
+                await LiveActivityManager.shared.end()
+            }
+        } else if #available(iOS 16.1, *) {
+            let elapsed = Int(activeElapsedSeconds)
+            await LiveActivityManager.shared.update(
+                round: currentIndex,
+                score: Int(avgScoreValue() * 100),
+                elapsed: elapsed,
+                streak: consecutiveErrors == 0 ? max(0, currentIndex - errorCount - skippedCount) : 0
+            )
+        }
+        await presenter?.presentCompleteActivity(response)
     }
 
     func endSessionEarly() async {
@@ -433,7 +474,8 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// SessionShell подсказки не агрегируются). `sessionId` — стабильный для этого
     /// проигрывания, чтобы детерминировать выбор баннера/стикера.
     func buildSessionResult() -> SessionResult {
-        let completed = activities.filter { $0.isCompleted }
+        // P2-3: пропущенные шаги не считаются попытками экрана итогов.
+        let completed = activities.filter { $0.isCompleted && !$0.skipped }
         let avgScore = avgScoreValue()
         let totalAttempts = completed.count
         let correctAttempts = completed.filter { ($0.score ?? 0) >= 0.5 }.count
@@ -606,10 +648,12 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         guard !didSaveSession else { return }
         didSaveSession = true
 
-        let completed = activities.filter { $0.isCompleted }
+        // P2-3: пропущенные шаги (`skipped`) исключаются из «попыток» — пропуск
+        // нейтрален и не должен ни засчитываться верным, ни штрафовать точность.
+        let completed = activities.filter { $0.isCompleted && !$0.skipped }
         let totalCompleted = completed.count
         let avgScore = avgScoreValue()
-        // Каждый завершённый шаг = одна «попытка» сессии; correct = score >= 0.5.
+        // Каждый завершённый (не пропущенный) шаг = одна «попытка»; correct = score >= 0.5.
         let totalAttempts = max(totalCompleted, 0)
         let correctAttempts = completed.filter { ($0.score ?? 0) >= 0.5 }.count
 
@@ -727,8 +771,15 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     }
 
     private func avgScoreValue() -> Float {
+        // Пропущенные шаги имеют score=nil и не влияют на средний балл (нейтрально).
         let scored = activities.compactMap { $0.score }
         guard !scored.isEmpty else { return 0 }
         return scored.reduce(0, +) / Float(scored.count)
+    }
+
+    /// P2-3: число пропущенных шагов сессии — нужно, чтобы серия в LiveActivity
+    /// не «штрафовалась» за пропуски и не уходила в минус.
+    private var skippedCount: Int {
+        activities.filter { $0.skipped }.count
     }
 }

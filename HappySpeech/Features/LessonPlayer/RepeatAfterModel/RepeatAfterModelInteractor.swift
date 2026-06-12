@@ -106,14 +106,22 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     /// Активная подсказка для текущего слова (nil = не запрошена).
     private(set) var currentRepeatHintLevel: RepeatHintLevel = .none
 
+    /// P2-4 (Fable): порядок слов раунда. В проде — реальный `shuffled()`, чтобы
+    /// сессия не предъявляла одну и ту же последовательность каждый запуск. Тесты
+    /// инъектируют детерминированный провайдер (identity / seeded), сохраняя ПОЛНЫЙ
+    /// набор слов — перемешивается только порядок, ни одно слово не теряется.
+    private let wordOrderProvider: ([TargetWordItem]) -> [TargetWordItem]
+
     // MARK: - Init
 
     init(
         narrationService: (any KidLLMNarrationServiceProtocol)? = nil,
-        reviewScheduler: (any ReviewSchedulerService)? = nil
+        reviewScheduler: (any ReviewSchedulerService)? = nil,
+        wordOrderProvider: @escaping ([TargetWordItem]) -> [TargetWordItem] = { $0.shuffled() }
     ) {
         self.narrationService = narrationService
         self.reviewScheduler = reviewScheduler
+        self.wordOrderProvider = wordOrderProvider
     }
 
     // MARK: - Block H: подключение narrationService из View
@@ -143,7 +151,10 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     func loadSession(_ request: RepeatAfterModelModels.LoadSession.Request) {
         childName = request.childName
         childId = request.childId
-        let pool = TargetWordItem.words(for: request.soundGroup)
+        // P2-4 (Fable): перемешиваем ВЕСЬ пул, затем берём префикс — так порядок
+        // слов раунда меняется от запуска к запуску (раньше — всегда фиксированный),
+        // а при `count == pool.count` в сессию попадает полный набор слов группы.
+        let pool = wordOrderProvider(TargetWordItem.words(for: request.soundGroup))
         // Берём до wordsPerSession слов из пула, но не меньше 2-х.
         let count = max(2, min(wordsPerSession, pool.count))
         words = Array(pool.prefix(count))

@@ -80,6 +80,17 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         return (sut, spy)
     }
 
+    /// P2-4: SUT с детерминированным провайдером порядка слов (по умолчанию
+    /// identity — НЕ перемешивает), чтобы проверять полноту набора без флаки.
+    private func makeSUT(
+        order: @escaping ([TargetWordItem]) -> [TargetWordItem]
+    ) -> (RepeatAfterModelInteractor, SpyPresenter) {
+        let sut = RepeatAfterModelInteractor(wordOrderProvider: order)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        return (sut, spy)
+    }
+
     // MARK: - 1. loadSession вызывает presentLoadSession с правильным childName
 
     func test_loadSession_callsPresenterWithChildName() {
@@ -531,6 +542,44 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         XCTAssertTrue(spy.evaluateAttemptCalled)
         XCTAssertEqual(spy.lastEvaluateAttempt?.passed, false)
         XCTAssertEqual(spy.lastEvaluateAttempt?.diagnostic, .omission)
+    }
+
+    // MARK: - P2-4: shuffle набора слов (перемешан, но ПОЛНЫЙ)
+
+    /// Перемешивание сохраняет ВЕСЬ набор слов группы (count == pool.count для
+    /// групп ≤ wordsPerSession): ни одно слово не теряется, нет дублей.
+    func test_loadSession_shuffledSetIsComplete_noLoss_noDuplicates() {
+        // identity-провайдер изолирует проверку полноты от случайности.
+        let (sut, _) = makeSUT(order: { $0 })
+        for group in ["whistling", "hissing", "sonants", "velar"] {
+            sut.loadSession(.init(soundGroup: group, childName: "Тест"))
+            let poolIds = Set(TargetWordItem.words(for: group).map(\.id))
+            let sessionIds = sut.words.map(\.id)
+            XCTAssertEqual(sessionIds.count, poolIds.count, "Группа \(group): набор неполный")
+            XCTAssertEqual(Set(sessionIds), poolIds, "Группа \(group): потеряны/изменены слова")
+            XCTAssertEqual(Set(sessionIds).count, sessionIds.count, "Группа \(group): есть дубли")
+        }
+    }
+
+    /// Провайдер порядка реально применяется: реверс пула → реверс набора.
+    /// Доказывает, что `loadSession` использует инъектированный порядок, а не
+    /// фиксированный (раньше порядок был всегда один и тот же).
+    func test_loadSession_appliesInjectedOrder_notFixed() {
+        let (sut, _) = makeSUT(order: { $0.reversed() })
+        sut.loadSession(.init(soundGroup: "whistling", childName: "Тест"))
+        let expected = TargetWordItem.words(for: "whistling").reversed().map(\.id)
+        XCTAssertEqual(sut.words.map(\.id), Array(expected),
+                       "loadSession должен применять инъектированный порядок слов")
+    }
+
+    /// Реальный `shuffled()` (дефолт) тоже сохраняет полноту набора — порядок
+    /// случаен, но множество слов идентично пулу.
+    func test_loadSession_realShuffle_preservesFullSet() {
+        let (sut, _) = makeSUT()   // дефолтный реальный shuffled()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        let poolIds = Set(TargetWordItem.words(for: "sonants").map(\.id))
+        XCTAssertEqual(Set(sut.words.map(\.id)), poolIds,
+                       "Реальный shuffle не должен терять или добавлять слова")
     }
 }
 

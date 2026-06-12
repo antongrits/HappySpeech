@@ -8,7 +8,7 @@ import XCTest
 //   - completeActivity advances index and fires presentCompleteActivity
 //   - Three consecutive failures trigger fatigue detection
 //   - pause/resume accounting does not leak into elapsed time
-//   - skipCurrentActivity flows through completeActivity with score 0
+//   - skipCurrentActivity is neutral (no reward, no fatigue, no streak/error impact)
 // ==================================================================================
 
 @MainActor
@@ -154,9 +154,9 @@ final class SessionShellInteractorTests: XCTestCase {
         XCTAssertEqual(spy.pauseCalled, 1, "Duplicate pause must be idempotent")
     }
 
-    // MARK: - skip
+    // MARK: - skip (P2-3: пропуск нейтрален)
 
-    func test_skipCurrentActivity_emitsCompleteWithZeroScore() async {
+    func test_skipCurrentActivity_isNeutral_noReward_skippedFeedback_advances() async {
         let (sut, spy) = makeSUT()
         await sut.startSession(.init(childId: "c1", targetSoundId: "Р", sessionType: .adaptive))
 
@@ -165,6 +165,28 @@ final class SessionShellInteractorTests: XCTestCase {
         let last = spy.completeResponses.last
         XCTAssertNotNil(last)
         XCTAssertNil(last?.earnedReward, "Skip should not award a reward")
+        XCTAssertEqual(last?.feedback, .skipped, "Skip must emit neutral .skipped feedback")
+        XCTAssertFalse(last?.fatigueDetected ?? true, "A single skip must not trigger fatigue")
+    }
+
+    /// P2-3: три пропуска подряд НЕ должны завершать сессию по «усталости»
+    /// (раньше skip = score 0 = ошибка → 3 подряд = фатиг). Берём сессию
+    /// quickPractice (5 шагов) и пропускаем первые три — сессия продолжается.
+    func test_threeSkips_doNotTriggerFatigue() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c1", targetSoundId: "Р", sessionType: .quickPractice))
+        XCTAssertGreaterThanOrEqual(spy.startResponses.first?.activities.count ?? 0, 4)
+
+        await sut.skipCurrentActivity()
+        await sut.skipCurrentActivity()
+        await sut.skipCurrentActivity()
+
+        let last = spy.completeResponses.last
+        XCTAssertNotNil(last)
+        XCTAssertFalse(last?.fatigueDetected ?? true,
+                       "Three skips are neutral and must NOT trip fatigue")
+        XCTAssertFalse(last?.isSessionComplete ?? true,
+                       "Session must still have remaining steps after three skips")
     }
 
     // MARK: - Batch 1: расширенное покрытие

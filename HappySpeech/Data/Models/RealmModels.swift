@@ -72,32 +72,6 @@ final class ContentPackMetaRealm: Object, @unchecked Sendable {
     @Persisted var lastSyncAt: Date?
 }
 
-// MARK: - AdaptivePlan
-
-final class AdaptivePlan: Object, @unchecked Sendable {
-    @Persisted(primaryKey: true) var id: String = UUID().uuidString
-    @Persisted var childId: String = ""
-    @Persisted var date: Date = Date()
-    @Persisted var plannedRoute: List<RouteStep>
-    @Persisted var actualRoute: List<RouteStep>
-    @Persisted var fatigueLevel: Int = 0                   // 0=fresh, 1=normal, 2=tired
-    @Persisted var llmSummary: String?
-    @Persisted var homeTask: String?
-    @Persisted var isCompleted: Bool = false
-}
-
-// MARK: - RouteStep (EmbeddedObject)
-
-final class RouteStep: EmbeddedObject, @unchecked Sendable {
-    @Persisted var templateType: String = ""
-    @Persisted var targetSound: String = ""
-    @Persisted var stage: String = ""
-    @Persisted var difficulty: Int = 1
-    @Persisted var wordCount: Int = 8
-    @Persisted var durationTargetSec: Int = 180
-    @Persisted var completed: Bool = false
-}
-
 // MARK: - SyncQueueItem
 
 final class SyncQueueItem: Object, @unchecked Sendable {
@@ -705,8 +679,12 @@ public struct PhonemeObservationDTO: Sendable, Identifiable, Equatable {
 /// v17: PhonemeObservationObject («Фонемный паспорт») — пофонемные GOP-наблюдения
 ///      (только числа/IPA, без аудио/PII). Новый объект — Realm создаёт схему
 ///      автоматически, дефолты заданы в модели. Аддитивная миграция.
+/// v18: удалены мёртвые `AdaptivePlan` + `RouteStep` (EmbeddedObject) — никогда не
+///      инстанцировались/читались/писались (0 ссылок в коде, таблицы всегда пустые).
+///      Realm удаляет неиспользуемые таблицы при отсутствии класса — ручной миграции
+///      не требуется, потери данных нет.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 17
+    static let current: UInt64 = 18
 }
 
 // MARK: - RealmConfig

@@ -14,6 +14,7 @@ import XCTest
 //   - itemId == lessonId шага, sound == soundTarget шага (реальные данные)
 //   - каждый завершённый шаг даёт ровно один вызов планировщика
 //   - вызов происходит для разных шаблонов (minimal-pairs, articulation, …)
+//   - P2-3: пропуск шага НЕЙТРАЛЕН — он НЕ кормит планировщик (ни correct, ни failed)
 // ==================================================================================
 
 @MainActor
@@ -139,9 +140,9 @@ final class SessionShellFSRSFeedTests: XCTestCase {
         XCTAssertTrue(planner.recordedItemOutcomes.allSatisfy { !$0.itemId.isEmpty && !$0.sound.isEmpty })
     }
 
-    // MARK: - skip is a real (failed) attempt and still feeds the scheduler
+    // MARK: - P2-3: skip is NEUTRAL — it does NOT feed the scheduler at all
 
-    func test_skip_feedsScheduler_withCorrectFalse() async {
+    func test_skip_doesNotFeedScheduler() async {
         let planner = MockAdaptivePlannerService()
         let (sut, _) = makeSUT(planner: planner)
         await sut.startSession(.init(
@@ -151,7 +152,31 @@ final class SessionShellFSRSFeedTests: XCTestCase {
 
         await sut.skipCurrentActivity()
 
-        XCTAssertEqual(planner.recordedItemOutcomes.count, 1)
-        XCTAssertEqual(planner.recordedItemOutcomes.first?.correct, false)
+        // Пропуск нейтрален: не верный и не ошибочный — FSRS-лестница его не видит
+        // (раньше skip ошибочно писался как failed-исход, сбрасывая слово на «завтра»).
+        XCTAssertTrue(planner.recordedItemOutcomes.isEmpty,
+                      "Skip must NOT record any FSRS outcome (neutral, not a failed attempt)")
+    }
+
+    /// P2-3: реальный ответ после пропуска по-прежнему кормит планировщик —
+    /// нейтральный skip не должен «глушить» последующую запись исхода.
+    func test_skip_thenRealAnswer_feedsSchedulerOnceForRealAnswer() async {
+        let planner = MockAdaptivePlannerService()
+        let (sut, spy) = makeSUT(planner: planner)
+        await sut.startSession(.init(
+            childId: "c-6", targetSoundId: "С", sessionType: .quickPractice
+        ))
+        XCTAssertGreaterThan(spy.startResponses.first?.activities.count ?? 0, 1)
+
+        await sut.skipCurrentActivity()
+        let secondActivity = spy.startResponses.first!.activities[1]
+        await sut.completeActivity(.init(
+            activityId: secondActivity.id, score: 0.9,
+            durationSeconds: 20, errorCount: 0
+        ))
+
+        XCTAssertEqual(planner.recordedItemOutcomes.count, 1,
+                       "Only the real answer feeds the scheduler; the skip does not")
+        XCTAssertEqual(planner.recordedItemOutcomes.first?.correct, true)
     }
 }

@@ -71,6 +71,8 @@ final class SessionShellPresenter: SessionShellPresentationLogic {
             switch response.feedback {
             case .correct:   return .correct
             case .incorrect: return .incorrect
+            // P2-3: пропуск нейтрален — без overlay «верно/ошибка».
+            case .skipped:   return .none
             }
         }()
         let mascotState: SessionShellModels.MascotState = {
@@ -78,6 +80,8 @@ final class SessionShellPresenter: SessionShellPresentationLogic {
             switch response.feedback {
             case .correct:   return response.earnedReward != nil ? .celebrating : .encouraging
             case .incorrect: return .thinking
+            // P2-3: после пропуска — мягкое подбадривание, не «думающая» реакция ошибки.
+            case .skipped:   return .encouraging
             }
         }()
 

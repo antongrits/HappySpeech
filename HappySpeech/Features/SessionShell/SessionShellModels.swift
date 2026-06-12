@@ -136,6 +136,8 @@ enum SessionShellModels {
     enum ActivityFeedback: Sendable, Equatable {
         case correct
         case incorrect
+        /// P2-3 (Fable): шаг пропущен — нейтральный исход (не верно, не ошибка).
+        case skipped
     }
 
     /// Lyalya mood requested by the Presenter for the current shell state.
@@ -160,6 +162,11 @@ struct SessionActivity: Identifiable, Sendable, Equatable {
     let difficulty: Int
     var isCompleted: Bool
     var score: Float?
+    /// P2-3 (Fable): шаг был пропущен ребёнком (кнопка «дальше»). Пропуск —
+    /// НЕЙТРАЛЬНОЕ событие: не верный и не ошибочный. Помеченные так шаги
+    /// исключаются из подсчёта точности, серии, фатига, FSRS и попыток —
+    /// раньше пропуск шёл как `score 0` (ошибка) и валил сессию.
+    var skipped: Bool = false
 }
 
 /// Все 17 шаблонов игр, поддерживаемых проектом. Дублирование с
