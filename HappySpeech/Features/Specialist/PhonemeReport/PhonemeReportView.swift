@@ -79,7 +79,7 @@ struct PhonemeReportView: View {
             if let errorText = vm.errorText {
                 errorState(errorText)
             } else if vm.isEmpty {
-                emptyState
+                emptyState(passport: vm.passport)
             } else {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
@@ -87,6 +87,9 @@ struct PhonemeReportView: View {
                         legend
                         ForEach(vm.groups) { group in
                             groupSection(group)
+                        }
+                        if let passport = vm.passport {
+                            passportSection(passport)
                         }
                         footnote
                         doneButton
@@ -354,32 +357,54 @@ struct PhonemeReportView: View {
 
     // MARK: - Empty / error states
 
-    private var emptyState: some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            HSCard(style: .flat) {
-                VStack(spacing: SpacingTokens.sp3) {
-                    Image(systemName: "waveform.slash")
-                        .font(.system(size: 40))
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    Text(String(localized: "phonemeReport.empty.title"))
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Spec.ink)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                    Text(String(localized: "phonemeReport.empty.message"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
+    /// Экран-уровень empty (нет сессий). Если паспорт всё же содержит данные
+    /// (были family-voice занятия с записью голоса), показываем его секцию —
+    /// чтобы ценная GOP-аналитика не пряталась за «нет сессий».
+    @ViewBuilder
+    private func emptyState(passport: PhonemePassportViewModel?) -> some View {
+        if let passport, !passport.isEmpty {
+            ScrollView {
+                VStack(spacing: SpacingTokens.sp4) {
+                    sessionsEmptyCard
+                    passportSection(passport)
+                    footnote
+                    doneButton
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, SpacingTokens.sp4)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.sp3)
+                .padding(.bottom, SpacingTokens.sp6)
             }
-            doneButton
+        } else {
+            VStack(spacing: SpacingTokens.sp4) {
+                sessionsEmptyCard
+                doneButton
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp6)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp6)
+    }
+
+    private var sessionsEmptyCard: some View {
+        HSCard(style: .flat) {
+            VStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "waveform.slash")
+                    .font(.system(size: 40))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                Text(String(localized: "phonemeReport.empty.title"))
+                    .font(TypographyTokens.headline(17))
+                    .foregroundStyle(ColorTokens.Spec.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                Text(String(localized: "phonemeReport.empty.message"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp4)
+        }
     }
 
     private func errorState(_ text: String) -> some View {

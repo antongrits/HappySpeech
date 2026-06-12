@@ -16,7 +16,8 @@ enum PhonemeReportRouter {
         presenter.display = display
         let interactor = PhonemeReportInteractor(
             sessionRepository: container.sessionRepository,
-            childRepository: container.childRepository
+            childRepository: container.childRepository,
+            phonemeProfileService: container.phonemeProfileService
         )
         interactor.presenter = presenter
         return interactor

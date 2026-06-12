@@ -60,6 +60,13 @@ final class PhonemeReportPresenter: PhonemeReportPresentationLogic {
             withData, total
         )
 
+        let passport = response.phonemeProfile.map {
+            PhonemePassportPresenter.makeViewModel(
+                profile: $0,
+                forecasts: response.forecasts
+            )
+        }
+
         display?.displayLoad(.init(
             titleText: title,
             childNameText: childName,
@@ -67,7 +74,8 @@ final class PhonemeReportPresenter: PhonemeReportPresentationLogic {
             groups: groupVMs,
             coverageText: coverage,
             isEmpty: isEmpty,
-            errorText: nil
+            errorText: nil,
+            passport: passport
         ))
     }
 

@@ -31,17 +31,26 @@ enum PhonemeReportModels {
             /// Все сессии ребёнка (для построения истории и охвата).
             let sessions: [SessionDTO]
             let error: Error?
+            /// Агрегат «Фонемного паспорта» (GOP-анализ). `nil` — паспорт не
+            /// загрузился (его ошибка не валит остальной экран).
+            let phonemeProfile: PhonemeProfile?
+            /// Прогнозы динамики освоения по топ-проблемным фонемам паспорта.
+            let forecasts: [MasteryForecast]
 
             init(
                 childName: String,
                 targetSounds: [String],
                 sessions: [SessionDTO],
-                error: Error? = nil
+                error: Error? = nil,
+                phonemeProfile: PhonemeProfile? = nil,
+                forecasts: [MasteryForecast] = []
             ) {
                 self.childName = childName
                 self.targetSounds = targetSounds
                 self.sessions = sessions
                 self.error = error
+                self.phonemeProfile = phonemeProfile
+                self.forecasts = forecasts
             }
         }
 
@@ -55,6 +64,30 @@ enum PhonemeReportModels {
             /// `true`, если у ребёнка вообще нет ни одной сессии.
             let isEmpty: Bool
             let errorText: String?
+            /// Секция «Фонемный паспорт» (GOP-анализ). Источник —
+            /// `PhonemeProfileService`. `nil`, если профиль не удалось загрузить
+            /// (ошибка паспорта не валит весь экран — секция просто скрывается).
+            let passport: PhonemePassportViewModel?
+
+            init(
+                titleText: String,
+                childNameText: String,
+                summaryText: String,
+                groups: [PhonemeReportGroupViewModel],
+                coverageText: String,
+                isEmpty: Bool,
+                errorText: String?,
+                passport: PhonemePassportViewModel? = nil
+            ) {
+                self.titleText = titleText
+                self.childNameText = childNameText
+                self.summaryText = summaryText
+                self.groups = groups
+                self.coverageText = coverageText
+                self.isEmpty = isEmpty
+                self.errorText = errorText
+                self.passport = passport
+            }
         }
     }
 }
@@ -127,4 +160,122 @@ struct PhonemeRowViewModelA09: Identifiable, Equatable, Hashable {
     let stageText: String?
     /// Точки истории для спарклайна (могут быть пустыми).
     let history: [HistoryPoint]
+}
+
+// MARK: - Phoneme Passport view models (GOP-анализ)
+
+/// Тон ячейки матрицы паспорта (управляет тёплым цветом и a11y-меткой).
+/// Отличается от `AccuracyTone` тем, что учитывает «нет данных» и
+/// неопределённость, специфичные для GOP-наблюдений.
+enum PhonemePassportTone: Sendable, Equatable, Hashable {
+    /// Преобладает корректное произнесение (высокий self-baseline уровень).
+    case good
+    /// Искажение / умеренный уровень — требует внимания.
+    case medium
+    /// Замена / пропуск / низкий уровень — приоритет коррекции.
+    case poor
+    /// Нейтральный (нет данных в ячейке).
+    case neutral
+}
+
+/// Одна ячейка матрицы «фонема × позиция» для отображения.
+struct PhonemePassportCellViewModel: Identifiable, Equatable, Hashable {
+    var id: String { "\(phoneme)|\(positionKey)" }
+    let phoneme: String
+    /// Машинный ключ позиции (initial/medial/final) — для стабильного id.
+    let positionKey: String
+    /// «GOP 0,72» либо пустая строка, если уровня нет.
+    let levelText: String
+    /// Тон ячейки (цвет + a11y).
+    let tone: PhonemePassportTone
+    /// Локализованная подпись состояния («искажение», «норма»…). Может быть пустой.
+    let stateText: String
+    /// `true`, если в ячейке есть хотя бы одно наблюдение.
+    let hasData: Bool
+    /// Совмещённая accessibility-метка ячейки.
+    let accessibilityLabel: String
+}
+
+/// Колонка матрицы — одна позиция (начало/середина/конец) для заголовка.
+struct PhonemePassportColumn: Identifiable, Equatable, Hashable {
+    var id: String { key }
+    /// Машинный ключ позиции.
+    let key: String
+    /// Локализованный краткий заголовок («Начало»/«Середина»/«Конец»).
+    let title: String
+}
+
+/// Строка матрицы паспорта — одна фонема × три позиции.
+struct PhonemePassportRowViewModel: Identifiable, Equatable, Hashable {
+    var id: String { phoneme }
+    let phoneme: String
+    /// Ячейки в порядке колонок матрицы.
+    let cells: [PhonemePassportCellViewModel]
+}
+
+/// Точка sparkline-динамики GOP по проблемной фонеме.
+struct PhonemePassportTrendPoint: Identifiable, Equatable, Hashable {
+    var id: Int { index }
+    /// Порядковый индекс наблюдения (ось X).
+    let index: Int
+    /// Уровень self-baseline [0…1] (ось Y).
+    let level: Double
+}
+
+/// Sparkline динамики GOP по одной проблемной фонеме.
+struct PhonemePassportTrendViewModel: Identifiable, Equatable, Hashable {
+    var id: String { phoneme }
+    let phoneme: String
+    /// «GOP 0,41 · искажение».
+    let captionText: String
+    let tone: PhonemePassportTone
+    let points: [PhonemePassportTrendPoint]
+}
+
+/// Прогноз динамики освоения одной целевой фонемы для UI.
+struct PhonemePassportForecastViewModel: Identifiable, Equatable, Hashable {
+    var id: String { phoneme }
+    let phoneme: String
+    /// Основной текст прогноза («Ожидаемое освоение через 4 занятия»).
+    let summaryText: String
+    /// Текст доверительного интервала («диапазон: 3–7 занятий») или пусто.
+    let confidenceText: String?
+    /// `true` → бейдж «рекомендуется консультация».
+    let needsConsultation: Bool
+    /// Текущий уровень self-baseline [0…1] для прогресс-полосы.
+    let currentLevel: Double
+    /// Нормированная нижняя граница CI [0…1] для CI-полосы (доля времени). `nil` если нет.
+    let confidenceLowerFraction: Double?
+    /// Нормированная верхняя граница CI [0…1] для CI-полосы. `nil` если нет.
+    let confidenceUpperFraction: Double?
+    let tone: PhonemePassportTone
+    let accessibilityLabel: String
+}
+
+/// Полная ViewModel секции «Фонемный паспорт».
+struct PhonemePassportViewModel: Equatable {
+    /// Заголовок секции.
+    let titleText: String
+    /// Подзаголовок-сводка («38 наблюдений · откалибровано»).
+    let subtitleText: String
+    /// Колонки матрицы (позиции).
+    let columns: [PhonemePassportColumn]
+    /// Строки матрицы (фонемы).
+    let rows: [PhonemePassportRowViewModel]
+    /// Sparkline-динамика по слабейшим фонемам.
+    let trends: [PhonemePassportTrendViewModel]
+    /// Прогнозы освоения по целевым фонемам.
+    let forecasts: [PhonemePassportForecastViewModel]
+    /// Дата последнего наблюдения («обновлено 12 июня») или пусто.
+    let lastObservationText: String
+    /// Честная пометка относительной шкалы.
+    let disclaimerText: String
+    /// `true`, если паспорт пуст (наблюдений ещё нет) → дружелюбный empty-state.
+    let isEmpty: Bool
+    /// Текст empty-state.
+    let emptyText: String
+    /// Готовая CSV-строка для экспорта специалистом. Пустая, если паспорт пуст.
+    let csvExport: String
+    /// Имя файла CSV (без расширения), без PII.
+    let csvFileName: String
 }
