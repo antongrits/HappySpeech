@@ -325,6 +325,25 @@ public final class AppContainer {
         _dailyUsageTracker = tracker
     }
 
+    // MARK: - AcousticMirrorService («Акустическое зеркало»)
+
+    /// On-device акустическая артикулометрия сибилянтов (vDSP, без ML-моделей и
+    /// сети). Kid-контур, COPPA-safe by construction. Lazy.
+    /// Live: ``LiveAcousticMirrorService``. Preview/Test: ``MockAcousticMirrorService``.
+    private var _acousticMirrorService: (any AcousticMirrorServicing)?
+    public var acousticMirrorService: any AcousticMirrorServicing {
+        if let existing = _acousticMirrorService { return existing }
+        let new: any AcousticMirrorServicing = LiveAcousticMirrorService()
+        _acousticMirrorService = new
+        return new
+    }
+
+    /// Подмена ``acousticMirrorService`` для preview / тестов. Должна вызываться
+    /// до первого обращения к `acousticMirrorService`.
+    public func overrideAcousticMirrorService(_ service: any AcousticMirrorServicing) {
+        _acousticMirrorService = service
+    }
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
@@ -1251,6 +1270,8 @@ public extension AppContainer {
         // v17 «Фонемный паспорт» — детерминированный mock без Realm в preview/tests.
         container.overridePhonemeObservationRepository(MockPhonemeObservationRepository())
         container.overridePhonemeProfileService(MockPhonemeProfileService())
+        // «Акустическое зеркало» — детерминированный mock без DSP/файлов в preview/tests.
+        container.overrideAcousticMirrorService(MockAcousticMirrorService())
         return container
     }
 }

@@ -162,6 +162,13 @@ struct ArticulationGymView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
             }
 
+            // «Акустическое зеркало» — для свистящих/шипящих групп: после разминки
+            // ребёнок может проверить акустику своего звука (on-device vDSP).
+            if selectedGroup != .sonor {
+                acousticMirrorEntryCard
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+
             Spacer()
 
             HStack {
@@ -172,6 +179,58 @@ struct ArticulationGymView: View {
             }
         }
         .padding(.top, SpacingTokens.sp4)
+    }
+
+    // MARK: - Acoustic Mirror entry
+
+    /// Вход в «Акустическое зеркало» (kid): акустическая проверка С/Ш после разминки.
+    private var acousticMirrorEntryCard: some View {
+        Button {
+            stopTimer()
+            coordinator.navigate(to: .acousticMirror(childId: childId))
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "waveform.and.magnifyingglass")
+                    .font(TypographyTokens.headline(20))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().fill(ColorTokens.Brand.primary.opacity(0.9)))
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "acousticMirror.entry.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "acousticMirror.entry.subtitle"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(TypographyTokens.caption(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(.horizontal, SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, minHeight: 64)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Brand.primary.opacity(0.10))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .strokeBorder(ColorTokens.Brand.primary.opacity(0.28), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(String(localized: "acousticMirror.entry.title")))
+        .accessibilityHint(Text(String(localized: "acousticMirror.entry.subtitle")))
     }
 
     @ViewBuilder

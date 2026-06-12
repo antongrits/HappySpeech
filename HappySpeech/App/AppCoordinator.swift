@@ -303,6 +303,13 @@ enum AppRoute: Hashable {
     /// Видео-фон — пред-рендеренный Remotion-шаблон, поверх — оверлей с
     /// реальными числами ребёнка из недельной агрегации `SessionRepository`.
     case weeklyVideoReport(childId: String)
+
+    // MARK: - Акустическое зеркало (kid, on-device акустика сибилянтов)
+
+    /// «Акустическое зеркало» (kid): ребёнок тянет С-С-С/Ш-Ш-Ш, vDSP-анализ
+    /// спектрального центра тяжести показывает позицию его звука на континууме
+    /// «Ш ↔ С» (биообратная связь). Без ML-моделей и сети — COPPA-safe.
+    case acousticMirror(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1264,6 +1271,12 @@ struct AppCoordinatorView: View {
         case .weeklyVideoReport(let childId):
             WeeklyVideoReportView(childId: childId)
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - Акустическое зеркало
+
+        case .acousticMirror(let childId):
+            AcousticMirrorView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1841,6 +1854,10 @@ extension AppCoordinatorView {
         // MARK: п.26 — Еженедельный видео-отчёт (Remotion)
         case "weeklyVideoReport", "videoReport", "reportVideo":
             return .weeklyVideoReport(childId: previewChild)
+
+        // MARK: Акустическое зеркало (сибилянты, on-device DSP)
+        case "acousticMirror", "acousticmirror", "sibilantMirror":
+            return .acousticMirror(childId: previewChild)
 
         default:
             return .auth

@@ -1560,6 +1560,635 @@
         }
       }
     },
+    "acousticMirror.analyzing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю твой звук…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening to your sound…"
+          }
+        }
+      }
+    },
+    "acousticMirror.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть акустическое зеркало"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close acoustic mirror"
+          }
+        }
+      }
+    },
+    "acousticMirror.complete.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличная работа! Твой звук всё ближе к цели!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great job! Your sound is getting closer to the target!"
+          }
+        }
+      }
+    },
+    "acousticMirror.complete.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая тренировка! Завтра шарик подберётся ещё ближе."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good practice! Tomorrow the ball will get even closer."
+          }
+        }
+      }
+    },
+    "acousticMirror.complete.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зеркало запомнило, как звучит твой звук «%@». Возвращайся потренироваться!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The mirror remembered how your “%@” sounds. Come back to practice!"
+          }
+        }
+      }
+    },
+    "acousticMirror.cta.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One more time!"
+          }
+        }
+      }
+    },
+    "acousticMirror.cta.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На главную"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back home"
+          }
+        }
+      }
+    },
+    "acousticMirror.cta.listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
+          }
+        }
+      }
+    },
+    "acousticMirror.cta.openSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть настройки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        }
+      }
+    },
+    "acousticMirror.cta.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потянуть звук"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch the sound"
+          }
+        }
+      }
+    },
+    "acousticMirror.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверь, куда летит твой звук — к С или к Ш"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See where your sound lands — closer to S or Sh"
+          }
+        }
+      }
+    },
+    "acousticMirror.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Акустическое зеркало"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acoustic Mirror"
+          }
+        }
+      }
+    },
+    "acousticMirror.error.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось записать звук. Попробуй ещё раз!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't record the sound. Try again!"
+          }
+        }
+      }
+    },
+    "acousticMirror.error.micPermission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтобы зеркало услышало звук, нужен доступ к микрофону."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The mirror needs microphone access to hear your sound."
+          }
+        }
+      }
+    },
+    "acousticMirror.gauge.empty.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шкала от Ш до С. Звук ещё не записан."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scale from Sh to S. No sound recorded yet."
+          }
+        }
+      }
+    },
+    "acousticMirror.gauge.position.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твой звук на %d процентах пути от Ш к С."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sound is at %d percent of the way from Sh to S."
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.airstream": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подуй посильнее — пусть ветерок будет слышен!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blow a bit stronger — let the airflow be heard!"
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.focus": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук получился размытым. Поставь язычок поточнее и попробуй снова."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The sound was a bit fuzzy. Place your tongue more precisely and try again."
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.longer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо! А теперь потяни звук ещё дольше."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nice! Now stretch the sound even longer."
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.sustain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потяни звук подольше, на всём выдохе: не меньше двух секунд."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stretch the sound longer, on one breath — at least two seconds."
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.towardHissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай губы трубочкой, язычок чашечкой вверх — звук станет шире, как Ш."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round your lips, cup your tongue up — the sound will get wider, like Sh."
+          }
+        }
+      }
+    },
+    "acousticMirror.hint.towardWhistling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбнись шире, кончик язычка вниз — и звук станет тоньше, как С."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smile wider, tongue tip down — the sound will get thinner, like S."
+          }
+        }
+      }
+    },
+    "acousticMirror.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми на микрофон и потяни звук: %@-%@-%@!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the mic and stretch the sound: %@-%@-%@!"
+          }
+        }
+      }
+    },
+    "acousticMirror.pole.hissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящий звук — тёплый и широкий, как змейка: ш-ш-ш"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A hissing sound — warm and wide, like a snake: sh-sh-sh"
+          }
+        }
+      }
+    },
+    "acousticMirror.pole.s.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S"
+          }
+        }
+      }
+    },
+    "acousticMirror.pole.sh.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ш"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sh"
+          }
+        }
+      }
+    },
+    "acousticMirror.pole.whistling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящий звук — тонкий и высокий, как насос: с-с-с"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A whistling sound — thin and high, like a pump: s-s-s"
+          }
+        }
+      }
+    },
+    "acousticMirror.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %d из %d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round %d of %d"
+          }
+        }
+      }
+    },
+    "acousticMirror.result.middle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твой звук пока между С и Ш — посмотри на шарик!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sound is between S and Sh — look at the ball!"
+          }
+        }
+      }
+    },
+    "acousticMirror.result.nearTarget": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти получилось — шарик совсем рядом с целью!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almost there — the ball is right next to the target!"
+          }
+        }
+      }
+    },
+    "acousticMirror.result.noSound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я не расслышала звук — попробуем ещё разок?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I couldn't hear the sound — shall we try again?"
+          }
+        }
+      }
+    },
+    "acousticMirror.result.onTarget": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В яблочко! Звук там, где нужно!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bullseye! Your sound is right on target!"
+          }
+        }
+      }
+    },
+    "acousticMirror.result.sweptToHissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ой, звук убежал к Ш! Улыбнись шире и попробуй ещё."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oops, the sound ran off to Sh! Smile wider and try again."
+          }
+        }
+      }
+    },
+    "acousticMirror.result.sweptToWhistling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ой, звук убежал к С! Сделай губы трубочкой и попробуй ещё."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oops, the sound ran off to S! Round your lips and try again."
+          }
+        }
+      }
+    },
+    "acousticMirror.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Акустическое зеркало"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acoustic Mirror"
+          }
+        }
+      }
+    },
+    "acousticMirror.sound.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound %@"
+          }
+        }
+      }
+    },
+    "acousticMirror.stars.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звёзд за попытку: %d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stars for this attempt: %d"
+          }
+        }
+      }
+    },
     "action.cancel": {
       "localizations": {
         "ru": {
@@ -54264,6 +54893,94 @@
         }
       }
     },
+    "soundTrafficLight.instruction.phrase": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай фразу. Какой звук в ней главный?"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.instruction.syllable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай слог и отправь машинку в нужный гараж"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.instruction.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай рассказ и посчитай слова с каждым звуком"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.phrase": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фразы"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.syllable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоги"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.unlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый уровень: %@"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова"
+          }
+        }
+      }
+    },
     "soundTrafficLight.loading": {
       "extractionState": "manual",
       "localizations": {
@@ -54271,6 +54988,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Готовим игру…"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.pair.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пара пройдена целиком — отличная работа!"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза: %@"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.both": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оба звука"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.both.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери, если во фразе есть оба звука"
           }
         }
       }
@@ -54348,6 +55109,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Игра окончена!"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ «%@»"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.check": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить ответ"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.feedback.correct": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно! Ты внимательно посчитал слова"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.feedback.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Послушай ещё раз и посчитай снова"
           }
         }
       }
@@ -71965,182 +72770,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.instruction.syllable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушай слог и отправь машинку в нужный гараж"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.instruction.phrase": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушай фразу. Какой звук в ней главный?"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.instruction.text": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушай рассказ и посчитай слова с каждым звуком"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.level.syllable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слоги"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.level.word": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слова"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.level.phrase": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фразы"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.level.text": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рассказ"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.level.unlocked": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Новый уровень: %@"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.pair.completed": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пара пройдена целиком — отличная работа!"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.phrase.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фраза: %@"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.phrase.both": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Оба звука"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.phrase.both.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выбери, если во фразе есть оба звука"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.text.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рассказ «%@»"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.text.check": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверить ответ"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.text.feedback.correct": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Верно! Ты внимательно посчитал слова"
-          }
-        }
-      }
-    },
-    "soundTrafficLight.text.feedback.tryAgain": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Почти! Послушай ещё раз и посчитай снова"
           }
         }
       }
