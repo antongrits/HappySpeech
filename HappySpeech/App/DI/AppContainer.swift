@@ -148,6 +148,10 @@ public final class AppContainer {
     // Persistence-only — НЕ реплицирует детей кросс-аккаунтно (см. co-parent gap).
     private var _familyMembershipStore: (any FamilyMembershipStoring)?
 
+    // P0-4: персистентный прогресс ребёнка по лестнице коррекции (per-child-per-sound).
+    // Источник реальной стартовой стадии сессии и приёмник продвижения вперёд.
+    private var _stageProgressStore: (any StageProgressStoring)?
+
     // Block R.2 (v32): ChatRepository — реальный чат parent ↔ specialist (Firestore).
     // Lazy. Live: FirestoreChatRepository. Preview/Test: MockChatRepository.
     // COPPA: только родительский/специалистский контур.
@@ -663,6 +667,21 @@ public final class AppContainer {
         let new = UserDefaultsFamilyMembershipStore()
         _familyMembershipStore = new
         return new
+    }
+
+    /// P0-4: персистентный прогресс ребёнка по 10-этапной лестнице коррекции
+    /// (per-child-per-sound, UserDefaults). Используется `SessionShellInteractor`
+    /// для старта сессии с реальной стадии и продвижения вперёд при освоении.
+    public var stageProgressStore: any StageProgressStoring {
+        if let existing = _stageProgressStore { return existing }
+        let new = UserDefaultsStageProgressStore()
+        _stageProgressStore = new
+        return new
+    }
+
+    /// Подмена ``stageProgressStore`` для preview / тестов.
+    public func overrideStageProgressStore(_ store: any StageProgressStoring) {
+        _stageProgressStore = store
     }
 
     /// Позволяет Preview/Tests подменить Block U сервисы.

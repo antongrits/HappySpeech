@@ -62,6 +62,12 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// тренировали захардкоженный звук. Опционален — в legacy preview/test может
     /// быть `nil` (тогда поведение прежнее: используется переданный звук как есть).
     private let childRepository: (any ChildRepository)?
+    /// P0-4: персистентный прогресс ребёнка по 10-этапной лестнице коррекции
+    /// (per-child-per-sound). Источник РЕАЛЬНОЙ стартовой стадии сессии (вместо
+    /// захардкоженного `wordInit`) и приёмник продвижения вперёд при освоении.
+    /// Опционален — в legacy preview/test может быть `nil` (тогда стадия как
+    /// раньше определяется метаданными forced-шаблона / адаптивным маршрутом).
+    private let stageProgressStore: (any StageProgressStoring)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionShell")
 
     private var activities: [SessionActivity] = []
@@ -70,6 +76,16 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     /// Метаданные текущей сессии для построения `SessionDTO` при сохранении.
     private var sessionChildId: String = ""
     private var sessionTargetSound: String = ""
+    /// P0-4: РЕАЛЬНАЯ стадия лестницы, на которой идёт эта сессия. Резолвится в
+    /// `startSession` из `stageProgressStore` (forced/quick путь) или из стадии
+    /// первого звукового шага адаптивного маршрута. Персистится в `SessionDTO`
+    /// вместо константы `wordInit` и кормит продвижение стадии.
+    private var sessionStage: CorrectionStage = .wordInit
+    /// P1-3 (Fable): реальные попытки сессии — по одной на каждый завершённый
+    /// шаг (слово/урок + score + correct + время). Накапливаются в
+    /// `completeActivity`, пишутся в `SessionDTO.attempts`, оживляя «слова недели»,
+    /// экспорт и consecutiveWrong-фатиг планировщика (раньше attempts были `[]`).
+    private var collectedAttempts: [AttemptDTO] = []
     /// Гард от двойного сохранения: `completeActivity`→`saveSession` и
     /// `onDisappear`→`endSessionEarly`→`saveSession` могут сработать оба.
     private var didSaveSession: Bool = false
@@ -111,7 +127,8 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         hapticService: any HapticService,
         emotionDetectionService: (any EmotionDetectionServiceProtocol)? = nil,
         sessionPersistence: (any SessionPersistenceCoordinating)? = nil,
-        childRepository: (any ChildRepository)? = nil
+        childRepository: (any ChildRepository)? = nil,
+        stageProgressStore: (any StageProgressStoring)? = nil
     ) {
         self.contentService = contentService
         self.adaptivePlannerService = adaptivePlannerService
@@ -120,6 +137,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         self.emotionDetectionService = emotionDetectionService
         self.sessionPersistence = sessionPersistence
         self.childRepository = childRepository
+        self.stageProgressStore = stageProgressStore
     }
 
     // MARK: - SessionShellBusinessLogic
@@ -134,6 +152,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         fatigueHearts = initialHearts
         consecutiveNegativeEmotions = 0
         didSaveSession = false
+        collectedAttempts = []
         sessionChildId = request.childId
 
         // P0-2: если маршрут не донёс целевой звук, берём реальный звук активного
@@ -144,6 +163,15 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         // forced/quick путь и метаданные персистенции.
         let resolvedRequest = await resolveTargetSound(for: request)
         sessionTargetSound = resolvedRequest.targetSoundId
+
+        // P0-4: РЕАЛЬНАЯ стадия лестницы этого ребёнка по этому звуку. Раньше
+        // сессия всегда писалась как `wordInit` (хардкод), из-за чего лестница
+        // была заморожена. Берём текущую стадию из персистентного стора —
+        // сессия стартует с того этапа, где ребёнок реально находится.
+        sessionStage = resolveSessionStage(
+            childId: resolvedRequest.childId,
+            sound: resolvedRequest.targetSoundId
+        )
 
         let activities = await loadActivities(for: resolvedRequest)
         self.activities = activities
@@ -202,6 +230,24 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         }
     }
 
+    /// P0-4: Резолвит РЕАЛЬНУЮ стадию лестницы для сессии. Источник истины —
+    /// персистентный `stageProgressStore` (per-child-per-sound). При отсутствии
+    /// стора (legacy preview/test) или пустых идентификаторов возвращает
+    /// `.wordInit` как нейтральную стартовую (прежнее поведение). Откат стадии
+    /// при настоящем регрессе уже применяется в адаптивном маршруте
+    /// (`StageProgressionPlanner.recommendedStage`) на уровне планировщика — здесь
+    /// мы фиксируем текущую освоенную стадию ребёнка для персистенции и продвижения.
+    private func resolveSessionStage(childId: String, sound: String) -> CorrectionStage {
+        guard let stageProgressStore, !childId.isEmpty, !sound.isEmpty else {
+            return .wordInit
+        }
+        let stage = stageProgressStore.currentStage(childId: childId, sound: sound)
+        logger.info(
+            "Session stage resolved sound=\(sound, privacy: .public) stage=\(stage.rawValue, privacy: .public)"
+        )
+        return stage
+    }
+
     func completeActivity(_ request: SessionShellModels.CompleteActivity.Request) async {
         guard currentIndex < activities.count else {
             logger.warning(
@@ -238,6 +284,15 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
 
         activities[currentIndex].isCompleted = true
         activities[currentIndex].score = request.score
+
+        // P1-3 (Fable): фиксируем РЕАЛЬНУЮ попытку завершённого шага. Каждый
+        // завершённый шаг любого шаблона проходит через SessionShell, поэтому
+        // здесь — единая точка записи attempts (без дублирования в играх).
+        // `word` = практикуемый элемент шага (`lessonId`), `asrScore` = реальный
+        // score шаблона, `isCorrect` = score ≥ 0.5 (тот же критерий, что у
+        // totalAttempts/correctAttempts). Без этого «слова недели», экспорт и
+        // consecutiveWrong-фатиг планировщика были мертвы (attempts всегда `[]`).
+        recordAttempt(for: activities[currentIndex], score: request.score, isCorrect: isCorrect)
 
         let fatigueDetected = detectFatigue()
         let nextActivity: SessionActivity? = {
@@ -428,6 +483,29 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         )
     }
 
+    /// P1-3 (Fable): добавляет реальную попытку завершённого шага в буфер сессии.
+    /// `word` берётся из практикуемого элемента шага (`lessonId`). Аудио-пути
+    /// пустые: SessionShell не владеет файлом записи (он живёт в играх с захватом
+    /// голоса), а отчёты/«слова недели» используют слово + score + correctness,
+    /// которые здесь реальны. ASR-транскрипт = слово (известно из контента шага).
+    private func recordAttempt(for activity: SessionActivity, score: Float, isCorrect: Bool) {
+        let word = activity.lessonId
+        guard !word.isEmpty else { return }
+        let attempt = AttemptDTO(
+            id: UUID().uuidString,
+            word: word,
+            audioLocalPath: "",
+            audioStoragePath: "",
+            asrTranscript: word,
+            asrScore: Double(score),
+            pronunciationScore: Double(score),
+            manualScore: -1,
+            isCorrect: isCorrect,
+            timestamp: Date()
+        )
+        collectedAttempts.append(attempt)
+    }
+
     private func detectFatigue() -> Bool {
         let elapsed = activeElapsedSeconds / 60
         return fatigueHearts == 0
@@ -541,23 +619,77 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
             date: Date(),
             templateType: Self.representativeTemplateType(for: activities),
             targetSound: sessionTargetSound,
-            stage: CorrectionStage.wordInit.rawValue,
+            // P0-4: пишем РЕАЛЬНУЮ стадию лестницы (резолвнутую в startSession),
+            // а не захардкоженный `wordInit` — иначе агрегатор стадии
+            // (`SoundProgressAggregator.latestStage`) навсегда видел бы `wordInit`.
+            stage: sessionStage.rawValue,
             durationSeconds: Int(activeElapsedSeconds),
             totalAttempts: totalAttempts,
             correctAttempts: correctAttempts,
             fatigueDetected: detectFatigue(),
             isSynced: false,
-            attempts: []
+            // P1-3 (Fable): реальные попытки сессии (раньше всегда `[]`).
+            attempts: collectedAttempts
         )
 
         logger.info("Session saving: \(totalCompleted)/\(self.activities.count) avg=\(avgScore, format: .fixed(precision: 2))")
-        logger.info("Session attempts=\(totalAttempts) correct=\(correctAttempts)")
+        logger.info("Session attempts=\(totalAttempts) correct=\(correctAttempts) stage=\(self.sessionStage.rawValue, privacy: .public)")
+
+        // P0-4: продвижение по лестнице при освоении текущей стадии. Применяем
+        // методический критерий (≥80% × 2 сессии, изолированный 8/10, рассказ
+        // 70%) к реальной точности этой сессии и персистим новую стадию. Только
+        // для сессий с реальными попытками — пустой выход (немедленный exit без
+        // единого шага) не должен обнулять накопленную серию.
+        if totalAttempts > 0 {
+            advanceStageProgress(sessionSuccessRate: dto.successRate)
+        }
 
         guard let sessionPersistence else {
             logger.debug("Session not persisted — no SessionPersistenceCoordinator wired (preview/test)")
             return
         }
         await sessionPersistence.persistAndSync(dto)
+    }
+
+    /// P0-4: применяет результат завершённой сессии к прогрессу лестницы и
+    /// персистит. Продвигает стадию вперёд при выполнении методического критерия
+    /// освоения (`StageAdvancementPlanner`). Откат при регрессе делает
+    /// планировщик маршрута — здесь только «вверх или держим серию». No-op без
+    /// `stageProgressStore` (legacy preview/test) или пустых идентификаторов.
+    private func advanceStageProgress(sessionSuccessRate: Double) {
+        guard let stageProgressStore,
+              !sessionChildId.isEmpty,
+              !sessionTargetSound.isEmpty else { return }
+
+        // Считаем серию относительно стадии, на которой реально шла эта сессия
+        // (`sessionStage`), сохраняя накопленный счётчик подряд квалифицирующих
+        // сессий из стора. Если стор за время сессии переключился на другую
+        // стадию (рассинхрон) — счётчик неактуален, начинаем серию заново.
+        let stored = stageProgressStore.progress(
+            childId: sessionChildId,
+            sound: sessionTargetSound
+        )
+        let streak = stored.stage == sessionStage ? stored.consecutiveQualifyingSessions : 0
+        let current = StageProgress(stage: sessionStage, consecutiveQualifyingSessions: streak)
+        let decision = StageAdvancementPlanner.apply(
+            progress: current,
+            sessionSuccessRate: sessionSuccessRate
+        )
+        stageProgressStore.save(
+            decision.progress,
+            childId: sessionChildId,
+            sound: sessionTargetSound
+        )
+        if decision.didAdvance {
+            logger.notice(
+                """
+                Stage advanced sound=\(self.sessionTargetSound, privacy: .public) \
+                from=\(self.sessionStage.rawValue, privacy: .public) \
+                to=\(decision.progress.stage.rawValue, privacy: .public) \
+                rate=\(sessionSuccessRate, format: .fixed(precision: 2))
+                """
+            )
+        }
     }
 
     /// Представительный `TemplateType.rawValue` сессии — берём первый завершённый
