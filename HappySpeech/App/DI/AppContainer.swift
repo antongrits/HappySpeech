@@ -144,6 +144,10 @@ public final class AppContainer {
     private var _familyInviteService: (any FamilyInviteServiceProtocol)?
     private var _realtimeDatabaseService: (any RealtimeDatabaseServiceProtocol)?
 
+    // Со-родительство: локальное хранилище принятых семейных приглашений.
+    // Persistence-only — НЕ реплицирует детей кросс-аккаунтно (см. co-parent gap).
+    private var _familyMembershipStore: (any FamilyMembershipStoring)?
+
     // Block R.2 (v32): ChatRepository — реальный чат parent ↔ specialist (Firestore).
     // Lazy. Live: FirestoreChatRepository. Preview/Test: MockChatRepository.
     // COPPA: только родительский/специалистский контур.
@@ -628,13 +632,24 @@ public final class AppContainer {
         return new
     }
 
+    /// Локальное хранилище принятых семейных приглашений (со-родительство).
+    /// Сохраняет факт членства; кросс-аккаунтный доступ к детям — известный gap.
+    public var familyMembershipStore: any FamilyMembershipStoring {
+        if let existing = _familyMembershipStore { return existing }
+        let new = UserDefaultsFamilyMembershipStore()
+        _familyMembershipStore = new
+        return new
+    }
+
     /// Позволяет Preview/Tests подменить Block U сервисы.
     public func overrideBlockUServices(
         familyInvite: (any FamilyInviteServiceProtocol)? = nil,
-        realtimeDatabase: (any RealtimeDatabaseServiceProtocol)? = nil
+        realtimeDatabase: (any RealtimeDatabaseServiceProtocol)? = nil,
+        familyMembershipStore: (any FamilyMembershipStoring)? = nil
     ) {
         if let fi = familyInvite { _familyInviteService = fi }
         if let rdb = realtimeDatabase { _realtimeDatabaseService = rdb }
+        if let store = familyMembershipStore { _familyMembershipStore = store }
     }
 
     // MARK: - Block R.2 (v32): ChatRepository

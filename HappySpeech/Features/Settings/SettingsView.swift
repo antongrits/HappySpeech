@@ -23,6 +23,7 @@ struct SettingsView: View {
     // Видимость internal (не private) — секции в SettingsViewSectionsExtras.swift
     // обращаются к container и dismiss из extension того же типа.
     @Environment(AppContainer.self) var container
+    @Environment(AppCoordinator.self) var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) var dismiss
 
@@ -49,6 +50,12 @@ struct SettingsView: View {
     @State var showCustomizationSheet = false
     @State private var parentalGatePendingURL: ParentalGateURL?
     @State private var showChangelog = false
+
+    // Со-родительство (FamilyInvite). Каждая поверхность открывается через
+    // ParentalGate — после прохождения биометрии/математики показывается sheet.
+    @State var pendingFamilyInviteAction: FamilyInviteEntryAction?
+    @State var showCreateInviteSheet = false
+    @State var showRedeemInviteSheet = false
     /// Block R.1 v18 — sheet для DialectAdaptationView (Settings → Profile → Dialect).
     @State var showDialectAdaptationSheet = false
 
@@ -74,6 +81,7 @@ struct SettingsView: View {
                     modelPacksSection
                     dataSection
                     performanceSection
+                    coParentSection
                     specialistSection
                     karaokeSection
                     aboutSection
@@ -245,6 +253,34 @@ struct SettingsView: View {
                     .environment(container)
                     .presentationDetents([.large])
             }
+            // Со-родительство: ParentalGate перед открытием create/redeem.
+            .sheet(item: $pendingFamilyInviteAction) { action in
+                ParentalGate(
+                    isPresented: Binding(
+                        get: { pendingFamilyInviteAction != nil },
+                        set: { if !$0 { pendingFamilyInviteAction = nil } }
+                    )
+                ) {
+                    switch action {
+                    case .create: showCreateInviteSheet = true
+                    case .redeem: showRedeemInviteSheet = true
+                    }
+                    pendingFamilyInviteAction = nil
+                }
+            }
+            .sheet(isPresented: $showCreateInviteSheet) {
+                CreateInviteView()
+                    .environment(container)
+                    .environment(\.circuitContext, .parent)
+                    .presentationDetents([.large])
+            }
+            .sheet(isPresented: $showRedeemInviteSheet) {
+                RedeemInviteView()
+                    .environment(container)
+                    .environment(coordinator)
+                    .environment(\.circuitContext, .parent)
+                    .presentationDetents([.large])
+            }
         }
         .environment(\.circuitContext, .parent)
         // P0.4 fix v19: use onAppear (sync) instead of .task (async) so that
@@ -289,5 +325,6 @@ struct SettingsView: View {
 #Preview("Settings – Parent") {
     SettingsView()
         .environment(AppContainer.preview())
+        .environment(AppCoordinator())
         .environment(\.circuitContext, .parent)
 }
