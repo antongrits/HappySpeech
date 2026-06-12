@@ -71843,6 +71843,182 @@
           }
         }
       }
+    },
+    "soundTrafficLight.instruction.syllable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай слог и отправь машинку в нужный гараж"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.instruction.phrase": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай фразу. Какой звук в ней главный?"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.instruction.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай рассказ и посчитай слова с каждым звуком"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.syllable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоги"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.phrase": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фразы"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.level.unlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый уровень: %@"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.pair.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пара пройдена целиком — отличная работа!"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза: %@"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.both": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оба звука"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.phrase.both.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери, если во фразе есть оба звука"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ «%@»"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.check": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить ответ"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.feedback.correct": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно! Ты внимательно посчитал слова"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.text.feedback.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Послушай ещё раз и посчитай снова"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

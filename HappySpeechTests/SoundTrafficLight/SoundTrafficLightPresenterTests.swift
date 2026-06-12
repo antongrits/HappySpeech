@@ -7,12 +7,20 @@ import XCTest
 private final class SpyTrafficLightDisplay: SoundTrafficLightDisplayLogic, @unchecked Sendable {
     var startVM: SoundTrafficLightModels.Start.ViewModel?
     var sortVM: SoundTrafficLightModels.Sort.ViewModel?
+    var phraseVM: SoundTrafficLightModels.ChoosePhrase.ViewModel?
+    var textVM: SoundTrafficLightModels.CountText.ViewModel?
 
     func displayStart(viewModel: SoundTrafficLightModels.Start.ViewModel) async {
         startVM = viewModel
     }
     func displaySort(viewModel: SoundTrafficLightModels.Sort.ViewModel) async {
         sortVM = viewModel
+    }
+    func displayChoosePhrase(viewModel: SoundTrafficLightModels.ChoosePhrase.ViewModel) async {
+        phraseVM = viewModel
+    }
+    func displayCountText(viewModel: SoundTrafficLightModels.CountText.ViewModel) async {
+        textVM = viewModel
     }
 }
 
@@ -42,7 +50,7 @@ final class SoundTrafficLightPresenterTests: XCTestCase {
         await sut.presentStart(response: .init(pair: pair, rounds: rounds))
         XCTAssertNotNil(display.startVM)
         XCTAssertEqual(display.startVM?.totalRounds, 2)
-        XCTAssertEqual(display.startVM?.firstRound.word, "сок")
+        XCTAssertEqual(display.startVM?.firstRound?.word, "сок")
     }
 
     func test_presentStart_garageLabelsContainSounds() async {
@@ -60,7 +68,9 @@ final class SoundTrafficLightPresenterTests: XCTestCase {
             nextRound: rounds[1],
             nextRoundIndex: 1,
             correctCount: 1,
-            totalRounds: 2
+            totalRounds: 2,
+            level: .word,
+            nextLevel: nil
         ))
         XCTAssertEqual(display.sortVM?.wasCorrect, true)
         XCTAssertFalse(display.sortVM?.feedbackText.isEmpty ?? true)
@@ -76,7 +86,9 @@ final class SoundTrafficLightPresenterTests: XCTestCase {
             nextRound: nil,
             nextRoundIndex: nil,
             correctCount: 2,
-            totalRounds: 2
+            totalRounds: 2,
+            level: .word,
+            nextLevel: nil
         ))
         XCTAssertEqual(display.sortVM?.isFinished, true)
         XCTAssertNotNil(display.sortVM?.summary)
@@ -92,7 +104,9 @@ final class SoundTrafficLightPresenterTests: XCTestCase {
             nextRound: nil,
             nextRoundIndex: nil,
             correctCount: 1,
-            totalRounds: 8
+            totalRounds: 8,
+            level: .word,
+            nextLevel: nil
         ))
         XCTAssertFalse(display.sortVM?.summary?.encouragement.isEmpty ?? true)
     }
@@ -105,7 +119,9 @@ final class SoundTrafficLightPresenterTests: XCTestCase {
             nextRound: rounds[1],
             nextRoundIndex: 1,
             correctCount: 1,
-            totalRounds: 2
+            totalRounds: 2,
+            level: .word,
+            nextLevel: nil
         ))
         // Round index 1 (0-based) -> "слово 2 из 2"
         XCTAssertTrue(display.sortVM?.nextRound?.progressLabel.contains("2") ?? false)

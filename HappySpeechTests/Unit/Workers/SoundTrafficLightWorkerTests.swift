@@ -12,12 +12,25 @@ import XCTest
 @MainActor
 final class SoundTrafficLightWorkerTests: XCTestCase {
 
+    /// Стор, фиксирующий уровень СЛОВО — эти тесты проверяют именно сборку
+    /// словесных раундов (balance / belongsToA / id-схема).
+    private final class FixedWordLevelStore: DifferentiationProgressStoring {
+        func progress(childId: String, pairId: String) -> DifferentiationProgress {
+            DifferentiationProgress(level: .word)
+        }
+        func save(_ progress: DifferentiationProgress, childId: String, pairId: String) {}
+        func clear(childId: String) {}
+    }
+
     private func child(id: String = "c-1", sounds: [String]) -> ChildProfileDTO {
         ChildProfileDTO(id: id, name: "Тест", age: 7, targetSounds: sounds, parentId: "p-1")
     }
 
     private func makeSUT(children: [ChildProfileDTO]) -> SoundTrafficLightWorker {
-        SoundTrafficLightWorker(childRepository: MockChildRepository(children: children))
+        SoundTrafficLightWorker(
+            childRepository: MockChildRepository(children: children),
+            progressStore: FixedWordLevelStore()
+        )
     }
 
     // MARK: - buildSession: непустота и баланс

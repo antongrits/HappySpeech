@@ -18,8 +18,11 @@ enum SoundTrafficLightCorpus {
     /// Все пары дифференциации (из `pack_differentiation.json`).
     static let pairs: [DifferentiationPair] = SoundTrafficLightPackLoader.shared.pairs
 
-    /// Размер раунда игры (число слов на сессию).
+    /// Размер раунда игры (число слов на сессию уровня СЛОВО).
     static let roundsPerSession = SoundTrafficLightPackLoader.shared.roundsPerSession
+
+    /// Число слогов на сессию уровня СЛОГ.
+    static let syllablesPerSession = SoundTrafficLightPackLoader.shared.syllablesPerSession
 
     /// Возвращает пару по идентификатору.
     static func pair(forId id: String) -> DifferentiationPair? {
@@ -47,6 +50,8 @@ struct SoundTrafficLightPackLoader {
     static let shared = SoundTrafficLightPackLoader()
 
     let roundsPerSession: Int
+    /// Число слогов в одной сессии уровня СЛОГ.
+    let syllablesPerSession: Int
     let pairs: [DifferentiationPair]
 
     private static let logger = Logger(
@@ -56,6 +61,7 @@ struct SoundTrafficLightPackLoader {
 
     private struct Pack: Decodable {
         let roundsPerSession: Int
+        let syllablesPerSession: Int?
         let pairs: [PairDTO]
     }
 
@@ -63,8 +69,27 @@ struct SoundTrafficLightPackLoader {
         let id: String
         let soundA: String
         let soundB: String
+        let syllablesA: [String]?
+        let syllablesB: [String]?
         let wordsA: [String]
         let wordsB: [String]
+        let phrases: [PhraseDTO]?
+        let texts: [TextDTO]?
+    }
+
+    private struct PhraseDTO: Decodable {
+        let text: String
+        let sound: String
+        let wordsA: [String]
+        let wordsB: [String]
+    }
+
+    private struct TextDTO: Decodable {
+        let title: String
+        let lines: [String]
+        let countA: Int
+        let countB: Int
+        let source: String
     }
 
     private init() {
@@ -73,6 +98,7 @@ struct SoundTrafficLightPackLoader {
         ) else {
             Self.logger.error("pack_differentiation.json not found in bundle — using fallback")
             roundsPerSession = 8
+            syllablesPerSession = 6
             pairs = SoundTrafficLightPackLoader.fallbackPairs
             return
         }
@@ -80,22 +106,51 @@ struct SoundTrafficLightPackLoader {
             let data = try Data(contentsOf: url)
             let pack = try JSONDecoder().decode(Pack.self, from: data)
             roundsPerSession = pack.roundsPerSession
-            pairs = pack.pairs.map { dto in
-                DifferentiationPair(
-                    id: dto.id,
-                    soundA: dto.soundA,
-                    soundB: dto.soundB,
-                    wordsA: dto.wordsA,
-                    wordsB: dto.wordsB
-                )
-            }
+            syllablesPerSession = pack.syllablesPerSession ?? 6
+            pairs = pack.pairs.map(Self.makePair)
         } catch {
             Self.logger.error(
                 "pack_differentiation.json decode error: \(error.localizedDescription, privacy: .public)"
             )
             roundsPerSession = 8
+            syllablesPerSession = 6
             pairs = SoundTrafficLightPackLoader.fallbackPairs
         }
+    }
+
+    /// Преобразует DTO пары в доменную модель, сохраняя стабильные id для
+    /// фраз/текстов (id-схема `<pairId>-phrase-N` / `<pairId>-text-N`).
+    private static func makePair(_ dto: PairDTO) -> DifferentiationPair {
+        let phrases = (dto.phrases ?? []).enumerated().map { index, phrase in
+            TrafficLightPhrase(
+                id: "\(dto.id)-phrase-\(index)",
+                text: phrase.text,
+                dominant: TrafficLightPhrase.Dominant(rawValue: phrase.sound) ?? .both,
+                wordsA: phrase.wordsA,
+                wordsB: phrase.wordsB
+            )
+        }
+        let texts = (dto.texts ?? []).enumerated().map { index, text in
+            TrafficLightText(
+                id: "\(dto.id)-text-\(index)",
+                title: text.title,
+                lines: text.lines,
+                countA: text.countA,
+                countB: text.countB,
+                source: text.source
+            )
+        }
+        return DifferentiationPair(
+            id: dto.id,
+            soundA: dto.soundA,
+            soundB: dto.soundB,
+            syllablesA: dto.syllablesA ?? [],
+            syllablesB: dto.syllablesB ?? [],
+            wordsA: dto.wordsA,
+            wordsB: dto.wordsB,
+            phrases: phrases,
+            texts: texts
+        )
     }
 
     /// Минимальный безопасный набор на случай отказа бандла.
