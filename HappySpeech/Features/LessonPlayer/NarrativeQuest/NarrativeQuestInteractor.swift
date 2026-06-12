@@ -40,6 +40,10 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     private var narrationService: (any KidLLMNarrationServiceProtocol)?
 
+    /// F1-016: планировщик интервальных повторов — фиксируем исход слова на
+    /// каждом этапе квеста в дневном расписании повторений.
+    private var reviewScheduler: (any ReviewSchedulerService)?
+
     // MARK: - State
 
     private var script: NarrativeQuestScript?
@@ -47,6 +51,8 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     private var stageScores: [Float] = []
     private var collectedEmojis: [String] = []
     private var isListening: Bool = false
+    /// Активный ребёнок для записи исхода этапов (F1-016).
+    private var childId: String = ""
 
     // Кэш LLM нарративов для текущей сессии квеста (стек → нарратив).
     private var llmNarrationCache: [Int: String] = [:]
@@ -67,10 +73,12 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     init(
         presenter: (any NarrativeQuestPresentationLogic)? = nil,
-        narrationService: (any KidLLMNarrationServiceProtocol)? = nil
+        narrationService: (any KidLLMNarrationServiceProtocol)? = nil,
+        reviewScheduler: (any ReviewSchedulerService)? = nil
     ) {
         self.presenter = presenter
         self.narrationService = narrationService
+        self.reviewScheduler = reviewScheduler
     }
 
     deinit {
@@ -85,6 +93,12 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         self.narrationService = narrationService
     }
 
+    // MARK: - F1-016: подключение планировщика повторов из View
+
+    func connect(reviewScheduler: any ReviewSchedulerService) {
+        self.reviewScheduler = reviewScheduler
+    }
+
     // MARK: - LoadQuest
 
     func loadQuest(_ request: NarrativeQuestModels.LoadQuest.Request) {
@@ -93,6 +107,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
             logger.error("NarrativeQuest catalog missing default fallback for group=\(group, privacy: .public)")
             return
         }
+        self.childId = request.childId
         self.script = script
         self.currentStageIndex = 0
         self.stageScores = []
@@ -201,6 +216,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         logger.info(
             "NarrativeQuest stage=\(stage.stageNumber) target=\(stage.targetWord, privacy: .public) score=\(score, privacy: .public) passed=\(passed)"
         )
+
+        // F1-016: исход слова этапа → расписание повторов. itemId — целевое
+        // слово (стабильно); sound — кириллический звук группы этапа.
+        // Fire-and-forget: фидбэк ребёнку уже презентуется ниже.
+        recordReviewOutcome(stage: stage, correct: passed)
 
         let response = NarrativeQuestModels.EvaluateWord.Response(
             score: score,
@@ -327,6 +347,32 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     private func stopSpeaking() {
         LessonVoiceWorker.shared.stop()
+    }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// Пишет исход слова этапа в `ReviewSchedulerService`. itemId — целевое
+    /// слово; sound — кириллический звук группы этапа. Fire-and-forget, чтобы
+    /// не задерживать презентацию фидбэка ребёнку (хот-путь kid-UX).
+    private func recordReviewOutcome(stage: NarrativeQuestStage, correct: Bool) {
+        guard let reviewScheduler, !childId.isEmpty else { return }
+        let sound = Self.cyrillicSound(forQuestGroup: stage.targetSoundGroup)
+        let cid = childId
+        let itemId = stage.targetWord
+        Task { await reviewScheduler.recordOutcome(childId: cid, itemId: itemId, sound: sound, correct: correct) }
+    }
+
+    /// Кириллический целевой звук для группы квеста. Группы квеста используют
+    /// собственные id ("whistling"/"hissing"/"sonants"/"velar"), поэтому
+    /// маппинг отдельный от `SoundFamily` ("sonants" vs "sonorant").
+    static func cyrillicSound(forQuestGroup group: String) -> String {
+        switch group {
+        case "whistling": return "С"
+        case "hissing":   return "Ш"
+        case "sonants", "sonorant": return "Р"
+        case "velar":     return "К"
+        default:          return group
+        }
     }
 
     // MARK: - Sound group resolution

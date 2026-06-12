@@ -249,4 +249,70 @@ final class ArticulationGymInteractorTests: XCTestCase {
         let hissingIds = Set(hissing.map(\.id))
         XCTAssertTrue(universalIds.isSubset(of: hissingIds))
     }
+
+    // MARK: - F1-016: spaced repetition
+
+    private func makeSchedulerSUT(
+        group: ArticulationSoundGroup = .hissing,
+        childId: String = "child-g1"
+    ) -> (ArticulationGymInteractor, MockReviewSchedulerService) {
+        let scheduler = MockReviewSchedulerService()
+        let sut = ArticulationGymInteractor(
+            soundGroup: group,
+            worker: AGMockWorker(override: nil),
+            analyticsService: MockAnalyticsService(),
+            hapticService: AGMockHapticService(),
+            childId: childId,
+            reviewScheduler: scheduler
+        )
+        let spy = AGSpyPresenter()
+        sut.presenter = spy
+        return (sut, scheduler)
+    }
+
+    func test_nextExercise_recordsPracticeOutcome() async {
+        let (sut, scheduler) = makeSchedulerSUT(group: .hissing, childId: "child-g1")
+        await sut.loadGym(request: .init(soundGroup: .hissing))
+        let firstExerciseId = sut.exercises[0].id
+        await sut.nextExercise(request: .init(currentIndex: 0))
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-g1")
+        XCTAssertEqual(last?.itemId, firstExerciseId)
+        XCTAssertEqual(last?.sound, "Ш")   // hissing → primary cyrillic
+        XCTAssertEqual(last?.correct, true, "Gym без fail-состояния — отработка = успех")
+    }
+
+    func test_nextExercise_lastIndex_recordsPractice() async {
+        let (sut, scheduler) = makeSchedulerSUT(group: .sibilant, childId: "child-g2")
+        await sut.loadGym(request: .init(soundGroup: .sibilant))
+        let lastIndex = sut.exercises.count - 1
+        let lastExerciseId = sut.exercises[lastIndex].id
+        await sut.nextExercise(request: .init(currentIndex: lastIndex))
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.itemId, lastExerciseId)
+        XCTAssertEqual(last?.sound, "С")   // sibilant → primary cyrillic
+        XCTAssertEqual(last?.correct, true)
+    }
+
+    func test_nextExercise_invalidIndex_doesNotRecord() async {
+        let (sut, scheduler) = makeSchedulerSUT()
+        await sut.loadGym(request: .init(soundGroup: .hissing))
+        await sut.nextExercise(request: .init(currentIndex: 999))
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 0)
+    }
+
+    func test_nextExercise_emptyChildId_doesNotRecord() async {
+        let (sut, scheduler) = makeSchedulerSUT(group: .hissing, childId: "")
+        await sut.loadGym(request: .init(soundGroup: .hissing))
+        await sut.nextExercise(request: .init(currentIndex: 0))
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 0, "Пустой childId не пишет в расписание повторов")
+    }
+
+    func test_soundGroup_primarySound_mapping() {
+        XCTAssertEqual(ArticulationSoundGroup.sibilant.primarySound, "С")
+        XCTAssertEqual(ArticulationSoundGroup.hissing.primarySound, "Ш")
+        XCTAssertEqual(ArticulationSoundGroup.sonor.primarySound, "Р")
+    }
 }

@@ -351,4 +351,92 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         XCTAssertFalse(sut.isRecording)
         XCTAssertFalse((spy.lastNoInput?.message ?? "").isEmpty)
     }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// SUT с подключённым мок-планировщиком повторов.
+    private func makeSchedulerSUT() -> (RepeatAfterModelInteractor, SpyPresenter, MockReviewSchedulerService) {
+        let scheduler = MockReviewSchedulerService()
+        let sut = RepeatAfterModelInteractor(reviewScheduler: scheduler)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        return (sut, spy, scheduler)
+    }
+
+    /// Ждёт, пока fire-and-forget `Task` запишет исход в мок (до ~1 с).
+    private func waitForOutcome(_ scheduler: MockReviewSchedulerService, atLeast count: Int) async {
+        for _ in 0..<50 {
+            if await scheduler.outcomeCount >= count { return }
+            try? await Task.sleep(nanoseconds: 20_000_000)
+        }
+    }
+
+    func test_submitTranscript_passed_recordsPositiveOutcome() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест", childId: "child-r1"))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        // Зачёт с первой попытки → canAdvance == true → запись исхода.
+        sut.submitMLScore(.init(wordId: word.id, mlScore: 1.0))
+        sut.submitTranscript(.init(transcript: word.word, confidence: 1.0))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-r1")
+        XCTAssertEqual(last?.itemId, word.id)
+        XCTAssertEqual(last?.sound, "С")   // whistling → primary cyrillic
+        XCTAssertEqual(last?.correct, true)
+    }
+
+    func test_submitTranscript_forcedAdvance_recordsNegativeOutcome() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.hissing.rawValue, childName: "Тест", childId: "child-r2"))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        // 3 неверные попытки → forced advance (passed=false) → запись исхода.
+        sut.submitTranscript(.init(transcript: "ааа", confidence: 0.0))
+        sut.submitTranscript(.init(transcript: "ббб", confidence: 0.0))
+        sut.submitTranscript(.init(transcript: "ввв", confidence: 0.0))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-r2")
+        XCTAssertEqual(last?.itemId, word.id)
+        XCTAssertEqual(last?.sound, "Ш")   // hissing → primary cyrillic
+        XCTAssertEqual(last?.correct, false)
+    }
+
+    func test_submitTranscript_recordsOncePerWord_notPerAttempt() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест", childId: "child-r3"))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        // Промах (canAdvance=false) → исход НЕ пишется, затем зачёт → пишется один раз.
+        sut.submitTranscript(.init(transcript: "неверно", confidence: 0.0))
+        sut.submitMLScore(.init(wordId: word.id, mlScore: 1.0))
+        sut.submitTranscript(.init(transcript: word.word, confidence: 1.0))
+        await waitForOutcome(scheduler, atLeast: 1)
+        // Небольшая дополнительная пауза, чтобы убедиться, что лишних записей нет.
+        try? await Task.sleep(nanoseconds: 80_000_000)
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 1, "Исход пишется один раз на слово (в момент разрешения)")
+    }
+
+    func test_submitTranscript_emptyChildId_doesNotRecord() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Тест", childId: ""))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        sut.submitMLScore(.init(wordId: word.id, mlScore: 1.0))
+        sut.submitTranscript(.init(transcript: word.word, confidence: 1.0))
+        try? await Task.sleep(nanoseconds: 120_000_000)
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 0, "Пустой childId не пишет в расписание повторов")
+    }
+
+    func test_cyrillicSound_mapsGroupsToFirstSound() {
+        XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: SoundFamily.whistling.rawValue), "С")
+        XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: SoundFamily.hissing.rawValue), "Ш")
+        XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: SoundFamily.sonorant.rawValue), "Р")
+        XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: SoundFamily.velar.rawValue), "К")
+        XCTAssertEqual(SoundFamily.cyrillicSound(forGroup: "unknown"), "unknown")
+    }
 }

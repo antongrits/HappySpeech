@@ -821,8 +821,15 @@ struct RepeatAfterModelView: View {
         sessionStarted = true
         // Block H: подключаем narrationService из AppContainer.
         interactor.connect(narrationService: container.kidLLMNarrationService)
+        // F1-016: планировщик повторов из контейнера — исход каждого слова
+        // попадает в дневное расписание повторений.
+        interactor.connect(reviewScheduler: container.reviewScheduler)
         let soundGroup = Self.soundGroup(for: activity.soundTarget)
-        interactor.loadSession(.init(soundGroup: soundGroup, childName: ""))
+        interactor.loadSession(.init(
+            soundGroup: soundGroup,
+            childName: "",
+            childId: container.currentChildId
+        ))
         interactor.startWord(.init(wordIndex: 0))
     }
 

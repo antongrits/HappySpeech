@@ -70,6 +70,10 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
 
     var presenter: (any ArticulationImitationPresentationLogic)?
 
+    /// F1-016: планировщик интервальных повторов — фиксируем исход каждой позы
+    /// (зачтена/не зачтена) в дневном расписании повторений артикуляции.
+    private var reviewScheduler: (any ReviewSchedulerService)?
+
     private let logger = HSLogger.app
 
     // MARK: - Configuration
@@ -98,6 +102,10 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
     private(set) var currentPoseIndex: Int = 0
     private(set) var starsEarned: Int = 0
     private(set) var childName: String = ""
+    /// Активный ребёнок для записи исхода поз (F1-016).
+    private(set) var childId: String = ""
+    /// rawValue `SoundFamily` сессии — целевой звук для расписания повторов.
+    private(set) var soundGroup: String = ""
     private(set) var mirroringMode: MirroringMode = .fallback2D
     private(set) var perPoseRecords: [PerPoseRecord] = []
 
@@ -121,10 +129,24 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
     private(set) var exercises: [ArticulationExercise] = []
     private(set) var currentIndex: Int = 0
 
+    // MARK: - Init
+
+    init(reviewScheduler: (any ReviewSchedulerService)? = nil) {
+        self.reviewScheduler = reviewScheduler
+    }
+
+    // MARK: - F1-016: подключение планировщика повторов из View
+
+    func connect(reviewScheduler: any ReviewSchedulerService) {
+        self.reviewScheduler = reviewScheduler
+    }
+
     // MARK: - loadSession
 
     func loadSession(_ request: ArticulationImitationModels.LoadSession.Request) {
         childName = request.childName
+        childId = request.childId
+        soundGroup = request.soundGroup
         currentPoseIndex = 0
         starsEarned = 0
         currentAttempts = 0
@@ -256,6 +278,10 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
             passed: passed
         )
         perPoseRecords.append(record)
+
+        // F1-016: исход позы → расписание повторов. itemId — id позы (стабилен),
+        // sound — целевой звук группы. Fire-and-forget (фидбэк уже презентуется).
+        recordReviewOutcome(poseId: pose.id, correct: passed)
 
         let nextIndex: Int? = (currentPoseIndex + 1 < poses.count) ? currentPoseIndex + 1 : nil
         let allDone = nextIndex == nil
@@ -420,6 +446,9 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
         )
         perPoseRecords.append(record)
 
+        // F1-016: исчерпаны попытки → исход «не зачтено» в расписание повторов.
+        recordReviewOutcome(poseId: pose.id, correct: false)
+
         let nextIndex: Int? = (currentPoseIndex + 1 < poses.count) ? currentPoseIndex + 1 : nil
         let response = ArticulationImitationModels.ConfirmPose.Response(
             passed: false,
@@ -428,6 +457,17 @@ final class ArticulationImitationInteractor: ArticulationImitationBusinessLogic 
             allDone: nextIndex == nil
         )
         presenter?.presentConfirmPose(response)
+    }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// Пишет исход позы в `ReviewSchedulerService`. itemId — id позы;
+    /// sound — целевой кириллический звук группы. Fire-and-forget.
+    private func recordReviewOutcome(poseId: String, correct: Bool) {
+        guard let reviewScheduler, !childId.isEmpty else { return }
+        let sound = SoundFamily.cyrillicSound(forGroup: soundGroup)
+        let cid = childId
+        Task { await reviewScheduler.recordOutcome(childId: cid, itemId: poseId, sound: sound, correct: correct) }
     }
 
     // MARK: - Task Scheduling

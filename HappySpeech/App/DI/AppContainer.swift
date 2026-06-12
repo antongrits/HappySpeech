@@ -189,6 +189,11 @@ public final class AppContainer {
     // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
     private var _spotlightIndexer: (any SpotlightIndexerProtocol)?
 
+    // F1-016: ReviewSchedulerService — единый планировщик интервальных повторов.
+    // internal visibility — live()/preview() инжектят shared-инстанс (тот же,
+    // что получает AdaptivePlanner), чтобы все шаблоны писали в одно расписание.
+    var reviewSchedulerStorage: (any ReviewSchedulerService)?
+
     // Block O (v12): BiometricGateService — Face ID gate для родительских разделов.
     private var _biometricGateService: (any BiometricGateService)?
 
@@ -779,6 +784,19 @@ public final class AppContainer {
         return new
     }
 
+    // F1-016: единый планировщик интервальных повторов. Шаблоны упражнений
+    // (minimal-pairs, repeat-after-model, articulation, narrative-quest)
+    // фиксируют исход каждой попытки через `recordOutcome`; AdaptivePlanner
+    // подмешивает due-повторы в дневной маршрут. Lazy fallback на
+    // UserDefaults-backed реализацию (`.standard`) совпадает по хранилищу с
+    // shared-инстансом, инжектируемым из `live()`/`preview()`.
+    public var reviewScheduler: any ReviewSchedulerService {
+        if let existing = reviewSchedulerStorage { return existing }
+        let new = LiveReviewSchedulerService()
+        reviewSchedulerStorage = new
+        return new
+    }
+
     // Block O (v12): BiometricGateService — Face ID для родительского gate.
     // Лёгкий: не требует factory — LiveBiometricGateService() не имеет зависимостей.
     public var biometricGateService: any BiometricGateService {
@@ -1057,7 +1075,7 @@ public extension AppContainer {
                 repository: LivePhonemeObservationRepository(realmActor: realmActor)
             )
 
-        return AppContainer(
+        let container = AppContainer(
             realmActor: realmActor,
             childRepository: childRepo,
             sessionRepository: sessionRepo,
@@ -1121,6 +1139,10 @@ public extension AppContainer {
                 )
             }
         )
+        // F1-016: тот же планировщик повторов, что получил AdaptivePlanner —
+        // шаблоны упражнений пишут в него, планировщик читает due-повторы.
+        container.reviewSchedulerStorage = sharedReviewScheduler
+        return container
     }
 
     /// Creates a preview container with mock service implementations.

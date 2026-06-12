@@ -46,6 +46,9 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
 
     var presenter: (any RepeatAfterModelPresentationLogic)?
     private var narrationService: (any KidLLMNarrationServiceProtocol)?
+    /// F1-016: планировщик интервальных повторов — фиксируем исход каждой
+    /// зачтённой/незачтённой попытки слова в дневном расписании повторов.
+    private var reviewScheduler: (any ReviewSchedulerService)?
     private let logger = HSLogger.asr
 
     // MARK: - Tunables
@@ -72,6 +75,8 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     private(set) var attemptsLeft: Int = 3
     private(set) var isRecording: Bool = false
     private(set) var childName: String = ""
+    /// Активный ребёнок для записи исхода в расписание повторов (F1-016).
+    private(set) var childId: String = ""
 
     /// Счётчик прослушиваний эталона для текущего слова.
     private var replayCountPerWord: [String: Int] = [:]
@@ -94,8 +99,12 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
 
     // MARK: - Init
 
-    init(narrationService: (any KidLLMNarrationServiceProtocol)? = nil) {
+    init(
+        narrationService: (any KidLLMNarrationServiceProtocol)? = nil,
+        reviewScheduler: (any ReviewSchedulerService)? = nil
+    ) {
         self.narrationService = narrationService
+        self.reviewScheduler = reviewScheduler
     }
 
     // MARK: - Block H: подключение narrationService из View
@@ -104,10 +113,17 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         self.narrationService = narrationService
     }
 
+    // MARK: - F1-016: подключение планировщика повторов из View
+
+    func connect(reviewScheduler: any ReviewSchedulerService) {
+        self.reviewScheduler = reviewScheduler
+    }
+
     // MARK: - loadSession
 
     func loadSession(_ request: RepeatAfterModelModels.LoadSession.Request) {
         childName = request.childName
+        childId = request.childId
         let pool = TargetWordItem.words(for: request.soundGroup)
         // Берём до wordsPerSession слов из пула, но не меньше 2-х.
         let count = max(2, min(wordsPerSession, pool.count))
@@ -292,6 +308,15 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         )
         presenter?.presentEvaluateAttempt(response)
 
+        // F1-016: фиксируем исход в расписании повторов ОДИН раз на слово — в
+        // момент его разрешения (зачёт ИЛИ исчерпаны попытки). `correct = passed`
+        // — слово, освоенное со 2-3-й попытки, не штрафуется (errorless).
+        // Хот-путь kid-UX: запускаем fire-and-forget, чтобы не задерживать
+        // презентацию фидбэка ребёнку.
+        if canAdvance {
+            recordReviewOutcome(word: word, correct: passed)
+        }
+
         // Block H: обновляем feedback через LLM в фоне (Tier A/C, kid-safe).
         // Сохраняем Task — отменяется в cancel() и advanceWord() при переходе к следующему слову.
         if let narrationService, !canAdvance {
@@ -427,6 +452,19 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         llmFeedbackTask = nil
         isRecording = false
         pendingMLScore = nil
+    }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// Пишет исход слова в `ReviewSchedulerService`. itemId — id слова
+    /// (стабилен между сессиями); sound — целевой кириллический звук группы.
+    /// Fire-and-forget: оценка уже показана ребёнку, запись не на хот-пути UX.
+    private func recordReviewOutcome(word: TargetWordItem, correct: Bool) {
+        guard let reviewScheduler, !childId.isEmpty else { return }
+        let sound = SoundFamily.cyrillicSound(forGroup: word.soundGroup)
+        let cid = childId
+        let itemId = word.id
+        Task { await reviewScheduler.recordOutcome(childId: cid, itemId: itemId, sound: sound, correct: correct) }
     }
 
     // MARK: - Diagnostic

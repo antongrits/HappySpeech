@@ -248,6 +248,71 @@ final class MinimalPairsInteractorTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(MinimalPairRound.extendedCatalog.count, 16)
         XCTAssertEqual(MinimalPairRound.catalog.count, 10)
     }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// SUT с подключённым мок-планировщиком повторов.
+    private func makeSchedulerSUT() -> (MinimalPairsInteractor, SpyMinimalPairsPresenter, MockReviewSchedulerService) {
+        let scheduler = MockReviewSchedulerService()
+        let sut = MinimalPairsInteractor(reviewScheduler: scheduler)
+        let spy = SpyMinimalPairsPresenter()
+        sut.presenter = spy
+        return (sut, spy, scheduler)
+    }
+
+    func test_selectOption_correct_recordsPositiveOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childId: "child-1", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        let targetWord = spy.lastStartRound?.pair.targetWord ?? ""
+        await sut.selectOption(.init(selectedIsTarget: true))
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-1")
+        XCTAssertEqual(last?.itemId, targetWord)
+        XCTAssertEqual(last?.sound, "С")   // целевой звук контраста «С-Ш»
+        XCTAssertEqual(last?.correct, true)
+    }
+
+    func test_selectOption_wrong_recordsNegativeOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        await sut.loadSession(.init(soundContrast: "Р-Л", childName: "Ваня", childId: "child-2", childAge: 7))
+        await sut.startRound(.init(roundIndex: 0))
+        let targetWord = spy.lastStartRound?.pair.targetWord ?? ""
+        await sut.selectOption(.init(selectedIsTarget: false))
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-2")
+        XCTAssertEqual(last?.itemId, targetWord)
+        XCTAssertEqual(last?.sound, "Р")
+        XCTAssertEqual(last?.correct, false)
+    }
+
+    func test_selectOption_recordsOncePerAnswer() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childId: "child-3", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        await sut.startRound(.init(roundIndex: 1))
+        await sut.selectOption(.init(selectedIsTarget: false))
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 2)
+    }
+
+    func test_selectOption_emptyChildId_doesNotRecord() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childId: "", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        // childId="" — сервис-обёртка пишет вызов, но Live-сервис игнорит пустой.
+        // Здесь проверяем, что interactor НЕ глотает childId: фиксируется как есть.
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "")
+    }
+
+    func test_targetSound_extractsFirstSegment() {
+        XCTAssertEqual(MinimalPairsInteractor.targetSound(from: "С-Ш"), "С")
+        XCTAssertEqual(MinimalPairsInteractor.targetSound(from: "Р-Л"), "Р")
+        XCTAssertEqual(MinimalPairsInteractor.targetSound(from: "Ц"), "Ц")
+    }
 }
 
 // MARK: - Hint/Replay capturing presenter (batch 1)

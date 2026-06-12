@@ -1255,6 +1255,7 @@
 		8E82204DF2B757E0F365C0E4 /* GoalTrackerKidInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F5A4755C6741FCB1A4041 /* GoalTrackerKidInteractor.swift */; };
 		8EAFCEE9D8F7463B8CB98A42 /* CulturalContentInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBB7E6D352FF109D7E948E6 /* CulturalContentInteractorTests.swift */; };
 		8ED06D47FF21FD63748BC18A /* SoundDictionaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B06AE3FA78034380B606C93 /* SoundDictionaryPresenterTests.swift */; };
+		8EF98C49A4EE1183B7C3382A /* MockReviewSchedulerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD90100FF60F5D2B85AEB08 /* MockReviewSchedulerService.swift */; };
 		8F1479D55AED18ADDB4686A2 /* SpecialistAssessmentWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ACD42A36C0D751B528B7DAD /* SpecialistAssessmentWorker.swift */; };
 		8F5D24796A4C07BED51167AC /* ButterflyCatchPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06684FAA2AA4C34D0947C54E /* ButterflyCatchPresenterTests.swift */; };
 		8F85341B6A53D06797BF3BFB /* AnimalSoundsBingoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106A7E92AA8F11CEFEFD945 /* AnimalSoundsBingoInteractorTests.swift */; };
@@ -3226,6 +3227,7 @@
 		7BB8810114CB720BACB06240 /* PhonemeJourneyMapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeJourneyMapModels.swift; sourceTree = "<group>"; };
 		7BBF8D809AB3A939D2E35B33 /* pack_lexical_themes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_lexical_themes.json; sourceTree = "<group>"; };
 		7BC3A3F2AF4FD1B958C34C2B /* CustomWordListDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWordListDisplayLogic.swift; sourceTree = "<group>"; };
+		7BD90100FF60F5D2B85AEB08 /* MockReviewSchedulerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReviewSchedulerService.swift; sourceTree = "<group>"; };
 		7BED9A98AA8595E8C72E98B7 /* AudioMemoryGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMemoryGameView.swift; sourceTree = "<group>"; };
 		7C09DD80E18B13A8CD903F76 /* AchievementCalendarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCalendarInteractorTests.swift; sourceTree = "<group>"; };
 		7C0E4441EFDC9521CB428A95 /* StoryLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryLibrary.swift; sourceTree = "<group>"; };
@@ -4998,6 +5000,7 @@
 			isa = PBXGroup;
 			children = (
 				9C406E069E8897985870F8DB /* MockContainer.swift */,
+				7BD90100FF60F5D2B85AEB08 /* MockReviewSchedulerService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -10624,6 +10627,7 @@
 				D09B25A7378CA3856BDA6AFC /* MockHomeworkRepositoryTests.swift in Sources */,
 				ADD5B51B9C4A9EDA7AC3680B /* MockMLExecutor.swift in Sources */,
 				CD6AE5AC80C3C2E4339572C1 /* MockRepositoryTests.swift in Sources */,
+				8EF98C49A4EE1183B7C3382A /* MockReviewSchedulerService.swift in Sources */,
 				39B219CBDC42CB7DA93C4709 /* MockServices.swift in Sources */,
 				862F66CEAA417BB7B887687F /* MorningRoutineInteractorTests.swift in Sources */,
 				76CB40FFCACF0FD576E21F30 /* MusicalSoundDrumsInteractorTests.swift in Sources */,

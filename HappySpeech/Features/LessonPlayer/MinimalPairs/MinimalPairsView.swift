@@ -77,10 +77,14 @@ struct MinimalPairsView: View {
         )
         .task {
             presenter.viewModel = display
+            // F1-016: подключаем планировщик повторов и реальный childId, чтобы
+            // ошибочные пары попадали в дневной маршрут (а не терялись).
+            interactor.connect(reviewScheduler: container.reviewScheduler)
+            let resolvedChildId = container.currentChildId
             await interactor.loadSession(.init(
                 soundContrast: soundContrast,
                 childName: childName,
-                childId: "",
+                childId: resolvedChildId,
                 childAge: 6
             ))
             await interactor.startRound(.init(roundIndex: 0))

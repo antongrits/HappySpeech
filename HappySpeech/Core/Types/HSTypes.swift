@@ -26,6 +26,21 @@ public enum SoundFamily: String, CaseIterable, Codable, Sendable {
         case .velar:     return ["К", "Г", "Х"]
         }
     }
+
+    /// Репрезентативный кириллический звук группы (первый в `sounds`):
+    /// whistling→«С», hissing→«Ш», sonorant→«Р», velar→«К».
+    public var primarySound: String {
+        sounds.first ?? rawValue
+    }
+
+    /// Кириллический целевой звук для произвольной строки группы. Принимает
+    /// rawValue (`"whistling"`…) или уже-кириллический звук. Для нераспознанной
+    /// строки возвращает её как есть — единый helper для шаблонов упражнений
+    /// (F1-016: запись исхода в `ReviewSchedulerService`).
+    public static func cyrillicSound(forGroup group: String) -> String {
+        if let family = SoundFamily(rawValue: group) { return family.primarySound }
+        return group
+    }
 }
 
 // MARK: - Correction Stage

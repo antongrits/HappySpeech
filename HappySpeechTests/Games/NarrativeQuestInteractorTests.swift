@@ -291,6 +291,66 @@ final class NarrativeQuestInteractorTests: XCTestCase {
         sut.completeQuest(.init())
         XCTAssertEqual(spy.lastComplete?.collectedEmojis.count, 0)
     }
+
+    // MARK: - F1-016: spaced repetition
+
+    private func makeSchedulerSUT() -> (NarrativeQuestInteractor, SpyNarrativePresenter, MockReviewSchedulerService) {
+        let spy = SpyNarrativePresenter()
+        let scheduler = MockReviewSchedulerService()
+        let sut = NarrativeQuestInteractor(presenter: spy, reviewScheduler: scheduler)
+        return (sut, spy, scheduler)
+    }
+
+    /// Ждёт, пока fire-and-forget `Task` запишет исход в мок (до ~1 с).
+    private func waitForOutcome(_ scheduler: MockReviewSchedulerService, atLeast count: Int) async {
+        for _ in 0..<50 {
+            if await scheduler.outcomeCount >= count { return }
+            try? await Task.sleep(nanoseconds: 20_000_000)
+        }
+    }
+
+    func test_evaluateWord_passed_recordsPositiveOutcome() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша", childId: "child-q1"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "сова", confidence: 0.95))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-q1")
+        XCTAssertEqual(last?.itemId, "сова")   // целевое слово этапа
+        XCTAssertEqual(last?.sound, "С")        // whistling-группа этапа → «С»
+        XCTAssertEqual(last?.correct, true)
+    }
+
+    func test_evaluateWord_failed_recordsNegativeOutcome() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadQuest(.init(soundTarget: "Ш", childName: "Ваня", childId: "child-q2"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "абракадабра", confidence: 0.1))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-q2")
+        XCTAssertEqual(last?.sound, "Ш")   // hissing-группа этапа → «Ш»
+        XCTAssertEqual(last?.correct, false)
+    }
+
+    func test_evaluateWord_emptyChildId_doesNotRecord() async {
+        let (sut, _, scheduler) = makeSchedulerSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша", childId: ""))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "сова", confidence: 0.95))
+        try? await Task.sleep(nanoseconds: 120_000_000)
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 0, "Пустой childId не пишет в расписание повторов")
+    }
+
+    func test_cyrillicSound_forQuestGroup_mapping() {
+        XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "whistling"), "С")
+        XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "hissing"), "Ш")
+        XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "sonants"), "Р")
+        XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "velar"), "К")
+        XCTAssertEqual(NarrativeQuestInteractor.cyrillicSound(forQuestGroup: "other"), "other")
+    }
 }
 
 // MARK: - Record-spy presenter (batch 1)

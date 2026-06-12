@@ -468,4 +468,81 @@ final class ArticulationImitationInteractorTests: XCTestCase {
     func test_arCapabilityChecker_simulatorReturnsFalse() {
         XCTAssertFalse(ARCapabilityChecker.isFaceTrackingSupported)
     }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// SUT с подключённым мок-планировщиком повторов.
+    private func makeSchedulerSUT() -> (ArticulationImitationInteractor, SpyArticulationPresenter, MockReviewSchedulerService) {
+        let scheduler = MockReviewSchedulerService()
+        let sut = ArticulationImitationInteractor(reviewScheduler: scheduler)
+        let spy = SpyArticulationPresenter()
+        sut.presenter = spy
+        return (sut, spy, scheduler)
+    }
+
+    /// Ждёт, пока fire-and-forget `Task` запишет исход в мок (до ~1 с).
+    private func waitForOutcome(_ scheduler: MockReviewSchedulerService, atLeast count: Int) async {
+        for _ in 0..<50 {
+            if await scheduler.outcomeCount >= count { return }
+            try? await Task.sleep(nanoseconds: 20_000_000)
+        }
+    }
+
+    func test_confirmPose_recordsPositiveOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.whistling.rawValue, childName: "Маша", childId: "child-7"))
+        sut.startPose(.init(poseIndex: 0))
+        sut.beginMirroring()
+        let poseId = spy.lastStartPose?.pose.id ?? ""
+        sut.confirmPose(.init(poseId: poseId, confirmedByParent: true))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-7")
+        XCTAssertEqual(last?.itemId, poseId)
+        XCTAssertEqual(last?.sound, "С")   // whistling → primary cyrillic
+        XCTAssertEqual(last?.correct, true)
+    }
+
+    func test_confirmPose_lowScore_recordsNegativeOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: SoundFamily.hissing.rawValue, childName: "Ваня", childId: "child-8"))
+        sut.startPose(.init(poseIndex: 0))
+        sut.beginMirroring()
+        let poseId = spy.lastStartPose?.pose.id ?? ""
+        sut.confirmPose(.init(poseId: poseId, confirmedByParent: false))
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.childId, "child-8")
+        XCTAssertEqual(last?.itemId, poseId)
+        XCTAssertEqual(last?.sound, "Ш")   // hissing → primary cyrillic
+        XCTAssertEqual(last?.correct, false)
+    }
+
+    func test_exhaustedAttempts_recordsNegativeOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: "any", childName: "Маша", childId: "child-9"))
+        sut.startPose(.init(poseIndex: 0))
+        let poseId = spy.lastStartPose?.pose.id ?? ""
+        sut.beginMirroring()
+        sut.beginMirroring()
+        sut.beginMirroring()
+        sut.requestHint(.init(poseId: poseId))   // attemptsLeft == 0 → forced advance
+        await waitForOutcome(scheduler, atLeast: 1)
+        let last = await scheduler.lastOutcome
+        XCTAssertEqual(last?.correct, false)
+        XCTAssertEqual(last?.itemId, poseId)
+    }
+
+    func test_emptyChildId_doesNotRecordOutcome() async {
+        let (sut, spy, scheduler) = makeSchedulerSUT()
+        sut.loadSession(.init(soundGroup: "any", childName: "Маша", childId: ""))
+        sut.startPose(.init(poseIndex: 0))
+        sut.beginMirroring()
+        let poseId = spy.lastStartPose?.pose.id ?? ""
+        sut.confirmPose(.init(poseId: poseId, confirmedByParent: true))
+        // Дать шанс fire-and-forget Task'у (его быть не должно).
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        let count = await scheduler.outcomeCount
+        XCTAssertEqual(count, 0, "Пустой childId не пишет в расписание повторов")
+    }
 }

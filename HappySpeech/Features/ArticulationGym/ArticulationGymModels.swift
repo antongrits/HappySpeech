@@ -28,6 +28,16 @@ public enum ArticulationSoundGroup: String, CaseIterable, Sendable, Equatable {
         case .sonor:    return "articulationGym.group.sonor"
         }
     }
+
+    /// Репрезентативный кириллический звук группы (для расписания повторов
+    /// F1-016): свистящие→«С», шипящие→«Ш», соноры→«Р».
+    public var primarySound: String {
+        switch self {
+        case .sibilant: return "С"
+        case .hissing:  return "Ш"
+        case .sonor:    return "Р"
+        }
+    }
 }
 
 // MARK: - ArticulationItem

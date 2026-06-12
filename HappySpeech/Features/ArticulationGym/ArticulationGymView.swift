@@ -308,7 +308,9 @@ struct ArticulationGymView: View {
                 soundGroup: selectedGroup,
                 worker: ArticulationGymWorker(),
                 analyticsService: container.analyticsService,
-                hapticService: container.hapticService
+                hapticService: container.hapticService,
+                childId: childId,
+                reviewScheduler: container.reviewScheduler
             )
             interactor.presenter = presenter
             self.presenter = presenter

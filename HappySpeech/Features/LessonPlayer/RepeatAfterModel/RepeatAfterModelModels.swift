@@ -160,6 +160,9 @@ enum RepeatAfterModelModels {
         struct Request: Sendable {
             let soundGroup: String
             let childName: String
+            /// F1-016: активный ребёнок для записи исхода попыток в расписание
+            /// повторов. Default "" — обратная совместимость со старыми вызовами.
+            var childId: String = ""
         }
         struct Response: Sendable {
             let words: [TargetWordItem]

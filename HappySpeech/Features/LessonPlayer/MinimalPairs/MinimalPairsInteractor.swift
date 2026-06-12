@@ -51,6 +51,11 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
 
     var presenter: (any MinimalPairsPresentationLogic)?
     private let hapticService: (any HapticService)?
+    /// F1-016: планировщик интервальных повторов — фиксируем исход каждой
+    /// дифференцировки, чтобы ошибочные пары вернулись в дневной маршрут.
+    /// `var` — View подключает реальный сервис из контейнера через `connect`
+    /// (interactor строится в init View без доступа к контейнеру).
+    private var reviewScheduler: (any ReviewSchedulerService)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "MinimalPairs")
 
     // MARK: - Configuration
@@ -120,8 +125,20 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
 
     // MARK: - Init
 
-    init(hapticService: (any HapticService)? = nil) {
+    init(
+        hapticService: (any HapticService)? = nil,
+        reviewScheduler: (any ReviewSchedulerService)? = nil
+    ) {
         self.hapticService = hapticService
+        self.reviewScheduler = reviewScheduler
+    }
+
+    // MARK: - Dependency wiring from View
+
+    /// Подключает планировщик повторов из контейнера (interactor строится в
+    /// init View, где контейнера ещё нет — как `connect(narrationService:)`).
+    func connect(reviewScheduler: any ReviewSchedulerService) {
+        self.reviewScheduler = reviewScheduler
     }
 
     deinit {
@@ -238,6 +255,12 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
         } else {
             hapticService?.notification(.warning)
         }
+
+        // F1-016: фиксируем исход дифференцировки в расписании повторов.
+        // itemId — целевое слово (стабильно между сессиями, в отличие от
+        // session-суффиксного pair.id); sound — целевой звук пары (первый
+        // сегмент контраста «С-Ш» → «С», кириллица как в остальном коде).
+        await recordReviewOutcome(for: pair, correct: correct)
 
         let duration = Date().timeIntervalSince(roundStartTime)
         let roundMsg = "selectOption round=\(currentIndex + 1) correct=\(correct) streak=\(streakCount) dur=\(Int(duration))s"
@@ -397,6 +420,29 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
         speakTask?.cancel()
         LessonVoiceWorker.shared.stop()
         logger.info("Session cancelled at round=\(self.currentIndex + 1, privacy: .public)")
+    }
+
+    // MARK: - Private: spaced repetition (F1-016)
+
+    /// Пишет исход дифференцировки в `ReviewSchedulerService`. Целевое слово —
+    /// стабильный itemId; целевой звук пары — `sound`. childId берётся из
+    /// сессии (loadSession). Пустой childId сервис отбрасывает сам.
+    private func recordReviewOutcome(for pair: MinimalPairRound, correct: Bool) async {
+        guard let reviewScheduler else { return }
+        let targetSound = Self.targetSound(from: pair.soundContrast)
+        await reviewScheduler.recordOutcome(
+            childId: childId,
+            itemId: pair.targetWord,
+            sound: targetSound,
+            correct: correct
+        )
+    }
+
+    /// Извлекает целевой звук из контраста: «С-Ш» → «С». Пустой/без дефиса —
+    /// возвращает контраст как есть (кириллица).
+    static func targetSound(from contrast: String) -> String {
+        let parts = contrast.split(separator: "-", maxSplits: 1)
+        return parts.first.map(String.init) ?? contrast
     }
 
     // MARK: - Private: auto-advance

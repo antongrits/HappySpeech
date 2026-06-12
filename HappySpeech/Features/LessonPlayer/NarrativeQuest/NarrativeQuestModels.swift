@@ -16,6 +16,9 @@ enum NarrativeQuestModels {
         struct Request: Sendable {
             let soundTarget: String
             let childName: String
+            /// F1-016: активный ребёнок для записи исхода этапов в расписание
+            /// повторов. Default "" — обратная совместимость со старыми вызовами.
+            var childId: String = ""
         }
         struct Response: Sendable {
             let script: NarrativeQuestScript

@@ -510,9 +510,13 @@ struct NarrativeQuestView: View {
         bootstrapped = true
         // Block H: подключаем narrationService из AppContainer до loadQuest.
         interactor.connect(narrationService: container.kidLLMNarrationService)
+        // F1-016: планировщик повторов из контейнера — исход слова на каждом
+        // этапе попадает в дневное расписание повторений.
+        interactor.connect(reviewScheduler: container.reviewScheduler)
         interactor.loadQuest(.init(
             soundTarget: activity.soundTarget,
-            childName: ""
+            childName: "",
+            childId: container.currentChildId
         ))
         logger.debug("NarrativeQuest bootstrap soundTarget=\(activity.soundTarget, privacy: .public)")
     }

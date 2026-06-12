@@ -401,10 +401,14 @@ struct ArticulationImitationView: View {
     private func startSessionOnce() {
         guard !sessionStarted else { return }
         sessionStarted = true
+        // F1-016: планировщик повторов из контейнера — исход каждой позы
+        // попадает в дневное расписание повторений.
+        interactor.connect(reviewScheduler: container.reviewScheduler)
         let soundGroup = Self.soundGroup(for: activity.soundTarget)
         interactor.loadSession(.init(
             soundGroup: soundGroup,
-            childName: ""
+            childName: "",
+            childId: container.currentChildId
         ))
         // После loadSession bridge выставил phase=loading. Сразу стартуем первую позу.
         interactor.startPose(.init(poseIndex: 0))

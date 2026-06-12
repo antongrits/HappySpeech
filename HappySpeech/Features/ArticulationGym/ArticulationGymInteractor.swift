@@ -46,6 +46,13 @@ final class ArticulationGymInteractor: ArticulationGymBusinessLogic, Articulatio
     private let worker: any ArticulationGymWorkerProtocol
     private let analyticsService: any AnalyticsService
     private let hapticService: any HapticService
+    /// F1-016: планировщик интервальных повторов — фиксируем факт отработки
+    /// каждого артикуляционного упражнения (gym — практика без fail-состояния:
+    /// упражнение, доведённое до конца таймера, — успешный практический повтор).
+    private let reviewScheduler: (any ReviewSchedulerService)?
+
+    /// Активный ребёнок для записи отработки упражнений (F1-016).
+    private let childId: String
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -58,12 +65,16 @@ final class ArticulationGymInteractor: ArticulationGymBusinessLogic, Articulatio
         soundGroup: ArticulationSoundGroup,
         worker: any ArticulationGymWorkerProtocol,
         analyticsService: any AnalyticsService,
-        hapticService: any HapticService
+        hapticService: any HapticService,
+        childId: String = "",
+        reviewScheduler: (any ReviewSchedulerService)? = nil
     ) {
         self.soundGroup = soundGroup
         self.worker = worker
         self.analyticsService = analyticsService
         self.hapticService = hapticService
+        self.childId = childId
+        self.reviewScheduler = reviewScheduler
     }
 
     // MARK: - Load
@@ -100,6 +111,14 @@ final class ArticulationGymInteractor: ArticulationGymBusinessLogic, Articulatio
         let nextIndex = request.currentIndex + 1
         let isLast = nextIndex >= exercises.count
 
+        // F1-016: упражнение, доведённое до конца (переход к следующему/финалу),
+        // считается отработанным практическим повтором. itemId — id упражнения,
+        // sound — кириллический звук группы. await — мы уже в async-обработчике
+        // перехода (не хот-путь ввода ребёнка).
+        if request.currentIndex >= 0, request.currentIndex < exercises.count {
+            await recordPractice(exercise: exercises[request.currentIndex])
+        }
+
         if !isLast {
             hapticService.impact(.light)
         }
@@ -129,5 +148,20 @@ final class ArticulationGymInteractor: ArticulationGymBusinessLogic, Articulatio
             soundGroup: soundGroup
         )
         await presenter?.presentComplete(response: response)
+    }
+
+    // MARK: - F1-016: spaced repetition
+
+    /// Фиксирует отработку упражнения в `ReviewSchedulerService`. itemId — id
+    /// упражнения; sound — кириллический звук группы. Gym без fail-состояния,
+    /// поэтому исход всегда `correct: true` (практический повтор выполнен).
+    private func recordPractice(exercise: ArticulationItem) async {
+        guard let reviewScheduler, !childId.isEmpty else { return }
+        await reviewScheduler.recordOutcome(
+            childId: childId,
+            itemId: exercise.id,
+            sound: soundGroup.primarySound,
+            correct: true
+        )
     }
 }
