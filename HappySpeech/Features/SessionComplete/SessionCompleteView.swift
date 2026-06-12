@@ -1,3 +1,4 @@
+import CryptoKit
 import OSLog
 import Particles
 import SwiftUI
@@ -841,6 +842,12 @@ struct SessionCompleteView: View {
 
     /// Детерминированный выбор celebration-баннера для session.
     /// Один и тот же урок всегда даёт ту же иллюстрацию.
+    ///
+    /// `Swift.Hasher` инициализируется случайным per-launch seed → `sessionId.hashValue`
+    /// давал РАЗНЫЙ баннер при каждом запуске (комментарий «детерминированный» врал).
+    /// Берём первые 8 байт `SHA256` от `sessionId` как стабильный беззнаковый ключ —
+    /// хеш одинаков между запусками, поэтому один и тот же урок всегда показывает
+    /// ту же иллюстрацию (как сделано для LyalyaMail stableId).
     private static func celebrationHeroSlug(for result: SessionResult) -> String {
         let slugs = [
             "celebration_balloons",
@@ -849,8 +856,11 @@ struct SessionCompleteView: View {
             "celebration_stars",
             "celebration_trophy_glow"
         ]
-        let hash = abs(result.sessionId.hashValue)
-        return slugs[hash % slugs.count]
+        let digest = SHA256.hash(data: Data(result.sessionId.utf8))
+        let key = digest.prefix(8).reduce(into: UInt64(0)) { acc, byte in
+            acc = (acc << 8) | UInt64(byte)
+        }
+        return slugs[Int(key % UInt64(slugs.count))]
     }
 
     // MARK: - Helpers

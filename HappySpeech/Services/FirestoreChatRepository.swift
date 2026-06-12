@@ -1,5 +1,6 @@
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 import Foundation
 import OSLog
 
@@ -16,7 +17,15 @@ import OSLog
 //   chats/{chatId}                — метаданные треда (chatId детерминирован)
 //     { familyId, specialistId, createdAt, lastMessageAt }
 //   chats/{chatId}/messages/{id}  — сообщения
-//     { id, senderRole, text, audioRef?, audioDurationSec?, createdAt, read }
+//     { id, senderRole, text, audioPath?, audioURL?, audioDurationSec?,
+//       createdAt, read }
+//
+// Аудио-вложения: m4a выгружается в Firebase Storage по parental-gated пути
+// `chat_audio/{chatId}/{messageId}.m4a` (см. storage.rules → isChatParticipant),
+// а в Firestore пишется `audioPath` (storage-ref) + `audioURL` (download-URL).
+// Получатель проигрывает удалённый URL — НИКОГДА локальный путь песочницы
+// отправителя (тот недоступен на другом устройстве). COPPA: путь доступен
+// только участникам треда (parent/specialist), ребёнок не участвует.
 //
 // Offline-first: Firestore SDK включает дисковую персистенцию (см.
 // `FirebaseBootstrap`), поэтому записи ставятся в нативную offline-очередь SDK
@@ -36,16 +45,19 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ChatRepository.Firestore")
     private let firestore: Firestore
+    private let storage: Storage
     private let networkMonitor: any NetworkMonitorService
 
     private enum Path {
         static let links = "chat_links"
         static let chats = "chats"
         static let messages = "messages"
+        static let audio = "chat_audio"
     }
 
     public init(networkMonitor: any NetworkMonitorService) {
         self.firestore = Firestore.firestore()
+        self.storage = Storage.storage()
         self.networkMonitor = networkMonitor
     }
 
@@ -169,7 +181,7 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
             createdAt: now,
             status: networkMonitor.isConnected ? .sent : .sending
         )
-        await write(message, identity: identity, audioRef: nil, durationSeconds: nil)
+        await write(message, identity: identity)
         return message
     }
 
@@ -181,34 +193,94 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
         titleKey: String,
         now: Date
     ) async -> ChatMessage {
+        let messageId = UUID().uuidString
+
+        // 1. Выгружаем локальный m4a в Firebase Storage (parental-gated путь).
+        //    Получатель на другом устройстве не имеет доступа к файлу в песочнице
+        //    отправителя — поэтому шлём download-URL, а не локальный путь.
+        let upload = await uploadAudio(
+            localPath: localAudioPath,
+            chatId: identity.chatId,
+            messageId: messageId
+        )
+
         let attachment = MessageAttachment(
             id: UUID().uuidString,
             kind: .audioRecording,
             titleKey: titleKey,
-            durationSeconds: durationSeconds
+            durationSeconds: durationSeconds,
+            remoteURL: upload?.downloadURL
         )
+        // Если выгрузка не удалась (нет файла/нет сети) — сообщение уходит со
+        // статусом .failed без аудио-ref, без фабрикации недоступной ссылки.
+        let status: MessageStatus
+        if upload != nil {
+            status = networkMonitor.isConnected ? .sent : .sending
+        } else {
+            status = .failed
+        }
         let message = ChatMessage(
-            id: UUID().uuidString,
+            id: messageId,
             sender: .parent,
             text: String(localized: "chat.attachment.audio.placeholder"),
             createdAt: now,
-            status: networkMonitor.isConnected ? .sent : .sending,
+            status: status,
             attachment: attachment
         )
         await write(
             message,
             identity: identity,
-            audioRef: localAudioPath,
+            audioPath: upload?.storagePath,
+            audioURL: upload?.downloadURL,
             durationSeconds: durationSeconds
         )
         return message
     }
 
+    /// Результат выгрузки аудио в Storage: путь-ref и публичный download-URL.
+    private struct AudioUpload: Sendable {
+        let storagePath: String
+        let downloadURL: URL
+    }
+
+    /// Выгружает локальный m4a в `chat_audio/{chatId}/{messageId}.m4a` и
+    /// возвращает storage-path + download-URL. `nil`, если файла нет или
+    /// выгрузка не удалась (честный провал — без фейковой ссылки).
+    private func uploadAudio(
+        localPath: String,
+        chatId: String,
+        messageId: String
+    ) async -> AudioUpload? {
+        guard !localPath.isEmpty else {
+            logger.warning("sendAudio: empty localAudioPath — нет файла для выгрузки")
+            return nil
+        }
+        let fileURL = URL(fileURLWithPath: localPath)
+        guard FileManager.default.fileExists(atPath: fileURL.path) else {
+            logger.warning("sendAudio: файл не найден по пути \(localPath, privacy: .private)")
+            return nil
+        }
+        let storagePath = "\(Path.audio)/\(chatId)/\(messageId).m4a"
+        let ref = storage.reference(withPath: storagePath)
+        let metadata = StorageMetadata()
+        metadata.contentType = "audio/m4a"
+        do {
+            _ = try await ref.putFileAsync(from: fileURL, metadata: metadata)
+            let url = try await ref.downloadURL()
+            logger.info("sendAudio: выгружено в Storage (\(storagePath, privacy: .public))")
+            return AudioUpload(storagePath: storagePath, downloadURL: url)
+        } catch {
+            logger.error("sendAudio: Storage upload failed — \(error.localizedDescription)")
+            return nil
+        }
+    }
+
     private func write(
         _ message: ChatMessage,
         identity: ChatIdentity,
-        audioRef: String?,
-        durationSeconds: Double?
+        audioPath: String? = nil,
+        audioURL: URL? = nil,
+        durationSeconds: Double? = nil
     ) async {
         var payload: [String: Any] = [
             "id": message.id,
@@ -217,7 +289,8 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
             "createdAt": Timestamp(date: message.createdAt),
             "read": false
         ]
-        if let audioRef { payload["audioRef"] = audioRef }
+        if let audioPath { payload["audioPath"] = audioPath }
+        if let audioURL { payload["audioURL"] = audioURL.absoluteString }
         if let durationSeconds { payload["audioDurationSec"] = durationSeconds }
 
         let docRef = messagesCollection(identity).document(message.id)
@@ -314,12 +387,21 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
         let read = (data["read"] as? Bool) ?? false
 
         var attachment: MessageAttachment?
-        if data["audioRef"] != nil {
+        // Удалённый download-URL аудио (или legacy `audioRef` из старых записей).
+        // Вложение показываем только при наличии хоть какого-то аудио-маркера;
+        // проигрываемый источник — `audioURL` (Storage download-URL).
+        let audioURLString = (data["audioURL"] as? String)
+        let hasAudio = audioURLString != nil
+            || data["audioPath"] != nil
+            || data["audioRef"] != nil
+        if hasAudio {
+            let remoteURL = audioURLString.flatMap { URL(string: $0) }
             attachment = MessageAttachment(
                 id: "\(id)-att",
                 kind: .audioRecording,
                 titleKey: "chat.attachment.audio.title",
-                durationSeconds: data["audioDurationSec"] as? Double
+                durationSeconds: data["audioDurationSec"] as? Double,
+                remoteURL: remoteURL
             )
         }
 

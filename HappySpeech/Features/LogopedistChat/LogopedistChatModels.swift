@@ -42,11 +42,29 @@ public struct MessageAttachment: Identifiable, Sendable, Hashable {
     public let kind: Kind
     public let titleKey: String
     public let durationSeconds: Double?
+    /// Удалённый URL аудио в Firebase Storage (download-URL). Получатель
+    /// проигрывает именно его — НЕ локальный путь песочницы отправителя.
+    /// `nil`, когда вложение ещё не выгружено или для нон-аудио видов.
+    public let remoteURL: URL?
 
     public enum Kind: String, Sendable {
         case audioRecording
         case sessionHighlight
         case progressReport
+    }
+
+    public init(
+        id: String,
+        kind: Kind,
+        titleKey: String,
+        durationSeconds: Double?,
+        remoteURL: URL? = nil
+    ) {
+        self.id = id
+        self.kind = kind
+        self.titleKey = titleKey
+        self.durationSeconds = durationSeconds
+        self.remoteURL = remoteURL
     }
 
     public var symbolName: String {

@@ -132,6 +132,26 @@ service firebase.storage {
     }
 
     // ------------------------------------------------------------------
+    // Logopedist chat audio attachments (parent ↔ specialist)
+    // ------------------------------------------------------------------
+    // chatId формата `lo__hi` — лексикографически отсортированная пара uid
+    // (familyId/parent + specialistId), см. ChatIdentity.chatId. Доступ строго
+    // у участников треда; ребёнок никогда не участвует (COPPA — parental-gated).
+    function isChatParticipant(chatId) {
+      return isSignedIn()
+        && (
+          request.auth.uid == chatId.split('__')[0]
+          || request.auth.uid == chatId.split('__')[1]
+        );
+    }
+
+    match /chat_audio/{chatId}/{fileName} {
+      allow read: if isChatParticipant(chatId) || isAdmin();
+      allow write: if isChatParticipant(chatId) && isValidAudio();
+      allow delete: if isChatParticipant(chatId) || isAdmin();
+    }
+
+    // ------------------------------------------------------------------
     // Per-user private storage
     // ------------------------------------------------------------------
 

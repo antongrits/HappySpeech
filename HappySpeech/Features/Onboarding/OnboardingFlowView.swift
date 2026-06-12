@@ -391,6 +391,29 @@ struct OnboardingFlowView: View {
         let router = OnboardingRouter()
         router.coordinator = coordinator
         router.onCompleted = onComplete
+        // Резолвер реального активного ребёнка для default-роута роли .child
+        // (онбординг не создаёт ChildProfile — см. OnboardingRouter). View владеет
+        // AppContainer, поэтому резолюция childRepository живёт здесь, не в Router.
+        router.resolveChildHome = { [weak coordinator, container] in
+            guard let coordinator else { return }
+            let repository = container.childRepository
+            Task { @MainActor in
+                let profiles = (try? await repository.fetchAll()) ?? []
+                if let storedId = ActiveChildStore.shared.id,
+                   profiles.contains(where: { $0.id == storedId }) {
+                    coordinator.navigate(to: .childHome(childId: storedId))
+                    return
+                }
+                if let first = profiles.first {
+                    ActiveChildStore.shared.set(first.id)
+                    coordinator.navigate(to: .childHome(childId: first.id))
+                    return
+                }
+                // Детей ещё нет — ведём в родительский контур создавать профиль,
+                // а не в фантомную детскую главную.
+                coordinator.navigate(to: .parentHome)
+            }
+        }
 
         self.presenter = presenter
         self.interactor = interactor

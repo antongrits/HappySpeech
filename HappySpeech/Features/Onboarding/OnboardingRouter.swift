@@ -26,6 +26,12 @@ final class OnboardingRouter: OnboardingRoutingLogic {
     var onCompleted: ((OnboardingProfile) -> Void)?
     weak var coordinator: AppCoordinator?
 
+    /// Резолвит реальный профиль активного ребёнка и навигирует в его главную
+    /// (или в родительский контур создания, если детей ещё нет). Внедряет View,
+    /// владеющая `AppContainer.childRepository`: Router не импортирует Data-слой
+    /// напрямую — резолюция отдана View по правилам слоёв.
+    var resolveChildHome: (@MainActor () -> Void)?
+
     // MARK: - Routing
 
     func routeCompleted(profile: OnboardingProfile) {
@@ -37,7 +43,16 @@ final class OnboardingRouter: OnboardingRoutingLogic {
         // в нужный home-экран по роли.
         switch profile.role {
         case .child:
-            routeToChildHome(childId: "primary-child")
+            // Онбординг НЕ создаёт ChildProfile в Realm (только OnboardingState +
+            // AdaptivePlanner-seed), поэтому литеральный `"primary-child"` указывал
+            // на несуществующий профиль → пустая детская главная + сессии-сироты.
+            // Резолвим РЕАЛЬНЫЙ id (как RoleSelect): сохранённый/первый профиль,
+            // иначе — родительский контур создания. Резолвер внедряет View.
+            if let resolveChildHome {
+                resolveChildHome()
+            } else {
+                routeToParentHome()
+            }
         case .specialist:
             routeToSpecialistHome()
         case .parent:
