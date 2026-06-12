@@ -217,6 +217,11 @@ public final class AppContainer {
     // Actor-typed, lazy. Загружает модель при первом вызове transcribe. Graceful fallback на mock.
     private var _wav2Vec2Service: (any Wav2Vec2Service)?
 
+    // v17 «Фонемный паспорт»: PhonemePassportIngestor — фоновый приёмник
+    // пофонемных наблюдений поверх Wav2Vec2 forced alignment. Lazy. Запускается
+    // только из parent-контура fire-and-forget, гейтится по RAM (модель ~302 MB).
+    private var _phonemePassportIngestor: (any PhonemePassportIngesting)?
+
     // Block C v15: EnsembleASRService — weighted voting Tier A/B.
     private var _ensembleASRService: (any EnsembleASRServiceProtocol)?
 
@@ -838,6 +843,26 @@ public final class AppContainer {
         return service
     }
 
+    /// «Фонемный паспорт»: фоновый ингестор пофонемных наблюдений.
+    ///
+    /// Используется только из parent-контура (`FamilyVoice`) fire-and-forget.
+    /// Внутри гейтит по RAM (Wav2Vec2 ≈ 302 MB) — на слабых устройствах тихо
+    /// пропускает. Lazy: модель грузится лишь при первом реальном вызове.
+    public var phonemePassportIngestor: any PhonemePassportIngesting {
+        if let existing = _phonemePassportIngestor { return existing }
+        let service = LivePhonemePassportIngestor(
+            wav2Vec2: wav2Vec2Service,
+            profileService: phonemeProfileService
+        )
+        _phonemePassportIngestor = service
+        return service
+    }
+
+    /// Подмена ингестора паспорта для preview / тестов.
+    public func overridePhonemePassportIngestor(_ service: any PhonemePassportIngesting) {
+        _phonemePassportIngestor = service
+    }
+
     // MARK: - Block C v15: Speech Service Wrappers
 
     /// Ансамблевый ASR — взвешенное голосование Tier A (on-device) / Tier B (Whisper).
@@ -1009,6 +1034,13 @@ public extension AppContainer {
         let sharedSyncService: any SyncService = LiveSyncService(realmActor: realmActor, networkMonitor: sharedNetworkMonitor)
         // F1-016: единый планировщик интервальных повторов (UserDefaults-backed).
         let sharedReviewScheduler: any ReviewSchedulerService = LiveReviewSchedulerService()
+        // v17 «Фонемный паспорт»: профиль-сервис над тем же Realm, что и контейнер
+        // (репозиторий — stateless-обёртка, данные живут в Realm). Планировщик
+        // читает слабейшую confusion-пару для адресной дифференциации minimal-pairs.
+        let sharedPhonemeProfileService: any PhonemeProfileServiceProtocol =
+            LivePhonemeProfileService(
+                repository: LivePhonemeObservationRepository(realmActor: realmActor)
+            )
 
         return AppContainer(
             realmActor: realmActor,
@@ -1043,7 +1075,8 @@ public extension AppContainer {
                 LiveAdaptivePlannerService(
                     childRepository: childRepo,
                     sessionRepository: sessionRepo,
-                    reviewScheduler: sharedReviewScheduler
+                    reviewScheduler: sharedReviewScheduler,
+                    phonemeProfileService: sharedPhonemeProfileService
                 )
             },
             llmDecisionServiceFactory: {

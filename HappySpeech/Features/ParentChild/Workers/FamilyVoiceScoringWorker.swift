@@ -43,21 +43,55 @@ final class FamilyVoiceScoringWorker: Sendable {
     /// Опциональный ансамблевый ASR (Tier B). Подключается из родительского
     /// контура для более точной оценки. `nil` → используется одиночный scorer.
     private let ensembleASR: (any EnsembleASRServiceProtocol)?
+    /// Опциональный ингестор «Фонемного паспорта». Подключается из родительского
+    /// контура (parent-tier). Запускается fire-and-forget ПОСЛЕ выдачи оценки —
+    /// не влияет на латентность. nil → паспорт не пополняется. Сам ингестор
+    /// дополнительно гейтит по RAM (Wav2Vec2 ≈ 302 MB).
+    private let passportIngestor: (any PhonemePassportIngesting)?
     private let logger = Logger(subsystem: "com.happyspeech", category: "FamilyVoiceScoringWorker")
 
     init(
         pronunciationScorer: (any PronunciationScorerService)? = nil,
-        ensembleASR: (any EnsembleASRServiceProtocol)? = nil
+        ensembleASR: (any EnsembleASRServiceProtocol)? = nil,
+        passportIngestor: (any PhonemePassportIngesting)? = nil
     ) {
         self.pronunciationScorer = pronunciationScorer
         self.ensembleASR = ensembleASR
+        self.passportIngestor = passportIngestor
     }
 
     // MARK: - Public API
 
     /// Scores child's attempt against the reference word.
     /// Возвращает `FamilyVoiceScoringOutcome`: значение `[0, 1]` + флаг `isApproximate`.
+    ///
+    /// - Parameters:
+    ///   - childAudioPath: относительный путь к записи ребёнка.
+    ///   - referenceWord: эталонное слово (кириллица).
+    ///   - childId: id активного ребёнка для «Фонемного паспорта». Пустой →
+    ///     паспорт не пополняется (но оценка всё равно считается).
     func score(
+        childAudioPath: String,
+        referenceWord: String,
+        childId: String = ""
+    ) async -> FamilyVoiceScoringOutcome {
+        let outcome = await computeScore(childAudioPath: childAudioPath, referenceWord: referenceWord)
+
+        // Fire-and-forget пополнение «Фонемного паспорта» ПОСЛЕ выдачи оценки —
+        // не блокирует возврат результата (parent-tier; RAM-gate внутри ингестора).
+        // PCM грузим СЕЙЧАС, синхронно, и передаём байты в детачнутую задачу:
+        // вызывающий удаляет temp-файл сразу после score(), поэтому отложенное
+        // чтение файла гонялось бы с удалением.
+        if passportIngestor != nil, !childId.isEmpty,
+           let pcm = Self.loadPCMData(relativePath: childAudioPath) {
+            schedulePassportIngest(pcm: pcm, referenceWord: referenceWord, childId: childId)
+        }
+
+        return outcome
+    }
+
+    /// Чистый расчёт оценки (без побочного пополнения паспорта).
+    private func computeScore(
         childAudioPath: String,
         referenceWord: String
     ) async -> FamilyVoiceScoringOutcome {
@@ -120,6 +154,65 @@ final class FamilyVoiceScoringWorker: Sendable {
         if sonants.contains(where: { lower.contains($0) }) { return "sonants" }
         if velar.contains(where: { lower.contains($0) }) { return "velar" }
         return nil
+    }
+
+    // MARK: - Phoneme Passport ingest (fire-and-forget)
+
+    /// Запускает фоновое пополнение «Фонемного паспорта» детачнутой задачей.
+    /// Принимает уже-загруженный PCM (см. `score`) — отвязано от temp-файла.
+    /// Никогда не блокирует выдачу оценки и не пробрасывает ошибки в UI.
+    private func schedulePassportIngest(
+        pcm: Data,
+        referenceWord: String,
+        childId: String
+    ) {
+        guard let passportIngestor else { return }
+        let word = referenceWord
+        let wordId = Self.wordId(for: referenceWord)
+        let log = logger
+
+        Task.detached(priority: .utility) {
+            let recorded = await passportIngestor.ingest(
+                audio: pcm,
+                word: word,
+                childId: childId,
+                wordId: wordId
+            )
+            if recorded > 0 {
+                log.debug("Passport ingest: записано \(recorded) наблюдений для '\(word)'")
+            }
+        }
+    }
+
+    /// Стабильный COPPA-safe идентификатор слова (не PII): нормализованное слово
+    /// с префиксом `word_`. Используется для группировки наблюдений в паспорте.
+    static func wordId(for word: String) -> String {
+        let normalized = word
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+        return "word_\(normalized)"
+    }
+
+    /// Загружает запись ребёнка как Float32 PCM `Data` для Wav2Vec2.
+    /// Возвращает `nil` при любой ошибке (фоновый путь не должен падать).
+    private static func loadPCMData(relativePath: String) -> Data? {
+        do {
+            let url = try FamilyVoiceRecorderWorker.resolveFilePath(relativePath)
+            let file = try AVAudioFile(forReading: url)
+            guard let buffer = AVAudioPCMBuffer(
+                pcmFormat: file.processingFormat,
+                frameCapacity: AVAudioFrameCount(file.length)
+            ) else {
+                return nil
+            }
+            try file.read(into: buffer)
+            guard let channelData = buffer.floatChannelData?[0] else { return nil }
+            let count = Int(buffer.frameLength)
+            guard count > 0 else { return nil }
+            return Data(bytes: channelData, count: count * MemoryLayout<Float>.size)
+        } catch {
+            return nil
+        }
     }
 
     // MARK: - RMS heuristic fallback (реальная энергия сигнала)

@@ -55,7 +55,8 @@ struct FamilyVoiceSplitView: View {
                     realmActor: realmActor,
                     pronunciationScorer: container.pronunciationService,
                     ensembleASR: container.ensembleASRService,
-                    speakerVerification: container.speakerVerificationService
+                    speakerVerification: container.speakerVerificationService,
+                    passportIngestor: container.phonemePassportIngestor
                 )
             }
             await scene?.interactor.fetchRecordings(.init(parentId: parentId))

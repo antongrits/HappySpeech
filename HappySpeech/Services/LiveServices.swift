@@ -538,15 +538,21 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
     /// F1-016: единый планировщик интервальных повторов слов-ошибок. Опционален —
     /// при отсутствии маршрут собирается без подмешивания due-повторов (back-compat).
     private let reviewScheduler: (any ReviewSchedulerService)?
+    /// v17 «Фонемный паспорт»: источник слабейшей confusion-пары ребёнка для
+    /// адресной вставки упражнения minimal-pairs. Опционален — при отсутствии /
+    /// нехватке данных маршрут не меняется (graceful).
+    private let phonemeProfileService: (any PhonemeProfileServiceProtocol)?
 
     public init(
         childRepository: (any ChildRepository)? = nil,
         sessionRepository: (any SessionRepository)? = nil,
-        reviewScheduler: (any ReviewSchedulerService)? = nil
+        reviewScheduler: (any ReviewSchedulerService)? = nil,
+        phonemeProfileService: (any PhonemeProfileServiceProtocol)? = nil
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
         self.reviewScheduler = reviewScheduler
+        self.phonemeProfileService = phonemeProfileService
     }
 
     // MARK: buildDailyRoute
@@ -603,7 +609,10 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
             fatigue: fatigue
         )
         let intro = Self.dedupeIntro(reviewSteps + retroSteps)
-        let combined = intro + steps
+        // v17: адресная дифференциация слабейшей confusion-пары из «Фонемного
+        // паспорта» (если данные есть и пара имеет реальный minimal-pairs контент).
+        let confusionStep = await weakestConfusionMinimalPairsStep(for: childId)
+        let combined = (confusionStep.map { [$0] } ?? []) + intro + steps
 
         let stepsTotal = combined.reduce(0) { $0 + $1.durationTargetSec }
         let cap = DisorderRouteStrategy.sessionCap(for: profile.age, disorder: disorder)
@@ -639,6 +648,56 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
             fatigueLevel: fatigue,
             disorder: disorder
         )
+    }
+
+    /// v17 «Фонемный паспорт»: строит шаг minimal-pairs на слабейшую confusion-пару
+    /// ребёнка (target ↔ dominantCompetitor из topProblems). Возвращает nil, если:
+    ///   • профиль-сервис не подключён;
+    ///   • профиль пуст / нет проблемной фонемы с доминирующим конкурентом;
+    ///   • пара не имеет реального контента minimal-pairs (см. `MinimalPairRound`).
+    /// В этих случаях план не меняется (graceful).
+    private func weakestConfusionMinimalPairsStep(for childId: String) async -> RouteStepItem? {
+        guard let phonemeProfileService, !childId.isEmpty else { return nil }
+        guard let profile = try? await phonemeProfileService.profile(childId: childId) else { return nil }
+
+        // Слабейшая проблема с конкурентом-заменой (topProblems отсортированы по
+        // возрастанию уровня — первый подходящий и есть слабейшая confusion-пара).
+        for problem in profile.topProblems {
+            guard let competitor = problem.dominantCompetitor else { continue }
+            guard let contrast = Self.minimalPairsContrast(
+                targetIPA: problem.phoneme,
+                competitorIPA: competitor
+            ) else { continue }
+
+            return RouteStepItem(
+                templateType: .minimalPairs,
+                targetSound: contrast,
+                stage: .diff,
+                difficulty: 3,
+                wordCount: 8,
+                durationTargetSec: 150,
+                track: .phonemic
+            )
+        }
+        return nil
+    }
+
+    /// Сопоставляет confusion-пару (target IPA, competitor IPA) с реальным
+    /// контрастом minimal-pairs из каталога `MinimalPairRound.extendedCatalog`.
+    /// Проверяет обе ориентации ("Р-Л" и "Л-Р"). nil — если контента под пару нет.
+    static func minimalPairsContrast(targetIPA: String, competitorIPA: String) -> String? {
+        guard
+            let targetLetter = IPADictionary.info(for: targetIPA)?.cyrillic.uppercased(),
+            let competitorLetter = IPADictionary.info(for: competitorIPA)?.cyrillic.uppercased(),
+            targetLetter != competitorLetter
+        else { return nil }
+
+        let supported = Set(MinimalPairRound.extendedCatalog.map(\.soundContrast))
+        let direct = "\(targetLetter)-\(competitorLetter)"
+        let reversed = "\(competitorLetter)-\(targetLetter)"
+        if supported.contains(direct) { return direct }
+        if supported.contains(reversed) { return reversed }
+        return nil
     }
 
     /// F1-016: собирает шаги due-повторов через `ReviewSchedulerService` (если подключён).

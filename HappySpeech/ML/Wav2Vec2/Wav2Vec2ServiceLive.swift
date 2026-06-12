@@ -51,6 +51,29 @@ public actor Wav2Vec2ServiceLive: Wav2Vec2Service {
         os_signpost(.begin, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Inference")
         defer { os_signpost(.end, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Inference") }
 
+        let logitsArray = try await runInference(audio: audio)
+
+        // CTC decode
+        let result = CTCDecoder.decode(logitsArray: logitsArray)
+        logger.debug("Wav2Vec2: декодировано '\(result.decodedText)' (avgConf=\(String(format: "%.2f", result.averageConfidence)))")
+
+        return result
+    }
+
+    public func logits(audio: Data) async throws -> [[Float]] {
+        os_signpost(.begin, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Logits")
+        defer { os_signpost(.end, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Logits") }
+
+        let logitsArray = try await runInference(audio: audio)
+        return Self.multiArrayToMatrix(logitsArray)
+    }
+
+    // MARK: - Inference (общая часть transcribe / logits)
+
+    /// Прогоняет общий инференс модели и возвращает сырой `MLMultiArray` логитов
+    /// формы `[1, T, 37]`. Переиспользуется и ``transcribe(audio:)``, и
+    /// ``logits(audio:)`` — модель загружается один раз, без дублирования.
+    private func runInference(audio: Data) async throws -> MLMultiArray {
         let model = try loadModelIfNeeded()
 
         // 1. Data -> [Float]
@@ -80,12 +103,59 @@ public actor Wav2Vec2ServiceLive: Wav2Vec2Service {
         else {
             throw Wav2Vec2Error.predictionFailed("Выход 'logits' не найден в ответе модели")
         }
+        return logitsArray
+    }
 
-        // 7. CTC decode
-        let result = CTCDecoder.decode(logitsArray: logitsArray)
-        logger.debug("Wav2Vec2: декодировано '\(result.decodedText)' (avgConf=\(String(format: "%.2f", result.averageConfidence)))")
+    /// Конвертирует `MLMultiArray` логитов формы `[1, T, C]` (или `[T, C]`) в
+    /// матрицу `T × C` (`T` строк по `C` значений) row-major. Читает через
+    /// `strides`, поэтому корректна для любого layout, выдаваемого Core ML.
+    static func multiArrayToMatrix(_ array: MLMultiArray) -> [[Float]] {
+        let shape = array.shape.map(\.intValue)
+        // Поддерживаем [1, T, C] и [T, C].
+        let timeSteps: Int
+        let vocab: Int
+        let timeAxis: Int
+        let vocabAxis: Int
+        if shape.count == 3 {
+            timeSteps = shape[1]
+            vocab = shape[2]
+            timeAxis = 1
+            vocabAxis = 2
+        } else if shape.count == 2 {
+            timeSteps = shape[0]
+            vocab = shape[1]
+            timeAxis = 0
+            vocabAxis = 1
+        } else {
+            return []
+        }
+        guard timeSteps > 0, vocab > 0 else { return [] }
 
-        return result
+        let strides = array.strides.map(\.intValue)
+        let timeStride = strides[timeAxis]
+        let vocabStride = strides[vocabAxis]
+
+        var matrix = [[Float]](repeating: [Float](repeating: 0, count: vocab), count: timeSteps)
+
+        // Быстрый путь для float32 (наиболее частый layout логитов): читаем через
+        // типизированный указатель. Для других dataType — безопасный subscript.
+        if array.dataType == .float32 {
+            let basePtr = array.dataPointer.bindMemory(to: Float.self, capacity: array.count)
+            for t in 0 ..< timeSteps {
+                let rowBase = t * timeStride
+                for c in 0 ..< vocab {
+                    matrix[t][c] = basePtr[rowBase + c * vocabStride]
+                }
+            }
+        } else {
+            for t in 0 ..< timeSteps {
+                let rowBase = t * timeStride
+                for c in 0 ..< vocab {
+                    matrix[t][c] = array[rowBase + c * vocabStride].floatValue
+                }
+            }
+        }
+        return matrix
     }
 
     // MARK: - Model Loading
@@ -185,14 +255,22 @@ public actor Wav2Vec2ServiceMock: Wav2Vec2Service {
     public var simulatedConfidence: Double
     public var shouldThrow: Bool
 
+    /// Явная матрица логитов `T × C`. Если задана — ``logits(audio:)`` возвращает
+    /// её как есть (для детерминированных тестов alignment/GOP). Если `nil` —
+    /// логиты синтезируются из ``simulatedText`` (каждый символ доминирует в своём
+    /// фрейм-спане, между фонемами — blank).
+    public var simulatedLogits: [[Float]]?
+
     public init(
         text: String = "кот",
         confidence: Double = 0.82,
-        shouldThrow: Bool = false
+        shouldThrow: Bool = false,
+        logits: [[Float]]? = nil
     ) {
         self.simulatedText = text
         self.simulatedConfidence = confidence
         self.shouldThrow = shouldThrow
+        self.simulatedLogits = logits
     }
 
     public func transcribe(audio: Data) async throws -> CTCDecodeResult {
@@ -212,5 +290,48 @@ public actor Wav2Vec2ServiceMock: Wav2Vec2Service {
             decodedText: simulatedText,
             averageConfidence: simulatedConfidence
         )
+    }
+
+    public func logits(audio: Data) async throws -> [[Float]] {
+        if shouldThrow {
+            throw Wav2Vec2Error.modelNotLoaded
+        }
+        if let simulatedLogits {
+            return simulatedLogits
+        }
+        return Self.synthesizeLogits(for: simulatedText)
+    }
+
+    /// Синтезирует матрицу логитов `T × C` из кириллической строки: каждая буква,
+    /// присутствующая в словаре модели, доминирует в собственном спане кадров,
+    /// разделённом blank-кадром. Высокие логиты у целевого класса, низкие — у
+    /// остальных. Достаточно для прохождения forced-alignment + GOP в тестах.
+    static func synthesizeLogits(for text: String) -> [[Float]] {
+        let vocabSize = Wav2Vec2Vocabulary.size
+        let blankId = Wav2Vec2Vocabulary.blankIndex
+        let classIds = text.compactMap { Wav2Vec2Vocabulary.index(of: String($0)) }
+        guard !classIds.isEmpty else { return [] }
+
+        let framesPerPhoneme = 4
+        let high: Float = 6.0
+        let low: Float = -2.0
+
+        func row(dominant: Int) -> [Float] {
+            var values = [Float](repeating: low, count: vocabSize)
+            if dominant >= 0, dominant < vocabSize { values[dominant] = high }
+            return values
+        }
+
+        var matrix: [[Float]] = []
+        // Ведущий blank-кадр.
+        matrix.append(row(dominant: blankId))
+        for classId in classIds {
+            for _ in 0 ..< framesPerPhoneme {
+                matrix.append(row(dominant: classId))
+            }
+            // blank-разделитель между фонемами.
+            matrix.append(row(dominant: blankId))
+        }
+        return matrix
     }
 }

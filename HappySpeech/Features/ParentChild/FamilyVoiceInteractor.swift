@@ -45,20 +45,28 @@ final class FamilyVoiceInteractor {
 
     // MARK: - Init
 
+    /// Источник id активного ребёнка для пополнения «Фонемного паспорта».
+    /// По умолчанию — единый персистентный источник истины `ActiveChildStore`.
+    private let activeChildIdProvider: @Sendable () -> String?
+
     init(
         realmActor: RealmActor,
         pronunciationScorer: (any PronunciationScorerService)? = nil,
         ensembleASR: (any EnsembleASRServiceProtocol)? = nil,
         speakerVerification: (any SpeakerVerificationServiceProtocol)? = nil,
+        passportIngestor: (any PhonemePassportIngesting)? = nil,
         recorderWorker: (any FamilyVoiceRecording)? = nil,
-        micPermissionProvider: (@Sendable () async -> Bool)? = nil
+        micPermissionProvider: (@Sendable () async -> Bool)? = nil,
+        activeChildIdProvider: (@Sendable () -> String?)? = nil
     ) {
         self.realmActor = realmActor
         self.recorderWorker = recorderWorker ?? FamilyVoiceRecorderWorker()
         self.scoringWorker = FamilyVoiceScoringWorker(
             pronunciationScorer: pronunciationScorer,
-            ensembleASR: ensembleASR
+            ensembleASR: ensembleASR,
+            passportIngestor: passportIngestor
         )
+        self.activeChildIdProvider = activeChildIdProvider ?? { ActiveChildStore.shared.id }
         self.speakerTagWorker = FamilyVoiceSpeakerTagWorker(
             speakerVerification: speakerVerification
         )
@@ -210,10 +218,13 @@ final class FamilyVoiceInteractor {
         )
         logger.info("Child recording speaker tag=\(speakerTag.rawValue, privacy: .public)")
 
-        // Score against word
+        // Score against word. childId — для фонового пополнения «Фонемного
+        // паспорта» (parent-tier; пустой → паспорт не пополняется).
+        let childId = activeChildIdProvider() ?? ""
         let outcome = await scoringWorker.score(
             childAudioPath: childPath,
-            referenceWord: request.word
+            referenceWord: request.word,
+            childId: childId
         )
 
         // Cleanup child temp file

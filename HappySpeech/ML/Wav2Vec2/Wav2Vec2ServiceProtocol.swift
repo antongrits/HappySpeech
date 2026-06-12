@@ -36,4 +36,18 @@ public protocol Wav2Vec2Service: Actor {
     /// - Returns: CTC-декодированный результат с фонемами и текстом.
     /// - Throws: ``Wav2Vec2Error`` при ошибке модели или аудио.
     func transcribe(audio: Data) async throws -> CTCDecodeResult
+
+    /// Возвращает СЫРЫЕ логиты модели как матрицу `T × C` (без CTC-декода и без
+    /// log-softmax). Нужны «Фонемному паспорту» для forced alignment / GOP:
+    /// ``CTCForcedAligner`` сам применяет log-softmax через
+    /// ``CTCForcedAligner/applyLogSoftmax(_:vocabSize:)``.
+    ///
+    /// Переиспользует тот же инференс, что и ``transcribe(audio:)`` — модель
+    /// загружается один раз, лениво. Выход модели имеет форму `[1, T, C]`
+    /// (`C = 37`), здесь разворачивается в `T` строк по `C` логитов.
+    ///
+    /// - Parameter audio: Data c сырыми Float32 сэмплами (см. ``transcribe(audio:)``).
+    /// - Returns: матрица `T × C` сырых логитов в порядке кадров.
+    /// - Throws: ``Wav2Vec2Error`` при ошибке модели или аудио.
+    func logits(audio: Data) async throws -> [[Float]]
 }

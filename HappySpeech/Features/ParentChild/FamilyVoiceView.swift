@@ -12,7 +12,8 @@ final class FamilyVoiceScene {
         realmActor: RealmActor,
         pronunciationScorer: (any PronunciationScorerService)? = nil,
         ensembleASR: (any EnsembleASRServiceProtocol)? = nil,
-        speakerVerification: (any SpeakerVerificationServiceProtocol)? = nil
+        speakerVerification: (any SpeakerVerificationServiceProtocol)? = nil,
+        passportIngestor: (any PhonemePassportIngesting)? = nil
     ) {
         let display = FamilyVoiceDisplay()
         let presenter = FamilyVoicePresenter()
@@ -20,7 +21,8 @@ final class FamilyVoiceScene {
             realmActor: realmActor,
             pronunciationScorer: pronunciationScorer,
             ensembleASR: ensembleASR,
-            speakerVerification: speakerVerification
+            speakerVerification: speakerVerification,
+            passportIngestor: passportIngestor
         )
         presenter.display = display
         interactor.presenter = presenter
@@ -109,7 +111,8 @@ struct FamilyVoiceView: View {
                     realmActor: container.realmActor,
                     pronunciationScorer: container.pronunciationService,
                     ensembleASR: container.ensembleASRService,
-                    speakerVerification: container.speakerVerificationService
+                    speakerVerification: container.speakerVerificationService,
+                    passportIngestor: container.phonemePassportIngestor
                 )
             }
             await scene?.interactor.fetchRecordings(.init(parentId: parentId))
