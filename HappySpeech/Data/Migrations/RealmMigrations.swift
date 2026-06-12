@@ -94,6 +94,13 @@ enum RealmMigrations {
             // автоматически (значение объявлено в модели). Никаких enumerateObjects
             // не требуется — нужно только зафиксировать версию.
         }
+        if oldSchemaVersion < 17 {
+            // v17: PhonemeObservationObject («Фонемный паспорт») — пофонемные
+            // GOP-наблюдения (childId/phoneme(IPA)/wordId/position/gop/posterior/
+            // defect/competitor?/date). Только числа/IPA, без аудио/PII.
+            // Новый объект — Realm создаёт схему автоматически, дефолты заданы
+            // в модели. Никаких enumerateObjects не требуется.
+        }
     }
 }
 

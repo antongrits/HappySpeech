@@ -93,7 +93,8 @@ final class OnboardingChildProvisionerTests: XCTestCase {
 
     func test_provision_persistsDisorderForCreatedChild() async throws {
         let sut = makeSUT()
-        let id = try XCTUnwrap(await sut.provisionChild(from: parentProfile(disorder: .ffn)))
+        let provisioned = await sut.provisionChild(from: parentProfile(disorder: .ffn))
+        let id = try XCTUnwrap(provisioned)
         XCTAssertEqual(SpeechDisorderStore.load(childId: id), .ffn)
         SpeechDisorderStore.clear(childId: id)
     }
@@ -123,7 +124,8 @@ final class OnboardingChildProvisionerTests: XCTestCase {
         let sut = makeSUT()
         let id = await sut.provisionChild(from: profile)
         XCTAssertNotNil(id)
-        XCTAssertEqual(try await repository.fetchAll().count, 1)
+        let count = try await repository.fetchAll().count
+        XCTAssertEqual(count, 1)
     }
 
     // MARK: - Guard clauses
@@ -132,17 +134,21 @@ final class OnboardingChildProvisionerTests: XCTestCase {
         let sut = makeSUT()
         let id = await sut.provisionChild(from: parentProfile(name: " "))
         XCTAssertNil(id)
-        XCTAssertTrue(try await repository.fetchAll().isEmpty)
+        let all = try await repository.fetchAll()
+        XCTAssertTrue(all.isEmpty)
     }
 
     // MARK: - Idempotency
 
     func test_provision_isIdempotent_noDuplicateOnReplay() async throws {
         let sut = makeSUT()
-        let firstId = try XCTUnwrap(await sut.provisionChild(from: parentProfile()))
-        let secondId = try XCTUnwrap(await sut.provisionChild(from: parentProfile()))
+        let firstProvisioned = await sut.provisionChild(from: parentProfile())
+        let firstId = try XCTUnwrap(firstProvisioned)
+        let secondProvisioned = await sut.provisionChild(from: parentProfile())
+        let secondId = try XCTUnwrap(secondProvisioned)
         XCTAssertEqual(firstId, secondId, "Повтор онбординга не плодит дубликаты")
-        XCTAssertEqual(try await repository.fetchAll().count, 1)
+        let count = try await repository.fetchAll().count
+        XCTAssertEqual(count, 1)
     }
 
     // MARK: - parentId resolution
@@ -150,18 +156,21 @@ final class OnboardingChildProvisionerTests: XCTestCase {
     func test_provision_usesAuthUidWhenSignedIn() async throws {
         let sut = makeSUT(authUser: AuthUser(uid: "parent-uid-42", isAnonymous: false))
         _ = await sut.provisionChild(from: parentProfile())
-        XCTAssertEqual(try await repository.fetchAll().first?.parentId, "parent-uid-42")
+        let parentId = try await repository.fetchAll().first?.parentId
+        XCTAssertEqual(parentId, "parent-uid-42")
     }
 
     func test_provision_usesLocalParentWhenAnonymous() async throws {
         let sut = makeSUT(authUser: AuthUser(uid: "anon", isAnonymous: true))
         _ = await sut.provisionChild(from: parentProfile())
-        XCTAssertEqual(try await repository.fetchAll().first?.parentId, "local-parent")
+        let parentId = try await repository.fetchAll().first?.parentId
+        XCTAssertEqual(parentId, "local-parent")
     }
 
     func test_provision_usesLocalParentWhenNoAuth() async throws {
         let sut = makeSUT(authUser: nil)
         _ = await sut.provisionChild(from: parentProfile())
-        XCTAssertEqual(try await repository.fetchAll().first?.parentId, "local-parent")
+        let parentId = try await repository.fetchAll().first?.parentId
+        XCTAssertEqual(parentId, "local-parent")
     }
 }

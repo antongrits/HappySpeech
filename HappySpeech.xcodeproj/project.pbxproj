@@ -151,6 +151,7 @@
 		129A72BCEA3B077FC00B44C8 /* NeurolinguistInsightsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2D56B3225480DEE9AFB357 /* NeurolinguistInsightsInteractor.swift */; };
 		12A420B18C2EB8A4750021D1 /* OralStoryCreatorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A35EC3DEFFEA94F7CA24B5 /* OralStoryCreatorPresenter.swift */; };
 		12B406C740F0424A40CD6944 /* TonguePostureClassifierFixtureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9318E3BB2A2F304D17D94EBE /* TonguePostureClassifierFixtureTests.swift */; };
+		12B4F619A38DA190AF4D1F46 /* CTCForcedAlignerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF3F57179E2F3C71F06CAA /* CTCForcedAlignerTests.swift */; };
 		12F5CC38DAD2531BB38B9F39 /* SpeechNormsEncyclopediaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232F439D700EB6F6C96EED18 /* SpeechNormsEncyclopediaPresenter.swift */; };
 		12F7A6F9E342BC178A435BA3 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 61E38C43243E01E9A36F6C60 /* KeychainAccess */; };
 		131D8CC4F3258C8D52A621AE /* MockARSessionScriptedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC588E94981C7BD4D5C13F0 /* MockARSessionScriptedTests.swift */; };
@@ -366,6 +367,7 @@
 		2BA30339A8919C76B4E06198 /* WordFormationCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A7E022F464A390099B7ADEB /* WordFormationCorpus.swift */; };
 		2BB4C653685CD28240978A39 /* LessonVoiceWorkerExtendedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEC81A6220E98BC9C1157DF /* LessonVoiceWorkerExtendedTests.swift */; };
 		2BB50595A73CE703CC052ADA /* RoomCameraSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897E417A8681202BA631FA54 /* RoomCameraSession.swift */; };
+		2BD83D6D1E1A8D167E0F1A0B /* CTCForcedAligner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728F166B96962567DCC52B83 /* CTCForcedAligner.swift */; };
 		2BE748B788941536FCDD25DD /* MemoryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7C1A618B109E502AF44DA7 /* MemoryModels.swift */; };
 		2BF98C6D0A6AF80FE65C3DB7 /* PermissionFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07EFF561AFE4E6FB7B8D680 /* PermissionFlowView.swift */; };
 		2C0A382A1AEBD036FDCB1D45 /* ARSoundHunterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9AB743CAFBFE5454C6A8FA /* ARSoundHunterRouter.swift */; };
@@ -681,6 +683,7 @@
 		4E2E26DCEEB98406E037E3EB /* SyllableSnailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA3324A29B48E961C9BBC3D /* SyllableSnailWorker.swift */; };
 		4E5C90FCBF4ED43B9BFC31BC /* ChildHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD017F028138E0285415700C /* ChildHomePresenter.swift */; };
 		4E9E869CE1D033651094BDC8 /* ImitationLabContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1F5C0D00B665CBE0805B1E /* ImitationLabContent.swift */; };
+		4EBD64385AFF83C6F062D384 /* PhonemeProfileServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D93C2938BFC04600A12B22 /* PhonemeProfileServiceTests.swift */; };
 		4ED9F06113739E303D22E564 /* StorytellingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E829F8EF762A7C559E71A /* StorytellingInteractor.swift */; };
 		4EF6244C31B5B7E711F5A804 /* FSRSSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D14ACBEAC41DA3E7B1C9E48 /* FSRSSchedulerTests.swift */; };
 		4EF87C531F17C79634938689 /* FirebaseEmulatorTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B2F836E56DA84FADB7CF9F /* FirebaseEmulatorTestsBase.swift */; };
@@ -842,6 +845,7 @@
 		61C9621C4080440D6B4E9DB5 /* KaraokePitchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C32B05D53DBC5E1E51E16E6 /* KaraokePitchRouter.swift */; };
 		622602A6A337B2BF178331FD /* PhonemeJourneyMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FFD40EDEAE46CE1E10BF08 /* PhonemeJourneyMapView.swift */; };
 		62556242E40E0D8C2C6359B0 /* loader_audio_processing.json in Resources */ = {isa = PBXBuildFile; fileRef = 479B157E2E527F0518CFB257 /* loader_audio_processing.json */; };
+		62C044E28D337C9C69223683 /* PhonemeDefectClassifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042765D7B07DF7F4FA80E550 /* PhonemeDefectClassifierTests.swift */; };
 		62CC8DA68AC4C610B1174E72 /* DiaryEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449B2BA4AA2C05FE3A63686E /* DiaryEncryption.swift */; };
 		62F27EC6D47ACDD50664D5A0 /* PronunciationScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D165C8E6C72D7E883F201 /* PronunciationScorer.swift */; };
 		632A87B9CC644B5212E88C39 /* empty_no_sessions.json in Resources */ = {isa = PBXBuildFile; fileRef = D3DAAAA47E5A999B46AACD79 /* empty_no_sessions.json */; };
@@ -851,6 +855,7 @@
 		6354D17C9FAAE71C9125EA68 /* seasonal in Resources */ = {isa = PBXBuildFile; fileRef = BBA6C89938A42DD12C6CE1E9 /* seasonal */; };
 		637E5FB0864FD73FA5E2294E /* DialectAdaptationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B35F150374C2A97DC596E9 /* DialectAdaptationPresenterTests.swift */; };
 		6393C19A26F81F4AA1152A2F /* CustomWordListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1605402901D9AA4C8E667A8 /* CustomWordListRouter.swift */; };
+		639CFE9C25BE56D8834CC76A /* PhonemeProfileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD9D01B350EA96617D60179 /* PhonemeProfileTypes.swift */; };
 		639F5DB14AD91E887E718DD2 /* SpeechRiddlesInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C36D2180F8FFD6EC1A00C79 /* SpeechRiddlesInteractorTests.swift */; };
 		63B32A692052C5D4D3B5CEFF /* PhonemeFamilyMatcherWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF6F95182DDBAA30F9122EE /* PhonemeFamilyMatcherWorker.swift */; };
 		63C53F797361D1CEFC7BCBBE /* LetterTracingInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B72BB8E7E0120F07D3BC77 /* LetterTracingInteractorTests.swift */; };
@@ -931,6 +936,7 @@
 		6DA6C6AC7720DFA47FFD3117 /* ObjectHuntInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA3B8FE1307E528DB94D487D /* ObjectHuntInteractorTests.swift */; };
 		6DACB50C961A14CAE81D62D0 /* DailyMissionsHubModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FAFBCEA16A8DF593E40716 /* DailyMissionsHubModels.swift */; };
 		6DB336331E4A72166E04C9D6 /* GoalTrackerKidModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3477731B478190859AB9A413 /* GoalTrackerKidModels.swift */; };
+		6E3585962473FE081C5B7F55 /* GOPScorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD477A76298B176C7216A4CF /* GOPScorerTests.swift */; };
 		6E621567C6BF7C7628A438BE /* RhythmDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C7A5B1F326661A6351FD85 /* RhythmDisplayLogic.swift */; };
 		6E8335EDEFAA31FE6FDC204B /* FamilyAwardsCabinetModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C636B031CC3E508DD2FEF19 /* FamilyAwardsCabinetModels.swift */; };
 		6E85BD17000A30D66E4825E0 /* MelSpectrogramExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F54C82AF7A82D96F084EE46A /* MelSpectrogramExtractor.swift */; };
@@ -1126,6 +1132,7 @@
 		816604014C3EA4E546193CF6 /* LetterPaintingFunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB5B96E49A3814533057D0A /* LetterPaintingFunView.swift */; };
 		8179CD2D1FDC53481AC42CC8 /* FamilyAchievementsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69F107EA7FEC20069A39101 /* FamilyAchievementsModels.swift */; };
 		81C284A875C8197A1C3D8805 /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA71F0121AF83275E12B2A9E /* SoundService.swift */; };
+		81EDF83F30C41A6E325B52B6 /* AlignmentVocabMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07628FD8A4F1F30457D4744E /* AlignmentVocabMap.swift */; };
 		81F053638BD78EDFFEF9EEC7 /* SpotlightIndexerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC675E6B43C95A12BB139267 /* SpotlightIndexerTests.swift */; };
 		82025982200D6BCD4BEC2A84 /* TypographyTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EC50811607E83514091DFB /* TypographyTokens.swift */; };
 		820A79A06036EC25EE4F114A /* FamilyCalendarPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174AA0122050F258127D00B1 /* FamilyCalendarPresenterTests.swift */; };
@@ -1160,6 +1167,7 @@
 		84A561046475498A0CEA9EAE /* RussianG2P.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAD8DE194AA24A69208DB0C /* RussianG2P.swift */; };
 		84B9335DFAB536747406F3B6 /* SoundDetectivePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73DC9E93AAF53B8CA3F49C3 /* SoundDetectivePresenter.swift */; };
 		85197ACA1CC89C1DDC7BCCA9 /* WordFormationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E4CD2F8DC182D7D3C4F869 /* WordFormationView.swift */; };
+		85363B2F86C631491F4CFAB0 /* AlignmentVocabMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5EC7A8AADC6258CD4A8C7E /* AlignmentVocabMapTests.swift */; };
 		85F4D2CB54DCA821E178ACCE /* SyllableConstructorPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D2BF6611E27336DD878F9 /* SyllableConstructorPresenterTests.swift */; };
 		85FA8767C03D383FFE593048 /* BreatheAndSpeakWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA960E883AF5D315BB0D4AA9 /* BreatheAndSpeakWorker.swift */; };
 		860E2471FA5C7D4E7DAE1384 /* LyalyaWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29505E924E3F724562C941B0 /* LyalyaWidget.swift */; };
@@ -1522,6 +1530,7 @@
 		B272C12A1ADADD91827A4C0C /* MLXTokenizerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFE3B824353E89D923BAEE /* MLXTokenizerBridge.swift */; };
 		B27F56294EAE51B3C9485DD7 /* SiblingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F276AB26BC78859EF116CC /* SiblingRouter.swift */; };
 		B29CF4D5898E6DB9FCA7C7FB /* WordFormationDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163F62A043601E24C6B215F8 /* WordFormationDisplayLogic.swift */; };
+		B2A723BC1F54199FF28900B7 /* PhonemeObservationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136FB5F4521FA6FB2C2BD108 /* PhonemeObservationRepository.swift */; };
 		B2A73E99C54E1A6EAD36D9C8 /* AssignedHomeworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8EF7FB353F8FBE1729C3D7E /* AssignedHomeworkRouter.swift */; };
 		B2DBAAEAC380DA362127DE76 /* LyalyaMailInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA7BAF60FD7DA28EFEE44DB /* LyalyaMailInteractorTests.swift */; };
 		B2E7200BCFD9861474EE1191 /* CulturalContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050A39FE693EBF8D146D1ADA /* CulturalContentView.swift */; };
@@ -1625,6 +1634,7 @@
 		BFC053526C91D9E3F758BF22 /* WhoseTailCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A17B500F8A54870C13F99 /* WhoseTailCorpus.swift */; };
 		BFCACC5B414C116DA41E7AFA /* HSMascotViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEDB8FCCDA6D037FDAD3BAB /* HSMascotViewSnapshotTests.swift */; };
 		BFD082C6A88E33B5C74E57FE /* BreatheAndSpeakPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16887A378DA176729EF87F7B /* BreatheAndSpeakPresenter.swift */; };
+		BFFC36A440348E01AC808867 /* GOPScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E47FF27AEEE7CFD975BA0D /* GOPScorer.swift */; };
 		C01D5E486DC26901C7292910 /* DailyMissionsHubInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E548A44D28EDA9D717E8ECF4 /* DailyMissionsHubInteractor.swift */; };
 		C02935FB9DC8FEFDF520792E /* CacheClearWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB8FB0EDBBDA61FA76C12C7 /* CacheClearWorkerTests.swift */; };
 		C0444C4248D176EF8303F0DC /* ArticulationImitationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314A84E7001407ED9F00558 /* ArticulationImitationInteractor.swift */; };
@@ -1883,6 +1893,7 @@
 		E3E10B81158445743E35D6D6 /* FSRSScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E03CDDC54B92ACB00A917E /* FSRSScheduler.swift */; };
 		E3ECC5C2C4571623EC555261 /* AppErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */; };
 		E3F08DFB7DF600232A8E54AD /* ProgramTemplateExportWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B4DE815520B55396874B90 /* ProgramTemplateExportWorker.swift */; };
+		E41017AAAC665A746397F94B /* PhonemeObservationRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AC391E4A1178CDF9717112 /* PhonemeObservationRepositoryTests.swift */; };
 		E43C83BE02810DA6C45011DB /* DialectScoringIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA26EF6B6ECBF8044AC28D /* DialectScoringIntegrationTests.swift */; };
 		E45601D2272AE996EA2247A0 /* GrammarGameSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790D0E31F9D7343AC1F4479C /* GrammarGameSnapshotTests.swift */; };
 		E47B64E7EF71DE98A3DC9738 /* SyllableSnailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9295776C830838FE03D4C52 /* SyllableSnailInteractor.swift */; };
@@ -2076,6 +2087,7 @@
 		FC15C2E8B147F905BC7605B2 /* pack_storytelling.json in Resources */ = {isa = PBXBuildFile; fileRef = 0D7BD7C29FFA78C20DB396DC /* pack_storytelling.json */; };
 		FC2608233C30F7C1894747BF /* LLMDecisionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABD10350ECAA606782BE07D /* LLMDecisionServiceTests.swift */; };
 		FC53261350F09893A1AE8744 /* ColorAndSoundModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21C59013CAB87783582D2A3 /* ColorAndSoundModels.swift */; };
+		FC7474477E4AB6AA25210157 /* PhonemeProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012484CD5C98B6424C591CA4 /* PhonemeProfileService.swift */; };
 		FC7B89CB70A28426E3BF9507 /* PalindromeHunterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C22D363676CD2E14D094DF /* PalindromeHunterView.swift */; };
 		FC89DD9469BDCB19041D1CBD /* SessionReviewInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2882B0D1B3C483E78DFF56D /* SessionReviewInteractor.swift */; };
 		FC9C80A49A03F613EA9E4FB5 /* HandPoseWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11CF2E26F2C3DE286CFC2C3 /* HandPoseWorkerTests.swift */; };
@@ -2112,6 +2124,7 @@
 		FFC905BB80E0E15C85BA067B /* WordBankInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1207FE0A19CCD56DBE9FBE53 /* WordBankInteractorTests.swift */; };
 		FFD7F9E86D4C41FF169A9C63 /* ParentVoiceNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4FC2D66F204D35D9177C9 /* ParentVoiceNoteView.swift */; };
 		FFD97D9B62B7DB537DF6DBCF /* WeeklySoundReportPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE879800B9DECA59BBE083A /* WeeklySoundReportPresenter.swift */; };
+		FFE2608347ACB55DC17EC569 /* PhonemeDefectClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8483F19F7620FD3D8DFC198 /* PhonemeDefectClassifier.swift */; };
 		FFF68EE49282BCFB1C2BF8A8 /* HoldThePoseInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C440A0D717B307D6614467EA /* HoldThePoseInteractorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -2159,11 +2172,13 @@
 		00403E522F4D213E5879C034 /* KaraokePitchCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokePitchCorpus.swift; sourceTree = "<group>"; };
 		006A7A2D1BDA909A18780E0D /* SoundJournalKidInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundJournalKidInteractorTests.swift; sourceTree = "<group>"; };
 		008030F4A24A87C14F6598CB /* BedtimeModeCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BedtimeModeCorpus.swift; sourceTree = "<group>"; };
+		00AC391E4A1178CDF9717112 /* PhonemeObservationRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeObservationRepositoryTests.swift; sourceTree = "<group>"; };
 		00B2F1AB8F3A0D794ED4DC2A /* ProsodyWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProsodyWorker.swift; sourceTree = "<group>"; };
 		00C0F4EDBE2ED1DC9AAD990A /* WeeklySoundReportWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySoundReportWorker.swift; sourceTree = "<group>"; };
 		00E1DF54F9FE05AD44E59775 /* SoundOfTheDayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundOfTheDayPresenter.swift; sourceTree = "<group>"; };
 		00EF543077114B3916857A9C /* BiometricGateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricGateService.swift; sourceTree = "<group>"; };
 		0113908A7DAA533FB73C1987 /* SoundDictionaryDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundDictionaryDisplayLogic.swift; sourceTree = "<group>"; };
+		012484CD5C98B6424C591CA4 /* PhonemeProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeProfileService.swift; sourceTree = "<group>"; };
 		012592FBBC81AB5CEECE292E /* CapReachedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapReachedView.swift; sourceTree = "<group>"; };
 		013825DA3DA454BFC4F13A89 /* HabitStreakDashboardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitStreakDashboardModels.swift; sourceTree = "<group>"; };
 		013879A472EC44165C63BEEB /* SharePlaySessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlaySessionView.swift; sourceTree = "<group>"; };
@@ -2188,6 +2203,7 @@
 		03AE151420B81BA6FB5605AF /* CustomWordListEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWordListEditorView.swift; sourceTree = "<group>"; };
 		03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackVoiceSynthesisChain.swift; sourceTree = "<group>"; };
 		03EB74ADD6CE29F6775FAACA /* HandPoseCameraSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandPoseCameraSession.swift; sourceTree = "<group>"; };
+		042765D7B07DF7F4FA80E550 /* PhonemeDefectClassifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeDefectClassifierTests.swift; sourceTree = "<group>"; };
 		042D20D897DC3EB8E8FCDD71 /* StoryLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryLibraryView.swift; sourceTree = "<group>"; };
 		04651A6C56DF88ECC1CCE20A /* PoseSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSequenceView.swift; sourceTree = "<group>"; };
 		04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeModels.swift; sourceTree = "<group>"; };
@@ -2226,6 +2242,7 @@
 		074AF5D02954E43FB60AA803 /* SentenceBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceBuilderView.swift; sourceTree = "<group>"; };
 		075997A627170B27FB5F5351 /* ParentVoiceNotePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVoiceNotePresenter.swift; sourceTree = "<group>"; };
 		075B99915ED7599A0614E236 /* ParentInsightsTimelineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentInsightsTimelineInteractor.swift; sourceTree = "<group>"; };
+		07628FD8A4F1F30457D4744E /* AlignmentVocabMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentVocabMap.swift; sourceTree = "<group>"; };
 		07934B179B82174A2791C643 /* ParentChildSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildSnapshotTests.swift; sourceTree = "<group>"; };
 		07A3D7B7B600A7FE49CE242C /* SessionShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionShellView.swift; sourceTree = "<group>"; };
 		081448BD537219E4AEBAF975 /* SiblingMPCWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiblingMPCWorkerTests.swift; sourceTree = "<group>"; };
@@ -2239,6 +2256,7 @@
 		09E6D9023AD054578830A09E /* celebrate_level_up.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_level_up.json; sourceTree = "<group>"; };
 		09FB5935FBE8B6143BEE82EE /* BilingualPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilingualPracticeView.swift; sourceTree = "<group>"; };
 		0A3A3BD2F30445FD151974E2 /* FamilyVoiceRecorderWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceRecorderWorkerTests.swift; sourceTree = "<group>"; };
+		0A5EC7A8AADC6258CD4A8C7E /* AlignmentVocabMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignmentVocabMapTests.swift; sourceTree = "<group>"; };
 		0A74F421FA065892BEAB84AB /* whisper-small */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "whisper-small"; path = "HappySpeech/Resources/Models/Whisper/whisper-small"; sourceTree = SOURCE_ROOT; };
 		0A7E43731FF4FA3BC8878042 /* LogopedistChatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogopedistChatModels.swift; sourceTree = "<group>"; };
 		0A8C9F544DE336722FF8B1B6 /* PronunciationLeaderboardPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationLeaderboardPresenterTests.swift; sourceTree = "<group>"; };
@@ -2250,6 +2268,7 @@
 		0B4B18643ACAFD1544F0D8A8 /* FamilyRecordingObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyRecordingObject.swift; sourceTree = "<group>"; };
 		0B4E61B73B10D06F1D2F900A /* ArticulationImitationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationImitationModels.swift; sourceTree = "<group>"; };
 		0B58CEFB539715F6C092E7E2 /* CardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModifier.swift; sourceTree = "<group>"; };
+		0BAF3F57179E2F3C71F06CAA /* CTCForcedAlignerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCForcedAlignerTests.swift; sourceTree = "<group>"; };
 		0BB6BFE4A99DC8D21AD61EBC /* SpacingTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingTokens.swift; sourceTree = "<group>"; };
 		0BBFC79FA39F517A8AB43502 /* ParentGuideWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGuideWorkerTests.swift; sourceTree = "<group>"; };
 		0BD68C36C0F6447E9D7FAA4C /* PuzzleRevealRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRevealRouter.swift; sourceTree = "<group>"; };
@@ -2304,6 +2323,7 @@
 		128CD27ADAFE32D2A05841A1 /* BilingualModeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BilingualModeInteractor.swift; sourceTree = "<group>"; };
 		12F5F7A95EB55AFF1FB1DF73 /* ARFaceFilterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceFilterInteractor.swift; sourceTree = "<group>"; };
 		13159CC299583AEB1FBCEEC5 /* PrecannedNarrationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecannedNarrationsTests.swift; sourceTree = "<group>"; };
+		136FB5F4521FA6FB2C2BD108 /* PhonemeObservationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeObservationRepository.swift; sourceTree = "<group>"; };
 		1394262E321DDA5C4345B2A4 /* MusicalSoundDrumsContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalSoundDrumsContent.swift; sourceTree = "<group>"; };
 		13BA45257BC71A01C371E014 /* DailyChallengePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengePresenterTests.swift; sourceTree = "<group>"; };
 		14056CFB8ACEEFBC9EA2602E /* StoryCompletionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCompletionPresenterTests.swift; sourceTree = "<group>"; };
@@ -3090,6 +3110,7 @@
 		7265F6F34560EFCC3D7F10A3 /* VideoCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCatalog.swift; sourceTree = "<group>"; };
 		727E0FFC0DDBBC1AB7CBC2FC /* EmotionDetectionServiceLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionDetectionServiceLive.swift; sourceTree = "<group>"; };
 		727E7FA6B2265DCF35B0145E /* SpeechRiddlesModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRiddlesModels.swift; sourceTree = "<group>"; };
+		728F166B96962567DCC52B83 /* CTCForcedAligner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCForcedAligner.swift; sourceTree = "<group>"; };
 		728F71E672980B682E909514 /* ARMirrorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMirrorRouter.swift; sourceTree = "<group>"; };
 		7295A80C46AE85D0A39F52B5 /* RewardsCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsCatalog.swift; sourceTree = "<group>"; };
 		72E9C256261C7700734A0932 /* lyalya-phrase-mapping.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "lyalya-phrase-mapping.json"; sourceTree = "<group>"; };
@@ -3295,6 +3316,7 @@
 		8D2D2BF6611E27336DD878F9 /* SyllableConstructorPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllableConstructorPresenterTests.swift; sourceTree = "<group>"; };
 		8D52543D886FC7C0C9AE75A7 /* SpeechHomeworkPlannerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHomeworkPlannerModels.swift; sourceTree = "<group>"; };
 		8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVoiceCloneService.swift; sourceTree = "<group>"; };
+		8DD9D01B350EA96617D60179 /* PhonemeProfileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeProfileTypes.swift; sourceTree = "<group>"; };
 		8DE9E6D02A5E6A031A4A1E10 /* RealmActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmActor.swift; sourceTree = "<group>"; };
 		8DEA8DD31DBAD27770B1B714 /* StoryPlayerSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayerSmokeTests.swift; sourceTree = "<group>"; };
 		8E2516C38811F3AF4A2CCD2B /* SpecialistCaseNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistCaseNotesView.swift; sourceTree = "<group>"; };
@@ -3507,6 +3529,7 @@
 		A817288F653C9F393138FF12 /* ContentPackLoadingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPackLoadingTests.swift; sourceTree = "<group>"; };
 		A823218076F24B845E419B8D /* CutsceneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CutsceneService.swift; sourceTree = "<group>"; };
 		A837EA3F2B7CDBAB43213E47 /* LyalyaPersonalCoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaPersonalCoachView.swift; sourceTree = "<group>"; };
+		A8483F19F7620FD3D8DFC198 /* PhonemeDefectClassifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeDefectClassifier.swift; sourceTree = "<group>"; };
 		A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirStreamDetector.swift; sourceTree = "<group>"; };
 		A86CF255D2125F882A3623B6 /* FamilyVoiceSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceSmokeUITest.swift; sourceTree = "<group>"; };
 		A8D44EDEA9ED27D2EC053E35 /* LyalyaMailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaMailModels.swift; sourceTree = "<group>"; };
@@ -3833,6 +3856,7 @@
 		CD20778DE53826EFE2AE1A82 /* DailyChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyChallengeView.swift; sourceTree = "<group>"; };
 		CD35ED27346CCD5336C7173A /* RemoteConfigService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteConfigService.swift; sourceTree = "<group>"; };
 		CD37F3EA2A4A22E909694A89 /* pack_letter_trace.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_letter_trace.json; sourceTree = "<group>"; };
+		CD477A76298B176C7216A4CF /* GOPScorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOPScorerTests.swift; sourceTree = "<group>"; };
 		CD5356BC959038BD84332650 /* TonguePostureClassifierMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonguePostureClassifierMLTests.swift; sourceTree = "<group>"; };
 		CD73C790843C10100D0B2ADD /* HSParallaxTileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSParallaxTileTests.swift; sourceTree = "<group>"; };
 		CD803C145C49FF4C1926224F /* BreathingExtendedInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingExtendedInteractorTests.swift; sourceTree = "<group>"; };
@@ -3926,6 +3950,7 @@
 		D77DFCC27316DE16BC491A55 /* ProgramEditorTemplateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorTemplateTests.swift; sourceTree = "<group>"; };
 		D796765992370B23EDE86631 /* ARMirrorInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMirrorInteractorTests.swift; sourceTree = "<group>"; };
 		D7C9C905FB318E43CD36CA52 /* FamilyAwardsCabinetRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAwardsCabinetRouter.swift; sourceTree = "<group>"; };
+		D7E47FF27AEEE7CFD975BA0D /* GOPScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GOPScorer.swift; sourceTree = "<group>"; };
 		D7F86A38109D3129959AAA70 /* WordRhymeGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordRhymeGameInteractor.swift; sourceTree = "<group>"; };
 		D80A1015CB8AF67A97946676 /* PlainProgressWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainProgressWorker.swift; sourceTree = "<group>"; };
 		D82A89524E9E4C637A486108 /* MusicalSoundDrumsInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalSoundDrumsInteractorTests.swift; sourceTree = "<group>"; };
@@ -4014,6 +4039,7 @@
 		E1609ED7A6C11EE5E24B2272 /* LogorhythmicsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogorhythmicsPresenter.swift; sourceTree = "<group>"; };
 		E1711CF7FAE26F1BAAD272C7 /* ProsodyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProsodyModels.swift; sourceTree = "<group>"; };
 		E1C4137D7BA450D7CECBCD31 /* FluencyAnalyzerWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluencyAnalyzerWorker.swift; sourceTree = "<group>"; };
+		E1D93C2938BFC04600A12B22 /* PhonemeProfileServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeProfileServiceTests.swift; sourceTree = "<group>"; };
 		E1DD970A98F05C333E95EF28 /* StorytellingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellingPresenterTests.swift; sourceTree = "<group>"; };
 		E1E1B9719E34C31FA48B9FF7 /* FCMNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMNotificationHandler.swift; sourceTree = "<group>"; };
 		E1E84B3E5E8A280063620039 /* sound_velars_pack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sound_velars_pack.json; sourceTree = "<group>"; };
@@ -5080,6 +5106,7 @@
 		262F48EF7740C8BD47E1724D /* ML */ = {
 			isa = PBXGroup;
 			children = (
+				B1692FB7C8D47DD8586C4ECF /* Alignment */,
 				B4B894F4F1B8A607C6C92207 /* ASR */,
 				E4EE0D72A8DFE2E588E5AF6A /* LLM */,
 				35F50CECE1AD59CE80243668 /* MFCC */,
@@ -5297,6 +5324,7 @@
 				3E49C2B0D1E0918201C00853 /* ParentRole.swift */,
 				053D22C174DA28172B35C902 /* PerformanceMonitorService.swift */,
 				DD32EC01CDB2B645B255589A /* PersonalVoiceService.swift */,
+				012484CD5C98B6424C591CA4 /* PhonemeProfileService.swift */,
 				C56924D8335C1ECCCFD7D9E2 /* RealtimeDatabaseService.swift */,
 				CD35ED27346CCD5336C7173A /* RemoteConfigService.swift */,
 				94845A4DECFB5A4F78EDB150 /* RemoteLLMClient.swift */,
@@ -7188,6 +7216,17 @@
 			path = FamilyVoiceMessageHub;
 			sourceTree = "<group>";
 		};
+		7B86DC2595CF6EA76500C087 /* Alignment */ = {
+			isa = PBXGroup;
+			children = (
+				0A5EC7A8AADC6258CD4A8C7E /* AlignmentVocabMapTests.swift */,
+				0BAF3F57179E2F3C71F06CAA /* CTCForcedAlignerTests.swift */,
+				CD477A76298B176C7216A4CF /* GOPScorerTests.swift */,
+				042765D7B07DF7F4FA80E550 /* PhonemeDefectClassifierTests.swift */,
+			);
+			path = Alignment;
+			sourceTree = "<group>";
+		};
 		7B91207FF43B08388BD11A13 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -8282,6 +8321,17 @@
 			path = SpeechTempo;
 			sourceTree = "<group>";
 		};
+		B1692FB7C8D47DD8586C4ECF /* Alignment */ = {
+			isa = PBXGroup;
+			children = (
+				07628FD8A4F1F30457D4744E /* AlignmentVocabMap.swift */,
+				728F166B96962567DCC52B83 /* CTCForcedAligner.swift */,
+				D7E47FF27AEEE7CFD975BA0D /* GOPScorer.swift */,
+				A8483F19F7620FD3D8DFC198 /* PhonemeDefectClassifier.swift */,
+			);
+			path = Alignment;
+			sourceTree = "<group>";
+		};
 		B186C935FA6A05D6FD40D3B1 /* SpecialistCaseNotes */ = {
 			isa = PBXGroup;
 			children = (
@@ -8595,6 +8645,7 @@
 			isa = PBXGroup;
 			children = (
 				F27C3268900B40BDD9F7AB4F /* ChildRepository.swift */,
+				136FB5F4521FA6FB2C2BD108 /* PhonemeObservationRepository.swift */,
 				8DE9E6D02A5E6A031A4A1E10 /* RealmActor.swift */,
 				584ED79DF3CE2030E58C26EB /* ScreeningOutcomeRepository.swift */,
 				FA015122A5BF78E6F5A8C5FB /* SessionRepository.swift */,
@@ -8861,6 +8912,8 @@
 				B40EAC7EFAF2D059654F5A43 /* NotificationServiceExtTests.swift */,
 				C0304D9F3236A0CB5383BD22 /* NotificationServiceLiveTests.swift */,
 				1FDC496477DF8914487EB90D /* PerformanceMonitorServiceTests.swift */,
+				00AC391E4A1178CDF9717112 /* PhonemeObservationRepositoryTests.swift */,
+				E1D93C2938BFC04600A12B22 /* PhonemeProfileServiceTests.swift */,
 				D06639D1A4BA6BCB074C9436 /* RealtimeDatabaseServiceTests.swift */,
 				AD410E5211ABE74802311CD2 /* RemoteConfigServiceTests.swift */,
 				765E1424DD48CCF1F35DE2B3 /* RemoteLLMClientTests.swift */,
@@ -9664,6 +9717,7 @@
 			isa = PBXGroup;
 			children = (
 				2D8D952C841DB7529B7C764C /* HSTypes.swift */,
+				8DD9D01B350EA96617D60179 /* PhonemeProfileTypes.swift */,
 				BA351EC4D1EABA32865AA60F /* SoundRomanizer.swift */,
 			);
 			path = Types;
@@ -9713,6 +9767,7 @@
 		F5A77F716F137743BC52154B /* ML */ = {
 			isa = PBXGroup;
 			children = (
+				7B86DC2595CF6EA76500C087 /* Alignment */,
 				D963971E5B4473B6C87EF86F /* MFCC */,
 				9CD65E6DDC4947D742E608E9 /* ChildSpeechScoringPolicyTests.swift */,
 				E8DA26EF6B6ECBF8044AC28D /* DialectScoringIntegrationTests.swift */,
@@ -10209,6 +10264,7 @@
 				45338CA7F1CE77C8153CF0B6 /* AdaptiveVADTests.swift in Sources */,
 				7D75257DC7FDDAFAB1D3F1BA /* AdvancedGameSnapshotTests.swift in Sources */,
 				A666FEDA0DE6A46BD6E0D41D /* AirStreamAnalyzerTests.swift in Sources */,
+				85363B2F86C631491F4CFAB0 /* AlignmentVocabMapTests.swift in Sources */,
 				9C06BEBE96C1BC91D17E0404 /* AmbientSoundServiceTests.swift in Sources */,
 				C27C2386C111C6F3CC6788D9 /* AnalyticsServiceTests.swift in Sources */,
 				8F85341B6A53D06797BF3BFB /* AnimalSoundsBingoInteractorTests.swift in Sources */,
@@ -10256,6 +10312,7 @@
 				863DA40B2101E5FCF205648A /* ButterflyCatchInteractorTests.swift in Sources */,
 				8F5D24796A4C07BED51167AC /* ButterflyCatchPresenterTests.swift in Sources */,
 				DC641DC12F29179E0A156721 /* CTCDecoderTests.swift in Sources */,
+				12B4F619A38DA190AF4D1F46 /* CTCForcedAlignerTests.swift in Sources */,
 				C02935FB9DC8FEFDF520792E /* CacheClearWorkerTests.swift in Sources */,
 				C98E87203EF3F357A9C2B2B9 /* CanvasCoordinatorTests.swift in Sources */,
 				EC728300CC647AEFF30D40E8 /* ChildAchievementShareInteractorTests.swift in Sources */,
@@ -10365,6 +10422,7 @@
 				F4F92F96EBA35702C35AE6EC /* FourthExtraInteractorTests.swift in Sources */,
 				D8D8DB6B34461C7FC2796EFE /* FourthExtraPresenterTests.swift in Sources */,
 				1778D0B0D49D4D2CEE0EF938 /* FourthExtraWorkerCorpusTests.swift in Sources */,
+				6E3585962473FE081C5B7F55 /* GOPScorerTests.swift in Sources */,
 				EA6D73E51D5F94FE184946AC /* GameTemplatesSnapshotTests.swift in Sources */,
 				5860D51C536EEE2B3BBDCB38 /* GoalTrackerKidInteractorTests.swift in Sources */,
 				76305A9B2E01F0B1F44049D5 /* GoogleSignInWorkerTests.swift in Sources */,
@@ -10519,8 +10577,11 @@
 				1436E3CF3CC92BB1F4057617 /* PhonemeAnalysisServiceLiveTests.swift in Sources */,
 				B9A257F25D7961D817DCE90F /* PhonemeAnalysisServiceTests.swift in Sources */,
 				C78C8120864988207433997D /* PhonemeAudioWorkerTests.swift in Sources */,
+				62C044E28D337C9C69223683 /* PhonemeDefectClassifierTests.swift in Sources */,
 				733F2F271ECBCBD40D56B9DE /* PhonemeFamilyMatcherInteractorTests.swift in Sources */,
 				FCDEB8BC3CAA5EA66645F7E6 /* PhonemeJourneyMapInteractorTests.swift in Sources */,
+				E41017AAAC665A746397F94B /* PhonemeObservationRepositoryTests.swift in Sources */,
+				4EBD64385AFF83C6F062D384 /* PhonemeProfileServiceTests.swift in Sources */,
 				16BD0078E705558AB303BCC8 /* PhonemeReportTests.swift in Sources */,
 				0B8AC2824EF046D44D1F2A58 /* PhonemicListeningInteractorTests.swift in Sources */,
 				CEB78487FFA7041F5956C541 /* PhonemicListeningPresenterTests.swift in Sources */,
@@ -10797,6 +10858,7 @@
 				20AD4F482483FA67D0D2D436 /* AchievementsView.swift in Sources */,
 				A273B837EF6C41C969853C0A /* AirStreamAnalyzer.swift in Sources */,
 				9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */,
+				81EDF83F30C41A6E325B52B6 /* AlignmentVocabMap.swift in Sources */,
 				4213FCB660BC4A74904613D8 /* AmbientSoundService.swift in Sources */,
 				15E4ADCCBB55B9158EFF8B1B /* AnalyticsService.swift in Sources */,
 				F362E62880AF89A38B6EE109 /* AnimalSoundsBingoContent.swift in Sources */,
@@ -10905,6 +10967,7 @@
 				1B1FC813CA84884334DAAC48 /* ButterflyCatchPresenter.swift in Sources */,
 				31878B184637C093246CEF90 /* ButterflyCatchView.swift in Sources */,
 				CD0A9D4DA522DF8E7994B84D /* CTCDecoder.swift in Sources */,
+				2BD83D6D1E1A8D167E0F1A0B /* CTCForcedAligner.swift in Sources */,
 				E733A15894C41A8B71464454 /* CacheClearWorker.swift in Sources */,
 				4F2D7FA7758C0F8BFB10E700 /* CalmModeManager.swift in Sources */,
 				2138188911810F874CA19404 /* CanvasViewRepresentable.swift in Sources */,
@@ -11148,6 +11211,7 @@
 				90CA19754CA30B8FBA48480F /* FourthExtraView.swift in Sources */,
 				516BE939F11F2E4095D5851F /* FourthExtraWorker.swift in Sources */,
 				A988838DD5668BA7956CBDEF /* G2PWorker.swift in Sources */,
+				BFFC36A440348E01AC808867 /* GOPScorer.swift in Sources */,
 				803889989393F3FA23903C41 /* GestureClassifier.swift in Sources */,
 				7DFAB63FCBCB6AB484942417 /* GetWeeklySummaryIntent.swift in Sources */,
 				E4E8A0C6ED3FC2B766A19750 /* GlassCTAFooterModifier.swift in Sources */,
@@ -11538,6 +11602,7 @@
 				BB00DC1736C7A80101D65A2A /* PhonemeAnalysisServiceLive.swift in Sources */,
 				73A83F72F8D052EF0DA4DAB0 /* PhonemeAnalysisServiceProtocol.swift in Sources */,
 				08077A2B8A7C2B5CEB990131 /* PhonemeAudioWorker.swift in Sources */,
+				FFE2608347ACB55DC17EC569 /* PhonemeDefectClassifier.swift in Sources */,
 				D88BB5BC7431911DC51DDE52 /* PhonemeFamilyMatcherInteractor.swift in Sources */,
 				034A1B844657F08493C50021 /* PhonemeFamilyMatcherModels.swift in Sources */,
 				43F4A109F51D6DDF687049B4 /* PhonemeFamilyMatcherView.swift in Sources */,
@@ -11546,6 +11611,9 @@
 				12560591EC6308AA53D7D3D0 /* PhonemeJourneyMapModels.swift in Sources */,
 				622602A6A337B2BF178331FD /* PhonemeJourneyMapView.swift in Sources */,
 				730208770B55481D22148ECC /* PhonemeJourneyMapWorker.swift in Sources */,
+				B2A723BC1F54199FF28900B7 /* PhonemeObservationRepository.swift in Sources */,
+				FC7474477E4AB6AA25210157 /* PhonemeProfileService.swift in Sources */,
+				639CFE9C25BE56D8834CC76A /* PhonemeProfileTypes.swift in Sources */,
 				A982D621F75802CF4A43B7D8 /* PhonemeReportAggregator.swift in Sources */,
 				A562BECFF44CE647990F882B /* PhonemeReportInteractor.swift in Sources */,
 				9AA3B97DC08978E94B7CDD08 /* PhonemeReportModels.swift in Sources */,

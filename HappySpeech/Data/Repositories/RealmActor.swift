@@ -54,7 +54,7 @@ public actor RealmActor {
     /// Открывает Realm через `Realm(actor: self)` — actor-safe async инициализация.
     /// Гарантирует, что Realm привязан к executor этого actor, исключая thread mismatch.
     ///
-    /// Конфигурация по умолчанию — единый `RealmConfig.make()` (v16 + migrationBlock).
+    /// Конфигурация по умолчанию — единый `RealmConfig.make()` (v17 + migrationBlock).
     /// Этот же config выставляется как `Realm.Configuration.defaultConfiguration`, чтобы
     /// async-хелперы (`asyncFetchMapped`, `fetchLyalyaLetters` и т.д.), открывающие
     /// Realm через `Realm(actor:)` без явного config, наследовали ту же версию схемы и

@@ -606,6 +606,91 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
     let transcript: String?
 }
 
+// MARK: - PhonemeObservationObject (v17 — «Фонемный паспорт»)
+//
+// Одно пофонемное наблюдение, полученное из GOP-скоринга попытки ребёнка.
+// Хранит ТОЛЬКО относительные числовые метрики и IPA-символ фонемы — НИКАКОГО
+// аудио, имени ребёнка или иной PII. Это сознательный COPPA-дизайн: паспорт
+// строится из накопленных наблюдений, аудио на диске/в облаке не нужно.
+//
+// Используется:
+//   • PhonemeProfileService — агрегация в матрицу «фонема × позиция» и прогноз
+//     динамики (EWMA + Theil-Sen). Это ОЦЕНКА ДИНАМИКИ, не диагноз (project guide §11).
+//   • SpecialistExportService — пофонемная часть PDF/CSV отчёта.
+//
+// Декаплировано от ML-движка: сервис оперирует уже-сохранёнными наблюдениями,
+// поэтому слой данных не зависит от того, как именно посчитан `gop`/`posterior`.
+
+final class PhonemeObservationObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted(indexed: true) var childId: String = ""
+    /// Целевая фонема в IPA (например «r», «ʂ», «s»).
+    @Persisted var phoneme: String = ""
+    /// Идентификатор слова урока, в котором наблюдалась фонема (для дедупликации
+    /// и трассировки). Не содержит самого слова — только id.
+    @Persisted var wordId: String = ""
+    /// Позиция фонемы в слове: "initial" | "medial" | "final".
+    @Persisted var position: String = "initial"
+    /// Goodness of Pronunciation — относительная мера «похожести» на эталон.
+    /// Абсолютная шкала смещена (модель на синтетике), поэтому используются
+    /// только относительные/трендовые выводы и self-baseline перцентили.
+    @Persisted var gop: Double = 0
+    /// Усреднённая апостериорная вероятность целевой фонемы на её интервале.
+    @Persisted var posterior: Double = 0
+    /// Классифицированный исход: "ok" | "distortion" | "substitution" |
+    /// "age_substitution" | "omission".
+    @Persisted var defect: String = "ok"
+    /// IPA конкурирующей фонемы (для замен) — nil, если конкурента нет.
+    @Persisted var competitor: String?
+    @Persisted var date: Date = Date()
+}
+
+// MARK: - PhonemeObservationDTO (Sendable DTO)
+
+/// Realm-независимый снимок пофонемного наблюдения. Создаётся из
+/// `PhonemeObservationObject` внутри RealmActor и безопасно пересекает границу
+/// актора. Содержит только числа/IPA — никакого аудио и PII.
+public struct PhonemeObservationDTO: Sendable, Identifiable, Equatable {
+    public let id: String
+    public let childId: String
+    /// Целевая фонема в IPA.
+    public let phoneme: String
+    public let wordId: String
+    /// "initial" | "medial" | "final".
+    public let position: String
+    public let gop: Double
+    public let posterior: Double
+    /// "ok" | "distortion" | "substitution" | "age_substitution" | "omission".
+    public let defect: String
+    /// IPA конкурента (для замен), иначе nil.
+    public let competitor: String?
+    public let date: Date
+
+    public init(
+        id: String = UUID().uuidString,
+        childId: String,
+        phoneme: String,
+        wordId: String,
+        position: String,
+        gop: Double,
+        posterior: Double,
+        defect: String,
+        competitor: String? = nil,
+        date: Date = Date()
+    ) {
+        self.id = id
+        self.childId = childId
+        self.phoneme = phoneme
+        self.wordId = wordId
+        self.position = position
+        self.gop = gop
+        self.posterior = posterior
+        self.defect = defect
+        self.competitor = competitor
+        self.date = date
+    }
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
@@ -617,8 +702,11 @@ struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
 ///      Realm создаёт схему автоматически, дефолты заданы в моделях.
 /// v16: LyalyaLetterObject.isDeleted (Bool, default false) — soft-delete флаг
 ///      для event-писем, чтобы идемпотентная вставка не воскрешала удалённые.
+/// v17: PhonemeObservationObject («Фонемный паспорт») — пофонемные GOP-наблюдения
+///      (только числа/IPA, без аудио/PII). Новый объект — Realm создаёт схему
+///      автоматически, дефолты заданы в модели. Аддитивная миграция.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 16
+    static let current: UInt64 = 17
 }
 
 // MARK: - RealmConfig
@@ -639,7 +727,7 @@ enum RealmSchemaVersion {
 /// preview-инстансы — наследует одну и ту же версию схемы и migration-блок.
 enum RealmConfig {
 
-    /// Собирает каноническую конфигурацию Realm (v16 + migrationBlock).
+    /// Собирает каноническую конфигурацию Realm (v17 + migrationBlock).
     ///
     /// Стартует от текущего `defaultConfiguration`, поэтому уважает уже
     /// установленный `fileURL`/`inMemoryIdentifier` (важно для тестов, которые

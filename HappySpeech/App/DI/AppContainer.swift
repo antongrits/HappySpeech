@@ -56,6 +56,41 @@ public final class AppContainer {
         return new
     }
 
+    // v17 «Фонемный паспорт»: PhonemeObservation repository — lazy, DTO-only
+    // через RealmActor. Хранит только числа/IPA (без аудио/PII, COPPA-safe).
+    private var _phonemeObservationRepository: (any PhonemeObservationRepository)?
+    public var phonemeObservationRepository: any PhonemeObservationRepository {
+        if let existing = _phonemeObservationRepository { return existing }
+        let new = LivePhonemeObservationRepository(realmActor: realmActor)
+        _phonemeObservationRepository = new
+        return new
+    }
+
+    /// Подмена ``phonemeObservationRepository`` для preview / тестов. Должна
+    /// вызываться до первого обращения к репозиторию/сервису паспорта.
+    public func overridePhonemeObservationRepository(_ repository: any PhonemeObservationRepository) {
+        _phonemeObservationRepository = repository
+        // Сброс зависимого сервиса, чтобы он пересобрался поверх нового репозитория.
+        _phonemeProfileService = nil
+    }
+
+    // v17 «Фонемный паспорт»: PhonemeProfileService — lazy actor. Агрегирует
+    // GOP-наблюдения в матрицу «фонема × позиция» и оценивает динамику освоения
+    // (EWMA + Theil-Sen). Оценка динамики, не диагноз (project guide §11).
+    private var _phonemeProfileService: (any PhonemeProfileServiceProtocol)?
+    public var phonemeProfileService: any PhonemeProfileServiceProtocol {
+        if let existing = _phonemeProfileService { return existing }
+        let new = LivePhonemeProfileService(repository: phonemeObservationRepository)
+        _phonemeProfileService = new
+        return new
+    }
+
+    /// Подмена ``phonemeProfileService`` для preview / тестов. Должна вызываться
+    /// до первого обращения к сервису.
+    public func overridePhonemeProfileService(_ service: any PhonemeProfileServiceProtocol) {
+        _phonemeProfileService = service
+    }
+
     // Rewards repository — реальные данные альбома (стикеры/достижения/кошелёк/
     // серия) из сессий, профиля и Realm-инвентаря. Lazy. Может быть переопределён
     // на mock в preview/тестах через `rewardsRepositoryOverride`.
@@ -945,7 +980,7 @@ public extension AppContainer {
 
     /// Creates the production container with real service implementations.
     static func live() -> AppContainer {
-        // Выставляем каноническую конфигурацию Realm (v16 + migrationBlock) как
+        // Выставляем каноническую конфигурацию Realm (v17 + migrationBlock) как
         // глобальный дефолт СИНХРОННО, до создания RealmActor и до первого рендера.
         // Гарантирует, что любое открытие Realm через `Realm(actor:)` (в т.ч.
         // хелпер, опередивший `bootstrapApp().open()`) использует правильную схему
@@ -1046,7 +1081,7 @@ public extension AppContainer {
     /// Leaderboard, FamilyAchievements, SessionHistory, ComparisonDashboard и т.д.
     static func preview() -> AppContainer {
         // Та же каноническая конфигурация, что и в проде: даже preview/UI-test
-        // открытия Realm через `Realm(actor:)` наследуют v16 + migrationBlock.
+        // открытия Realm через `Realm(actor:)` наследуют v17 + migrationBlock.
         RealmConfig.installAsDefault()
         let realmActor = RealmActor()
         let childRepo = MockChildRepository(children: ChildProfileDTO.previewList)
@@ -1143,6 +1178,9 @@ public extension AppContainer {
         container.overrideCutsceneService(MockCutsceneService())
         // HomeworkRepository — mock без Firestore в preview/tests.
         container.overrideHomeworkRepository(MockHomeworkRepository())
+        // v17 «Фонемный паспорт» — детерминированный mock без Realm в preview/tests.
+        container.overridePhonemeObservationRepository(MockPhonemeObservationRepository())
+        container.overridePhonemeProfileService(MockPhonemeProfileService())
         return container
     }
 }
