@@ -349,7 +349,14 @@ struct ProgramEditorView: View {
 
 extension UTType {
     /// Custom UTType for HappySpeech program template files (.happyspeech).
-    static let happySpeechProgram = UTType(exportedAs: "ru.happyspeech.program-template")
+    /// Declared in Info.plist `UTExportedTypeDeclarations`; resolved here with
+    /// `importedAs` (the app consumes the type via the picker) and a
+    /// `public.json` conformance fallback so the importer recognises the
+    /// extension even before the launch-time type registration completes.
+    static let happySpeechProgram = UTType(
+        importedAs: "ru.happyspeech.program-template",
+        conformingTo: .json
+    )
 }
 
 // MARK: - Row

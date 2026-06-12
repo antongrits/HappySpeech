@@ -1600,6 +1600,12 @@
             "state": "translated",
             "value": "ОК"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
         }
       }
     },
