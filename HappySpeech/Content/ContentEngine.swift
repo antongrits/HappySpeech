@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import OSLog
 
 // MARK: - ContentEngine
@@ -66,13 +67,39 @@ public final class ContentEngine {
         }
     }
 
-    /// Estimates total content count via the matrix formula.
-    public var estimatedContentCount: Int {
-        let sounds = 22  // С З Ц Ш Ж Ч Щ Р Рь Л Ль К Г Х + variants
-        let stages = CorrectionStage.allCases.count
-        let templates = TemplateType.allCases.count
-        let wordsPerPack = 40
-        return sounds * stages * min(templates, 6) * wordsPerPack
+    // MARK: - Variation Generation (gap #2)
+
+    @ObservationIgnored
+    private var _variationGenerator: ContentVariationGenerator?
+
+    /// Рантайм-генератор вариаций контента уроков. Собирает активности по матрице
+    /// `звук × этап × шаблон [× тема]` из существующих паков, со строгой
+    /// анти-пустышкой и методическими гейтами. См. ``ContentVariationGenerator``.
+    /// Один shared-инстанс на движок (ленивая инициализация).
+    public var variationGenerator: ContentVariationGenerator {
+        if let existing = _variationGenerator { return existing }
+        let new = ContentVariationGenerator(contentService: contentService)
+        _variationGenerator = new
+        return new
+    }
+
+    /// Полный каталог реально-наполняемых сгенерированных активностей (≈766 по
+    /// матрице). Заменяет устаревший `estimatedContentCount`, который считал
+    /// слова-копии. Ленивая, детерминированная генерация — без пустышек.
+    public func generatedCatalog() async -> [GeneratedActivity] {
+        await variationGenerator.fullCatalog()
+    }
+
+    /// Сгенерированные активности конкретного звука.
+    public func generatedActivities(for sound: String) async -> [GeneratedActivity] {
+        await variationGenerator.generateActivities(for: sound)
+    }
+
+    /// Честное число валидных активностей, реально выдаваемых генератором.
+    /// Замена `estimatedContentCount`: считает активности (по правилам матрицы),
+    /// а не слова-копии.
+    public func generatedActivityCount() async -> Int {
+        await variationGenerator.totalActivityCount()
     }
 
     // MARK: - Private Helpers

@@ -5,10 +5,14 @@ import XCTest
 
 final class ContentEngineTests: XCTestCase {
 
-    func testEstimatedContentCountIsAbove6000() {
-        let engine = ContentEngine(contentService: MockContentService())
-        XCTAssertGreaterThan(engine.estimatedContentCount, 6000,
-                             "ContentEngine должен обеспечивать более 6000 единиц контента")
+    func testGeneratedCatalogReachesMatrixVolume() async {
+        // Честный счётчик активностей из реального контента (замена устаревшего
+        // estimatedContentCount, который считал слова-копии). Ожидаемо ≈766 по
+        // матрице content-generator-matrix; допускаем диапазон калибровки minPool.
+        let engine = ContentEngine(contentService: LiveContentService())
+        let count = await engine.generatedActivityCount()
+        XCTAssertGreaterThan(count, 600,
+                             "Генератор вариаций должен выдавать сотни валидных активностей (≈766 по матрице), получено \(count)")
     }
 
     func testAvailableLessonsAreNonEmpty() {

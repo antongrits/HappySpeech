@@ -194,6 +194,15 @@ public final class MockContentService: ContentService, @unchecked Sendable {
 
     public func allPacks() async throws -> [ContentPackMeta] { [] }
     public func bundledPacks() -> [ContentPackMeta] { [] }
+
+    public func loadStagedPack(soundCode: String) async throws -> StagedContentPack {
+        StagedContentPack(
+            id: "sound_\(SoundRomanizer.latinCode(for: soundCode))_v1",
+            soundTarget: soundCode,
+            group: "соноры",
+            itemsByStage: [.wordInit: ContentItem.previewItems]
+        )
+    }
 }
 
 // MARK: MockAdaptivePlannerService

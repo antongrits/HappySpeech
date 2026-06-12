@@ -24,15 +24,20 @@ final class SoundExplorerMapInteractor {
 
     private let childRepository: (any ChildRepository)?
     private let sessionRepository: (any SessionRepository)?
+    /// Генератор вариаций контента — источник числа реально-наполняемых
+    /// активностей на звук (делает сгенерированный контент достижимым из каталога).
+    private let variationGenerator: ContentVariationGenerator?
 
     init(
         childId: String,
         childRepository: (any ChildRepository)? = nil,
-        sessionRepository: (any SessionRepository)? = nil
+        sessionRepository: (any SessionRepository)? = nil,
+        variationGenerator: ContentVariationGenerator? = nil
     ) {
         self.childId = childId
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
+        self.variationGenerator = variationGenerator
     }
 
     var visible: [SoundExplorerMapModels.SoundCell] {
@@ -54,9 +59,25 @@ final class SoundExplorerMapInteractor {
             guard let self else { return }
             let progress = await self.loadProgress()
             let practiced = await self.loadPracticedSounds()
-            self.sounds = self.makeCells(progress: progress, practicedSounds: practiced)
-            Self.logger.info("sound map refreshed (progress=\(progress.count, privacy: .public), practiced=\(practiced.count, privacy: .public))")
+            let counts = await self.loadActivityCounts()
+            self.sounds = self.makeCells(progress: progress, practicedSounds: practiced, activityCounts: counts)
+            let variations = counts.values.reduce(0, +)
+            Self.logger.info(
+                "sound map refreshed (progress=\(progress.count, privacy: .public), variations=\(variations, privacy: .public))"
+            )
         }
+    }
+
+    /// Число реально-наполняемых вариаций активностей на звук из генератора.
+    /// Без генератора — пусто (preview/тесты). Ключи — кириллические звуки.
+    private func loadActivityCounts() async -> [String: Int] {
+        guard let variationGenerator else { return [:] }
+        var counts: [String: Int] = [:]
+        for sound in ContentVariationGenerator.soundRoster {
+            let activities = await variationGenerator.generateActivities(for: sound)
+            counts[sound] = activities.count
+        }
+        return counts
     }
 
     // MARK: - Data Loading
@@ -91,7 +112,8 @@ final class SoundExplorerMapInteractor {
     /// иначе если звук был в сессиях — «учу»; иначе дефолт группы (untried/known).
     func makeCells(
         progress: [String: Double],
-        practicedSounds: Set<String>
+        practicedSounds: Set<String>,
+        activityCounts: [String: Int] = [:]
     ) -> [SoundExplorerMapModels.SoundCell] {
         SoundExplorerMapModels.inventory.flatMap { group, sounds, defaultMastery in
             sounds.map { sound in
@@ -101,7 +123,12 @@ final class SoundExplorerMapInteractor {
                     progress: progress,
                     practicedSounds: practicedSounds
                 )
-                return SoundExplorerMapModels.SoundCell(id: sound, group: group, mastery: mastery)
+                return SoundExplorerMapModels.SoundCell(
+                    id: sound,
+                    group: group,
+                    mastery: mastery,
+                    activityCount: activityCounts[sound] ?? 0
+                )
             }
         }
     }

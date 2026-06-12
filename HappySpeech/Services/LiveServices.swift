@@ -298,6 +298,26 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
         }
     }
 
+    public func loadStagedPack(soundCode: String) async throws -> StagedContentPack {
+        // Резолвим к каноническому файлу `sound_<latin>_pack.json`.
+        let latin = SoundRomanizer.latinCode(for: soundCode)
+        let fileName = "sound_\(latin)_pack"
+        guard let url = Self.resolveResourceURL(fileName: fileName, ext: "json") else {
+            HSLogger.content.error("Staged pack resource missing: \(fileName).json")
+            throw AppError.contentPackNotFound(fileName)
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let raw = try decoder.decode(RawContentPack.self, from: data)
+            return raw.toStagedPack()
+        } catch let error as AppError {
+            throw error
+        } catch {
+            HSLogger.content.error("Staged pack decode failed for \(fileName): \(error)")
+            throw AppError.contentPackNotFound(fileName)
+        }
+    }
+
     public func allPacks() async throws -> [ContentPackMeta] {
         bundledPacks()
     }
@@ -483,6 +503,32 @@ private struct RawContentPack: Decodable {
         let stage = CorrectionStage(rawValue: String(parts[1])) ?? .isolated
         let template = TemplateType(rawValue: String(parts[2])) ?? .listenAndChoose
         return (stage, template)
+    }
+
+    /// Разворачивает пак во ВСЕ этапы (для ``ContentVariationGenerator``).
+    /// Порядок items внутри этапа — как в JSON (детерминированный).
+    func toStagedPack() -> StagedContentPack {
+        var byStage: [CorrectionStage: [ContentItem]] = [:]
+        for stageEnum in CorrectionStage.allCases {
+            guard let rawStage = stages[stageEnum.rawValue] else { continue }
+            byStage[stageEnum] = rawStage.items.map { raw in
+                ContentItem(
+                    id: raw.id,
+                    word: raw.word,
+                    imageAsset: raw.imageAsset,
+                    audioAsset: raw.audioAsset,
+                    hint: raw.hint,
+                    stage: stageEnum,
+                    difficulty: raw.difficulty
+                )
+            }
+        }
+        return StagedContentPack(
+            id: id,
+            soundTarget: soundTarget,
+            group: group,
+            itemsByStage: byStage
+        )
     }
 }
 

@@ -123,6 +123,26 @@ public protocol ContentService: Sendable {
     func loadPack(id: String) async throws -> ContentPack
     func allPacks() async throws -> [ContentPackMeta]
     func bundledPacks() -> [ContentPackMeta]
+
+    /// Загружает ВСЕ этапы канонического звукового пака (а не один этап, как
+    /// `loadPack`). Нужен генератору вариаций контента (`ContentVariationGenerator`),
+    /// которому требуются пулы каждого этапа `(prep…diff)` целиком, чтобы строить
+    /// активности по матрице `звук × этап × шаблон [× тема]`.
+    ///
+    /// - Parameter soundCode: латинский код пака (`SoundRomanizer.latinCode`)
+    ///   ИЛИ кириллический звук («С», «Ш», «Рь» …).
+    /// - Returns: `StagedContentPack` с items, сгруппированными по `CorrectionStage`.
+    func loadStagedPack(soundCode: String) async throws -> StagedContentPack
+}
+
+public extension ContentService {
+    /// Дефолт — недоступно: реализации без staged-загрузки (упрощённые
+    /// тест-моки) сообщают «пак не найден». Реальные `LiveContentService` /
+    /// `MockContentService` переопределяют метод. Генератор вариаций трактует
+    /// ошибку как «нет пака» и пропускает звук (graceful).
+    func loadStagedPack(soundCode: String) async throws -> StagedContentPack {
+        throw AppError.contentPackNotFound("sound_\(soundCode)")
+    }
 }
 
 public struct ContentPack: Sendable {
@@ -131,6 +151,34 @@ public struct ContentPack: Sendable {
     public let stage: CorrectionStage
     public let templateType: TemplateType
     public let items: [ContentItem]
+}
+
+/// Полное содержимое канонического звукового пака, сгруппированное по этапам
+/// коррекции. В отличие от ``ContentPack`` (один этап, под конкретный шаблон),
+/// хранит весь материал пака — источник для ``ContentVariationGenerator``.
+public struct StagedContentPack: Sendable {
+    public let id: String
+    public let soundTarget: String
+    public let group: String
+    /// Items по этапу: `stage → [ContentItem]` (детерминированный порядок внутри).
+    public let itemsByStage: [CorrectionStage: [ContentItem]]
+
+    public init(
+        id: String,
+        soundTarget: String,
+        group: String,
+        itemsByStage: [CorrectionStage: [ContentItem]]
+    ) {
+        self.id = id
+        self.soundTarget = soundTarget
+        self.group = group
+        self.itemsByStage = itemsByStage
+    }
+
+    /// Items конкретного этапа (пустой массив, если этапа нет в паке).
+    public func items(for stage: CorrectionStage) -> [ContentItem] {
+        itemsByStage[stage] ?? []
+    }
 }
 
 public struct ContentItem: Sendable, Identifiable {

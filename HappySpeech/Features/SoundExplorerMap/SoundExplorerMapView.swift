@@ -48,7 +48,8 @@ struct SoundExplorerMapView: View {
                     let new = SoundExplorerMapInteractor(
                         childId: childId,
                         childRepository: container.childRepository,
-                        sessionRepository: container.sessionRepository
+                        sessionRepository: container.sessionRepository,
+                        variationGenerator: container.contentEngine.variationGenerator
                     )
                     interactor = new
                     new.refresh()
@@ -203,6 +204,15 @@ struct SoundExplorerMapView: View {
                         .foregroundStyle(textColor.opacity(0.70))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
+                    if cell.activityCount > 0 {
+                        // Число реально-наполняемых игр-вариаций для звука
+                        // (из ContentVariationGenerator) — делает контент видимым.
+                        Text(String(localized: "soundMap.cell.games", defaultValue: "\(cell.activityCount) игр"))
+                            .font(TypographyTokens.caption(8).weight(.semibold))
+                            .foregroundStyle(textColor.opacity(0.55))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .frame(minHeight: 72)

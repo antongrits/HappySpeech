@@ -996,6 +996,20 @@ public final class AppContainer {
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
+    // MARK: - ContentEngine (gap #2: генератор вариаций контента)
+
+    private var _contentEngine: ContentEngine?
+
+    /// Движок сборки уроков + рантайм-генератор вариаций контента
+    /// (``ContentVariationGenerator`` через `contentEngine.variationGenerator`).
+    /// Один shared-инстанс поверх `contentService`. Lazy.
+    public var contentEngine: ContentEngine {
+        if let existing = _contentEngine { return existing }
+        let new = ContentEngine(contentService: contentService)
+        _contentEngine = new
+        return new
+    }
+
     // MARK: - GuidedTour (VIP — Block I v16)
 
     private var _guidedTourCoordinator: GuidedTourCoordinator?

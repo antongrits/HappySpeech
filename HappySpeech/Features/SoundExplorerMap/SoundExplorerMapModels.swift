@@ -39,6 +39,11 @@ enum SoundExplorerMapModels {
         let id: String
         let group: String
         var mastery: Mastery
+        /// Число реально-наполняемых вариаций активностей для звука, выданных
+        /// `ContentVariationGenerator` (0 — у звука нет канонического пака:
+        /// гласные/губные/мягкие-под-материал). Делает сгенерированный контент
+        /// видимым и достижимым из детского каталога звуков.
+        var activityCount: Int = 0
 
         var matches: (MasteryFilter) -> Bool {
             { filter in
