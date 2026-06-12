@@ -2,6 +2,7 @@ import AsyncAlgorithms
 @preconcurrency import AVFoundation
 import Collections
 import Foundation
+import os
 import OSLog
 import UIKit
 
@@ -14,13 +15,30 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
     nonisolated(unsafe) private var audioFile: AVAudioFile?
     nonisolated(unsafe) private var recordingURL: URL?
     nonisolated(unsafe) private let playerNode = AVAudioPlayerNode()
-    nonisolated(unsafe) private var _amplitude: Float = 0
-    nonisolated(unsafe) private var _isRecording: Bool = false
-    nonisolated(unsafe) private var amplitudeHistory: [Float] = Array(repeating: 0, count: 60)
-    nonisolated(unsafe) private var historyIndex: Int = 0
 
-    public var amplitude: Float { _amplitude }
-    public var isRecording: Bool { _isRecording }
+    /// Формат последнего соединения playerNode → mainMixer. Нужен, чтобы
+    /// переподключать узел только при смене формата файла (P2-12) и не плодить
+    /// висячие соединения. Доступ — только с MainActor (playAudio/stopPlayback).
+    nonisolated(unsafe) private var connectedPlaybackFormat: AVAudioFormat?
+
+    // P2-5/P2-12: общее состояние амплитуды пишется из realtime-потока tap'а и
+    // читается с main. Защищаем `OSAllocatedUnfairLock` — короткий невытесняемый
+    // лок, корректный для realtime-аудио (удержание на единицы операций).
+    private struct AmplitudeState: Sendable {
+        var current: Float = 0
+        var history: [Float] = Array(repeating: 0, count: 60)
+        var index: Int = 0
+        var isRecording: Bool = false
+    }
+    private let amplitudeState = OSAllocatedUnfairLock(initialState: AmplitudeState())
+
+    public var amplitude: Float {
+        amplitudeState.withLock { $0.current }
+    }
+
+    public var isRecording: Bool {
+        amplitudeState.withLock { $0.isRecording }
+    }
 
     public var isPermissionGranted: Bool {
         AVAudioApplication.shared.recordPermission == .granted
@@ -32,6 +50,34 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
 
     public func startRecording() async throws {
         guard isPermissionGranted else { throw AppError.audioPermissionDenied }
+
+        // P1-1: гард от повторного старта без stop. Двойной installTap на bus 0
+        // бросает NSException, поэтому отказываемся, если запись уже идёт.
+        guard !amplitudeState.withLock({ $0.isRecording }) else {
+            throw AppError.audioRecordingFailed("Recording already in progress")
+        }
+
+        // P1-1 (ядро «Повтори за моделью» на ЖЕЛЕЗЕ): перед записью переводим
+        // AVAudioSession в `.playAndRecord`. До этого фикса запись стартовала без
+        // настройки сессии, а `LessonVoiceWorker` перед каждым словом Ляли ставит
+        // категорию `.playback` → на устройстве inputNode не отдаёт входной формат
+        // (sampleRate 0 / тишина), installTap/engine.start падают или пишут пустоту.
+        // Симулятор это скрывает, поэтому баг проявлялся только на устройстве.
+        // `.measurement` mode + `.defaultToSpeaker` — корректный режим для записи
+        // речи с одновременным воспроизведением эталона.
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(
+                .playAndRecord,
+                mode: .measurement,
+                options: [.defaultToSpeaker]
+            )
+            try session.setActive(true, options: [])
+        } catch {
+            HSLogger.audio.error("Failed to configure AVAudioSession for recording: \(error.localizedDescription)")
+            throw AppError.audioRecordingFailed("Audio session setup failed")
+        }
+
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("m4a")
@@ -52,6 +98,7 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
         audioFile = try AVAudioFile(forWriting: url, settings: recordFormat.settings)
 
         let converter = AVAudioConverter(from: format, to: recordFormat)
+        let amplitudeState = self.amplitudeState
 
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
             guard let self, let converter, let audioFile = self.audioFile else { return }
@@ -60,9 +107,13 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
             let frameCount = Int(buffer.frameLength)
             if let data = channelData {
                 let amp = (0..<frameCount).map { abs(data[$0]) }.max() ?? 0
-                self._amplitude = amp
-                self.amplitudeHistory[self.historyIndex % 60] = amp
-                self.historyIndex += 1
+                // P2-5/P2-12: атомарно обновляем амплитуду и кольцевой буфер под
+                // локом — устраняет гонку записи (tap) ↔ чтения (main).
+                amplitudeState.withLock { state in
+                    state.current = amp
+                    state.history[state.index % 60] = amp
+                    state.index += 1
+                }
             }
 
             guard let convertedBuffer = AVAudioPCMBuffer(
@@ -81,8 +132,16 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
             try? audioFile.write(from: convertedBuffer)
         }
 
-        try engine.start()
-        _isRecording = true
+        do {
+            try engine.start()
+        } catch {
+            // Откат при провале старта движка: снимаем tap, не оставляем «висящую» запись.
+            inputNode.removeTap(onBus: 0)
+            self.audioFile = nil
+            HSLogger.audio.error("AVAudioEngine start failed: \(error.localizedDescription)")
+            throw AppError.audioRecordingFailed("Audio engine start failed")
+        }
+        amplitudeState.withLock { $0.isRecording = true }
         HSLogger.audio.info("Recording started at 16kHz mono")
     }
 
@@ -90,8 +149,17 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
         engine.inputNode.removeTap(onBus: 0)
         engine.stop()
         audioFile = nil
-        _isRecording = false
-        _amplitude = 0
+        amplitudeState.withLock { state in
+            state.isRecording = false
+            state.current = 0
+        }
+        // P1-1: деактивируем запись-сессию, отдавая аудиофокус. Воспроизведение
+        // эталона (LessonVoiceWorker) затем само выставит `.playback`.
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])
+        } catch {
+            HSLogger.audio.warning("Failed to deactivate recording session: \(error.localizedDescription)")
+        }
         guard let url = recordingURL else {
             throw AppError.audioRecordingFailed("Recording URL missing")
         }
@@ -102,13 +170,31 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
     public func playAudio(url: URL) async throws {
         let file = try AVAudioFile(forReading: url)
 
-        // Подключаем playerNode к движку только один раз: повторный attach того же
-        // узла бросает исключение, а лишний connect с другим форматом плодит висячие
-        // соединения. Формат соединения = processingFormat файла.
+        // На устройстве запись могла деактивировать сессию (P1-1). Гарантируем
+        // воспроизводимую категорию `.playback` перед стартом движка.
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .default, options: [])
+            try session.setActive(true, options: [])
+        } catch {
+            HSLogger.audio.warning("Failed to configure AVAudioSession for playback: \(error.localizedDescription)")
+        }
+
+        // Подключаем playerNode к движку только один раз. P2-12: переподключаем
+        // соединение playerNode → mainMixer ТОЛЬКО при смене формата файла —
+        // иначе повторные `connect` с разными форматами плодят висячие соединения.
         if playerNode.engine == nil {
             engine.attach(playerNode)
         }
-        engine.connect(playerNode, to: engine.mainMixerNode, format: file.processingFormat)
+        let newFormat = file.processingFormat
+        if connectedPlaybackFormat != newFormat {
+            // Снимаем прежнее соединение по формату перед новым (избегаем накопления).
+            if connectedPlaybackFormat != nil {
+                engine.disconnectNodeOutput(playerNode)
+            }
+            engine.connect(playerNode, to: engine.mainMixerNode, format: newFormat)
+            connectedPlaybackFormat = newFormat
+        }
 
         // ВАЖНО (P0): движок и узел должны быть запущены ДО ожидания завершения.
         // `scheduleFile` completion вызывается лишь по факту воспроизведения, поэтому
@@ -131,8 +217,12 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
     }
 
     public func amplitudeBuffer() -> [Float] {
-        var result = Array(amplitudeHistory[historyIndex % 60 ..< 60])
-        result += Array(amplitudeHistory[0 ..< historyIndex % 60])
+        // P2-12: снимаем кольцевой буфер и индекс ОДНИМ атомарным чтением под
+        // локом, чтобы tap-поток не сдвинул index между двумя срезами.
+        let (history, index) = amplitudeState.withLock { ($0.history, $0.index) }
+        let pivot = index % 60
+        var result = Array(history[pivot ..< 60])
+        result += Array(history[0 ..< pivot])
         return result
     }
 }
@@ -142,12 +232,16 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
 // MARK: - LocalAnalyticsService
 
 public final class LocalAnalyticsService: AnalyticsService, @unchecked Sendable {
-    nonisolated(unsafe) private var events: [AnalyticsEvent] = []
+    // P2-5: `track` может вызываться конкурентно из разных потоков — буфер событий
+    // защищаем локом, иначе одновременные append/removeFirst дают data race (UB).
+    private let events = OSAllocatedUnfairLock(initialState: [AnalyticsEvent]())
     private let maxEvents = 1000
 
     public func track(event: AnalyticsEvent) {
-        if events.count >= maxEvents { events.removeFirst() }
-        events.append(event)
+        events.withLock { buffer in
+            if buffer.count >= maxEvents { buffer.removeFirst() }
+            buffer.append(event)
+        }
         HSLogger.analytics.debug("Event: \(event.name) \(event.parameters)")
     }
 }

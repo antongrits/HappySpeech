@@ -29,17 +29,25 @@ public struct SyncPolicy: Sendable {
     public let maxRetryCount: Int
     public let wifiOnly: Bool
 
+    /// Единая константа максимального числа попыток (P2-1). Используется во ВСЕХ
+    /// местах: hydrate-фильтр, drain-фильтр, OfflineQueueManager.refreshCount, purge.
+    public static let defaultMaxRetryCount: Int = 5
+
+    /// Возраст «мёртвых» элементов очереди в секундах — используется при периодической
+    /// очистке исчерпавших retry-лимит элементов (P2-1 purge).
+    public static let deadItemAgeDays: Int = 30
+
     public static let `default` = SyncPolicy(
         baseDelaySec: 1.0,
         maxDelaySec: 60.0,
-        maxRetryCount: 5,
+        maxRetryCount: defaultMaxRetryCount,
         wifiOnly: false
     )
 
     public static let wifiOnly = SyncPolicy(
         baseDelaySec: 1.0,
         maxDelaySec: 60.0,
-        maxRetryCount: 5,
+        maxRetryCount: defaultMaxRetryCount,
         wifiOnly: true
     )
 
@@ -53,12 +61,18 @@ public struct SyncPolicy: Sendable {
 
 // MARK: - ProgressMergePayload
 
-/// Сериализованная полезная нагрузка, которую можно «слить по максимуму» (merge-by-max).
-/// Используется для обновлений прогресса ребёнка.
+/// Сериализованная полезная нагрузка для conflict-resolution прогресса ребёнка.
+///
+/// Правила слияния (P2-2):
+///   - `percent`, `totalSessionMinutes` — merge-by-max (монотонно растут);
+///   - `streak` — last-write-wins по `updatedAt` (серия может быть законно сброшена;
+///     max-merge воскрешал сброшенный стрик).
 struct ProgressMergePayload: Codable {
     let percent: Double?
     let streak: Int?
     let totalSessionMinutes: Int?
+    /// Временная метка записи — используется для last-write-wins у `streak`.
+    let updatedAt: Double?    // Unix timestamp (TimeInterval)
 }
 
 // MARK: - LiveSyncService
@@ -143,16 +157,53 @@ public actor LiveSyncService: SyncService {
         stateContinuation.yield(state)
     }
 
-    /// Считает текущее число «висящих» элементов (`syncedAt == nil`) в Realm и
-    /// кладёт результат в `_pendingCount`. Вызывается из `init` чтобы UI не
-    /// видел 0 на холодном старте, если на диске уже лежит очередь.
+    /// Считает текущее число «висящих» элементов в Realm и кладёт результат в
+    /// `_pendingCount`. Использует тот же фильтр, что и `drainQueue` —
+    /// `syncedAt == nil && retryCount < maxRetryCount` — чтобы мёртвые (exhausted)
+    /// элементы не раздували бейдж навсегда (P2-1).
     private func hydratePendingCount() async {
+        let max = policy.maxRetryCount
         let flags = await realmActor.asyncFetchMapped(SyncQueueItem.self) { item in
-            item.syncedAt == nil
+            item.syncedAt == nil && item.retryCount < max
         }
         let count = flags.lazy.filter { $0 }.count
         _pendingCount = count
-        HSLogger.sync.info("Hydrated pendingCount=\(count) from Realm")
+        HSLogger.sync.info("Hydrated pendingCount=\(count) (maxRetry=\(max)) from Realm")
+    }
+
+    /// Периодическая очистка «мёртвых» элементов очереди: `retryCount >= maxRetryCount`
+    /// и старше `deadItemAgeDays` суток. Вызывается из `drainQueue` после успешного
+    /// прохода (P2-1 purge). Логирует каждое удалённое сообщение — тихого уничтожения нет.
+    private func purgeDeadItems() async {
+        let max = policy.maxRetryCount
+        let cutoff = Calendar.current.date(
+            byAdding: .day,
+            value: -SyncPolicy.deadItemAgeDays,
+            to: Date()
+        ) ?? Date.distantPast
+        let dead = await realmActor.asyncFetchMapped(SyncQueueItem.self) { item -> SyncQueueItemDTO? in
+            guard item.syncedAt == nil,
+                  item.retryCount >= max,
+                  item.createdAt < cutoff else { return nil }
+            return SyncQueueItemDTO(
+                id: item.id, entityType: item.entityType, entityId: item.entityId,
+                operation: item.operation, payload: item.payload, createdAt: item.createdAt,
+                syncedAt: item.syncedAt, retryCount: item.retryCount,
+                lastErrorMessage: item.lastErrorMessage
+            )
+        }.compactMap { $0 }
+        guard !dead.isEmpty else { return }
+        HSLogger.sync.warning("Purging \(dead.count) dead sync items (retry>=\(max), age>=\(SyncPolicy.deadItemAgeDays)d)")
+        for item in dead {
+            let itemId = item.id
+            await realmActor.asyncWrite { realm in
+                if let obj = realm.object(ofType: SyncQueueItem.self, forPrimaryKey: itemId) {
+                    let detail = "\(item.entityType):\(item.entityId) retries=\(item.retryCount) lastErr=\(item.lastErrorMessage ?? "nil")"
+                    HSLogger.sync.warning("Purged dead sync item \(detail, privacy: .private)")
+                    realm.delete(obj)
+                }
+            }
+        }
     }
 
     // MARK: - Enqueue
@@ -221,6 +272,8 @@ public actor LiveSyncService: SyncService {
         let succeeded = max(0, pendingBefore - _pendingCount)
         publish(.completed(itemsSynced: succeeded))
         publish(.idle)
+        // P2-1: после каждого прохода чистим мёртвые элементы очереди.
+        await purgeDeadItems()
     }
 
     /// Хук для background sync: вызывать при переходе приложения в foreground.
@@ -544,20 +597,33 @@ public actor LiveSyncService: SyncService {
     }
 
     private func mergedPayload(for item: SyncQueueItemDTO) async throws -> String {
-        // Применяем merge-by-max только для progress-entity.
+        // Применяем conflict-resolution только для progress-entity.
         guard item.entityType == "progress" || item.entityType == "child_progress" else {
             return item.payload
         }
         guard let data = item.payload.data(using: .utf8) else { return item.payload }
 
         let client = (try? JSONDecoder().decode(ProgressMergePayload.self, from: data))
-            ?? ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+            ?? ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil, updatedAt: nil)
         let remote = await fetchRemoteProgressSnapshot(entityId: item.entityId)
+
+        // P2-2: streak — last-write-wins по updatedAt; percent/totalMinutes — merge-by-max.
+        let mergedStreak: Int?
+        let clientUpdatedAt = client.updatedAt ?? 0
+        let remoteUpdatedAt = remote.updatedAt ?? 0
+        if client.streak != nil || remote.streak != nil {
+            // Берём значение той стороны, у которой `updatedAt` свежее.
+            // Если временные метки равны или одна сторона nil — предпочитаем client.
+            mergedStreak = (remoteUpdatedAt > clientUpdatedAt) ? remote.streak : client.streak
+        } else {
+            mergedStreak = nil
+        }
 
         let merged = ProgressMergePayload(
             percent: maxOptional(client.percent, remote.percent),
-            streak: maxOptional(client.streak, remote.streak),
-            totalSessionMinutes: maxOptional(client.totalSessionMinutes, remote.totalSessionMinutes)
+            streak: mergedStreak,
+            totalSessionMinutes: maxOptional(client.totalSessionMinutes, remote.totalSessionMinutes),
+            updatedAt: maxOptional(clientUpdatedAt, remoteUpdatedAt)
         )
 
         let encoded = try JSONEncoder().encode(merged)
@@ -580,7 +646,7 @@ public actor LiveSyncService: SyncService {
         let parts = entityId.components(separatedBy: "__")
         guard parts.count >= 2 else {
             HSLogger.sync.warning("fetchRemoteProgressSnapshot: cannot parse entityId=\(entityId, privacy: .private)")
-            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil, updatedAt: nil)
         }
         let childId = parts[0]
         let soundTarget = parts[1]
@@ -591,7 +657,7 @@ public actor LiveSyncService: SyncService {
         }
         guard let parentId = parentIds.compactMap({ $0 }).first, !parentId.isEmpty else {
             HSLogger.sync.warning("fetchRemoteProgressSnapshot: parentId not found for childId=\(childId, privacy: .private)")
-            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil, updatedAt: nil)
         }
 
         let docRef = firestore
@@ -602,18 +668,26 @@ public actor LiveSyncService: SyncService {
         do {
             let snapshot = try await docRef.getDocument()
             guard snapshot.exists, let data = snapshot.data() else {
-                return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+                return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil, updatedAt: nil)
             }
             let percent = data["successRate"] as? Double
             let streak = data["currentStreak"] as? Int
             let totalSessionMinutes = data["totalMinutes"] as? Int
-            return ProgressMergePayload(percent: percent, streak: streak, totalSessionMinutes: totalSessionMinutes)
+            // updatedAt хранится как Firestore Timestamp или Double (Unix).
+            let updatedAt: Double?
+            if let ts = data["updatedAt"] as? Timestamp {
+                updatedAt = ts.dateValue().timeIntervalSince1970
+            } else {
+                updatedAt = data["updatedAt"] as? Double
+            }
+            return ProgressMergePayload(percent: percent, streak: streak,
+                                        totalSessionMinutes: totalSessionMinutes, updatedAt: updatedAt)
         } catch {
             // Fail-open: сетевая ошибка не блокирует синхронизацию.
             HSLogger.sync.warning(
                 "fetchRemoteProgressSnapshot: Firestore read failed for \(entityId, privacy: .private) — \(error.localizedDescription). Using empty snapshot."
             )
-            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil, updatedAt: nil)
         }
     }
 

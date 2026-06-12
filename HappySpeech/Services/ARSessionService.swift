@@ -261,8 +261,31 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
 
     // MARK: Stream
 
-    public let blendshapeStream: AsyncStream<FaceBlendshapes>
-    private let continuation: AsyncStream<FaceBlendshapes>.Continuation
+    // P2-9: multicast. Один `AsyncStream` — single-consumer: второй подписчик
+    // «крадёт» кадры у первого (так и происходило в ARMirrorView — два
+    // `for await … blendshapeStream`). Каждый доступ к `blendshapeStream` создаёт
+    // НОВЫЙ stream и регистрирует его continuation; пришедший кадр рассылается
+    // всем активным подписчикам. Завершённые подписки удаляются по `onTermination`.
+    private var blendshapeContinuations: [UUID: AsyncStream<FaceBlendshapes>.Continuation] = [:]
+
+    public var blendshapeStream: AsyncStream<FaceBlendshapes> {
+        let id = UUID()
+        let (stream, continuation) = AsyncStream<FaceBlendshapes>.makeStream()
+        blendshapeContinuations[id] = continuation
+        continuation.onTermination = { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.blendshapeContinuations[id] = nil
+            }
+        }
+        return stream
+    }
+
+    /// Рассылает кадр всем активным подписчикам blendshape-потока.
+    private func broadcastBlendshapes(_ frame: FaceBlendshapes) {
+        for continuation in blendshapeContinuations.values {
+            continuation.yield(frame)
+        }
+    }
 
     // Block J: pixel buffer stream для Vision hand pose (nil у mock)
     public let pixelBufferStream: AsyncStream<CVPixelBuffer>?
@@ -282,9 +305,6 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     // MARK: - Init
 
     public override init() {
-        let blendStream = AsyncStream<FaceBlendshapes>.makeStream()
-        self.blendshapeStream = blendStream.stream
-        self.continuation = blendStream.continuation
         let pbStream = AsyncStream<CVPixelBuffer>.makeStream()
         self.pixelBufferStream = pbStream.stream
         self.pixelBufferContinuation = pbStream.continuation
@@ -297,7 +317,9 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     }
 
     deinit {
-        continuation.finish()
+        for continuation in blendshapeContinuations.values {
+            continuation.finish()
+        }
         pixelBufferContinuation?.finish()
         faceAnchorContinuation.finish()
     }
@@ -357,7 +379,7 @@ extension LiveARSessionService: ARSessionDelegate {
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.currentBlendshapes = snapshot
-            self.continuation.yield(snapshot)
+            self.broadcastBlendshapes(snapshot)
             // Block L: пробрасываем raw anchor для EyeFocusWorker
             self.faceAnchorContinuation.yield(faceAnchor)
         }
@@ -433,8 +455,27 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
     // Block J: симулятор не имеет камеры — pixelBufferStream отсутствует.
     public let pixelBufferStream: AsyncStream<CVPixelBuffer>? = nil
 
-    public let blendshapeStream: AsyncStream<FaceBlendshapes>
-    private let continuation: AsyncStream<FaceBlendshapes>.Continuation
+    // P2-9: multicast — каждый подписчик получает собственный stream (см.
+    // LiveARSessionService). ARMirror подписывается на blendshapeStream дважды.
+    private var blendshapeContinuations: [UUID: AsyncStream<FaceBlendshapes>.Continuation] = [:]
+
+    public var blendshapeStream: AsyncStream<FaceBlendshapes> {
+        let id = UUID()
+        let (stream, continuation) = AsyncStream<FaceBlendshapes>.makeStream()
+        blendshapeContinuations[id] = continuation
+        continuation.onTermination = { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.blendshapeContinuations[id] = nil
+            }
+        }
+        return stream
+    }
+
+    private func broadcastBlendshapes(_ frame: FaceBlendshapes) {
+        for continuation in blendshapeContinuations.values {
+            continuation.yield(frame)
+        }
+    }
 
     private var tickTask: Task<Void, Never>?
     private var phase: Float = 0
@@ -449,14 +490,13 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
     public init(isSupported: Bool = true, script: [ScriptedPose] = []) {
         self.isSupported = isSupported
         self.script = script
-        let stream = AsyncStream<FaceBlendshapes>.makeStream()
-        self.blendshapeStream = stream.stream
-        self.continuation = stream.continuation
     }
 
     deinit {
         tickTask?.cancel()
-        continuation.finish()
+        for continuation in blendshapeContinuations.values {
+            continuation.finish()
+        }
     }
 
     /// Задаёт/заменяет детерминированный сценарий поз. Применяется при следующем `startSession()`.
@@ -478,6 +518,10 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
     /// Анимированная синусоида (живое превью, недетерминированно).
     private func startSineLoop() {
         tickTask = Task { @MainActor [weak self] in
+            // Уступаем уже-запланированным подписчикам шанс зарегистрировать
+            // continuation в multicast-реестре до первого кадра (P2-9): подписка
+            // и старт плеера происходят в одном MainActor-такте.
+            await Task.yield()
             while let self, !Task.isCancelled, self.isRunning {
                 self.phase += 0.1
                 let wave = (sin(self.phase) + 1) / 2  // 0…1
@@ -490,7 +534,7 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
                     cheekPuff: max(0, sin(self.phase * 0.4)) * 0.3
                 )
                 self.currentBlendshapes = snapshot
-                self.continuation.yield(snapshot)
+                self.broadcastBlendshapes(snapshot)
                 try? await Task.sleep(nanoseconds: 66_000_000)  // ~15fps
             }
         }
@@ -501,12 +545,14 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
         let poses = script
         let interval = frameInterval
         tickTask = Task { @MainActor [weak self] in
+            // См. startSineLoop: даём подписчикам зарегистрироваться до 1-го кадра.
+            await Task.yield()
             for scripted in poses {
                 let frameCount = max(1, Int((scripted.duration / interval).rounded()))
                 for _ in 0..<frameCount {
                     guard let self, !Task.isCancelled, self.isRunning else { return }
                     self.currentBlendshapes = scripted.pose
-                    self.continuation.yield(scripted.pose)
+                    self.broadcastBlendshapes(scripted.pose)
                     try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
                 }
             }

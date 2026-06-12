@@ -525,6 +525,16 @@ final class CustomizationInteractor {
     // MARK: - Private: achievement notifications
 
     private func postSkinAchievementEventIfNeeded() {
+        // P1-5: подписчик `.achievementEventOccurred` guard'ит наличие `childId`
+        // в userInfo — без него событие молча отбрасывалось, и ачивки нарядов
+        // («исследователь нарядов») были неразблокируемы. Прокидываем реальный
+        // childId из единого источника истины. Если активного ребёнка нет —
+        // постить событие бессмысленно (некому начислять ачивку).
+        guard let childId = ActiveChildStore.shared.id, !childId.isEmpty else {
+            logger.info("CustomizationInteractor: skin achievement skipped — нет активного ребёнка")
+            return
+        }
+
         // Уведомляем систему достижений только если это новый скин
         let allSkinsRawValues = Set(LyalyaSkin.allCases.map { $0.rawValue })
         let allTried = allSkinsRawValues.isSubset(of: triedSkins)
@@ -532,14 +542,14 @@ final class CustomizationInteractor {
         NotificationCenter.default.post(
             name: .achievementEventOccurred,
             object: nil,
-            userInfo: ["event": AchievementEvent.skinChanged]
+            userInfo: ["childId": childId, "event": AchievementEvent.skinChanged]
         )
 
         if allTried {
             NotificationCenter.default.post(
                 name: .achievementEventOccurred,
                 object: nil,
-                userInfo: ["event": AchievementEvent.allSkinsExplored]
+                userInfo: ["childId": childId, "event": AchievementEvent.allSkinsExplored]
             )
             logger.info("CustomizationInteractor: allSkinsExplored achievement triggered")
         }

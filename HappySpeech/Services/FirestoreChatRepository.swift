@@ -241,15 +241,18 @@ public final class FirestoreChatRepository: ChatRepository, @unchecked Sendable 
         guard !messageIds.isEmpty else { return [] }
         let collection = messagesCollection(identity)
         var updated: [String] = []
-        let batch = firestore.batch()
+        // P2-11: batch.updateData завалит весь batch, если хотя бы один id не существует
+        // (например, pending-локальное сообщение ещё не попало в Firestore).
+        // Пишем по-одному через setData(merge: true) — несуществующий документ создаётся,
+        // существующий — патчится; каждая операция изолирована.
         for id in messageIds {
-            batch.updateData(["read": true], forDocument: collection.document(id))
-            updated.append(id)
-        }
-        do {
-            try await batch.commit()
-        } catch {
-            logger.error("markAsRead batch failed: \(error.localizedDescription)")
+            do {
+                try await collection.document(id).setData(["read": true], merge: true)
+                updated.append(id)
+            } catch {
+                logger.warning("markAsRead: failed for id=\(id, privacy: .private) — \(error.localizedDescription)")
+                // Пропускаем проблемный id, продолжаем остальные.
+            }
         }
         return updated
     }

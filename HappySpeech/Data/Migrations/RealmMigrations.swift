@@ -130,6 +130,28 @@ public extension RealmActor {
         }
     }
 
+    /// Обёртка вокруг `realmInstance.write` с логированием ошибки (P2-7).
+    ///
+    /// Заменяет `loggedWrite(realmInstance) { ... }` во вспомогательных методах расширения:
+    /// `try?` глотал сбой записи (диск полон, миграционный конфликт и т.д.) без следа.
+    /// `loggedWrite` логирует ошибку через `HSLogger.realm` — тихой потери данных нет.
+    ///
+    /// - Parameters:
+    ///   - realm: Уже открытый экземпляр Realm.
+    ///   - context: Метка для лога — имя метода-вызывателя.
+    ///   - block: Мутирующий блок.
+    func loggedWrite(
+        _ realm: Realm,
+        context: String = #function,
+        _ block: () -> Void
+    ) {
+        do {
+            try realm.write(block)
+        } catch {
+            HSLogger.realm.error("\(context, privacy: .public): write failed — \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
     /// Fetches FluencySessionObject as value-type DTOs — Sendable-safe.
     /// Бросает ошибку при сбое открытия Realm — вызывающая сторона должна
     /// отличать «нет записей» от «не удалось прочитать хранилище».
@@ -188,7 +210,7 @@ public extension RealmActor {
         obj.childId = childId
         obj.achievementKey = achievementKey
         obj.unlockedAt = Date()
-        try? realmInstance.write { realmInstance.add(obj) }
+        loggedWrite(realmInstance) { realmInstance.add(obj) }
     }
 
     // MARK: - Block T v17: VoiceSample / Leaderboard / Insight helpers
@@ -228,7 +250,7 @@ public extension RealmActor {
         obj.durationSeconds = data.durationSeconds
         obj.recordedAt = data.recordedAt
         obj.note = data.note
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
     }
 
     /// Deletes a voice sample by id (returns true if existed).
@@ -239,7 +261,7 @@ public extension RealmActor {
               let obj = realmInstance.object(ofType: VoiceSampleObject.self, forPrimaryKey: id) else {
             return false
         }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        loggedWrite(realmInstance) { realmInstance.delete(obj) }
         return true
     }
 
@@ -273,7 +295,7 @@ public extension RealmActor {
             .filter("childId == %@ AND weekKey == %@", data.childId, data.weekKey)
             .first
 
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             if let existing {
                 existing.weeklyAccuracy = data.weeklyAccuracy
                 existing.sessionsCount = data.sessionsCount
@@ -331,7 +353,7 @@ public extension RealmActor {
         obj.sessionsAnalyzedCount = data.sessionsAnalyzedCount
         obj.primarySoundFocus = data.primarySoundFocus
         obj.recommendation = data.recommendation
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
     }
 
     // MARK: - v9 v31 Волна B: ParentVoiceClip helpers
@@ -396,7 +418,7 @@ public extension RealmActor {
         obj.durationSec = data.durationSec
         obj.recordedAt = data.recordedAt
         obj.isEnabled = data.isEnabled
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
     }
 
     /// Deletes a parent voice clip by id (returns true if existed).
@@ -407,7 +429,7 @@ public extension RealmActor {
               let obj = realmInstance.object(ofType: ParentVoiceClipObject.self, forPrimaryKey: id) else {
             return false
         }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        loggedWrite(realmInstance) { realmInstance.delete(obj) }
         return true
     }
 
@@ -420,7 +442,7 @@ public extension RealmActor {
         guard let realmInstance else { return }
         let clips = realmInstance.objects(ParentVoiceClipObject.self)
             .filter("childId == %@", childId)
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             for clip in clips {
                 clip.isEnabled = isEnabled
             }
@@ -444,7 +466,7 @@ public extension RealmActor {
         record.rewardId = stickerId
         record.earnedAt = Date()
         record.sessionId = sessionId
-        try? realmInstance.write { realmInstance.add(record, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(record, update: .modified) }
     }
 
     // MARK: - v10 v31 Волна C Ф.1: Sticker inventory
@@ -485,7 +507,7 @@ public extension RealmActor {
         obj.stickerId = stickerId
         obj.purchasedAt = Date()
         obj.priceSpent = price
-        try? realmInstance.write { realmInstance.add(obj) }
+        loggedWrite(realmInstance) { realmInstance.add(obj) }
         return true
     }
 
@@ -535,7 +557,7 @@ public extension RealmActor {
     internal func persistCustomWordList(_ data: CustomWordListData) async {
         let realmInstance = try? await Realm(actor: self)
         guard let realmInstance else { return }
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             let obj = realmInstance.object(
                 ofType: CustomWordListObject.self,
                 forPrimaryKey: data.id
@@ -562,7 +584,7 @@ public extension RealmActor {
               let obj = realmInstance.object(ofType: CustomWordListObject.self, forPrimaryKey: id) else {
             return false
         }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        loggedWrite(realmInstance) { realmInstance.delete(obj) }
         return true
     }
 
@@ -619,7 +641,7 @@ public extension RealmActor {
     internal func upsertLexicalReview(_ data: LexicalItemReviewData) async {
         let realmInstance = try? await Realm(actor: self)
         guard let realmInstance else { return }
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             let existing = realmInstance.objects(LexicalItemReviewObject.self)
                 .filter("childId == %@ AND wordId == %@", data.childId, data.wordId)
                 .first
@@ -673,7 +695,7 @@ public extension RealmActor {
         obj.answers.append(objectsIn: data.answers)
         obj.recommendedFocus.append(objectsIn: data.recommendedFocus)
         obj.validUntil = data.validUntil
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
     }
 
     // MARK: - v12 Wave E Ф.3: ChildOralStory helpers
@@ -716,7 +738,7 @@ public extension RealmActor {
         obj.lexicalDiversity = data.lexicalDiversity
         obj.totalWords = data.totalWords
         obj.uniqueWords = data.uniqueWords
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
         return true
     }
 
@@ -764,7 +786,7 @@ public extension RealmActor {
         obj.note = data.note
         obj.shareToken = data.shareToken
         obj.shareTokenExpiresAt = data.shareTokenExpiresAt
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
         return true
     }
 
@@ -782,7 +804,7 @@ public extension RealmActor {
                 forPrimaryKey: id
               )
         else { return false }
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             obj.shareToken = token
             obj.shareTokenExpiresAt = expiresAt
         }
@@ -800,7 +822,7 @@ public extension RealmActor {
                 forPrimaryKey: id
               )
         else { return false }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        loggedWrite(realmInstance) { realmInstance.delete(obj) }
         return true
     }
 
@@ -855,7 +877,7 @@ public extension RealmActor {
         obj.title = title
         obj.durationSeconds = durationSeconds
         obj.transcript = transcript
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
         return true
     }
 
@@ -869,7 +891,7 @@ public extension RealmActor {
                 forPrimaryKey: id
               )
         else { return false }
-        try? realmInstance.write { realmInstance.delete(obj) }
+        loggedWrite(realmInstance) { realmInstance.delete(obj) }
         return true
     }
 
@@ -925,7 +947,7 @@ public extension RealmActor {
         obj.type = defaultType
         obj.goal = defaultGoal
         obj.weekStart = weekStart
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
         return FamilyChallengeData(
             parentId: parentId,
             type: defaultType,
@@ -943,7 +965,7 @@ public extension RealmActor {
         guard let realmInstance,
               let obj = realmInstance.object(ofType: FamilyChallengeObject.self, forPrimaryKey: parentId)
         else { return 0 }
-        try? realmInstance.write {
+        loggedWrite(realmInstance) {
             if !obj.claimedWeekStarts.contains(weekStart) {
                 obj.claimedWeekStarts.append(weekStart)
             }
@@ -992,7 +1014,7 @@ public extension RealmActor {
         obj.date = data.date
         obj.isRead = data.isRead
         obj.audioFileName = data.audioFileName ?? ""
-        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        loggedWrite(realmInstance) { realmInstance.add(obj, update: .modified) }
     }
 
     /// Отмечает письмо прочитанным. Возвращает обновлённое письмо (nil, если нет).
@@ -1001,7 +1023,7 @@ public extension RealmActor {
         guard let realmInstance,
               let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId)
         else { return nil }
-        try? realmInstance.write { obj.isRead = true }
+        loggedWrite(realmInstance) { obj.isRead = true }
         return LyalyaLetterData(
             id: obj.id,
             childId: obj.childId,
@@ -1030,7 +1052,7 @@ public extension RealmActor {
               let obj = realmInstance.object(ofType: LyalyaLetterObject.self, forPrimaryKey: letterId),
               !obj.isDeleted
         else { return false }
-        try? realmInstance.write { obj.isDeleted = true }
+        loggedWrite(realmInstance) { obj.isDeleted = true }
         return true
     }
 }

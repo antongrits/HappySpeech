@@ -325,6 +325,10 @@ public protocol SyncService: Sendable {
     func drainQueue() async throws
     func enqueue(operation: SyncOperation) async throws
 
+    /// Drains the offline queue when the app returns to foreground. Checks connectivity
+    /// internally; safe to call unconditionally on `scenePhase == .active`.
+    func syncOnAppForeground() async
+
     /// Pushes all Realm-stored progress artefacts for a given child/user to the remote store
     /// as a single batched write. Applies merge-by-max conflict resolution on numeric fields.
     /// Intended for full-snapshot resync (first login, manual “sync now”, logout cleanup).
@@ -345,6 +349,9 @@ public extension SyncService {
         // Mocks/previews: no-op by default. LiveSyncService overrides with a real Firestore batch.
         _ = userId
     }
+
+    /// Mocks/previews: no-op by default. LiveSyncService overrides with the real foreground drain.
+    func syncOnAppForeground() async {}
 
     var syncState: AsyncStream<SyncState> {
         AsyncStream { continuation in

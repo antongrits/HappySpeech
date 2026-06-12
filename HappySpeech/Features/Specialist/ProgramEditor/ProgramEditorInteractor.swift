@@ -268,7 +268,8 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
             sensitivityLevel: existingDTO.sensitivityLevel,
             totalSessionMinutes: existingDTO.totalSessionMinutes,
             currentStreak: existingDTO.currentStreak,
-            lastSessionAt: existingDTO.lastSessionAt
+            lastSessionAt: existingDTO.lastSessionAt,
+            isArchived: existingDTO.isArchived
         )
         try await repo.save(updatedDTO)
     }

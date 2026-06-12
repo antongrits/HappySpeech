@@ -25,6 +25,14 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     /// коротит ASR на уверенной тишине (см. ``SpeechPreflightGating``). nil → как раньше.
     nonisolated(unsafe) private var preflightGate: (any SpeechPreflightGating)?
 
+    /// P2-10: in-flight задача загрузки. `loadModel` может вызываться конкурентно
+    /// (`EnsembleASRService.warmUp` Tier B + `MLModelWarmupService` Tier A) — без
+    /// дедупликации это создаёт два WhisperKit-инстанса и всплеск памяти. Лок
+    /// защищает доступ к задаче из разных потоков; повторные вызовы во время
+    /// загрузки ждут уже идущую задачу вместо старта новой.
+    nonisolated(unsafe) private var loadTask: Task<Void, Error>?
+    private let loadLock = NSLock()
+
     public var isReady: Bool { _isReady }
     public var activeTier: ASRTier { _activeTier }
 
@@ -83,7 +91,48 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
 
     /// Загрузить модель для указанного tier.
     /// При ошибке автоматически откатывается: parentQuality → kidOnDevice.
+    ///
+    /// P2-10: дедупликация конкурентных вызовов. Если загрузка уже идёт — ждём
+    /// её результат, не запуская второй WhisperKit. Если модель уже готова —
+    /// мгновенный возврат.
     public func loadModel(tier: ASRTier = .parentQuality) async throws {
+        // P2-10: решение принимаем в ОДНОМ синхронном критическом участке через
+        // `withLock` (Swift 6 запрещает `NSLock.lock()/unlock()` в async-контексте).
+        // Все `await` — строго ВНЕ лока.
+        enum LoadAction {
+            case ready
+            case wait(Task<Void, Error>)
+            case start(Task<Void, Error>)
+        }
+
+        let action: LoadAction = loadLock.withLock {
+            if _isReady, loadTask == nil { return .ready }
+            if let inFlight = loadTask { return .wait(inFlight) }
+            let task = Task<Void, Error> { [weak self] in
+                guard let self else { return }
+                try await self.performLoad(tier: tier)
+            }
+            loadTask = task
+            return .start(task)
+        }
+
+        switch action {
+        case .ready:
+            return
+        case .wait(let inFlight):
+            try await inFlight.value
+        case .start(let task):
+            defer {
+                loadLock.withLock { if loadTask == task { loadTask = nil } }
+            }
+            try await task.value
+        }
+    }
+
+    /// Реальная загрузка с fallback-цепочкой. Вызывается строго внутри одной
+    /// дедуплицированной `loadTask`, поэтому рекурсивный fallback (parentQuality →
+    /// kidOnDevice) безопасен и не пытается взять `loadLock` повторно.
+    private func performLoad(tier: ASRTier) async throws {
         HSLogger.asr.info("ASRService: loading tier=\(tier.rawValue)")
 
         switch tier {
@@ -93,7 +142,7 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
                 return
             }
             HSLogger.asr.warning("ASRService: bundled whisper-small unavailable, falling back to parentQuality")
-            try await loadModel(tier: .parentQuality)
+            try await performLoad(tier: .parentQuality)
 
         case .parentQuality:
             if await tryLoadBundledBase() {
@@ -189,7 +238,10 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         if let firstSegment = results.first?.segments.first {
             confidence = min(1.0, exp(Double(firstSegment.avgLogprob)))
         } else {
-            confidence = 0.8
+            // Пустые segments = ничего не распознано. Уверенность 0.0, а не
+            // сфабрикованные 0.8: иначе ансамбль/политики скоринга получают
+            // «уверенную» оценку на фактической тишине и завышают вес Whisper.
+            confidence = 0.0
         }
         let timestamps: [ASRResult.WordTimestamp] = results.first?.segments.flatMap { seg -> [ASRResult.WordTimestamp] in
             guard let words = seg.words else { return [] }

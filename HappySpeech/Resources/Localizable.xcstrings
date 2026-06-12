@@ -18781,6 +18781,40 @@
         }
       }
     },
+    "family.challenge.claim.notReached": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The goal hasn't been reached yet — keep practising!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цель ещё не достигнута — продолжайте заниматься!"
+          }
+        }
+      }
+    },
+    "family.challenge.claim.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reward claimed!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда получена!"
+          }
+        }
+      }
+    },
     "family.challenge.contributions.title": {
       "extractionState": "manual",
       "localizations": {

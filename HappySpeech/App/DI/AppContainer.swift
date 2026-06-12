@@ -24,15 +24,27 @@ public final class AppContainer {
     /// Идентификатор активного ребёнка — устанавливается после выбора профиля.
     /// Используется ARZoneInteractor → AdaptivePlannerService.
     ///
-    /// При изменении зеркалится в `activeChildIdHolder` — Sendable-снимок,
+    /// P1-8: ЕДИНЫЙ источник истины — ``ActiveChildStore`` (персистится в
+    /// UserDefaults). `currentChildId` — вычисляемый прокси над ним, поэтому
+    /// запись из FamilyHome и запись из ChildHome (`ActiveChildStore.set`)
+    /// больше не расходятся: оба пишут в одно хранилище. Раньше это были два
+    /// независимых источника, и при входе НЕ через FamilyHome `currentChildId`
+    /// оставался пустым → уроки с пустым childId (сессии-сироты), диалект `.default`.
+    ///
+    /// При записи зеркалится в `activeChildIdHolder` — Sendable-снимок,
     /// который читают не-isolated слои (например `LiveEnsembleASRService` при
-    /// выборе диалектного ruleset во время скоринга).
-    public var currentChildId: String = "" {
-        didSet { activeChildIdHolder.set(currentChildId) }
+    /// выборе диалектного ruleset во время скоринга). Пустую строку не
+    /// сохраняем как мусор — ``ActiveChildStore`` трактует "" как «очистить».
+    public var currentChildId: String {
+        get { ActiveChildStore.shared.id ?? "" }
+        set {
+            ActiveChildStore.shared.set(newValue)
+            activeChildIdHolder.set(newValue)
+        }
     }
 
     /// Потокобезопасный снимок активного childId для не-MainActor слоёв.
-    /// Заполняется из `currentChildId.didSet`. Sendable.
+    /// Заполняется из `currentChildId` setter. Sendable.
     private let activeChildIdHolder = ActiveChildIdHolder()
 
     // M6.16: ScreeningOutcome repository — lazy, инициализируется при первом обращении.
@@ -857,6 +869,25 @@ public final class AppContainer {
     private var _guidedTourPresenter: GuidedTourPresenter?
     private var _guidedTourRouter: GuidedTourRouter?
 
+    // P1-5: резидентный слушатель шины достижений. Раньше единственным
+    // подписчиком был AchievementsInteractor (жил только пока открыт экран),
+    // поэтому события закрытого экрана терялись. Sink живёт всё время работы
+    // приложения и персистит разблокированные ачивки в Realm независимо от UI.
+    private var _achievementEventSink: AchievementEventSink?
+
+    /// Долгоживущий слушатель шины `.achievementEventOccurred`. Lazy; реально
+    /// поднимается в `attachGuidedTourCoordinator` на старте приложения, чтобы
+    /// ачивки персистились даже когда экран ачивок закрыт.
+    var achievementEventSink: AchievementEventSink {
+        if let existing = _achievementEventSink { return existing }
+        let sink = AchievementEventSink(
+            realmActor: realmActor,
+            childRepository: childRepository
+        )
+        _achievementEventSink = sink
+        return sink
+    }
+
     /// Lazy global guided-tour coordinator. Single instance per AppContainer so the
     /// 11-step tour state survives navigation between ChildHome / ParentHome / Settings.
     /// Internal visibility — only consumed by feature views within the app target.
@@ -897,6 +928,14 @@ public final class AppContainer {
     func attachGuidedTourCoordinator(_ appCoordinator: AppCoordinator) {
         _ = guidedTourCoordinator // ensure built
         _guidedTourRouter?.coordinator = appCoordinator
+        // P1-5: поднимаем резидентный слушатель шины достижений на старте
+        // приложения, чтобы разблокировки персистились даже при закрытом экране.
+        _ = achievementEventSink
+        // P1-8: на холодном старте seed'им Sendable-снимок childId для не-isolated
+        // ML-слоёв из персистентного источника истины (`ActiveChildStore`). Иначе
+        // диалект-ruleset ансамбля оставался бы `.default` до первого входа в
+        // детскую главную (которая теперь тоже пишет через `currentChildId`).
+        activeChildIdHolder.set(ActiveChildStore.shared.id ?? "")
     }
 }
 

@@ -69,13 +69,24 @@ final class FamilyChallengeInteractor: FamilyChallengeBusinessLogic {
         logger.info("claimReward parentId=\(request.challengeId, privacy: .public)")
         // request.challengeId здесь — parentId (см. View.claimTapped).
         let weekStart = weekStart(for: Date())
-        // Гарантируем, что объект челленджа существует, затем персистим claim.
-        _ = await realmActor.fetchOrCreateFamilyChallenge(
-            parentId: request.challengeId,
-            defaultType: ChallengeType.totalMinutes.rawValue,
-            defaultGoal: Self.defaultGoalMinutes,
-            weekStart: weekStart
-        )
+
+        // P2-6: НЕ доверяем только видимости кнопки во View — проверяем реальный
+        // прогресс в интеракторе. `current` собирается из недельных минут реальных
+        // детей семьи. Если цель не достигнута — claim отклоняется (награда не
+        // персистится, конфетти не показываются).
+        let challenge = await fetchActiveFamilyChallenge(parentId: request.challengeId)
+        guard challenge.current >= challenge.goal else {
+            logger.info(
+                "claimReward rejected: progress \(challenge.current, privacy: .public)/\(challenge.goal, privacy: .public) < goal"
+            )
+            await presenter?.presentClaimedReward(
+                response: .init(challengeId: request.challengeId, confettiShown: false)
+            )
+            return
+        }
+
+        // Цель достигнута — персистим claim (идемпотентно: повторный claim той же
+        // недели не дублирует запись).
         _ = await realmActor.claimFamilyChallengeWeek(
             parentId: request.challengeId,
             weekStart: weekStart

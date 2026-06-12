@@ -258,7 +258,14 @@ struct ChildHomeView: View {
 
         self.interactor = createdInteractor
         self.router = createdRouter
-        ActiveChildStore.shared.set(childId)
+        // P1-8: пишем через единый источник истины (`container.currentChildId`
+        // → `ActiveChildStore` + Sendable-снимок для не-isolated ML-слоёв).
+        // Пустой childId НЕ сохраняем: навигационные выходы из мини-игр идут
+        // через `childHome("")`, и запись "" стёрла бы выбранного ребёнка
+        // (`ActiveChildStore` трактует "" как «очистить»).
+        if !childId.isEmpty {
+            container.currentChildId = childId
+        }
         Self.logger.debug("ChildHome bootstrapped for child=\(childId, privacy: .public)")
     }
 

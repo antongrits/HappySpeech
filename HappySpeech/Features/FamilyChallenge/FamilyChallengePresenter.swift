@@ -59,8 +59,13 @@ final class FamilyChallengePresenter: FamilyChallengePresentationLogic {
     // MARK: - Claim
 
     func presentClaimedReward(response: FamilyChallengeModels.ClaimReward.Response) async {
+        // P2-6: confettiShown == false → цель ещё не достигнута, claim отклонён
+        // интерактором. Показываем честное сообщение вместо «Награда получена!».
+        let message = response.confettiShown
+            ? String(localized: "family.challenge.claim.success")
+            : String(localized: "family.challenge.claim.notReached")
         let viewModel = FamilyChallengeModels.ClaimReward.ViewModel(
-            toastMessage: "Награда получена!",
+            toastMessage: message,
             confettiShown: response.confettiShown
         )
         await displayLogic?.displayClaimedReward(viewModel: viewModel)

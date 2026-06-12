@@ -67,9 +67,12 @@ public final class OfflineQueueManager {
 
     // MARK: - Count
 
+    /// Обновляет счётчик незавершённых операций. Использует `SyncPolicy.defaultMaxRetryCount`
+    /// как единую константу retry-лимита (P2-1) — ранее было захардкожено 3 (vs 5 в SyncService).
     public func refreshCount() async {
+        let max = SyncPolicy.defaultMaxRetryCount
         let all = await realmActor.asyncFetchMapped(SyncQueueItem.self, map: Self.mapSyncQueueItem)
-        pendingCount = all.filter { $0.syncedAt == nil && $0.retryCount < 3 }.count
+        pendingCount = all.filter { $0.syncedAt == nil && $0.retryCount < max }.count
     }
 
     @Sendable

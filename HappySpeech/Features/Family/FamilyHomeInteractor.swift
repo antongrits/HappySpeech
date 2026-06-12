@@ -315,7 +315,8 @@ final class FamilyHomeInteractor {
 // MARK: - ChildProfileDTO private extension
 
 private extension ChildProfileDTO {
-    var isArchived: Bool { false }
+    // P2-3: убрана захардкоженная константа false — теперь читается из DTO-поля
+    // (ChildProfileDTO.isArchived добавлен в fix P2-3 в ChildRepository.swift).
 
     var overallProgress: Double {
         guard !progressSummary.isEmpty else { return 0 }

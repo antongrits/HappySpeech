@@ -768,6 +768,7 @@
 		57E2CE97EC672B8210B83B9F /* HSSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4AD77FF12CA94F5A0A0BB9 /* HSSpeechBubble.swift */; };
 		580690229FC06F9EAEFDCBD0 /* LyalyaAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C716B42967E212018F796D8F /* LyalyaAnimation.swift */; };
 		581B5F8C35C1F29B23783FE2 /* RealMFCCExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F144350EDAF7846E08A1C46 /* RealMFCCExtractor.swift */; };
+		581BF06A13A8CE65CD5BF0DB /* AchievementEventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BBEBECE4B2E35DC49297B4 /* AchievementEventSink.swift */; };
 		585B0B7B8873AE4984C47758 /* LLMDecisionServiceJSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A345F23D7D461CB683F7 /* LLMDecisionServiceJSONParserTests.swift */; };
 		585F97B40157EB9AAC57A642 /* NeurolinguistInsightsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9205875BBA7E018A1A3AE325 /* NeurolinguistInsightsRouter.swift */; };
 		5860D51C536EEE2B3BBDCB38 /* GoalTrackerKidInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1E973F34331DD8CF38D3F2 /* GoalTrackerKidInteractorTests.swift */; };
@@ -2608,6 +2609,7 @@
 		386B6D439703C33BF5578B05 /* VoiceJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceJournalView.swift; sourceTree = "<group>"; };
 		38734DAA0D9063D720AA88B1 /* TargetPosesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetPosesRepository.swift; sourceTree = "<group>"; };
 		388FD8708F99A9C7B7F26065 /* SpectrogramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramTests.swift; sourceTree = "<group>"; };
+		38BBEBECE4B2E35DC49297B4 /* AchievementEventSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementEventSink.swift; sourceTree = "<group>"; };
 		38C29C8BACA7A897E17F75F2 /* LocalLLMServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLLMServiceTests.swift; sourceTree = "<group>"; };
 		391258066C6D93156622EA87 /* pack_bedtime_stories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_bedtime_stories.json; sourceTree = "<group>"; };
 		3915545C5C891A8018EDDE44 /* RussianPhonemeClassifierWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianPhonemeClassifierWrapper.swift; sourceTree = "<group>"; };
@@ -8678,6 +8680,7 @@
 			children = (
 				7422760EC8921D24F7ADF2BC /* Workers */,
 				7252E20BA5DED6FFCC1BE724 /* AchievementCardView.swift */,
+				38BBEBECE4B2E35DC49297B4 /* AchievementEventSink.swift */,
 				E679EB4B30BACABC1E524EA9 /* AchievementsDisplayLogic.swift */,
 				331056FF7C2B312ECC198469 /* AchievementsInteractor.swift */,
 				81626E39798A0A1B2CAC10D4 /* AchievementsModels.swift */,
@@ -10771,6 +10774,7 @@
 				A0297920268B4EA62A30EEBC /* AchievementCalendarModels.swift in Sources */,
 				75A7B9BFE9F8F3E67833F15A /* AchievementCalendarView.swift in Sources */,
 				E3C64A9FAA6ECBAD8AB61BE6 /* AchievementCardView.swift in Sources */,
+				581BF06A13A8CE65CD5BF0DB /* AchievementEventSink.swift in Sources */,
 				132473177DEE73D0E401029F /* AchievementUnlockerWorker.swift in Sources */,
 				0C4DC7F71AB871CD0F7C4B16 /* AchievementWallInteractor.swift in Sources */,
 				25D45C49D3C2783643D319AA /* AchievementWallModels.swift in Sources */,

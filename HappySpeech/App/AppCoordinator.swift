@@ -428,6 +428,28 @@ final class AppCoordinator {
         }
     }
 
+    /// P2-4: реальный дренаж offline-очереди по кнопке «Повторить» на баннере.
+    /// Раньше `onRetry` был пустышкой `{ Task { } }` — нажатие ничего не делало,
+    /// сессии, записанные офлайн, не уезжали в облако по запросу пользователя.
+    /// Теперь дёргаем `syncService.drainQueue()`, обновляем счётчик pending и
+    /// прячем баннер, если очередь опустела. Ошибку дренажа логируем и оставляем
+    /// баннер — пользователь сможет повторить позже.
+    func retryOfflineSync(using syncService: any SyncService) {
+        Task { @MainActor [weak self] in
+            do {
+                try await syncService.drainQueue()
+            } catch {
+                HSLogger.sync.error("retryOfflineSync: drainQueue failed: \(error.localizedDescription, privacy: .public)")
+            }
+            let remaining = await syncService.pendingCount()
+            guard let self else { return }
+            self.offlinePendingCount = remaining
+            if remaining == 0 {
+                self.hideOfflineBanner()
+            }
+        }
+    }
+
     // MARK: - v31 Wave F F-05 — Daily time cap gate
 
     /// Helper для child-экранов: проверяет, превышен ли дневной лимит,
@@ -502,7 +524,7 @@ struct AppCoordinatorView: View {
                 if coordinator.isShowingOfflineBanner {
                     HSOfflineBanner(
                         pendingCount: coordinator.offlinePendingCount,
-                        onRetry: { Task { /* trigger sync */ } }
+                        onRetry: { coordinator.retryOfflineSync(using: container.syncService) }
                     )
                     .transition(.move(edge: .top).combined(with: .opacity))
                     .zIndex(100)

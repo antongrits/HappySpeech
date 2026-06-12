@@ -57,6 +57,9 @@ struct HappySpeechApp: App {
     @State private var coordinator: AppCoordinator = AppCoordinator()
     @State private var spotlightCoordinator: SpotlightIndexCoordinator?
 
+    // P1-3: отслеживаем scenePhase для foreground-дренажа offline-очереди.
+    @Environment(\.scenePhase) private var scenePhase
+
     // MARK: - v23 Test harness — Dark theme override
 
     /// Plan v23 Block 1.3 — UI-test harness override темы.
@@ -184,6 +187,15 @@ struct HappySpeechApp: App {
                 .onContinueUserActivity(CSSearchableItemActionType) { activity in
                     handleSpotlightActivity(activity)
                 }
+                // P1-3: при переходе приложения в foreground дренируем offline-очередь.
+                // `syncOnAppForeground` сам проверяет наличие сети перед попыткой.
+                .onChange(of: scenePhase, initial: false) { _, newPhase in
+                    guard newPhase == .active else { return }
+                    let syncService = container.syncService
+                    Task {
+                        await syncService.syncOnAppForeground()
+                    }
+                }
         }
     }
 
@@ -258,6 +270,27 @@ struct HappySpeechApp: App {
             // accumulator. UserDefaults + per-day key — без сети, без Family
             // Controls entitlement.
             container.dailyUsageTracker.startObservingLifecycle()
+
+            // P1-3: материализуем OfflineQueueManager и подписываем его на
+            // UIApplication.didBecomeActiveNotification, чтобы дренаж происходил
+            // каждый раз при возврате в foreground. scenePhase-хук (body) дублирует
+            // это для SwiftUI-сцен; оба механизма идемпотентны (guard isDraining).
+            let queueManager = container.offlineQueueManager
+            let syncSvc = container.syncService
+            Task.detached(priority: .utility) { [queueManager, syncSvc] in
+                // Подписываемся на UIApplication.didBecomeActiveNotification.
+                // NotificationCenter — Sendable, использование Task.detached корректно.
+                let notifications = NotificationCenter.default.notifications(
+                    named: UIApplication.didBecomeActiveNotification
+                )
+                for await _ in notifications {
+                    // drainIfOnline проверяет сеть и isDraining внутри.
+                    await queueManager.drainIfOnline()
+                    // Дополнительно дёргаем полный syncOnAppForeground для
+                    // сессий, лежащих вне OfflineQueueManager (persist-and-sync путь).
+                    await syncSvc.syncOnAppForeground()
+                }
+            }
         } catch {
             HSLogger.app.critical("ColdStart error — Realm open failed: \(error)")
         }

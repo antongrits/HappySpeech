@@ -52,6 +52,16 @@ final class GuidedTourRouter: GuidedTourRoutingLogic {
             logger.debug("routeToHome: coordinator nil — noop")
             return
         }
-        coordinator.navigate(to: .childHome(childId: "primary-child"))
+        // P0-1: раньше тут был фантомный литерал `"primary-child"`, которого нет
+        // в live-Realm → пустая детская главная + сессии-сироты. Резолвим РЕАЛЬНЫЙ
+        // id активного ребёнка из единого источника истины (`ActiveChildStore`).
+        // Если активный ребёнок ещё не выбран — честно ведём в выбор роли, а не в
+        // несуществующий профиль.
+        if let activeChildId = ActiveChildStore.shared.id, !activeChildId.isEmpty {
+            coordinator.navigate(to: .childHome(childId: activeChildId))
+        } else {
+            logger.debug("routeToHome: no active child — routing to roleSelect")
+            coordinator.navigate(to: .roleSelect)
+        }
     }
 }

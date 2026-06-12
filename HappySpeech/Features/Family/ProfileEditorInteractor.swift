@@ -163,7 +163,8 @@ final class ProfileEditorInteractor {
                 sensitivityLevel:  existing.sensitivityLevel,
                 totalSessionMinutes: existing.totalSessionMinutes,
                 currentStreak:     existing.currentStreak,
-                lastSessionAt:     existing.lastSessionAt
+                lastSessionAt:     existing.lastSessionAt,
+                isArchived:        existing.isArchived
             )
 
             try await childRepository.save(updated)
@@ -238,7 +239,8 @@ final class ProfileEditorInteractor {
             sensitivityLevel:    existing.sensitivityLevel,
             totalSessionMinutes: existing.totalSessionMinutes,
             currentStreak:       existing.currentStreak,
-            lastSessionAt:       existing.lastSessionAt
+            lastSessionAt:       existing.lastSessionAt,
+            isArchived:          existing.isArchived
         )
 
         do {
@@ -285,7 +287,8 @@ final class ProfileEditorInteractor {
             sensitivityLevel:    existing.sensitivityLevel,
             totalSessionMinutes: existing.totalSessionMinutes,
             currentStreak:       existing.currentStreak,
-            lastSessionAt:       existing.lastSessionAt
+            lastSessionAt:       existing.lastSessionAt,
+            isArchived:          existing.isArchived
         )
 
         do {

@@ -39,6 +39,10 @@ public struct ChildProfileDTO: Sendable, Identifiable {
     public let totalSessionMinutes: Int
     public let currentStreak: Int
     public let lastSessionAt: Date?
+    /// P2-3: добавлено в DTO, чтобы `save()` не сбрасывал флаг архивации в false
+    /// при обновлении других полей. FamilyHome фильтрует `!isArchived` —
+    /// без этого поля фильтр был фикцией.
+    public let isArchived: Bool
 
     public init(
         id: String = UUID().uuidString,
@@ -53,7 +57,8 @@ public struct ChildProfileDTO: Sendable, Identifiable {
         sensitivityLevel: Int = 1,
         totalSessionMinutes: Int = 0,
         currentStreak: Int = 0,
-        lastSessionAt: Date? = nil
+        lastSessionAt: Date? = nil,
+        isArchived: Bool = false
     ) {
         self.id = id
         self.name = name
@@ -68,6 +73,7 @@ public struct ChildProfileDTO: Sendable, Identifiable {
         self.totalSessionMinutes = totalSessionMinutes
         self.currentStreak = currentStreak
         self.lastSessionAt = lastSessionAt
+        self.isArchived = isArchived
     }
 }
 
@@ -107,6 +113,8 @@ public final class LiveChildRepository: ChildRepository, @unchecked Sendable {
             obj.totalSessionMinutes = profile.totalSessionMinutes
             obj.currentStreak = profile.currentStreak
             obj.lastSessionAt = profile.lastSessionAt
+            // P2-3: round-trip isArchived — без этого save() сбрасывал флаг в false.
+            obj.isArchived = profile.isArchived
             for (k, v) in profile.progressSummary {
                 obj.progressSummary[k] = v
             }
@@ -161,7 +169,9 @@ private extension ChildProfile {
             sensitivityLevel: sensitivityLevel,
             totalSessionMinutes: totalSessionMinutes,
             currentStreak: currentStreak,
-            lastSessionAt: lastSessionAt
+            lastSessionAt: lastSessionAt,
+            // P2-3: persisted round-trip — ранее отсутствовал, фильтр !isArchived был фикцией.
+            isArchived: isArchived
         )
     }
 }
@@ -205,7 +215,8 @@ public final class MockChildRepository: ChildRepository, @unchecked Sendable {
             id: c.id, name: c.name, age: c.age, targetSounds: c.targetSounds,
             createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
             avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
-            totalSessionMinutes: c.totalSessionMinutes, currentStreak: streak, lastSessionAt: c.lastSessionAt
+            totalSessionMinutes: c.totalSessionMinutes, currentStreak: streak,
+            lastSessionAt: c.lastSessionAt, isArchived: c.isArchived
         )
     }
 
@@ -222,7 +233,7 @@ public final class MockChildRepository: ChildRepository, @unchecked Sendable {
             createdAt: c.createdAt, parentId: c.parentId, progressSummary: c.progressSummary,
             avatarStyle: c.avatarStyle, colorTheme: c.colorTheme, sensitivityLevel: c.sensitivityLevel,
             totalSessionMinutes: c.totalSessionMinutes + max(0, addedMinutes),
-            currentStreak: streak, lastSessionAt: lastSessionAt
+            currentStreak: streak, lastSessionAt: lastSessionAt, isArchived: c.isArchived
         )
     }
 }
