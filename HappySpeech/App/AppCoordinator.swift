@@ -319,6 +319,11 @@ enum AppRoute: Hashable {
     /// спектрального центра тяжести показывает позицию его звука на континууме
     /// «Ш ↔ С» (биообратная связь). Без ML-моделей и сети — COPPA-safe.
     case acousticMirror(childId: String)
+
+    /// «Скороговорка-ракета» (kid): ребёнок быстро/ровно повторяет слоговой ряд
+    /// (па-та-ка), vDSP-детекция слоговых ядер по огибающей энергии измеряет темп
+    /// диадохокинеза и ровность ритма (оромоторная разминка). Без ML и сети.
+    case syllableRace(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1298,6 +1303,12 @@ struct AppCoordinatorView: View {
         case .acousticMirror(let childId):
             AcousticMirrorView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - Скороговорка-ракета (диадохокинез)
+
+        case .syllableRace(let childId):
+            SyllableRaceView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1879,6 +1890,10 @@ extension AppCoordinatorView {
         // MARK: Акустическое зеркало (сибилянты, on-device DSP)
         case "acousticMirror", "acousticmirror", "sibilantMirror":
             return .acousticMirror(childId: previewChild)
+
+        // MARK: Скороговорка-ракета (диадохокинез, on-device DSP)
+        case "syllableRace", "syllablerace", "ddk", "pataka":
+            return .syllableRace(childId: previewChild)
 
         default:
             return .auth

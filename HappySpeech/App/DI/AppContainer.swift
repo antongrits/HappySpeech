@@ -348,6 +348,25 @@ public final class AppContainer {
         _acousticMirrorService = service
     }
 
+    // MARK: - SyllableRaceService («Скороговорка-ракета» / диадохокинез)
+
+    /// On-device анализ темпа ритмичного повтора слогов (vDSP, без ML-моделей и
+    /// сети). Kid-контур, COPPA-safe by construction. Lazy.
+    /// Live: ``LiveSyllableRaceService``. Preview/Test: ``MockSyllableRaceService``.
+    private var _syllableRaceService: (any SyllableRaceServicing)?
+    public var syllableRaceService: any SyllableRaceServicing {
+        if let existing = _syllableRaceService { return existing }
+        let new: any SyllableRaceServicing = LiveSyllableRaceService()
+        _syllableRaceService = new
+        return new
+    }
+
+    /// Подмена ``syllableRaceService`` для preview / тестов. Должна вызываться
+    /// до первого обращения к `syllableRaceService`.
+    public func overrideSyllableRaceService(_ service: any SyllableRaceServicing) {
+        _syllableRaceService = service
+    }
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
@@ -1308,6 +1327,8 @@ public extension AppContainer {
         container.overridePhonemeProfileService(MockPhonemeProfileService())
         // «Акустическое зеркало» — детерминированный mock без DSP/файлов в preview/tests.
         container.overrideAcousticMirrorService(MockAcousticMirrorService())
+        // «Скороговорка-ракета» (диадохокинез) — детерминированный mock в preview/tests.
+        container.overrideSyllableRaceService(MockSyllableRaceService())
         return container
     }
 }

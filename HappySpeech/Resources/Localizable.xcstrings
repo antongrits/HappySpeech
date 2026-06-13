@@ -2580,6 +2580,23 @@
         }
       }
     },
+    "ar.butterfly.hud.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catch with your tongue up"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лови язычком вверх"
+          }
+        }
+      }
+    },
     "ar.butterfly.itemLabel": {
       "extractionState": "manual",
       "localizations": {
@@ -2966,6 +2983,57 @@
         }
       }
     },
+    "ar.holdPose.hint.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great! Pose held"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Поза удержана"
+          }
+        }
+      }
+    },
+    "ar.holdPose.hint.hold": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the pose for 3 seconds"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держи позу 3 секунды"
+          }
+        }
+      }
+    },
+    "ar.holdPose.hud.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hold the pose steady"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удержи позу ровно"
+          }
+        }
+      }
+    },
     "ar.holdPose.result": {
       "extractionState": "manual",
       "localizations": {
@@ -3325,6 +3393,23 @@
         }
       }
     },
+    "ar.mirror.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Follow the guide"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй за подсказкой"
+          }
+        }
+      }
+    },
     "ar.mirror.symmetry": {
       "extractionState": "manual",
       "localizations": {
@@ -3332,91 +3417,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Симметрия"
-          }
-        }
-      }
-    },
-    "ar.butterfly.hud.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Catch with your tongue up"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Лови язычком вверх"
-          }
-        }
-      }
-    },
-    "ar.holdPose.hint.done" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Great! Pose held"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отлично! Поза удержана"
-          }
-        }
-      }
-    },
-    "ar.holdPose.hint.hold" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hold the pose for 3 seconds"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Держи позу 3 секунды"
-          }
-        }
-      }
-    },
-    "ar.holdPose.hud.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hold the pose steady"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удержи позу ровно"
-          }
-        }
-      }
-    },
-    "ar.mirror.subtitle" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Follow the guide"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Повторяй за подсказкой"
           }
         }
       }
@@ -28079,6 +28079,40 @@
         }
       }
     },
+    "karaoke.axis.higher": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "higher"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выше"
+          }
+        }
+      }
+    },
+    "karaoke.axis.lower": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "lower"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ниже"
+          }
+        }
+      }
+    },
     "karaoke.button.next": {
       "extractionState": "manual",
       "localizations": {
@@ -28295,6 +28329,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробуй ещё раз — слушай мелодию и подпевай"
+          }
+        }
+      }
+    },
+    "karaoke.heat.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loudness scale: from quiet coral to loud gold"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шкала громкости: от тихого коралла к звонкому золоту"
+          }
+        }
+      }
+    },
+    "karaoke.heat.loud": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "loud"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "звонко"
+          }
+        }
+      }
+    },
+    "karaoke.heat.quiet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "quiet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "тихо"
           }
         }
       }
@@ -62791,6 +62876,601 @@
         }
       }
     },
+    "syllableRace.analyzing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считаю слоги…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counting syllables…"
+          }
+        }
+      }
+    },
+    "syllableRace.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close game"
+          }
+        }
+      }
+    },
+    "syllableRace.complete.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Космический полёт!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A cosmic flight!"
+          }
+        }
+      }
+    },
+    "syllableRace.complete.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая тренировка!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good practice!"
+          }
+        }
+      }
+    },
+    "syllableRace.complete.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твой лучший темп: %@ слога в секунду."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your best tempo: %@ syllables per second."
+          }
+        }
+      }
+    },
+    "syllableRace.cta.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Again"
+          }
+        }
+      }
+    },
+    "syllableRace.cta.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "syllableRace.cta.listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю… повторяй!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening… keep going!"
+          }
+        }
+      }
+    },
+    "syllableRace.cta.openSettings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть настройки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Settings"
+          }
+        }
+      }
+    },
+    "syllableRace.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори па-та-ка быстро и ровно — ракета взлетит!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat pa-ta-ka fast and even — the rocket flies!"
+          }
+        }
+      }
+    },
+    "syllableRace.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка-ракета"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syllable Rocket"
+          }
+        }
+      }
+    },
+    "syllableRace.error.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что-то пошло не так. Попробуем ещё раз?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong. Shall we try again?"
+          }
+        }
+      }
+    },
+    "syllableRace.error.micPermission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтобы запустить ракету, разреши доступ к микрофону."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To launch the rocket, allow microphone access."
+          }
+        }
+      }
+    },
+    "syllableRace.gauge.empty.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ракета на старте"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rocket on the launch pad"
+          }
+        }
+      }
+    },
+    "syllableRace.gauge.height.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ракета взлетела на %d процентов"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rocket climbed %d percent"
+          }
+        }
+      }
+    },
+    "syllableRace.hint.allTheWay": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори ряд до самого конца."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat the row all the way through."
+          }
+        }
+      }
+    },
+    "syllableRace.hint.clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произноси слоги чётко, без лишних звуков."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say each syllable clearly, no extra sounds."
+          }
+        }
+      }
+    },
+    "syllableRace.hint.faster": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори слоги чуть быстрее."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat the syllables a little faster."
+          }
+        }
+      }
+    },
+    "syllableRace.hint.louder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скажи погромче, прямо в микрофон."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say it louder, right into the mic."
+          }
+        }
+      }
+    },
+    "syllableRace.hint.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держи одинаковый ритм, как часики."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep an even rhythm, like a clock."
+          }
+        }
+      }
+    },
+    "syllableRace.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори «%@» как можно быстрее и ровнее!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat “%@” as fast and evenly as you can!"
+          }
+        }
+      }
+    },
+    "syllableRace.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %1$d из %2$d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Round %1$d of %2$d"
+          }
+        }
+      }
+    },
+    "syllableRace.rate.unknown": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "темп не расслышала"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "couldn’t hear the tempo"
+          }
+        }
+      }
+    },
+    "syllableRace.rate.value": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ слога в секунду"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ syllables per second"
+          }
+        }
+      }
+    },
+    "syllableRace.result.fastSteady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вжух! Ракета взлетела!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whoosh! The rocket blasted off!"
+          }
+        }
+      }
+    },
+    "syllableRace.result.notDetected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я не расслышала слоги."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I couldn’t hear the syllables."
+          }
+        }
+      }
+    },
+    "syllableRace.result.slow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо! Давай чуть быстрее."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nice! Let’s go a bit faster."
+          }
+        }
+      }
+    },
+    "syllableRace.result.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здорово, ровный полёт!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great, a smooth flight!"
+          }
+        }
+      }
+    },
+    "syllableRace.result.uneven": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получилось! Попробуй ровнее."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You did it! Try to keep it even."
+          }
+        }
+      }
+    },
+    "syllableRace.rhythm.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ритм неплохой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "decent rhythm"
+          }
+        }
+      }
+    },
+    "syllableRace.rhythm.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ритм ровный"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "steady rhythm"
+          }
+        }
+      }
+    },
+    "syllableRace.rhythm.uneven": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ритм прыгает"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bumpy rhythm"
+          }
+        }
+      }
+    },
+    "syllableRace.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка-ракета"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syllable Rocket"
+          }
+        }
+      }
+    },
+    "syllableRace.sequence.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоговой ряд: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Syllable row: %@"
+          }
+        }
+      }
+    },
+    "syllableRace.stars.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %d из 3"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stars earned: %d of 3"
+          }
+        }
+      }
+    },
     "syllableSnail.assemble.check": {
       "extractionState": "manual",
       "localizations": {
@@ -75697,91 +76377,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "karaoke.heat.quiet" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "quiet"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "тихо"
-          }
-        }
-      }
-    },
-    "karaoke.heat.loud" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "loud"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "звонко"
-          }
-        }
-      }
-    },
-    "karaoke.heat.a11y" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loudness scale: from quiet coral to loud gold"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Шкала громкости: от тихого коралла к звонкому золоту"
-          }
-        }
-      }
-    },
-    "karaoke.axis.higher" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "higher"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "выше"
-          }
-        }
-      }
-    },
-    "karaoke.axis.lower" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "lower"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ниже"
           }
         }
       }
