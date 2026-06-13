@@ -87,7 +87,6 @@ struct ComprehensionDetectiveView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     init(childId: String, preferredTier: GrammarTier? = nil) {
@@ -100,23 +99,10 @@ struct ComprehensionDetectiveView: View {
         category: "ComprehensionDetective.View"
     )
 
-    private let columns = [
-        GridItem(.flexible(), spacing: SpacingTokens.sp3),
-        GridItem(.flexible(), spacing: SpacingTokens.sp3)
-    ]
-
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                if !reduceMotion {
-                    HSMeshGradientBackground(palette: .kidCool, animated: true)
-                        .ignoresSafeArea()
-                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                        .blendMode(.softLight)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -133,20 +119,7 @@ struct ComprehensionDetectiveView: View {
                         .accessibilityHidden(true)
                 }
             }
-            .navigationTitle(Text("detective.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("detective.close.a11y"))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 await setupAndStart()
             }
@@ -159,72 +132,38 @@ struct ComprehensionDetectiveView: View {
     private func gameSection(
         round: ComprehensionDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            progressHeader(round)
-
-            // Ляля-сыщик произносит инструкцию.
-            HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
-                HSSpeechBubble(
-                    holder.lastLyalyaLine ?? round.instruction,
-                    direction: .left,
-                    style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
-                )
-                .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
-                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-                replayButton
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
+        KidGameTapScaffold(
+            stepLabel: round.progressLabel,
+            progress: round.progressFraction,
+            promptText: holder.lastLyalyaLine ?? round.instruction,
+            mascotState: mascotState,
+            feedback: currentFeedback,
+            listen: KidGameListenAction(action: { Task { await replayInstruction() } }),
+            onClose: { exitGame() }
+        ) {
             tierBadge(round)
-
-            Spacer(minLength: 0)
-
             picturesGrid(round)
-                .padding(.horizontal, SpacingTokens.screenEdge)
                 .id(round.id)
                 .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-            Spacer(minLength: 0)
         }
         .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
     }
 
-    private var replayButton: some View {
-        Button {
-            Task { await replayInstruction() }
-        } label: {
-            Image(systemName: "speaker.wave.2.fill")
-                .font(.system(size: 22))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .frame(width: 56, height: 56)
-                .background(Circle().fill(ColorTokens.Brand.sky))
+    private var mascotState: LyalyaState {
+        switch holder.lastFeedback {
+        case .hit:   return .celebrating
+        case .retry: return .encouraging
+        case .almost, .none: return .explaining
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("detective.replay.a11y"))
     }
 
-    private func progressHeader(
-        _ round: ComprehensionDetectiveModels.Start.RoundViewModel
-    ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(round.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                    Capsule()
-                        .fill(ColorTokens.Brand.sky)
-                        .frame(width: max(0, geo.size.width * round.progressFraction))
-                }
-            }
-            .frame(height: 10)
-            .accessibilityHidden(true)
+    private var currentFeedback: KidGameFeedback? {
+        guard let line = holder.lastLyalyaLine, let fb = holder.lastFeedback else { return nil }
+        switch fb {
+        case .hit:   return KidGameFeedback(.correct, line)
+        case .retry: return KidGameFeedback(.hint, line)
+        case .almost: return KidGameFeedback(.incorrect, line)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp4)
     }
 
     private func tierBadge(
@@ -233,9 +172,12 @@ struct ComprehensionDetectiveView: View {
         Text(round.tierLabel)
             .font(TypographyTokens.caption(12).weight(.medium))
             .foregroundStyle(ColorTokens.Kid.inkMuted)
-            .padding(.horizontal, SpacingTokens.sp3)
-            .padding(.vertical, SpacingTokens.sp1)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
+            .padding(.horizontal, SpacingTokens.small)
+            .padding(.vertical, SpacingTokens.micro)
             .background(Capsule().fill(ColorTokens.Kid.surfaceAlt))
+            .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityLabel(Text(round.tierHint))
     }
 
@@ -244,7 +186,7 @@ struct ComprehensionDetectiveView: View {
     private func picturesGrid(
         _ round: ComprehensionDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
+        LazyVGrid(columns: KidGameTapScaffold<EmptyView>.twoColumnGrid, spacing: SpacingTokens.small) {
             ForEach(round.pictures) { picture in
                 pictureTile(picture)
             }
@@ -261,55 +203,20 @@ struct ComprehensionDetectiveView: View {
             && holder.lastFeedback != .hit
         let isRevealedHit = holder.lastFeedback == .hit
             && holder.chosenPictureId == picture.id
-
-        return Button {
-            Task { await pick(picture) }
-        } label: {
-            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-                Image(systemName: picture.symbolName)
-                    .font(.system(size: 56))
-                    .foregroundStyle(tileTint(isHit: isRevealedHit, isHinted: isHinted))
-                    .frame(maxWidth: .infinity, minHeight: 120)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .stroke(
-                        tileStroke(isHit: isRevealedHit, isHinted: isHinted, isMiss: isChosenMiss),
-                        lineWidth: tileStrokeWidth(isHit: isRevealedHit, isHinted: isHinted, isMiss: isChosenMiss)
-                    )
-            )
-            .scaleEffect(reduceMotion ? 1 : (isHinted ? 1.04 : 1))
-        }
-        .buttonStyle(.plain)
-        .disabled(holder.lastFeedback == .hit)
+        let state: KidGameCardState = {
+            if isRevealedHit { return .correct }
+            if isChosenMiss { return .wrong }
+            if isHinted { return .selected }
+            return .neutral
+        }()
+        return KidGameTapCard(
+            symbol: picture.symbolName,
+            state: state,
+            isLocked: holder.lastFeedback == .hit,
+            onTap: { Task { await pick(picture) } }
+        )
         .accessibilityLabel(Text(picture.accessibilityLabel))
         .accessibilityHint(Text("detective.tile.hint"))
-        .accessibilityAddTraits(isRevealedHit ? [.isButton, .isSelected] : .isButton)
-    }
-
-    private func tileTint(isHit: Bool, isHinted: Bool) -> Color {
-        if isHit { return ColorTokens.Brand.mint }
-        if isHinted { return ColorTokens.Brand.sky }
-        return ColorTokens.Kid.ink
-    }
-
-    private func tileStroke(isHit: Bool, isHinted: Bool, isMiss: Bool) -> Color {
-        if isHit { return ColorTokens.Brand.mint }
-        if isHinted { return ColorTokens.Brand.sky }
-        if isMiss { return ColorTokens.Brand.butter }
-        return ColorTokens.Brand.sky.opacity(0.4)
-    }
-
-    private func tileStrokeWidth(isHit: Bool, isHinted: Bool, isMiss: Bool) -> CGFloat {
-        (isHit || isHinted || isMiss) ? 3 : 1.5
-    }
-
-    private func bubbleStyle(_ feedback: FeedbackTier?) -> HSSpeechBubble.BubbleStyle {
-        switch feedback {
-        case .hit:    return .lyalya
-        case .retry:  return .hint
-        case .almost, .none: return .question
-        }
     }
 
     // MARK: - Summary
@@ -324,7 +231,7 @@ struct ComprehensionDetectiveView: View {
                 ? "magnifyingglass.circle.fill"
                 : "hand.thumbsup.circle.fill")
                 .font(.system(size: 80))
-                .foregroundStyle(ColorTokens.Brand.sky)
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .hsSymbolEffect(.bounce, value: summary.scoreText)
                 .accessibilityHidden(true)
 

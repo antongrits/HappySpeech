@@ -23390,6 +23390,23 @@
         }
       }
     },
+    "grammar.game.session.correctCount %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld из %2$lld правильно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld correct"
+          }
+        }
+      }
+    },
     "grammar.game.title.\\(modeTitle)": {
       "extractionState": "manual",
       "localizations": {
@@ -27544,6 +27561,22 @@
         }
       }
     },
+    "kidDrag.step.a11y %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        }
+      }
+    },
     "kidGame.bestStars %lld": {
       "localizations": {
         "ru": {
@@ -27556,6 +27589,125 @@
           "stringUnit": {
             "state": "translated",
             "value": "Best: %lld ★"
+          }
+        }
+      }
+    },
+    "kidGame.card.correct.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "верно"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "correct"
+          }
+        }
+      }
+    },
+    "kidGame.card.selected.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выбрано"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "selected"
+          }
+        }
+      }
+    },
+    "kidGame.card.wrong.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "не подходит"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not a match"
+          }
+        }
+      }
+    },
+    "kidGame.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти из урока"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exit lesson"
+          }
+        }
+      }
+    },
+    "kidGame.listen": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listen"
+          }
+        }
+      }
+    },
+    "kidGame.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс урока"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lesson progress"
+          }
+        }
+      }
+    },
+    "kidGame.prompt.kicker": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля спрашивает"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyalya asks"
           }
         }
       }
@@ -33091,6 +33243,40 @@
         }
       }
     },
+    "palindromeHunter.complete.score %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correct: %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "palindromeHunter.complete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done!"
+          }
+        }
+      }
+    },
     "palindromeHunter.cta.action": {
       "localizations": {
         "ru": {
@@ -33127,6 +33313,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Палиндромы"
+          }
+        }
+      }
+    },
+    "palindromeHunter.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какое слово — палиндром?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which word is a palindrome?"
           }
         }
       }
@@ -48064,6 +48267,28 @@
         }
       }
     },
+    "sentenceBuilder.section.sentence": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предложение"
+          }
+        }
+      }
+    },
+    "sentenceBuilder.section.words": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова"
+          }
+        }
+      }
+    },
     "sentenceBuilder.slot.a11y.empty": {
       "extractionState": "manual",
       "localizations": {
@@ -52743,6 +52968,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "По категориям"
+          }
+        }
+      }
+    },
+    "sorting.section.put_in_house": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положи в домик"
           }
         }
       }
@@ -60282,6 +60518,28 @@
         }
       }
     },
+    "syllable.section.syllables": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоги"
+          }
+        }
+      }
+    },
+    "syllable.section.word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово"
+          }
+        }
+      }
+    },
     "syllable.slot.return.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -60839,6 +61097,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Картинка и слово: %@"
+          }
+        }
+      }
+    },
+    "syllableSnail.section.path": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тропинка"
+          }
+        }
+      }
+    },
+    "syllableSnail.section.syllables": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоги"
           }
         }
       }
@@ -61723,6 +62003,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Привет! Я Ляля"
+          }
+        }
+      }
+    },
+    "vocabFlip.cta.flip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перевернуть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flip"
           }
         }
       }
@@ -65186,6 +65483,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "А теперь скажи эту форму сам(а)!"
+          }
+        }
+      }
+    },
+    "wordFormation.section.choose": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери форму"
           }
         }
       }

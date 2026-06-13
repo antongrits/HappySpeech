@@ -122,10 +122,12 @@ struct DragAndMatchView: View {
 
     private var playingView: some View {
         ZStack {
-            VStack(spacing: SpacingTokens.medium) {
+            VStack(spacing: SpacingTokens.small) {
                 header
+                KidSectionLabel(String(localized: "Перетащи картинки"))
                 wordsPool
                 Spacer(minLength: SpacingTokens.tiny)
+                KidSectionLabel(String(localized: "Домики звуков"))
                 bucketsRow
                 hintButton
             }
@@ -218,39 +220,36 @@ struct DragAndMatchView: View {
     }
 
     private var header: some View {
-        VStack(spacing: SpacingTokens.tiny) {
+        VStack(spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                HSProgressBar(value: progressValue, tint: ColorTokens.Brand.primary)
+                    .frame(height: 12)
+                KidStepChip(current: display.placedWords.count, total: display.words.count)
+            }
             Text(display.greeting.isEmpty
                  ? String(localized: "Разложи слова по корзинам")
                  : display.greeting)
-                .font(TypographyTokens.title(22))
+                .font(TypographyTokens.kidTitle(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-            if !display.roundLabel.isEmpty {
-                Text(display.roundLabel)
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .monospacedDigit()
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
             if let pairLabel = display.confusedPairLabel {
                 Text(pairLabel)
-                    .font(TypographyTokens.caption(12))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(1)
                     .minimumScaleFactor(0.85)
             }
-            Text(progressLabel)
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .monospacedDigit()
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
+    }
+
+    private var progressValue: Double {
+        let total = max(display.words.count, 1)
+        return Double(display.placedWords.count) / Double(total)
     }
 
     // MARK: Words pool
@@ -260,16 +259,19 @@ struct DragAndMatchView: View {
         let columns = [
             GridItem(.adaptive(minimum: 108), spacing: SpacingTokens.small)
         ]
-        return ScrollView(.vertical, showsIndicators: false) {
-            LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
-                ForEach(unplaced) { word in
-                    wordChip(word)
+        return KidTrayContainer {
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
+                    ForEach(unplaced) { word in
+                        wordChip(word)
+                    }
                 }
+                .padding(.vertical, SpacingTokens.tiny)
+                .frame(maxWidth: .infinity, alignment: .top)
             }
-            .padding(.vertical, SpacingTokens.tiny)
-            .frame(maxWidth: .infinity, alignment: .top)
+            .frame(height: 184)
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .frame(height: 200)
         .accessibilityLabel(String(localized: "Слова для сортировки"))
     }
 
@@ -457,6 +459,13 @@ struct DragAndMatchView: View {
         .overlay(
             Capsule().strokeBorder(borderColor, lineWidth: 2)
         )
+        .overlay(alignment: .topTrailing) {
+            if isCorrect {
+                KidCorrectTick()
+                    .scaleEffect(0.7)
+                    .offset(x: 6, y: -6)
+            }
+        }
         .accessibilityLabel(word.word)
     }
 
@@ -533,10 +542,6 @@ struct DragAndMatchView: View {
     }
 
     // MARK: - Helpers
-
-    private var progressLabel: String {
-        "\(display.placedWords.count) / \(display.words.count)"
-    }
 
     private func bucketBackground(for color: String) -> Color {
         switch color.lowercased() {

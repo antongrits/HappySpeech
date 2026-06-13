@@ -9,36 +9,14 @@ struct PalindromeHunterView: View {
     @State private var interactor: PalindromeHunterInteractor?
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
-                // hunt-вайб). softLight overlay для глубины.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.32)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
                 content
             }
-            .navigationTitle(Text(String(localized: "palindromeHunter.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     interactor = PalindromeHunterInteractor(childId: childId)
@@ -51,122 +29,91 @@ struct PalindromeHunterView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    if let round = interactor.state.currentRound {
-                        roundCard(round, interactor: interactor)
-                    } else {
-                        completionCard(state: interactor.state)
-                    }
-                    cta(interactor: interactor)
+            let state = interactor.state
+            KidGameTapScaffold(
+                stepLabel: state.currentRound.map { "Раунд \($0.id + 1)" },
+                progress: state.progress,
+                promptText: state.currentRound != nil
+                    ? String(localized: "palindromeHunter.prompt")
+                    : String(localized: "palindromeHunter.complete.title"),
+                mascotState: state.currentRound != nil ? .thinking : .celebrating,
+                primary: KidGamePrimaryAction(
+                    title: String(localized: "palindromeHunter.cta.action"),
+                    icon: "arrow.counterclockwise"
+                ) {
+                    hapticService.impact(.light)
+                    interactor.reset()
+                },
+                onClose: { exitGame() }
+            ) {
+                if let round = state.currentRound {
+                    wordOptions(round, interactor: interactor)
+                } else {
+                    completionCard(state: state)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
-    private func hero(state: PalindromeHunterModels.ViewState) -> some View {
-        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
-        // hero card поверх kidWarm mesh.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "palindromeHunter.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "palindromeHunter.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
-                HSProgressBar(value: state.progress, style: .kid)
-                    .frame(height: 8)
-                    .padding(.top, 4)
-            }
-        }
-    }
-
-    private func roundCard(
+    private func wordOptions(
         _ round: PalindromeHunterModels.Round,
         interactor: PalindromeHunterInteractor
     ) -> some View {
-        HSCard(style: .elevated) {
-            VStack(spacing: SpacingTokens.sp3) {
-                Text("Раунд \(round.id + 1)")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                Text("Какое слово — палиндром?")
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(round.words, id: \.self) { word in
-                        Button {
-                            hapticService.impact(.light)
-                            let ok = interactor.pick(word)
-                            hapticService.notification(ok ? .success : .warning)
-                        } label: {
-                            Text(word)
-                                .font(TypographyTokens.headline(17))
-                                .foregroundStyle(ColorTokens.Kid.ink)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, SpacingTokens.sp3)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 14)
-                                        .fill(ColorTokens.Kid.surface)
+        VStack(spacing: SpacingTokens.small) {
+            ForEach(round.words, id: \.self) { word in
+                Button {
+                    hapticService.impact(.light)
+                    let ok = interactor.pick(word)
+                    hapticService.notification(ok ? .success : .warning)
+                } label: {
+                    Text(word)
+                        .font(TypographyTokens.kidCardTitle(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.8)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, SpacingTokens.regular)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                                .fill(ColorTokens.Kid.surface)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1.5)
                                 )
-                        }
-                        .buttonStyle(.plain)
-                        // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                        // + parallax drift на word-option tiles.
-                        .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                            content
-                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
-                        }
-                        .hsParallaxTile(factor: 0.25)
-                    }
+                        )
+                        .kidTileShadow()
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(word))
+                .accessibilityAddTraits(.isButton)
             }
         }
     }
 
     private func completionCard(state: PalindromeHunterModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: "checkmark.seal.fill")
-                    .font(.system(size: 36))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    // Step 10 Batch C — Pattern 5: bounce on completion seal
-                    // (kid celebration when round finishes).
-                    .hsSymbolEffect(.bounce, value: state.correctCount)
-                Text("Завершено!")
-                    .font(TypographyTokens.title(18))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                Text("Правильно: \(state.correctCount) из \(state.rounds.count)")
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, SpacingTokens.sp3)
+        VStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: .celebrating, size: 72)
+                .accessibilityHidden(true)
+            Text(String(
+                format: String(localized: "palindromeHunter.complete.score %lld %lld"),
+                state.correctCount, state.rounds.count
+            ))
+            .font(TypographyTokens.headline(18))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            .multilineTextAlignment(.center)
         }
-    }
-
-    private func cta(interactor: PalindromeHunterInteractor) -> some View {
-        HSButton(
-            String(localized: "palindromeHunter.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "arrow.counterclockwise"
-        ) {
-            hapticService.impact(.light)
-            interactor.reset()
-        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.large)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Semantic.successBg)
+        )
+        .accessibilityElement(children: .combine)
     }
 }
 

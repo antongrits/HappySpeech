@@ -90,7 +90,6 @@ struct SoundDetectiveView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -102,17 +101,6 @@ struct SoundDetectiveView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Детективная «прохлада» — kidCool mesh, ненавязчиво.
-                // Reduced Motion: убираем анимированный/блендовый фон —
-                // остаётся ровный Kid.bg (accessibility + детерминизм снимков).
-                if !reduceMotion {
-                    HSMeshGradientBackground(palette: .kidCool, animated: true)
-                        .ignoresSafeArea()
-                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                        .blendMode(.softLight)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -129,20 +117,7 @@ struct SoundDetectiveView: View {
                         .accessibilityHidden(true)
                 }
             }
-            .navigationTitle(Text("soundDetective.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("soundDetective.close.a11y"))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 await setupAndStart()
             }
@@ -155,110 +130,71 @@ struct SoundDetectiveView: View {
     private func gameSection(
         round: SoundDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        GeometryReader { geo in
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.sp4) {
-                    progressHeader(round)
+        KidGameTapScaffold(
+            stepLabel: round.progressLabel,
+            progress: round.progressFraction,
+            promptText: holder.lastLyalyaLine ?? round.promptLyalya,
+            mascotState: mascotState,
+            feedback: currentFeedback,
+            listen: KidGameListenAction(
+                title: String(localized: "soundDetective.replay"),
+                action: { Task { await replayWord() } }
+            ),
+            onClose: { exitGame() }
+        ) {
+            clueCard(round: round)
+                .id(round.id)
+                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+            wordStrip(round: round)
+        }
+        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
+    }
 
-                    Spacer(minLength: 0)
-
-                    // Ляля-детектив задаёт вопрос.
-                    HSSpeechBubble(
-                        holder.lastLyalyaLine ?? round.promptLyalya,
-                        direction: .left,
-                        style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
-                    )
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
-                    .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-                    // Картинка-улика.
-                    clueCard(round: round)
-                        .id(round.id)
-                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-                    // Кнопка «Ещё разок» — переслушать слово.
-                    replayButton
-
-                    Spacer(minLength: 0)
-
-                    // Полоска слова: зоны-окошки + лупа.
-                    wordStrip(round: round)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                }
-                .frame(minHeight: geo.size.height, alignment: .top)
-                .padding(.top, SpacingTokens.sp2)
-                .padding(.bottom, SpacingTokens.sp6)
-            }
-            .scrollBounceBehavior(.basedOnSize)
-            .safeAreaPadding(.bottom, SpacingTokens.small)
-            .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
+    private var mascotState: LyalyaState {
+        switch holder.lastFeedback {
+        case .hit:   return .celebrating
+        case .retry: return .encouraging
+        case .almost, .none: return .pointing
         }
     }
 
-    private func progressHeader(
-        _ round: SoundDetectiveModels.Start.RoundViewModel
-    ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(round.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                    Capsule()
-                        .fill(ColorTokens.Brand.primary)
-                        .frame(width: max(0, geo.size.width * round.progressFraction))
-                }
-            }
-            .frame(height: 10)
-            .accessibilityHidden(true)
+    private var currentFeedback: KidGameFeedback? {
+        guard let line = holder.lastLyalyaLine, let fb = holder.lastFeedback else { return nil }
+        switch fb {
+        case .hit:   return KidGameFeedback(.correct, line)
+        case .retry: return KidGameFeedback(.hint, line)
+        case .almost: return KidGameFeedback(.incorrect, line)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp4)
     }
 
     private func clueCard(
         round: SoundDetectiveModels.Start.RoundViewModel
     ) -> some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
-            VStack(spacing: SpacingTokens.sp3) {
-                HSContentSymbol(round.imageAsset, size: 96, tint: ColorTokens.Brand.primary)
-                Text(round.wordText)
-                    .font(TypographyTokens.title(30))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
-            }
-            .frame(maxWidth: .infinity)
+        VStack(spacing: SpacingTokens.small) {
+            HSContentSymbol(round.imageAsset, size: 84, tint: ColorTokens.Brand.primary)
+                .frame(width: 110, height: 110)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surfaceAlt)
+                )
+            Text(round.wordText)
+                .font(TypographyTokens.title(30))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.6)
+                .multilineTextAlignment(.center)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.regular)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .kidTileShadow()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(
             String(format: String(localized: "soundDetective.clue.a11y"), round.wordText)
         ))
-    }
-
-    private var replayButton: some View {
-        Button {
-            Task { await replayWord() }
-        } label: {
-            Label {
-                Text("soundDetective.replay")
-                    .font(TypographyTokens.body(15).weight(.medium))
-            } icon: {
-                Image(systemName: "speaker.wave.2.fill")
-            }
-            .foregroundStyle(ColorTokens.Brand.primary)
-            .padding(.horizontal, SpacingTokens.sp4)
-            .frame(minHeight: 44)
-            .background(
-                Capsule().fill(ColorTokens.Kid.surface)
-            )
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("soundDetective.replay.a11y"))
     }
 
     // MARK: - Word strip (zones + magnifier)
@@ -452,14 +388,6 @@ struct SoundDetectiveView: View {
         if isRevealed { return ColorTokens.Brand.mint.opacity(0.28) }
         if isMiss { return ColorTokens.Kid.surfaceAlt }
         return ColorTokens.Kid.surface
-    }
-
-    private func bubbleStyle(_ feedback: FeedbackTier?) -> HSSpeechBubble.BubbleStyle {
-        switch feedback {
-        case .hit:    return .lyalya
-        case .retry:  return .hint
-        case .almost, .none: return .question
-        }
     }
 
     // MARK: - Wiring

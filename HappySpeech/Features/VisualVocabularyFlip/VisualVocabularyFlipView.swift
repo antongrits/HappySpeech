@@ -10,36 +10,16 @@ struct VisualVocabularyFlipView: View {
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.small), count: 2)
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (vocabulary).
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
                 content
             }
-            .navigationTitle(Text(String(localized: "vocabFlip.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     interactor = VisualVocabularyFlipInteractor(childId: childId)
@@ -52,52 +32,35 @@ struct VisualVocabularyFlipView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp3) {
-                    hero
-                    filterBar(interactor: interactor)
-                    grid(interactor: interactor)
-                    cta(interactor: interactor)
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+            KidGameTapScaffold(
+                promptText: String(localized: "vocabFlip.hero.subtitle"),
+                mascotState: .happy,
+                primary: KidGamePrimaryAction(
+                    title: String(localized: "vocabFlip.cta.start"),
+                    icon: "play.fill"
+                ) {
+                    hapticService.notification(.success)
+                    exitGame()
+                },
+                onClose: { exitGame() }
+            ) {
+                filterBar(interactor: interactor)
+                grid(interactor: interactor)
             }
         } else {
             ProgressView().controlSize(.large)
-        }
-    }
-
-    private var hero: some View {
-        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
-        HSLiquidGlassCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .happy, size: 64)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "vocabFlip.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "vocabFlip.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                }
-                Spacer(minLength: 0)
-            }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
     private func filterBar(interactor: VisualVocabularyFlipInteractor) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.tiny) {
                 ForEach(VisualVocabularyFlipModels.SoundFilter.allCases) { f in
                     chip(f, interactor: interactor)
                 }
             }
+            .padding(.horizontal, 2)
         }
     }
 
@@ -111,16 +74,22 @@ struct VisualVocabularyFlipView: View {
             interactor.setFilter(f)
         } label: {
             Text(f.rawValue)
-                .font(TypographyTokens.body(13).weight(.semibold))
+                .font(TypographyTokens.labelRounded(13, weight: .semibold))
                 .foregroundStyle(selected
                                  ? ColorTokens.Overlay.onAccent
                                  : ColorTokens.Kid.ink)
+                .lineLimit(1)
                 .padding(.horizontal, SpacingTokens.small)
-                .padding(.vertical, 7)
+                .padding(.vertical, SpacingTokens.tiny)
                 .background(
                     Capsule().fill(selected
                                    ? ColorTokens.Brand.primary
-                                   : ColorTokens.Kid.bgSoft)
+                                   : ColorTokens.Kid.surface)
+                    .overlay(
+                        Capsule().strokeBorder(
+                            selected ? Color.clear : ColorTokens.Kid.line, lineWidth: 1
+                        )
+                    )
                 )
         }
         .buttonStyle(.plain)
@@ -129,17 +98,9 @@ struct VisualVocabularyFlipView: View {
     }
 
     private func grid(interactor: VisualVocabularyFlipInteractor) -> some View {
-        LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
+        LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
             ForEach(interactor.deck) { card in
                 flipCard(card, interactor: interactor)
-                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                    }
-                    // Step 10 Batch G — Pattern 4: parallax drift на flip cards.
-                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -162,17 +123,18 @@ struct VisualVocabularyFlipView: View {
                     cardFront(card)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 140)
+            .frame(maxWidth: .infinity, minHeight: 148)
             .background(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
                     .fill(flipped
-                          ? ColorTokens.Brand.primary.opacity(0.12)
+                          ? ColorTokens.Brand.primary.opacity(0.10)
                           : ColorTokens.Kid.surface)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                    .strokeBorder(flipped ? ColorTokens.Brand.primary.opacity(0.5) : ColorTokens.Kid.line, lineWidth: 1.5)
             )
+            .kidTileShadow()
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
@@ -181,46 +143,34 @@ struct VisualVocabularyFlipView: View {
     }
 
     private func cardFront(_ card: VisualVocabularyFlipModels.Card) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: card.symbol)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 60)
-                .foregroundStyle(ColorTokens.Brand.primary)
-                // Step 10 Batch G — Pattern 5: pulse on card symbol.
-                .hsSymbolEffect(.pulse, value: card.id)
+        VStack(spacing: SpacingTokens.tiny) {
+            HSContentSymbol(card.symbol, size: 56, tint: ColorTokens.Brand.primary)
+                .frame(width: 84, height: 84)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surfaceAlt)
+                )
                 .accessibilityHidden(true)
-            Text("Перевернуть")
+            Text(String(localized: "vocabFlip.cta.flip"))
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
         }
-        .padding(SpacingTokens.sp2)
+        .padding(SpacingTokens.small)
     }
 
     private func cardBack(_ card: VisualVocabularyFlipModels.Card) -> some View {
-        VStack(spacing: 4) {
+        VStack(spacing: SpacingTokens.micro) {
             Text(card.word.capitalized)
-                .font(TypographyTokens.title(20).weight(.bold))
+                .font(TypographyTokens.kidCardTitle(20))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .lineLimit(nil)
                 .minimumScaleFactor(0.7)
+                .multilineTextAlignment(.center)
             Text("Звук: \(card.targetSound)")
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
-        .padding(SpacingTokens.sp2)
-    }
-
-    private func cta(interactor: VisualVocabularyFlipInteractor) -> some View {
-        HSButton(
-            String(localized: "vocabFlip.cta.start"),
-            style: .primary,
-            size: .large,
-            icon: "play.circle.fill"
-        ) {
-            hapticService.notification(.success)
-            exitGame()
-        }
+        .padding(SpacingTokens.small)
     }
 }
 

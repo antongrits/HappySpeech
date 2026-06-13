@@ -25,11 +25,11 @@ enum ListenAndChoosePhase: Sendable, Equatable {
 /// auto-loads a round on appear, handles up to 3 attempts per round, and then
 /// calls `onComplete` once the round is finished.
 ///
-/// UI:
-///   • AudioPlayButton — 88×88pt circle с 3-х концентрическими ripple-волнами;
-///   • LazyVGrid 2×2 — карточки HSLiquidGlassCard, появляются stagger
-///     (delay 0.1 × n) при каждом новом задании;
-///   • Shake-анимация на неправильно выбранной карточке.
+/// UI: единый каркас `KidGameTapScaffold` (эталон kid-game-tap) — sound-chip +
+/// шаг + прогресс-бар + крестик в шапке, маскот Ляля + коралловый пузырь-вопрос,
+/// сетка `KidGameTapCard` 2×N (stagger-появление), строка обратной связи и
+/// нижняя капсула «Послушать». Состояния карточки: neutral / selected /
+/// correct (мятная галочка) / wrong (коралл-обводка + shake-намёк).
 struct ListenAndChooseView: View {
 
     // MARK: Input
@@ -54,7 +54,6 @@ struct ListenAndChooseView: View {
     @State private var feedbackIsCorrect: Bool?
     @State private var revealAnswer: Bool = false
     @State private var isPlayingSample: Bool = false
-    @State private var shakeIndex: Int?
     @State private var visibleCardCount: Int = 0
     @State private var staggerTask: Task<Void, Never>?
 
@@ -68,29 +67,35 @@ struct ListenAndChooseView: View {
     // MARK: Body
 
     var body: some View {
-        GeometryReader { geo in
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.large) {
-                    if let vm {
-                        difficultyChip(vm)
-                        instructionSection(vm)
-                        audioPlayerRow(vm)
-                        phaseLabel
-                        optionsGrid(vm)
-                    } else {
-                        ProgressView().progressViewStyle(.circular)
+        Group {
+            if let vm {
+                KidGameTapScaffold(
+                    soundLetter: soundLetter,
+                    soundTitle: soundTitle,
+                    stepLabel: vm.progressText,
+                    progress: progressFraction(vm),
+                    promptText: vm.instructionText,
+                    mascotState: phase == .listening ? .singing : .pointing,
+                    feedback: currentFeedback,
+                    listen: KidGameListenAction(
+                        isPlaying: isPlayingSample,
+                        action: { replayWord(vm) }
+                    )
+                ) {
+                    optionsGrid(vm)
+                    if let hint = vm.hintText {
+                        Text(hint)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    if let text = feedbackText {
-                        feedbackBanner(text, isCorrect: feedbackIsCorrect ?? false)
-                    }
-                    Spacer(minLength: 0)
                 }
-                .frame(minHeight: geo.size.height, alignment: .top)
-                .padding(SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.sp6)
+            } else {
+                ProgressView().progressViewStyle(.circular)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .scrollBounceBehavior(.basedOnSize)
-            .safeAreaPadding(.bottom, SpacingTokens.small)
         }
         .task { await bootstrap() }
         .onDisappear {
@@ -99,155 +104,42 @@ struct ListenAndChooseView: View {
         }
     }
 
-    // MARK: Difficulty chip (Q3.6)
+    // MARK: Scaffold mapping
 
-    /// Маленький чип «Уровень N ★…» в шапке карточки вопроса. Цвет — по тиеру:
-    /// easy → mint, medium → butter, hard → primary.
-    private func difficultyChip(
-        _ vm: ListenAndChooseModels.LoadRound.ViewModel
-    ) -> some View {
-        let tint: Color = {
-            switch vm.difficulty {
-            case .easy:   return ColorTokens.Brand.mint
-            case .medium: return ColorTokens.Brand.butter
-            case .hard:   return ColorTokens.Brand.primary
-            }
-        }()
-        return HStack(spacing: SpacingTokens.tiny) {
-            Text(vm.difficultyTitle)
-                .font(TypographyTokens.body(13).weight(.semibold))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            HStack(spacing: 2) {
-                ForEach(0..<3, id: \.self) { idx in
-                    Image(systemName: idx < vm.difficulty.starCount ? "star.fill" : "star")
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(tint)
-                        .accessibilityHidden(true)
-                }
-            }
-        }
-        .padding(.horizontal, SpacingTokens.regular)
-        .padding(.vertical, SpacingTokens.tiny)
-        .background(
-            Capsule().fill(tint.opacity(0.18))
-        )
-        .overlay(
-            Capsule().strokeBorder(tint.opacity(0.45), lineWidth: 1)
-        )
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(
-            "\(vm.difficultyTitle), \(vm.difficulty.starCount) " +
-            String(localized: "listen.difficulty.stars.a11y")
-        )
+    /// Буква звука для sound-chip — первый символ цели урока в верхнем регистре.
+    private var soundLetter: String? {
+        let raw = activity.soundTarget.trimmingCharacters(in: .whitespaces)
+        guard let first = raw.first else { return nil }
+        return String(first).uppercased()
     }
 
-    // MARK: Phase label (под кнопкой проигрывания)
-
-    @ViewBuilder
-    private var phaseLabel: some View {
-        switch phase {
-        case .listening:
-            phaseRow(icon: "ear", text: String(localized: "listen.phase.listening"),
-                     tint: ColorTokens.Brand.primary)
-        case .choosing:
-            phaseRow(icon: "hand.tap", text: String(localized: "listen.phase.choosing"),
-                     tint: ColorTokens.Kid.inkSoft)
-        case .revealing:
-            phaseRow(icon: "checkmark.seal.fill", text: String(localized: "listen.phase.revealing"),
-                     tint: ColorTokens.Semantic.success)
-        case .nextItem:
-            phaseRow(icon: "arrow.right.circle", text: String(localized: "listen.phase.next_item"),
-                     tint: ColorTokens.Kid.inkSoft)
-        }
+    private var soundTitle: String? {
+        guard let letter = soundLetter else { return nil }
+        return String(localized: "Звук \(letter)")
     }
 
-    private func phaseRow(icon: String, text: String, tint: Color) -> some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            Image(systemName: icon)
-                .font(TypographyTokens.caption(14).weight(.semibold))
-                .foregroundStyle(tint)
-                .accessibilityHidden(true)
-            Text(text)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(tint)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(text)
+    private func progressFraction(_ vm: ListenAndChooseModels.LoadRound.ViewModel) -> Double? {
+        // progressText вида «N из M» → доля; если распарсить нельзя — без бара.
+        guard let text = vm.progressText else { return nil }
+        let nums = text.split(whereSeparator: { !$0.isNumber }).compactMap { Int($0) }
+        guard nums.count == 2, nums[1] > 0 else { return nil }
+        return Double(nums[0]) / Double(nums[1])
     }
 
-    // MARK: Instruction
-
-    private func instructionSection(_ vm: ListenAndChooseModels.LoadRound.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.small) {
-            LyalyaMascotView(
-                state: phase == .listening ? .singing : .pointing,
-                size: 80
-            )
-            .accessibilityHidden(true)
-
-            Text(vm.instructionText)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-
-            if let progress = vm.progressText {
-                Text(progress)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-            }
-
-            if let hint = vm.hintText {
-                Text(hint)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.regular)
-            }
-        }
+    private var currentFeedback: KidGameFeedback? {
+        guard let text = feedbackText, let isCorrect = feedbackIsCorrect else { return nil }
+        return KidGameFeedback(isCorrect ? .correct : .incorrect, text)
     }
 
-    // MARK: Audio player row (главная кнопка прослушивания + Replay)
-
-    private func audioPlayerRow(_ vm: ListenAndChooseModels.LoadRound.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.large) {
-            AudioPlayButton(
-                isPlaying: isPlayingSample,
-                reduceMotion: reduceMotion,
-                onTap: { playSample(targetWord: vm.targetWord) }
-            )
-            .accessibilityIdentifier("audioPlayButton")
-            .accessibilityLabel(String(localized: "Прослушать слово \(vm.targetWord)"))
-            .accessibilityHint(String(localized: "listen.audio.button.hint"))
-
-            Button {
-                interactor?.replayCurrentWord(ListenAndChooseModels.ReplayWord.Request())
-                container.hapticService.selection()
-            } label: {
-                HStack(spacing: SpacingTokens.small) {
-                    Image(systemName: "arrow.counterclockwise")
-                        .font(TypographyTokens.body(18).weight(.semibold))
-                        .accessibilityHidden(true)
-                    Text(String(localized: "Повтори"))
-                        .font(TypographyTokens.body(14))
-                }
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .padding(.vertical, SpacingTokens.small)
-                .padding(.horizontal, SpacingTokens.regular)
-                .overlay(
-                    Capsule().strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
-                )
-            }
-            .accessibilityLabel(String(localized: "Повторить слово ещё раз"))
-            .accessibilityAddTraits(.isButton)
-        }
+    private func replayWord(_ vm: ListenAndChooseModels.LoadRound.ViewModel) {
+        interactor?.replayCurrentWord(ListenAndChooseModels.ReplayWord.Request())
+        playSample(targetWord: vm.targetWord)
     }
 
     // MARK: Options grid
 
     private func optionsGrid(_ vm: ListenAndChooseModels.LoadRound.ViewModel) -> some View {
-        let columns = [GridItem(.flexible(), spacing: SpacingTokens.regular),
-                       GridItem(.flexible(), spacing: SpacingTokens.regular)]
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.regular) {
+        LazyVGrid(columns: KidGameTapScaffold<EmptyView>.twoColumnGrid, spacing: SpacingTokens.small) {
             ForEach(Array(vm.options.enumerated()), id: \.element.id) { idx, option in
                 optionCard(option, index: idx, vm: vm)
                     .opacity(calmReduce || idx < visibleCardCount ? 1 : 0)
@@ -267,76 +159,20 @@ struct ListenAndChooseView: View {
         let isCorrect = index == vm.correctIndex
         let shouldHighlightCorrect = revealAnswer && isCorrect
         let isWrongSelection = isSelected && feedbackIsCorrect == false && !revealAnswer
-        let shakeOffset: CGFloat = shakeIndex == index && !calmReduce ? 8 : 0
-
-        return Button {
-            selectOption(index: index, vm: vm)
-        } label: {
-            HSLiquidGlassCard(style: cardGlassStyle(isCorrect: shouldHighlightCorrect, isWrong: isWrongSelection),
-                              padding: SpacingTokens.regular) {
-                VStack(spacing: SpacingTokens.small) {
-                    HSContentSymbol(option.imageSystemName, size: 64, tint: ColorTokens.Brand.primary)
-                        .accessibilityHidden(true)
-                    Text(option.word)
-                        .font(TypographyTokens.body(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: 110)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .strokeBorder(cardBorder(isCorrect: shouldHighlightCorrect, isWrong: isWrongSelection), lineWidth: 2)
-            )
-            .scaleEffect(isSelected && !calmReduce ? 0.97 : 1.0)
-            .offset(x: shakeOffset)
-            .animation(calmReduce ? nil : .spring(duration: 0.25), value: shakeIndex)
-        }
-        .buttonStyle(.plain)
-        .disabled(phase != .choosing || feedbackIsCorrect == true || revealAnswer)
+        let state: KidGameCardState = {
+            if shouldHighlightCorrect { return .correct }
+            if isWrongSelection { return .wrong }
+            if isSelected { return .selected }
+            return .neutral
+        }()
+        return KidGameTapCard(
+            symbol: option.imageSystemName,
+            word: option.word,
+            state: state,
+            isLocked: phase != .choosing || feedbackIsCorrect == true || revealAnswer,
+            onTap: { selectOption(index: index, vm: vm) }
+        )
         .accessibilityIdentifier("answerOption_\(index)")
-        .accessibilityLabel(String(localized: "Вариант: \(option.word)"))
-        .accessibilityAddTraits(.isButton)
-        .accessibilityValue(
-            shouldHighlightCorrect
-                ? String(localized: "Правильный ответ")
-                : (isWrongSelection ? String(localized: "Неверно") : "")
-        )
-    }
-
-    private func cardGlassStyle(isCorrect: Bool, isWrong: Bool) -> HSLiquidGlassStyle {
-        if isCorrect { return .tinted(ColorTokens.Semantic.success) }
-        if isWrong { return .tinted(ColorTokens.Semantic.error) }
-        return .primary
-    }
-
-    private func cardBorder(isCorrect: Bool, isWrong: Bool) -> Color {
-        if isCorrect { return ColorTokens.Semantic.success }
-        if isWrong { return ColorTokens.Semantic.error }
-        return ColorTokens.Kid.line
-    }
-
-    // MARK: Feedback banner
-
-    private func feedbackBanner(_ text: String, isCorrect: Bool) -> some View {
-        HStack(spacing: SpacingTokens.small) {
-            Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(isCorrect ? ColorTokens.Semantic.success : ColorTokens.Semantic.error)
-                .accessibilityHidden(true)
-            Text(text)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.ink)
-        }
-        .padding(.vertical, SpacingTokens.small)
-        .padding(.horizontal, SpacingTokens.regular)
-        .background(
-            Capsule().fill(isCorrect ? ColorTokens.Semantic.successBg : ColorTokens.Semantic.errorBg)
-        )
-        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(text)
     }
 
     // MARK: Actions
@@ -364,9 +200,6 @@ struct ListenAndChooseView: View {
                 revealAnswer = result.shouldRevealAnswer
                 if result.shouldRevealAnswer || result.isCorrect {
                     phase = .revealing
-                }
-                if !result.isCorrect && !result.shouldRevealAnswer {
-                    triggerShake(at: selectedIndex)
                 }
                 if let finalScore = result.finalScore {
                     Task { @MainActor in
@@ -431,7 +264,6 @@ struct ListenAndChooseView: View {
         feedbackIsCorrect = nil
         revealAnswer = false
         attemptsUsed = 0
-        shakeIndex = nil
         phase = .listening
         visibleCardCount = 0
 
@@ -453,80 +285,6 @@ struct ListenAndChooseView: View {
             if Task.isCancelled { return }
             phase = .choosing
         }
-    }
-
-    private func triggerShake(at index: Int?) {
-        guard let index, !reduceMotion else { return }
-        shakeIndex = index
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(280))
-            shakeIndex = nil
-        }
-    }
-}
-
-// MARK: - AudioPlayButton
-
-/// 88×88pt круглая кнопка прослушивания. При isPlaying=true показывает 3
-/// концентрические ripple-волны (Circle: scale 1.0→2.0, opacity 0.6→0.0,
-/// stagger delay 0.3s × n).
-struct AudioPlayButton: View {
-    let isPlaying: Bool
-    let reduceMotion: Bool
-    let onTap: () -> Void
-
-    @State private var rippleStart: Date = Date()
-
-    var body: some View {
-        Button(action: onTap) {
-            ZStack {
-                if isPlaying && !reduceMotion {
-                    rippleLayer
-                }
-                Circle()
-                    .fill(ColorTokens.Brand.primary)
-                    .frame(width: 88, height: 88)
-                    .overlay(
-                        Image(systemName: isPlaying ? "speaker.wave.3.fill" : "play.fill")
-                            .font(TypographyTokens.title(36).weight(.bold))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .accessibilityHidden(true)
-                    )
-                    .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 12, y: 6)
-            }
-            .frame(width: 140, height: 140)
-            .contentShape(Circle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(.isButton)
-        .accessibilityLabel(String(
-            localized: isPlaying ? "a11y.audio.playing" : "a11y.button.play"
-        ))
-        .onChange(of: isPlaying) { _, newValue in
-            if newValue { rippleStart = Date() }
-        }
-    }
-
-    /// 3 концентрические Circle, каждый разгоняется до scale 2.0 и затухает.
-    /// stagger 0.3s между ними, общий цикл 1.5с.
-    private var rippleLayer: some View {
-        TimelineView(.animation) { context in
-            let elapsed = context.date.timeIntervalSince(rippleStart)
-            ZStack {
-                ForEach(0..<3, id: \.self) { idx in
-                    let delay = Double(idx) * 0.3
-                    let phase = max(0, (elapsed - delay).truncatingRemainder(dividingBy: 1.5)) / 1.5
-                    let scale = 1.0 + phase * 1.0
-                    let opacity = 0.6 * (1 - phase)
-                    Circle()
-                        .strokeBorder(ColorTokens.Brand.primary, lineWidth: 2)
-                        .frame(width: 88, height: 88)
-                        .scaleEffect(scale)
-                        .opacity(opacity)
-                }
-            }
-        }
-        .accessibilityHidden(true)
     }
 }
 

@@ -195,6 +195,8 @@ struct WordFormationView: View {
                     Spacer(minLength: 0)
 
                     // Текстовые варианты-формы.
+                    KidSectionLabel(String(localized: "wordFormation.section.choose"))
+                        .padding(.horizontal, SpacingTokens.screenEdge)
                     optionsStack(round: round)
                         .padding(.horizontal, SpacingTokens.screenEdge)
                 }
@@ -211,21 +213,25 @@ struct WordFormationView: View {
     private func progressHeader(
         _ round: WordFormationModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(round.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-
+        let total = max(holder.startVM?.totalRounds ?? 1, 1)
+        let current = min(max(Int((round.progressFraction * Double(total)).rounded(.up)), 1), total)
+        return HStack(spacing: SpacingTokens.small) {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
+                    Capsule().fill(ColorTokens.Kid.line)
                     Capsule()
-                        .fill(ColorTokens.Brand.primary)
+                        .fill(
+                            LinearGradient(
+                                colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                startPoint: .leading, endPoint: .trailing
+                            )
+                        )
                         .frame(width: max(0, geo.size.width * round.progressFraction))
                 }
             }
-            .frame(height: 10)
+            .frame(height: 12)
             .accessibilityHidden(true)
+            KidStepChip(current: max(current, 1), total: total)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.sp4)

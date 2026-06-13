@@ -11,8 +11,6 @@ struct PhonemeFamilyMatcherView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = [
         GridItem(.flexible(), spacing: SpacingTokens.sp2),
@@ -24,28 +22,9 @@ struct PhonemeFamilyMatcherView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (phonemic).
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
                 content
             }
-            .navigationTitle(Text(String(localized: "phonemeFamily.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     let game = PhonemeFamilyMatcherInteractor(
@@ -66,23 +45,36 @@ struct PhonemeFamilyMatcherView: View {
         if let interactor {
             if !interactor.state.isLoaded {
                 ProgressView().controlSize(.large)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if interactor.state.isEmpty {
                 emptyState
             } else {
-                ScrollView {
-                    VStack(spacing: SpacingTokens.sp4) {
-                        hero(state: interactor.state)
-                        familyPicker
-                        wordsGrid(interactor: interactor)
-                        cta(interactor: interactor)
-                    }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp3)
-                    .padding(.bottom, SpacingTokens.sp6)
+                let state = interactor.state
+                KidGameTapScaffold(
+                    stepLabel: String(
+                        format: String(localized: "phonemeFamily.progress %lld %lld"),
+                        state.matchedCount, state.words.count
+                    ),
+                    progress: state.words.isEmpty ? nil
+                        : Double(state.matchedCount) / Double(state.words.count),
+                    promptText: String(localized: "phonemeFamily.hero.subtitle"),
+                    mascotState: .pointing,
+                    primary: KidGamePrimaryAction(
+                        title: String(localized: "phonemeFamily.cta.action"),
+                        icon: "arrow.counterclockwise"
+                    ) {
+                        hapticService.impact(.light)
+                        interactor.reset()
+                    },
+                    onClose: { exitGame() }
+                ) {
+                    familyPicker
+                    wordsGrid(interactor: interactor)
                 }
             }
         } else {
             ProgressView().controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -95,32 +87,8 @@ struct PhonemeFamilyMatcherView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(SpacingTokens.screenEdge)
-    }
-
-    private func hero(state: PhonemeFamilyMatcherModels.ViewState) -> some View {
-        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "phonemeFamily.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "phonemeFamily.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
-                Text(String(
-                    format: String(localized: "phonemeFamily.progress %lld %lld"),
-                    state.matchedCount, state.words.count
-                ))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .padding(.top, 4)
-            }
-        }
     }
 
     private var familyPicker: some View {
@@ -131,15 +99,23 @@ struct PhonemeFamilyMatcherView: View {
                     selectedFamily = family
                 } label: {
                     Text(family.title)
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(selectedFamily == family ? .white : ColorTokens.Kid.ink)
-                        .padding(.horizontal, SpacingTokens.sp2)
-                        .padding(.vertical, 8)
+                        .font(TypographyTokens.labelRounded(12, weight: .semibold))
+                        .foregroundStyle(selectedFamily == family ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, SpacingTokens.small)
                         .background(
                             Capsule().fill(
                                 selectedFamily == family
                                     ? ColorTokens.Brand.primary
                                     : ColorTokens.Kid.surface
+                            )
+                            .overlay(
+                                Capsule().strokeBorder(
+                                    selectedFamily == family ? Color.clear : ColorTokens.Kid.line,
+                                    lineWidth: 1
+                                )
                             )
                         )
                 }
@@ -159,14 +135,6 @@ struct PhonemeFamilyMatcherView: View {
                         hapticService.notification(.success)
                     }
                 }
-                // Step 10 Batch G — Pattern 3: scrollTransition stagger.
-                .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                    content
-                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                }
-                // Step 10 Batch G — Pattern 4: parallax drift на word chips.
-                .hsParallaxTile(factor: 0.2)
             }
         }
     }
@@ -180,14 +148,14 @@ struct PhonemeFamilyMatcherView: View {
         return Button(action: action) {
             ZStack(alignment: .topTrailing) {
                 Text(word.text)
-                    .font(TypographyTokens.headline(14))
+                    .font(TypographyTokens.kidCardTitle(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, SpacingTokens.sp2)
+                    .padding(.vertical, SpacingTokens.small)
                     .background(
-                        RoundedRectangle(cornerRadius: 12)
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                             .fill(
                                 isAssigned
                                     ? (isCorrect
@@ -195,32 +163,29 @@ struct PhonemeFamilyMatcherView: View {
                                         : ColorTokens.Kid.surfaceAlt)
                                     : ColorTokens.Kid.surface
                             )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                    .strokeBorder(
+                                        isAssigned && isCorrect
+                                            ? ColorTokens.Semantic.success
+                                            : ColorTokens.Kid.line,
+                                        lineWidth: isAssigned && isCorrect ? 2 : 1
+                                    )
+                            )
                     )
                 if isAssigned && isCorrect {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.caption2)
                         .foregroundStyle(ColorTokens.Semantic.success)
-                        // Step 10 Batch G — Pattern 5: bounce on correct assignment.
                         .hsSymbolEffect(.bounce, value: isCorrect)
                         .padding(4)
                 }
             }
+            .kidTileShadow()
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(String(format: String(localized: "phonemeFamily.word.a11y %@"), word.text)))
         .accessibilityAddTraits(.isButton)
-    }
-
-    private func cta(interactor: PhonemeFamilyMatcherInteractor) -> some View {
-        HSButton(
-            String(localized: "phonemeFamily.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "arrow.counterclockwise"
-        ) {
-            hapticService.impact(.light)
-            interactor.reset()
-        }
     }
 }
 

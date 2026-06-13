@@ -38,7 +38,8 @@ struct BingoView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm)
+                .ignoresSafeArea()
             content
 
             if display.phase == .bingo {
@@ -114,9 +115,18 @@ struct BingoView: View {
     }
 
     private var lyalyaHeader: some View {
-        LyalyaMascotView(state: display.isCalling ? .explaining : .idle, size: 56)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityHidden(true)
+        HStack(alignment: .center, spacing: SpacingTokens.tiny) {
+            LyalyaMascotView(state: display.isCalling ? .explaining : .happy, size: 56)
+                .accessibilityHidden(true)
+            HSSpeechBubble(
+                bingoCheer,
+                direction: .left,
+                style: .lyalya,
+                maxWidth: 220
+            )
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     // MARK: Banner
@@ -351,6 +361,15 @@ struct BingoView: View {
         router?.routeBack()
     }
 
+    // MARK: - Computed helpers
+
+    /// Короткая реплика маскота над сеткой.
+    private var bingoCheer: String {
+        display.isCalling
+            ? String(localized: "Слушай слово!")
+            : String(localized: "Найди слово!")
+    }
+
     // MARK: - Bootstrap
 
     @MainActor
@@ -439,10 +458,15 @@ private struct BingoCellView: View {
             )
             .overlay(alignment: .topTrailing) {
                 if cell.isMarked {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 24, weight: .semibold))
-                        .foregroundStyle(ColorTokens.Semantic.success)
-                        .padding(6)
+                    // Маленький mint-tick — единственное «зелёное» пятно
+                    // (семантика «найдено»), не крупная заливка.
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 12, weight: .black, design: .rounded))
+                        .foregroundStyle(Color.white)
+                        .frame(width: 22, height: 22)
+                        .background(Circle().fill(ColorTokens.Semantic.success))
+                        .shadow(color: ColorTokens.Semantic.success.opacity(0.45), radius: 3, y: 1)
+                        .padding(7)
                         .accessibilityHidden(true)
                 }
             }
@@ -479,7 +503,7 @@ private struct BingoCellView: View {
         HSContentSymbol(
             ListenAndChoosePresenter.imageSymbol(for: cell.word),
             size: BingoGridMetrics.illustrationSize,
-            tint: cell.isMarked ? ColorTokens.Semantic.success : ColorTokens.Brand.primary
+            tint: ColorTokens.Brand.primary
         )
         .frame(width: BingoGridMetrics.illustrationSize, height: BingoGridMetrics.illustrationSize)
         .accessibilityHidden(true)
@@ -488,10 +512,13 @@ private struct BingoCellView: View {
     // MARK: Styling
 
     private var backgroundFill: Color {
+        // Тёплые заливки в палитре приложения; «найдено»/«выигрыш» —
+        // мягкий коралловый тинт (не зелёная заливка). Семантика
+        // совпадения передаётся mint-tick'ом и рамкой.
         if cell.isWinner {
-            return ColorTokens.Semantic.successBg
+            return ColorTokens.Brand.primaryLo.opacity(0.55)
         } else if cell.isMarked {
-            return ColorTokens.Semantic.successBg
+            return ColorTokens.Brand.primaryLo.opacity(0.30)
         } else {
             return ColorTokens.Kid.surface
         }
@@ -499,7 +526,7 @@ private struct BingoCellView: View {
 
     private var borderColor: Color {
         if cell.isWinner {
-            return ColorTokens.Semantic.success
+            return ColorTokens.Brand.primary
         } else if cell.isMarked {
             return ColorTokens.Semantic.success
         } else {
@@ -512,11 +539,7 @@ private struct BingoCellView: View {
     }
 
     private var textColor: Color {
-        if cell.isMarked || cell.isWinner {
-            return ColorTokens.Semantic.success
-        } else {
-            return ColorTokens.Kid.ink
-        }
+        cell.isWinner ? ColorTokens.Brand.primary : ColorTokens.Kid.ink
     }
 
     private var scaleEffect: CGFloat {

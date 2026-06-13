@@ -11,38 +11,16 @@ struct SpeechRiddlesView: View {
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
+    private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.small), count: 2)
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-
-                // Step 10 Batch A — Pattern 1: mesh .kidCool (sky/lilac/mint) подчёркивает
-                // «думающий» режим разгадывания загадок.
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.28 : 0.50)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
-
                 content
             }
-            .navigationTitle(Text(String(localized: "speechRiddles.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     let game = SpeechRiddlesInteractor(
@@ -63,27 +41,34 @@ struct SpeechRiddlesView: View {
         if let interactor {
             if !interactor.state.isLoaded {
                 ProgressView().controlSize(.large)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if interactor.state.isEmpty {
                 emptyState
             } else {
-                ScrollView {
-                    VStack(spacing: SpacingTokens.sp4) {
-                        hero(state: interactor.state)
-                        if let current = interactor.state.current {
-                            prompt(riddle: current)
-                            options(riddle: current, interactor: interactor)
-                        } else {
-                            completionCard(state: interactor.state)
-                        }
-                        cta(interactor: interactor)
+                let state = interactor.state
+                KidGameTapScaffold(
+                    soundLetter: state.current?.targetLetter,
+                    soundTitle: state.current.map {
+                        String(format: String(localized: "Звук %@"), $0.targetLetter)
+                    },
+                    progress: state.progress,
+                    promptText: state.current?.prompt
+                        ?? String(localized: "speechRiddles.complete.title"),
+                    mascotState: state.current != nil ? .thinking : .celebrating,
+                    feedback: currentFeedback(state),
+                    primary: primaryAction(interactor: interactor),
+                    onClose: { exitGame() }
+                ) {
+                    if let current = state.current {
+                        options(riddle: current, interactor: interactor)
+                    } else {
+                        completionCard(state: state)
                     }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp3)
-                    .padding(.bottom, SpacingTokens.sp6)
                 }
             }
         } else {
             ProgressView().controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -96,62 +81,51 @@ struct SpeechRiddlesView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(SpacingTokens.screenEdge)
     }
 
-    private func hero(state: SpeechRiddlesModels.ViewState) -> some View {
-        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .thinking, size: 64)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "speechRiddles.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "speechRiddles.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                    HSProgressBar(value: state.progress, style: .kid)
-                        .frame(height: 6)
-                        .padding(.top, 4)
-                }
-                Spacer(minLength: 0)
-            }
+    private func currentFeedback(_ state: SpeechRiddlesModels.ViewState) -> KidGameFeedback? {
+        switch state.feedback {
+        case .correct:
+            return KidGameFeedback(.correct, String(localized: "speechRiddles.hero.subtitle"))
+        case .wrong:
+            return KidGameFeedback(.incorrect, String(localized: "speechRiddles.hero.subtitle"))
+        default:
+            return nil
         }
     }
 
-    private func prompt(riddle: SpeechRiddlesModels.Riddle) -> some View {
-        HSCard(style: .elevated) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Text(riddle.targetLetter)
-                    .font(TypographyTokens.titleLarge(56).weight(.bold))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                Text(riddle.prompt)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
+    private func primaryAction(interactor: SpeechRiddlesInteractor) -> KidGamePrimaryAction? {
+        let state = interactor.state
+        if state.isComplete {
+            return KidGamePrimaryAction(
+                title: String(localized: "speechRiddles.cta.again"),
+                icon: "arrow.counterclockwise"
+            ) {
+                hapticService.notification(.success)
+                Task { await interactor.load() }
             }
         }
+        if case .wrong = state.feedback {
+            return KidGamePrimaryAction(
+                title: String(localized: "speechRiddles.cta.action"),
+                icon: "arrow.right"
+            ) {
+                hapticService.notification(.success)
+                interactor.advance()
+            }
+        }
+        return nil
     }
 
     private func options(
         riddle: SpeechRiddlesModels.Riddle,
         interactor: SpeechRiddlesInteractor
     ) -> some View {
-        // Step 10 Batch A — Pattern 3: stagger fade+scale entrance на вариантах ответов.
-        LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
+        LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
             ForEach(riddle.options) { option in
                 optionTile(option, riddle: riddle, interactor: interactor)
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
-                    }
             }
         }
         .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: riddle.id)
@@ -176,87 +150,46 @@ struct SpeechRiddlesView: View {
             }
             return false
         }()
+        let locked: Bool = {
+            if case .none = interactor.state.feedback { return false }
+            return true
+        }()
+        let cardState: KidGameCardState =
+            isCorrectFeedback ? .correct : (isWrongFeedback ? .wrong : .neutral)
 
-        return Button {
-            hapticService.impact(.light)
-            interactor.answer(option.id)
-        } label: {
-            VStack(spacing: 6) {
-                HSContentSymbol(option.asset ?? "questionmark.circle", size: 52)
-                Text(option.label)
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+        return KidGameTapCard(
+            symbol: option.asset ?? "questionmark.circle",
+            word: option.label,
+            state: cardState,
+            isLocked: locked,
+            onTap: {
+                hapticService.impact(.light)
+                interactor.answer(option.id)
             }
-            .frame(maxWidth: .infinity, minHeight: 120)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(optionBackground(isCorrectFeedback: isCorrectFeedback, isWrongFeedback: isWrongFeedback))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(
-                        optionBorder(isCorrectFeedback: isCorrectFeedback, isWrongFeedback: isWrongFeedback),
-                        lineWidth: 1.5
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(option.label))
-        .accessibilityAddTraits(.isButton)
-    }
-
-    private func optionBackground(isCorrectFeedback: Bool, isWrongFeedback: Bool) -> Color {
-        if isCorrectFeedback { return ColorTokens.Semantic.successBg }
-        if isWrongFeedback { return ColorTokens.Semantic.errorBg }
-        return ColorTokens.Kid.surface
-    }
-
-    private func optionBorder(isCorrectFeedback: Bool, isWrongFeedback: Bool) -> Color {
-        if isCorrectFeedback { return ColorTokens.Semantic.success }
-        if isWrongFeedback { return ColorTokens.Semantic.error }
-        return ColorTokens.Kid.line
+        )
     }
 
     private func completionCard(state: SpeechRiddlesModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .celebrating, size: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "speechRiddles.complete.title"))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(String(
-                        format: String(localized: "speechRiddles.complete.score %lld %lld"),
-                        state.score, state.riddles.count
-                    ))
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-                Spacer()
-            }
+        VStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: .celebrating, size: 72)
+                .accessibilityHidden(true)
+            Text(String(
+                format: String(localized: "speechRiddles.complete.score %lld %lld"),
+                state.score, state.riddles.count
+            ))
+            .font(TypographyTokens.headline(18))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            .multilineTextAlignment(.center)
         }
-    }
-
-    private func cta(interactor: SpeechRiddlesInteractor) -> some View {
-        HSButton(
-            interactor.state.isComplete
-                ? String(localized: "speechRiddles.cta.again")
-                : String(localized: "speechRiddles.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: interactor.state.isComplete ? "arrow.counterclockwise" : "arrow.right"
-        ) {
-            hapticService.notification(.success)
-            if interactor.state.isComplete {
-                Task { await interactor.load() }
-            } else if case .wrong = interactor.state.feedback {
-                interactor.advance()
-            }
-        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.large)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Semantic.successBg)
+        )
+        .accessibilityElement(children: .combine)
     }
 }
 

@@ -113,12 +113,14 @@ struct SyllableConstructorView: View {
     private func contentSection(
         startVM: SyllableConstructorModels.Start.ViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp4) {
+        VStack(spacing: SpacingTokens.sp3) {
             tierChipsRow(startVM)
             progressRow(startVM)
             wordHeader(startVM)
+            KidSectionLabel(String(localized: "syllable.section.word"))
             slotsRow(startVM)
-            tileBank
+            KidSectionLabel(String(localized: "syllable.section.syllables"))
+            tileBankTray
             Spacer(minLength: SpacingTokens.sp2)
             actionRow(startVM)
         }
@@ -164,10 +166,32 @@ struct SyllableConstructorView: View {
     private func progressRow(
         _ startVM: SyllableConstructorModels.Start.ViewModel
     ) -> some View {
-        Text(startVM.progressLabel)
-            .font(TypographyTokens.caption(12).monospacedDigit())
-            .foregroundStyle(ColorTokens.Kid.inkMuted)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        let total = max(startVM.placeholdersCount, 1)
+        let filled = min(holder.slotTiles.count, total)
+        return VStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.small) {
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(ColorTokens.Kid.line)
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                    startPoint: .leading, endPoint: .trailing
+                                )
+                            )
+                            .frame(width: max(0, geo.size.width * Double(filled) / Double(total)))
+                    }
+                }
+                .frame(height: 12)
+                .accessibilityHidden(true)
+                KidStepChip(current: filled, total: total)
+            }
+            Text(startVM.progressLabel)
+                .font(TypographyTokens.caption(12).monospacedDigit())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 
     private func wordHeader(
@@ -239,34 +263,37 @@ struct SyllableConstructorView: View {
                     .frame(minWidth: 64, minHeight: 56)
                     .padding(.horizontal, SpacingTokens.sp2)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.md)
                             .fill(ColorTokens.Brand.primary)
                     )
+                    .overlay(alignment: .top) {
+                        KidSlotOrderBadge(order: index + 1).offset(y: -9)
+                    }
+                    .overlay(alignment: .topTrailing) {
+                        if holder.lastSubmit?.isCorrect == true {
+                            KidCorrectTick().scaleEffect(0.7).offset(x: 6, y: -6)
+                        }
+                    }
             }
             .buttonStyle(.plain)
             .accessibilityLabel(Text(tile.accessibilityLabel))
             .accessibilityHint(Text("syllable.slot.return.hint"))
         } else {
-            // Fix v34-polish — раньше пустой слот был только пунктирным контуром
-            // (Kid.line) на прозрачном фоне — «дырка» в макете, слабо читался как
-            // drop-зона. Добавлена мягкая подложка Kid.surfaceAlt + цветной
-            // (Brand.primary) пунктир: слот выглядит как явное приглашение
-            // положить слог, не перетягивая внимание с заполненных слотов.
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surfaceAlt)
-                .overlay(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .strokeBorder(
-                            ColorTokens.Brand.primary.opacity(0.45),
-                            style: .init(lineWidth: 2, dash: [6, 4])
-                        )
-                )
-                .frame(minWidth: 64, minHeight: 56)
+            // Пустой drop-слот эталонного класса: мягкая подложка surfaceAlt +
+            // коралловый пунктир + порядковый бейдж — явное приглашение
+            // «положи слог сюда», без перетягивания внимания с заполненных.
+            KidEmptyDropSlot(order: index + 1, isActive: index == holder.slotTiles.count, minHeight: 56)
                 .accessibilityHidden(true)
         }
     }
 
-    private var tileBank: some View {
+    private var tileBankTray: some View {
+        KidTrayContainer {
+            tileBankGrid
+        }
+    }
+
+    private var tileBankGrid: some View {
         let columns = [GridItem(.adaptive(minimum: 72), spacing: SpacingTokens.sp2)]
         return LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(holder.bankTiles) { tile in
@@ -281,13 +308,14 @@ struct SyllableConstructorView: View {
                         .frame(minWidth: 64, minHeight: 56)
                         .padding(.horizontal, SpacingTokens.sp2)
                         .background(
-                            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                            RoundedRectangle(cornerRadius: RadiusTokens.md)
                                 .fill(ColorTokens.Kid.surface)
                         )
                         .overlay(
-                            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                            RoundedRectangle(cornerRadius: RadiusTokens.md)
                                 .strokeBorder(ColorTokens.Brand.primary, lineWidth: 2)
                         )
+                        .depthShadow(ShadowTokens.kidDepth)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(tile.accessibilityLabel))
@@ -302,7 +330,6 @@ struct SyllableConstructorView: View {
                 .hsParallaxTile(factor: 0.3)
             }
         }
-        .padding(.top, SpacingTokens.sp2)
     }
 
     @ViewBuilder

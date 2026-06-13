@@ -492,6 +492,7 @@
 		3627FC7ED79F12A6C8B34726 /* sound_ch_pack.json in Resources */ = {isa = PBXBuildFile; fileRef = 6FD658AFF2F53658AF899D17 /* sound_ch_pack.json */; };
 		363F4740C9C329662ED7367B /* DailyChallengePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6C12F3394C30C8DE9A649B /* DailyChallengePresenter.swift */; };
 		364805E04ED53727E45DEB5D /* LocalMethodologyAssistantClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34665DDD543370E82EC0155 /* LocalMethodologyAssistantClientTests.swift */; };
+		3679953DA70724634CB8F920 /* KidGameDragKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D6E18F2B2C1C917C047217 /* KidGameDragKit.swift */; };
 		36949DE1F0B9B6E3BA6D2AF5 /* ScreeningScoringEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B396EE30200D9380C8017C /* ScreeningScoringEngine.swift */; };
 		36970A8325B391079E8B12E4 /* GoalTrackerKidView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC9535CBA2C6F23CCC86289 /* GoalTrackerKidView.swift */; };
 		36992E9BAC42B4DF5BA4ECBD /* EyeFocusModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CED9BA71A64AC46D974139 /* EyeFocusModels.swift */; };
@@ -1740,6 +1741,7 @@
 		C6EA2260E4AEB615B19A62BD /* SentenceBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074AF5D02954E43FB60AA803 /* SentenceBuilderView.swift */; };
 		C6F448A08A32F959AD05344B /* MetronomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CC4814DC5DE9198ED1BA2E /* MetronomeView.swift */; };
 		C701724E4E3F6F0F001CE85F /* ProgressDashboardInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91B64E131D8084D66FE3963 /* ProgressDashboardInteractorTests.swift */; };
+		C705856531D8A811D5220E4D /* KidGameTapScaffold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E8FFF4CF5F532DA94FEF4F /* KidGameTapScaffold.swift */; };
 		C7318D86EEEFF47999821421 /* AwardsCatalogWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D358A3F084EB0F749250EDBD /* AwardsCatalogWorker.swift */; };
 		C774ED8E87EB0ADCEFFF2968 /* AdaptivePlannerConfusionPairTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE5CC94626562DD89817C1 /* AdaptivePlannerConfusionPairTests.swift */; };
 		C78C8120864988207433997D /* PhonemeAudioWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF60D25DC03A30E3606A79 /* PhonemeAudioWorkerTests.swift */; };
@@ -2709,6 +2711,7 @@
 		388FD8708F99A9C7B7F26065 /* SpectrogramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramTests.swift; sourceTree = "<group>"; };
 		38BBEBECE4B2E35DC49297B4 /* AchievementEventSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementEventSink.swift; sourceTree = "<group>"; };
 		38C29C8BACA7A897E17F75F2 /* LocalLLMServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLLMServiceTests.swift; sourceTree = "<group>"; };
+		38E8FFF4CF5F532DA94FEF4F /* KidGameTapScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidGameTapScaffold.swift; sourceTree = "<group>"; };
 		391258066C6D93156622EA87 /* pack_bedtime_stories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_bedtime_stories.json; sourceTree = "<group>"; };
 		3915545C5C891A8018EDDE44 /* RussianPhonemeClassifierWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianPhonemeClassifierWrapper.swift; sourceTree = "<group>"; };
 		39A8678FD8ADFF8C695C75AC /* RedeemInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedeemInviteView.swift; sourceTree = "<group>"; };
@@ -2864,6 +2867,7 @@
 		49A8D46346E9D614EF86F912 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		49AEEB23232B0916A65C4D75 /* ParentHomeInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeInteractorTests.swift; sourceTree = "<group>"; };
 		49B2F836E56DA84FADB7CF9F /* FirebaseEmulatorTestsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEmulatorTestsBase.swift; sourceTree = "<group>"; };
+		49D6E18F2B2C1C917C047217 /* KidGameDragKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidGameDragKit.swift; sourceTree = "<group>"; };
 		49EC64A47413A219105FFAE5 /* whisper-base */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "whisper-base"; path = "HappySpeech/Resources/Models/Whisper/whisper-base"; sourceTree = SOURCE_ROOT; };
 		4A005AF8D340712709D1C025 /* ColorAndSoundContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorAndSoundContent.swift; sourceTree = "<group>"; };
 		4A17398CA7DE541D0B0F4C18 /* StutteringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StutteringWorkerTests.swift; sourceTree = "<group>"; };
@@ -7740,6 +7744,8 @@
 				378D0A5162342BA08DBE94CE /* Accessibility */,
 				551F5A52CFBFA60D6EB25980 /* Navigation */,
 				27C00F49261ABD82D6B77C8B /* ViewModifiers */,
+				49D6E18F2B2C1C917C047217 /* KidGameDragKit.swift */,
+				38E8FFF4CF5F532DA94FEF4F /* KidGameTapScaffold.swift */,
 				7D68E9CE7ED09EA31E3ACB38 /* MapJourneyComponents.swift */,
 			);
 			path = Shared;
@@ -11609,8 +11615,10 @@
 				29EB33DA017BB89ADE6068E2 /* KaraokePitchView.swift in Sources */,
 				2D64F1E936D884CBE8F5B5BA /* KaraokeWordView.swift in Sources */,
 				A006CEEEC10C89D753ED23A3 /* KeychainStore.swift in Sources */,
+				3679953DA70724634CB8F920 /* KidGameDragKit.swift in Sources */,
 				57983FC86251B59C3BFF1946 /* KidGameExitAction.swift in Sources */,
 				F7337DAEFD25B478E8F6BE2D /* KidGameScoreStore.swift in Sources */,
+				C705856531D8A811D5220E4D /* KidGameTapScaffold.swift in Sources */,
 				6D06B1568896D4E6065F0AD6 /* KidHintProvider.swift in Sources */,
 				DB038252C158A57D477B6AAC /* KidLLMNarrationService.swift in Sources */,
 				0A78251C9930B974BE5EDB33 /* KidSafetyFilter.swift in Sources */,

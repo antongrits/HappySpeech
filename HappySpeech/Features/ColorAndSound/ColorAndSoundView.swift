@@ -10,35 +10,14 @@ struct ColorAndSoundView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private let columns = [
-        GridItem(.flexible(), spacing: SpacingTokens.sp2),
-        GridItem(.flexible(), spacing: SpacingTokens.sp2)
-    ]
 
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
+                ColorTokens.Kid.bg.ignoresSafeArea()
                 content
             }
-            .navigationTitle(Text(String(localized: "colorAndSound.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     let new = ColorAndSoundInteractor(
@@ -57,75 +36,72 @@ struct ColorAndSoundView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor, interactor.state.isLoaded {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(interactor: interactor)
-                    if interactor.state.isGameComplete {
-                        completeBanner(interactor: interactor)
-                    } else {
-                        grid(interactor: interactor)
-                        if interactor.state.roundComplete {
-                            nextButton(interactor: interactor)
-                        }
-                    }
+            let state = interactor.state
+            KidGameTapScaffold(
+                soundLetter: state.sound,
+                soundTitle: String(format: String(localized: "Звук %@"), state.sound),
+                stepLabel: String(
+                    format: String(localized: "colorAndSound.round %lld %lld"),
+                    min(state.roundIndex + 1, state.totalRounds), state.totalRounds
+                ),
+                progress: state.totalRounds > 0
+                    ? Double(min(state.roundIndex + 1, state.totalRounds)) / Double(state.totalRounds)
+                    : nil,
+                promptText: String(
+                    format: String(localized: "colorAndSound.prompt %@ %@"),
+                    state.sound, state.soundColor.name
+                ),
+                mascotState: state.isGameComplete ? .celebrating : .pointing,
+                feedback: completeFeedback(state),
+                primary: primaryAction(interactor: interactor),
+                onClose: { exitGame() }
+            ) {
+                if !state.isGameComplete {
+                    grid(interactor: interactor)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
             }
         } else {
             ProgressView().controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
-    private func hero(interactor: ColorAndSoundInteractor) -> some View {
+    private func completeFeedback(_ state: ColorAndSoundModels.ViewState) -> KidGameFeedback? {
+        guard state.isGameComplete else { return nil }
+        return KidGameFeedback(
+            .correct,
+            String(localized: "colorAndSound.complete") + " " +
+            String(format: String(localized: "kidGame.stars %lld"), state.stars)
+        )
+    }
+
+    private func primaryAction(interactor: ColorAndSoundInteractor) -> KidGamePrimaryAction? {
         let state = interactor.state
-        return HSLiquidGlassCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                Circle()
-                    .fill(state.soundColor.color)
-                    .frame(width: 64, height: 64)
-                    .overlay(
-                        Text(state.sound)
-                            .font(TypographyTokens.title(26).weight(.bold))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    )
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(String(
-                        format: String(localized: "colorAndSound.prompt %@ %@"),
-                        state.sound, state.soundColor.name
-                    ))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                    Text(String(
-                        format: String(localized: "colorAndSound.round %lld %lld"),
-                        min(state.roundIndex + 1, state.totalRounds), state.totalRounds
-                    ))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-                Spacer(minLength: 0)
+        if state.isGameComplete {
+            return KidGamePrimaryAction(
+                title: String(localized: "imitationLab.cta.done"),
+                icon: "checkmark"
+            ) { exitGame() }
+        }
+        if state.roundComplete {
+            return KidGamePrimaryAction(
+                title: String(localized: "colorAndSound.cta.next"),
+                icon: "arrow.right"
+            ) {
+                hapticService.notification(.success)
+                interactor.next()
             }
         }
+        return nil
     }
 
     private func grid(interactor: ColorAndSoundInteractor) -> some View {
-        LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(Array(interactor.state.cards.enumerated()), id: \.element.id) { index, card in
+        LazyVGrid(columns: KidGameTapScaffold<EmptyView>.twoColumnGrid, spacing: SpacingTokens.small) {
+            ForEach(Array(interactor.state.cards.enumerated()), id: \.element.id) { _, card in
                 wordCard(card, soundColor: interactor.state.soundColor) {
                     hapticService.impact(.light)
                     interactor.toggle(card.id)
                 }
-                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
-                    content
-                        .opacity(phase.isIdentity ? 1 : 0)
-                        .scaleEffect(phase.isIdentity ? 1 : 0.92)
-                }
-                .hsParallaxTile(factor: 0.2)
-                .zIndex(Double(interactor.state.cards.count - index))
             }
         }
     }
@@ -135,95 +111,23 @@ struct ColorAndSoundView: View {
         soundColor: ColorAndSoundModels.SoundColor,
         action: @escaping () -> Void
     ) -> some View {
-        // После выбора: верное слово подсвечивается «своим цветом» (успех),
-        // неверное — мягко-нейтрально (errorless, без «красного»).
-        let style: HSCardStyle = card.isSelected
-            ? (card.belongs ? .tinted(soundColor.color.opacity(0.28)) : .tinted(ColorTokens.Kid.bgSoft))
-            : .elevated
-        // Scale: selected correct → немного вырастает; unselected → полный размер.
-        let scale: CGFloat = card.isSelected && card.belongs ? 1.04 : 1.0
-
-        return Button(action: action) {
-            HSCard(style: style) {
-                VStack(spacing: SpacingTokens.sp2) {
-                    if let asset = card.asset {
-                        HSContentSymbol(asset, size: 48)
-                    } else {
-                        Image(systemName: "textformat.abc")
-                            .font(.system(size: 32))
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    Text(card.text)
-                        .font(TypographyTokens.headline(15))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                    if card.isSelected {
-                        Image(systemName: card.belongs ? "checkmark.circle.fill" : "minus.circle.fill")
-                            .font(.system(size: 18))
-                            .foregroundStyle(card.belongs ? soundColor.color : ColorTokens.Kid.inkSoft)
-                            .hsSymbolEffect(.bounce, value: card.isSelected)
-                            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, SpacingTokens.sp2)
-            }
-            .depthShadow(ShadowTokens.kidDepth)
-        }
-        .buttonStyle(.plain)
-        .scaleEffect(scale)
-        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6), value: card.isSelected)
-        .disabled(card.isSelected)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(card.text))
+        // После выбора: верное слово — мятная галочка (correct); неверное —
+        // мягко-нейтральное (errorless: dimmed, без «красного»).
+        let state: KidGameCardState = card.isSelected
+            ? (card.belongs ? .correct : .dimmed)
+            : .neutral
+        return KidGameTapCard(
+            symbol: card.asset ?? "textformat.abc",
+            word: card.text,
+            state: state,
+            isLocked: card.isSelected,
+            onTap: action
+        )
         .accessibilityValue(Text(card.isSelected
             ? (card.belongs
                 ? String(localized: "colorAndSound.a11y.right")
                 : String(localized: "colorAndSound.a11y.wrong"))
             : String(localized: "colorAndSound.a11y.notChosen")))
-        .accessibilityAddTraits(.isButton)
-    }
-
-    private func nextButton(interactor: ColorAndSoundInteractor) -> some View {
-        HSButton(
-            String(localized: "colorAndSound.cta.next"),
-            style: .primary,
-            size: .large,
-            icon: "arrow.right.circle.fill"
-        ) {
-            hapticService.notification(.success)
-            interactor.next()
-        }
-    }
-
-    private func completeBanner(interactor: ColorAndSoundInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .celebrating, size: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "colorAndSound.complete"))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(String(
-                        format: String(localized: "kidGame.stars %lld"),
-                        interactor.state.stars
-                    ))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Semantic.warning)
-                }
-                Spacer()
-                HSButton(
-                    String(localized: "imitationLab.cta.done"),
-                    style: .ghost,
-                    size: .medium,
-                    icon: "checkmark"
-                ) {
-                    exitGame()
-                }
-            }
-        }
     }
 }
 

@@ -10,36 +10,14 @@ struct WhisperGameView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch C — Pattern 1: kidCool mesh палитра (тихий
-                // прохладный шёпотный вайб). softLight overlay.
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
                 content
             }
-            .navigationTitle(Text(String(localized: "whisperGame.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     let game = WhisperGameInteractor(
@@ -58,57 +36,35 @@ struct WhisperGameView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero
-                    modeSelector(interactor: interactor)
-                    micMeter(interactor: interactor)
-                    cta(interactor: interactor)
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+            KidGameTapScaffold(
+                promptText: String(localized: "whisperGame.hero.subtitle"),
+                mascotState: .thinking,
+                primary: KidGamePrimaryAction(
+                    title: String(localized: "whisperGame.cta.action"),
+                    icon: "checkmark"
+                ) {
+                    hapticService.notification(.success)
+                    interactor.completeRound()
+                },
+                onClose: { exitGame() }
+            ) {
+                modeSelector(interactor: interactor)
+                micMeter(interactor: interactor)
             }
         } else {
             ProgressView().controlSize(.large)
-        }
-    }
-
-    private var hero: some View {
-        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
-        // hero card поверх kidCool mesh.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "whisperGame.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "whisperGame.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
-            }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
     private func modeSelector(interactor: WhisperGameInteractor) -> some View {
-        HStack(spacing: SpacingTokens.sp2) {
+        HStack(spacing: SpacingTokens.tiny) {
             ForEach(WhisperGameModels.Mode.allCases, id: \.self) { mode in
                 modeChip(mode, isActive: interactor.state.mode == mode) {
                     hapticService.impact(.light)
                     interactor.setMode(mode)
                     interactor.startListening()
                 }
-                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                // + parallax drift на mode-chip tiles (даже в HStack scroll-aware).
-                .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                    content
-                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
-                }
-                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -119,23 +75,28 @@ struct WhisperGameView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            VStack(spacing: 6) {
+            VStack(spacing: SpacingTokens.micro) {
                 Image(systemName: mode.icon)
                     .font(.system(size: 22, weight: .semibold))
-                    .foregroundStyle(isActive ? .white : ColorTokens.Brand.primary)
-                    // Step 10 Batch C — Pattern 5: bounce on mode icon when
-                    // selection changes (state-reactive feedback).
+                    .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary)
                     .hsSymbolEffect(.bounce, value: isActive)
                 Text(mode.title)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(isActive ? .white : ColorTokens.Kid.ink)
+                    .font(TypographyTokens.labelRounded(12, weight: .semibold))
+                    .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.small)
             .background(
-                RoundedRectangle(cornerRadius: 14)
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                     .fill(isActive ? ColorTokens.Brand.primary : ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(isActive ? Color.clear : ColorTokens.Kid.line, lineWidth: 1)
+                    )
             )
+            .kidTileShadow()
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(mode.title))

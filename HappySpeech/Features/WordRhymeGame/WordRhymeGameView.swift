@@ -10,36 +10,14 @@ struct WordRhymeGameView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
-                // poetic вайб рифм). softLight overlay для глубины.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.32)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
                 content
             }
-            .navigationTitle(Text(String(localized: "wordRhyme.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     let game = WordRhymeGameInteractor(
@@ -60,27 +38,32 @@ struct WordRhymeGameView: View {
         if let interactor {
             if !interactor.state.isLoaded {
                 ProgressView().controlSize(.large)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if interactor.state.isEmpty {
                 emptyState
             } else {
-                ScrollView {
-                    VStack(spacing: SpacingTokens.sp4) {
-                        hero(state: interactor.state)
-                        if let current = interactor.state.current {
-                            target(round: current)
-                            optionsRow(round: current, interactor: interactor)
-                        } else {
-                            completionCard(state: interactor.state)
-                        }
-                        cta(interactor: interactor)
+                let state = interactor.state
+                KidGameTapScaffold(
+                    progress: state.progress,
+                    promptText: state.current != nil
+                        ? String(localized: "wordRhyme.target.hint")
+                        : String(localized: "wordRhyme.complete.title"),
+                    mascotState: state.current != nil ? .singing : .celebrating,
+                    feedback: currentFeedback(state),
+                    primary: primaryAction(interactor: interactor),
+                    onClose: { exitGame() }
+                ) {
+                    if let current = state.current {
+                        targetCard(round: current)
+                        optionsGrid(round: current, interactor: interactor)
+                    } else {
+                        completionCard(state: state)
                     }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp3)
-                    .padding(.bottom, SpacingTokens.sp6)
                 }
             }
         } else {
             ProgressView().controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -93,70 +76,76 @@ struct WordRhymeGameView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(SpacingTokens.screenEdge)
     }
 
-    private func hero(state: WordRhymeGameModels.ViewState) -> some View {
-        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
-        // hero card поверх kidWarm mesh.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .singing, size: 64)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "wordRhyme.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "wordRhyme.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                    HSProgressBar(value: state.progress, style: .kid)
-                        .frame(height: 6)
-                        .padding(.top, 4)
-                }
-                Spacer(minLength: 0)
-            }
+    private func currentFeedback(_ state: WordRhymeGameModels.ViewState) -> KidGameFeedback? {
+        switch state.feedback {
+        case .correct:
+            return KidGameFeedback(.correct, String(localized: "wordRhyme.target.hint"))
+        case .wrong:
+            return KidGameFeedback(.incorrect, String(localized: "wordRhyme.target.hint"))
+        default:
+            return nil
         }
     }
 
-    private func target(round: WordRhymeGameModels.Round) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
-            VStack(spacing: 6) {
-                HSContentSymbol(round.targetAsset ?? "music.note", size: 60)
-                Text(round.targetWord)
-                    .font(TypographyTokens.titleLarge(28).weight(.bold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                Text(String(localized: "wordRhyme.target.hint"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+    private func primaryAction(interactor: WordRhymeGameInteractor) -> KidGamePrimaryAction? {
+        let state = interactor.state
+        if state.isComplete {
+            return KidGamePrimaryAction(
+                title: String(localized: "wordRhyme.cta.again"),
+                icon: "arrow.counterclockwise"
+            ) {
+                hapticService.notification(.success)
+                Task { await interactor.load() }
             }
         }
+        if case .wrong = state.feedback {
+            return KidGamePrimaryAction(
+                title: String(localized: "wordRhyme.cta.action"),
+                icon: "arrow.right"
+            ) {
+                hapticService.notification(.success)
+                interactor.advance()
+            }
+        }
+        return nil
     }
 
-    private func optionsRow(
+    private func targetCard(round: WordRhymeGameModels.Round) -> some View {
+        VStack(spacing: SpacingTokens.tiny) {
+            HSContentSymbol(round.targetAsset ?? "music.note", size: 56)
+                .accessibilityHidden(true)
+            Text(round.targetWord)
+                .font(TypographyTokens.titleLarge(28).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.7)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.regular)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Brand.butter.opacity(0.18))
+        )
+        .accessibilityElement(children: .combine)
+    }
+
+    private func optionsGrid(
         round: WordRhymeGameModels.Round,
         interactor: WordRhymeGameInteractor
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
+        LazyVGrid(columns: KidGameTapScaffold<EmptyView>.twoColumnGrid, spacing: SpacingTokens.small) {
             ForEach(round.options) { option in
-                optionRow(option, round: round, interactor: interactor)
-                    // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                    // + parallax drift на rhyme option rows.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
-                    }
-                    .hsParallaxTile(factor: 0.25)
+                optionCard(option, round: round, interactor: interactor)
             }
         }
     }
 
-    private func optionRow(
+    private func optionCard(
         _ option: WordRhymeGameModels.RhymeOption,
         round: WordRhymeGameModels.Round,
         interactor: WordRhymeGameInteractor
@@ -174,87 +163,44 @@ struct WordRhymeGameView: View {
             }
             return false
         }()
-
-        return Button {
-            hapticService.impact(.light)
-            interactor.answer(option.id)
-        } label: {
-            HSCard(style: backgroundStyle(isCorrect: isCorrect, isWrong: isWrong)) {
-                HStack(spacing: SpacingTokens.sp3) {
-                    HSContentSymbol(option.asset ?? "music.note", size: 32)
-                    Text(option.word)
-                        .font(TypographyTokens.headline(18))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Spacer()
-                    if isCorrect {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 22))
-                            .foregroundStyle(ColorTokens.Semantic.success)
-                            // Step 10 Batch C — Pattern 5: bounce on correct
-                            // (state-reactive feedback).
-                            .hsSymbolEffect(.bounce, value: isCorrect)
-                    } else if isWrong {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 22))
-                            .foregroundStyle(ColorTokens.Semantic.error)
-                            // Step 10 Batch C — Pattern 5: bounce on wrong
-                            // (state-reactive feedback).
-                            .hsSymbolEffect(.bounce, value: isWrong)
-                    }
-                }
+        let locked: Bool = {
+            if case .none = interactor.state.feedback { return false }
+            return true
+        }()
+        let state: KidGameCardState = isCorrect ? .correct : (isWrong ? .wrong : .neutral)
+        return KidGameTapCard(
+            symbol: option.asset ?? "music.note",
+            word: option.word,
+            state: state,
+            isLocked: locked,
+            onTap: {
+                hapticService.impact(.light)
+                interactor.answer(option.id)
             }
-        }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(option.word))
-        .accessibilityAddTraits(.isButton)
-    }
-
-    private func backgroundStyle(isCorrect: Bool, isWrong: Bool) -> HSCardStyle {
-        if isCorrect { return .tinted(ColorTokens.Semantic.successBg) }
-        if isWrong { return .tinted(ColorTokens.Semantic.errorBg) }
-        return .elevated
+        )
     }
 
     private func completionCard(state: WordRhymeGameModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .celebrating, size: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "wordRhyme.complete.title"))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(String(
-                        format: String(localized: "wordRhyme.complete.score %lld %lld"),
-                        state.score, state.rounds.count
-                    ))
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-                Spacer()
-            }
+        VStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: .celebrating, size: 72)
+                .accessibilityHidden(true)
+            Text(String(
+                format: String(localized: "wordRhyme.complete.score %lld %lld"),
+                state.score, state.rounds.count
+            ))
+            .font(TypographyTokens.headline(18))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            .multilineTextAlignment(.center)
         }
-    }
-
-    private func cta(interactor: WordRhymeGameInteractor) -> some View {
-        HSButton(
-            interactor.state.isComplete
-                ? String(localized: "wordRhyme.cta.again")
-                : String(localized: "wordRhyme.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: interactor.state.isComplete ? "arrow.counterclockwise" : "arrow.right"
-        ) {
-            hapticService.notification(.success)
-            if interactor.state.isComplete {
-                Task { await interactor.load() }
-            } else if case .wrong = interactor.state.feedback {
-                interactor.advance()
-            }
-        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.large)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Semantic.successBg)
+        )
+        .accessibilityElement(children: .combine)
     }
 }
 

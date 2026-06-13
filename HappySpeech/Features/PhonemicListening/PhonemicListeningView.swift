@@ -69,7 +69,6 @@ struct PhonemicListeningView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -81,15 +80,6 @@ struct PhonemicListeningView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch C — Pattern 1: kidCool mesh палитра (прохладный,
-                // listening-focused). softLight + низкий opacity не отвлекает от
-                // word-карточки в центре экрана.
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -99,20 +89,7 @@ struct PhonemicListeningView: View {
                     loadingSection
                 }
             }
-            .navigationTitle(Text("phonemicListening.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("phonemicListening.close.a11y"))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 await setupAndStart()
             }
@@ -125,86 +102,56 @@ struct PhonemicListeningView: View {
     private func gameSection(
         round: PhonemicListeningModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp5) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Text(round.progressLabel)
-                    .font(TypographyTokens.caption(12).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                        Capsule()
-                            .fill(ColorTokens.Brand.primary)
-                            .frame(width: max(0, geo.size.width * round.progressFraction))
-                    }
-                }
-                .frame(height: 10)
-                .accessibilityHidden(true)
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp4)
-
-            Spacer()
-
-            // Question + word
-            VStack(spacing: SpacingTokens.sp3) {
-                Text(round.prompt)
-                    .font(TypographyTokens.headline(19))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .padding(.horizontal, SpacingTokens.sp4)
-
-                wordCard(round.word)
-            }
-            .id(round.id)
-            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-            if let feedback = holder.lastFeedback,
-               let wasCorrect = holder.lastWasCorrect {
-                feedbackBanner(text: feedback, isCorrect: wasCorrect)
-            }
-
-            Spacer()
-
-            // Answer options
-            VStack(spacing: SpacingTokens.sp3) {
-                ForEach(displayedOptions(round)) { option in
-                    optionButton(option) {
-                        Task { await answer(optionIndex: option.id) }
-                    }
-                    // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                    // + parallax drift на option buttons.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
-                    }
-                    .hsParallaxTile(factor: 0.25)
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.sp6)
+        KidGameTapScaffold(
+            stepLabel: round.progressLabel,
+            progress: round.progressFraction,
+            promptText: round.prompt,
+            mascotState: .thinking,
+            feedback: currentFeedback,
+            onClose: { exitGame() }
+        ) {
+            wordCard(round.word)
+            optionsList(round)
         }
         .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
     }
 
-    private func wordCard(_ word: String) -> some View {
-        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) для word
-        // hero — ultraThick стекло над kidCool mesh создаёт focal point для
-        // целевого слова, kavsoft-style.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp6) {
-            Text(word)
-                .font(TypographyTokens.title(40))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel(Text(verbatim: word))
-                .accessibilityAddTraits(.isStaticText)
+    private var currentFeedback: KidGameFeedback? {
+        guard let feedback = holder.lastFeedback,
+              let wasCorrect = holder.lastWasCorrect else { return nil }
+        return KidGameFeedback(wasCorrect ? .correct : .incorrect, feedback)
+    }
+
+    private func optionsList(
+        _ round: PhonemicListeningModels.Start.RoundViewModel
+    ) -> some View {
+        VStack(spacing: SpacingTokens.small) {
+            ForEach(displayedOptions(round)) { option in
+                optionButton(option) {
+                    Task { await answer(optionIndex: option.id) }
+                }
+            }
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
+        .id(round.id)
+        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+    }
+
+    private func wordCard(_ word: String) -> some View {
+        Text(word)
+            .font(TypographyTokens.title(40))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.5)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.large)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+            )
+            .kidTileShadow()
+            .accessibilityLabel(Text(verbatim: word))
+            .accessibilityAddTraits(.isStaticText)
     }
 
     private func optionButton(
@@ -213,47 +160,27 @@ struct PhonemicListeningView: View {
     ) -> some View {
         Button(action: action) {
             Text(option.label)
-                .font(TypographyTokens.headline(20))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .lineLimit(2)
+                .font(TypographyTokens.kidCardTitle(20))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
                 .minimumScaleFactor(0.7)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, minHeight: 64)
-                .padding(SpacingTokens.sp3)
+                .padding(SpacingTokens.small)
                 .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Brand.sky)
+                    RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                                .strokeBorder(ColorTokens.Brand.primary.opacity(0.4), lineWidth: 1.5)
+                        )
                 )
-                .depthShadow(ShadowTokens.kidDepth)
+                .kidTileShadow()
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(option.label))
         .accessibilityHint(Text("phonemicListening.option.hint"))
         .accessibilityAddTraits(.isButton)
-    }
-
-    private func feedbackBanner(text: String, isCorrect: Bool) -> some View {
-        HStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: isCorrect
-                ? "checkmark.circle.fill"
-                : "arrow.counterclockwise.circle.fill")
-                .font(.title3)
-                // Step 10 Batch C — Pattern 5: bounce on feedback symbol
-                // when correctness toggles (state-reactive).
-                .hsSymbolEffect(.bounce, value: isCorrect)
-            Text(text)
-                .font(TypographyTokens.body(15).weight(.medium))
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-        }
-        .foregroundStyle(ColorTokens.Overlay.onAccent)
-        .padding(.horizontal, SpacingTokens.sp4)
-        .padding(.vertical, SpacingTokens.sp2)
-        .background(
-            Capsule().fill(isCorrect ? ColorTokens.Brand.mint : ColorTokens.Brand.butter)
-        )
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(text))
     }
 
     // MARK: - Summary

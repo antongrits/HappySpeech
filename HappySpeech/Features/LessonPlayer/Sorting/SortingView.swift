@@ -129,6 +129,7 @@ struct SortingView: View {
             VStack(spacing: SpacingTokens.medium) {
                 header
                 wordCard
+                KidSectionLabel(String(localized: "sorting.section.put_in_house"))
                 categoryButtons
                 hintButton
             }
@@ -155,22 +156,22 @@ struct SortingView: View {
             Text(display.greeting.isEmpty
                  ? String(localized: "sorting.greeting.default")
                  : display.greeting)
-                .font(TypographyTokens.title(22))
+                .font(TypographyTokens.kidTitle(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
                 .minimumScaleFactor(0.7)
-            HSProgressBar(value: progressValue)
-                .frame(height: 8)
-            HStack {
-                Text(progressLabel)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .monospacedDigit()
-                Spacer()
-                if display.currentStreak >= 2 {
-                    streakBadge
-                }
+            HStack(spacing: SpacingTokens.small) {
+                HSProgressBar(value: progressValue, tint: ColorTokens.Brand.primary)
+                    .frame(height: 12)
+                KidStepChip(
+                    current: min(display.currentWordIndex + 1, display.words.count),
+                    total: display.words.count
+                )
+            }
+            if display.currentStreak >= 2 {
+                streakBadge
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
         .frame(maxWidth: .infinity)
@@ -573,10 +574,6 @@ struct SortingView: View {
     private var progressValue: Double {
         let total = max(display.words.count, 1)
         return Double(display.currentWordIndex) / Double(total)
-    }
-
-    private var progressLabel: String {
-        "\(min(display.currentWordIndex + 1, display.words.count)) / \(display.words.count)"
     }
 
     // MARK: - Group key inference

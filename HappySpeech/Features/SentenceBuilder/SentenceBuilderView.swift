@@ -226,13 +226,17 @@ struct SentenceBuilderView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
             // Лента-слоты (зона сборки).
+            KidSectionLabel(String(localized: "sentenceBuilder.section.sentence"))
+                .padding(.horizontal, SpacingTokens.screenEdge)
             slotLane(round: round)
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer(minLength: 0)
 
             // Банк слов-карточек.
-            bankGrid(round: round)
+            KidSectionLabel(String(localized: "sentenceBuilder.section.words"))
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            bankTray(round: round)
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
             doneButton(round: round)
@@ -299,11 +303,12 @@ struct SentenceBuilderView: View {
         round: SentenceBuilderModels.Start.RoundViewModel
     ) -> some View {
         let columns = [GridItem(.adaptive(minimum: 80), spacing: SpacingTokens.sp2)]
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
+        return LazyVGrid(columns: columns, spacing: SpacingTokens.medium) {
             ForEach(0..<round.slotCount, id: \.self) { index in
                 slotView(index: index, round: round)
             }
         }
+        .padding(.top, SpacingTokens.tiny)
         .accessibilityElement(children: .contain)
     }
 
@@ -325,9 +330,12 @@ struct SentenceBuilderView: View {
                     .fill(card == nil ? ColorTokens.Kid.surfaceAlt : ColorTokens.Brand.primary.opacity(0.12))
                     .overlay(
                         RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                            .stroke(
-                                isHintSlot ? ColorTokens.Brand.lilac : ColorTokens.Kid.inkMuted.opacity(0.3),
-                                style: StrokeStyle(lineWidth: isHintSlot ? 3 : 1.5, dash: card == nil ? [5] : [])
+                            .strokeBorder(
+                                slotStroke(card: card, isHintSlot: isHintSlot),
+                                style: StrokeStyle(
+                                    lineWidth: isHintSlot ? 3 : 2,
+                                    dash: card == nil ? [6, 4] : []
+                                )
                             )
                     )
 
@@ -338,13 +346,17 @@ struct SentenceBuilderView: View {
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
                         .padding(.horizontal, SpacingTokens.sp1)
-                } else {
-                    Text("\(index + 1)")
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.5))
                 }
             }
             .frame(minHeight: 56)
+            .overlay(alignment: .top) {
+                KidSlotOrderBadge(order: index + 1).offset(y: -9)
+            }
+            .overlay(alignment: .topTrailing) {
+                if card != nil, holder.lastFeedback == .hit {
+                    KidCorrectTick().scaleEffect(0.7).offset(x: 6, y: -6)
+                }
+            }
         }
         .buttonStyle(.plain)
         .disabled(card == nil)
@@ -370,6 +382,14 @@ struct SentenceBuilderView: View {
     }
 
     // MARK: - Bank grid (банк слов-карточек)
+
+    private func bankTray(
+        round: SentenceBuilderModels.Start.RoundViewModel
+    ) -> some View {
+        KidTrayContainer {
+            bankGrid(round: round)
+        }
+    }
 
     private func bankGrid(
         round: SentenceBuilderModels.Start.RoundViewModel
@@ -521,6 +541,14 @@ struct SentenceBuilderView: View {
         case .retry:  return .hint
         case .almost, .none: return .question
         }
+    }
+
+    private func slotStroke(
+        card: SentenceBuilderModels.Start.CardViewModel?,
+        isHintSlot: Bool
+    ) -> Color {
+        if isHintSlot { return ColorTokens.Brand.lilac }
+        return card == nil ? ColorTokens.Brand.primary.opacity(0.45) : .clear
     }
 
     // MARK: - Wiring

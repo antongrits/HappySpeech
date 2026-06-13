@@ -132,87 +132,43 @@ struct MinimalPairsView: View {
     // MARK: Round
 
     private var roundView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            lyalyaMascotHeader
-            progressHeader
-            promptBlock
-            optionsRow
-            hintReplayRow
-            Spacer(minLength: 0)
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .overlay(alignment: .bottom) {
-            if display.phase == .feedback {
-                feedbackOverlay
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .padding(.bottom, SpacingTokens.xLarge)
+        KidGameTapScaffold(
+            soundLetter: soundChipLetter,
+            soundTitle: soundChipTitle,
+            stepLabel: display.progressLabel,
+            progress: roundProgress,
+            promptText: display.promptText,
+            mascotState: display.isAnswered ? .happy : .pointing,
+            feedback: currentFeedback,
+            listen: KidGameListenAction(action: replayWord),
+            content: {
+                optionsRow
+                hintReplayRow
             }
-        }
+        )
         .animation(
             reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
             value: display.phase
         )
     }
 
-    private var lyalyaMascotHeader: some View {
-        LyalyaMascotView(state: display.isAnswered ? .happy : .idle, size: 60)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityHidden(true)
+    /// Первая буква контраста («С-Ш» → «С») для sound-chip.
+    private var soundChipLetter: String? {
+        soundContrast.first.map { String($0) }
     }
 
-    private var progressHeader: some View {
-        VStack(spacing: SpacingTokens.tiny) {
-            Text(display.progressLabel)
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .monospacedDigit()
-            ProgressView(value: roundProgress, total: 1.0)
-                .progressViewStyle(.linear)
-                .tint(ColorTokens.Brand.primary)
-                .frame(maxWidth: 260)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(String(localized: "Прогресс сессии"))
-        .accessibilityValue(display.progressLabel)
+    private var soundChipTitle: String? {
+        soundContrast.isEmpty ? nil : soundContrast
     }
 
-    private var promptBlock: some View {
-        HStack(spacing: SpacingTokens.small) {
-            Button(action: replayWord) {
-                Image(systemName: "speaker.wave.2.fill")
-                    .font(TypographyTokens.headline(22))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .frame(width: 56, height: 56)
-                    .background(Circle().fill(ColorTokens.Brand.primary))
-                    .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 3)
-            }
-            .buttonStyle(.plain)
-            .disabled(display.replaysRemaining == 0 && !display.isAnswered)
-            .accessibilityLabel(String(localized: "Повторить слово"))
-            .accessibilityHint(String(localized: "Нажмите, чтобы услышать слово ещё раз"))
-            .accessibilityValue(
-                display.replaysRemaining > 0
-                    ? String(localized: "Доступно повторов: \(display.replaysRemaining)")
-                    : String(localized: "Повторы закончились")
-            )
-
-            Text(display.promptText)
-                .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .padding(SpacingTokens.cardPad)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-        )
+    private var currentFeedback: KidGameFeedback? {
+        guard display.phase == .feedback, !display.feedbackText.isEmpty else { return nil }
+        let text = display.streakLabel.map { "\(display.feedbackText) \($0)" } ?? display.feedbackText
+        return KidGameFeedback(display.correct ? .correct : .incorrect, text)
     }
 
     private var optionsRow: some View {
-        HStack(spacing: SpacingTokens.medium) {
+        HStack(spacing: SpacingTokens.small) {
             if let pair = display.currentPair {
                 if pair.targetIsLeft {
                     optionCard(word: pair.targetWord, emoji: pair.targetEmoji, isTarget: true)
@@ -227,39 +183,20 @@ struct MinimalPairsView: View {
 
     private func optionCard(word: String, emoji: String, isTarget: Bool) -> some View {
         let shouldHighlight = display.showHintHighlight && isTarget
-        let glassStyle: HSLiquidGlassStyle = shouldHighlight
-            ? .tinted(ColorTokens.Brand.primary)
-            : .primary
-        return Button {
-            selectOption(isTarget: isTarget)
-        } label: {
-            HSLiquidGlassCard(style: glassStyle, padding: SpacingTokens.small) {
-                VStack(spacing: SpacingTokens.small) {
-                    HSContentSymbol(emoji, size: 72)
-                    Text(word)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                }
-                .frame(maxWidth: .infinity)
-                .frame(minHeight: 160)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .strokeBorder(cardStroke(isTarget: isTarget, hintHighlight: shouldHighlight), lineWidth: 3)
-            )
-            .scaleEffect(shouldHighlight ? 1.04 : 1.0)
-            .animation(
-                reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
-                value: shouldHighlight
-            )
-        }
-        .buttonStyle(.plain)
-        .disabled(display.isAnswered)
-        .accessibilityLabel(word)
+        let isSelectedCard = display.isAnswered && display.selectedIsTarget == isTarget
+        let state: KidGameCardState = {
+            if isSelectedCard { return display.correct ? .correct : .wrong }
+            if shouldHighlight { return .selected }
+            return .neutral
+        }()
+        return KidGameTapCard(
+            symbol: emoji,
+            word: word,
+            state: state,
+            isLocked: display.isAnswered,
+            onTap: { selectOption(isTarget: isTarget) }
+        )
         .accessibilityHint(String(localized: "Нажмите, если это правильная картинка"))
-        .accessibilityAddTraits(shouldHighlight ? .isSelected : [])
     }
 
     // MARK: Hint & Replay row
@@ -314,38 +251,6 @@ struct MinimalPairsView: View {
         }
         .padding(.horizontal, SpacingTokens.small)
         .opacity(display.isAnswered ? 0.4 : 1.0)
-    }
-
-    // MARK: Feedback overlay
-
-    private var feedbackOverlay: some View {
-        VStack(spacing: SpacingTokens.tiny) {
-            HStack(spacing: SpacingTokens.small) {
-                Image(systemName: display.correct ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .font(TypographyTokens.title(24))
-                Text(display.feedbackText)
-                    .font(TypographyTokens.headline(17))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            if let streak = display.streakLabel {
-                Text(streak)
-                    .font(TypographyTokens.caption(12))
-                    .opacity(0.9)
-            }
-        }
-        .padding(.horizontal, SpacingTokens.large)
-        .padding(.vertical, SpacingTokens.medium)
-        .foregroundStyle(ColorTokens.Overlay.onAccent)
-        .background(
-            Capsule().fill(
-                display.correct
-                    ? ColorTokens.Feedback.correct
-                    : ColorTokens.Feedback.incorrect
-            )
-        )
-        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
-        .accessibilityLabel(display.feedbackText)
     }
 
     // MARK: Completed
@@ -463,28 +368,6 @@ struct MinimalPairsView: View {
     }
 
     // MARK: - Styling helpers
-
-    private func cardFill(isTarget: Bool, hintHighlight: Bool) -> Color {
-        if hintHighlight { return ColorTokens.Brand.primary.opacity(0.15) }
-        guard display.isAnswered,
-              let selected = display.selectedIsTarget else { return ColorTokens.Kid.surface }
-        let cardIsSelected = (selected == isTarget)
-        if !cardIsSelected { return ColorTokens.Kid.surface }
-        return display.correct
-            ? ColorTokens.Feedback.correct.opacity(0.18)
-            : ColorTokens.Feedback.incorrect.opacity(0.18)
-    }
-
-    private func cardStroke(isTarget: Bool, hintHighlight: Bool) -> Color {
-        if hintHighlight { return ColorTokens.Brand.primary }
-        guard display.isAnswered,
-              let selected = display.selectedIsTarget else { return .clear }
-        let cardIsSelected = (selected == isTarget)
-        if !cardIsSelected { return .clear }
-        return display.correct
-            ? ColorTokens.Feedback.correct
-            : ColorTokens.Feedback.incorrect
-    }
 
     private func accuracyColor(_ percent: Int) -> Color {
         switch percent {

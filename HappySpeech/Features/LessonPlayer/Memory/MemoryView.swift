@@ -69,7 +69,8 @@ struct MemoryView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm)
+                .ignoresSafeArea()
             content
         }
         .task {
@@ -127,15 +128,16 @@ struct MemoryView: View {
     private var playingView: some View {
         GeometryReader { geo in
             ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.small) {
+                VStack(spacing: SpacingTokens.regular) {
                     header
+                    mascotStrip
                     grid
                     Spacer(minLength: 0)
                     bottomBar
                 }
                 .frame(minHeight: geo.size.height, alignment: .top)
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.large)
+                .padding(.top, SpacingTokens.regular)
                 .padding(.bottom, SpacingTokens.sp6)
             }
             .scrollBounceBehavior(.basedOnSize)
@@ -143,43 +145,119 @@ struct MemoryView: View {
         }
     }
 
+    // MARK: - Header (title + stat chips + progress)
+
     private var header: some View {
         VStack(spacing: SpacingTokens.small) {
-            HStack(alignment: .firstTextBaseline) {
-                LyalyaMascotView(state: display.streakCount >= 3 ? .celebrating : .idle, size: 52)
-                    .accessibilityHidden(true)
-
+            HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.small) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(display.greeting.isEmpty
-                         ? String(localized: "Найди все пары")
+                         ? String(localized: "Найди пару")
                          : display.greeting)
-                        .font(TypographyTokens.title(18))
+                        .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(2)
                         .minimumScaleFactor(0.85)
                     Text(display.roundLabel)
-                        .font(TypographyTokens.caption(12))
+                        .font(TypographyTokens.caption(12.5))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
-                Spacer()
-                // D-10 v27 — убран дублирующий внутриигровой таймер:
-                // время сессии уже показывает шапка SessionShell.
-            }
-            HStack(spacing: SpacingTokens.small) {
-                Text(String(localized: "Найдено пар: \(display.matchedPairs) из \(display.totalPairs)"))
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-                    .layoutPriority(1)
-                Spacer(minLength: 4)
+                Spacer(minLength: SpacingTokens.tiny)
                 if display.streakCount >= 3 {
                     streakBadge
                 }
             }
-            HSProgressBar(value: matchedProgress)
-                .frame(height: 8)
+
+            statStrip
+
+            VStack(spacing: SpacingTokens.micro) {
+                HSProgressBar(value: matchedProgress)
+                    .frame(height: 8)
+                HStack {
+                    Text(String(localized: "Прогресс"))
+                    Spacer()
+                    Text(String(localized: "\(display.matchedPairs) из \(display.totalPairs) пар"))
+                        .monospacedDigit()
+                }
+                .font(TypographyTokens.caption(11.5))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    // MARK: Stat chips (real model fields only)
+
+    private var statStrip: some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            statChip(
+                dot: ColorTokens.Feedback.correct,
+                value: "\(display.matchedPairs) / \(display.totalPairs)",
+                label: String(localized: "найдено пар")
+            )
+            statChip(
+                dot: ColorTokens.Brand.butter,
+                value: "\(display.hintsRemaining)",
+                label: String(localized: "подсказки")
+            )
+            statChip(
+                dot: ColorTokens.Brand.lilac,
+                value: difficultyShort,
+                label: String(localized: "уровень")
+            )
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(
+            localized: "Найдено пар: \(display.matchedPairs) из \(display.totalPairs). Подсказок: \(display.hintsRemaining). \(display.difficultyLabel)"
+        ))
+    }
+
+    private func statChip(dot: Color, value: String, label: String) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Circle()
+                .fill(dot)
+                .frame(width: 8, height: 8)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(value)
+                    .font(TypographyTokens.caption(15).weight(.bold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                Text(label)
+                    .font(TypographyTokens.caption(10.5).weight(.medium))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, SpacingTokens.tiny)
+        .padding(.vertical, 9)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+        )
+        .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 2)
+    }
+
+    // MARK: Mascot cheer strip
+
+    private var mascotStrip: some View {
+        HStack(alignment: .center, spacing: SpacingTokens.tiny) {
+            Spacer(minLength: 0)
+            HSSpeechBubble(mascotCheer, direction: .right, style: .lyalya, maxWidth: 220)
+            LyalyaMascotView(state: display.streakCount >= 3 ? .celebrating : .happy, size: 50)
+                .accessibilityHidden(true)
         }
         .frame(maxWidth: .infinity)
     }
@@ -221,6 +299,15 @@ struct MemoryView: View {
                     .accessibilityIdentifier("memoryCard_\(index)")
             }
         }
+        .overlay(alignment: .topTrailing) {
+            // Faint inset win-hint stars — decorative, not the focus.
+            Image(systemName: "sparkles")
+                .font(.system(size: 30, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.butter)
+                .opacity(0.13)
+                .offset(x: -4, y: -10)
+                .accessibilityHidden(true)
+        }
     }
 
     private func cardTile(_ card: MemoryCard) -> some View {
@@ -236,11 +323,22 @@ struct MemoryView: View {
                     RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                         .fill(ColorTokens.Feedback.correct.opacity(0.18))
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
-                } else {
+                } else if faceUp {
                     RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                        .fill(faceUp
-                              ? ColorTokens.Kid.surface
-                              : ColorTokens.Brand.primary.opacity(0.85))
+                        .fill(ColorTokens.Kid.surface)
+                } else {
+                    // Coral-tinted «рубашка» — мягкий тёплый градиент в одном hue.
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    ColorTokens.Brand.primaryHi,
+                                    ColorTokens.Brand.primary
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
                 }
                 if faceUp {
                     cardFaceContent(card: card)
@@ -250,6 +348,11 @@ struct MemoryView: View {
             }
             .frame(height: cardHeight)
             .overlay(cardOverlay(card: card, isHinted: isHinted))
+            .overlay(alignment: .topTrailing) {
+                if card.isMatched {
+                    matchedTick
+                }
+            }
             .shadow(color: ColorTokens.Overlay.shadow, radius: 3, y: 1)
             .scaleEffect(card.isMatched && !calmReduce ? 1.02 : 1.0)
             .rotation3DEffect(
@@ -300,9 +403,19 @@ struct MemoryView: View {
     }
 
     private var cardBackContent: some View {
-        Image(systemName: "questionmark")
-            .font(TypographyTokens.title(questionSize).weight(.bold))
+        // Маленький эмблема-знак Ляли на «рубашке» (вместо абстрактного ?).
+        LyalyaMascotView(state: .idle, size: emblemSize)
+            .accessibilityHidden(true)
+    }
+
+    private var matchedTick: some View {
+        Image(systemName: "checkmark")
+            .font(.system(size: 11, weight: .black, design: .rounded))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .frame(width: 20, height: 20)
+            .background(Circle().fill(ColorTokens.Feedback.correct))
+            .shadow(color: ColorTokens.Feedback.correct.opacity(0.45), radius: 3, y: 1)
+            .padding(7)
             .accessibilityHidden(true)
     }
 
@@ -325,13 +438,58 @@ struct MemoryView: View {
     // MARK: - Bottom bar (hints + difficulty)
 
     private var bottomBar: some View {
-        HStack {
-            Text(display.difficultyLabel)
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-            Spacer()
-            hintButton
+        VStack(spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                hintButton
+                Spacer(minLength: SpacingTokens.tiny)
+                replayButton
+            }
+            Text(String(localized: "Кнопка «Дальше» появится после победы"))
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity)
         }
+    }
+
+    private var replayButton: some View {
+        Button {
+            container.soundService.playUISound(.tap)
+            Task {
+                await interactor.loadSession(.init(
+                    soundGroup: soundGroup,
+                    childName: childName,
+                    startDifficulty: .easy
+                ))
+            }
+        } label: {
+            HStack(spacing: SpacingTokens.tiny) {
+                Image(systemName: "arrow.counterclockwise")
+                    .font(TypographyTokens.caption(14).weight(.bold))
+                    .accessibilityHidden(true)
+                Text(String(localized: "Заново"))
+                    .font(TypographyTokens.caption(15).weight(.bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.vertical, 9)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+            )
+            .overlay(
+                Capsule(style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.primary, lineWidth: 1.5)
+            )
+            .foregroundStyle(ColorTokens.Brand.primary)
+        }
+        .buttonStyle(.plain)
+        .disabled(display.phase != .playing)
+        .accessibilityLabel(String(localized: "Заново"))
+        .accessibilityHint(String(localized: "Начать игру сначала"))
     }
 
     private var hintButton: some View {
@@ -524,8 +682,23 @@ struct MemoryView: View {
         display.columns == 6 ? 10 : 12
     }
 
-    private var questionSize: CGFloat {
-        display.columns == 6 ? 18 : 22
+    private var emblemSize: CGFloat {
+        display.columns == 6 ? 30 : 38
+    }
+
+    /// Короткая мотивирующая реплика маскота над сеткой.
+    private var mascotCheer: String {
+        if display.streakCount >= 3 {
+            return String(localized: "Отлично!")
+        }
+        return String(localized: "Найди пару!")
+    }
+
+    /// Сжатый ярлык уровня для stat-чипа (исходный `difficultyLabel`
+    /// может быть длинным, чип узкий на SE).
+    private var difficultyShort: String {
+        let label = display.difficultyLabel
+        return label.isEmpty ? String(localized: "—") : label
     }
 
     // MARK: - Group key inference

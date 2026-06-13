@@ -100,11 +100,15 @@ struct SentenceBuilderKidView: View {
     }
 
     private func assembledZone(interactor: SentenceBuilderKidInteractor) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            KidSectionLabel(String(localized: "sentenceBuilder.yourSentence"))
+            assembledCard(interactor: interactor)
+        }
+    }
+
+    private func assembledCard(interactor: SentenceBuilderKidInteractor) -> some View {
         HSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text(String(localized: "sentenceBuilder.yourSentence"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                 if interactor.state.assembled.isEmpty {
                     Text(String(localized: "sentenceBuilder.tapWords"))
                         .font(TypographyTokens.body(14))
@@ -122,20 +126,21 @@ struct SentenceBuilderKidView: View {
     }
 
     private func availableZone(interactor: SentenceBuilderKidInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Kid.bgSoft)) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text(String(localized: "sentenceBuilder.availableWords"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                if interactor.state.available.isEmpty {
-                    Text(String(localized: "sentenceBuilder.allUsed"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .padding(.vertical, SpacingTokens.sp2)
-                } else {
-                    flowLayout(chips: interactor.state.available, isAssembled: false) { id in
-                        hapticService.impact(.light)
-                        interactor.pickFromAvailable(id)
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            KidSectionLabel(String(localized: "sentenceBuilder.availableWords"))
+            KidTrayContainer {
+                Group {
+                    if interactor.state.available.isEmpty {
+                        Text(String(localized: "sentenceBuilder.allUsed"))
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                            .frame(maxWidth: .infinity, minHeight: 56)
+                    } else {
+                        flowLayout(chips: interactor.state.available, isAssembled: false) { id in
+                            hapticService.impact(.light)
+                            interactor.pickFromAvailable(id)
+                        }
+                        .frame(minHeight: 56)
                     }
                 }
             }

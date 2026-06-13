@@ -99,7 +99,6 @@ struct FourthExtraView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -107,26 +106,14 @@ struct FourthExtraView: View {
         category: "FourthExtra.View"
     )
 
-    private let columns = [
-        GridItem(.flexible(), spacing: SpacingTokens.sp3),
-        GridItem(.flexible(), spacing: SpacingTokens.sp3)
-    ]
+    private var cardColumns: [GridItem] {
+        KidGameTapScaffold<EmptyView>.twoColumnGrid
+    }
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Семантический вариант — тёплый mesh; ненавязчиво.
-                // Reduced Motion: убираем анимированный фон (accessibility +
-                // детерминизм снимков).
-                if !reduceMotion {
-                    HSMeshGradientBackground(palette: backgroundPalette, animated: true)
-                        .ignoresSafeArea()
-                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                        .blendMode(.softLight)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -143,20 +130,7 @@ struct FourthExtraView: View {
                         .accessibilityHidden(true)
                 }
             }
-            .navigationTitle(Text("fourthExtra.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("fourthExtra.close.a11y"))
-                }
-            }
+            .navigationBarHidden(true)
             .task {
                 await setupAndStart()
             }
@@ -164,92 +138,49 @@ struct FourthExtraView: View {
         .environment(\.circuitContext, .kid)
     }
 
-    private var backgroundPalette: HSMeshGradientBackground.Palette {
-        // Фонетика — «прохлада» (звуковая тема); семантика — тепло.
-        holder.currentRound?.variant == .phonetic ? .kidCool : .kidWarm
-    }
-
     // MARK: - Game
 
     private func gameSection(
         round: FourthExtraModels.Start.RoundViewModel
     ) -> some View {
-        GeometryReader { geo in
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.sp4) {
-                    progressHeader(round)
-
-                    // Ляля задаёт вопрос.
-                    HSSpeechBubble(
-                        holder.lastLyalyaLine ?? round.promptLyalya,
-                        direction: .left,
-                        style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
-                    )
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
-                    .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-                    Spacer(minLength: 0)
-
-                    // Сетка 2×2 карточек.
-                    cardsGrid(round: round)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                        .id(round.id)
-                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-                    // Обобщение «своих» при попадании (обруч-категория + текст).
-                    if let grouping = holder.groupingLabel, holder.lastFeedback == .hit {
-                        groupingBanner(grouping)
-                            .padding(.horizontal, SpacingTokens.screenEdge)
-                            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
-                    }
-
-                    Spacer(minLength: 0)
+        KidGameTapScaffold(
+            stepLabel: round.progressLabel,
+            progress: round.progressFraction,
+            promptText: holder.lastLyalyaLine ?? round.promptLyalya,
+            mascotState: mascotState,
+            feedback: currentFeedback,
+            onClose: { exitGame() }
+        ) {
+            LazyVGrid(columns: cardColumns, spacing: SpacingTokens.small) {
+                ForEach(round.cards) { card in
+                    cardButton(card)
                 }
-                .frame(minHeight: geo.size.height, alignment: .top)
-                .padding(.top, SpacingTokens.sp2)
-                .padding(.bottom, SpacingTokens.sp6)
             }
-            .scrollBounceBehavior(.basedOnSize)
-            .safeAreaPadding(.bottom, SpacingTokens.small)
+            .id(round.id)
+            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
             .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
         }
     }
 
-    private func progressHeader(
-        _ round: FourthExtraModels.Start.RoundViewModel
-    ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(round.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                    Capsule()
-                        .fill(ColorTokens.Brand.primary)
-                        .frame(width: max(0, geo.size.width * round.progressFraction))
-                }
-            }
-            .frame(height: 10)
-            .accessibilityHidden(true)
+    private var mascotState: LyalyaState {
+        switch holder.lastFeedback {
+        case .hit:   return .celebrating
+        case .retry: return .encouraging
+        case .almost, .none: return .pointing
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp4)
+    }
+
+    private var currentFeedback: KidGameFeedback? {
+        if holder.lastFeedback == .hit, let grouping = holder.groupingLabel {
+            return KidGameFeedback(.correct, grouping)
+        }
+        if let line = holder.lastLyalyaLine, holder.lastFeedback != nil, holder.lastFeedback != .hit {
+            return KidGameFeedback(holder.lastFeedback == .retry ? .hint : .incorrect, line)
+        }
+        return nil
     }
 
     // MARK: - Cards grid (2×2)
-
-    private func cardsGrid(
-        round: FourthExtraModels.Start.RoundViewModel
-    ) -> some View {
-        LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
-            ForEach(round.cards) { card in
-                cardButton(card)
-            }
-        }
-    }
 
     private func cardButton(
         _ card: FourthExtraModels.Start.CardViewModel
@@ -264,55 +195,23 @@ struct FourthExtraView: View {
             && holder.revealedExtraId != nil
             && card.id != holder.revealedExtraId
 
-        return Button {
-            Task { await chooseCard(card.id) }
-        } label: {
-            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-                VStack(spacing: SpacingTokens.sp2) {
-                    HSContentSymbol(card.imageAsset, size: 64, tint: ColorTokens.Brand.primary)
-                        .scaleEffect(reduceMotion ? 1 : (isRevealedExtra ? 0.7 : 1))
-                        .opacity(isRevealedExtra ? (reduceMotion ? 0.4 : 0.5) : 1)
-                    Text(card.word)
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
-                }
-                .frame(maxWidth: .infinity, minHeight: 96)
-            }
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .stroke(cardStroke(isGrouped: isGrouped, isHinted: isHinted, isMiss: isChosenMiss),
-                            lineWidth: cardStrokeWidth(isGrouped: isGrouped, isHinted: isHinted, isMiss: isChosenMiss))
-            )
-        }
-        .buttonStyle(.plain)
+        let state: KidGameCardState = {
+            if isRevealedExtra { return .dimmed }
+            if isGrouped { return .correct }
+            if isChosenMiss { return .wrong }
+            if isHinted { return .selected }
+            return .neutral
+        }()
+
+        return KidGameTapCard(
+            symbol: card.imageAsset,
+            word: card.word,
+            state: state,
+            isLocked: holder.lastFeedback == .hit,
+            onTap: { Task { await chooseCard(card.id) } }
+        )
         .accessibilityLabel(Text(card.accessibilityLabel))
         .accessibilityHint(Text("fourthExtra.card.hint"))
-        .accessibilityAddTraits(isRevealedExtra ? [.isButton, .isSelected] : .isButton)
-    }
-
-    private func groupingBanner(_ grouping: String) -> some View {
-        HStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: "circle.dashed")
-                .font(.title3.weight(.bold))
-                .foregroundStyle(ColorTokens.Brand.mint)
-                .accessibilityHidden(true)
-            Text(grouping)
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Brand.mint.opacity(0.18))
-        )
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isStaticText)
     }
 
     // MARK: - Summary
@@ -394,28 +293,6 @@ struct FourthExtraView: View {
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    // MARK: - Card styling
-
-    private func cardStroke(isGrouped: Bool, isHinted: Bool, isMiss: Bool) -> Color {
-        if isGrouped { return ColorTokens.Brand.mint }
-        if isHinted { return ColorTokens.Brand.lilac }
-        if isMiss { return ColorTokens.Brand.butter }
-        return .clear
-    }
-
-    private func cardStrokeWidth(isGrouped: Bool, isHinted: Bool, isMiss: Bool) -> CGFloat {
-        if isGrouped || isHinted || isMiss { return 3 }
-        return 0
-    }
-
-    private func bubbleStyle(_ feedback: FeedbackTier?) -> HSSpeechBubble.BubbleStyle {
-        switch feedback {
-        case .hit:    return .lyalya
-        case .retry:  return .hint
-        case .almost, .none: return .question
-        }
     }
 
     // MARK: - Wiring

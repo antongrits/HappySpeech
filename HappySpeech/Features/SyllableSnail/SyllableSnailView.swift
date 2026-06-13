@@ -433,8 +433,9 @@ struct SyllableSnailView: View {
     private func assembleSection(
         round: SyllableSnailModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp4) {
+        VStack(spacing: SpacingTokens.sp3) {
             // Слоты (домики тропинки).
+            KidSectionLabel(String(localized: "syllableSnail.section.path"))
             HStack(spacing: SpacingTokens.sp2) {
                 ForEach(0..<round.pathSlotsCount, id: \.self) { index in
                     slotView(index: index)
@@ -442,12 +443,15 @@ struct SyllableSnailView: View {
             }
 
             // Банк перемешанных слогов.
-            HStack(spacing: SpacingTokens.sp2) {
-                ForEach(holder.bankTiles) { tile in
-                    tileView(tile, inBank: true)
+            KidSectionLabel(String(localized: "syllableSnail.section.syllables"))
+            KidTrayContainer {
+                HStack(spacing: SpacingTokens.sp2) {
+                    ForEach(holder.bankTiles) { tile in
+                        tileView(tile, inBank: true)
+                    }
                 }
+                .frame(minHeight: 60)
             }
-            .frame(minHeight: 60)
 
             Button {
                 Task { await submitAssembled(round: round) }
@@ -490,13 +494,27 @@ struct SyllableSnailView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 56)
             .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                RoundedRectangle(cornerRadius: RadiusTokens.md)
                     .fill(tile == nil ? ColorTokens.Kid.surfaceAlt : ColorTokens.Kid.surface)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .stroke(isHint ? ColorTokens.Brand.butter : Color.clear, lineWidth: isHint ? 3 : 0)
+                RoundedRectangle(cornerRadius: RadiusTokens.md)
+                    .strokeBorder(
+                        slotStroke(tile: tile, isHint: isHint, isActive: index == holder.slotTiles.count),
+                        style: StrokeStyle(
+                            lineWidth: (isHint || tile == nil) ? 2 : 0,
+                            dash: tile == nil ? [6, 4] : []
+                        )
+                    )
             )
+            .overlay(alignment: .top) {
+                KidSlotOrderBadge(order: index + 1).offset(y: -9)
+            }
+            .overlay(alignment: .topTrailing) {
+                if tile != nil, holder.lastFeedback == .hit {
+                    KidCorrectTick().scaleEffect(0.7).offset(x: 6, y: -6)
+                }
+            }
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(
@@ -642,6 +660,18 @@ struct SyllableSnailView: View {
         case .retry:  return .hint
         case .almost, .none: return .question
         }
+    }
+
+    private func slotStroke(
+        tile: SyllableSnailModels.Start.TileViewModel?,
+        isHint: Bool,
+        isActive: Bool
+    ) -> Color {
+        if isHint { return ColorTokens.Brand.butter }
+        guard tile == nil else { return .clear }
+        return isActive
+            ? ColorTokens.Brand.primary
+            : ColorTokens.Brand.primary.opacity(0.45)
     }
 
     // MARK: - Local tile manipulation (B/C)

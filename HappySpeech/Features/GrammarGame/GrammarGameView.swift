@@ -170,27 +170,10 @@ struct GrammarGameView: View {
 
     // MARK: - Background
 
-    @Environment(\.colorScheme) private var colorScheme
-
+    /// Однотонный тёплый кремовый фон эталона kid-game-tap (без mesh/градиент-
+    /// смешивания, без движения).
     private var backgroundLayer: some View {
-        ZStack {
-            LinearGradient(
-                colors: [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-
-            // Step 10 Batch C — Pattern 1: kidCool mesh палитра для grammar game
-            // (прохладный analytical вайб). softLight overlay не перебивает
-            // content, но добавляет dimensionality фону.
-            HSMeshGradientBackground(palette: .kidCool, animated: true)
-                .ignoresSafeArea()
-                .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                .blendMode(.softLight)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
+        ColorTokens.Kid.bg.ignoresSafeArea()
     }
 
     // MARK: - Main content (TopBar + ContentArea + ActionArea)
@@ -207,42 +190,48 @@ struct GrammarGameView: View {
     // MARK: - Top Bar
 
     private var topBar: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: SpacingTokens.small) {
+            // Тонкий коралловый прогресс-бар эталона + чип сложности.
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                difficultyCapsule
+                roundProgressBar
+            }
+
             Button {
                 interactor.requestExit()
             } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(TypographyTokens.title(24))
+                Image(systemName: "xmark")
+                    .font(.system(size: 16, weight: .bold))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .frame(width: 40, height: 40)
+                    .background(Circle().fill(ColorTokens.Kid.surface))
+                    .kidTileShadow()
             }
-            .frame(width: 44, height: 44)
+            .buttonStyle(.plain)
             .accessibilityLabel(String(localized: "grammar.game.exit.confirm", bundle: .main))
-
-            Spacer()
-
-            // Прогресс раундов
-            roundProgressDots
-
-            Spacer()
-
-            // Уровень сложности
-            difficultyCapsule
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-        .frame(height: 52)
+        .padding(.top, SpacingTokens.tiny)
     }
 
-    private var roundProgressDots: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            ForEach(0..<totalRounds, id: \.self) { i in
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(i <= currentRoundIndex
-                          ? ColorTokens.Brand.primary
-                          : ColorTokens.Kid.line)
-                    .frame(width: isSmallDevice ? 14 : 20, height: 8)
+    private var roundProgressBar: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule().fill(ColorTokens.Kid.line)
+                Capsule()
+                    .fill(
+                        LinearGradient(
+                            colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
+                    .frame(width: max(0, geo.size.width * progressFraction))
                     .animation(reduceMotion ? nil : .spring(response: 0.3), value: currentRoundIndex)
             }
         }
+        .frame(height: 8)
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel(
             String(
                 format: String(localized: "grammar.game.round.progress"),
@@ -250,6 +239,11 @@ struct GrammarGameView: View {
                 totalRounds
             )
         )
+    }
+
+    private var progressFraction: Double {
+        guard totalRounds > 0 else { return 0 }
+        return Double(currentRoundIndex + 1) / Double(totalRounds)
     }
 
     private var difficultyCapsule: some View {
@@ -550,9 +544,15 @@ struct GrammarGameView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
 
-            Text("\(sessionCorrectCount) из \(totalRounds) правильно")
+            Text(String(
+                format: String(localized: "grammar.game.session.correctCount %lld %lld", bundle: .main),
+                sessionCorrectCount, totalRounds
+            ))
                 .font(TypographyTokens.headline(20))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
 
             HSButton(
                 String(localized: "grammar.game.cta.next", bundle: .main),
