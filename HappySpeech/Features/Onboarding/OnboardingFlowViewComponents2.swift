@@ -10,60 +10,31 @@ struct OnboardingScheduleStep: View {
     let selectedMinutes: Int
     let onSelect: (Int) -> Void
 
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
-        // P0-FIX (SE/iOS26): обёрнут в ScrollView (как соседние шаги role/name/
-        // goals/sounds/permissions). Маскот 200pt + заголовок + 4 карточки
-        // расписания (~80pt каждая) переполняли экран iPhone SE (667pt) —
-        // нижние пресеты уходили за footer с кнопкой «Далее».
-        ScrollView {
-            VStack(spacing: SpacingTokens.medium) {
-                Spacer(minLength: SpacingTokens.tiny)
+        // Компактная вёрстка без скролла: шапка + 4 карточки расписания.
+        VStack(spacing: SpacingTokens.medium) {
+            OnboardingStepHeader(
+                mascotState: .happy,
+                title: String(localized: "onboarding.schedule.title"),
+                subtitle: String(localized: "onboarding.schedule.subtitle"),
+                mascotSize: 96
+            )
+            .padding(.top, SpacingTokens.small)
 
-                // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: .happy, size: 200)
-                    .opacity(appeared ? 1 : 0)
-                    .accessibilityHidden(true)
-
-                Text(String(localized: "onboarding.schedule.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
-
-                Text(String(localized: "onboarding.schedule.subtitle"))
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-
-                VStack(spacing: SpacingTokens.small) {
-                    ForEach(DailySchedulePreset.allPresets) { preset in
-                        ScheduleRow(
-                            preset: preset,
-                            isSelected: preset.minutes == selectedMinutes,
-                            onTap: { onSelect(preset.minutes) }
-                        )
-                    }
+            VStack(spacing: SpacingTokens.small) {
+                ForEach(DailySchedulePreset.allPresets) { preset in
+                    ScheduleRow(
+                        preset: preset,
+                        isSelected: preset.minutes == selectedMinutes,
+                        onTap: { onSelect(preset.minutes) }
+                    )
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Spacer(minLength: SpacingTokens.medium)
-            }
-            .frame(maxWidth: .infinity)
+            Spacer(minLength: 0)
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -140,89 +111,84 @@ struct OnboardingPermissionsStep: View {
     let onRequestMicrophone: (() -> Void)?
     let onRequestCamera: (() -> Void)?
     let onRequestNotifications: (() -> Void)?
-
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Текущий статус выданных разрешений (из Interactor через display).
+    let micGranted: Bool
+    let cameraGranted: Bool
+    let notificationsGranted: Bool
 
     init(
         onRequestMicrophone: (() -> Void)? = nil,
         onRequestCamera: (() -> Void)? = nil,
-        onRequestNotifications: (() -> Void)? = nil
+        onRequestNotifications: (() -> Void)? = nil,
+        micGranted: Bool = false,
+        cameraGranted: Bool = false,
+        notificationsGranted: Bool = false
     ) {
         self.onRequestMicrophone = onRequestMicrophone
         self.onRequestCamera = onRequestCamera
         self.onRequestNotifications = onRequestNotifications
+        self.micGranted = micGranted
+        self.cameraGranted = cameraGranted
+        self.notificationsGranted = notificationsGranted
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: SpacingTokens.medium) {
-                // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: .pointing, size: 200)
-                    .opacity(appeared ? 1 : 0)
-                    .accessibilityHidden(true)
+        VStack(spacing: SpacingTokens.medium) {
+            OnboardingStepHeader(
+                mascotState: .pointing,
+                title: String(localized: "onboarding.permissions.title"),
+                subtitle: String(localized: "onboarding.permissions.subtitle"),
+                mascotSize: 92
+            )
+            .padding(.top, SpacingTokens.small)
 
-                Text(String(localized: "onboarding.permissions.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
-
-                Text(String(localized: "onboarding.permissions.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-
-                VStack(spacing: SpacingTokens.small) {
-                    permissionCard(
-                        icon: "mic.circle.fill",
+            VStack(spacing: SpacingTokens.small) {
+                permissionCard(
+                    icon: "mic.circle.fill",
+                    texts: (
                         title: String(localized: "onboarding.permissions.mic.title"),
                         body: String(localized: "onboarding.permissions.mic.body"),
-                        allowLabel: String(localized: "permissions.mic.allow"),
-                        color: ColorTokens.Brand.primary,
-                        action: onRequestMicrophone
-                    )
-                    permissionCard(
-                        icon: "camera.circle.fill",
+                        allowLabel: String(localized: "permissions.mic.allow")
+                    ),
+                    color: ColorTokens.Brand.primary,
+                    granted: micGranted,
+                    action: onRequestMicrophone
+                )
+                permissionCard(
+                    icon: "camera.circle.fill",
+                    texts: (
                         title: String(localized: "onboarding.permissions.camera.title"),
                         body: String(localized: "onboarding.permissions.camera.body"),
-                        allowLabel: String(localized: "permissions.camera.allow"),
-                        color: ColorTokens.Brand.lilac,
-                        action: onRequestCamera
-                    )
-                    permissionCard(
-                        icon: "bell.circle.fill",
+                        allowLabel: String(localized: "permissions.camera.allow")
+                    ),
+                    color: ColorTokens.Brand.lilac,
+                    granted: cameraGranted,
+                    action: onRequestCamera
+                )
+                permissionCard(
+                    icon: "bell.circle.fill",
+                    texts: (
                         title: String(localized: "onboarding.permissions.notifications.title"),
                         body: String(localized: "onboarding.permissions.notifications.body"),
-                        allowLabel: String(localized: "permissions.notif.allow"),
-                        color: ColorTokens.Brand.butter,
-                        action: onRequestNotifications
-                    )
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
+                        allowLabel: String(localized: "permissions.notif.allow")
+                    ),
+                    color: ColorTokens.Brand.butter,
+                    granted: notificationsGranted,
+                    action: onRequestNotifications
+                )
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Spacer(minLength: SpacingTokens.small)
-            }
+            Spacer(minLength: 0)
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 
     private func permissionCard(
         icon: String,
-        title: String,
-        body: String,
-        allowLabel: String,
+        texts: (title: String, body: String, allowLabel: String),
         color: Color,
+        granted: Bool,
         action: (() -> Void)?
     ) -> some View {
         HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.medium) {
@@ -233,12 +199,12 @@ struct OnboardingPermissionsStep: View {
                         .foregroundStyle(color)
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                        Text(title)
+                        Text(texts.title)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .lineLimit(2)
                             .minimumScaleFactor(0.85)
-                        Text(body)
+                        Text(texts.body)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(3)
@@ -247,12 +213,14 @@ struct OnboardingPermissionsStep: View {
                     Spacer()
                 }
 
-                // Plan v21 Block A.fix — CTA «Разрешить ...» дёргает callback
-                // только при явном tap. iOS modal появляется после tap, что
-                // позволяет пользователю прочитать описание до запроса.
-                if let action {
+                // Granted: показываем чек-пилюлю «Разрешено» (Semantic.success —
+                // мелкий семантический акцент). Иначе — CTA «Разрешить ...», который
+                // дёргает callback только при явном tap (iOS modal после tap).
+                if granted {
+                    grantedBadge
+                } else if let action {
                     Button(action: action) {
-                        Text(allowLabel)
+                        Text(texts.allowLabel)
                             .font(TypographyTokens.headline(14))
                             .foregroundStyle(color)
                             .padding(.horizontal, SpacingTokens.medium)
@@ -263,12 +231,32 @@ struct OnboardingPermissionsStep: View {
                             )
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel(allowLabel)
+                    .accessibilityLabel(texts.allowLabel)
                     .accessibilityAddTraits(.isButton)
                 }
             }
         }
         .accessibilityElement(children: .contain)
+        .accessibilityValue(granted ? String(localized: "onboarding.permissions.mic.granted") : "")
+    }
+
+    private var grantedBadge: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Semantic.success)
+                .accessibilityHidden(true)
+            Text(String(localized: "onboarding.permissions.mic.granted"))
+                .font(TypographyTokens.headline(14))
+                .foregroundStyle(ColorTokens.Semantic.success)
+        }
+        .padding(.horizontal, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(
+            Capsule()
+                .fill(ColorTokens.Semantic.success.opacity(0.14))
+        )
+        .accessibilityLabel(String(localized: "onboarding.permissions.mic.granted"))
     }
 }
 
@@ -374,96 +362,98 @@ struct OnboardingCompletionStep: View {
     /// Callback при изменении состояния чекбокса (вызывает interactor).
     let onTogglePrivacy: (Bool) -> Void
 
-    @State private var confettiAppeared = false
+    @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    // Block D v16: эмодзи-частицы заменены на SF Symbol particles + tinted ColorTokens.
-    private let confettiSymbols: [(systemName: String, tint: Color)] = [
-        ("party.popper.fill", ColorTokens.Brand.gold),
-        ("sparkles",          ColorTokens.Brand.primary),
-        ("star.fill",         ColorTokens.Brand.gold),
-        ("sparkle",           ColorTokens.Brand.lilac),
-        ("heart.fill",        ColorTokens.Brand.rose),
-        ("star.fill",         ColorTokens.Brand.sky)
-    ]
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        ZStack {
-            ForEach(0..<confettiSymbols.count * 3, id: \.self) { i in
-                let particle = confettiSymbols[i % confettiSymbols.count]
-                Image(systemName: particle.systemName)
-                    .font(.system(size: CGFloat.random(in: 22...32), weight: .regular))
-                    .foregroundStyle(particle.tint)
-                    .offset(
-                        x: CGFloat.random(in: -160...160),
-                        y: confettiAppeared ? CGFloat.random(in: 200...500) : -CGFloat.random(in: 200...400)
-                    )
-                    .opacity(confettiAppeared ? 0.9 : 0)
-                    .accessibilityHidden(true)
-            }
+        // Спокойный статичный праздник: маскот в круге + аватар-бейдж + заголовок
+        // с именем + согласие. БЕЗ хаотичной анимации падающих звёзд (убрана —
+        // выглядела неряшливо). Контент влезает на SE без скролла.
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                Spacer(minLength: SpacingTokens.small)
 
-            ScrollView {
-                VStack(spacing: SpacingTokens.large) {
-                    Spacer(minLength: SpacingTokens.small)
+                celebrationMedallion
 
-                    LyalyaHeroView(state: .celebrating, size: 200)
-                        .accessibilityHidden(true)
+                VStack(spacing: SpacingTokens.small) {
+                    Text(String(
+                        format: String(localized: "onboarding.completion.title"),
+                        profile.childName.isEmpty
+                            ? String(localized: "onboarding.completion.placeholderName")
+                            : profile.childName
+                    ))
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityAddTraits(.isHeader)
 
-                    // Block D v16: avatar string is now an Asset name (illustrationName).
-                    // Backward-compat: если в строке legacy эмодзи — фолбэк на mascot_lyalya_happy.
-                    Image(profile.childAvatar.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
-                          ? profile.childAvatar
-                          : "mascot_lyalya_happy")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 72, height: 72)
-                        .clipShape(Circle())
-                        .accessibilityHidden(true)
-
-                    VStack(spacing: SpacingTokens.small) {
-                        Text(String(
-                            format: String(localized: "onboarding.completion.title"),
-                            profile.childName.isEmpty
-                                ? String(localized: "onboarding.completion.placeholderName")
-                                : profile.childName
-                        ))
-                        .font(TypographyTokens.title(26))
-                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(String(localized: "onboarding.completion.subtitle"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
-                        .accessibilityAddTraits(.isHeader)
-
-                        Text(String(localized: "onboarding.completion.subtitle"))
-                            .font(TypographyTokens.body(15))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(nil)
-                            .minimumScaleFactor(0.85)
-                            .padding(.horizontal, SpacingTokens.large)
-                            .lineSpacing(4)
-                    }
-
-                    // MARK: Родительское согласие (COPPA)
-                    // Чекбокс обязателен: completeOnboarding проверяет profile.privacyAccepted.
-                    // Данные обрабатываются ЛОКАЛЬНО — без облака и внешних сервисов.
-                    privacyConsentToggle
-
-                    Spacer(minLength: SpacingTokens.medium)
+                        .padding(.horizontal, SpacingTokens.large)
+                        .lineSpacing(4)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                // MARK: Родительское согласие (COPPA)
+                // Чекбокс обязателен: completeOnboarding проверяет profile.privacyAccepted.
+                // Данные обрабатываются ЛОКАЛЬНО — без облака и внешних сервисов.
+                privacyConsentToggle
+
+                Spacer(minLength: SpacingTokens.small)
             }
-            .scrollBounceBehavior(.basedOnSize)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 12)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: appeared)
         }
-        .onAppear {
-            if reduceMotion {
-                confettiAppeared = true
-            } else {
-                withAnimation(.easeOut(duration: 1.6)) {
-                    confettiAppeared = true
-                }
+        .scrollBounceBehavior(.basedOnSize)
+        .task { appeared = true }
+    }
+
+    // MARK: - Celebration medallion
+
+    /// Маскот Ляля в мягком круге с маленьким бейджем выбранного аватара.
+    private var celebrationMedallion: some View {
+        ZStack(alignment: .bottomTrailing) {
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Kid.surface)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(ColorTokens.Brand.primary.opacity(0.18), lineWidth: 2)
+                    )
+                    .frame(width: 168, height: 168)
+                    .shadow(
+                        color: ColorTokens.Brand.primary.opacity(colorScheme == .dark ? 0.10 : 0.14),
+                        radius: 12, x: 0, y: 5
+                    )
+                LyalyaHeroView(state: .celebrating, size: 144)
+                    .opacity(colorScheme == .dark ? 0.94 : 1.0)
             }
+
+            avatarBadge
+                .offset(x: 4, y: 4)
+        }
+        .accessibilityHidden(true)
+    }
+
+    /// Бейдж выбранного аватара ребёнка — чистый SF Symbol по style-id.
+    private var avatarBadge: some View {
+        ZStack {
+            Circle()
+                .fill(ColorTokens.Brand.primary)
+                .frame(width: 46, height: 46)
+                .overlay(Circle().strokeBorder(ColorTokens.Kid.bg, lineWidth: 3))
+            Image(systemName: OnboardingProfile.avatarSymbol(for: profile.childAvatar))
+                .font(.system(size: 20, weight: .regular))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
     }
 
@@ -535,6 +525,73 @@ struct OnboardingCompletionStep: View {
                             ? String(localized: "accessibility.checkbox.checked")
                             : String(localized: "accessibility.checkbox.unchecked"))
         .accessibilityAddTraits(.isButton)
+    }
+}
+
+// MARK: - OnboardingStepHeader
+//
+// Единая компактная «шапка» шага онбординга по эталону onboarding-step.png:
+// компактный маскот Ляля в мягком кремовом круге сверху → заголовок →
+// подзаголовок. Заменяет прежний гигантский 200pt-маскот + отдельный
+// плавающий пузырь, который перекрывал интерактив. Маскот ~104pt влезает на
+// SE 375×667 вместе с контентом и CTA без скролла.
+
+struct OnboardingStepHeader: View {
+    let mascotState: LyalyaState
+    let title: String
+    let subtitle: String
+    var mascotSize: CGFloat = 104
+
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.small) {
+            mascotMedallion
+
+            Text(title)
+                .font(TypographyTokens.title(24))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.medium)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(subtitle)
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.large)
+                .lineSpacing(2)
+        }
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 10)
+        .animation(reduceMotion ? nil : MotionTokens.spring, value: appeared)
+        .task { appeared = true }
+    }
+
+    private var mascotMedallion: some View {
+        ZStack {
+            Circle()
+                .fill(ColorTokens.Kid.surface)
+                .overlay(
+                    Circle()
+                        .strokeBorder(ColorTokens.Brand.primary.opacity(0.18), lineWidth: 1.5)
+                )
+                .frame(width: mascotSize + 20, height: mascotSize + 20)
+                .shadow(
+                    color: ColorTokens.Brand.primary.opacity(colorScheme == .dark ? 0.08 : 0.12),
+                    radius: 10, x: 0, y: 4
+                )
+
+            LyalyaMascotView(state: mascotState, size: mascotSize)
+                .opacity(colorScheme == .dark ? 0.94 : 1.0)
+        }
+        .accessibilityHidden(true)
     }
 }
 

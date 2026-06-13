@@ -92,6 +92,19 @@ public enum OnboardingStep: Int, Sendable, CaseIterable {
         case .completion:     return String(localized: "onboarding.step.completion.title")
         }
     }
+
+    /// Шаги, реально показываемые пользователю в стандартном flow (вариант A).
+    /// `.modelDownload` исключён: ML-модели зашиты в бандл, отдельной «загрузки»
+    /// нет. Используется Presenter'ом для корректной нумерации «N из M» и
+    /// прогресс-бара — иначе номер прыгал бы через скрытый шаг.
+    public static var flowSteps: [OnboardingStep] {
+        allCases.filter { $0 != .modelDownload }
+    }
+
+    /// 1-based позиция шага среди видимых `flowSteps` (для прогресса).
+    public var flowIndex: Int {
+        (Self.flowSteps.firstIndex(of: self) ?? rawValue) + 1
+    }
 }
 
 // MARK: - UserRole + Onboarding metadata
@@ -224,7 +237,7 @@ public struct OnboardingProfile: Sendable, Equatable {
         role: UserRole = .parent,
         childName: String = "",
         childAge: Int = 6,
-        childAvatar: String = "word_cat",
+        childAvatar: String = "cat",
         childGender: ChildGender = .notSpecified,
         goals: Set<String> = [],
         difficultSounds: Set<String> = [],
@@ -256,11 +269,30 @@ public struct OnboardingProfile: Sendable, Equatable {
         self.lyalyaPreset = lyalyaPreset
     }
 
-    // Block D v16 / G v18: иллюстрационные ассеты аватаров.
-    // FALLBACK: panda → word_bear, lion → reward_champion.
+    /// Аватары ребёнка — канонические style-id, совместимые со всем приложением
+    /// (`ProfileEditor`, `FamilyAchievements`, `ParentHome` маппят именно эти id).
+    /// В онбординге каждый id рисуется ЧИСТЫМ SF Symbol'ом животного (без
+    /// растровой бахромы/обрезки). Все 5 различимы, single-select по id.
     public static let availableAvatars: [String] = [
-        "word_cat", "word_dog", "word_fox", "word_bear", "word_bear", "reward_champion"
+        "cat", "fox", "bear", "frog", "butterfly"
     ]
+
+    /// SF Symbol для аватар-style id (чистый вектор, без обрезки).
+    /// Все символы — iOS 17-safe (cat.fill/dog.fill только с iOS 18, не используем
+    /// в активном наборе). Различимые глифы; неизвестный id → нейтральный персонаж.
+    public static func avatarSymbol(for style: String) -> String {
+        switch style.lowercased() {
+        case "cat":       return "pawprint.fill"
+        case "fox":       return "hare.fill"
+        case "bear":      return "teddybear.fill"
+        case "frog":      return "tortoise.fill"
+        case "butterfly": return "ladybug.fill"
+        case "bird", "owl": return "bird.fill"
+        case "fish":      return "fish.fill"
+        case "rabbit":    return "hare.fill"
+        default:          return "person.crop.circle.fill"
+        }
+    }
 
     /// Целевой возраст 5–8 лет (методическое требование).
     /// Допустимый диапазон 3–12 лет — крайние возраста показываются «вне рекомендованного».

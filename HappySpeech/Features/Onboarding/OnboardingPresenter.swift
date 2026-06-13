@@ -40,7 +40,7 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
     // MARK: - PresentationLogic
 
     func presentLoadOnboarding(_ response: OnboardingModels.LoadOnboarding.Response) {
-        let total = OnboardingStep.allCases.count
+        let total = OnboardingStep.flowSteps.count
         let advance = canAdvance(from: response.initialStep, profile: response.profile)
         display?.displayLoadOnboarding(.init(
             currentStep: response.initialStep,
@@ -54,7 +54,7 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
     }
 
     func presentAdvanceStep(_ response: OnboardingModels.AdvanceStep.Response) {
-        let total = OnboardingStep.allCases.count
+        let total = OnboardingStep.flowSteps.count
         let advance = canAdvance(from: response.currentStep, profile: response.profile)
         display?.displayAdvanceStep(.init(
             currentStep: response.currentStep,
@@ -69,7 +69,7 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
     }
 
     func presentGoBack(_ response: OnboardingModels.GoBack.Response) {
-        let total = OnboardingStep.allCases.count
+        let total = OnboardingStep.flowSteps.count
         let advance = canAdvance(from: response.currentStep, profile: response.profile)
         display?.displayGoBack(.init(
             currentStep: response.currentStep,
@@ -124,7 +124,7 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
     }
 
     func presentSkipPermissions(_ response: OnboardingModels.SkipPermissions.Response) {
-        let total = OnboardingStep.allCases.count
+        let total = OnboardingStep.flowSteps.count
         display?.displaySkipPermissions(.init(
             currentStep: response.currentStep,
             totalSteps: total,
@@ -262,11 +262,13 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
 
     private func progress(from step: OnboardingStep, total: Int) -> Double {
         guard total > 0 else { return 0 }
-        return Double(step.rawValue + 1) / Double(total)
+        // Считаем по видимым шагам (modelDownload исключён) — иначе прогресс
+        // прыгал бы через скрытый шаг.
+        return Double(step.flowIndex) / Double(total)
     }
 
     private func progressLabel(from step: OnboardingStep, total: Int) -> String {
-        String(format: String(localized: "onboarding.progress.label"), step.rawValue + 1, total)
+        String(format: String(localized: "onboarding.progress.label"), step.flowIndex, total)
     }
 
     /// Фраза Ляли для каждого шага онбординга.

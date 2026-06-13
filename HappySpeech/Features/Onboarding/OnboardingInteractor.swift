@@ -462,6 +462,12 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         case .sounds:
             // Показываем звуки только если в goals есть «произношение»
             return profile.goals.contains("pronunciation") || profile.goals.isEmpty
+        case .modelDownload:
+            // ML-модели зашиты в бандл приложения — отдельный шаг «загрузки»
+            // больше не нужен (всё готово сразу). Шаг исключён из flow целиком;
+            // навигация вперёд/назад его проскакивает. Нумерация «N из …»
+            // считает только видимые шаги (см. OnboardingPresenter).
+            return false
         default:
             return true
         }

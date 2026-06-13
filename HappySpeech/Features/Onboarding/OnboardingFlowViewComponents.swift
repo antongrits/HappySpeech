@@ -13,13 +13,27 @@ struct OnboardingWelcomeStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
-            Spacer()
-            // P-FIX (SE/iOS26): контент welcome-шага ВСЕГДА видим — без opacity-гейта,
-            // который мог застрять на 0 (экран выглядел пустым). Вход — только мягкий
-            // offset-settle через `.task` (надёжнее onAppear); offset не скрывает контент.
-            LyalyaHeroView(state: .waving, size: 240)
-                .opacity(colorScheme == .dark ? 0.92 : 1.0)
-                .accessibilityHidden(true)
+            Spacer(minLength: SpacingTokens.medium)
+
+            // Welcome — единственный шаг с крупным приветственным маскотом в
+            // мягком круге. Контент ВСЕГДА видим (без opacity-гейта), вход —
+            // мягкий offset-settle через `.task`.
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Kid.surface)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(ColorTokens.Brand.primary.opacity(0.16), lineWidth: 2)
+                    )
+                    .frame(width: 196, height: 196)
+                    .shadow(
+                        color: ColorTokens.Brand.primary.opacity(colorScheme == .dark ? 0.10 : 0.14),
+                        radius: 14, x: 0, y: 6
+                    )
+                LyalyaHeroView(state: .waving, size: 168)
+                    .opacity(colorScheme == .dark ? 0.94 : 1.0)
+            }
+            .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
                 Text(String(localized: "onboarding.welcome.title"))
@@ -27,7 +41,7 @@ struct OnboardingWelcomeStep: View {
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
-                    .minimumScaleFactor(0.8)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
 
@@ -43,7 +57,7 @@ struct OnboardingWelcomeStep: View {
             .offset(y: appeared ? 0 : 14)
             .animation(reduceMotion ? nil : MotionTokens.spring, value: appeared)
 
-            Spacer()
+            Spacer(minLength: SpacingTokens.medium)
         }
         .task {
             appeared = true
@@ -57,59 +71,33 @@ struct OnboardingRoleStep: View {
     let selectedRole: UserRole
     let onSelect: (UserRole) -> Void
 
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
-        // P1-01 v25: обёрнут в ScrollView (как соседние шаги childName/goals/sounds) —
-        // маскот 200pt + 3 карточки переполняли экран iPhone SE (667pt),
-        // карточка «Ребёнок» и кнопка «Далее» уходили за нижний край без прокрутки.
-        ScrollView {
-            VStack(spacing: SpacingTokens.medium) {
-                Spacer(minLength: SpacingTokens.small)
+        // Компактная вёрстка по эталону onboarding-step: шапка (маскот в круге +
+        // заголовок + подзаголовок) + 3 карточки ролей. Всё влезает на SE 375×667
+        // без скролла — гигантский 200pt-маскот заменён на 96pt-медальон.
+        VStack(spacing: SpacingTokens.medium) {
+            OnboardingStepHeader(
+                mascotState: .pointing,
+                title: String(localized: "onboarding.role.title"),
+                subtitle: String(localized: "onboarding.role.subtitle"),
+                mascotSize: 96
+            )
+            .padding(.top, SpacingTokens.small)
 
-                // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: .pointing, size: 200)
-                    .opacity(appeared ? 1 : 0)
-                    .accessibilityHidden(true)
-
-                Text(String(localized: "onboarding.role.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
-
-                Text(String(localized: "onboarding.role.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-
-                VStack(spacing: SpacingTokens.small) {
-                    ForEach(UserRole.allCases) { role in
-                        OnboardingRoleCard(
-                            role: role,
-                            isSelected: role == selectedRole,
-                            onTap: { onSelect(role) }
-                        )
-                    }
+            VStack(spacing: SpacingTokens.small) {
+                ForEach(UserRole.allCases) { role in
+                    OnboardingRoleCard(
+                        role: role,
+                        isSelected: role == selectedRole,
+                        onTap: { onSelect(role) }
+                    )
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Spacer(minLength: SpacingTokens.medium)
-            }
-            .frame(maxWidth: .infinity)
+            Spacer(minLength: 0)
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -179,98 +167,107 @@ struct OnboardingNameStep: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: SpacingTokens.large) {
-                Spacer(minLength: SpacingTokens.medium)
+        VStack(spacing: SpacingTokens.medium) {
+            OnboardingStepHeader(
+                mascotState: .encouraging,
+                title: String(localized: "onboarding.name.title"),
+                subtitle: String(localized: "onboarding.name.subtitle"),
+                mascotSize: 96
+            )
+            .padding(.top, SpacingTokens.small)
 
-                // E v21: Step 3 child name — .encouraging (3D Ляля поддерживает выбор имени).
-                LyalyaHeroView(state: .encouraging, size: 200)
-                    .accessibilityHidden(true)
-
-                Text(String(localized: "onboarding.name.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .accessibilityAddTraits(.isHeader)
-
-                Text(String(localized: "onboarding.name.subtitle"))
-                    .font(TypographyTokens.body(14))
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                Text(String(localized: "onboarding.profile.name.label"))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+
+                TextField(String(localized: "onboarding.name.placeholder"), text: $name)
+                    .font(TypographyTokens.headline(18))
                     .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .padding(.vertical, SpacingTokens.medium)
                     .padding(.horizontal, SpacingTokens.large)
-
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "onboarding.profile.name.label"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.6)
-
-                    TextField(String(localized: "onboarding.name.placeholder"), text: $name)
-                        .font(TypographyTokens.headline(18))
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .padding(.vertical, SpacingTokens.medium)
-                        .padding(.horizontal, SpacingTokens.large)
-                        .background(
-                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                                .fill(ColorTokens.Kid.surface)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                                        .strokeBorder(
-                                            nameFocused ? ColorTokens.Brand.primary : Color.clear,
-                                            lineWidth: 2
-                                        )
-                                )
-                        )
-                        .focused($nameFocused)
-                        .submitLabel(.done)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.words)
-                        .onChange(of: name) { _, newValue in onChange(newValue, avatar) }
-                        .onSubmit { nameFocused = false }
-                        .accessibilityLabel(String(localized: "onboarding.profile.name.label"))
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "onboarding.profile.avatar.label"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.6)
-
-                    HStack(spacing: SpacingTokens.tiny) {
-                        ForEach(OnboardingProfile.availableAvatars, id: \.self) { option in
-                            AvatarOption(
-                                emoji: option,
-                                isSelected: avatar == option,
-                                onTap: {
-                                    avatar = option
-                                    onChange(name, avatar)
-                                }
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .fill(ColorTokens.Kid.surface)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                    .strokeBorder(
+                                        nameFocused ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
+                                        lineWidth: nameFocused ? 2 : 1
+                                    )
                             )
-                        }
+                    )
+                    .focused($nameFocused)
+                    .submitLabel(.done)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.words)
+                    .onChange(of: name) { _, newValue in onChange(newValue, avatar) }
+                    .onSubmit { nameFocused = false }
+                    .accessibilityLabel(String(localized: "onboarding.profile.name.label"))
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                Text(String(localized: "onboarding.profile.avatar.label"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+
+                // Single-select: каждый аватар имеет УНИКАЛЬНЫЙ id (sf:cat … sf:hare),
+                // выбор одного снимает остальные. 6 различимых животных в равномерной
+                // сетке с симметричными отступами.
+                HStack(spacing: SpacingTokens.small) {
+                    ForEach(Array(OnboardingProfile.availableAvatars.enumerated()), id: \.offset) { index, option in
+                        AvatarOption(
+                            avatarToken: option,
+                            tint: Self.avatarTint(index: index),
+                            isSelected: avatar == option,
+                            onTap: {
+                                avatar = option
+                                onChange(name, avatar)
+                            }
+                        )
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                Spacer(minLength: SpacingTokens.large)
+                .frame(maxWidth: .infinity)
             }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            Spacer(minLength: 0)
         }
+        .frame(maxWidth: .infinity)
+        // Закрытие клавиатуры по тапу ФОНА — на заднем слое, чтобы НЕ перехватывать
+        // тапы по кнопкам-аватарам (раньше parent .onTapGesture глотал их выбор).
+        .background(
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture { nameFocused = false }
+        )
+    }
+
+    /// Тёплый акцент аватара по индексу — циклически из палитры приложения.
+    private static func avatarTint(index: Int) -> Color {
+        let palette: [Color] = [
+            ColorTokens.Brand.primary,
+            ColorTokens.Brand.lilac,
+            ColorTokens.Brand.rose,
+            ColorTokens.Brand.butter,
+            ColorTokens.Brand.gold,
+            ColorTokens.Brand.primaryHi
+        ]
+        return palette[index % palette.count]
     }
 }
 
 struct AvatarOption: View {
-    /// Block D v16: parameter `emoji` оставлен по имени для совместимости callsites,
-    /// но его значение теперь — Asset name из Assets.xcassets.
-    let emoji: String
+    /// Канонический style-id аватара (`cat`/`fox`/…) — совместим со всем
+    /// приложением. Рисуется чистым SF Symbol'ом без растровой бахромы.
+    let avatarToken: String
+    let tint: Color
     let isSelected: Bool
     let onTap: () -> Void
 
@@ -278,28 +275,28 @@ struct AvatarOption: View {
 
     var body: some View {
         Button(action: onTap) {
-            Image(emoji)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .padding(SpacingTokens.micro)
-                .frame(width: 52, height: 52)
-                .background(
-                    Circle()
-                        .fill(isSelected ? ColorTokens.Brand.primary.opacity(0.15) : ColorTokens.Kid.surface)
-                        .overlay(
-                            Circle()
-                                .strokeBorder(
-                                    isSelected ? ColorTokens.Brand.primary : Color.clear,
-                                    lineWidth: 2
-                                )
-                        )
-                )
-                .clipShape(Circle())
-                .scaleEffect(isSelected ? 1.1 : 1.0)
-                .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
+            ZStack {
+                Circle()
+                    .fill(isSelected ? tint.opacity(0.18) : ColorTokens.Kid.surface)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(
+                                isSelected ? tint : ColorTokens.Kid.line,
+                                lineWidth: isSelected ? 2.5 : 1
+                            )
+                    )
+
+                // Чистый векторный глиф — без растровой бахромы/обрезки.
+                Image(systemName: OnboardingProfile.avatarSymbol(for: avatarToken))
+                    .font(.system(size: 26, weight: .regular))
+                    .foregroundStyle(isSelected ? tint : ColorTokens.Kid.inkMuted)
+            }
+            .frame(width: 56, height: 56)
+            .scaleEffect(isSelected ? 1.08 : 1.0)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(String(format: String(localized: "onboarding.a11y.avatar"), emoji))
+        .accessibilityLabel(String(format: String(localized: "onboarding.a11y.avatar"), avatarToken))
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 }
@@ -313,74 +310,54 @@ struct OnboardingAgeStep: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        // P0-FIX (SE/iOS26): обёрнут в ScrollView (как соседние шаги role/name/
-        // goals/sounds). Маскот 200pt + заголовок + 5 возрастных кружков 70pt +
-        // wheel-picker 110pt переполняли экран iPhone SE (667pt) — кнопка «Далее»
-        // в нижнем footer'е оставалась доступна, но контент шага уезжал за неё и
-        // обрезался. ScrollView гарантирует, что весь шаг доступен прокруткой.
-        ScrollView {
-            VStack(spacing: SpacingTokens.large) {
-                Spacer(minLength: SpacingTokens.medium)
+        // Компактная вёрстка без скролла: шапка + ряд рекомендованных возрастов
+        // (5–8) + компактный wheel-picker для прочих возрастов. На SE влезает.
+        VStack(spacing: SpacingTokens.medium) {
+            OnboardingStepHeader(
+                mascotState: .thinking,
+                title: String(localized: "onboarding.age.title"),
+                subtitle: String(localized: "onboarding.age.subtitle"),
+                mascotSize: 96
+            )
+            .padding(.top, SpacingTokens.small)
 
-                LyalyaHeroView(state: .thinking, size: 200)
-                    .accessibilityHidden(true)
-
-                VStack(spacing: SpacingTokens.small) {
-                    Text(String(localized: "onboarding.age.title"))
-                        .font(TypographyTokens.title(24))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                        .padding(.horizontal, SpacingTokens.medium)
-                        .accessibilityAddTraits(.isHeader)
-
-                    Text(String(localized: "onboarding.age.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .padding(.horizontal, SpacingTokens.large)
+            HStack(spacing: SpacingTokens.small) {
+                ForEach(OnboardingProfile.recommendedAgeRange, id: \.self) { value in
+                    AgeBubble(
+                        value: value,
+                        isSelected: age == value,
+                        onTap: { onChange(value) }
+                    )
                 }
-
-                HStack(spacing: SpacingTokens.small) {
-                    ForEach(OnboardingProfile.recommendedAgeRange, id: \.self) { value in
-                        AgeBubble(
-                            value: value,
-                            isSelected: age == value,
-                            onTap: { onChange(value) }
-                        )
-                    }
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "onboarding.age.other.label"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.6)
-
-                    Picker(
-                        String(localized: "onboarding.profile.age.label"),
-                        selection: Binding(get: { age }, set: { onChange($0) })
-                    ) {
-                        ForEach(OnboardingProfile.availableAges, id: \.self) { value in
-                            Text(String(format: String(localized: "onboarding.profile.age.years"), value))
-                                .tag(value)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .frame(height: 110)
-                    .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                Spacer(minLength: SpacingTokens.medium)
             }
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                Text(String(localized: "onboarding.age.other.label"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+
+                Picker(
+                    String(localized: "onboarding.profile.age.label"),
+                    selection: Binding(get: { age }, set: { onChange($0) })
+                ) {
+                    ForEach(OnboardingProfile.availableAges, id: \.self) { value in
+                        Text(String(format: String(localized: "onboarding.profile.age.years"), value))
+                            .tag(value)
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 100)
+                .clipped()
+                .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            Spacer(minLength: 0)
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -428,34 +405,18 @@ struct OnboardingGoalsStep: View {
     let selectedGoals: Set<String>
     let onToggle: (String) -> Void
 
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            // E v21: Step 5 goals — .thinking (3D Ляля размышляет над целями).
-            LyalyaHeroView(state: .thinking, size: 200)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
-                .padding(.top, SpacingTokens.small)
+            OnboardingStepHeader(
+                mascotState: .thinking,
+                title: String(localized: "onboarding.goals.title"),
+                subtitle: String(localized: "onboarding.goals.subtitle"),
+                mascotSize: 96
+            )
+            .padding(.top, SpacingTokens.small)
 
-            Text(String(localized: "onboarding.goals.title"))
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, SpacingTokens.medium)
-                .accessibilityAddTraits(.isHeader)
-
-            Text(String(localized: "onboarding.goals.subtitle"))
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
-
+            // 5 целей — ScrollView включается только если контент реально
+            // переполняет экран (basedOnSize). На 16 Pro скролла нет.
             ScrollView {
                 VStack(spacing: SpacingTokens.small) {
                     ForEach(OnboardingProfile.availableGoals, id: \.id) { goal in
@@ -467,13 +428,11 @@ struct OnboardingGoalsStep: View {
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.small)
             }
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -523,52 +482,33 @@ struct OnboardingSoundsStep: View {
     let selectedSounds: Set<String>
     let onToggle: (String) -> Void
 
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private let columns = [
-        GridItem(.adaptive(minimum: 70, maximum: 90), spacing: SpacingTokens.tiny)
-    ]
+    // Фиксированная сетка 4 колонки: 12 звуков → 3 ряда, влезают на SE без
+    // скролла. Равномерные симметричные отступы (flexible колонки).
+    private let columns = Array(
+        repeating: GridItem(.flexible(), spacing: SpacingTokens.small),
+        count: 4
+    )
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .explaining, size: 200)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
-                .padding(.top, SpacingTokens.small)
+            OnboardingStepHeader(
+                mascotState: .explaining,
+                title: String(localized: "onboarding.sounds.title"),
+                subtitle: String(localized: "onboarding.sounds.subtitle"),
+                mascotSize: 92
+            )
+            .padding(.top, SpacingTokens.small)
 
-            Text(String(localized: "onboarding.sounds.title"))
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.top, SpacingTokens.medium)
-                .padding(.horizontal, SpacingTokens.medium)
-                .accessibilityAddTraits(.isHeader)
-
-            Text(String(localized: "onboarding.sounds.subtitle"))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
-
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: SpacingTokens.tiny) {
-                    ForEach(OnboardingProfile.availableSounds, id: \.id) { sound in
-                        SoundChip(
-                            label: sound.label,
-                            isSelected: selectedSounds.contains(sound.id),
-                            onTap: { onToggle(sound.id) }
-                        )
-                    }
+            LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
+                ForEach(OnboardingProfile.availableSounds, id: \.id) { sound in
+                    SoundChip(
+                        label: sound.label,
+                        isSelected: selectedSounds.contains(sound.id),
+                        onTap: { onToggle(sound.id) }
+                    )
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.tiny)
             }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
             Text(String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count))
                 .font(TypographyTokens.caption(12))
@@ -576,12 +516,10 @@ struct OnboardingSoundsStep: View {
                 .accessibilityLabel(
                     String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count)
                 )
+
+            Spacer(minLength: 0)
         }
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -597,7 +535,8 @@ struct SoundChip: View {
             Text(label)
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
-                .frame(width: 60, height: 60)
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fit)
                 .background(
                     Circle()
                         .fill(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.surface)

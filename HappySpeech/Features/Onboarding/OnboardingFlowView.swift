@@ -44,47 +44,26 @@ struct OnboardingFlowView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                // Единый ТЁПЛЫЙ статичный фон онбординга (без off-palette
-                // sky/mint и без многоцветного движущегося градиента). Один
-                // кремовый тон семейства Kid удерживает все 10 шагов в одной
-                // спокойной палитре эталона onboarding-step.
+                // Единый ТЁПЛЫЙ статичный фон онбординга (чистый кремовый тон Kid
+                // по эталону onboarding-step.png — БЕЗ фоновых картинок-иллюстраций
+                // и без off-palette sky/mint). Mesh-слой добавляет лёгкую тёплую
+                // глубину через softLight, не перекрывая UI.
                 ColorTokens.Kid.bg
                     .ignoresSafeArea()
 
                 HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     // F.tier1 v21: mesh мягче в dark поверх кремового фона.
-                    .opacity(colorScheme == .dark ? 0.22 : 0.35)
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
-
-                // Task #67: per-step decorative hero banner from Hero/onboarding_*
-                // (35 illustration generated via Imagen). Используется как мягкий
-                // фон-баннер за gradient/mesh — НЕ перекрывает UI, низкая
-                // непрозрачность + screen blendMode для гармонии с палитрой.
-                // P-FIX: клампим hero к размеру экрана — scaledToFill(16:9) иначе
-                // раздувал layout ZStack по ширине (~3×) и ломал весь онбординг на SE.
-                heroBackground
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    .clipped()
 
                 VStack(spacing: 0) {
                     progressHeader
 
                     stepContent
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                    // Mascot bubble: показываем на шагах, где есть фраза Ляли.
-                    // Welcome и Completion — пропускаем (там своя большая Ляля).
-                    if !display.mascotText.isEmpty
-                        && display.currentStep != .welcome
-                        && display.currentStep != .completion {
-                        OnboardingMascotBubble(text: display.mascotText)
-                            .padding(.bottom, SpacingTokens.small)
-                            .transition(.opacity.combined(with: .move(edge: .bottom)))
-                            .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
-                    }
 
                     actionFooter
                         .background(
@@ -94,9 +73,7 @@ struct OnboardingFlowView: View {
                         .padding(.bottom, geometry.safeAreaInsets.bottom)
                 }
                 // P-FIX (SE/iOS26 overflow): жёстко ограничиваем контент шириной
-                // экрана. Без этого scaledToFill hero-баннер (16:9) раздувал ZStack
-                // до ~3× ширины → весь UV (прогресс/заголовок/кнопка) уезжал за
-                // правый край (экран выглядел пустым). frame(width:) гарантирует SE-fit.
+                // экрана, гарантируя SE-fit и отсутствие горизонтального overflow.
                 .frame(width: geometry.size.width)
             }
         }
@@ -118,50 +95,13 @@ struct OnboardingFlowView: View {
         }
     }
 
-    // MARK: - Hero background (Task #67 — 10 Imagen onboarding illustrations)
-
-    /// Имя hero-imageset из `Assets.xcassets/Hero/` для текущего шага.
-    /// Источник — `hero_manifest.json` (10 onboarding scenes, 16:9).
-    private static func heroSlug(for step: OnboardingStep) -> String {
-        switch step {
-        case .welcome:       return "onboarding_welcome"
-        case .role:          return "onboarding_meet_lyalya"
-        case .childName:     return "onboarding_family"
-        case .childAge:      return "onboarding_first_lesson"
-        case .goals:         return "onboarding_practice"
-        case .sounds:        return "onboarding_choose_sound"
-        case .schedule:      return "onboarding_streak"
-        case .permissions:   return "onboarding_ready"
-        case .modelDownload: return "onboarding_progress"
-        case .completion:    return "onboarding_celebration"
-        }
-    }
-
-    @ViewBuilder
-    private var heroBackground: some View {
-        let slug = Self.heroSlug(for: display.currentStep)
-        Image(slug)
-            .resizable()
-            .scaledToFill()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .clipped()
-            .opacity(colorScheme == .dark ? 0.10 : 0.14)
-            .blendMode(.screen)
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
-            .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.currentStep)
-            .id(slug)
-            .ignoresSafeArea()
-    }
-
     // MARK: - Header
 
     private var progressHeader: some View {
-        // Fix #2 — убран маленький Lyalya pointing над прогресс-баром.
         // Контракт онбординга: поток строго линейный, вперёд (forward-only) —
         // навигации «Назад» нет ни на одном шаге (UX-решение + защита от выхода
-        // из flow). Поэтому back-affordance (chevron-left) удалена; в левом углу
-        // на всех шагах кроме welcome показывается счётчик «Шаг N из 10».
+        // из flow). В левом углу — счётчик «Шаг N из M», где M = число видимых
+        // шагов flow (modelDownload исключён, см. OnboardingStep.flowSteps).
         VStack(spacing: SpacingTokens.tiny) {
             HStack {
                 Text(display.progressLabel)
@@ -244,7 +184,10 @@ struct OnboardingFlowView: View {
                     },
                     onRequestNotifications: {
                         interactor?.requestNotificationPermission(.init())
-                    }
+                    },
+                    micGranted: display.permissionsStatus.microphoneGranted,
+                    cameraGranted: display.permissionsStatus.cameraGranted,
+                    notificationsGranted: display.permissionsStatus.notificationsGranted
                 )
             case .modelDownload:
                 OnboardingModelDownloadStep(
