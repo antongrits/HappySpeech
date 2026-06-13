@@ -36,54 +36,6 @@ struct LetterHighlightView: View {
     }
 }
 
-// MARK: - RecordingButton
-
-/// 80×80pt Capsule-кнопка с pulse-ring анимацией. Красная при isRecording=true.
-struct RecordingButton: View {
-    let isRecording: Bool
-    @Binding var pulse: Bool
-    let reduceMotion: Bool
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: onTap) {
-            ZStack {
-                if isRecording && !reduceMotion {
-                    Circle()
-                        .strokeBorder(ColorTokens.Semantic.error.opacity(0.4), lineWidth: 4)
-                        .frame(width: 100, height: 100)
-                        .scaleEffect(pulse ? 1.25 : 1.0)
-                        .opacity(pulse ? 0.0 : 0.9)
-                        .animation(
-                            .easeOut(duration: 1.1).repeatForever(autoreverses: false),
-                            value: pulse
-                        )
-                }
-                Capsule()
-                    .fill(isRecording
-                        ? ColorTokens.Semantic.error
-                        : ColorTokens.Brand.primary)
-                    .frame(width: 80, height: 80)
-                    .overlay(
-                        Image(systemName: isRecording ? "stop.fill" : "mic.fill")
-                            .font(TypographyTokens.title(32).weight(.bold))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .accessibilityHidden(true)
-                    )
-                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.plain)
-        .onAppear { if !reduceMotion { pulse = true } }
-        .onDisappear { pulse = false }
-        .accessibilityAddTraits(.isButton)
-        .accessibilityLabel(String(
-            localized: isRecording ? "a11y.button.stop_record" : "a11y.button.record"
-        ))
-    }
-}
-
 // MARK: - StoreBridge
 
 @MainActor

@@ -1,4 +1,3 @@
-import OSLog
 import SwiftUI
 
 // MARK: - Holder
@@ -60,27 +59,15 @@ struct LogorhythmicsView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.hapticService) private var hapticService
 
-    private static let logger = Logger(
-        subsystem: "ru.happyspeech", category: "Logorhythmics.View"
-    )
-
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра поверх
-                // плоского cream baseline создаёт «дышащий» kid-фон.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+                KidGameCanvasBackground(palette: .kidWarm)
+
                 switch holder.phase {
                 case .picking:  pickingSection
                 case .ready:    readySection
@@ -96,6 +83,7 @@ struct LogorhythmicsView: View {
             .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.phase)
             .navigationTitle(Text("Логоритмика"))
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarHidden(holder.phase == .ready || holder.phase == .playing)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
             .onDisappear {
@@ -231,45 +219,38 @@ struct LogorhythmicsView: View {
 
     // MARK: - Ready
 
+    @ViewBuilder
     private var readySection: some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            if let vm = holder.selectVM {
-                exerciseHeader(vm)
-                rhymeCard(vm.exercise.rhymeText)
-                hintCard(vm.hintMessage)
-                Spacer(minLength: 0)
-                startButton
-            } else {
-                ProgressView().padding()
-            }
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp3)
-    }
-
-    private func exerciseHeader(_ vm: LogorhythmicsModels.SelectExercise.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            LyalyaMascotView(state: mascotState, size: 80)
-                .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                HStack(spacing: SpacingTokens.sp2) {
-                    Image(systemName: iconForCategory(vm.exercise.category))
-                        .font(.system(size: 28))
-                        .foregroundStyle(ColorTokens.Brand.butter)
-                        .symbolRenderingMode(.hierarchical)
-                        .accessibilityHidden(true)
-                    Text(vm.exercise.title)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
+        if let vm = holder.selectVM {
+            KidGameCanvasScaffold(
+                title: Text(vm.exercise.title),
+                subtitle: "\(vm.exercise.bpm) уд/мин · \(vm.totalBeats) долей",
+                palette: .kidWarm,
+                onExit: { Task { await backToPicking() } }
+            ) {
+                VStack(spacing: SpacingTokens.sp4) {
+                    Spacer(minLength: 0)
+                    rhymeCard(vm.exercise.rhymeText)
+                    hintCard(vm.hintMessage)
+                    Spacer(minLength: 0)
+                    HStack(alignment: .bottom) {
+                        LyalyaMascotView(state: mascotState, size: 72)
+                            .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                            .accessibilityHidden(true)
+                        Spacer(minLength: 0)
+                    }
                 }
-                Text("\(vm.exercise.bpm) уд/мин · \(vm.totalBeats) долей")
-                    .font(TypographyTokens.caption(12).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .padding(SpacingTokens.sp3)
+            } toolbar: {
+                KidGameCTAButton(
+                    title: String(localized: "Старт"),
+                    systemImage: "play.fill"
+                ) {
+                    Task { await beginPlayback() }
+                }
             }
-            Spacer(minLength: 0)
+        } else {
+            ProgressView().padding()
         }
     }
 
@@ -306,46 +287,38 @@ struct LogorhythmicsView: View {
         )
     }
 
-    private var startButton: some View {
-        Button {
-            Task { await beginPlayback() }
-        } label: {
-            Label("Старт", systemImage: "play.fill")
-                .font(TypographyTokens.headline(17))
-                .frame(maxWidth: .infinity, minHeight: 64)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Brand.primary)
-                )
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-        }
-        .buttonStyle(.plain)
-        .accessibilityHint(Text("Начать метроном и двигаться в такт."))
-    }
-
     // MARK: - Playing
 
+    @ViewBuilder
     private var playingSection: some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            if let vm = holder.selectVM {
-                HStack(spacing: SpacingTokens.sp3) {
-                    LyalyaMascotView(state: .singing, size: 72)
-                        .accessibilityHidden(true)
-                    Text(vm.exercise.title)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
+        if let vm = holder.selectVM {
+            KidGameCanvasScaffold(
+                title: Text(vm.exercise.title),
+                subtitle: "\(vm.exercise.bpm) уд/мин",
+                palette: .kidWarm,
+                onExit: { Task { await stopPlayback() } }
+            ) {
+                VStack(spacing: SpacingTokens.sp4) {
+                    rhymeCard(vm.exercise.rhymeText)
                     Spacer(minLength: 0)
+                    beatRing(vm: holder.beatVM, totalBeats: vm.totalBeats)
+                    Spacer(minLength: 0)
+                    HStack(alignment: .bottom) {
+                        LyalyaMascotView(state: .singing, size: 64)
+                            .accessibilityHidden(true)
+                        Spacer(minLength: 0)
+                    }
                 }
-                rhymeCard(vm.exercise.rhymeText)
-                beatRing(vm: holder.beatVM, totalBeats: vm.totalBeats)
-                Spacer(minLength: 0)
-                stopButton
+                .padding(SpacingTokens.sp3)
+            } toolbar: {
+                KidGameCTAButton(
+                    title: String(localized: "Остановить"),
+                    systemImage: "stop.fill"
+                ) {
+                    Task { await stopPlayback() }
+                }
             }
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp3)
     }
 
     private func beatRing(
@@ -394,23 +367,6 @@ struct LogorhythmicsView: View {
                 ringPulse = false
             }
         }
-    }
-
-    private var stopButton: some View {
-        Button {
-            Task { await stopPlayback() }
-        } label: {
-            Label("Остановить", systemImage: "stop.fill")
-                .font(TypographyTokens.headline(17))
-                .frame(maxWidth: .infinity, minHeight: 56)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Semantic.error)
-                )
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-        }
-        .buttonStyle(.plain)
-        .accessibilityHint(Text("Закончить упражнение и посмотреть результат."))
     }
 
     // MARK: - Result

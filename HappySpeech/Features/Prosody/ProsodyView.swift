@@ -153,22 +153,12 @@ struct ProsodyView: View {
     private func progressBar(
         _ round: ProsodyModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(round.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                    Capsule()
-                        .fill(ColorTokens.Brand.primary)
-                        .frame(width: max(0, geo.size.width * round.progressFraction))
-                }
-            }
-            .frame(height: 10)
-            .accessibilityHidden(true)
-        }
+        // Единый заголовок класса record-and-score: подзаголовок + прогресс.
+        RecordLessonHeader(
+            sound: "",
+            subtitle: round.progressLabel,
+            progress: round.progressFraction
+        )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.sp4)
     }
@@ -242,28 +232,12 @@ struct ProsodyView: View {
     private func voiceControl(
         _ round: ProsodyModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Button {
-                Task { await answer(optionIndex: 0, voice: true) }
-            } label: {
-                HStack(spacing: SpacingTokens.sp2) {
-                    Image(systemName: "mic.fill")
-                        .font(.title3)
-                        .hsSymbolEffect(.pulse, value: round.id)
-                    Text("prosody.voice.say")
-                        .font(TypographyTokens.headline(18))
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.7)
-                }
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .frame(maxWidth: .infinity, minHeight: 64)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Brand.primary)
-                )
-            }
-            .buttonStyle(.plain)
-            .accessibilityHint(Text("prosody.voice.hint"))
+        // Большой центральный микрофон в стиле эталона record-and-score.
+        RecordMicButton(
+            state: .idle,
+            hint: String(localized: "prosody.voice.say")
+        ) {
+            Task { await answer(optionIndex: 0, voice: true) }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.bottom, SpacingTokens.sp6)

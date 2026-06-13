@@ -9,19 +9,21 @@ import SwiftUI
 struct BreathingTreeView: View {
 
     @State private var interactor = BreathingExtendedInteractor()
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private let difficulty: StutteringDifficulty = .easy
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.sp6) {
-                mascotHeader
-                treeIllustration
+            VStack(spacing: SpacingTokens.sp5) {
+                Spacer(minLength: 0)
+                breathingOrb
+                Spacer(minLength: 0)
                 waveformSection
                 roundsSection
+                mascotBubble
                 controlButton
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -41,58 +43,55 @@ struct BreathingTreeView: View {
 
     // MARK: - Subviews
 
-    private var mascotHeader: some View {
-        // Fix #9 — единый канонический маскот LyalyaMascotView.
+    /// Центральный дыхательный орб: растёт по мере длинного выдоха.
+    private var breathingOrb: some View {
+        let progress = CGFloat(interactor.display.treeProgress)
+        return HSBreathingOrb(
+            expansion: progress,
+            ringProgress: progress,
+            phaseTitle: interactor.display.isPlaying
+                ? String(localized: "Выдох…")
+                : String(localized: "Готов?"),
+            phaseCount: nil,
+            size: 240
+        )
+    }
+
+    private var mascotBubble: some View {
         let state: LyalyaState = interactor.display.mascotMood == .celebrating
             ? .celebrating
-            : .idle
-        return LyalyaMascotView(state: state, size: 100)
-            .frame(maxWidth: .infinity)
-    }
-
-    private var treeIllustration: some View {
-        ZStack {
-            // Tree trunk (static)
-            RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(ColorTokens.Nature.treeTrunk)
-                .frame(width: 16, height: 80)
-                .offset(y: 50)
-
-            // Tree canopy: circular clipping with leaf fill
-            Circle()
-                .fill(leafColor)
-                .scaleEffect(0.5 + Double(interactor.display.treeProgress) * 0.5)
-                .frame(width: 160, height: 160)
-                .overlay {
-                    Circle()
-                        .strokeBorder(ColorTokens.Brand.mint.opacity(0.4), lineWidth: 2)
-                }
-                .animation(
-                    reduceMotion ? .linear(duration: 0.2) : MotionTokens.spring,
-                    value: interactor.display.treeProgress
+            : (interactor.display.isPlaying ? .encouraging : .idle)
+        return HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: state, size: 60)
+                .accessibilityHidden(true)
+            Text(interactor.display.isPlaying
+                ? String(localized: "Выдыхай долго и плавно")
+                : String(localized: "Дыши вместе со мной"))
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                        )
                 )
+            Spacer(minLength: 0)
         }
-        .frame(height: 220)
-    }
-
-    // Design exception: dynamic leaf color based on breathing progress.
-    // Intentionally not using ColorTokens — progress-based interpolation
-    // from ColorTokens.Brand.mint (hue≈0.46) to a deeper green.
-    // Reviewed and approved in ui-audit-v15.md.
-    private var leafColor: Color {
-        let progress = Double(interactor.display.treeProgress)
-        return Color(
-            hue: 0.35,
-            saturation: 0.4 + progress * 0.4,
-            brightness: 0.5 + progress * 0.3
-        )
+        .accessibilityElement(children: .combine)
     }
 
     private var waveformSection: some View {
         HSAudioWaveform(
             amplitudes: interactor.display.waveformLevels,
             style: .recording,
-            tint: ColorTokens.Brand.mint
+            tint: ColorTokens.Brand.primary
         )
         .frame(height: 56)
         .accessibilityHidden(true)
@@ -104,7 +103,7 @@ struct BreathingTreeView: View {
                 Circle()
                     .fill(
                         i < interactor.display.roundsComplete
-                            ? ColorTokens.Brand.mint
+                            ? ColorTokens.Brand.primary
                             : ColorTokens.Kid.surfaceAlt
                     )
                     .frame(width: 12, height: 12)
@@ -132,9 +131,9 @@ struct BreathingTreeView: View {
 
     private var successOverlay: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "leaf.fill")
+            Image(systemName: "wind")
                 .font(TypographyTokens.kidDisplay(48))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .foregroundStyle(ColorTokens.Brand.primary)
 
             Text(String(localized: "stuttering.feedback.complete"))
                 .font(TypographyTokens.title(24))

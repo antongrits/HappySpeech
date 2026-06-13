@@ -83,27 +83,25 @@ struct ImitationLabView: View {
     }
 
     private func hero(interactor: ImitationLabInteractor) -> some View {
-        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "imitationLab.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "imitationLab.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
-                Text(String(
-                    format: String(localized: "imitationLab.hero.progress %lld %lld"),
-                    interactor.state.practicedCount, interactor.state.samples.count
-                ))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .padding(.top, 2)
-            }
+        // Единый заголовок класса record-and-score: подзаголовок + прогресс.
+        let total = max(interactor.state.samples.count, 1)
+        return VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+            RecordLessonHeader(
+                sound: "",
+                subtitle: String(localized: "imitationLab.hero.title"),
+                progress: Double(interactor.state.practicedCount) / Double(total)
+            )
+            Text(String(localized: "imitationLab.hero.subtitle"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(3)
+                .minimumScaleFactor(0.85)
+            Text(String(
+                format: String(localized: "imitationLab.hero.progress %lld %lld"),
+                interactor.state.practicedCount, interactor.state.samples.count
+            ))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
         }
     }
 
@@ -205,38 +203,27 @@ struct ImitationLabView: View {
     }
 
     private func completeBanner(interactor: ImitationLabInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .celebrating, size: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "imitationLab.complete"))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(String(
-                        format: String(localized: "kidGame.stars %lld"),
-                        interactor.state.stars
-                    ))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Semantic.warning)
-                }
-                Spacer()
-            }
+        let total = max(interactor.state.samples.count, 1)
+        return RecordLessonFeedbackCard(
+            scoreFraction: Double(interactor.state.practicedCount) / Double(total),
+            scoreCaption: nil,
+            stars: interactor.state.stars,
+            title: String(localized: "imitationLab.complete"),
+            detail: nil,
+            passed: true,
+            ctaTitle: String(localized: "imitationLab.cta.done"),
+            ctaIcon: "checkmark"
+        ) {
+            hapticService.notification(.success)
+            exitGame()
         }
     }
 
     @ViewBuilder
     private func cta(interactor: ImitationLabInteractor) -> some View {
         if interactor.state.isComplete {
-            HSButton(
-                String(localized: "imitationLab.cta.done"),
-                style: .primary,
-                size: .large,
-                icon: "checkmark"
-            ) {
-                hapticService.notification(.success)
-                exitGame()
-            }
+            // CTA «Готово» теперь внутри RecordLessonFeedbackCard.
+            EmptyView()
         } else if interactor.state.practicedCount > 0 {
             // «Начать заново» бессмысленна до первой попытки — скрываем.
             HSButton(

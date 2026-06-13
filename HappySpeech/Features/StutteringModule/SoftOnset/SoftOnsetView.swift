@@ -11,16 +11,23 @@ struct SoftOnsetView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.sp5) {
-                mascotHeader
+            VStack(spacing: SpacingTokens.sp4) {
                 wordLabel
-                lanternView
+                    .padding(.top, SpacingTokens.sp3)
+                Spacer(minLength: 0)
+                breathingOrb
+                Spacer(minLength: 0)
                 waveformSection
-                listenButton
-                recordButton
                 feedbackLabel
+                HStack(spacing: SpacingTokens.sp5) {
+                    listenButton
+                    recordButton
+                }
+                mascotBubble
                 attemptCounter
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -39,10 +46,39 @@ struct SoftOnsetView: View {
 
     // MARK: - Subviews
 
-    private var mascotHeader: some View {
-        LyalyaMascotView(state: lyalyaState, size: 100)
-            .frame(maxWidth: .infinity)
-            .accessibilityHidden(true)
+    private var mascotBubble: some View {
+        let phrase: String = {
+            switch interactor.display.feedbackStyle {
+            case .success: return String(localized: "Мягко и плавно — отлично!")
+            case .error:   return String(localized: "Начни тихо, без толчка")
+            default:
+                return interactor.display.isRecording
+                    ? String(localized: "Тяни звук мягко…")
+                    : String(localized: "Начни слово плавно и тихо")
+            }
+        }()
+        return HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: lyalyaState, size: 60)
+                .accessibilityHidden(true)
+            Text(phrase)
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                        )
+                )
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private var lyalyaState: LyalyaState {
@@ -63,74 +99,31 @@ struct SoftOnsetView: View {
             .accessibilityLabel(String(format: String(localized: "stuttering.soft_start.word_accessibility"), interactor.display.currentWord))
     }
 
-    private var lanternView: some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.butter), padding: SpacingTokens.medium) {
-            ZStack {
-                // Lantern body
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(lanternBodyColor)
-                    .frame(width: 60, height: 90)
-
-                // Light glow
-                Circle()
-                    .fill(lanternGlowColor)
-                    .frame(width: 120, height: 120)
-                    .blur(radius: 30)
-                    .opacity(lanternGlowOpacity)
-                    .animation(
-                        reduceMotion ? nil : lanternAnimation,
-                        value: interactor.display.lanternState
-                    )
-
-                Image(systemName: "lamp.table.fill")
-                    .font(TypographyTokens.kidDisplay(48))
-                    .foregroundStyle(lanternIconColor)
-                    .animation(MotionTokens.spring, value: interactor.display.lanternState)
-            }
-            .frame(width: 120, height: 120)
-        }
-        .accessibilityHidden(true)
+    /// Центральный дыхательный орб — мягко раскрывается по мере плавного,
+    /// тихого начала голоса (lanternState: off → flicker → bright).
+    private var breathingOrb: some View {
+        HSBreathingOrb(
+            expansion: orbExpansion,
+            ringProgress: orbExpansion,
+            phaseTitle: orbPhaseTitle,
+            phaseCount: nil,
+            size: 240
+        )
     }
 
-    private var lanternBodyColor: Color {
+    private var orbExpansion: CGFloat {
         switch interactor.display.lanternState {
-        case .off:     return ColorTokens.Kid.surfaceAlt
-        case .flicker: return ColorTokens.Brand.butter.opacity(0.5)
-        case .bright:  return ColorTokens.Brand.butter
-        }
-    }
-
-    private var lanternIconColor: Color {
-        switch interactor.display.lanternState {
-        case .off:     return ColorTokens.Kid.inkMuted
-        case .flicker: return ColorTokens.Brand.butter.opacity(0.7)
-        case .bright:  return ColorTokens.Brand.butter
-        }
-    }
-
-    private var lanternGlowColor: Color {
-        switch interactor.display.lanternState {
-        case .off:     return .clear
-        case .flicker: return ColorTokens.Brand.butter.opacity(0.3)
-        case .bright:  return ColorTokens.Brand.butter.opacity(0.6)
-        }
-    }
-
-    private var lanternGlowOpacity: Double {
-        switch interactor.display.lanternState {
-        case .off:     return 0
-        case .flicker: return 0.5
+        case .off:     return 0.2
+        case .flicker: return 0.6
         case .bright:  return 1.0
         }
     }
 
-    private var lanternAnimation: Animation {
+    private var orbPhaseTitle: String {
         switch interactor.display.lanternState {
-        case .flicker:
-            return .easeInOut(duration: 0.15)
-                .repeatCount(4, autoreverses: true)
-        default:
-            return MotionTokens.spring
+        case .off:     return String(localized: "Тихо…")
+        case .flicker: return String(localized: "Мягко…")
+        case .bright:  return String(localized: "Голос!")
         }
     }
 

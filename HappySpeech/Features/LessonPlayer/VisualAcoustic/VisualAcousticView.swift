@@ -91,11 +91,11 @@ struct VisualAcousticView: View {
     private var playingView: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: SpacingTokens.small) {
-                HStack(spacing: SpacingTokens.small) {
-                    LyalyaMascotView(state: .encouraging, size: 44)
-                        .accessibilityHidden(true)
-                    progressHeader
-                }
+                RecordLessonHeader(
+                    sound: Self.soundBadge(for: activity.soundTarget),
+                    subtitle: String(localized: "Раунд \(display.roundIndex + 1) из \(display.totalRounds)"),
+                    progress: display.progressFraction
+                )
                 emojiTile
                 questionBlock
                 listenButton
@@ -110,19 +110,10 @@ struct VisualAcousticView: View {
         .safeAreaPadding(.bottom, SpacingTokens.small)
     }
 
-    private var progressHeader: some View {
-        HStack(spacing: SpacingTokens.small) {
-            HSProgressBar(value: display.progressFraction)
-                .frame(height: 10)
-                .accessibilityLabel(
-                    String(localized: "Раунд \(display.roundIndex + 1) из \(display.totalRounds)")
-                )
-            Text("\(display.roundIndex + 1)/\(display.totalRounds)")
-                .font(TypographyTokens.mono(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .monospacedDigit()
-                .accessibilityHidden(true)
-        }
+    /// Бейдж целевого звука из soundTarget («С», «Ш», …) — если короткий.
+    static func soundBadge(for soundTarget: String) -> String {
+        let trimmed = soundTarget.trimmingCharacters(in: .whitespaces)
+        return trimmed.count <= 2 ? trimmed : ""
     }
 
     private var emojiTile: some View {

@@ -1,4 +1,3 @@
-import OSLog
 import PencilKit
 import SwiftUI
 import UIKit
@@ -35,6 +34,7 @@ struct LetterTracingView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - VIP
 
@@ -75,174 +75,137 @@ struct LetterTracingView: View {
 
     @ViewBuilder
     private var tracingCanvas: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .top) {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+        ZStack {
+            KidGameCanvasScaffold(
+                title: Text(exerciseVM?.instructionText ?? String(localized: "letter_tracing.canvas.accessibility_label")),
+                subtitle: traceSubtitle,
+                progress: traceProgress,
+                stepDots: traceStepDots,
+                palette: .kidWarm,
+                onExit: { exitGame() }
+            ) {
+                canvasContent
+            } toolbar: {
+                KidGameToolButton(
+                    systemImage: "arrow.uturn.backward",
+                    label: String(localized: "letter_tracing.button.reset"),
+                    isMuted: canvas.drawing.strokes.isEmpty
+                ) {
+                    handleReset()
+                }
 
-                VStack(spacing: SpacingTokens.medium) {
-                    if let vm = exerciseVM {
-                        exerciseHeader(vm: vm)
-                            .padding(.horizontal, SpacingTokens.screenEdge)
-                    }
-
-                    ZStack {
+                if exerciseVM != nil {
+                    KidGameToolButton(
+                        systemImage: "lightbulb.fill",
+                        label: String(localized: "letter_tracing.button.hint")
+                    ) {
                         if let vm = exerciseVM {
-                            LetterTemplateView(
-                                letter: vm.targetLetter,
-                                level: vm.tracingLevel,
-                                showFullOverlay: hintVM?.showFullTemplate ?? false
+                            interactor?.requestHint(
+                                LetterTracingModels.RequestHint.Request(letter: vm.targetLetter)
                             )
-                            .frame(
-                                width: canvasSize(geo).width,
-                                height: canvasSize(geo).height
-                            )
-                            .accessibilityHidden(true)
-                        }
-
-                        CanvasViewRepresentable(
-                            canvas: $canvas,
-                            allowsFinger: true
-                        )
-                        .frame(
-                            width: canvasSize(geo).width,
-                            height: canvasSize(geo).height
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
-                        .accessibilityLabel(
-                            String(localized: "letter_tracing.canvas.accessibility_label")
-                        )
-                        .accessibilityHint(
-                            String(localized: "letter_tracing.canvas.accessibility_hint")
-                        )
-
-                        // Hint overlay: точка начала или стрелка направления.
-                        if let hint = hintVM {
-                            hintOverlay(hint: hint, size: canvasSize(geo))
-                                .allowsHitTesting(false)
                         }
                     }
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                            .fill(ColorTokens.Kid.surface)
+                }
+
+                KidGameCTAButton(
+                    title: String(localized: "letter_tracing.button.check"),
+                    systemImage: "checkmark",
+                    isDisabled: isProcessing || canvas.drawing.strokes.isEmpty || phase == .feedback
+                ) {
+                    Task { await handleCheck() }
+                }
+            }
+
+            if phase == .feedback, let vm = feedbackVM {
+                feedbackOverlay(vm: vm)
+                    .transition(
+                        reduceMotion
+                            ? .opacity
+                            : .opacity.combined(with: .scale(scale: 0.92))
                     )
-                    .depthShadow(ShadowTokens.kidDepth)
-                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .zIndex(10)
+            }
 
-                    // Строковые хинты + phoneme word
-                    if let vm = exerciseVM, !vm.phonemeWord.isEmpty {
-                        Text(
-                            String(localized: "letter_tracing.phoneme_example \(vm.phonemeWord)")
-                        )
-                        .font(TypographyTokens.caption())
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                        .accessibilityLabel(
-                            String(localized: "letter_tracing.phoneme_accessibility \(vm.phonemeWord)")
-                        )
-                    }
-
-                    Text(inputHintText)
-                        .font(TypographyTokens.caption())
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                        .accessibilityHidden(true)
-
-                    controlsRow
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-
-                    Spacer(minLength: 0)
-                }
-                .padding(.top, SpacingTokens.regular)
-
-                if phase == .feedback, let vm = feedbackVM {
-                    feedbackOverlay(vm: vm)
-                        .transition(
-                            reduceMotion
-                                ? .opacity
-                                : .opacity.combined(with: .scale(scale: 0.92))
-                        )
-                        .zIndex(10)
-                }
-
-                if phase == .complete {
-                    completeOverlay
-                        .transition(
-                            reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity)
-                        )
-                        .zIndex(10)
-                }
+            if phase == .complete {
+                completeOverlay
+                    .transition(
+                        reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity)
+                    )
+                    .zIndex(10)
             }
         }
         .onAppear(perform: setupToolPicker)
     }
 
-    // MARK: - Sub-views
+    // MARK: - Canvas content (внутри холста)
 
-    private func exerciseHeader(vm: LetterTracingModels.LoadExercise.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.small) {
-                LyalyaMascotView(state: .pointing, size: 56)
-                    .accessibilityHidden(true)
-                Spacer()
-                Text(vm.tracingLevel.localizedTitle)
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Brand.sky)
-                    .accessibilityLabel(
-                        String(localized: "letter_tracing.level_accessibility \(vm.tracingLevel.localizedTitle)")
+    private var canvasContent: some View {
+        GeometryReader { geo in
+            let side = min(geo.size.width, geo.size.height) - SpacingTokens.regular
+            ZStack {
+                if let vm = exerciseVM {
+                    LetterTemplateView(
+                        letter: vm.targetLetter,
+                        level: vm.tracingLevel,
+                        showFullOverlay: hintVM?.showFullTemplate ?? false
                     )
+                    .frame(width: side, height: side)
+                    .accessibilityHidden(true)
+                }
+
+                CanvasViewRepresentable(canvas: $canvas, allowsFinger: true)
+                    .frame(width: side, height: side)
+                    .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+                    .accessibilityLabel(
+                        String(localized: "letter_tracing.canvas.accessibility_label")
+                    )
+                    .accessibilityHint(
+                        String(localized: "letter_tracing.canvas.accessibility_hint")
+                    )
+
+                if let hint = hintVM {
+                    hintOverlay(hint: hint, size: CGSize(width: side, height: side))
+                        .allowsHitTesting(false)
+                }
+
+                // Маскот + реплика снизу-слева холста.
+                VStack {
+                    Spacer()
+                    HStack(alignment: .bottom) {
+                        KidGameMascotBubble(
+                            message: mascotMessage,
+                            state: phase == .feedback ? .celebrating : .pointing
+                        )
+                        Spacer(minLength: 0)
+                    }
+                }
+                .padding(SpacingTokens.small)
+                .allowsHitTesting(false)
             }
-            HSProgressBar(
-                value: Double(vm.roundIndex) / Double(max(vm.totalRounds, 1))
-            )
-            Text(vm.instructionText)
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
-    private var controlsRow: some View {
-        VStack(spacing: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.medium) {
-                HSButton(
-                    String(localized: "letter_tracing.button.reset"),
-                    style: .secondary,
-                    icon: "arrow.counterclockwise"
-                ) {
-                    handleReset()
-                }
-                .accessibilityLabel(String(localized: "letter_tracing.button.reset"))
-
-                HSButton(
-                    String(localized: "letter_tracing.button.check"),
-                    style: .primary,
-                    icon: "checkmark.circle.fill"
-                ) {
-                    Task { await handleCheck() }
-                }
-                .disabled(isProcessing || canvas.drawing.strokes.isEmpty || phase == .feedback)
-                .accessibilityLabel(String(localized: "letter_tracing.button.check"))
-            }
-
-            // Кнопка подсказки (три уровня)
-            if phase == .drawing, let vm = exerciseVM {
-                HSButton(
-                    String(localized: "letter_tracing.button.hint"),
-                    style: .secondary,
-                    icon: "lightbulb.fill"
-                ) {
-                    interactor?.requestHint(
-                        LetterTracingModels.RequestHint.Request(letter: vm.targetLetter)
-                    )
-                }
-                .accessibilityLabel(String(localized: "letter_tracing.button.hint_accessibility"))
-                .accessibilityHint(String(localized: "letter_tracing.button.hint_hint"))
-            }
+    private var mascotMessage: String {
+        if let vm = exerciseVM, !vm.phonemeWord.isEmpty {
+            return String(localized: "letter_tracing.phoneme_example \(vm.phonemeWord)")
         }
+        return inputHintText
+    }
+
+    private var traceSubtitle: String? {
+        guard let vm = exerciseVM else { return nil }
+        return vm.tracingLevel.localizedTitle
+    }
+
+    private var traceProgress: Double? {
+        guard let vm = exerciseVM else { return nil }
+        return Double(vm.roundIndex) / Double(max(vm.totalRounds, 1))
+    }
+
+    private var traceStepDots: (current: Int, total: Int)? {
+        guard let vm = exerciseVM, vm.totalRounds > 1 else { return nil }
+        return (current: min(vm.roundIndex, vm.totalRounds - 1), total: vm.totalRounds)
     }
 
     @ViewBuilder
@@ -264,7 +227,7 @@ struct LetterTracingView: View {
         if hint.showDirectionArrow {
             Image(systemName: "arrow.down.right.circle.fill")
                 .font(TypographyTokens.display(36))
-                .foregroundStyle(ColorTokens.Brand.sky.opacity(0.85))
+                .foregroundStyle(ColorTokens.Brand.lilac.opacity(0.85))
                 .position(x: size.width * 0.3, y: size.height * 0.3)
                 .accessibilityHidden(true)
         }
@@ -373,17 +336,7 @@ struct LetterTracingView: View {
         )
     }
 
-    // MARK: - Canvas size
-
-    private func canvasSize(_ geo: GeometryProxy) -> CGSize {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            let screenWidth = UIScreen.main.bounds.width
-            let side = min(screenWidth * 0.85, 350)
-            return CGSize(width: side, height: side)
-        }
-        let side = min(geo.size.width - SpacingTokens.screenEdge * 2, geo.size.height * 0.55)
-        return CGSize(width: side, height: side)
-    }
+    // MARK: - Input hint
 
     private var inputHintText: String {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -513,7 +466,7 @@ struct LetterTemplateView: View {
 
                     Text(letter)
                         .font(.system(size: fontSize, weight: .bold, design: .rounded))
-                        .foregroundStyle(ColorTokens.Brand.sky.opacity(0.22))
+                        .foregroundStyle(ColorTokens.Brand.primaryLo.opacity(0.55))
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
                 case .dotsOnly:

@@ -10,89 +10,78 @@ struct MusicalSoundDrumsView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
-                content
-            }
-            .navigationTitle(Text(String(localized: "musicalDrums.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
+        Group {
+            if let interactor, interactor.state.isLoaded {
+                KidGameCanvasScaffold(
+                    title: Text(String(localized: "musicalDrums.hero.title")),
+                    subtitle: String(localized: "musicalDrums.hero.subtitle"),
+                    palette: .kidWarm,
+                    onExit: { exitGame() }
+                ) {
+                    canvasContent(interactor: interactor)
+                } toolbar: {
+                    drumsToolbar(interactor: interactor)
+                }
+            } else {
+                ZStack {
+                    KidGameCanvasBackground(palette: .kidWarm)
+                    ProgressView().controlSize(.large)
                 }
             }
-            .task {
-                if interactor == nil {
-                    let new = MusicalSoundDrumsInteractor(
-                        childId: childId,
-                        childRepository: container.childRepository,
-                        adaptivePlanner: container.adaptivePlannerService
-                    )
-                    interactor = new
-                    await new.load()
-                }
+        }
+        .task {
+            if interactor == nil {
+                let new = MusicalSoundDrumsInteractor(
+                    childId: childId,
+                    childRepository: container.childRepository,
+                    adaptivePlanner: container.adaptivePlannerService
+                )
+                interactor = new
+                await new.load()
             }
         }
         .environment(\.circuitContext, .kid)
     }
 
-    @ViewBuilder
-    private var content: some View {
-        if let interactor, interactor.state.isLoaded {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    rhythmCard(interactor: interactor)
-                    if interactor.isGameComplete {
-                        completeBanner(interactor: interactor)
-                    } else if interactor.state.roundComplete {
-                        roundDoneBanner(interactor: interactor)
-                    } else {
-                        drums(interactor: interactor)
-                    }
-                    cta(interactor: interactor)
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+    // MARK: - Canvas content (внутри холста)
+
+    private func canvasContent(interactor: MusicalSoundDrumsInteractor) -> some View {
+        VStack(spacing: SpacingTokens.regular) {
+            rhythmCard(interactor: interactor)
+            Spacer(minLength: 0)
+            if interactor.isGameComplete {
+                completeBanner(interactor: interactor)
+            } else if interactor.state.roundComplete {
+                roundDoneBanner(interactor: interactor)
+            } else {
+                drums(interactor: interactor)
             }
-        } else {
-            ProgressView().controlSize(.large)
+            Spacer(minLength: 0)
         }
+        .padding(SpacingTokens.small)
     }
 
-    private func hero(state: MusicalSoundDrumsModels.ViewState) -> some View {
-        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "musicalDrums.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "musicalDrums.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
+    // MARK: - Toolbar (CTA: reset / next)
+
+    @ViewBuilder
+    private func drumsToolbar(interactor: MusicalSoundDrumsInteractor) -> some View {
+        if !interactor.isGameComplete && interactor.state.roundComplete {
+            KidGameCTAButton(
+                title: String(localized: "musicalDrums.next"),
+                systemImage: "arrow.right"
+            ) {
+                hapticService.impact(.light)
+                interactor.nextRound()
+            }
+        } else {
+            KidGameCTAButton(
+                title: String(localized: "musicalDrums.cta.action"),
+                systemImage: "arrow.counterclockwise"
+            ) {
+                hapticService.notification(.success)
+                interactor.reset()
             }
         }
     }
@@ -133,31 +122,22 @@ struct MusicalSoundDrumsView: View {
     }
 
     private func roundDoneBanner(interactor: MusicalSoundDrumsInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            VStack(spacing: SpacingTokens.sp2) {
-                HStack(spacing: SpacingTokens.sp3) {
-                    LyalyaMascotView(state: .celebrating, size: 48)
-                        .accessibilityHidden(true)
-                    Text(String(localized: "musicalDrums.roundDone"))
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Spacer()
-                }
-                HSButton(
-                    String(localized: "musicalDrums.next"),
-                    style: .primary,
-                    size: .medium,
-                    icon: "arrow.right.circle.fill"
-                ) {
-                    hapticService.impact(.light)
-                    interactor.nextRound()
-                }
+        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.12))) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .celebrating, size: 56)
+                    .accessibilityHidden(true)
+                Text(String(localized: "musicalDrums.roundDone"))
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Spacer(minLength: 0)
             }
         }
     }
 
     private func completeBanner(interactor: MusicalSoundDrumsInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        HSCard(style: .tinted(ColorTokens.Brand.gold.opacity(0.14))) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 56)
                     .accessibilityHidden(true)
@@ -170,9 +150,9 @@ struct MusicalSoundDrumsView: View {
                         interactor.state.stars
                     ))
                         .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Semantic.warning)
+                        .foregroundStyle(ColorTokens.Brand.gold)
                 }
-                Spacer()
+                Spacer(minLength: 0)
             }
         }
     }
@@ -184,14 +164,6 @@ struct MusicalSoundDrumsView: View {
                     hapticService.impact(.medium)
                     interactor.tap(drum)
                 }
-                // Step 10 Batch G — Pattern 3: scrollTransition stagger.
-                .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                    content
-                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                }
-                // Step 10 Batch G — Pattern 4: parallax drift на drum tiles.
-                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -212,8 +184,12 @@ struct MusicalSoundDrumsView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 120)
             .background(
-                RoundedRectangle(cornerRadius: 18)
-                    .fill(isActive ? ColorTokens.Brand.primary : ColorTokens.Kid.surface)
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(isActive ? ColorTokens.Brand.primary : ColorTokens.Kid.surfaceAlt)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: isActive ? 0 : 1)
+                    )
             )
             .scaleEffect(isActive ? 0.97 : 1.0)
             .animation(.spring(duration: 0.2), value: isActive)
@@ -224,18 +200,6 @@ struct MusicalSoundDrumsView: View {
             drum.label
         )))
         .accessibilityAddTraits(.isButton)
-    }
-
-    private func cta(interactor: MusicalSoundDrumsInteractor) -> some View {
-        HSButton(
-            String(localized: "musicalDrums.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "arrow.counterclockwise"
-        ) {
-            hapticService.notification(.success)
-            interactor.reset()
-        }
     }
 }
 

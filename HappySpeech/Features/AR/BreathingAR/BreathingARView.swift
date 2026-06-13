@@ -17,45 +17,108 @@ struct BreathingARView: View {
             if ARFaceTrackingConfiguration.isSupported, let session {
                 ARFaceViewContainer(session: session.underlyingSession)
                     .ignoresSafeArea()
+                cameraOverlay
             } else {
-                ColorTokens.Kid.bgDeep.ignoresSafeArea()
-                ARUnsupportedView()
-            }
-
-            VStack {
-                ARGameHUD(
-                    title: "ar.breathing.title",
-                    scoreText: display.totalText,
-                    onClose: { dismiss() }
-                )
-                Spacer()
-                Image(systemName: display.isBlowing ? "wind" : "wind.snow")
-                    .font(TypographyTokens.kidDisplay(64)) // emoji key graphic — skip TypographyTokens
-                    .foregroundStyle(ColorTokens.Brand.sky)
-                    .scaleEffect(1 + CGFloat(display.strength) * 0.2)
-                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: display.strength)
-                Text(display.hint)
-                    .font(TypographyTokens.headline())
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .padding(.vertical, SpacingTokens.small)
-                    .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
-                Spacer()
-                GeometryReader { proxy in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(ColorTokens.Overlay.highlight)
-                        Capsule().fill(ColorTokens.Brand.sky)
-                            .frame(width: proxy.size.width * CGFloat(display.strength))
-                    }
-                }
-                .frame(height: 10)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.xLarge)
+                // 2D-fallback без камеры: спокойный тёплый дыхательный экран.
+                fallbackBreathing
             }
         }
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)
+    }
+
+    // MARK: - Camera overlay (AR-supported)
+
+    private var cameraOverlay: some View {
+        VStack {
+            ARGameHUD(
+                title: "ar.breathing.title",
+                scoreText: display.totalText,
+                onClose: { dismiss() }
+            )
+            Spacer()
+            Image(systemName: display.isBlowing ? "wind" : "wind.snow")
+                .font(TypographyTokens.kidDisplay(64))
+                .foregroundStyle(ColorTokens.Brand.primaryHi)
+                .scaleEffect(1 + CGFloat(display.strength) * 0.2)
+                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: display.strength)
+            Text(display.hint)
+                .font(TypographyTokens.headline())
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.medium)
+                .padding(.vertical, SpacingTokens.small)
+                .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            Spacer()
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(ColorTokens.Overlay.highlight)
+                    Capsule().fill(ColorTokens.Brand.primary)
+                        .frame(width: proxy.size.width * CGFloat(display.strength))
+                }
+            }
+            .frame(height: 10)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.xLarge)
+        }
+    }
+
+    // MARK: - 2D fallback (no TrueDepth camera)
+
+    private var fallbackBreathing: some View {
+        ZStack {
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
+
+            VStack(spacing: SpacingTokens.sp4) {
+                HStack {
+                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    }
+                    .accessibilityLabel(String(localized: "Закрыть"))
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.sp3)
+
+                Spacer(minLength: 0)
+
+                HSBreathingOrb(
+                    expansion: CGFloat(display.strength),
+                    ringProgress: CGFloat(display.strength),
+                    phaseTitle: display.isBlowing
+                        ? String(localized: "Выдох…")
+                        : String(localized: "Вдохни"),
+                    phaseCount: nil,
+                    size: 240
+                )
+
+                Text(display.hint.isEmpty
+                    ? String(localized: "Дуй ровно и долго")
+                    : display.hint)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Spacer(minLength: 0)
+
+                ARUnsupportedView()
+                    .padding(.bottom, SpacingTokens.xLarge)
+            }
+        }
     }
 
     private func bootstrap() async {

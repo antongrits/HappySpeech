@@ -70,7 +70,6 @@ struct BreatheAndSpeakView: View {
 
     @Environment(\.exitGame) private var exitGame
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -83,11 +82,9 @@ struct BreatheAndSpeakView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
-                // Step 10 Batch A — Pattern 1: mesh .calm палитра (mint/sky/lilac) —
-                // успокаивающий фон для дыхательных упражнений.
-                HSMeshGradientBackground(palette: .calm, animated: true)
+                // Спокойный тёплый статичный фон (кремовое семейство).
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.30 : 0.55)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 
@@ -130,40 +127,47 @@ struct BreatheAndSpeakView: View {
         startVM: BreatheAndSpeakModels.Start.ViewModel,
         step: BreatheAndSpeakModels.Start.StepViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp5) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Text(step.stepLabel)
-                    .font(TypographyTokens.caption(12).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+        VStack(spacing: SpacingTokens.sp4) {
+            // Шапка: название упражнения + спокойный ряд точек-прогресса.
+            VStack(spacing: SpacingTokens.sp3) {
+                Text(step.name)
+                    .font(TypographyTokens.kidTitle(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
 
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                        Capsule()
-                            .fill(ColorTokens.Brand.mint)
-                            .frame(width: max(0, geo.size.width * step.progressFraction))
-                    }
-                }
-                .frame(height: 10)
-                .accessibilityHidden(true)
-
-                Text(startVM.complexTitle)
-                    .font(TypographyTokens.caption(13).weight(.medium))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                progressDots(startVM: startVM, step: step)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp4)
+            .padding(.top, SpacingTokens.sp3)
 
-            Spacer()
+            Spacer(minLength: 0)
 
-            stepCard(step)
-                .id(step.id)
-                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+            // Центральный дыхательный орб — ведёт вдох/выдох.
+            HSBreathingOrb(
+                expansion: orbExpansion(step),
+                ringProgress: holdProgress(step),
+                phaseTitle: orbPhaseTitle(step),
+                phaseCount: orbPhaseCount(step),
+                size: 240
+            )
+            .id(step.id)
 
-            // Hold timer circle
-            holdCircle(step)
+            Text(step.instruction)
+                .font(TypographyTokens.body(16))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, SpacingTokens.sp4)
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
-            Spacer()
+            Spacer(minLength: 0)
+
+            mascotBubble(step)
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
             actionButton(step)
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -172,79 +176,96 @@ struct BreatheAndSpeakView: View {
         .animation(reduceMotion ? nil : .spring(duration: 0.35), value: step.id)
     }
 
-    private func stepCard(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
-        // Step 10 Batch A — Pattern 2+5: hero обёрнут в HSLiquidGlassCard.elevated;
-        // pulse-эффект на символе step реагирует на смену упражнения.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
-            VStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: step.symbolName)
-                    .font(.system(size: 56))
-                    .foregroundStyle(step.kind == .breathing
-                        ? ColorTokens.Brand.sky
-                        : ColorTokens.Brand.mint)
-                    .hsSymbolEffect(.pulse, value: step.id)
-                    .accessibilityHidden(true)
+    // MARK: - Progress dots
 
-                Text(step.name)
-                    .font(TypographyTokens.title(26))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-
-                Text(step.instruction)
-                    .font(TypographyTokens.body(16))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    // Без обрезки на SE: текст разворачивается на полную высоту,
-                    // а не клипуется родительским VStack между Spacer'ами.
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, SpacingTokens.sp4)
+    private func progressDots(
+        startVM: BreatheAndSpeakModels.Start.ViewModel,
+        step: BreatheAndSpeakModels.Start.StepViewModel
+    ) -> some View {
+        let total = max(startVM.totalSteps, 1)
+        let current = min(total - 1, Int((step.progressFraction * Double(total)).rounded(.down)))
+        return VStack(spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ForEach(0..<total, id: \.self) { index in
+                    Circle()
+                        .fill(index <= current
+                            ? ColorTokens.Brand.primary
+                            : ColorTokens.Kid.line)
+                        .frame(
+                            width: index == current ? 13 : 9,
+                            height: index == current ? 13 : 9
+                        )
+                }
             }
-            .frame(maxWidth: .infinity)
+            Text(step.stepLabel)
+                .font(TypographyTokens.caption(13).weight(.semibold).monospacedDigit())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(step.accessibilityLabel))
+        .accessibilityLabel(Text(verbatim: step.stepLabel))
     }
 
-    private func holdCircle(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
-        // Для дыхательных шагов с активным микрофоном кольцо «дышит» вместе с
-        // реальной силой выдоха (живой акустический сигнал), для остальных —
-        // ровная заливка прогресса удержания.
-        let usesLiveBlow = step.requiresBlow && isHolding && !blowUnavailable
-        let ringScale = usesLiveBlow ? CGFloat(0.92 + 0.16 * blowStrength) : 1.0
-        return ZStack {
-            Circle()
-                .stroke(ColorTokens.Kid.surfaceAlt, lineWidth: 10)
-            Circle()
-                .trim(from: 0, to: holdProgress(step))
-                .stroke(ColorTokens.Brand.mint,
-                        style: StrokeStyle(lineWidth: 10, lineCap: .round))
-                .rotationEffect(.degrees(-90))
-                .animation(reduceMotion ? nil : .linear(duration: 1), value: holdRemaining)
+    // MARK: - Orb phase mapping
 
-            if usesLiveBlow {
-                // Реальная сила дутья: пламя свечи отклоняется/тает по сигналу.
-                Image(systemName: isBlowing ? "wind" : "flame.fill")
-                    .font(.system(size: 30))
-                    .foregroundStyle(isBlowing ? ColorTokens.Brand.sky : ColorTokens.Brand.gold)
-                    .scaleEffect(reduceMotion ? 1.0 : ringScale)
-                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: blowStrength)
-                    .accessibilityHidden(true)
-            } else {
-                Text(isHolding ? "\(holdRemaining)" : "\(step.holdSeconds)")
-                    .font(TypographyTokens.title(32).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.ink)
-            }
+    /// Доля раскрытия орба: пока ребёнок держит выдох — орб сжимается к нулю;
+    /// пока готовится / завершил — раскрыт (вдох). Для не-дыхательных поз орб
+    /// держит наполнение пропорционально удержанию позы.
+    private func orbExpansion(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> CGFloat {
+        guard isHolding, step.holdSeconds > 0 else { return 1.0 }
+        let done = CGFloat(step.holdSeconds - holdRemaining) / CGFloat(step.holdSeconds)
+        // Дыхательный шаг: вдох сделан, выдыхаем → орб сжимается.
+        // Артикуляция: поза наполняет орб → орб растёт.
+        return step.requiresBlow ? (1.0 - done) : done
+    }
+
+    private func orbPhaseTitle(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> String {
+        guard isHolding else { return String(localized: "Готовься") }
+        if step.requiresBlow {
+            return isBlowing
+                ? String(localized: "Выдох…")
+                : String(localized: "Вдохни")
         }
-        .frame(width: 120, height: 120)
-        .scaleEffect(reduceMotion ? 1.0 : ringScale)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.2), value: blowStrength)
-        .accessibilityLabel(Text("breatheAndSpeak.timer.a11y"))
-        .accessibilityValue(Text(verbatim: "\(isHolding ? holdRemaining : step.holdSeconds)"))
+        return String(localized: "Держи…")
+    }
+
+    private func orbPhaseCount(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> String? {
+        isHolding ? "\(holdRemaining)" : nil
+    }
+
+    // MARK: - Mascot bubble
+
+    private func mascotBubble(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
+        let phrase: String = {
+            guard isHolding else { return String(localized: "Дыши вместе со мной") }
+            if step.requiresBlow {
+                return isBlowing
+                    ? String(localized: "Молодец, дыши спокойно")
+                    : String(localized: "Дыши спокойно и ровно")
+            }
+            return String(localized: "Держим — ты молодец")
+        }()
+        return HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: isHolding ? .encouraging : .idle, size: 60)
+                .accessibilityHidden(true)
+            Text(phrase)
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                        )
+                )
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private func holdProgress(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> CGFloat {

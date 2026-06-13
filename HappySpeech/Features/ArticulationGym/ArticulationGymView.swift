@@ -141,21 +141,17 @@ struct ArticulationGymView: View {
                 Task { await reloadGroup(newGroup) }
             }
 
-            HSProgressBar(
-                value: progressValue(viewModel: viewModel),
-                style: .kid,
+            RecordLessonHeader(
+                sound: "",
+                subtitle: String(
+                    format: String(localized: "articulationGym.progress.a11y"),
+                    holder.currentIndex + 1,
+                    viewModel.totalCount
+                ),
+                progress: progressValue(viewModel: viewModel),
                 tint: ColorTokens.Brand.lilac
             )
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(
-                Text(
-                    String(
-                        format: String(localized: "articulationGym.progress.a11y"),
-                        holder.currentIndex + 1,
-                        viewModel.totalCount
-                    )
-                )
-            )
 
             if let exercise = currentExercise(viewModel: viewModel) {
                 exerciseCard(exercise)

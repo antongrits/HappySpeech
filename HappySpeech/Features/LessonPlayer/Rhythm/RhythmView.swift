@@ -1,4 +1,3 @@
-import OSLog
 import SwiftUI
 
 // MARK: - RhythmView
@@ -25,8 +24,7 @@ struct RhythmView: View {
     @State private var store: RhythmStore
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private let logger = Logger(subsystem: "ru.happyspeech", category: "Rhythm")
+    @Environment(\.exitGame) private var exitGame
 
     init(activity: SessionActivity, onComplete: @escaping (Float) -> Void) {
         self.activity = activity
@@ -42,16 +40,30 @@ struct RhythmView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
-            VStack(spacing: SpacingTokens.large) {
-                header
-                Spacer(minLength: 0)
-                content
-                Spacer(minLength: 0)
-                actionArea
+            KidGameCanvasBackground(palette: .kidWarm)
+            if store.display.phase == .completed {
+                VStack {
+                    Spacer(minLength: 0)
+                    completedContent
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                    Spacer(minLength: 0)
+                    actionArea
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .padding(.bottom, SpacingTokens.large)
+                }
+            } else {
+                KidGameCanvasScaffold(
+                    title: Text(String(localized: "Повтори ритм")),
+                    subtitle: rhythmSubtitle,
+                    progress: store.display.progressFraction,
+                    palette: .kidWarm,
+                    onExit: { exitGame() }
+                ) {
+                    rhythmCanvasContent
+                } toolbar: {
+                    rhythmToolbar
+                }
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.vertical, SpacingTokens.medium)
         }
         .task {
             store.presenter.viewModel = store
@@ -75,27 +87,42 @@ struct RhythmView: View {
         .accessibilityLabel(String(localized: "Игра «Повтори ритм». Слушай Лалу и повторяй слово по слогам."))
     }
 
-    // MARK: - Header
+    // MARK: - Scaffold helpers
 
-    private var header: some View {
-        VStack(alignment: .center, spacing: SpacingTokens.tiny) {
-            HStack {
-                Text(String(localized: "Повтори ритм"))
-                    .font(TypographyTokens.title())
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                Spacer()
-                Text(String(
-                    format: String(localized: "%d из %d"),
-                    min(store.display.patternIndex + 1, store.display.totalPatterns),
-                    store.display.totalPatterns
-                ))
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+    private var rhythmSubtitle: String {
+        String(
+            format: String(localized: "%d из %d"),
+            min(store.display.patternIndex + 1, store.display.totalPatterns),
+            store.display.totalPatterns
+        )
+    }
+
+    private var rhythmCanvasContent: some View {
+        VStack(spacing: SpacingTokens.large) {
+            Spacer(minLength: 0)
+            content
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(SpacingTokens.medium)
+    }
+
+    @ViewBuilder
+    private var rhythmToolbar: some View {
+        switch store.display.phase {
+        case .preview:
+            KidGameCTAButton(
+                title: String(localized: "Слушай!"),
+                systemImage: "speaker.wave.2.fill"
+            ) {
+                Task { await store.interactor.playPattern(.init()) }
             }
-            HSProgressBar(value: store.display.progressFraction, style: .kid)
-                .frame(height: 10)
+        default:
+            KidGameCTAButton(
+                title: String(localized: "Слушай!"),
+                systemImage: "speaker.wave.2.fill",
+                isDisabled: true
+            ) { }
         }
     }
 
@@ -324,29 +351,14 @@ struct RhythmView: View {
         .accessibilityHidden(true)
     }
 
-    // MARK: - Action area
+    // MARK: - Action area (completed)
 
-    @ViewBuilder
     private var actionArea: some View {
-        switch store.display.phase {
-        case .preview:
-            HSButton(
-                String(localized: "Слушай!"),
-                style: .primary,
-                icon: "speaker.wave.2.fill"
-            ) {
-                Task { await store.interactor.playPattern(.init()) }
-            }
-        case .completed:
-            HSButton(
-                String(localized: "Завершить"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) {
-                store.finalScoreToReport = store.display.finalScore
-            }
-        default:
-            EmptyView()
+        KidGameCTAButton(
+            title: String(localized: "Завершить"),
+            systemImage: "checkmark"
+        ) {
+            store.finalScoreToReport = store.display.finalScore
         }
     }
 

@@ -63,11 +63,16 @@ struct TongueTwisterArenaView: View {
             if let selected = interactor.state.selected {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
+                        RecordLessonHeader(
+                            sound: selected.targetSound,
+                            subtitle: String(localized: "tongueTwister.hero.title"),
+                            progress: twisterProgress(interactor: interactor)
+                        )
                         detail(twister: selected, interactor: interactor)
+                        recordCTA(interactor: interactor)
                         if case .result(let stars, _) = interactor.state.phase {
                             resultCard(stars: stars)
                         }
-                        recordCTA(interactor: interactor)
                         backCTA(interactor: interactor)
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
@@ -178,58 +183,56 @@ struct TongueTwisterArenaView: View {
     }
 
     private func resultCard(stars: Int) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
-            VStack(spacing: SpacingTokens.sp2) {
-                HStack(spacing: 4) {
-                    ForEach(0..<3, id: \.self) { index in
-                        Image(systemName: index < stars ? "star.fill" : "star")
-                            .font(.system(size: 28))
-                            .foregroundStyle(ColorTokens.Brand.gold)
-                    }
-                }
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(Text(String(
-                    format: String(localized: "tongueTwister.result.a11y %lld"),
-                    stars
-                )))
-                Text(String(localized: "tongueTwister.result.caption"))
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
-            .frame(maxWidth: .infinity)
+        RecordLessonFeedbackCard(
+            scoreFraction: Double(stars) / 3.0,
+            scoreCaption: nil,
+            stars: stars,
+            title: String(localized: "tongueTwister.result.caption"),
+            detail: nil,
+            passed: stars >= 2,
+            ctaTitle: String(localized: "tongueTwister.cta.again"),
+            ctaIcon: "arrow.counterclockwise"
+        ) {
+            hapticService.notification(.success)
+            interactor?.toggleRecord()
         }
+    }
+
+    private func twisterProgress(interactor: TongueTwisterArenaInteractor) -> Double {
+        if case .result(let stars, _) = interactor.state.phase {
+            return Double(stars) / 3.0
+        }
+        return interactor.state.isRecording ? 0.5 : 0
     }
 
     @ViewBuilder
     private func recordCTA(interactor: TongueTwisterArenaInteractor) -> some View {
         if interactor.canRecord {
-            HSButton(
-                recordTitle(phase: interactor.state.phase),
-                style: interactor.state.isRecording ? .danger : .primary,
-                size: .large,
-                icon: recordIcon(phase: interactor.state.phase)
+            // Большой центральный микрофон в стиле эталона record-and-score.
+            RecordMicButton(
+                state: micState(phase: interactor.state.phase),
+                hint: recordHint(phase: interactor.state.phase)
             ) {
                 hapticService.notification(.success)
                 interactor.toggleRecord()
             }
-            .disabled(interactor.state.isScoring)
         }
     }
 
-    private func recordTitle(phase: TongueTwisterArenaModels.AttemptPhase) -> String {
+    private func micState(phase: TongueTwisterArenaModels.AttemptPhase) -> RecordMicState {
+        switch phase {
+        case .recording: return .recording
+        case .scoring:   return .processing
+        case .result, .idle: return .idle
+        }
+    }
+
+    private func recordHint(phase: TongueTwisterArenaModels.AttemptPhase) -> String {
         switch phase {
         case .recording: return String(localized: "tongueTwister.cta.stop")
         case .scoring:   return String(localized: "tongueTwister.cta.scoring")
         case .result:    return String(localized: "tongueTwister.cta.again")
         case .idle:      return String(localized: "tongueTwister.cta.action")
-        }
-    }
-
-    private func recordIcon(phase: TongueTwisterArenaModels.AttemptPhase) -> String {
-        switch phase {
-        case .recording: return "stop.circle.fill"
-        case .scoring:   return "hourglass"
-        default:         return "mic.fill"
         }
     }
 

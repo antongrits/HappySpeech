@@ -11,121 +11,89 @@ struct AudioMemoryGameView: View {
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 4)
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-
-                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра — тёплая «игровая» атмосфера.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.28 : 0.50)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
-
-                content
-            }
-            .navigationTitle(Text(String(localized: "audioMemory.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+        Group {
+            if let interactor, interactor.isLoaded {
+                KidGameCanvasScaffold(
+                    title: Text(String(localized: "audioMemory.hero.title")),
+                    subtitle: memorySubtitle(interactor: interactor),
+                    progress: interactor.pairCount > 0
+                        ? Double(interactor.matchedCount) / Double(interactor.pairCount)
+                        : 0,
+                    palette: .kidWarm,
+                    onExit: { exitGame() }
+                ) {
+                    canvasContent(interactor: interactor)
+                } toolbar: {
+                    KidGameCTAButton(
+                        title: interactor.isComplete
+                            ? String(localized: "audioMemory.cta.start")
+                            : String(localized: "audioMemory.cta.shuffle"),
+                        systemImage: "shuffle"
+                    ) {
+                        hapticService.notification(.success)
+                        interactor.restart()
                     }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
+                }
+            } else {
+                ZStack {
+                    KidGameCanvasBackground(palette: .kidWarm)
+                    ProgressView().controlSize(.large)
                 }
             }
-            .task {
-                if interactor == nil {
-                    let new = AudioMemoryGameInteractor(
-                        childId: childId,
-                        childRepository: container.childRepository,
-                        adaptivePlanner: container.adaptivePlannerService
-                    )
-                    interactor = new
-                    await new.load()
-                }
+        }
+        .task {
+            if interactor == nil {
+                let new = AudioMemoryGameInteractor(
+                    childId: childId,
+                    childRepository: container.childRepository,
+                    adaptivePlanner: container.adaptivePlannerService
+                )
+                interactor = new
+                await new.load()
             }
         }
         .environment(\.circuitContext, .kid)
     }
 
-    @ViewBuilder
-    private var content: some View {
-        if let interactor, interactor.isLoaded {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp3) {
-                    hero(interactor: interactor)
-                    grid(interactor: interactor)
-                    if interactor.isComplete {
-                        completeBanner
-                    }
-                    cta(interactor: interactor)
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
-            }
-        } else {
-            ProgressView().controlSize(.large)
-        }
+    private func memorySubtitle(interactor: AudioMemoryGameInteractor) -> String {
+        String(
+            format: String(localized: "audioMemory.hero.progress %lld %lld %lld"),
+            interactor.moves, interactor.matchedCount, interactor.pairCount
+        )
     }
 
-    private func hero(interactor: AudioMemoryGameInteractor) -> some View {
-        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .pointing, size: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "audioMemory.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "audioMemory.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                    Text(String(
-                        format: String(localized: "audioMemory.hero.progress %lld %lld %lld"),
-                        interactor.moves, interactor.matchedCount, interactor.pairCount
-                    ))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .padding(.top, 2)
-                    if interactor.bestStars > 0 {
-                        Text(String(
-                            format: String(localized: "kidGame.bestStars %lld"),
-                            interactor.bestStars
-                        ))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Semantic.warning)
-                    }
+    // MARK: - Canvas content (внутри холста)
+
+    private func canvasContent(interactor: AudioMemoryGameInteractor) -> some View {
+        VStack(spacing: SpacingTokens.small) {
+            grid(interactor: interactor)
+
+            Spacer(minLength: 0)
+
+            if interactor.isComplete {
+                completeBanner
+            } else {
+                HStack(alignment: .bottom) {
+                    KidGameMascotBubble(
+                        message: String(localized: "audioMemory.hero.subtitle"),
+                        state: .pointing,
+                        size: 48
+                    )
+                    Spacer(minLength: 0)
                 }
-                Spacer(minLength: 0)
             }
         }
+        .padding(SpacingTokens.small)
     }
 
     private func grid(interactor: AudioMemoryGameInteractor) -> some View {
-        // Step 10 Batch A — Pattern 3: stagger fade+scale entrance.
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.tiles.enumerated()), id: \.element.id) { idx, tile in
                 tileButton(tile, index: idx, interactor: interactor)
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.90))
-                    }
             }
         }
         .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: interactor.tiles.count)
@@ -176,29 +144,17 @@ struct AudioMemoryGameView: View {
     }
 
     private var completeBanner: some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.12))) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 56)
                     .accessibilityHidden(true)
                 Text(String(localized: "audioMemory.complete"))
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                Spacer()
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Spacer(minLength: 0)
             }
-        }
-    }
-
-    private func cta(interactor: AudioMemoryGameInteractor) -> some View {
-        HSButton(
-            interactor.isComplete
-                ? String(localized: "audioMemory.cta.start")
-                : String(localized: "audioMemory.cta.shuffle"),
-            style: interactor.isComplete ? .primary : .secondary,
-            size: .large,
-            icon: "shuffle"
-        ) {
-            hapticService.notification(.success)
-            interactor.restart()
         }
     }
 }

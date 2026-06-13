@@ -120,20 +120,22 @@ struct AcousticMirrorView: View {
     @ViewBuilder
     private func sessionView(_ start: AcousticMirrorModels.Start.ViewModel) -> some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: SpacingTokens.sp4) {
+            VStack(spacing: SpacingTokens.regular) {
+                // Единый заголовок класса record-and-score: бейдж звука + прогресс.
+                RecordLessonHeader(
+                    sound: start.targetSound,
+                    subtitle: String(
+                        format: String(localized: "acousticMirror.progress.a11y"),
+                        holder.attemptVM?.roundNumber ?? 0,
+                        start.totalRounds
+                    ),
+                    progress: progressValue
+                )
+
                 soundPicker(selected: start.targetSound)
 
-                HSProgressBar(
-                    value: progressValue,
-                    style: .kid,
-                    tint: ColorTokens.Brand.primary
-                )
-                .accessibilityLabel(Text(String(
-                    format: String(localized: "acousticMirror.progress.a11y"),
-                    holder.attemptVM?.roundNumber ?? 0,
-                    start.totalRounds
-                )))
-
+                // Карточка задания: подсказка + континуум-«горка» (spectral-логика
+                // и шарик НЕ тронуты) + блок результата.
                 HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
                     VStack(spacing: SpacingTokens.sp4) {
                         Text(start.targetHint)
@@ -149,16 +151,15 @@ struct AcousticMirrorView: View {
                     }
                 }
 
-                micButton(start: start)
+                // Большой центральный микрофон в стиле эталона + Ляля рядом.
+                HStack(alignment: .center, spacing: SpacingTokens.small) {
+                    micButton(start: start)
+                    HSMascotView(mood: mascotMood, size: 72)
+                        .accessibilityHidden(true)
+                }
 
                 if let failure = holder.failureVM {
                     failureBlock(failure)
-                }
-
-                HStack {
-                    Spacer()
-                    HSMascotView(mood: mascotMood, size: 92)
-                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -377,19 +378,24 @@ struct AcousticMirrorView: View {
     @ViewBuilder
     private func micButton(start: AcousticMirrorModels.Start.ViewModel) -> some View {
         let isBusy = holder.phase == .recording || holder.phase == .analyzing
-        HSButton(
-            isBusy
+        RecordMicButton(
+            state: micState,
+            hint: isBusy
                 ? String(localized: "acousticMirror.cta.listening")
-                : String(localized: "acousticMirror.cta.start"),
-            style: .primary,
-            icon: "mic.fill",
-            isLoading: holder.phase == .analyzing
+                : start.instruction
         ) {
             guard !isBusy else { return }
             Task { await interactor?.performAttempt(.init()) }
         }
-        .disabled(isBusy)
         .accessibilityHint(Text(start.instruction))
+    }
+
+    private var micState: RecordMicState {
+        switch holder.phase {
+        case .recording: return .recording
+        case .analyzing: return .processing
+        case .ready, .result, .completed: return .idle
+        }
     }
 
     // MARK: - Failure block

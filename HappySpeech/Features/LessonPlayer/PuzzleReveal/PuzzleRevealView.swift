@@ -21,6 +21,7 @@ struct PuzzleRevealView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - State
 
@@ -37,7 +38,7 @@ struct PuzzleRevealView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            KidGameCanvasBackground(palette: .kidWarm)
             content
         }
         .task { await bootstrap() }
@@ -85,65 +86,58 @@ struct PuzzleRevealView: View {
     // MARK: - Playing
 
     private var playingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            progressHeader
-            wordBanner
+        KidGameCanvasScaffold(
+            title: Text(String(localized: "Сложи пазл")),
+            subtitle: String(localized: "Пазл \(display.puzzleIndex + 1) из \(display.totalPuzzles)"),
+            progress: display.progressFraction,
+            palette: .kidWarm,
+            onExit: { exitGame() }
+        ) {
+            puzzleCanvasContent
+        } toolbar: {
+            puzzleControls
+        }
+    }
+
+    // MARK: Canvas content (внутри холста)
+
+    private var puzzleCanvasContent: some View {
+        VStack(spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                Text(display.word)
+                    .font(TypographyTokens.title(30))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .accessibilityLabel(String(localized: "Слово: \(display.word)"))
+            }
+            .frame(maxWidth: .infinity)
+
             Text(display.hintText)
                 .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
 
             puzzleGrid
 
             feedbackLine
 
-            Spacer(minLength: SpacingTokens.small)
+            Spacer(minLength: 0)
 
-            controlButtons
-                .padding(.bottom, SpacingTokens.large)
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-    }
-
-    // MARK: Progress header
-
-    private var progressHeader: some View {
-        HStack(spacing: SpacingTokens.small) {
-            HSProgressBar(value: display.progressFraction)
-                .frame(height: 8)
-                .accessibilityLabel(
-                    String(localized: "Открыто плиток: \(openedTiles) из \(PuzzleRevealInteractor.tileCount)")
+            HStack(alignment: .bottom) {
+                KidGameMascotBubble(
+                    message: display.lastFeedback.isEmpty
+                        ? String(localized: "Скажи слово вслух!")
+                        : display.lastFeedback,
+                    state: display.lastScore >= 0.6 ? .celebrating : .explaining,
+                    size: 48
                 )
-            Text("\(display.puzzleIndex + 1)/\(display.totalPuzzles)")
-                .font(TypographyTokens.mono(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .monospacedDigit()
-                .accessibilityLabel(
-                    String(localized: "Пазл \(display.puzzleIndex + 1) из \(display.totalPuzzles)")
-                )
-        }
-    }
-
-    // MARK: Word banner
-
-    private var wordBanner: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.small) {
-                LyalyaMascotView(state: .explaining, size: 56)
-                    .accessibilityHidden(true)
-                Text(display.word)
-                    .font(TypographyTokens.title(30))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                    .frame(maxWidth: .infinity)
-                    .accessibilityLabel(String(localized: "Слово: \(display.word)"))
+                Spacer(minLength: 0)
             }
         }
+        .padding(SpacingTokens.small)
     }
 
     // MARK: Grid 3×3
@@ -162,8 +156,10 @@ struct PuzzleRevealView: View {
                 )
             }
         }
-        .frame(maxWidth: 300)
-        .padding(.vertical, SpacingTokens.small)
+        .frame(maxWidth: 280)
+        .accessibilityLabel(
+            String(localized: "Открыто плиток: \(openedTiles) из \(PuzzleRevealInteractor.tileCount)")
+        )
     }
 
     // MARK: Feedback
@@ -176,10 +172,6 @@ struct PuzzleRevealView: View {
                 .foregroundStyle(feedbackColor)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
-                .accessibilityLabel(display.lastFeedback)
-        } else {
-            Text(" ")
-                .font(TypographyTokens.headline(18))
                 .accessibilityHidden(true)
         }
     }
@@ -190,10 +182,10 @@ struct PuzzleRevealView: View {
         return ColorTokens.Kid.inkMuted
     }
 
-    // MARK: Controls
+    // MARK: Controls (toolbar CTA)
 
     @ViewBuilder
-    private var controlButtons: some View {
+    private var puzzleControls: some View {
         if display.isASRAvailable {
             asrControls
         } else {
@@ -205,33 +197,26 @@ struct PuzzleRevealView: View {
     private var asrControls: some View {
         switch display.phase {
         case .ready, .tileReveal:
-            HSButton(
-                String(localized: "Говори"),
-                style: .primary,
-                icon: "mic.fill"
+            KidGameCTAButton(
+                title: String(localized: "Говори"),
+                systemImage: "mic.fill"
             ) {
                 container.hapticService.selection()
                 interactor?.startRecord(.init())
             }
-            .frame(maxWidth: 320)
         case .recording:
-            HSButton(
-                String(localized: "Стоп"),
-                style: .secondary,
-                icon: "stop.fill"
+            KidGameCTAButton(
+                title: String(localized: "Стоп"),
+                systemImage: "stop.fill"
             ) {
                 container.hapticService.selection()
                 interactor?.stopRecord(.init())
             }
-            .frame(maxWidth: 320)
         case .evaluating:
-            HSButton(
-                String(localized: "Проверяем…"),
-                style: .secondary,
+            KidGameCTAButton(
+                title: String(localized: "Проверяем…"),
                 isLoading: true
             ) { }
-            .frame(maxWidth: 320)
-            .disabled(true)
         default:
             EmptyView()
         }
@@ -241,25 +226,20 @@ struct PuzzleRevealView: View {
     private var fallbackControls: some View {
         switch display.phase {
         case .ready, .tileReveal:
-            HSButton(
-                String(localized: "Я произнёс!"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
+            KidGameCTAButton(
+                title: String(localized: "Я произнёс!"),
+                systemImage: "checkmark"
             ) {
                 container.hapticService.selection()
                 // В fallback режиме считаем нажатие завершением «псевдо-записи».
                 interactor?.startRecord(.init())
                 interactor?.stopRecord(.init())
             }
-            .frame(maxWidth: 320)
         case .evaluating, .recording:
-            HSButton(
-                String(localized: "Проверяем…"),
-                style: .secondary,
+            KidGameCTAButton(
+                title: String(localized: "Проверяем…"),
                 isLoading: true
             ) { }
-            .frame(maxWidth: 320)
-            .disabled(true)
         default:
             EmptyView()
         }

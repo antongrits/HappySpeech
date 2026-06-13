@@ -22,6 +22,7 @@ struct SoundHunterView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - VIP
 
@@ -41,7 +42,7 @@ struct SoundHunterView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            KidGameCanvasBackground(palette: .kidWarm)
 
             switch display.phase {
             case .loading:
@@ -83,52 +84,61 @@ struct SoundHunterView: View {
     // MARK: - Hunting
 
     private var huntingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            hintBanner
-            sceneIndicator
-            grid
-            Spacer(minLength: 0)
-            HSProgressBar(value: display.progressFraction)
-                .frame(height: 8)
-                .padding(.horizontal, SpacingTokens.screenEdge)
+        KidGameCanvasScaffold(
+            title: Text(display.hintText),
+            subtitle: String(localized: "Сцена \(display.sceneIndex + 1) из \(display.totalScenes)"),
+            progress: display.progressFraction,
+            palette: .kidWarm,
+            onExit: { exitGame() }
+        ) {
+            huntCanvasContent
+        } toolbar: {
+            huntScoreBar
         }
-        .padding(.vertical, SpacingTokens.medium)
     }
 
-    private var hintBanner: some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.primary), padding: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.small) {
-                LyalyaMascotView(state: .explaining, size: 48)
-                    .accessibilityHidden(true)
-                Image(systemName: "magnifyingglass")
-                    .font(TypographyTokens.headline(18))
-                    .accessibilityHidden(true)
-                Text(display.hintText)
-                    .font(TypographyTokens.headline(16))
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-            .foregroundStyle(ColorTokens.Brand.primary)
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityLabel(display.hintText)
-    }
-
-    private var sceneIndicator: some View {
+    /// SoundHunter не имеет ручного CTA — предметы нажимаются прямо на холсте,
+    /// сцена авто-переходит. Нижняя панель показывает живой счёт «найдено».
+    private var huntScoreBar: some View {
         HStack(spacing: SpacingTokens.small) {
-            Text(String(localized: "Сцена \(display.sceneIndex + 1) из \(display.totalScenes)"))
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
-            Spacer(minLength: 4)
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .accessibilityHidden(true)
             Text(String(localized: "Найдено: \(display.correctCount) из \(display.totalCorrectNeeded)"))
-                .font(TypographyTokens.mono(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .font(TypographyTokens.kidCardTitle(17))
+                .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                .minimumScaleFactor(0.8)
+                .monospacedDigit()
+            Spacer(minLength: 0)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 58)
+        .padding(.horizontal, SpacingTokens.regular)
+        .background {
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                )
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var huntCanvasContent: some View {
+        VStack(spacing: SpacingTokens.small) {
+            grid
+
+            Spacer(minLength: 0)
+
+            HStack(alignment: .bottom) {
+                KidGameMascotBubble(message: display.hintText, state: .explaining, size: 48)
+                Spacer(minLength: 0)
+            }
+        }
+        .padding(SpacingTokens.small)
     }
 
     private var grid: some View {
@@ -150,7 +160,6 @@ struct SoundHunterView: View {
                 }
             }
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     // MARK: - Scene complete (intermediate)

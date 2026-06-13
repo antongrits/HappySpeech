@@ -13,7 +13,7 @@ import SwiftUI
 // UI-блоки:
 //   • Header (Ляля + greeting + progress);
 //   • WordCard (emoji, слово, подсветка букв, AttemptDots);
-//   • RecordingButton (80×80pt Capsule с pulse ring);
+//   • RecordMicButton (большой центральный микрофон, эталон record-and-score);
 //   • Feedback (✓ / ↻ + score bar);
 //   • Completed (звёздочки + сообщение).
 //
@@ -39,7 +39,6 @@ struct RepeatAfterModelView: View {
     private let bridge: RepeatAfterModelStoreBridge
 
     // Local UI-only state
-    @State private var micPulse: Bool = false
     @State private var ringPulse: Bool = false
     @State private var sessionStarted: Bool = false
     @State private var letterHighlightTask: Task<Void, Never>?
@@ -340,10 +339,19 @@ struct RepeatAfterModelView: View {
     // MARK: - Recording
 
     private var recordingView: some View {
-        VStack(spacing: SpacingTokens.large) {
+        VStack(spacing: SpacingTokens.medium) {
             header
+            wordCard(highlightActive: false)
             Spacer(minLength: 0)
-            recordingBody
+
+            // Большой центральный микрофон в стиле эталона (состояние записи).
+            RecordMicButton(
+                state: .recording,
+                hint: display.micLabel,
+                onTap: stopRecording
+            )
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
             // Spectrogram visualizer — визуальный feedback голоса ребёнка.
             // Reduce Motion: SpectrogramVisualizerView сам переключается на StaticSpectrogramView.
             SpectrogramVisualizerView(
@@ -351,16 +359,9 @@ struct RepeatAfterModelView: View {
                 style: .forest
             )
             .frame(maxWidth: .infinity)
-            .frame(height: 140)
+            .frame(height: 120)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityLabel(String(localized: "spectrogram.recording.a11y", defaultValue: "Визуализация твоего голоса"))
-
-            // Block J v18 — HSAudioWaveform (recording mode) поверх spectrogram
-            // как additional kid-friendly visual feedback (idle TimelineView анимация).
-            HSAudioWaveform(style: .recording, tint: ColorTokens.Brand.primary)
-                .frame(height: 56)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .accessibilityHidden(true)
 
             // v31 Волна D Ф.4 — live транскрипт через SpeechAnalyzerService
             // (iOS 26 SpeechAnalyzer + WhisperKit fallback). Видим только в фазе
@@ -370,55 +371,8 @@ struct RepeatAfterModelView: View {
 
             attemptDotsView
             Spacer(minLength: 0)
-            RecordingButton(
-                isRecording: true,
-                pulse: $micPulse,
-                reduceMotion: reduceMotion,
-                onTap: stopRecording
-            )
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(String(localized: "repeat.button.stop"))
-            .accessibilityHint(String(localized: "repeat.button.stop.hint"))
         }
         .padding(.vertical, SpacingTokens.medium)
-    }
-
-    private var recordingBody: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            ZStack {
-                Circle()
-                    .fill(ColorTokens.Brand.primary.opacity(0.12))
-                    .frame(width: 220, height: 220)
-                    .scaleEffect(reduceMotion ? 1.0 : (micPulse ? 1.12 : 1.0))
-                    .animation(
-                        reduceMotion
-                            ? nil
-                            : .easeInOut(duration: 0.9).repeatForever(autoreverses: true),
-                        value: micPulse
-                    )
-                Image(systemName: "mic.fill")
-                    .font(TypographyTokens.kidDisplay(96).weight(.bold))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
-            }
-            .onAppear { if !reduceMotion { micPulse = true } }
-            .onDisappear { micPulse = false }
-
-            Text(display.micLabel)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-
-            if let word = display.currentWord {
-                Text(word.word)
-                    .font(TypographyTokens.headline(18))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     // MARK: - Processing
@@ -448,120 +402,49 @@ struct RepeatAfterModelView: View {
     // MARK: - Feedback
 
     private var feedbackView: some View {
-        VStack(spacing: SpacingTokens.large) {
+        VStack(spacing: SpacingTokens.medium) {
             header
+            wordCard(highlightActive: false)
             Spacer(minLength: 0)
-            feedbackBody
+            // Карточка результата в стиле эталона: кольцо счёта + звёзды +
+            // ободряющий текст + Ляля.
+            RecordLessonFeedbackCard(
+                scoreFraction: Double(display.score),
+                scoreCaption: nil,
+                stars: display.roundStars,
+                title: display.feedbackText,
+                detail: feedbackDetail,
+                passed: display.passed,
+                ctaTitle: display.canAdvance
+                    ? String(localized: "repeat.button.next_word")
+                    : String(localized: "repeat.button.retry"),
+                ctaIcon: display.canAdvance ? "arrow.right" : "arrow.counterclockwise",
+                ctaIdentifier: "gameNextButton"
+            ) {
+                container.soundService.playUISound(.tap)
+                if display.canAdvance {
+                    interactor.advanceWord()
+                } else {
+                    // Возвращаемся к wordPreview того же слова — попыток ещё есть.
+                    display.phase = .wordPreview
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
             attemptDotsView
             Spacer(minLength: 0)
-            feedbackBottom
         }
         .padding(.vertical, SpacingTokens.medium)
     }
 
-    private var feedbackBody: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            if display.passed {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(TypographyTokens.kidDisplay(120).weight(.bold))
-                    .foregroundStyle(ColorTokens.Brand.mint)
-                    .accessibilityHidden(true)
-            } else {
-                Image(systemName: "arrow.triangle.2.circlepath")
-                    .font(TypographyTokens.kidDisplay(96).weight(.bold))
-                    .foregroundStyle(ColorTokens.Brand.sky)
-                    .accessibilityHidden(true)
-            }
-
-            // Звёздочки за раунд.
-            roundStarsView
-
-            Text(display.feedbackText)
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-
-            // Encouragement (показывается если есть прогресс).
-            if let enc = display.encouragement {
-                Text(enc)
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Brand.mint)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-
-            HSProgressBar(value: Double(display.score))
-                .frame(height: 10)
-                .padding(.horizontal, SpacingTokens.xLarge)
-
-            // Диагностика ошибки (мягко, без технического жаргона).
-            if let diag = display.diagnosticText, !display.passed {
-                Text(diag)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
+    /// Объединяет encouragement и мягкую диагностику в одну строку описания
+    /// для карточки результата.
+    private var feedbackDetail: String? {
+        var parts: [String] = []
+        if let enc = display.encouragement, !enc.isEmpty { parts.append(enc) }
+        if !display.passed, let diag = display.diagnosticText, !diag.isEmpty {
+            parts.append(diag)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(display.feedbackText)
-    }
-
-    private var roundStarsView: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            ForEach(0..<3, id: \.self) { idx in
-                Image(systemName: idx < display.roundStars ? "star.fill" : "star")
-                    .font(TypographyTokens.title(22).weight(.semibold))
-                    .foregroundStyle(
-                        idx < display.roundStars
-                            ? ColorTokens.Brand.gold
-                            : ColorTokens.Kid.line
-                    )
-                    .scaleEffect(idx < display.roundStars && !reduceMotion ? 1.1 : 1.0)
-                    .animation(
-                        reduceMotion ? nil : .spring(duration: 0.35).delay(Double(idx) * 0.1),
-                        value: display.roundStars
-                    )
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(
-            String(localized: "repeat.round_stars.a11y \(display.roundStars)")
-        )
-    }
-
-    private var feedbackBottom: some View {
-        HStack(spacing: SpacingTokens.small) {
-            if display.canAdvance {
-                HSButton(
-                    String(localized: "repeat.button.next_word"),
-                    style: .primary,
-                    icon: "arrow.right"
-                ) {
-                    container.soundService.playUISound(.tap)
-                    interactor.advanceWord()
-                }
-                .accessibilityIdentifier("gameNextButton")
-            } else {
-                HSButton(
-                    String(localized: "repeat.button.retry"),
-                    style: .primary,
-                    icon: "arrow.counterclockwise"
-                ) {
-                    container.soundService.playUISound(.tap)
-                    // Возвращаемся к wordPreview того же слова — попыток ещё есть.
-                    display.phase = .wordPreview
-                }
-                .accessibilityIdentifier("gameNextButton")
-            }
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
+        return parts.isEmpty ? nil : parts.joined(separator: " ")
     }
 
     // MARK: - Completed
@@ -627,21 +510,38 @@ struct RepeatAfterModelView: View {
 
     private var header: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(display.greeting)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                Text(display.progressLabel)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
-            Spacer()
-            HSMascotView(mood: mascotMood, size: 80)
+            RecordLessonHeader(
+                sound: Self.soundBadge(for: activity.soundTarget),
+                subtitle: display.progressLabel,
+                progress: headerProgress
+            )
+            HSMascotView(mood: mascotMood, size: 64)
                 .accessibilityHidden(true)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    /// Доля прогресса для шапки: текущее слово из общего числа.
+    private var headerProgress: Double {
+        guard display.totalWords > 0 else { return 0 }
+        let parsed = Self.parseWordIndex(display.progressLabel)
+        return Double(parsed) / Double(display.totalWords)
+    }
+
+    /// Бейдж звука из soundTarget («Р», «С», …) — если короткий.
+    static func soundBadge(for soundTarget: String) -> String {
+        let trimmed = soundTarget.trimmingCharacters(in: .whitespaces)
+        return trimmed.count <= 2 ? trimmed : ""
+    }
+
+    /// Извлекает индекс текущего слова из локализованной метки прогресса
+    /// (первое число), чтобы заполнить полосу. Без числа → 0.
+    static func parseWordIndex(_ label: String) -> Int {
+        let digits = label.prefix { !$0.isNumber }.isEmpty
+            ? label
+            : String(label.drop { !$0.isNumber })
+        let number = digits.prefix { $0.isNumber }
+        return Int(number) ?? 0
     }
 
     private var mascotMood: MascotMood {

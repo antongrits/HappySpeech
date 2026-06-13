@@ -38,7 +38,9 @@ struct BreathingView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
             content
             if store.showTutorial { tutorialOverlay }
             if store.showWarmUp { warmUpOverlay }
@@ -68,35 +70,43 @@ struct BreathingView: View {
 
     @ViewBuilder
     private var content: some View {
-        VStack(spacing: SpacingTokens.large) {
+        VStack(spacing: SpacingTokens.medium) {
             header
             Spacer(minLength: 0)
-            dandelion
+            HSBreathingOrb(
+                expansion: orbExpansion,
+                ringProgress: store.progress,
+                phaseTitle: store.subtitle,
+                phaseCount: nil,
+                size: 240
+            )
             Spacer(minLength: 0)
+            mascotBubble
             progressSection
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.vertical, SpacingTokens.medium)
     }
 
+    /// Орб раскрывается тем сильнее, чем активнее выдох ребёнка (live RMS
+    /// масштаб ≈ 0.7…1.2 нормализуется в 0…1).
+    private var orbExpansion: CGFloat {
+        guard !reduceMotion else { return store.progress }
+        let normalized = (store.objectScale - 0.7) / 0.5
+        return max(0, min(1, normalized))
+    }
+
     private var header: some View {
-        HStack(alignment: .top, spacing: SpacingTokens.small) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(store.title)
-                    .font(TypographyTokens.title())
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                Text(store.subtitle)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-            Spacer()
-            LyalyaMascotView(state: breathingLyalyaState, size: 80)
-                .accessibilityHidden(true)
+        VStack(spacing: SpacingTokens.tiny) {
+            Text(store.title)
+                .font(TypographyTokens.kidTitle(22))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
+        .frame(maxWidth: .infinity)
+        .padding(.top, SpacingTokens.sp3)
     }
 
     private var breathingLyalyaState: LyalyaState {
@@ -108,52 +118,38 @@ struct BreathingView: View {
         }
     }
 
-    private var dandelion: some View {
-        ZStack {
-            // Stem
-            Rectangle()
-                .fill(ColorTokens.Brand.mint)
-                .frame(width: 6, height: 120)
-                .offset(y: 80)
+    private var mascotBubble: some View {
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: breathingLyalyaState, size: 60)
                 .accessibilityHidden(true)
-
-            // Petals
-            ForEach(0..<max(store.petalsRemaining, 0), id: \.self) { index in
-                petal(index: index)
-            }
-
-            // Core
-            Circle()
-                .fill(ColorTokens.Brand.primary.opacity(0.35))
-                .frame(width: 70, height: 70)
-                .overlay(
-                    Circle()
-                        .stroke(ColorTokens.Brand.primary, lineWidth: 2)
+            Text(String(localized: "Дыши вместе со мной"))
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                        )
                 )
+            Spacer(minLength: 0)
         }
-        .scaleEffect(reduceMotion ? 1.0 : store.objectScale)
-        .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
-                   value: store.objectScale)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(String(localized: "Одуванчик"))
-        .accessibilityValue(String(localized: "\(Int(store.progress * 100)) процентов"))
-    }
-
-    private func petal(index: Int) -> some View {
-        let total = max(store.petalsRemaining, 1)
-        let angle = Double(index) / Double(total) * 360
-        return Circle()
-            .fill(ColorTokens.Brand.primary.opacity(0.7))
-            .frame(width: 18, height: 18)
-            .offset(y: -54)
-            .rotationEffect(.degrees(angle))
-            .accessibilityHidden(true)
+        .accessibilityLabel(String(localized: "Дыши вместе со мной"))
     }
 
     private var progressSection: some View {
         VStack(spacing: SpacingTokens.small) {
             HSProgressBar(value: store.progress)
                 .frame(height: 10)
+                .accessibilityLabel(String(localized: "Прогресс"))
+                .accessibilityValue(String(localized: "\(Int(store.progress * 100)) процентов"))
 
             if let failure = store.failureMessage {
                 Text(failure)

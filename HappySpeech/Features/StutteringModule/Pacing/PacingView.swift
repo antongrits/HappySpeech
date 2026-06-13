@@ -14,15 +14,19 @@ struct PacingView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.sp5) {
-                mascotHeader
+            VStack(spacing: SpacingTokens.sp4) {
                 instructionLabel
+                    .padding(.top, SpacingTokens.sp3)
+                Spacer(minLength: 0)
                 phraseCard
                 tempoSlider
                 progressLabel
                 Spacer(minLength: 0)
+                mascotBubble
                 controlButtons
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -48,16 +52,36 @@ struct PacingView: View {
 
     // MARK: - Mascot Header
 
-    private var mascotHeader: some View {
-        // Fix #9 — единый канонический маскот LyalyaMascotView вместо
-        // legacy HSMascotView (как в AR-зоне). showRoundReward → celebrating,
-        // isRunning → happy, иначе idle.
+    private var mascotBubble: some View {
+        // showRoundReward → celebrating, isRunning → encouraging, иначе idle.
         let state: LyalyaState = interactor.display.showRoundReward
             ? .celebrating
-            : (interactor.display.isRunning ? .happy : .idle)
-        return LyalyaMascotView(state: state, size: 96)
-            .frame(maxWidth: .infinity)
-            .accessibilityHidden(true)
+            : (interactor.display.isRunning ? .encouraging : .idle)
+        let phrase = interactor.display.isRunning
+            ? String(localized: "Веди речь за бегунком, не спеши")
+            : String(localized: "Говори ровно и плавно за мной")
+        return HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: state, size: 60)
+                .accessibilityHidden(true)
+            Text(phrase)
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+                        )
+                )
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Instruction

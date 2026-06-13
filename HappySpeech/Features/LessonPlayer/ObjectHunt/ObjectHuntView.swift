@@ -1,4 +1,3 @@
-import AVFoundation
 import SwiftUI
 
 // MARK: - ObjectHuntView
@@ -28,6 +27,7 @@ struct ObjectHuntView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - VIP
 
@@ -46,31 +46,27 @@ struct ObjectHuntView: View {
 
     var body: some View {
         ZStack {
-            sceneBackground
-                .ignoresSafeArea()
+            KidGameCanvasBackground(palette: .kidWarm)
 
-            VStack(spacing: 0) {
-                topBar
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.small)
-
-                Spacer(minLength: SpacingTokens.small)
-
-                switch display.phase {
-                case .loading:
-                    loadingView
-                case .playing:
-                    itemsGrid
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                case .sceneComplete:
+            switch display.phase {
+            case .loading:
+                loadingView
+            case .playing:
+                playingView
+            case .sceneComplete:
+                VStack {
+                    Spacer(minLength: 0)
                     sceneCompleteCard
                         .padding(.horizontal, SpacingTokens.screenEdge)
-                case .gameComplete:
+                    Spacer(minLength: 0)
+                }
+            case .gameComplete:
+                VStack {
+                    Spacer(minLength: 0)
                     gameCompleteCard
                         .padding(.horizontal, SpacingTokens.screenEdge)
+                    Spacer(minLength: 0)
                 }
-
-                Spacer(minLength: SpacingTokens.medium)
             }
         }
         .task { await bootstrap() }
@@ -78,63 +74,60 @@ struct ObjectHuntView: View {
         .accessibilityElement(children: .contain)
     }
 
-    // MARK: - Scene background
+    // MARK: - Playing
 
-    private var sceneBackground: some View {
-        LinearGradient(
-            colors: [ColorTokens.Brand.sky.opacity(0.28), ColorTokens.Kid.bgSoft],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+    private var playingView: some View {
+        KidGameCanvasScaffold(
+            title: Text(display.promptText.isEmpty
+                ? String(localized: "object_hunt.find_sound \(display.targetSoundLabel)")
+                : display.promptText),
+            subtitle: display.roundBadge,
+            palette: .kidWarm,
+            onExit: { exitGame() }
+        ) {
+            itemsGrid
+                .padding(SpacingTokens.small)
+        } toolbar: {
+            huntTimerBar
+        }
     }
 
-    // MARK: - Top bar
-
-    private var topBar: some View {
+    /// ObjectHunt — предметы нажимаются прямо на холсте; нижняя панель показывает
+    /// целевой звук и обратный отсчёт.
+    private var huntTimerBar: some View {
         HStack(spacing: SpacingTokens.small) {
-            HSMascotView(mood: .explaining, size: 48)
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(display.roundBadge)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-                Text(display.promptText.isEmpty
-                    ? String(localized: "object_hunt.find_sound \(display.targetSoundLabel)")
-                    : display.promptText)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            VStack(spacing: 2) {
-                if !display.targetSoundLabel.isEmpty {
-                    Text(display.targetSoundLabel)
-                        .font(TypographyTokens.kidDisplay(32))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .frame(width: 44, height: 44)
-                        .background(Circle().fill(ColorTokens.Brand.lilac.opacity(0.25)))
-                        .accessibilityLabel(
-                            String(localized: "object_hunt.target_sound_a11y \(display.targetSoundLabel)")
-                        )
-                }
-                Text(display.timerLabel)
-                    .font(TypographyTokens.caption(13).monospacedDigit())
-                    .foregroundStyle(
-                        display.isTimerWarning ? ColorTokens.Semantic.error : ColorTokens.Kid.inkMuted
+            if !display.targetSoundLabel.isEmpty {
+                Text(display.targetSoundLabel)
+                    .font(TypographyTokens.kidDisplay(28))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(ColorTokens.Brand.primary))
+                    .accessibilityLabel(
+                        String(localized: "object_hunt.target_sound_a11y \(display.targetSoundLabel)")
                     )
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: display.isTimerWarning)
             }
+            Spacer(minLength: 0)
+            Image(systemName: "timer")
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(display.isTimerWarning ? ColorTokens.Semantic.error : ColorTokens.Kid.inkMuted)
+                .accessibilityHidden(true)
+            Text(display.timerLabel)
+                .font(TypographyTokens.titleSmall(20).monospacedDigit())
+                .foregroundStyle(display.isTimerWarning ? ColorTokens.Semantic.error : ColorTokens.Kid.ink)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: display.isTimerWarning)
         }
-        .padding(SpacingTokens.small)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface.opacity(0.88))
-        )
-        .accessibilityElement(children: .contain)
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 58)
+        .padding(.horizontal, SpacingTokens.regular)
+        .background {
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                )
+        }
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Loading

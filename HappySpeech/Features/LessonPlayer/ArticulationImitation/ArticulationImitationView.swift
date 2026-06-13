@@ -369,21 +369,27 @@ struct ArticulationImitationView: View {
 
     private var header: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(display.greeting)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                Text(display.progressLabel)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
-            Spacer()
-            HSMascotView(mood: mascotMood, size: 80)
+            RecordLessonHeader(
+                sound: Self.soundBadge(for: activity.soundTarget),
+                subtitle: display.progressLabel,
+                progress: headerProgress
+            )
+            HSMascotView(mood: mascotMood, size: 64)
                 .accessibilityHidden(true)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    /// Доля прогресса для шапки: пройденные позы из общего числа.
+    private var headerProgress: Double {
+        guard display.outOf > 0 else { return 0 }
+        return Double(display.starsTotal) / Double(display.outOf)
+    }
+
+    /// Бейдж звука из soundTarget («Р», «С», …) — если односимвольный.
+    static func soundBadge(for soundTarget: String) -> String {
+        let trimmed = soundTarget.trimmingCharacters(in: .whitespaces)
+        return trimmed.count <= 2 ? trimmed : ""
     }
 
     private var mascotMood: MascotMood {

@@ -27561,6 +27561,54 @@
         }
       }
     },
+    "kidCanvas.exit": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exit"
+          }
+        }
+      }
+    },
+    "kidCanvas.step %lld %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаг %1$lld из %2$lld"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Step %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "kidCanvas.wellDone": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Well done!"
+          }
+        }
+      }
+    },
     "kidDrag.step.a11y %lld %lld": {
       "localizations": {
         "ru": {
@@ -28260,6 +28308,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Закрась букву"
+          }
+        }
+      }
+    },
+    "letterPainting.tool.erase": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стереть"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erase"
           }
         }
       }
