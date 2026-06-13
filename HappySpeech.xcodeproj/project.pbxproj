@@ -1521,6 +1521,7 @@
 		ABD53939B74089DF74D26533 /* FamilyHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96835D84F9B83AE60BCCF60B /* FamilyHomeRouter.swift */; };
 		ABE93274F6E6D2E931BA8D6D /* DialectAdaptationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F092A9E232B88AF080354A63 /* DialectAdaptationView.swift */; };
 		AC1B0A387E0DB7AF6E32C319 /* AuthSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB95CEFCAE87DF80CD8C6EC1 /* AuthSignUpView.swift */; };
+		AC226D9A455E133FA4E52E6D /* BackgroundRedesignSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFE6F79F332F9FE5D5B3231 /* BackgroundRedesignSnapshotTests.swift */; };
 		AC276543B1346357125FBB31 /* ChildHomeDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD1F7B9E886E9804F488D39 /* ChildHomeDisplayLogic.swift */; };
 		AC3B326BA781E72B1ADBB42D /* SessionShellInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE18FE14E4D236D979AEE21E /* SessionShellInteractorTests.swift */; };
 		AC7087A0CF78E060C16E13C0 /* PermissionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C231BE9B001859E90BDE4E86 /* PermissionsInteractor.swift */; };
@@ -2342,6 +2343,7 @@
 		0D8C9FB6C6EBDA3F3A273B6F /* HSRewardBurst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSRewardBurst.swift; sourceTree = "<group>"; };
 		0DE5043E85610271B83E3A3A /* GamePlaythroughUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlaythroughUITests.swift; sourceTree = "<group>"; };
 		0DF9046A2667AFA4FF38BD6D /* FamilyVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceView.swift; sourceTree = "<group>"; };
+		0DFE6F79F332F9FE5D5B3231 /* BackgroundRedesignSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundRedesignSnapshotTests.swift; sourceTree = "<group>"; };
 		0E08EB6567A14647B2E1B26A /* ArticulationImitationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationImitationPresenterTests.swift; sourceTree = "<group>"; };
 		0E0A6A4A6E705DC000D86C70 /* ARActivityRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityRouter.swift; sourceTree = "<group>"; };
 		0E2628B8A06CD85D8A683EB8 /* FamilyInviteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInviteRouter.swift; sourceTree = "<group>"; };
@@ -6826,6 +6828,7 @@
 				65212AB38C0F045ACDF843FD /* AccessibilityVariantsSnapshotTests.swift */,
 				11B39162C028EF46673703F6 /* AdvancedGameSnapshotTests.swift */,
 				5AD2F2021E858F9B3AB35565 /* ARSnapshotTests.swift */,
+				0DFE6F79F332F9FE5D5B3231 /* BackgroundRedesignSnapshotTests.swift */,
 				7E539029741A39D53C968635 /* BlockCComponentsSnapshotTests.swift */,
 				ADBF41846F9E684384135C15 /* DesignSystemSnapshotTests.swift */,
 				D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */,
@@ -10217,17 +10220,17 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					80409027269012E01A4CED5F = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 539T2YXRS6;
 					};
 					A16D505572A70D1BDBEA0F10 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 539T2YXRS6;
 						TestTargetID = E693E860D757936401DB7BF8;
 					};
 					E693E860D757936401DB7BF8 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 539T2YXRS6;
 					};
 					EDB22877E8320FEB0A980638 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 539T2YXRS6;
 					};
 				};
 			};
@@ -10518,6 +10521,7 @@
 				7A9B486FA1144EF5DFE3C71D /* AuthPresenterTests.swift in Sources */,
 				7C85F5A7D3130F65DF0FD639 /* AuthServiceContractTests.swift in Sources */,
 				00B0519F3263A85BA2608ED3 /* AwardsCatalogWorkerTests.swift in Sources */,
+				AC226D9A455E133FA4E52E6D /* BackgroundRedesignSnapshotTests.swift in Sources */,
 				7F8F3244D6B65F9F85180AA2 /* BedtimeModeInteractorTests.swift in Sources */,
 				FD9FEC5ACF7AEE75B5D5DB1A /* BedtimeModePresenterTests.swift in Sources */,
 				93CBEBBDA03B2990B4897E19 /* BedtimeModeWorkerTests.swift in Sources */,
@@ -12534,7 +12538,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = BrandPrimary;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 539T2YXRS6;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_CONCURRENCY = complete;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -12618,7 +12622,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = BrandPrimary;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 539T2YXRS6;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_CONCURRENCY = complete;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
