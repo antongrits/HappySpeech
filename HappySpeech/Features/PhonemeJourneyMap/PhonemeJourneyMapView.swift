@@ -59,66 +59,92 @@ struct PhonemeJourneyMapView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    roadmap(interactor: interactor)
-                    cta(interactor: interactor)
+            VStack(spacing: 0) {
+                MapJourneyHeader(
+                    title: String(localized: "phonemeJourney.hero.title"),
+                    subtitle: headerSubtitle(state: interactor.state),
+                    starsCollected: "\(interactor.state.stages.filter(\.isComplete).count)",
+                    starsTotal: String(
+                        format: String(localized: "phonemeJourney.steps.of", defaultValue: "из %d"),
+                        interactor.state.stages.count
+                    ),
+                    progress: interactor.state.progress,
+                    leadingIcon: "waveform",
+                    reduceMotion: reduceMotion
+                )
+                .padding(.top, SpacingTokens.tiny)
+
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        soundHero(state: interactor.state)
+                        roadmap(interactor: interactor)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, 110)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+                .scrollBounceBehavior(.basedOnSize)
+            }
+            .safeAreaInset(edge: .bottom) {
+                cta(interactor: interactor)
+                    .padding(.bottom, SpacingTokens.tiny)
             }
         } else {
             ProgressView().controlSize(.large)
         }
     }
 
-    private func hero(state: PhonemeJourneyMapModels.ViewState) -> some View {
-        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
-        // hero card поверх kidCool mesh.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .explaining, size: 72)
+    private func headerSubtitle(state: PhonemeJourneyMapModels.ViewState) -> String {
+        let sound = state.targetSound.isEmpty
+            ? String(localized: "phonemeJourney.hero.subtitle")
+            : "\(String(localized: "phonemeJourney.sound.prefix", defaultValue: "Звук")) \(state.targetSound)"
+        return sound
+    }
+
+    /// Маскот + крупная буква-звук над дорожкой этапов (эталон — «герой острова»).
+    private func soundHero(state: PhonemeJourneyMapModels.ViewState) -> some View {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            HStack(spacing: SpacingTokens.sp4) {
+                LyalyaMascotView(state: .explaining, size: 76)
                     .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(String(localized: "phonemeJourney.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.tiny) {
+                        Text(state.targetSound.isEmpty ? "—" : state.targetSound)
+                            .font(TypographyTokens.titleLarge(34).weight(.black))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                        Text(String(
+                            format: String(localized: "phonemeJourney.step.counter", defaultValue: "шаг %1$d из %2$d"),
+                            state.currentIndex + 1, state.stages.count
+                        ))
+                        .font(TypographyTokens.caption(13).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                    }
                     Text(String(localized: "phonemeJourney.hero.subtitle"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
-                    HStack(spacing: 6) {
-                        Text(state.targetSound)
-                            .font(TypographyTokens.titleLarge(28).weight(.bold))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                        Text("· шаг \(state.currentIndex + 1) из \(state.stages.count)")
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    HSProgressBar(value: state.progress, style: .kid)
-                        .frame(height: 8)
-                        .padding(.top, 4)
                 }
-                Spacer(minLength: 0)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
 
     private func roadmap(interactor: PhonemeJourneyMapInteractor) -> some View {
-        VStack(spacing: 0) {
+        let currentIndex = interactor.state.currentIndex
+        return VStack(spacing: 0) {
             ForEach(Array(interactor.state.stages.enumerated()), id: \.element.id) { idx, item in
                 stageRow(
                     item: item,
                     index: idx,
+                    isCurrent: idx == currentIndex && !item.isComplete,
                     isLast: idx == interactor.state.stages.count - 1
                 )
-                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
-                // fade+scale + parallax drift на roadmap stages.
                 .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                     content
                         .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
@@ -132,32 +158,26 @@ struct PhonemeJourneyMapView: View {
     private func stageRow(
         item: PhonemeJourneyMapModels.StageItem,
         index: Int,
+        isCurrent: Bool,
         isLast: Bool
     ) -> some View {
-        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+        HStack(alignment: .top, spacing: SpacingTokens.sp4) {
             VStack(spacing: 0) {
-                ZStack {
-                    Circle()
-                        .fill(item.isComplete ? ColorTokens.Semantic.success : ColorTokens.Kid.surfaceAlt)
-                        .frame(width: 36, height: 36)
-                    Image(systemName: item.isComplete ? "checkmark" : item.id.iconSystemName)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundStyle(item.isComplete ? Color.white : ColorTokens.Brand.primary)
-                        // Step 10 Batch C — Pattern 5: bounce on stage symbol
-                        // when item flips to complete (state-reactive feedback).
-                        .hsSymbolEffect(.bounce, value: item.isComplete)
-                }
+                stageNode(item: item, isCurrent: isCurrent)
                 if !isLast {
+                    // Коннектор по эталону: коралловый у пройденного, пунктир-мягкий далее.
                     Rectangle()
-                        .fill(item.isComplete ? ColorTokens.Semantic.success.opacity(0.5) : ColorTokens.Kid.line)
-                        .frame(width: 3, height: 44)
+                        .fill(item.isComplete
+                              ? ColorTokens.Brand.primary.opacity(0.45)
+                              : ColorTokens.Kid.line)
+                        .frame(width: 3, height: 46)
                 }
             }
             // Read-only отражение реального прогресса — не интерактивный toggle.
-            HSCard(style: item.isComplete ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+            HSCard(style: isCurrent ? .tinted(ColorTokens.Brand.primaryLo.opacity(0.35)) : .elevated) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(item.id.title)
-                        .font(TypographyTokens.headline(15))
+                        .font(TypographyTokens.headline(15).weight(.bold))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
@@ -178,19 +198,83 @@ struct PhonemeJourneyMapView: View {
         .padding(.bottom, isLast ? 0 : SpacingTokens.sp2)
     }
 
-    private func cta(interactor: PhonemeJourneyMapInteractor) -> some View {
-        HSButton(
-            String(localized: "phonemeJourney.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "arrow.right"
-        ) {
-            hapticService.notification(.success)
-            coordinator.navigate(to: .worldMap(
-                childId: childId,
-                targetSound: interactor.state.targetSound
-            ))
+    /// Узел этапа по эталону: пройдено — золотой ободок + мятная галочка-бейдж;
+    /// текущий — коралловый кружок с пульсом; будущее — мягкий нейтральный.
+    @ViewBuilder
+    private func stageNode(item: PhonemeJourneyMapModels.StageItem, isCurrent: Bool) -> some View {
+        ZStack {
+            if item.isComplete {
+                Circle()
+                    .fill(ColorTokens.Kid.surface)
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        Circle().strokeBorder(ColorTokens.Brand.gold.opacity(0.7), lineWidth: 3)
+                    )
+                    .shadow(color: ColorTokens.Brand.gold.opacity(0.22), radius: 5, y: 2)
+                Image(systemName: "star.fill")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .hsSymbolEffect(.bounce, value: item.isComplete)
+                // Мятная галочка — мелкий семантический акцент «готово» (как в эталоне).
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 16, weight: .bold))
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(ColorTokens.Kid.surface, ColorTokens.Brand.mint)
+                    .offset(x: 15, y: 15)
+            } else if isCurrent {
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                            center: .topLeading, startRadius: 2, endRadius: 40
+                        )
+                    )
+                    .frame(width: 40, height: 40)
+                    .overlay(Circle().strokeBorder(ColorTokens.Kid.surface, lineWidth: 3))
+                    .shadow(color: ColorTokens.Brand.primary.opacity(0.5), radius: 7, y: 3)
+                Image(systemName: item.id.iconSystemName)
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+            } else {
+                Circle()
+                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .frame(width: 40, height: 40)
+                    .overlay(
+                        Circle().strokeBorder(ColorTokens.Kid.line, style: StrokeStyle(lineWidth: 2, dash: [3, 4]))
+                    )
+                Image(systemName: item.id.iconSystemName)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
         }
+        .accessibilityHidden(true)
+    }
+
+    private func cta(interactor: PhonemeJourneyMapInteractor) -> some View {
+        MapLevelCTACard(
+            badgeText: interactor.state.targetSound,
+            kicker: String(localized: "phonemeJourney.cta.kicker", defaultValue: "Следующий шаг"),
+            levelTitle: interactor.state.stages[safe: interactor.state.currentIndex]?.id.title
+                ?? String(localized: "phonemeJourney.cta.action"),
+            actionTitle: String(localized: "action.play", defaultValue: "Играть"),
+            actionIcon: "arrow.right",
+            reduceMotion: reduceMotion,
+            onTap: {
+                hapticService.notification(.success)
+                coordinator.navigate(to: .worldMap(
+                    childId: childId,
+                    targetSound: interactor.state.targetSound
+                ))
+            }
+        )
+    }
+}
+
+// MARK: - Safe index helper
+
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        indices.contains(index) ? self[index] : nil
     }
 }
 

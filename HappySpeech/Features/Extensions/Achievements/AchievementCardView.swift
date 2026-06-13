@@ -99,10 +99,13 @@ struct AchievementCardView: View {
     // MARK: - Helpers
 
     private var rarityColor: Color {
+        // Redesign (kid-rewards эталон): тёплая палитра наград. `.common`
+        // переведён с off-palette Brand.mint на Brand.gold — золото-«масло»
+        // сигнатура наград, без зелёных акцентов на карточках достижений.
         switch item.rarity {
         case .legendary: return ColorTokens.Brand.butter
         case .rare:      return ColorTokens.Brand.lilac
-        case .common:    return ColorTokens.Brand.mint
+        case .common:    return ColorTokens.Brand.gold
         }
     }
 

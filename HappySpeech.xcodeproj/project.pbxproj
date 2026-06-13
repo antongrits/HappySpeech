@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00136C8CA8701B08EA6DD9AC /* MapJourneyComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D68E9CE7ED09EA31E3ACB38 /* MapJourneyComponents.swift */; };
 		00665B18C1BE0A14AF7E8850 /* VoiceCloningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92EA96735D3319EFD0422DA /* VoiceCloningView.swift */; };
 		0066A3DCAC3848CC002AA5C5 /* HSSymbolEffectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CF377C529C07D08BFD52F7 /* HSSymbolEffectTests.swift */; };
 		00A448A19FEE213E5323C8A3 /* SpeechGrowthDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C2EB477F3A456AD4097FCD /* SpeechGrowthDiaryView.swift */; };
@@ -3293,6 +3294,7 @@
 		7CF836E2F6800D475DAE9C65 /* SoundHunterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundHunterModels.swift; sourceTree = "<group>"; };
 		7D236620A3353D2658636359 /* SpeechHomeworkPlannerInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHomeworkPlannerInteractorTests.swift; sourceTree = "<group>"; };
 		7D25D02EF13B79DCAFB2FC38 /* celebrate_perfect_word.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_perfect_word.json; sourceTree = "<group>"; };
+		7D68E9CE7ED09EA31E3ACB38 /* MapJourneyComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapJourneyComponents.swift; sourceTree = "<group>"; };
 		7D70394C7C3F1872C0834683 /* SortingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingInteractor.swift; sourceTree = "<group>"; };
 		7D9AF8ACEDE0DB204B828D2C /* PracticeReminderKidInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeReminderKidInteractor.swift; sourceTree = "<group>"; };
 		7DC4FEA5B578F39F04FAB39E /* ObjectHuntInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectHuntInteractor.swift; sourceTree = "<group>"; };
@@ -7738,6 +7740,7 @@
 				378D0A5162342BA08DBE94CE /* Accessibility */,
 				551F5A52CFBFA60D6EB25980 /* Navigation */,
 				27C00F49261ABD82D6B77C8B /* ViewModifiers */,
+				7D68E9CE7ED09EA31E3ACB38 /* MapJourneyComponents.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -11703,6 +11706,7 @@
 				4558B31DC1106ACC31648BC1 /* MLModelWarmupService.swift in Sources */,
 				89A341E4B76B10EBC9E5F468 /* MLXEngine.swift in Sources */,
 				B272C12A1ADADD91827A4C0C /* MLXTokenizerBridge.swift in Sources */,
+				00136C8CA8701B08EA6DD9AC /* MapJourneyComponents.swift in Sources */,
 				5A469BFC44B304A0C830F2DA /* MascotEyeContactState.swift in Sources */,
 				DE2D424E582B1B1E784EF401 /* MascotLipSyncState.swift in Sources */,
 				6E85BD17000A30D66E4825E0 /* MelSpectrogramExtractor.swift in Sources */,

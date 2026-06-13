@@ -1,8 +1,21 @@
 import SwiftUI
 
 // MARK: - HabitStreakDashboardView
+//
+// Детский экран «Карта занятий» (kid-progress класс). Редизайн по эталону
+// kid-progress: тёплый hero со «спичкой» (flame) и Лялей-болельщиком,
+// недельная streak-полоска (7 точек Пн–Вс из реальных дней), карточка
+// тепловой карты за 12 недель + тёплая легенда. Все данные — реальные
+// (HabitStreakDashboardInteractor.refresh() из SessionRepository), без выдумок.
+//
+// Инварианты: тёплая палитра (gold/coral) на крупных заливках, без off-palette;
+// текст не обрезается (lineLimit(nil) + minimumScaleFactor); симметричные
+// screenEdge-отступы; SE-safe (горизонтальный скролл heatmap); light+dark;
+// Dynamic Type; VoiceOver; Reduced Motion.
 
 struct HabitStreakDashboardView: View {
+
+    // MARK: - Dependencies
 
     let childId: String
 
@@ -11,9 +24,14 @@ struct HabitStreakDashboardView: View {
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
+
+    // MARK: - Layout constants
 
     private let cellSize: CGFloat = 18
     private let cellSpacing: CGFloat = 4
+
+    // MARK: - Body
 
     var body: some View {
         NavigationStack {
@@ -21,6 +39,7 @@ struct HabitStreakDashboardView: View {
                 ColorTokens.Kid.bg.ignoresSafeArea()
                 HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
                     .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.22 : 0.40)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
@@ -34,6 +53,7 @@ struct HabitStreakDashboardView: View {
                         exitGame()
                     } label: {
                         Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
                             .foregroundStyle(ColorTokens.Kid.inkSoft)
                     }
                     .accessibilityLabel(Text(String(localized: "action.close")))
@@ -53,14 +73,16 @@ struct HabitStreakDashboardView: View {
         .environment(\.circuitContext, .kid)
     }
 
+    // MARK: - Content switch
+
     @ViewBuilder
     private var content: some View {
         if let interactor {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    heatMap(interactor: interactor)
-                    legend
+                    heroCard(state: interactor.state)
+                    weekStripCard(state: interactor.state)
+                    heatMapCard(interactor: interactor)
                     if let day = interactor.state.selected {
                         detailCard(day: day)
                     }
@@ -68,62 +90,280 @@ struct HabitStreakDashboardView: View {
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+                .padding(.bottom, SpacingTokens.sp8)
             }
         } else {
-            ProgressView().controlSize(.large)
+            VStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .happy, size: 80)
+                    .accessibilityHidden(true)
+                ProgressView().controlSize(.large)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
-    private func hero(state: HabitStreakDashboardModels.ViewState) -> some View {
-        HSLiquidGlassCard(style: .elevated) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .celebrating, size: 64)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: SpacingTokens.tiny) {
-                        Image(systemName: "flame.fill")
-                            .font(TypographyTokens.title(20))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .hsSymbolEffect(.variableColor, value: state.currentStreak)
-                            .accessibilityHidden(true)
+    // MARK: - Hero streak card (эталон: flame + Ляля + cheer)
+
+    private func heroCard(state: HabitStreakDashboardModels.ViewState) -> some View {
+        let streak = state.currentStreak
+        let cheer = streak > 0
+            ? String(localized: "habitStreak.cheer")
+            : String(localized: "habitStreak.cheer.start")
+
+        return ZStack(alignment: .topTrailing) {
+            // Тёплый радиальный glow в углу (как в эталоне).
+            if !reduceMotion {
+                RadialGradient(
+                    colors: [ColorTokens.Overlay.highlight, .clear],
+                    center: .topTrailing,
+                    startRadius: 0,
+                    endRadius: 150
+                )
+                .allowsHitTesting(false)
+            }
+
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                // Верх: «спичка» в butter-gold плитке + число серии + статистика.
+                HStack(spacing: SpacingTokens.sp3) {
+                    flameTile(streak: streak)
+
+                    VStack(alignment: .leading, spacing: 2) {
                         Text(String(localized: "habitStreak.hero.title"))
-                            .font(TypographyTokens.title(20))
-                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .font(TypographyTokens.kidTitle(22))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .lineLimit(2)
                             .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(String(localized: "habitStreak.hero.subtitle"))
+                            .font(TypographyTokens.kidBody(14))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Text(String(localized: "habitStreak.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
+                    Spacer(minLength: 0)
+                }
+
+                // Метрики: серия + всего минут.
+                HStack(spacing: SpacingTokens.sp3) {
+                    heroStat(
+                        value: "\(streak)",
+                        caption: String(localized: "habitStreak.streakLabel")
+                    )
+                    heroStat(
+                        value: "\(state.totalMinutes)",
+                        caption: String(localized: "habitStreak.totalLabel")
+                    )
+                }
+
+                // Ляля + реплика-болельщик.
+                HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+                    LyalyaMascotView(state: .celebrating, size: 54)
+                        .accessibilityHidden(true)
+                    cheerBubble(text: cheer)
+                    Spacer(minLength: 0)
+                }
+            }
+            .padding(SpacingTokens.cardPad)
+        }
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+        .depthShadow(ShadowTokens.kidDepth)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(String(
+            format: String(localized: "habitStreak.hero.a11y"),
+            streak, state.totalMinutes
+        )))
+    }
+
+    private func flameTile(streak: Int) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [ColorTokens.Brand.butter, ColorTokens.Brand.gold],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 58, height: 58)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+                )
+            Image(systemName: "flame.fill")
+                .font(.system(size: 30))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .hsSymbolEffect(.bounce, value: streak)
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func heroStat(value: String, caption: String) -> some View {
+        VStack(alignment: .leading, spacing: 1) {
+            Text(value)
+                .font(TypographyTokens.kidDisplay(30))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .contentTransition(.numericText())
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(caption)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.88))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, SpacingTokens.sp2)
+        .padding(.horizontal, SpacingTokens.sp3)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(ColorTokens.Overlay.glass)
+        )
+    }
+
+    private func cheerBubble(text: String) -> some View {
+        Text(text)
+            .font(TypographyTokens.kidBody(14).weight(.semibold))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(2)
+            .minimumScaleFactor(0.85)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.sp2)
+            .background(
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+            )
+    }
+
+    // MARK: - Weekly streak strip (эталон: 7 точек Пн–Вс)
+
+    private func weekStripCard(state: HabitStreakDashboardModels.ViewState) -> some View {
+        let week = lastSevenDays(state: state)
+        let practicedCount = week.filter { $0.day.intensity > 0 }.count
+
+        return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack {
+                    Text(String(localized: "habitStreak.week.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
                         .minimumScaleFactor(0.85)
-                    Text("Серия: \(state.currentStreak) дн · всего \(state.totalMinutes) мин")
+                    Spacer()
+                    Text(String(format: String(localized: "habitStreak.week.meta"), practicedCount))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+
+                HStack(spacing: 0) {
+                    ForEach(week, id: \.day.id) { item in
+                        weekDot(item: item)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(String(
+            format: String(localized: "habitStreak.week.a11y"),
+            practicedCount
+        )))
+    }
+
+    private func weekDot(item: WeekDayItem) -> some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            ZStack {
+                if item.isToday {
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [ColorTokens.Brand.butter, ColorTokens.Brand.gold],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                    Image(systemName: "flame.fill")
+                        .font(.system(size: 15))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                } else if item.day.intensity > 0 {
+                    Circle().fill(ColorTokens.Brand.primaryLo)
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                } else {
+                    Circle()
+                        .strokeBorder(
+                            ColorTokens.Kid.line,
+                            style: StrokeStyle(lineWidth: 1.5, dash: [3, 3])
+                        )
+                        .background(Circle().fill(ColorTokens.Kid.surfaceAlt))
+                    Text(verbatim: "·")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .padding(.top, 2)
                 }
-                Spacer(minLength: 0)
             }
+            .frame(width: 34, height: 34)
+
+            Text(item.label)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
     }
 
-    private func heatMap(interactor: HabitStreakDashboardInteractor) -> some View {
+    // MARK: - Heat map card
+
+    private func heatMapCard(interactor: HabitStreakDashboardInteractor) -> some View {
         HSCard(style: .elevated) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(alignment: .top, spacing: cellSpacing) {
-                    ForEach(0..<HabitStreakDashboardModels.ViewState.weeks, id: \.self) { week in
-                        VStack(spacing: cellSpacing) {
-                            ForEach(0..<HabitStreakDashboardModels.ViewState.daysPerWeek, id: \.self) { row in
-                                let index = week * HabitStreakDashboardModels.ViewState.daysPerWeek + row
-                                if index < interactor.state.days.count {
-                                    cell(day: interactor.state.days[index], interactor: interactor)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack {
+                    Text(String(localized: "habitStreak.heatmap.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Spacer()
+                    Text(String(localized: "habitStreak.heatmap.meta"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: cellSpacing) {
+                        ForEach(0..<HabitStreakDashboardModels.ViewState.weeks, id: \.self) { week in
+                            VStack(spacing: cellSpacing) {
+                                ForEach(0..<HabitStreakDashboardModels.ViewState.daysPerWeek, id: \.self) { row in
+                                    let index = week * HabitStreakDashboardModels.ViewState.daysPerWeek + row
+                                    if index < interactor.state.days.count {
+                                        cell(day: interactor.state.days[index], interactor: interactor)
+                                    }
                                 }
                             }
                         }
                     }
+                    .padding(.vertical, 2)
                 }
+
+                legend
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -142,55 +382,81 @@ struct HabitStreakDashboardView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(
-                            isSelected ? ColorTokens.Brand.primary : Color.clear,
+                            isSelected ? ColorTokens.Brand.gold : Color.clear,
                             lineWidth: 2
                         )
                 )
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("День \(day.id), \(day.minutes) минут"))
+        .accessibilityLabel(Text(String(
+            format: String(localized: "habitStreak.day.detail.practiced"),
+            day.minutes
+        )))
         .accessibilityAddTraits(.isButton)
     }
 
+    // Тёплый интенсивностный ramp (butter → coral) вместо mint — единая
+    // тёплая палитра, как в эталоне kid-progress.
     private func intensityColor(_ intensity: Int) -> Color {
         switch intensity {
         case 0:  return ColorTokens.Kid.surfaceAlt
-        case 1:  return ColorTokens.Brand.mint.opacity(0.30)
-        case 2:  return ColorTokens.Brand.mint.opacity(0.55)
-        case 3:  return ColorTokens.Brand.mint.opacity(0.80)
-        default: return ColorTokens.Brand.mint
+        case 1:  return ColorTokens.Brand.butter.opacity(0.55)
+        case 2:  return ColorTokens.Brand.primaryLo
+        case 3:  return ColorTokens.Brand.primaryHi
+        default: return ColorTokens.Brand.primary
         }
     }
 
     private var legend: some View {
         HStack(spacing: SpacingTokens.sp2) {
-            Text("Меньше")
+            Text(String(localized: "habitStreak.legend.less"))
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
             ForEach(0..<5, id: \.self) { intensity in
                 RoundedRectangle(cornerRadius: 3)
                     .fill(intensityColor(intensity))
                     .frame(width: 14, height: 14)
             }
-            Text("Больше")
+            Text(String(localized: "habitStreak.legend.more"))
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
+        .accessibilityHidden(true)
     }
 
+    // MARK: - Selected-day detail
+
     private func detailCard(day: HabitStreakDashboardModels.Day) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.10))) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("День \(day.id + 1) из \(HabitStreakDashboardModels.ViewState.weeks * HabitStreakDashboardModels.ViewState.daysPerWeek)")
-                    .font(TypographyTokens.headline(15))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                Text(day.minutes > 0 ? "Практика: \(day.minutes) минут" : "Без практики")
+        HSCard(style: .tinted(ColorTokens.Brand.primaryLo.opacity(0.30))) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(String(
+                    format: String(localized: "habitStreak.day.detail.title"),
+                    day.id + 1,
+                    HabitStreakDashboardModels.ViewState.totalCells
+                ))
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                Text(day.minutes > 0
+                    ? String(format: String(localized: "habitStreak.day.detail.practiced"), day.minutes)
+                    : String(localized: "habitStreak.day.detail.empty"))
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .accessibilityElement(children: .combine)
     }
+
+    // MARK: - CTA
 
     private func cta(interactor: HabitStreakDashboardInteractor) -> some View {
         HSButton(
@@ -201,6 +467,46 @@ struct HabitStreakDashboardView: View {
         ) {
             hapticService.impact(.light)
             interactor.clearSelection()
+        }
+    }
+
+    // MARK: - Week-strip derivation (реальные данные)
+
+    private struct WeekDayItem {
+        let day: HabitStreakDashboardModels.Day
+        let label: String
+        let isToday: Bool
+    }
+
+    /// Последние 7 дней heat-карты (последняя ячейка — сегодня), с подписями
+    /// Пн–Вс по реальной дате каждого дня. Источник — реальный `state.days`.
+    private func lastSevenDays(state: HabitStreakDashboardModels.ViewState) -> [WeekDayItem] {
+        let calendar = Calendar.current
+        let total = HabitStreakDashboardModels.ViewState.totalCells
+        let today = calendar.startOfDay(for: Date())
+        let last7 = state.days.suffix(7)
+
+        return last7.map { day in
+            let daysAgo = (total - 1) - day.id
+            let date = calendar.date(byAdding: .day, value: -daysAgo, to: today) ?? today
+            let weekday = calendar.component(.weekday, from: date) // 1=Sun … 7=Sat
+            return WeekDayItem(
+                day: day,
+                label: Self.weekdayLabel(weekday),
+                isToday: daysAgo == 0
+            )
+        }
+    }
+
+    private static func weekdayLabel(_ weekday: Int) -> String {
+        switch weekday {
+        case 2:  return String(localized: "habitStreak.weekday.mon")
+        case 3:  return String(localized: "habitStreak.weekday.tue")
+        case 4:  return String(localized: "habitStreak.weekday.wed")
+        case 5:  return String(localized: "habitStreak.weekday.thu")
+        case 6:  return String(localized: "habitStreak.weekday.fri")
+        case 7:  return String(localized: "habitStreak.weekday.sat")
+        default: return String(localized: "habitStreak.weekday.sun")
         }
     }
 }

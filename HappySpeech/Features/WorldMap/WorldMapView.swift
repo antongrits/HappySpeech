@@ -61,30 +61,40 @@ struct WorldMapView: View {
         ZStack(alignment: .bottom) {
             backgroundLayer
 
-            if useGridFallback {
-                // iPad / accessibility size: классическая сетка плиток в общем ScrollView.
-                ScrollView {
-                    VStack(spacing: SpacingTokens.large) {
-                        mascotHeader
-                        zonesGrid
-                        Spacer(minLength: 96)
-                    }
-                    .padding(.top, SpacingTokens.medium)
-                    .padding(.bottom, SpacingTokens.xxLarge)
-                }
-            } else {
-                // Redesign §1 — вертикальный путь-квест: компактная шапка-маскот
-                // сверху + сам канвас островов скроллится отдельно (он сам
-                // ScrollView), заполняя вертикаль и не сбивая острова в угол.
-                VStack(spacing: SpacingTokens.medium) {
-                    mascotHeader
+            // Эталон «карта приключений»: шапка острова сверху (заголовок +
+            // звёзды + коралловый трек), путь-квест по центру, CTA-карточка
+            // «текущий уровень» снизу — единый визуальный язык всех карт.
+            VStack(spacing: 0) {
+                MapJourneyHeader(
+                    title: headerTitle,
+                    subtitle: headerSubtitle,
+                    starsCollected: starsCollectedLabel,
+                    starsTotal: starsTotalLabel,
+                    progress: display.totalProgressFraction,
+                    onLeadingTap: onDismiss.map { dismiss in { dismiss() } },
+                    reduceMotion: reduceMotion
+                )
+                .padding(.top, SpacingTokens.tiny)
+
+                if useGridFallback {
+                    // iPad / accessibility size: классическая сетка плиток.
+                    ScrollView {
+                        VStack(spacing: SpacingTokens.large) {
+                            zonesGrid
+                            Spacer(minLength: 110)
+                        }
                         .padding(.top, SpacingTokens.medium)
+                        .padding(.bottom, SpacingTokens.xxLarge)
+                    }
+                } else {
+                    // Redesign §1 — вертикальный путь-квест: канвас островов
+                    // скроллится сам, заполняя вертикаль.
                     islandsCanvas
-                        .padding(.bottom, 84)
+                        .padding(.bottom, 96)
                 }
             }
 
-            stickyBottomPanel
+            stickyCTAPanel
 
             if let toast = display.toastMessage {
                 HSToast(toast, type: .info)
@@ -151,42 +161,41 @@ struct WorldMapView: View {
         }
     }
 
-    // MARK: - Mascot header
+    // MARK: - Header derived values
+    //
+    // Шапка эталона показывает ТЕКУЩИЙ остров (где стоит Ляля) — заголовок,
+    // звуки-подзаголовок, прогресс. Значения берутся из готовых `display.zones`
+    // (никакой бизнес-логики во View) — текущий остров либо первый открытый.
 
-    private var mascotHeader: some View {
-        // Step 10 Batch C — hero wrapped в HSLiquidGlassCard(.elevated):
-        // mesh .kidCool палитра проходит за стеклом, создавая «прохладный»
-        // воздух за полупрозрачным стеклом — kavsoft-style hero на iOS 26+.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-            HStack(spacing: SpacingTokens.regular) {
-                // F.tier1 v21: mascot мягче в dark.
-                // E v21: 3D Ляля в header WorldMap (требование пользователя).
-                LyalyaHeroView(state: .pointing, size: 96)
-                    .opacity(colorScheme == .dark ? 0.92 : 1.0)
-                    .accessibilityHidden(true)
-
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "worldmap.title"))
-                        .font(TypographyTokens.title(22).weight(.bold))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.8)
-
-                    Text(String(localized: "worldMap.mascot.greeting"))
-                        .font(TypographyTokens.body(15))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
+    /// Текущий остров: маркированный `isCurrentLocation` и открытый, иначе —
+    /// первый открытый, иначе — первый в списке.
+    private var currentZone: WorldZoneCard? {
+        display.zones.first(where: { $0.isCurrentLocation && !$0.isLocked })
+            ?? display.zones.first(where: { !$0.isLocked })
+            ?? display.zones.first
     }
 
-    // Fix #4c — `streakBadge` удалён: streak отрисовывается ниже в
-    // `stickyBottomPanel` (flame chip), отдельный шапочный chip создавал
-    // визуальное дублирование на screenshots.
+    private var headerTitle: String {
+        currentZone?.name ?? String(localized: "worldmap.title")
+    }
+
+    private var headerSubtitle: String {
+        if let zone = currentZone, !zone.soundsLabel.isEmpty {
+            return zone.soundsLabel
+        }
+        return String(localized: "worldMap.mascot.greeting")
+    }
+
+    /// Численная часть собранных звёзд из готового `totalStarsLabel` (например
+    /// «12 ⭐» → «12»). Не пересчитывает данные — лишь форматирует под пилюлю.
+    private var starsCollectedLabel: String {
+        let digits = display.totalStarsLabel.filter { $0.isNumber }
+        return digits.isEmpty ? "0" : digits
+    }
+
+    /// «из N» — N = сумма доступных звёзд (1 звезда / урок) по открытым зонам;
+    /// чтобы не дублировать логику Presenter'а, показываем только когда понятно.
+    private var starsTotalLabel: String? { nil }
 
     // MARK: - Islands canvas
 
@@ -272,65 +281,42 @@ struct WorldMapView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
-    // MARK: - Sticky bottom panel
+    // MARK: - Sticky CTA panel
+    //
+    // Нижняя карточка «текущий уровень» по эталону: бейдж со звуком, название
+    // острова и кнопка «Играть»/«Открыть». Заблокированный текущий остров —
+    // приглушённая карточка с замком. Тап открывает detail-sheet острова, как и
+    // раньше (вся навигация/логика — без изменений).
 
-    private var stickyBottomPanel: some View {
-        HStack(spacing: SpacingTokens.regular) {
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                HStack(spacing: SpacingTokens.tiny) {
-                    Image(systemName: "star.fill")
-                        .foregroundStyle(ColorTokens.Brand.butter)
-                        .font(TypographyTokens.caption(14).weight(.semibold))
-                        // Step 10 Batch C — Pattern 5: state-reactive pulse on star
-                        // when total stars accumulate (changes with progress fraction).
-                        .hsSymbolEffect(.pulse, value: display.totalStarsLabel)
-                        .accessibilityHidden(true)
-                    Text(display.totalStarsLabel)
-                        .font(TypographyTokens.mono(13))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                }
-                HSProgressBar(
-                    value: display.totalProgressFraction,
-                    style: .parent,
-                    tint: ColorTokens.Brand.mint
-                )
-                .frame(height: 6)
-                .frame(maxWidth: 180)
-                .accessibilityHidden(true)
-            }
-
-            Spacer(minLength: 0)
-
-            if display.hasStreak {
-                HStack(spacing: SpacingTokens.micro) {
-                    Image(systemName: "flame.fill")
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .font(TypographyTokens.caption(14).weight(.semibold))
-                        // Step 10 Batch C — Pattern 5: bounce on streak symbol when
-                        // streak label changes (kid milestone feedback).
-                        .hsSymbolEffect(.bounce, value: display.streakLabel)
-                        .accessibilityHidden(true)
-                    Text(display.streakLabel)
-                        .font(TypographyTokens.mono(13).weight(.semibold))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                }
-                .padding(.horizontal, SpacingTokens.small)
-                .padding(.vertical, SpacingTokens.tiny)
-                .background(
-                    Capsule().fill(ColorTokens.Brand.primary.opacity(0.12))
-                )
-            }
+    @ViewBuilder
+    private var stickyCTAPanel: some View {
+        if let zone = currentZone {
+            MapLevelCTACard(
+                badgeText: ctaBadgeText(for: zone),
+                kicker: String(localized: "worldMap.cta.kicker", defaultValue: "Текущий остров"),
+                levelTitle: zone.name,
+                actionTitle: zone.isLocked
+                    ? String(localized: "worldMap.cta.locked", defaultValue: "Закрыто")
+                    : (zone.progress > 0
+                        ? String(localized: "worldMap.cta.continue", defaultValue: "Продолжить")
+                        : String(localized: "action.play", defaultValue: "Играть")),
+                actionIcon: "play.fill",
+                isLocked: zone.isLocked,
+                reduceMotion: reduceMotion,
+                onTap: { handleZoneTap(zone.id) }
+            )
+            .padding(.bottom, SpacingTokens.tiny)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.vertical, SpacingTokens.regular)
-        .background(
-            ColorTokens.Kid.surface
-                .opacity(0.95)
-                .background(.ultraThinMaterial)
-                .ignoresSafeArea(edges: .bottom)
-        )
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(display.summaryAccessibilityLabel)
+    }
+
+    /// Первая буква звука острова для бейджа CTA (например «Ц»). Если звуков нет
+    /// — fallback на иконку.
+    private func ctaBadgeText(for zone: WorldZoneCard) -> String {
+        guard let first = zone.soundsLabel.split(separator: "·").first?
+            .trimmingCharacters(in: .whitespaces), !first.isEmpty else {
+            return ""
+        }
+        return String(first.prefix(2))
     }
 
     // MARK: - Actions

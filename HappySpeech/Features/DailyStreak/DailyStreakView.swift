@@ -145,71 +145,96 @@ struct DailyStreakView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: DailyStreakModels.Load.ViewModel) -> some View {
-        // P0.4 v32: glass card получает тёплый gradient overlay; flame — radial glow;
-        // streak number → kidDisplay(52) (доминирует как главный элемент экрана).
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
-            // Тёплый gradient overlay поверх glass (butter → gold, низкая opacity).
-            ZStack {
-                LinearGradient(
-                    colors: [
-                        ColorTokens.Brand.butter.opacity(0.12),
-                        ColorTokens.Brand.gold.opacity(0.06)
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
+        // Редизайн по эталону kid-progress: насыщенный coral hero-gradient,
+        // «спичка» (flame) в butter-gold плитке слева, крупное число серии,
+        // Ляля-болельщик с репликой снизу. Доминирующий элемент экрана.
+        ZStack(alignment: .topTrailing) {
+            if !reduceMotion {
+                RadialGradient(
+                    colors: [ColorTokens.Overlay.highlight, .clear],
+                    center: .topTrailing,
+                    startRadius: 0,
+                    endRadius: 160
                 )
-                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
                 .allowsHitTesting(false)
+            }
 
-                VStack(spacing: SpacingTokens.sp2) {
-                    // Flame + тёплый radial glow (P0.4 spec).
+            VStack(spacing: SpacingTokens.sp3) {
+                HStack(alignment: .center, spacing: SpacingTokens.sp4) {
+                    // Flame в тёплой плитке (эталон).
                     ZStack {
-                        if !reduceMotion {
-                            RadialGradient(
-                                colors: [
-                                    ColorTokens.Brand.gold.opacity(0.30),
-                                    Color.clear
-                                ],
-                                center: .center,
-                                startRadius: 16,
-                                endRadius: 56
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .fill(
+                                LinearGradient(
+                                    colors: [ColorTokens.Brand.butter, ColorTokens.Brand.gold],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
                             )
-                            .frame(width: 112, height: 112)
-                            .allowsHitTesting(false)
-                        }
-
+                            .frame(width: 66, height: 66)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                    .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+                            )
                         Image(systemName: viewModel.statusEmoji)
-                            .font(.system(size: 64))
-                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .font(.system(size: 34))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .hsSymbolEffect(.bounce, value: viewModel.currentStreak)
                     }
                     .accessibilityHidden(true)
 
-                    // P3 v32: hero number → kidDisplay(52) для максимальной выразительности.
-                    Text(verbatim: "\(viewModel.currentStreak)")
-                        .font(TypographyTokens.kidDisplay(52))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .contentTransition(.numericText())
-                        .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
-
-                    Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
-                        .font(TypographyTokens.kidBody(17))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
-
-                    Text(viewModel.statusLabel)
-                        .font(TypographyTokens.kidBody(15))
-                        .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text(verbatim: "\(viewModel.currentStreak)")
+                            .font(TypographyTokens.kidDisplay(48))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                            .contentTransition(.numericText())
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
+                        Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
+                            .font(TypographyTokens.kidBody(15))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 0)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.top, SpacingTokens.sp2)
+
+                // Ляля + статус-реплика (cheer bubble).
+                HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+                    LyalyaMascotView(state: .celebrating, size: 50)
+                        .accessibilityHidden(true)
+                    Text(viewModel.statusLabel)
+                        .font(TypographyTokens.kidBody(14).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, SpacingTokens.sp3)
+                        .padding(.vertical, SpacingTokens.sp2)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(ColorTokens.Kid.surface)
+                        )
+                    Spacer(minLength: 0)
+                }
             }
+            .padding(SpacingTokens.cardPad)
         }
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        )
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+        .depthShadow(ShadowTokens.kidDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "streak.hero.a11y"),

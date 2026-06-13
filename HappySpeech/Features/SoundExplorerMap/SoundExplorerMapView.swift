@@ -62,23 +62,46 @@ struct SoundExplorerMapView: View {
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp3) {
-                    hero
-                    filterBar(interactor: interactor)
-                    grid(interactor: interactor)
+            VStack(spacing: 0) {
+                MapJourneyHeader(
+                    title: String(localized: "soundMap.hero.title"),
+                    subtitle: String(localized: "soundMap.hero.subtitle"),
+                    starsCollected: "\(knownCount(interactor))",
+                    starsTotal: String(
+                        format: String(localized: "soundMap.known.of", defaultValue: "из %d"),
+                        interactor.sounds.count
+                    ),
+                    progress: masteryProgress(interactor),
+                    leadingIcon: "map.fill",
+                    reduceMotion: reduceMotion
+                )
+                .padding(.top, SpacingTokens.tiny)
+
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp3) {
+                        heroGreeting
+                        filterBar(interactor: interactor)
+                        grid(interactor: interactor)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp16)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                // P6 v32: отступ снизу для glass-футера CTA.
-                .padding(.bottom, SpacingTokens.sp16)
             }
-            // P6 v32: стеклянный футер CTA, плавающий над контентом.
+            // Стеклянный футер CTA по эталону — карточка «текущий уровень».
             .safeAreaInset(edge: .bottom) {
-                HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
-                    cta
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
+                MapLevelCTACard(
+                    badgeText: "",
+                    badgeSystemImage: "play.fill",
+                    kicker: String(localized: "soundMap.cta.kicker", defaultValue: "Тренировка"),
+                    levelTitle: String(localized: "soundMap.cta.level", defaultValue: "Гимнастика звуков"),
+                    actionTitle: String(localized: "action.play", defaultValue: "Играть"),
+                    reduceMotion: reduceMotion,
+                    onTap: {
+                        hapticService.notification(.success)
+                        coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
+                    }
+                )
                 .padding(.bottom, SpacingTokens.tiny)
             }
         } else {
@@ -86,24 +109,32 @@ struct SoundExplorerMapView: View {
         }
     }
 
-    private var hero: some View {
-        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+    /// Число освоенных звуков (для пилюли в шапке).
+    private func knownCount(_ interactor: SoundExplorerMapInteractor) -> Int {
+        interactor.sounds.filter { $0.mastery == .known }.count
+    }
+
+    /// Доля освоения карты звуков (освоенные + половина «учу») 0…1.
+    private func masteryProgress(_ interactor: SoundExplorerMapInteractor) -> Double {
+        let total = interactor.sounds.count
+        guard total > 0 else { return 0 }
+        let known = Double(interactor.sounds.filter { $0.mastery == .known }.count)
+        let learning = Double(interactor.sounds.filter { $0.mastery == .learning }.count)
+        return (known + learning * 0.5) / Double(total)
+    }
+
+    /// Компактная карточка-приветствие Ляли под шапкой — тёплый «воздух»
+    /// и контекст, без дублирования заголовка.
+    private var heroGreeting: some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .explaining, size: 64)
+                LyalyaMascotView(state: .explaining, size: 56)
                     .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "soundMap.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "soundMap.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                }
+                Text(String(localized: "soundMap.hero.greeting", defaultValue: "Нажми на звук, чтобы потренировать его с Лялей."))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
                 Spacer(minLength: 0)
             }
         }
@@ -267,18 +298,6 @@ struct SoundExplorerMapView: View {
         case .known:    return String(localized: "soundMap.mastery.known", defaultValue: "освоен")
         case .learning: return String(localized: "soundMap.mastery.learning", defaultValue: "учу")
         case .untried:  return String(localized: "soundMap.mastery.untried", defaultValue: "ещё не пробовал")
-        }
-    }
-
-    private var cta: some View {
-        HSButton(
-            String(localized: "soundMap.cta.start"),
-            style: .primary,
-            size: .large,
-            icon: "play.circle.fill"
-        ) {
-            hapticService.notification(.success)
-            coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
         }
     }
 }

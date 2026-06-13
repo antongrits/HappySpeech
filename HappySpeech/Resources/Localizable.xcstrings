@@ -23441,12 +23441,92 @@
         }
       }
     },
+    "habitStreak.cheer": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты молодец! 💛"
+          }
+        }
+      }
+    },
+    "habitStreak.cheer.start": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай начнём серию! 💛"
+          }
+        }
+      }
+    },
     "habitStreak.cta.action": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Снять выделение"
+          }
+        }
+      }
+    },
+    "habitStreak.day.detail.empty": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без практики"
+          }
+        }
+      }
+    },
+    "habitStreak.day.detail.practiced": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Практика: %lld мин"
+          }
+        }
+      }
+    },
+    "habitStreak.day.detail.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День %lld из %lld"
+          }
+        }
+      }
+    },
+    "habitStreak.heatmap.meta": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "за 12 недель"
+          }
+        }
+      }
+    },
+    "habitStreak.heatmap.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карта занятий"
+          }
+        }
+      }
+    },
+    "habitStreak.hero.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия %lld дней, всего %lld минут практики"
           }
         }
       }
@@ -23471,12 +23551,152 @@
         }
       }
     },
+    "habitStreak.legend.less": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Меньше"
+          }
+        }
+      }
+    },
+    "habitStreak.legend.more": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Больше"
+          }
+        }
+      }
+    },
     "habitStreak.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Привычка"
+          }
+        }
+      }
+    },
+    "habitStreak.streakLabel": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия дней"
+          }
+        }
+      }
+    },
+    "habitStreak.totalLabel": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего минут"
+          }
+        }
+      }
+    },
+    "habitStreak.week.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эта неделя: %lld из 7 дней с практикой"
+          }
+        }
+      }
+    },
+    "habitStreak.week.meta": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld из 7 дней"
+          }
+        }
+      }
+    },
+    "habitStreak.week.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эта неделя"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.fri": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пт"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.mon": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пн"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.sat": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сб"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.sun": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вс"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.thu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чт"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.tue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вт"
+          }
+        }
+      }
+    },
+    "habitStreak.weekday.wed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ср"
           }
         }
       }
@@ -54651,6 +54871,46 @@
         }
       }
     },
+    "soundJournal.entry.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@, практик %lld, последний балл %lld"
+          }
+        }
+      }
+    },
+    "soundJournal.entry.score": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "балл"
+          }
+        }
+      }
+    },
+    "soundJournal.entry.sound": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%@»"
+          }
+        }
+      }
+    },
+    "soundJournal.entry.times": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Практик × %lld"
+          }
+        }
+      }
+    },
     "soundJournal.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -54671,12 +54931,82 @@
         }
       }
     },
+    "soundJournal.list.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дневник практик"
+          }
+        }
+      }
+    },
     "soundJournal.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Дневник звуков"
+          }
+        }
+      }
+    },
+    "soundJournal.ring.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@, %lld процентов"
+          }
+        }
+      }
+    },
+    "soundJournal.ring.great": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Класс!"
+          }
+        }
+      }
+    },
+    "soundJournal.ring.grow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Растём"
+          }
+        }
+      }
+    },
+    "soundJournal.ring.learn": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учим"
+          }
+        }
+      }
+    },
+    "soundJournal.sounds.meta": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "как растём"
+          }
+        }
+      }
+    },
+    "soundJournal.sounds.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мои звуки"
           }
         }
       }

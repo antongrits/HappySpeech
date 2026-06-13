@@ -133,36 +133,33 @@ struct ObjectDescriptionMapView: View {
 
     private var pickingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            // Маскот + приветствие
+            // Шапка эталона «карта приключений»: заголовок-описалочка + плашка
+            // числа доступных объектов. Под ней — тёплая карточка-приветствие Ляли.
+            MapJourneyHeader(
+                title: String(localized: "objectMap.pick.heading"),
+                subtitle: String(localized: "objectMap.pick.sub"),
+                starsCollected: "\(objectCount)",
+                starsTotal: String(localized: "objectMap.objects.label", defaultValue: "объектов"),
+                progress: 0,
+                leadingIcon: "map.fill",
+                reduceMotion: reduceMotion
+            )
+            .padding(.top, SpacingTokens.tiny)
+
             HSLiquidGlassCard(style: .elevated) {
                 HStack(spacing: SpacingTokens.sp3) {
-                    LyalyaMascotView(state: mascotState, size: 72)
+                    LyalyaMascotView(state: mascotState, size: 64)
                         .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
                         .accessibilityHidden(true)
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(spacing: SpacingTokens.tiny) {
-                            Image(systemName: "map.fill")
-                                .font(TypographyTokens.title(20))
-                                .foregroundStyle(ColorTokens.Brand.rose)
-                                .hsSymbolEffect(.bounce, value: holder.loadVM?.categoriesInOrder.count ?? 0)
-                                .accessibilityHidden(true)
-                            Text("objectMap.pick.heading")
-                                .font(TypographyTokens.title(20))
-                                .foregroundStyle(ColorTokens.Kid.ink)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
-                        }
-                        Text("objectMap.pick.sub")
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.85)
-                    }
+                    Text(String(localized: "objectMap.pick.greeting", defaultValue: "Выбери объект — Ляля поможет составить рассказ по плану."))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                     Spacer(minLength: 0)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp2)
 
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
@@ -189,6 +186,11 @@ struct ObjectDescriptionMapView: View {
             .scrollBounceBehavior(.basedOnSize)
             instructionBar
         }
+    }
+
+    /// Число доступных объектов (для плашки в шапке).
+    private var objectCount: Int {
+        holder.loadVM?.grouped.values.reduce(0) { $0 + $1.count } ?? 0
     }
 
     private func categorySection(name: String, items: [DescriptionObject]) -> some View {

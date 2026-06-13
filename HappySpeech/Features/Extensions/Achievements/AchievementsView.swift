@@ -160,26 +160,52 @@ struct AchievementsView: View {
     }
 
     private func progressHeader(vm: AchievementsModels.Load.ViewModel) -> some View {
+        // Redesign (kid-rewards эталон): hero-карта с маскотом Лялей,
+        // заголовком и тёплым golden-progress-баром — кульминационный
+        // celebratory header вместо плоской строки «заголовок + иконка».
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-            HStack {
-                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                    Text(String(localized: "achievements.tab.list"))
-                        .font(TypographyTokens.headline(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(vm.progressText)
-                        .font(TypographyTokens.caption(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: .celebrating, size: 60)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                        Text(String(localized: "achievements.tab.list"))
+                            .font(TypographyTokens.headline(20))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Text(vm.progressText)
+                            .font(TypographyTokens.caption(14))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "trophy.fill")
+                        .font(TypographyTokens.headline(28))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .hsSymbolEffect(.bounce, value: vm.progressText)
+                        .accessibilityHidden(true)
                 }
-                Spacer()
-                Image(systemName: "trophy.fill")
-                    .font(TypographyTokens.headline(28))
-                    .foregroundStyle(ColorTokens.Brand.butter)
-                    .hsSymbolEffect(.bounce, value: vm.progressText)
-                    .accessibilityHidden(true)
+                HSProgressBar(
+                    value: progressFraction(vm: vm),
+                    style: .kid,
+                    tint: ColorTokens.Brand.gold
+                )
+                .accessibilityHidden(true)
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(String(localized: "achievements.tab.list")). \(vm.progressText)")
+    }
+
+    /// Доля открытых достижений (View-уровень: считаем по уже-готовому VM,
+    /// без обращения к логике). Для тёплого golden-progress-бара в hero-карте.
+    private func progressFraction(vm: AchievementsModels.Load.ViewModel) -> Double {
+        let all = vm.sections.flatMap(\.items)
+        guard !all.isEmpty else { return 0 }
+        let unlocked = all.filter(\.isUnlocked).count
+        return Double(unlocked) / Double(all.count)
     }
 
     private func achievementSection(_ section: AchievementSection) -> some View {
@@ -301,10 +327,12 @@ struct AchievementsView: View {
     }
 
     private func heroRarityColor(_ rarity: AchievementRarity) -> Color {
+        // Redesign (kid-rewards эталон): `.common` — Brand.gold вместо
+        // off-palette Brand.mint. Hero-оверлей значка в тёплой палитре наград.
         switch rarity {
         case .legendary: return ColorTokens.Brand.butter
         case .rare:      return ColorTokens.Brand.lilac
-        case .common:    return ColorTokens.Brand.mint
+        case .common:    return ColorTokens.Brand.gold
         }
     }
 
@@ -358,9 +386,12 @@ struct AchievementsView: View {
                     x: .value("День", entry.label),
                     y: .value("Раунды", entry.roundsCompleted)
                 )
+                // Redesign (эталон): bar chart в тёплой палитре наград —
+                // primary(коралл)→gold(золото) вместо off-palette сине-голубого
+                // primary→sky на крупной заливке столбцов.
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [ColorTokens.Brand.primary, ColorTokens.Brand.sky],
+                        colors: [ColorTokens.Brand.primary, ColorTokens.Brand.gold],
                         startPoint: .bottom,
                         endPoint: .top
                     )

@@ -190,6 +190,17 @@ struct AchievementWallView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(badgeBackground(for: cell))
                     .frame(width: 92, height: 92)
+                    // Redesign (эталон): открытый бейдж получает золотой
+                    // ободок-сигнатуру награды (как gold-ring tiles в HTML-эталоне).
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                            .strokeBorder(
+                                cell.isUnlocked
+                                    ? ColorTokens.Brand.gold.opacity(0.65)
+                                    : Color.clear,
+                                lineWidth: 2
+                            )
+                    )
                 // Task #67: decorative trophy_bg_* background (Hero/trophy_bg_*).
                 // 9 hero illustrations: bronze / silver / gold / streak_7/30/100 /
                 // lessons_10/50/100. Слой только для unlocked-карточек.
@@ -209,16 +220,29 @@ struct AchievementWallView: View {
                     .symbolRenderingMode(.hierarchical)
                     .hsSymbolEffect(.bounce, value: cell.isUnlocked)
                     .accessibilityHidden(true)
+                // Redesign (kid-rewards эталон): lockpin — маленький кружок
+                // surface с замком, прижатый ровно к правому-нижнему углу
+                // бейджа (без выезда за карточку). Раньше offset(28,28) на
+                // 92pt-бейдже выносил замок за плитку на узком SE.
                 if !cell.isUnlocked {
-                    Image(systemName: "lock.fill")
-                        .font(.system(size: lockIconSize, weight: .bold))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .padding(6)
-                        .background(
-                            Circle().fill(ColorTokens.Kid.inkSoft)
-                        )
-                        .offset(x: 28, y: 28)
-                        .accessibilityHidden(true)
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Image(systemName: "lock.fill")
+                                .font(.system(size: lockIconSize * 0.6, weight: .bold))
+                                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                                .frame(width: lockIconSize + 6, height: lockIconSize + 6)
+                                .background(
+                                    Circle()
+                                        .fill(ColorTokens.Kid.surface)
+                                        .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                                )
+                                .accessibilityHidden(true)
+                        }
+                    }
+                    .frame(width: 92, height: 92)
+                    .offset(x: 6, y: 6)
                 }
             }
             Text(cell.title)
@@ -239,10 +263,13 @@ struct AchievementWallView: View {
         guard cell.isUnlocked else {
             return ColorTokens.Kid.surfaceAlt
         }
+        // Redesign (эталон): золото-«масло» — сигнатура наград. `.common`
+        // переведён с off-palette Brand.sky на тёплый butter; экран наград
+        // целиком в тёплой палитре (gold/butter/lilac).
         switch cell.rarity {
         case .legendary: return ColorTokens.Brand.gold.opacity(0.22)
         case .rare:      return ColorTokens.Brand.lilac.opacity(0.22)
-        case .common:    return ColorTokens.Brand.sky.opacity(0.18)
+        case .common:    return ColorTokens.Brand.butter.opacity(0.28)
         }
     }
 
@@ -251,7 +278,7 @@ struct AchievementWallView: View {
         switch cell.rarity {
         case .legendary: return ColorTokens.Brand.gold
         case .rare:      return ColorTokens.Brand.lilac
-        case .common:    return ColorTokens.Brand.sky
+        case .common:    return ColorTokens.Brand.gold
         }
     }
 

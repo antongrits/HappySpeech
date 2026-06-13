@@ -156,6 +156,22 @@ struct FamilyAwardsCabinetView: View {
                     )
                 )
                 .frame(height: 200)
+                // Redesign (kid-rewards эталон): золотое сияние-радиал поверх
+                // тёмной витрины — celebratory «трофейный» характер вместо
+                // плоского панельного фона.
+                .overlay(
+                    RadialGradient(
+                        colors: [
+                            ColorTokens.Brand.gold.opacity(0.22),
+                            Color.clear
+                        ],
+                        center: UnitPoint(x: 0.5, y: 0.35),
+                        startRadius: 10,
+                        endRadius: 180
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+                    .allowsHitTesting(false)
+                )
                 .depthShadow(ShadowTokens.parentDepth)
 
             // 3D scene — iOS 18+ RealityView; иначе 2D-fallback с layered cards.
