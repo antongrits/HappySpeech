@@ -62,8 +62,7 @@ struct SpecialistAssessmentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                ColorTokens.Spec.bg.ignoresSafeArea()
                 content
             }
             .navigationTitle(Text("specAssessment.title"))
@@ -395,6 +394,8 @@ struct SpecialistAssessmentView: View {
                 .padding(.bottom, SpacingTokens.sp5)
             }
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom)
     }
 
     private func axisCard(

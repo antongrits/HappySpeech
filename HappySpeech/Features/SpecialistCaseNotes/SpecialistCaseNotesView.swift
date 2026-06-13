@@ -19,11 +19,27 @@ struct SpecialistCaseNotesView: View {
         return f
     }()
 
+    // РЕДИЗАЙН specialist-editor (2026-06-13): нейтрально-холодный статичный
+    // холст `Spec.bg` (эталон #ECEEF2) + едва заметный coral-radial в hero-зоне.
+    @ViewBuilder
+    private var specBackground: some View {
+        ZStack(alignment: .top) {
+            ColorTokens.Spec.bg
+            RadialGradient(
+                colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                center: .topLeading,
+                startRadius: 0,
+                endRadius: 320
+            )
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                specBackground
                 content
             }
             .navigationTitle(Text(String(localized: "specialistNotes.nav.title")))
@@ -198,7 +214,7 @@ struct SpecialistCaseNotesView: View {
                 .frame(minHeight: 220)
                 Spacer()
                 HSButton(
-                    "Сохранить заметку",
+                    String(localized: "specialistNotes.save.button"),
                     style: .primary,
                     size: .large,
                     icon: "checkmark"
@@ -210,15 +226,12 @@ struct SpecialistCaseNotesView: View {
                 .opacity(interactor.state.draftBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.5 : 1)
             }
             .padding(SpacingTokens.sp4)
-            .background(
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-            )
-            .navigationTitle(Text("Новая заметка"))
+            .background(ColorTokens.Spec.bg.ignoresSafeArea())
+            .navigationTitle(Text(String(localized: "specialistNotes.new.title")))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Отмена") {
+                    Button(String(localized: "action.cancel")) {
                         interactor.cancelAdding()
                     }
                 }

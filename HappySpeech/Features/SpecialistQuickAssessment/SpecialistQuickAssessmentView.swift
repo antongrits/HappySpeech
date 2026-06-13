@@ -15,8 +15,7 @@ struct SpecialistQuickAssessmentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                ColorTokens.Spec.bg.ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "quickAssessment.nav.title")))
@@ -60,8 +59,13 @@ struct SpecialistQuickAssessmentView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom)
         } else {
-            ProgressView().controlSize(.large)
+            ProgressView()
+                .controlSize(.large)
+                .tint(ColorTokens.Spec.accent)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -78,7 +82,8 @@ struct SpecialistQuickAssessmentView: View {
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
-                Text(String(format: "Средняя оценка: %.1f / 5.0", state.averageStars))
+                Text(String(format: String(localized: "quickAssessment.hero.average %@"),
+                            String(format: "%.1f", state.averageStars)))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.accent)
                     .padding(.top, 2)
@@ -134,7 +139,7 @@ struct SpecialistQuickAssessmentView: View {
                                 .hsSymbolEffect(.bounce, value: rating.stars)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(Text("Оценка \(star) из 5"))
+                        .accessibilityLabel(Text(String(format: String(localized: "quickAssessment.star.a11y %lld"), star)))
                     }
                     Spacer()
                 }
@@ -149,7 +154,7 @@ struct SpecialistQuickAssessmentView: View {
                     .font(.system(size: 28))
                     .foregroundStyle(ColorTokens.Brand.gold)
                     .hsSymbolEffect(.bounce, value: true)
-                Text("Оценка сохранена")
+                Text(String(localized: "quickAssessment.saved"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Spec.ink)
                 Spacer()
@@ -171,7 +176,7 @@ struct SpecialistQuickAssessmentView: View {
             .disabled(interactor.state.ratings.allSatisfy { $0.stars == 0 })
             .opacity(interactor.state.ratings.allSatisfy { $0.stars == 0 } ? 0.5 : 1)
             HSButton(
-                "Сбросить",
+                String(localized: "quickAssessment.cta.reset"),
                 style: .ghost,
                 size: .medium,
                 icon: "arrow.counterclockwise"

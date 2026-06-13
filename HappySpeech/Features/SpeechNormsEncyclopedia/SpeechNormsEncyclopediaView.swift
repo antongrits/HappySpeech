@@ -63,7 +63,7 @@ struct SpeechNormsEncyclopediaView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
@@ -87,6 +87,7 @@ struct SpeechNormsEncyclopediaView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("speechNorms.screen.title"))
             .navigationBarTitleDisplayMode(.inline)

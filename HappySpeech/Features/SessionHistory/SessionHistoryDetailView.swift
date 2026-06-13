@@ -9,8 +9,6 @@ struct SessionHistoryDetailView: View {
 
     let detail: SessionDetailViewModel
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dismiss) private var dismiss
     @State private var noteText: String = ""
     @State private var isEditingNote: Bool = false
 
@@ -28,6 +26,8 @@ struct SessionHistoryDetailView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.large)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom)
         .background(ColorTokens.Parent.bg.ignoresSafeArea())
         .navigationTitle(detail.titleLine)
         .navigationBarTitleDisplayMode(.inline)

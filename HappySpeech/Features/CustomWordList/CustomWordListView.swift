@@ -84,13 +84,27 @@ struct CustomWordListView: View {
         category: "CustomWordList.View"
     )
 
+    // РЕДИЗАЙН specialist-editor (2026-06-13): нейтрально-холодный статичный
+    // холст `Spec.bg` (эталон #ECEEF2) + едва заметный coral-radial в hero-зоне.
+    @ViewBuilder
+    private var specBackground: some View {
+        ZStack(alignment: .top) {
+            ColorTokens.Spec.bg
+            RadialGradient(
+                colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                center: .topLeading,
+                startRadius: 0,
+                endRadius: 320
+            )
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
+                specBackground
 
                 if holder.isEmpty {
                     emptyState

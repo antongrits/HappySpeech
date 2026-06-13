@@ -83,13 +83,21 @@ struct AssignedHomeworkView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
+                // РЕДИЗАЙН specialist-editor (2026-06-13): нейтрально-холодный
+                // статичный холст `Spec.bg` (эталон #ECEEF2) + едва заметный
+                // coral-radial в hero-зоне вместо тёплого kid-mesh.
+                ZStack(alignment: .top) {
+                    ColorTokens.Spec.bg
+                    RadialGradient(
+                        colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                        center: .topLeading,
+                        startRadius: 0,
+                        endRadius: 320
+                    )
+                }
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
 
                 if holder.isLoading {
                     loadingSection

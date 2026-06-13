@@ -70,10 +70,10 @@ struct SessionHistoryView: View {
                     // F.tier1 v21: gradient мягче в dark, чтобы не размывал контент списка.
                     .opacity(colorScheme == .dark ? 0.85 : 1.0)
 
-                // Step 10 Batch A — Pattern 1: mesh .calm палитра (mint/sky/lilac)
-                // на очень низкой opacity — едва заметное «дыхание» цвета, не мешает
-                // читаемости списка сессий. Parent-tier: фон спокойный, аналитичный.
-                HSMeshGradientBackground(palette: .calm, animated: true)
+                // Parent-tier: спокойный СТАТИЧНЫЙ фон. Тёплое кремовое семейство
+                // .calm на очень низкой opacity — лёгкая глубина, без движения и
+                // без off-palette цветов, не мешает читаемости списка сессий.
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.12 : 0.18)
                     .blendMode(.softLight)
@@ -214,6 +214,8 @@ struct SessionHistoryView: View {
                 .padding(.bottom, SpacingTokens.xLarge)
             }
             .scrollIndicators(.hidden)
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom)
         }
     }
 

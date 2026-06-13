@@ -39728,6 +39728,40 @@
         }
       }
     },
+    "program.editor.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a template below to add the first lesson step. Drag steps to reorder them."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите шаблон ниже, чтобы добавить первый шаг занятия. Шаги можно перетаскивать, меняя порядок."
+          }
+        }
+      }
+    },
+    "program.editor.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No steps yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет ни одного шага"
+          }
+        }
+      }
+    },
     "program.editor.invalid": {
       "extractionState": "manual",
       "localizations": {
@@ -39761,6 +39795,40 @@
         }
       }
     },
+    "program.editor.palette.addHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds a step to the lesson program"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавляет шаг в программу занятия"
+          }
+        }
+      }
+    },
+    "program.editor.palette.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a step"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить шаг"
+          }
+        }
+      }
+    },
     "program.editor.save": {
       "extractionState": "manual",
       "localizations": {
@@ -39772,6 +39840,23 @@
         }
       }
     },
+    "program.editor.saveProgram": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save program"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить программу"
+          }
+        }
+      }
+    },
     "program.editor.sound.\\(sound)": {
       "extractionState": "manual",
       "localizations": {
@@ -39779,6 +39864,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "program.editor.sound.\\(sound)"
+          }
+        }
+      }
+    },
+    "program.editor.stepsCount %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld steps"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld шагов"
           }
         }
       }
@@ -41283,6 +41385,38 @@
         }
       }
     },
+    "quickAssessment.cta.reset": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "quickAssessment.hero.average %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Average rating: %@ / 5.0"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средняя оценка: %@ / 5,0"
+          }
+        }
+      }
+    },
     "quickAssessment.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -41309,6 +41443,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Быстрая оценка"
+          }
+        }
+      }
+    },
+    "quickAssessment.saved": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rating saved"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оценка сохранена"
+          }
+        }
+      }
+    },
+    "quickAssessment.star.a11y %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rating %lld of 5"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оценка %lld из 5"
           }
         }
       }
@@ -43406,32 +43572,6 @@
         }
       }
     },
-    "resourcesLibrary.cta.action": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавить ресурс"
-          }
-        }
-      }
-    },
-    "resourcesLibrary.cta.done": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        }
-      }
-    },
     "resourcesLibrary.empty": {
       "localizations": {
         "ru": {
@@ -43448,12 +43588,18 @@
         }
       }
     },
-    "resourcesLibrary.hero.subtitle": {
+    "resourcesLibrary.empty.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Терапевтические материалы по группам — фильтруй по типу."
+            "value": "Список пуст"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here"
           }
         }
       }
@@ -43548,12 +43694,108 @@
         }
       }
     },
+    "resourcesLibrary.loading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружаем материалы…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading materials…"
+          }
+        }
+      }
+    },
     "resourcesLibrary.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Библиотека ресурсов"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.search.clear": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очистить поиск"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear search"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.search.empty.message": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуйте изменить запрос или фильтр."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try a different query or filter."
+          }
+        }
+      }
+    },
+    "resourcesLibrary.search.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничего не найдено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.search.prompt": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найти материал"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find a material"
+          }
+        }
+      }
+    },
+    "resourcesLibrary.section.recommended": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендуем"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommended"
           }
         }
       }
@@ -57204,6 +57446,40 @@
         }
       }
     },
+    "specialistNotes.new.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New note"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новая заметка"
+          }
+        }
+      }
+    },
+    "specialistNotes.save.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save note"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить заметку"
+          }
+        }
+      }
+    },
     "specialistNotes.total %lld": {
       "localizations": {
         "ru": {
@@ -57226,6 +57502,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "К конструктору заданий"
+          }
+        }
+      }
+    },
+    "specialistSchedule.day.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sessions scheduled for this day"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этот день сессий не запланировано"
           }
         }
       }
@@ -57286,6 +57579,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Занятие"
+          }
+        }
+      }
+    },
+    "specialistSchedule.totalSessions %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total sessions: %lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего сессий: %lld"
+          }
+        }
+      }
+    },
+    "specialistSchedule.weekday.a11y %@ %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$lld sessions"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$lld сессий"
           }
         }
       }

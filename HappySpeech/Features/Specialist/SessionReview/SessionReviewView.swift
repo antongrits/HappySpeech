@@ -16,7 +16,7 @@ import SwiftUI
 //   • карточка с рекомендацией (если есть),
 //   • кнопка экспорта в PDF + share sheet.
 //
-// Темы: gradient синий→фиолетовый поверх `ColorTokens.Spec.bg`.
+// Фон: однотонный нейтрально-холодный `ColorTokens.Spec.bg` (specialist canvas).
 // A11y: VoiceOver labels на всех интерактивных элементах, поддержка
 // Dynamic Type, Reduced Motion.
 
@@ -79,17 +79,12 @@ struct SessionReviewView: View {
     }
 
     // MARK: - Background
+    //
+    // Specialist circuit: однотонный нейтрально-холодный канвас (Spec Bg).
+    // Никаких многоцветных градиентов — экран аналитический и читаемый.
 
     private var backgroundGradient: some View {
-        LinearGradient(
-            colors: [
-                ColorTokens.Brand.sky.opacity(0.55),
-                ColorTokens.Brand.lilac.opacity(0.55),
-                ColorTokens.Spec.bg
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        ColorTokens.Spec.bg
     }
 
     // MARK: - Content
@@ -117,6 +112,8 @@ struct SessionReviewView: View {
                 .padding(.top, SpacingTokens.medium)
                 .padding(.bottom, SpacingTokens.xLarge)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom)
         }
     }
 

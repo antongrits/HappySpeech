@@ -81,10 +81,11 @@ struct DialectAdaptationView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
+            .scrollBounceBehavior(.basedOnSize)
             .background(
                 ZStack {
                     ColorTokens.Parent.bg
-                    HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    HSMeshGradientBackground(palette: .calm, animated: false)
                         .blendMode(.softLight)
                         .accessibilityHidden(true)
                         .allowsHitTesting(false)

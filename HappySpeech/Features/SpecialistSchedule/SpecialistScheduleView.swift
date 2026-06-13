@@ -12,11 +12,29 @@ struct SpecialistScheduleView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    // РЕДИЗАЙН specialist-home (2026-06-13): специалистский контур —
+    // нейтрально-холодный статичный холст `Spec.bg` (эталон #ECEEF2), а не
+    // тёплый kid-mesh. Поверх — едва заметный coral-radial в hero-зоне, чтобы
+    // экран не был чисто системно-серым (паттерн SpecChildListView).
+    @ViewBuilder
+    private var specBackground: some View {
+        ZStack(alignment: .top) {
+            ColorTokens.Spec.bg
+            RadialGradient(
+                colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                center: .topLeading,
+                startRadius: 0,
+                endRadius: 320
+            )
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                specBackground
                 content
             }
             .navigationTitle(Text(String(localized: "specialistSchedule.nav.title")))
@@ -118,7 +136,10 @@ struct SpecialistScheduleView: View {
                         .font(.system(size: 12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                         .hsSymbolEffect(.bounce, value: state.slots.count)
-                    Text("Всего сессий: \(state.slots.count)")
+                    Text(String(
+                        format: String(localized: "specialistSchedule.totalSessions %lld"),
+                        state.slots.count
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
@@ -152,7 +173,10 @@ struct SpecialistScheduleView: View {
                     )
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(Text("\(day.shortTitle), \(count) сессий"))
+                .accessibilityLabel(Text(String(
+                    format: String(localized: "specialistSchedule.weekday.a11y %@ %lld"),
+                    day.shortTitle, count
+                )))
                 .accessibilityAddTraits(isActive ? [.isButton, .isSelected] : .isButton)
             }
         }
@@ -163,11 +187,13 @@ struct SpecialistScheduleView: View {
         return VStack(spacing: SpacingTokens.sp2) {
             if slots.isEmpty {
                 HSCard(style: .flat) {
-                    Text("Сессий не запланировано")
+                    Text(String(localized: "specialistSchedule.day.empty"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, SpacingTokens.sp3)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
                 }
             } else {
                 ForEach(slots) { slot in
@@ -186,27 +212,57 @@ struct SpecialistScheduleView: View {
     }
 
     private func slotRow(_ slot: SpecialistScheduleModels.Slot) -> some View {
-        HSCard(style: .flat) {
-            HStack(spacing: SpacingTokens.sp3) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(slot.time)
-                        .font(TypographyTokens.headline(15))
-                        .foregroundStyle(ColorTokens.Spec.accent)
-                    Text(slot.childName)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Spec.ink)
-                }
-                Spacer()
-                Text(slot.topic)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
-                    .background(
-                        Capsule().fill(ColorTokens.Spec.bg)
-                    )
+        HStack(spacing: SpacingTokens.sp3) {
+            // Coral time-accent rail (эталон: «ses» карточка занятия).
+            RoundedRectangle(cornerRadius: 3)
+                .fill(ColorTokens.Spec.accent)
+                .frame(width: 4, height: 40)
+                .accessibilityHidden(true)
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Spec.accent.opacity(0.12))
+                    .frame(width: 40, height: 40)
+                Text(String(slot.childName.prefix(1)))
+                    .font(TypographyTokens.titleSmall(17))
+                    .foregroundStyle(ColorTokens.Spec.accent)
             }
+            .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(slot.time)
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Spec.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                Text(slot.childName)
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            Spacer(minLength: SpacingTokens.sp2)
+            Text(slot.topic)
+                .font(TypographyTokens.caption(11).weight(.semibold))
+                .foregroundStyle(ColorTokens.Spec.accent)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.sp2)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule().fill(ColorTokens.Spec.accent.opacity(0.14))
+                )
         }
+        .padding(SpacingTokens.sp3)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                .fill(ColorTokens.Spec.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                .stroke(ColorTokens.Spec.line, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("\(slot.time), \(slot.childName), \(slot.topic)"))
     }
 
     private var cta: some View {

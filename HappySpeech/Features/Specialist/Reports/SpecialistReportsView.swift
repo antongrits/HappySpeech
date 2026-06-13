@@ -52,6 +52,8 @@ struct SpecialistReportsView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp5)
                 }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom)
             }
             .sheet(isPresented: $showCustomWordList) {
                 CustomWordListView(specialistId: Self.demoSpecialistId)

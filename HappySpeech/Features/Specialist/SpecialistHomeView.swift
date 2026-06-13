@@ -102,7 +102,6 @@ struct SpecChildDashboardView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var child: ChildProfileDTO?
     @State private var sessions: [SessionDTO] = []
     @State private var breakdown: [SoundBreakdownRow] = []
@@ -117,10 +116,28 @@ struct SpecChildDashboardView: View {
     @State private var showMessageSheet = false
     @State private var messageText = ""
 
+    // РЕДИЗАЙН specialist-home (2026-06-13): специалистский контур —
+    // нейтрально-холодный статичный холст `Spec.bg` (эталон #ECEEF2) +
+    // едва заметный coral-radial в hero-зоне (паттерн SpecChildListView),
+    // а не тёплый kid-mesh.
+    @ViewBuilder
+    private var specBackground: some View {
+        ZStack(alignment: .top) {
+            ColorTokens.Spec.bg
+            RadialGradient(
+                colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                center: .topLeading,
+                startRadius: 0,
+                endRadius: 320
+            )
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         ZStack {
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                .ignoresSafeArea()
+            specBackground
             if isLoading {
                 // Block J v18 — skeleton shimmer вместо ProgressView spinner.
                 VStack(spacing: SpacingTokens.regular) {

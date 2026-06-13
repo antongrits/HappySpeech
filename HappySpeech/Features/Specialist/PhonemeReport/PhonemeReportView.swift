@@ -25,7 +25,6 @@ struct PhonemeReportView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var model = PhonemeReportDisplayModel()
     @State private var interactor: PhonemeReportInteractor?
@@ -34,8 +33,7 @@ struct PhonemeReportView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                ColorTokens.Spec.bg.ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(model.viewModel?.titleText ?? String(localized: "phonemeReport.title")))
@@ -98,6 +96,8 @@ struct PhonemeReportView: View {
                     .padding(.top, SpacingTokens.sp3)
                     .padding(.bottom, SpacingTokens.sp6)
                 }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom)
             }
         }
     }
@@ -374,6 +374,8 @@ struct PhonemeReportView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom)
         } else {
             VStack(spacing: SpacingTokens.sp4) {
                 sessionsEmptyCard

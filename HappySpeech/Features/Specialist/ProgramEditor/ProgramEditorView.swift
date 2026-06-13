@@ -54,11 +54,29 @@ struct ProgramEditorView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                summary
-                Divider()
-                blockList
-                palette
+            ZStack {
+                // РЕДИЗАЙН specialist-editor (2026-06-13): специалистский контур —
+                // нейтрально-холодный статичный холст `Spec.bg` (эталон #ECEEF2),
+                // а не голый системный фон / kid-палитра. Поверх — едва заметный
+                // coral-radial в hero-зоне.
+                ZStack(alignment: .top) {
+                    ColorTokens.Spec.bg
+                    RadialGradient(
+                        colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                        center: .topLeading,
+                        startRadius: 0,
+                        endRadius: 320
+                    )
+                }
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
+
+                VStack(spacing: 0) {
+                    summary
+                    Divider().background(ColorTokens.Spec.line)
+                    blockList
+                    palette
+                }
             }
             // 3.C v23: inline title на iPhone SE 320pt мог обрезаться рядом с
             // LyalyaMascotView blob; используем кастомный principal toolbar item
@@ -69,7 +87,7 @@ struct ProgramEditorView: View {
                 ToolbarItem(placement: .principal) {
                     Text(String(localized: "program.editor.title"))
                         .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .foregroundStyle(ColorTokens.Spec.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
                         .accessibilityAddTraits(.isHeader)
@@ -128,14 +146,30 @@ struct ProgramEditorView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: "program.editor.duration"))
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .textCase(.uppercase)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
-                Text("\(totalMinutes) " + String(localized: "program.editor.minutes"))
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(isValid ? ColorTokens.Kid.ink : ColorTokens.Semantic.error)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp2) {
+                    Text("\(totalMinutes) " + String(localized: "program.editor.minutes"))
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(isValid ? ColorTokens.Spec.ink : ColorTokens.Semantic.error)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(String(
+                        format: String(localized: "program.editor.stepsCount %lld"),
+                        blocks.count
+                    ))
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                        .padding(.horizontal, SpacingTokens.sp2)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule().fill(ColorTokens.Spec.accent.opacity(0.14))
+                        )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
             }
             Spacer(minLength: SpacingTokens.tiny)
             if !isValid {
@@ -154,8 +188,34 @@ struct ProgramEditorView: View {
     /// without requiring an explicit EditButton tap.
     private var blockList: some View {
         List {
+            if blocks.isEmpty {
+                VStack(spacing: SpacingTokens.small) {
+                    Image(systemName: "list.bullet.rectangle.portrait")
+                        .font(.system(size: 40))
+                        .foregroundStyle(ColorTokens.Spec.accent.opacity(0.55))
+                        .accessibilityHidden(true)
+                    Text(String(localized: "program.editor.empty.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "program.editor.empty.message"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, SpacingTokens.sp8)
+                .listRowBackground(Color.clear)
+                .accessibilityElement(children: .combine)
+            }
             ForEach(blocks) { block in
                 ProgramBlockRow(block: block)
+                    .listRowBackground(ColorTokens.Spec.surface)
+                    .listRowSeparatorTint(ColorTokens.Spec.line)
             }
             .onDelete { indexSet in
                 for index in indexSet {
@@ -173,51 +233,99 @@ struct ProgramEditorView: View {
             }
         }
         .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         // Keep edit mode always active so drag handles are visible
         .environment(\.editMode, .constant(.active))
     }
 
     private var palette: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: SpacingTokens.small) {
-                ForEach(ProgramBlockType.allCases, id: \.rawValue) { type in
-                    Button {
-                        Task {
-                            await interactor?.addBlock(.init(
-                                type: type,
-                                durationMinutes: defaultMinutes(for: type),
-                                targetSound: nil
-                            ))
-                        }
-                    } label: {
-                        Text(String(localized: String.LocalizationValue(type.titleKey)))
-                            .font(TypographyTokens.caption(13))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
+        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+            Text(String(localized: "program.editor.palette.hint"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .textCase(.uppercase)
+                .padding(.horizontal, SpacingTokens.medium)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.small) {
+                    ForEach(ProgramBlockType.allCases, id: \.rawValue) { type in
+                        Button {
+                            Task {
+                                await interactor?.addBlock(.init(
+                                    type: type,
+                                    durationMinutes: defaultMinutes(for: type),
+                                    targetSound: nil
+                                ))
+                            }
+                        } label: {
+                            HStack(spacing: SpacingTokens.sp1) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 11, weight: .bold))
+                                    .accessibilityHidden(true)
+                                Text(String(localized: String.LocalizationValue(type.titleKey)))
+                                    .font(TypographyTokens.caption(13).weight(.semibold))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.85)
+                            }
+                            .foregroundStyle(ColorTokens.Spec.accent)
                             .padding(.horizontal, SpacingTokens.medium)
                             .padding(.vertical, SpacingTokens.small)
-                            .background(Capsule().fill(ColorTokens.Parent.surface))
+                            .background(Capsule().fill(ColorTokens.Spec.accent.opacity(0.14)))
+                            .overlay(
+                                Capsule().stroke(ColorTokens.Spec.accent.opacity(0.30), lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(String(localized: String.LocalizationValue(type.titleKey)))
+                        .accessibilityHint(String(localized: "program.editor.palette.addHint"))
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel(String(localized: String.LocalizationValue(type.titleKey)))
                 }
+                .padding(.horizontal, SpacingTokens.medium)
+                .padding(.vertical, SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.medium)
-            .padding(.vertical, SpacingTokens.small)
         }
-        .background(ColorTokens.Parent.bg)
+        .padding(.top, SpacingTokens.tiny)
+        .background(ColorTokens.Spec.surface)
+        .overlay(alignment: .top) {
+            Divider().background(ColorTokens.Spec.line)
+        }
     }
 
     @ViewBuilder
     private var bottomBanner: some View {
-        if let confirmation {
-            Text(confirmation)
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Parent.accent)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(SpacingTokens.small)
+        VStack(spacing: SpacingTokens.tiny) {
+            if let confirmation {
+                Label {
+                    Text(confirmation)
+                        .font(TypographyTokens.caption())
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                } icon: {
+                    Image(systemName: "checkmark.circle.fill")
+                        .accessibilityHidden(true)
+                }
+                .foregroundStyle(ColorTokens.Semantic.success)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
+            }
+            // Эталон specialist-editor: крупный коралловый CTA «Сохранить программу»
+            // внизу экрана. Дублирует toolbar-Save, но это основное действие.
+            HSButton(
+                String(localized: "program.editor.saveProgram"),
+                style: .primary,
+                size: .large,
+                icon: "square.and.arrow.down.fill"
+            ) {
+                save()
+            }
+            .disabled(!isValid)
+            .opacity(isValid ? 1 : 0.5)
         }
+        .padding(.horizontal, SpacingTokens.medium)
+        .padding(.top, SpacingTokens.small)
+        .padding(.bottom, SpacingTokens.tiny)
+        .background(.ultraThinMaterial)
     }
 
     // MARK: - Import/Export menu
@@ -247,7 +355,7 @@ struct ProgramEditorView: View {
             .accessibilityHint(String(localized: "program_editor.menu.import.hint"))
         } label: {
             Image(systemName: "ellipsis.circle")
-                .foregroundStyle(ColorTokens.Parent.accent)
+                .foregroundStyle(ColorTokens.Spec.accent)
                 .accessibilityLabel(String(localized: "program_editor.menu.label"))
         }
     }
@@ -364,30 +472,44 @@ extension UTType {
 private struct ProgramBlockRow: View {
     let block: ProgramBlock
     var body: some View {
-        HStack {
-            Image(systemName: symbol(for: block.type))
-                .foregroundStyle(ColorTokens.Parent.accent)
-                .frame(width: 28)
+        HStack(spacing: SpacingTokens.small) {
+            // Иконка-плитка с тёплым coral-тинтом (эталон step-icon).
+            ZStack {
+                RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                    .fill(ColorTokens.Spec.accent.opacity(0.14))
+                    .frame(width: 40, height: 40)
+                Image(systemName: symbol(for: block.type))
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(ColorTokens.Spec.accent)
+            }
+            .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: String.LocalizationValue(block.type.titleKey)))
-                    .font(TypographyTokens.body(15))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Spec.ink)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                 if let sound = block.targetSound {
                     Text(String(localized: "program.editor.sound.\(sound)"))
                         .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                 }
             }
             Spacer(minLength: SpacingTokens.tiny)
             Text("\(block.durationMinutes) " + String(localized: "program.editor.min"))
-                .font(TypographyTokens.mono(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .font(TypographyTokens.caption(12).weight(.bold))
+                .foregroundStyle(ColorTokens.Spec.accent)
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.sp2)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule().fill(ColorTokens.Spec.accent.opacity(0.12))
+                )
         }
+        .padding(.vertical, SpacingTokens.sp1)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }
