@@ -40,7 +40,7 @@ struct DailyTimeCapView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)

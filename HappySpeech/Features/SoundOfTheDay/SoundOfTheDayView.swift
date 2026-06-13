@@ -70,18 +70,19 @@ struct SoundOfTheDayView: View {
     @ViewBuilder
     private func content(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 greetingHeader(vm)
                 heroCard(vm)
                 activitiesSection(vm)
-                streakRing(vm)
-                Spacer(minLength: SpacingTokens.sp3)
+                progressSection(vm)
                 primaryCta(vm)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp4)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.sp2)
         .accessibilityElement(children: .contain)
     }
 
@@ -109,39 +110,50 @@ struct SoundOfTheDayView: View {
     }
 
     private func heroCard(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
-        HSCard(style: .gradientTinted(GradientTokens.cardCoralButter), padding: SpacingTokens.sp4) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                // Звук дня — крупная буква-якорь (P1.2, P3: kidDisplay(64))
-                HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+        // kid-sound-detail эталон: крупный фокусный звук-герой слева + Ляля с
+        // тёплым пузырём-репликой справа. Soft-lilac glow задаёт «семейный» тон.
+        HSCard(style: .gradientTinted(GradientTokens.cardLilacRose), padding: SpacingTokens.sp4) {
+            HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text(vm.heroTitle)
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .textCase(.uppercase)
+                        .foregroundStyle(ColorTokens.Brand.lilac)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     ZStack {
                         Circle()
-                            .fill(ColorTokens.Brand.primary.opacity(0.12))
-                            .frame(width: 88, height: 88)
-                        // P1-FIX: в кружок-якорь подаём ТОЛЬКО букву звука
-                        // (vm.soundLetter), а не полный heroTitle «Звук дня: «Р»»,
-                        // который kidDisplay(64) обрезал до «З…».
+                            .fill(ColorTokens.Brand.lilac.opacity(0.14))
+                            .frame(width: 104, height: 104)
                         Text(vm.soundLetter)
-                            .font(TypographyTokens.kidDisplay(64))
-                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .font(TypographyTokens.kidDisplay(72))
+                            .foregroundStyle(ColorTokens.Brand.lilac)
                             .minimumScaleFactor(0.7)
                             .lineLimit(1)
                     }
                     .accessibilityHidden(true)
-
-                    VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                        Text(vm.heroTitle)
-                            .font(TypographyTokens.kidTitle(22))
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                        Text(vm.heroReason)
-                            .font(TypographyTokens.kidBody(15))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(nil)
-                            .minimumScaleFactor(0.85)
-                    }
-                    Spacer(minLength: 0)
-                    LyalyaMascotView(state: .celebrating, size: 72)
+                    Text(vm.heroReason)
+                        .font(TypographyTokens.kidBody(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+                VStack(spacing: SpacingTokens.sp1) {
+                    Text(soundChantText(vm.soundLetter))
+                        .font(TypographyTokens.kidCardTitle(15))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .padding(.horizontal, SpacingTokens.sp2)
+                        .padding(.vertical, SpacingTokens.micro)
+                        .background(
+                            Capsule()
+                                .fill(ColorTokens.Kid.surface)
+                                .overlay(Capsule().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                        )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .accessibilityHidden(true)
+                    LyalyaMascotView(state: .celebrating, size: 84)
                         .accessibilityHidden(true)
                 }
             }
@@ -153,9 +165,7 @@ struct SoundOfTheDayView: View {
 
     private func activitiesSection(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text("sotd.activities.section.title")
-                .font(TypographyTokens.headline(17))
-                .foregroundStyle(ColorTokens.Kid.ink)
+            sectionLabel("sotd.activities.hint.title")
             HStack(spacing: SpacingTokens.sp2) {
                 ForEach(vm.activities) { activity in
                     activityChip(activity)
@@ -205,7 +215,9 @@ struct SoundOfTheDayView: View {
         .accessibilityHint(Text("sotd.activity.hint"))
     }
 
-    private func streakRing(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
+    private func progressSection(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
+        // kid-sound-detail эталон: footer-прогресс — золотое кольцо стрика +
+        // мягкий gold-track, тёплый подбадривающий текст.
         HStack(spacing: SpacingTokens.sp3) {
             ZStack {
                 Circle()
@@ -222,26 +234,74 @@ struct SoundOfTheDayView: View {
                 Image(systemName: "flame.fill")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.gold)
-                    // Step 10 Batch E — Pattern 5: flame pulse — streak alive.
                     .hsSymbolEffect(.pulse, value: vm.streakText)
                     .accessibilityHidden(true)
             }
             VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text("sotd.streak.title")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Text(vm.streakText)
-                    .font(TypographyTokens.headline(16).monospacedDigit())
+                    .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Text("sotd.progress.subtitle")
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                track(progress: vm.streakProgress)
+                    .padding(.top, SpacingTokens.micro)
             }
             Spacer(minLength: 0)
         }
         .padding(SpacingTokens.sp3)
         .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surfaceAlt)
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
         )
         .accessibilityElement(children: .combine)
+    }
+
+    /// Тёплая реплика-пузырь Ляли: «р-р-р!» из буквы звука. Для пустой/многобуквенной
+    /// буквы — мягкий безопасный фолбэк, без обрезки и пустых строк.
+    private func soundChantText(_ letter: String) -> String {
+        let trimmed = letter.trimmingCharacters(in: .whitespaces)
+        guard let first = trimmed.first else { return "ура!" }
+        let s = String(first).lowercased()
+        return "\(s)-\(s)-\(s)!"
+    }
+
+    private func track(progress: Double) -> some View {
+        GeometryReader { geo in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(ColorTokens.Kid.line)
+                Capsule()
+                    .fill(GradientTokens.celebrationGold)
+                    .frame(width: max(8, geo.size.width * min(1, max(0.02, progress))))
+            }
+        }
+        .frame(height: 7)
+        .accessibilityHidden(true)
+    }
+
+    private func sectionLabel(_ key: LocalizedStringKey) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Capsule()
+                .fill(ColorTokens.Brand.primaryLo)
+                .frame(width: 18, height: 3)
+            Text(key)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+        }
+        .padding(.leading, 2)
     }
 
     private func primaryCta(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {

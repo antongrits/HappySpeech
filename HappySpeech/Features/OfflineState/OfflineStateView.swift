@@ -46,7 +46,11 @@ struct OfflineStateView: View {
             GeometryReader { proxy in
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
-                        Spacer(minLength: SpacingTokens.sp10)
+                        offlineBanner
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                            .padding(.top, SpacingTokens.sp4)
+
+                        Spacer(minLength: SpacingTokens.sp8)
 
                         illustrationSection
 
@@ -85,13 +89,14 @@ struct OfflineStateView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
-        // F.tier1 v21: lilac accent мягче в dark, чтобы offline screen не «фонил» фиолетом.
+        // Брифом offline-состояние = тёплый коралловый тон (не фиолет/синий).
+        // Мягкое коралловое сияние сверху поверх кремового фона.
         ColorTokens.Kid.bg
             .ignoresSafeArea()
             .overlay(alignment: .top) {
                 LinearGradient(
                     colors: [
-                        ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
+                        ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.12 : 0.22),
                         ColorTokens.Kid.bg.opacity(0)
                     ],
                     startPoint: .top,
@@ -103,13 +108,40 @@ struct OfflineStateView: View {
             }
     }
 
+    // MARK: - Offline banner
+
+    /// Тёплый offline-баннер сверху (бриф: «Нет интернета» на коралловой
+    /// заливке). Заливка — тёплый brand-коралл (на токенах), белый текст.
+    private var offlineBanner: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Image(systemName: "wifi.slash")
+                .font(TypographyTokens.labelRounded(15))
+                .accessibilityHidden(true)
+            Text(String(localized: "offline.banner"))
+                .font(TypographyTokens.labelRounded(15))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .foregroundStyle(.white)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.sp2)
+        .padding(.horizontal, SpacingTokens.sp4)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Brand.primary)
+        )
+        .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 10, x: 0, y: 4)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "offline.banner"))
+    }
+
     // MARK: - Illustration
 
     private var illustrationSection: some View {
         ZStack {
-            // Soft pulse halo
+            // Soft pulse halo — warm coral glow.
             Circle()
-                .fill(ColorTokens.Brand.lilac.opacity(0.18))
+                .fill(ColorTokens.Brand.primaryLo.opacity(0.22))
                 .frame(width: 240, height: 240)
                 .scaleEffect(isMascotPulsing ? 1.06 : 0.98)
                 .opacity(isMascotPulsing ? 0.85 : 0.55)

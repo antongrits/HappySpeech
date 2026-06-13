@@ -102,9 +102,15 @@ struct CelebrationOverlayView: View {
                         .padding(.vertical, 14)
                         .background(
                             Capsule()
-                                .fill(ColorTokens.Celebration.primaryButton.opacity(0.9))
+                                .fill(
+                                    LinearGradient(
+                                        colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
                         )
-                        .shadow(color: ColorTokens.Celebration.primaryButton.opacity(0.5), radius: 12, x: 0, y: 6)
+                        .shadow(color: ColorTokens.Brand.primary.opacity(0.5), radius: 12, x: 0, y: 6)
                 }
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)

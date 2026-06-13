@@ -16,8 +16,9 @@ struct LyalyaPersonalCoachView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
+                    .opacity(0.30)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
@@ -60,9 +61,10 @@ struct LyalyaPersonalCoachView: View {
                 emptyState
             } else {
                 ScrollView {
-                    VStack(spacing: SpacingTokens.sp4) {
+                    VStack(spacing: SpacingTokens.sp3) {
                         hero(interactor: interactor)
                         if let round = interactor.current {
+                            sectionLabel("coach.section.question")
                             questionCard(round, interactor: interactor)
                             optionsGrid(round: round, interactor: interactor)
                             reactionView(interactor: interactor)
@@ -75,6 +77,8 @@ struct LyalyaPersonalCoachView: View {
                     .padding(.top, SpacingTokens.sp3)
                     .padding(.bottom, SpacingTokens.sp6)
                 }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom, SpacingTokens.sp2)
             }
         } else {
             ProgressView().controlSize(.large)
@@ -203,7 +207,8 @@ struct LyalyaPersonalCoachView: View {
     }
 
     private func summary(interactor: LyalyaPersonalCoachInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        // Тёплый итог — gold-градиент вместо off-palette зелёного successBg.
+        HSCard(style: .gradientTinted(GradientTokens.cardGold)) {
             VStack(spacing: SpacingTokens.sp2) {
                 LyalyaMascotView(state: .celebrating, size: 80)
                     .accessibilityHidden(true)
@@ -214,10 +219,29 @@ struct LyalyaPersonalCoachView: View {
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, SpacingTokens.sp2)
         }
+    }
+
+    private func sectionLabel(_ key: LocalizedStringKey) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Capsule()
+                .fill(ColorTokens.Brand.primaryLo)
+                .frame(width: 18, height: 3)
+            Text(key)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 2)
     }
 
     @ViewBuilder

@@ -1,6 +1,11 @@
 import SwiftUI
 
 // MARK: - PracticeReminderKidView
+//
+// Центрированный одноцелевой prompt детского контура: крупная Ляля на тёплом
+// коралловом glow + короткая фраза + task-pill «Сегодня нас ждёт звук …» +
+// реальные бейджи (минуты сегодня / серия) + коралловая CTA «Начать» и мягкая
+// «Позже». Тёплый кремовый холст, без холодных заливок.
 
 struct PracticeReminderKidView: View {
 
@@ -13,15 +18,12 @@ struct PracticeReminderKidView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @State private var mascotAppeared = false
+
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
+                background
                 content
             }
             .navigationTitle(Text(String(localized: "practiceReminder.nav.title")))
@@ -52,77 +54,168 @@ struct PracticeReminderKidView: View {
         .environment(\.circuitContext, .kid)
     }
 
+    // MARK: - Background
+
+    private var background: some View {
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+            RadialGradient(
+                colors: [ColorTokens.Brand.primaryLo.opacity(0.5), Color.clear],
+                center: .init(x: 0.5, y: 0.36),
+                startRadius: 8,
+                endRadius: 240
+            )
+            .ignoresSafeArea()
+            .accessibilityHidden(true)
+            .allowsHitTesting(false)
+        }
+    }
+
+    // MARK: - Content
+
     @ViewBuilder
     private var content: some View {
         if let interactor {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero(state: interactor.state)
-                    reminderCard(state: interactor.state, interactor: interactor)
-                    cta
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        Spacer(minLength: SpacingTokens.sp4)
+                        mascotSection
+                        titleSection
+                        taskPill(state: interactor.state)
+                        badgesRow(state: interactor.state)
+                        Spacer(minLength: SpacingTokens.sp5)
+                        ctaColumn(interactor: interactor)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: geo.size.height)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
-                .padding(.bottom, SpacingTokens.sp6)
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom, SpacingTokens.sp2)
             }
         } else {
             ProgressView().controlSize(.large)
         }
     }
 
-    private func hero(state: PracticeReminderKidModels.ViewState) -> some View {
-        HSLiquidGlassCard(style: .elevated) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .happy, size: 72)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(String(localized: "practiceReminder.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "practiceReminder.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
-                }
-                Spacer(minLength: 0)
+    // MARK: - Mascot
+
+    private var mascotSection: some View {
+        ZStack(alignment: .bottomTrailing) {
+            HSMascotView(mood: .waving, size: 176)
+                .accessibilityHidden(true)
+            Image(systemName: "alarm.fill")
+                .font(.system(size: 34, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .padding(10)
+                .background(
+                    Circle()
+                        .fill(ColorTokens.Kid.surface)
+                        .shadow(color: ColorTokens.Brand.primary.opacity(0.2), radius: 10, y: 4)
+                )
+                .offset(x: 4, y: 6)
+                .accessibilityHidden(true)
+        }
+        .scaleEffect(mascotAppeared ? 1.0 : 0.78)
+        .opacity(mascotAppeared ? 1.0 : 0.0)
+        .animation(reduceMotion ? .none : MotionTokens.rewardPop, value: mascotAppeared)
+        .onAppear {
+            withAnimation(reduceMotion ? .none : MotionTokens.rewardPop) {
+                mascotAppeared = true
             }
         }
     }
 
-    private func reminderCard(
-        state: PracticeReminderKidModels.ViewState,
-        interactor: PracticeReminderKidInteractor
-    ) -> some View {
-        HSCard(style: .elevated) {
-            VStack(spacing: SpacingTokens.sp3) {
-                HStack(spacing: SpacingTokens.sp4) {
-                    badge(
-                        icon: "clock.fill",
-                        value: minutesLabel(state),
-                        label: String(localized: "practiceReminder.badge.today")
-                    )
-                    badge(
-                        icon: "flame.fill",
-                        value: streakLabel(state),
-                        label: String(localized: "practiceReminder.badge.streak")
-                    )
-                }
-                Button {
-                    hapticService.impact(.light)
-                    interactor.snooze()
-                } label: {
-                    Text(String(localized: "practiceReminder.snooze"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-                .buttonStyle(.plain)
-                .opacity(state.isDismissed ? 0.4 : 1.0)
-                .disabled(state.isDismissed)
-            }
+    // MARK: - Title
+
+    private var titleSection: some View {
+        Text(String(localized: "practiceReminder.hero.title"))
+            .font(TypographyTokens.title(27))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .multilineTextAlignment(.center)
+            .lineLimit(2)
+            .minimumScaleFactor(0.85)
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    // MARK: - Task pill
+
+    private func taskPill(state: PracticeReminderKidModels.ViewState) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Image(systemName: "waveform.circle.fill")
+                .font(.system(size: 24, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .accessibilityHidden(true)
+            Text(String(localized: "practiceReminder.hero.subtitle"))
+                .font(TypographyTokens.body(15).weight(.medium))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
+        .padding(.vertical, SpacingTokens.sp2)
+        .padding(.horizontal, SpacingTokens.sp3)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .overlay(Capsule(style: .continuous).strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                .shadow(color: ColorTokens.Brand.primary.opacity(0.12), radius: 12, y: 6)
+        )
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Badges
+
+    private func badgesRow(state: PracticeReminderKidModels.ViewState) -> some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            badge(
+                icon: "clock.fill",
+                value: minutesLabel(state),
+                label: String(localized: "practiceReminder.badge.today")
+            )
+            badge(
+                icon: "flame.fill",
+                value: streakLabel(state),
+                label: String(localized: "practiceReminder.badge.streak")
+            )
+        }
+    }
+
+    private func badge(icon: String, value: String, label: String) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.pulse, value: value)
+            Text(value)
+                .font(TypographyTokens.headline(16))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Text(label)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.sp3)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                )
+        )
     }
 
     /// Минуты: «N мин» при реальных данных, «—» если за сегодня практики нет.
@@ -139,36 +232,35 @@ struct PracticeReminderKidView: View {
         return "\(state.streakDays)"
     }
 
-    private func badge(icon: String, value: String, label: String) -> some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 18, weight: .semibold))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .hsSymbolEffect(.pulse, value: value)
-            Text(value)
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text(label)
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp2)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(ColorTokens.Kid.surface)
-        )
-    }
+    // MARK: - CTA column
 
-    private var cta: some View {
-        HSButton(
-            String(localized: "practiceReminder.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "play.fill"
-        ) {
-            hapticService.notification(.success)
-            coordinator.navigate(to: .childHome(childId: childId))
+    private func ctaColumn(interactor: PracticeReminderKidInteractor) -> some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            HSButton(
+                String(localized: "practiceReminder.cta.action"),
+                style: .primary,
+                size: .large,
+                icon: "play.fill"
+            ) {
+                hapticService.notification(.success)
+                coordinator.navigate(to: .childHome(childId: childId))
+            }
+
+            Button {
+                hapticService.impact(.light)
+                interactor.snooze()
+            } label: {
+                Text(String(localized: "practiceReminder.snooze"))
+                    .font(TypographyTokens.body(16).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .frame(maxWidth: .infinity, minHeight: 48)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .buttonStyle(.plain)
+            .opacity(interactor.state.isDismissed ? 0.4 : 1.0)
+            .disabled(interactor.state.isDismissed)
+            .accessibilityHint(String(localized: "practiceReminder.snooze"))
         }
     }
 }

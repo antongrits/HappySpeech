@@ -72,10 +72,10 @@ struct WordBankView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: calm mesh палитра (word collection / reflection).
-                HSMeshGradientBackground(palette: .calm, animated: true)
+                // kid-sound-detail: тёплый статичный kidWarm mesh (детская копилка слов).
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
@@ -108,7 +108,7 @@ struct WordBankView: View {
             .sheet(isPresented: $showDetailSheet) {
                 if let detail = holder.selectedDetail {
                     detailSheet(detail)
-                        .presentationDetents([.medium])
+                        .presentationDetents([.medium, .large])
                         .presentationDragIndicator(.visible)
                 }
             }
@@ -136,6 +136,8 @@ struct WordBankView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.sp4)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.sp2)
     }
 
     @ViewBuilder
@@ -270,10 +272,25 @@ struct WordBankView: View {
     @ViewBuilder
     private func detailSheet(_ detail: WordBankModels.SelectWord.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
+            // kid-sound-detail: крупная реальная иллюстрация слова (word_* ассет,
+            // SF-фолбэк внутри HSContentSymbol).
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Brand.primaryLo.opacity(0.18))
+                    .frame(width: 132, height: 132)
+                HSContentSymbol(
+                    LessonContentMap.asset(for: detail.word) ?? "textformat.abc",
+                    size: 96,
+                    tint: ColorTokens.Brand.primary
+                )
+                .frame(width: 104, height: 104)
+            }
+            .padding(.top, SpacingTokens.sp6)
+            .accessibilityHidden(true)
+
             Text(detail.word)
                 .font(TypographyTokens.display(40).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.top, SpacingTokens.sp6)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
@@ -348,9 +365,11 @@ struct WordBankView: View {
     // MARK: - Tint helpers
 
     private func tileBackground(_ tint: WordTileTint) -> Color {
+        // Тёплая палитра: gold = освоено, rose = в работе (вместо off-palette mint),
+        // neutral = ещё не тренировали. Заливки крупные → только тёплые токены.
         switch tint {
         case .gold:    return ColorTokens.Brand.gold.opacity(0.16)
-        case .mint:    return ColorTokens.Brand.mint.opacity(0.16)
+        case .mint:    return ColorTokens.Brand.rose.opacity(0.16)
         case .neutral: return ColorTokens.Kid.surfaceAlt
         }
     }
@@ -358,7 +377,7 @@ struct WordBankView: View {
     private func tileBorder(_ tint: WordTileTint) -> Color {
         switch tint {
         case .gold:    return ColorTokens.Brand.gold.opacity(0.4)
-        case .mint:    return ColorTokens.Brand.mint.opacity(0.4)
+        case .mint:    return ColorTokens.Brand.rose.opacity(0.4)
         case .neutral: return ColorTokens.Kid.line
         }
     }

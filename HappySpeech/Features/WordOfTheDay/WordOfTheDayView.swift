@@ -17,10 +17,10 @@ struct WordOfTheDayView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра (daily word).
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                // kid-sound-detail: статичный тёплый kidWarm mesh (без волн).
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
@@ -57,9 +57,10 @@ struct WordOfTheDayView: View {
     private var content: some View {
         if let interactor {
             ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
+                VStack(spacing: SpacingTokens.sp3) {
                     hero(interactor: interactor)
                     illustration(interactor: interactor)
+                    howTo(interactor: interactor)
                     feedback(interactor: interactor)
                     cta(interactor: interactor)
                 }
@@ -67,6 +68,8 @@ struct WordOfTheDayView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
         } else {
             ProgressView().controlSize(.large)
         }
@@ -123,16 +126,50 @@ struct WordOfTheDayView: View {
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
                 // Целевой звук — маленький тёплый чип
-                Text("Звук: \(interactor.card.targetSound)")
-                    .font(TypographyTokens.caption(12))
+                Text(String(format: String(localized: "wotd.target.format"), interactor.card.targetSound))
+                    .font(TypographyTokens.caption(12).weight(.semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .padding(.horizontal, SpacingTokens.sp2)
                     .padding(.vertical, SpacingTokens.micro)
                     .background(Capsule().fill(ColorTokens.Brand.primaryLo.opacity(0.18)))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, SpacingTokens.sp2)
         }
+    }
+
+    private func howTo(interactor: WordOfTheDayInteractor) -> some View {
+        // kid-sound-detail «как сказать»: маленькая иконка-панель + тёплая
+        // дружеская подсказка (реальное card.hint), не клинично.
+        HSCard(style: .flat, padding: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Brand.rose.opacity(0.14))
+                        .frame(width: 64, height: 64)
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 26, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .symbolRenderingMode(.hierarchical)
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text("wotd.howto.label")
+                        .font(TypographyTokens.caption(11).weight(.semibold))
+                        .textCase(.uppercase)
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    Text(interactor.card.hint)
+                        .font(TypographyTokens.kidCardTitle(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder

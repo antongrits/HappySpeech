@@ -173,39 +173,31 @@ struct DemoModeView: View {
         }
     }
 
-    // MARK: - Animated background
+    // MARK: - Background
 
-    /// Динамический градиент: accent → secondary текущего шага. При свайпе
-    /// между шагами SwiftUI плавно интерполирует градиент.
+    /// Тёплый статичный кремовый холст детского контура. Акцент текущего шага
+    /// (`display.accent`) применяется ТОЛЬКО как мягкий коралловый/butter glow
+    /// за карточкой — крупная заливка остаётся тёплой и неподвижной (без
+    /// многоцветного движущегося градиента).
     private var animatedBackground: some View {
         ZStack {
-            LinearGradient(
-                colors: [
-                    display.accent.resolvedColor,
-                    display.accent.resolvedSecondary
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+            RadialGradient(
+                colors: [display.accent.resolvedColor.opacity(0.18), Color.clear],
+                center: .init(x: 0.5, y: 0.4),
+                startRadius: 8,
+                endRadius: 320
             )
             .ignoresSafeArea()
-
-            ZStack {
-                Circle()
-                    .fill(ColorTokens.Overlay.glass)
-                    .frame(width: 320)
-                    .offset(x: -120, y: -260)
-                Circle()
-                    .fill(ColorTokens.Overlay.glass)
-                    .frame(width: 220)
-                    .offset(x: 140, y: 80)
-                Circle()
-                    .fill(ColorTokens.Overlay.glass)
-                    .frame(width: 160)
-                    .offset(x: -80, y: 240)
-            }
             .accessibilityHidden(true)
+            .allowsHitTesting(false)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.accent)
         }
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.accent)
     }
 
     // MARK: - Content layer
@@ -230,7 +222,7 @@ struct DemoModeView: View {
             HStack {
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(13))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.9))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .accessibilityIdentifier("demo.progress.label")
                 Spacer()
             }
@@ -238,7 +230,7 @@ struct DemoModeView: View {
 
             ProgressView(value: display.progress)
                 .progressViewStyle(.linear)
-                .tint(ColorTokens.Overlay.onAccent)
+                .tint(ColorTokens.Brand.primary)
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .accessibilityHidden(true)
 
@@ -266,7 +258,7 @@ struct DemoModeView: View {
         } label: {
             Text(String(localized: "demo.cta.skip"))
                 .font(TypographyTokens.body(14).weight(.semibold))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .foregroundStyle(ColorTokens.Brand.primary)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
                 .frame(minWidth: 44, minHeight: 44)
@@ -284,7 +276,7 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: "arrow.counterclockwise")
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -299,8 +291,9 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: display.autoAdvanceEnabled ? "play.circle.fill" : "play.circle")
                 .font(TypographyTokens.headline(17))
-                .foregroundStyle(ColorTokens.Overlay.onAccent
-                    .opacity(display.autoAdvanceEnabled ? 1.0 : 0.7))
+                .foregroundStyle(display.autoAdvanceEnabled
+                    ? ColorTokens.Brand.primary
+                    : ColorTokens.Kid.inkMuted)
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -317,7 +310,7 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: "list.bullet.rectangle")
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -394,7 +387,7 @@ struct DemoModeView: View {
             HSCard(style: .elevated, padding: SpacingTokens.xLarge) {
                 ProgressView()
                     .progressViewStyle(.circular)
-                    .tint(ColorTokens.Overlay.onAccent)
+                    .tint(ColorTokens.Brand.primary)
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, SpacingTokens.screenEdge)

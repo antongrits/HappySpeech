@@ -42,6 +42,7 @@ struct SpeechGrowthDiaryView: View {
 
     @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -56,8 +57,11 @@ struct SpeechGrowthDiaryView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                // kid-diary-journal: тёплый статичный mesh — дневник-скрапбук
+                // (вместо холодного calm), но контур остаётся parent-gated.
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.14 : 0.22)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
@@ -167,6 +171,13 @@ struct SpeechGrowthDiaryView: View {
 
     private func clipsListSection(_ listVM: SpeechGrowthDiaryModels.List.ViewModel) -> some View {
         ScrollView {
+            VStack(spacing: SpacingTokens.sp3) {
+                mascotBubble
+                sectionLabel("diary.section.timeline")
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp3)
+
             LazyVStack(spacing: SpacingTokens.sp3) {
                 ForEach(Array(listVM.clips.enumerated()), id: \.element.id) { index, row in
                     clipRow(row)
@@ -188,6 +199,42 @@ struct SpeechGrowthDiaryView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp5)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.sp2)
+    }
+
+    // kid-diary-journal: Ляля с тёплым пузырём-подсказкой над лентой записей.
+    private var mascotBubble: some View {
+        HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            LyalyaMascotView(state: .encouraging, size: 52)
+                .accessibilityHidden(true)
+            HSCard(style: .elevated, padding: SpacingTokens.sp3) {
+                Text("diary.mascot.bubble")
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func sectionLabel(_ key: LocalizedStringKey) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Capsule()
+                .fill(ColorTokens.Brand.primaryLo)
+                .frame(width: 18, height: 3)
+            Text(key)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 2)
     }
 
     private func clipRow(_ row: SpeechGrowthDiaryModels.List.ClipRow) -> some View {
@@ -443,4 +490,11 @@ private struct VideoPickerSheet: UIViewControllerRepresentable {
     SpeechGrowthDiaryView(childId: "preview-child-1")
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
+}
+
+#Preview("Diary — Dark") {
+    SpeechGrowthDiaryView(childId: "preview-child-1")
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+        .preferredColorScheme(.dark)
 }

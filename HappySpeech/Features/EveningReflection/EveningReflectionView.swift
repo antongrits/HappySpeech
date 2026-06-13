@@ -11,13 +11,19 @@ struct EveningReflectionView: View {
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                ColorTokens.Kid.bg.ignoresSafeArea()
+                // kid-diary-journal: тёплый статичный kidWarm mesh (вечерняя рефлексия).
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "evening.nav.title")))
@@ -48,85 +54,133 @@ struct EveningReflectionView: View {
     private var content: some View {
         if let interactor, interactor.isLoaded {
             ScrollView {
-                VStack(spacing: SpacingTokens.sp4) {
-                    hero
+                VStack(spacing: SpacingTokens.sp3) {
+                    mascotBubble
+                    sectionLabel("evening.prompt.label")
                     funQuestion(interactor: interactor)
                     hardQuestion(interactor: interactor)
                     moodPicker(interactor: interactor)
                     cta(interactor: interactor)
-                    if !interactor.history.isEmpty {
-                        historySection(interactor: interactor)
-                    }
+                    historySection(interactor: interactor)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
         } else {
             ProgressView().controlSize(.large)
         }
     }
 
+    @ViewBuilder
     private func historySection(interactor: EveningReflectionInteractor) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text(String(localized: "evening.history.title"))
-                .font(TypographyTokens.headline(15))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.leading, 2)
-            ForEach(interactor.history.prefix(7)) { entry in
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionLabel("evening.history.title")
+            if interactor.history.isEmpty {
                 HSCard(style: .flat) {
-                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                        Text(entry.mood?.emoji ?? "🌙")
-                            .font(.system(size: 28))
-                        VStack(alignment: .leading, spacing: 2) {
-                            if let date = entry.savedAt {
-                                Text(date.formatted(date: .abbreviated, time: .omitted))
-                                    .font(TypographyTokens.caption(11))
-                                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                            }
-                            if !entry.fun.isEmpty {
-                                Text(entry.fun)
-                                    .font(TypographyTokens.body(13))
-                                    .foregroundStyle(ColorTokens.Kid.ink)
-                                    .lineLimit(2)
-                                    .minimumScaleFactor(0.85)
-                            }
-                            if !entry.hard.isEmpty {
-                                Text(entry.hard)
-                                    .font(TypographyTokens.body(13))
-                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                                    .lineLimit(2)
-                                    .minimumScaleFactor(0.85)
-                            }
-                        }
+                    HStack(spacing: SpacingTokens.sp3) {
+                        Image(systemName: "book.closed.fill")
+                            .font(.system(size: 26, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                            .symbolRenderingMode(.hierarchical)
+                            .accessibilityHidden(true)
+                        Text("evening.history.empty")
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
                         Spacer(minLength: 0)
                     }
                 }
-                .accessibilityElement(children: .combine)
+            } else {
+                ForEach(Array(interactor.history.prefix(7).enumerated()), id: \.element.id) { index, entry in
+                    historyEntry(entry)
+                        .scrollTransition(
+                            .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))
+                        ) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .zIndex(Double(interactor.history.count - index))
+                }
             }
         }
     }
 
-    private var hero: some View {
-        HSLiquidGlassCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: .thinking, size: 64)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "evening.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "evening.hero.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
+    // kid-diary-journal: запись-открытка с мягким настроением-узлом и датой.
+    private func historyEntry(_ entry: EveningReflectionModels.Entry) -> some View {
+        HSCard(style: .flat) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primaryLo.opacity(0.22))
+                        .frame(width: 46, height: 46)
+                    Text(entry.mood?.emoji ?? "🌙")
+                        .font(.system(size: 26))
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    if let date = entry.savedAt {
+                        Text(date.formatted(date: .abbreviated, time: .omitted))
+                            .font(TypographyTokens.caption(12).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
+                    if !entry.fun.isEmpty {
+                        Text(entry.fun)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
+                    if !entry.hard.isEmpty {
+                        Text(entry.hard)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
                 }
                 Spacer(minLength: 0)
             }
         }
+        .accessibilityElement(children: .combine)
+    }
+
+    // kid-diary-journal: Ляля с тёплым пузырём-приглашением сверху.
+    private var mascotBubble: some View {
+        HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            LyalyaMascotView(state: .thinking, size: 56)
+                .accessibilityHidden(true)
+            HSCard(style: .elevated, padding: SpacingTokens.sp3) {
+                Text("evening.mascot.bubble")
+                    .font(TypographyTokens.kidBody(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func sectionLabel(_ key: LocalizedStringKey) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Capsule()
+                .fill(ColorTokens.Brand.primaryLo)
+                .frame(width: 18, height: 3)
+            Text(key)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 2)
     }
 
     private func funQuestion(interactor: EveningReflectionInteractor) -> some View {

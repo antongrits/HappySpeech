@@ -11,8 +11,9 @@ import SwiftUI
 // App Review их режет. Ребёнок может закрыть приложение жестом Home/swipe-up,
 // что является естественным поведением iOS.
 //
-// Тон месседжа — мягкий, без рассеивающего «нельзя!»; Лялина рекомендует
-// вернуться завтра. Соответствует project guide §11 «честные границы».
+// Тон месседжа — мягкий, без рассеивающего «нельзя!»; Ляля рекомендует
+// вернуться завтра. Тёплый кремовый холст детского контура, без наказывающего
+// красного/холодного синего. Соответствует project guide §11 «честные границы».
 
 struct CapReachedView: View {
 
@@ -20,6 +21,7 @@ struct CapReachedView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var showParentalGate: Bool = false
+    @State private var mascotAppeared = false
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "DailyTimeCap.CapReached"
@@ -27,27 +29,33 @@ struct CapReachedView: View {
 
     var body: some View {
         ZStack {
-            backgroundGradient
-                .ignoresSafeArea()
-
-            VStack(spacing: SpacingTokens.sp4) {
-                Spacer(minLength: SpacingTokens.sp8)
-                mascotSection
-                titleSection
-                messageSection
-                Spacer(minLength: SpacingTokens.sp6)
-                okButton
-                parentEscapeButton
-                    .padding(.bottom, SpacingTokens.sp4)
+            background
+            GeometryReader { geo in
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        Spacer(minLength: SpacingTokens.sp6)
+                        mascotSection
+                        titleSection
+                        messageSection
+                        Spacer(minLength: SpacingTokens.sp6)
+                        okButton
+                        parentEscapeButton
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: geo.size.height)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp4)
+                    .padding(.bottom, SpacingTokens.sp6)
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom, SpacingTokens.sp2)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
         }
         // Полноэкранный sheet НЕ dismissible swipe-down.
         .interactiveDismissDisabled(true)
         .sheet(isPresented: $showParentalGate) {
             ParentalGate(isPresented: $showParentalGate) {
                 Self.logger.info("CapReached: parental gate passed → DailyTimeCap")
-                // Закрываем sheet, переходим на parent-настройки.
                 coordinator.dismissSheet()
                 coordinator.navigate(to: .dailyTimeCap)
             }
@@ -56,43 +64,64 @@ struct CapReachedView: View {
         .accessibilityElement(children: .contain)
     }
 
-    // MARK: - Sections
+    // MARK: - Background
 
-    private var backgroundGradient: some View {
-        LinearGradient(
-            colors: [
-                ColorTokens.Brand.sky.opacity(0.85),
-                ColorTokens.Brand.lilac.opacity(0.55),
-                ColorTokens.Kid.bgSoft
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
+    /// Тёплый статичный кремовый холст детского контура + мягкий коралловый
+    /// glow за маскотом. Без холодного синего/лилового на крупной заливке.
+    private var background: some View {
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+            RadialGradient(
+                colors: [
+                    ColorTokens.Brand.primaryLo.opacity(0.55),
+                    Color.clear
+                ],
+                center: .init(x: 0.5, y: 0.34),
+                startRadius: 8,
+                endRadius: 260
+            )
+            .ignoresSafeArea()
+            .accessibilityHidden(true)
+            .allowsHitTesting(false)
+        }
     }
 
-    @State private var mascotAppeared = false
+    // MARK: - Sections
 
     private var mascotSection: some View {
-        HSMascotView(mood: .waving, size: 180)
-            .accessibilityHidden(true)
-            .padding(.top, SpacingTokens.sp4)
-            .scaleEffect(mascotAppeared ? 1.0 : 0.7)
-            .opacity(mascotAppeared ? 1.0 : 0.0)
-            .animation(reduceMotion ? .none : MotionTokens.rewardPop, value: mascotAppeared)
-            .onAppear {
-                withAnimation(reduceMotion ? .none : MotionTokens.rewardPop) {
-                    mascotAppeared = true
-                }
+        ZStack(alignment: .topTrailing) {
+            HSMascotView(mood: .idle, size: 188)
+                .accessibilityHidden(true)
+            // Мягкое «Zzz» — спокойный конец дня, ребёнок молодец.
+            Image(systemName: "moon.zzz.fill")
+                .font(.system(size: 30, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.butter)
+                .offset(x: 6, y: 8)
+                .accessibilityHidden(true)
+        }
+        .padding(.top, SpacingTokens.sp4)
+        .scaleEffect(mascotAppeared ? 1.0 : 0.7)
+        .opacity(mascotAppeared ? 1.0 : 0.0)
+        .animation(reduceMotion ? .none : MotionTokens.rewardPop, value: mascotAppeared)
+        .onAppear {
+            withAnimation(reduceMotion ? .none : MotionTokens.rewardPop) {
+                mascotAppeared = true
             }
+        }
     }
 
     private var titleSection: some View {
         Text(String(localized: "dailyTimeCap.reached.title"))
-            .font(TypographyTokens.title(26))
-            .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .font(TypographyTokens.title(27))
+            .foregroundStyle(ColorTokens.Kid.ink)
             .multilineTextAlignment(.center)
             .lineLimit(2)
-            .minimumScaleFactor(0.8)
+            .minimumScaleFactor(0.85)
             .padding(.horizontal, SpacingTokens.sp2)
             .accessibilityAddTraits(.isHeader)
     }
@@ -100,7 +129,7 @@ struct CapReachedView: View {
     private var messageSection: some View {
         Text(String(localized: "dailyTimeCap.reached.message"))
             .font(TypographyTokens.body(17))
-            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
             .multilineTextAlignment(.center)
             .lineLimit(nil)
             .minimumScaleFactor(0.85)
@@ -116,12 +145,21 @@ struct CapReachedView: View {
         } label: {
             Text(String(localized: "dailyTimeCap.reached.ok"))
                 .font(TypographyTokens.headline(19))
-                .frame(maxWidth: .infinity, minHeight: 60)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity, minHeight: 58)
                 .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Overlay.onAccent)
+                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                        .fill(
+                            LinearGradient(
+                                colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .shadow(color: ColorTokens.Brand.primary.opacity(0.34), radius: 16, y: 8)
                 )
-                .foregroundStyle(ColorTokens.Brand.primary)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .buttonStyle(.plain)
         .accessibilityHint(String(localized: "dailyTimeCap.reached.ok.a11y_hint"))
@@ -136,11 +174,14 @@ struct CapReachedView: View {
                 Image(systemName: "person.2.fill")
                     .accessibilityHidden(true)
                 Text(String(localized: "dailyTimeCap.reached.parent"))
-                    .font(TypographyTokens.body(14))
+                    .font(TypographyTokens.body(14).weight(.semibold))
                     .underline()
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
-            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.82))
-            .padding(.vertical, SpacingTokens.sp2)
+            .foregroundStyle(ColorTokens.Brand.primary.opacity(0.9))
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .padding(.vertical, SpacingTokens.sp1)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(String(localized: "dailyTimeCap.reached.parent.a11y"))
@@ -154,4 +195,11 @@ struct CapReachedView: View {
     CapReachedView()
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
+}
+
+#Preview("CapReached — Dark") {
+    CapReachedView()
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+        .preferredColorScheme(.dark)
 }

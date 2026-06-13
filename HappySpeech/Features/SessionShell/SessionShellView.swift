@@ -301,21 +301,24 @@ struct SessionShellBinder: View {
     }
 
     private func gradientPalette(for type: GameType) -> (top: Color, bottom: Color) {
+        // Standing order: фон практической сессии — ТОЛЬКО тёплая палитра
+        // (коралл/butter/rose/lilac). Off-palette sky/mint как крупная заливка
+        // запрещены — заменены на тёплые акценты поверх кремового фона.
         switch type {
         case .listenAndChoose, .repeatAfterModel, .minimalPairs:
-            return (ColorTokens.Brand.sky.opacity(0.18), ColorTokens.Kid.bgSoft)
+            return (ColorTokens.Brand.primaryLo.opacity(0.16), ColorTokens.Kid.bgSoft)
         case .rhythm:
-            return (ColorTokens.Brand.mint.opacity(0.18), ColorTokens.Kid.bgSoft)
+            return (ColorTokens.Brand.gold.opacity(0.14), ColorTokens.Kid.bgSoft)
         case .narrativeQuest, .storyCompletion:
-            return (ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bgSoft)
+            return (ColorTokens.Brand.lilac.opacity(0.16), ColorTokens.Kid.bgSoft)
         case .arActivity, .visualAcoustic:
-            return (ColorTokens.Brand.butter.opacity(0.18), ColorTokens.Kid.bgSoft)
+            return (ColorTokens.Brand.butter.opacity(0.16), ColorTokens.Kid.bgSoft)
         case .breathing, .articulationImitation:
             // D-23: общий розово-кремовый фон уроков — без выбивающегося
             // жёлто-зелёного оттенка.
-            return (ColorTokens.Kid.bgSoft, ColorTokens.Kid.bg)
+            return (ColorTokens.Brand.rose.opacity(0.12), ColorTokens.Kid.bgSoft)
         case .letterTracing:
-            return (ColorTokens.Brand.sky.opacity(0.12), ColorTokens.Kid.bgSoft)
+            return (ColorTokens.Brand.primaryLo.opacity(0.12), ColorTokens.Kid.bgSoft)
         default:
             return (ColorTokens.Kid.bgSoft, ColorTokens.Kid.bg)
         }
@@ -341,9 +344,43 @@ struct SessionShellBinder: View {
             gameView(for: activity)
                 .id(activity.id)
         } else {
+            transitionLoadingView
+        }
+    }
+
+    /// Тёплое состояние «готовим следующее упражнение» между активностями.
+    /// Брифом задано: Ляля + спокойный коралловый спиннер + одна строка.
+    private var transitionLoadingView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            LyalyaMascotView(state: .encouraging, size: 120)
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
+                .accessibilityHidden(true)
+
             ProgressView()
                 .progressViewStyle(.circular)
+                .tint(ColorTokens.Brand.primary)
+                .controlSize(.large)
+
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "session.loading.next.title"))
+                    .font(TypographyTokens.headline(18))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+
+                Text(String(localized: "session.loading.next.hint"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "session.loading.next.title"))
     }
 
     private var sessionCompletedView: some View {

@@ -384,7 +384,7 @@ private struct DragCloudsGameView: View {
     private var scoreLabel: some View {
         Text(String(format: String(localized: "offline.minigame.score.format"), caught))
             .font(TypographyTokens.headline(18))
-            .foregroundStyle(ColorTokens.Brand.sky)
+            .foregroundStyle(ColorTokens.Brand.primary)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .frame(maxWidth: .infinity, alignment: .trailing)
     }
@@ -394,11 +394,11 @@ private struct DragCloudsGameView: View {
             Spacer()
             Image(systemName: "sparkles")
                 .font(.system(size: 72, weight: .regular))
-                .foregroundStyle(ColorTokens.Brand.sky)
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), caught))
                 .font(TypographyTokens.display(40))
-                .foregroundStyle(ColorTokens.Brand.sky)
+                .foregroundStyle(ColorTokens.Brand.primary)
             Text(caught >= 5
                  ? String(localized: "offline.minigame.congrats.great")
                  : String(localized: "offline.minigame.congrats.good"))
@@ -501,7 +501,7 @@ private struct FindPairGameView: View {
             Spacer()
             Text(String(format: String(localized: "offline.minigame.score.format"), pairsFound))
                 .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .foregroundStyle(ColorTokens.Brand.primary)
         }
     }
 
@@ -545,7 +545,7 @@ private struct FindPairGameView: View {
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), pairsFound))
                 .font(TypographyTokens.display(40))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .foregroundStyle(ColorTokens.Brand.primary)
             Text(String(localized: "offline.minigame.congrats.great"))
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Kid.ink)
