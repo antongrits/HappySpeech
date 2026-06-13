@@ -24,9 +24,9 @@ private final class MockVariationGenerator: ContentVariationGenerating, @uncheck
     }
 
     func generateActivities(for sound: String) async -> [GeneratedActivity] {
-        lock.lock()
-        callsBySound[sound, default: 0] += 1
-        lock.unlock()
+        lock.withLock {
+            callsBySound[sound, default: 0] += 1
+        }
         return activitiesBySound[sound] ?? []
     }
 }
