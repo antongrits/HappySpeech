@@ -186,10 +186,11 @@ final class SoundTrafficLightInteractor: SoundTrafficLightBusinessLogic, SoundTr
         let isFinished = currentIndex >= texts.count
         let nextText = isFinished ? nil : texts[currentIndex]
 
-        var nextLevel: DifferentiationLevel?
         var pairCompleted = false
         if isFinished {
-            nextLevel = commitSessionResult(total: texts.count)
+            // .text — финальный уровень дифференциации: следующего уровня нет,
+            // commitSessionResult вызывается ради фиксации результата сессии.
+            _ = commitSessionResult(total: texts.count)
             if let pair, level == .text {
                 pairCompleted = progressStore
                     .progress(childId: childId, pairId: pair.id).isPairCompleted

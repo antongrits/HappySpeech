@@ -105,16 +105,19 @@ public actor LiveAcousticMirrorService: AcousticMirrorServicing {
             throw AppError.audioFormatUnsupported
         }
 
-        var consumed = false
+        // AVAudioConverterInputBlock — @Sendable, но вызывается синхронно на этом
+        // же потоке до возврата из convert(); состояние подачи (флаг + non-Sendable
+        // буфер) безопасно держать в @unchecked Sendable-боксе.
+        let feed = ConverterSingleShotFeed(buffer: sourceBuffer)
         var conversionError: NSError?
         converter.convert(to: targetBuffer, error: &conversionError) { _, status in
-            if consumed {
+            if feed.consumed {
                 status.pointee = .endOfStream
                 return nil
             }
-            consumed = true
+            feed.consumed = true
             status.pointee = .haveData
-            return sourceBuffer
+            return feed.buffer
         }
         if let conversionError {
             throw AppError.audioRecordingFailed(conversionError.localizedDescription)
@@ -124,6 +127,20 @@ public actor LiveAcousticMirrorService: AcousticMirrorServicing {
         }
         return Array(UnsafeBufferPointer(start: channel, count: Int(targetBuffer.frameLength)))
     }
+}
+
+// MARK: - ConverterSingleShotFeed
+
+/// Состояние одноразовой подачи для `AVAudioConverterInputBlock`.
+///
+/// Блок ввода конвертера помечен `@Sendable`, но фактически вызывается
+/// синхронно на вызывающем потоке до возврата из `convert(to:error:)` —
+/// реальной конкурентности нет. Бокс позволяет держать изменяемый флаг и
+/// non-Sendable `AVAudioPCMBuffer` без предупреждений Swift 6 concurrency.
+private final class ConverterSingleShotFeed: @unchecked Sendable {
+    var consumed = false
+    let buffer: AVAudioPCMBuffer
+    init(buffer: AVAudioPCMBuffer) { self.buffer = buffer }
 }
 
 // MARK: - MockAcousticMirrorService
