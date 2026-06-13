@@ -88,9 +88,8 @@ struct CoPlayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
-                    .blendMode(.softLight)
                     .accessibilityHidden(true)
 
                 if holder.isFinished, let summary = holder.summary {
@@ -232,8 +231,8 @@ struct CoPlayView: View {
             .padding(.vertical, SpacingTokens.sp2)
             .background(
                 Capsule().fill(turn.role == .adult
-                    ? ColorTokens.Brand.sky
-                    : ColorTokens.Brand.mint)
+                    ? ColorTokens.Brand.lilac
+                    : ColorTokens.Brand.primary)
             )
             .accessibilityLabel(Text(turn.roleLabel))
 
@@ -262,8 +261,8 @@ struct CoPlayView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .strokeBorder(
                         turn.role == .adult
-                            ? ColorTokens.Brand.sky
-                            : ColorTokens.Brand.mint,
+                            ? ColorTokens.Brand.lilac
+                            : ColorTokens.Brand.primary,
                         lineWidth: 3
                     )
             )

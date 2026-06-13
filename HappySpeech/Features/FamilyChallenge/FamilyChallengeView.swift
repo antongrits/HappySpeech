@@ -62,11 +62,14 @@ struct FamilyChallengeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                ZStack {
+                    ColorTokens.Kid.bg
+                    HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                }
+                .ignoresSafeArea()
                 content
             }
-            .navigationTitle(Text("Челлендж недели"))
+            .navigationTitle(Text("family.challenge.nav.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
@@ -109,6 +112,8 @@ struct FamilyChallengeView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp4)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
             .overlay(alignment: .top) { toastOverlay() }
         } else {
             ProgressView().controlSize(.large)
@@ -174,8 +179,8 @@ struct FamilyChallengeView: View {
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text("Прогресс: \(vm.progressLabel)"))
-            .accessibilityValue(Text("\(Int((vm.progressFraction * 100).rounded())) процентов"))
+            .accessibilityLabel(Text(String(format: String(localized: "family.challenge.progress.a11y"), vm.progressLabel)))
+            .accessibilityValue(Text(String(format: String(localized: "family.challenge.progress.percent.a11y"), Int((vm.progressFraction * 100).rounded()))))
         }
         .padding(.vertical, SpacingTokens.sp2)
     }
@@ -253,7 +258,7 @@ struct FamilyChallengeView: View {
     }
 
     private func miniProgressBar(fraction: Double, isChild: Bool) -> some View {
-        let tint = isChild ? ColorTokens.Brand.primary : ColorTokens.Brand.sky
+        let tint = isChild ? ColorTokens.Brand.primary : ColorTokens.Brand.lilac
         return GeometryReader { proxy in
             ZStack(alignment: .leading) {
                 RoundedRectangle(cornerRadius: 4)
@@ -299,7 +304,7 @@ struct FamilyChallengeView: View {
             ) {
                 Task { await shareTapped() }
             }
-            .accessibilityHint(Text("Открыть системное окно поделиться прогрессом"))
+            .accessibilityHint(Text("family.challenge.share.hint"))
 
             if vm.canManage {
                 HSButton(
@@ -310,7 +315,7 @@ struct FamilyChallengeView: View {
                 ) {
                     Task { await claimTapped() }
                 }
-                .accessibilityHint(Text("Сменить тип челленджа на следующую неделю"))
+                .accessibilityHint(Text("family.challenge.change.hint"))
             }
         }
     }
@@ -327,7 +332,7 @@ struct FamilyChallengeView: View {
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
             }
-            .accessibilityLabel(Text("Закрыть"))
+            .accessibilityLabel(Text("action.close"))
         }
     }
 

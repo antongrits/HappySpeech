@@ -291,8 +291,28 @@ struct MethodologyAssistantView: View {
                         citationRow(citation)
                     }
                 }
+
+                disclaimerRow
             }
         }
+    }
+
+    /// Честная подпись: педагогические рекомендации, не мед-консультация (COPPA / §11).
+    private var disclaimerRow: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.tiny) {
+            Image(systemName: "info.circle")
+                .font(.system(size: 12))
+                .foregroundStyle(mutedColor)
+                .padding(.top, 1)
+                .accessibilityHidden(true)
+            Text(String(localized: "methodologyAssistant.disclaimer"))
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(mutedColor)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.top, SpacingTokens.tiny)
+        .accessibilityElement(children: .combine)
     }
 
     private func citationRow(_ citation: MethodologyCitation) -> some View {

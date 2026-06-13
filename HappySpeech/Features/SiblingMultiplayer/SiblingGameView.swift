@@ -31,11 +31,12 @@ struct SiblingGameView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bgDeep.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 headerBar
-                    .frame(height: 52)
+                    .frame(height: 56)
 
                 Spacer(minLength: 0)
 
@@ -81,19 +82,27 @@ struct SiblingGameView: View {
     // MARK: - HeaderBar
 
     private var headerBar: some View {
-        HStack {
-            Text(display.roundLabel)
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .accessibilityHidden(true)
+        HStack(spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.micro) {
+                Circle()
+                    .fill(ColorTokens.Brand.rose)
+                    .frame(width: 7, height: 7)
+                    .accessibilityHidden(true)
+                Text(display.roundLabel)
+                    .font(TypographyTokens.headline(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .accessibilityHidden(true)
 
-            Spacer()
+            Spacer(minLength: 0)
 
             Text("\(display.localDisplayName) \(display.ourScore) — \(display.peerScore) \(display.peerDisplayName)")
                 .font(TypographyTokens.mono(13))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(0.75)
+                .minimumScaleFactor(0.7)
                 .accessibilityLabel(
                     String(
                         format: String(localized: "sibling.a11y.score_format"),
@@ -104,13 +113,13 @@ struct SiblingGameView: View {
                     )
                 )
 
-            Spacer()
+            Spacer(minLength: 0)
 
             Button {
                 showExitAlert = true
             } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .font(TypographyTokens.body(20))
+                    .font(TypographyTokens.body(22))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .frame(width: 44, height: 44)
                     .contentShape(Rectangle())
@@ -118,7 +127,7 @@ struct SiblingGameView: View {
             .accessibilityLabel(String(localized: "sibling.game.exit"))
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-        .background(ColorTokens.Kid.surface.opacity(0.95))
+        .background(.ultraThinMaterial)
     }
 
     // MARK: - TargetWord
@@ -144,17 +153,6 @@ struct SiblingGameView: View {
                             reduceMotion ? nil : MotionTokens.outQuick,
                             value: display.currentWord
                         )
-
-                    Button {
-                    } label: {
-                        Label(
-                            String(localized: "sibling.game.instruction"),
-                            systemImage: "speaker.wave.2.fill"
-                        )
-                        .font(TypographyTokens.caption(13))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                    }
-                    .accessibilityLabel("Послушать как произносит Ляля")
                 }
                 .padding(SpacingTokens.sp4)
             }
@@ -241,7 +239,7 @@ struct SiblingGameView: View {
                 name: display.peerDisplayName,
                 result: display.peerRoundResult,
                 points: display.peerScore,
-                barColor: ColorTokens.Brand.sky,
+                barColor: ColorTokens.Brand.lilac,
                 a11yLabel: "\(display.peerDisplayName): \(Int(display.peerRoundResult * 100)) процентов"
             )
         }
@@ -336,7 +334,8 @@ struct SiblingGameView: View {
 
     private var endGameOverlay: some View {
         ZStack {
-            ColorTokens.Kid.bgDeep.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
 
             VStack(spacing: SpacingTokens.sp5) {
                 Spacer()

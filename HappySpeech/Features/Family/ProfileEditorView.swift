@@ -59,10 +59,15 @@ struct ProfileEditorView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                ZStack {
+                    ColorTokens.Parent.bg
+                    HSMeshGradientBackground(palette: .calm, animated: false)
+                        .accessibilityHidden(true)
+                }
+                .ignoresSafeArea()
 
                 if viewModel.isLoading {
-                    ProgressView()
+                    HSLoadingView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     content
@@ -85,9 +90,13 @@ struct ProfileEditorView: View {
 
     private var content: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: SpacingTokens.sectionGap) {
+            VStack(spacing: SpacingTokens.sp5) {
                 // Avatar preview
                 avatarPreviewSection
+
+                if let message = viewModel.errorMessage {
+                    errorBanner(message)
+                }
 
                 // Avatar gallery
                 avatarPickerSection
@@ -110,6 +119,32 @@ struct ProfileEditorView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.sp8)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.sp2)
+    }
+
+    private func errorBanner(_ message: String) -> some View {
+        HStack(alignment: .top, spacing: SpacingTokens.sp2) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(ColorTokens.Semantic.error)
+                .accessibilityHidden(true)
+            Text(message)
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.leading)
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.sp3)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(ColorTokens.Semantic.errorBg)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(message)
     }
 
     // MARK: - Avatar Preview

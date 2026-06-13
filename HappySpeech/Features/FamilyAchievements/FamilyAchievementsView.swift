@@ -76,9 +76,14 @@ struct FamilyAchievementsView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
             .background(
-                HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                ZStack {
+                    ColorTokens.Kid.bg
+                    HSMeshGradientBackground(palette: .rewards, animated: false)
+                }
+                .ignoresSafeArea()
             )
             .navigationTitle(Text("family.achievements.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -427,7 +432,7 @@ struct FamilyAchievementsView: View {
                 summaryStatCard(
                     label: summary.totalMasteredSoundsLabel,
                     iconName: "waveform.path",
-                    color: ColorTokens.Brand.sky
+                    color: ColorTokens.Brand.lilac
                 )
                 summaryStatCard(
                     label: String(

@@ -5,7 +5,8 @@ import SwiftUI
 // MARK: - SiblingDiscoveryView
 //
 // Экран 1: поиск партнёра через MultipeerConnectivity.
-// Контур: kid. Показывает анимацию-радар и список найденных пиров.
+// Контур: kid. Тёплый кремовый фон, радар-поиск, список найденных устройств
+// в стиле эталона multiplayer-lobby (состояние «Поиск друзей»).
 
 struct SiblingDiscoveryView: View {
 
@@ -24,22 +25,27 @@ struct SiblingDiscoveryView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp5) {
+                    statusChip
+
                     radarSection
 
-                    mascotSection
+                    mascotCheer
 
-                    peersSection
+                    foundSection
 
-                    cancelButton
+                    networkHint
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp6)
-                .padding(.bottom, SpacingTokens.sp8)
+                .padding(.top, SpacingTokens.sp4)
+                .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaInset(edge: .bottom) { footer }
 
             if let errorMsg = viewModel.permissionError {
                 permissionToast(message: errorMsg)
@@ -51,94 +57,195 @@ struct SiblingDiscoveryView: View {
         .onDisappear { interactor?.stopDiscovery() }
     }
 
+    // MARK: - Status chip
+
+    private var statusChip: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            statusDot
+
+            Text(String(localized: "sibling.discovery.chip_searching"))
+                .font(TypographyTokens.headline(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+
+            Spacer(minLength: 0)
+
+            Text(String(localized: "sibling.discovery.subtitle"))
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .padding(.horizontal, SpacingTokens.sp4)
+        .padding(.vertical, SpacingTokens.sp3)
+        .background(
+            Capsule().fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            Capsule().strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+        )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(localized: "sibling.discovery.chip_searching"))
+    }
+
+    private var statusDot: some View {
+        Circle()
+            .fill(ColorTokens.Brand.butter)
+            .frame(width: 9, height: 9)
+            .overlay(
+                Circle()
+                    .stroke(ColorTokens.Brand.butter.opacity(0.4), lineWidth: 2)
+                    .scaleEffect(viewModel.animateIn && !reduceMotion ? 2.0 : 1.0)
+                    .opacity(viewModel.animateIn && !reduceMotion ? 0 : 1)
+                    .animation(
+                        reduceMotion ? nil : .easeOut(duration: 1.6).repeatForever(autoreverses: false),
+                        value: viewModel.animateIn
+                    )
+            )
+            .accessibilityHidden(true)
+    }
+
     // MARK: - Radar
 
     private var radarSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
+        ZStack {
             if reduceMotion {
                 Image(systemName: "antenna.radiowaves.left.and.right")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 80, height: 80)
-                    .foregroundStyle(ColorTokens.Brand.sky)
+                    .frame(width: 72, height: 72)
+                    .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
             } else {
                 RadarAnimation()
-                    .frame(width: 160, height: 160)
+                    .frame(width: 200, height: 200)
                     .accessibilityHidden(true)
             }
 
-            Text(String(localized: "sibling.discovery.searching"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .opacity(viewModel.peers.isEmpty ? 1.0 : 0.0)
+            LyalyaMascotView(
+                state: viewModel.peers.isEmpty ? .thinking : .waving,
+                size: 76
+            )
+            .accessibilityHidden(true)
         }
+        .frame(height: 206)
+        .frame(maxWidth: .infinity)
     }
 
-    // MARK: - Mascot
+    // MARK: - Mascot cheer bubble
 
-    private var mascotSection: some View {
-        LyalyaMascotView(
-            state: viewModel.peers.isEmpty ? .thinking : .encouraging,
-            size: 80
-        )
-        .frame(maxWidth: .infinity, alignment: .center)
-        .accessibilityHidden(true)
+    private var mascotCheer: some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            Text(String(localized: "sibling.discovery.cheer_title"))
+                .font(TypographyTokens.headline(17))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+
+            Text(String(localized: "sibling.discovery.cheer_sub"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
     }
 
-    // MARK: - Peers list
+    // MARK: - Found devices
 
-    private var peersSection: some View {
-        Group {
+    private var foundSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            HStack {
+                Text(String(localized: "sibling.discovery.found_title"))
+                    .font(TypographyTokens.headline(17))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .accessibilityAddTraits(.isHeader)
+
+                Spacer()
+
+                if !viewModel.peers.isEmpty {
+                    countPill(viewModel.peers.count)
+                }
+            }
+
             if viewModel.peers.isEmpty {
                 emptyState
             } else {
-                LazyVStack(spacing: SpacingTokens.sp3) {
+                LazyVStack(spacing: SpacingTokens.listGap) {
                     ForEach(Array(viewModel.peers.enumerated()), id: \.element.id) { index, peer in
-                        peerCell(peer: peer, index: index)
+                        deviceRow(peer: peer, index: index)
                     }
                 }
             }
         }
     }
 
-    private func peerCell(peer: SiblingPeerViewModel, index: Int) -> some View {
-        Button {
-            interactor?.invitePeer(displayName: peer.displayName)
-        } label: {
-            HSLiquidGlassCard(style: .elevated, padding: 0) {
-                HStack(spacing: SpacingTokens.sp3) {
-                    avatarCircle(name: peer.displayName, size: 44)
+    private func countPill(_ count: Int) -> some View {
+        Text(String.localizedStringWithFormat(String(localized: "sibling.discovery.found_count"), count))
+            .font(TypographyTokens.headline(13))
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.sp1)
+            .background(
+                Capsule().fill(ColorTokens.Brand.primaryLo.opacity(0.5))
+            )
+            .accessibilityHidden(true)
+    }
 
+    private func deviceRow(peer: SiblingPeerViewModel, index: Int) -> some View {
+        HSCard(padding: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.sp3) {
+                avatarCircle(name: peer.displayName, size: 44)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(peer.displayName)
-                        .font(TypographyTokens.headline(18))
+                        .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
 
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(TypographyTokens.caption(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .accessibilityHidden(true)
+                    HStack(spacing: SpacingTokens.micro) {
+                        Circle()
+                            .fill(ColorTokens.Brand.mint)
+                            .frame(width: 6, height: 6)
+                        Text(String(localized: "sibling.discovery.device_ready"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
                 }
-                .padding(.horizontal, SpacingTokens.sp4)
-                .padding(.vertical, SpacingTokens.sp3)
-                .frame(maxWidth: .infinity, minHeight: 72)
+
+                Spacer(minLength: SpacingTokens.sp2)
+
+                Button {
+                    interactor?.invitePeer(displayName: peer.displayName)
+                } label: {
+                    Text(String(localized: "sibling.discovery.invite"))
+                        .font(TypographyTokens.headline(14))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .padding(.horizontal, SpacingTokens.sp4)
+                        .padding(.vertical, SpacingTokens.sp2)
+                        .background(
+                            Capsule().fill(ColorTokens.Brand.primary)
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(
+                    "\(String(localized: "sibling.discovery.invite")), \(peer.displayName)"
+                )
+                .accessibilityHint(String(localized: "sibling.a11y.invite_hint"))
             }
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(
-            String("\(peer.displayName), \(String(localized: "sibling.discovery.searching"))")
-        )
-        .accessibilityHint(String(localized: "sibling.discovery.searching"))
-        .scaleEffect(viewModel.animateIn ? 1.0 : 0.95)
+        .scaleEffect(viewModel.animateIn ? 1.0 : 0.96)
         .opacity(viewModel.animateIn ? 1.0 : 0.0)
         .animation(
             reduceMotion
                 ? .easeIn(duration: 0.15)
-                : MotionTokens.outQuick.delay(Double(index) * 0.05),
+                : MotionTokens.outQuick.delay(Double(index) * 0.06),
             value: viewModel.animateIn
         )
     }
@@ -146,27 +253,63 @@ struct SiblingDiscoveryView: View {
     // MARK: - Empty state
 
     private var emptyState: some View {
-        VStack(spacing: SpacingTokens.sp6) {
-            Image(systemName: "person.2.slash")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
+        HSCard {
+            VStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "person.2.wave.2")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 44, height: 44)
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .accessibilityHidden(true)
 
-            Text(String(localized: "sibling.discovery.empty"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
+                Text(String(localized: "sibling.discovery.empty"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp4)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp6)
+        .accessibilityElement(children: .combine)
         .accessibilityLabel(String(localized: "sibling.discovery.empty"))
     }
 
-    // MARK: - Cancel button
+    // MARK: - Network hint
 
-    private var cancelButton: some View {
+    private var networkHint: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Image(systemName: "wifi")
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Brand.lilac)
+                .accessibilityHidden(true)
+
+            Text(String(localized: "sibling.discovery.network_hint"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, SpacingTokens.sp4)
+        .padding(.vertical, SpacingTokens.sp3)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Kid.bgSoft)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "sibling.discovery.network_hint"))
+    }
+
+    // MARK: - Footer
+
+    private var footer: some View {
         HSButton(
             String(localized: "sibling.discovery.cancel"),
             style: .ghost
@@ -174,6 +317,8 @@ struct SiblingDiscoveryView: View {
             interactor?.cancelDiscovery()
         }
         .frame(maxWidth: .infinity, minHeight: 56)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.sp3)
         .accessibilityLabel(String(localized: "sibling.discovery.cancel"))
     }
 
@@ -183,8 +328,8 @@ struct SiblingDiscoveryView: View {
         VStack {
             Spacer()
             HSToast(message, type: .error)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.sp4)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.sp4)
         }
     }
 
@@ -194,10 +339,10 @@ struct SiblingDiscoveryView: View {
         let color = colorForName(name)
         return ZStack {
             Circle()
-                .fill(color.opacity(0.25))
+                .fill(color.opacity(0.22))
                 .frame(width: size, height: size)
             Text(String(name.prefix(1)).uppercased())
-                .font(TypographyTokens.headline(size * 0.4))
+                .font(TypographyTokens.headline(size * 0.42))
                 .foregroundStyle(color)
         }
         .accessibilityHidden(true)
@@ -206,10 +351,10 @@ struct SiblingDiscoveryView: View {
     private func colorForName(_ name: String) -> Color {
         let colors: [Color] = [
             ColorTokens.Brand.primary,
-            ColorTokens.Brand.sky,
-            ColorTokens.Brand.mint,
-            ColorTokens.Brand.butter,
-            ColorTokens.Brand.lilac
+            ColorTokens.Brand.rose,
+            ColorTokens.Brand.lilac,
+            ColorTokens.Brand.gold,
+            ColorTokens.Brand.sky
         ]
         let index = abs(name.hashValue) % colors.count
         return colors[index]
@@ -274,48 +419,58 @@ private struct RadarAnimation: View {
 
     var body: some View {
         ZStack {
-            radarRing(scale: scale3, opacity: opacity3)
+            staticRing(120)
+            staticRing(180)
+
+            radarPulse(scale: scale3, opacity: opacity3)
                 .onAppear {
                     withAnimation(
-                        .easeOut(duration: 2.0).repeatForever(autoreverses: false).delay(0.6)
+                        .easeOut(duration: 2.6).repeatForever(autoreverses: false).delay(1.8)
                     ) {
-                        scale3 = 1.0
+                        scale3 = 3.0
                         opacity3 = 0.0
                     }
                 }
-            radarRing(scale: scale2, opacity: opacity2)
+            radarPulse(scale: scale2, opacity: opacity2)
                 .onAppear {
                     withAnimation(
-                        .easeOut(duration: 2.0).repeatForever(autoreverses: false).delay(0.3)
+                        .easeOut(duration: 2.6).repeatForever(autoreverses: false).delay(0.9)
                     ) {
-                        scale2 = 1.0
+                        scale2 = 3.0
                         opacity2 = 0.0
                     }
                 }
-            radarRing(scale: scale1, opacity: opacity1)
+            radarPulse(scale: scale1, opacity: opacity1)
                 .onAppear {
                     withAnimation(
-                        .easeOut(duration: 2.0).repeatForever(autoreverses: false)
+                        .easeOut(duration: 2.6).repeatForever(autoreverses: false)
                     ) {
-                        scale1 = 1.0
+                        scale1 = 3.0
                         opacity1 = 0.0
                     }
                 }
-
-            Image(systemName: "antenna.radiowaves.left.and.right")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 48, height: 48)
-                .foregroundStyle(ColorTokens.Brand.sky)
         }
     }
 
-    private func radarRing(scale: CGFloat, opacity: Double) -> some View {
+    private func staticRing(_ size: CGFloat) -> some View {
         Circle()
-            .stroke(ColorTokens.Brand.sky, lineWidth: 2)
+            .stroke(ColorTokens.Brand.primary.opacity(0.30), lineWidth: 1.5)
+            .frame(width: size, height: size)
+    }
+
+    private func radarPulse(scale: CGFloat, opacity: Double) -> some View {
+        Circle()
+            .fill(
+                RadialGradient(
+                    colors: [ColorTokens.Brand.primary.opacity(0.25), .clear],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: 30
+                )
+            )
+            .frame(width: 60, height: 60)
             .scaleEffect(scale)
             .opacity(opacity)
-            .frame(width: 140, height: 140)
     }
 }
 
@@ -327,4 +482,13 @@ private struct RadarAnimation: View {
     }
     .environment(AppCoordinator())
     .environment(AppContainer.preview())
+}
+
+#Preview("Discovery — Dark") {
+    NavigationStack {
+        SiblingDiscoveryView(childId: "preview-child-1")
+    }
+    .environment(AppCoordinator())
+    .environment(AppContainer.preview())
+    .preferredColorScheme(.dark)
 }

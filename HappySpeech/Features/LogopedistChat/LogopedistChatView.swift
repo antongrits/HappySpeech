@@ -230,20 +230,25 @@ struct LogopedistChatView: View {
                     String(localized: "chat.connect.codePlaceholder"),
                     text: $connectCode
                 )
-                .font(TypographyTokens.headline(18))
+                .font(TypographyTokens.mono(26).weight(.bold))
+                .tracking(8)
                 .multilineTextAlignment(.center)
                 .textInputAutocapitalization(.characters)
                 .autocorrectionDisabled(true)
+                .keyboardType(.asciiCapable)
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .padding(.vertical, SpacingTokens.sp3)
+                .padding(.vertical, SpacingTokens.sp4)
                 .frame(maxWidth: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(ColorTokens.Parent.bgDeep)
+                        .fill(ColorTokens.Parent.surface)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+                        .strokeBorder(
+                            ColorTokens.Brand.primary.opacity(0.5),
+                            style: StrokeStyle(lineWidth: 1.5, dash: [7, 5])
+                        )
                 )
                 .onChange(of: connectCode) { _, newValue in
                     let filtered = newValue.uppercased().filter { $0.isLetter || $0.isNumber }
@@ -496,18 +501,28 @@ struct LogopedistChatView: View {
                     )
                     .lineLimit(nil)
                     .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, SpacingTokens.sp3)
                     .padding(.vertical, SpacingTokens.sp2)
                     .background(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        bubbleShape(isFromParent: message.isFromParent)
                             .fill(
                                 message.isFromParent
-                                    ? ColorTokens.Parent.accent
-                                    : ColorTokens.Parent.surface
+                                    ? AnyShapeStyle(
+                                        LinearGradient(
+                                            colors: [
+                                                ColorTokens.Parent.accent,
+                                                ColorTokens.Parent.accent.opacity(0.88)
+                                            ],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                      )
+                                    : AnyShapeStyle(ColorTokens.Parent.surface)
                             )
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        bubbleShape(isFromParent: message.isFromParent)
                             .strokeBorder(
                                 message.isFromParent
                                     ? Color.clear
@@ -539,6 +554,18 @@ struct LogopedistChatView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(message.accessibilityLabel))
+    }
+
+    /// Асимметричная форма пузыря: «хвостик» к своему краю (iMessage-стиль).
+    /// Свои (parent) — правый-низ скошен; входящие (specialist) — левый-низ.
+    private func bubbleShape(isFromParent: Bool) -> UnevenRoundedRectangle {
+        UnevenRoundedRectangle(
+            topLeadingRadius: 18,
+            bottomLeadingRadius: isFromParent ? 18 : 5,
+            bottomTrailingRadius: isFromParent ? 5 : 18,
+            topTrailingRadius: 18,
+            style: .continuous
+        )
     }
 
     @ViewBuilder

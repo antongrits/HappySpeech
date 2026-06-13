@@ -16,6 +16,13 @@ private struct ProfileEditorTarget: Identifiable {
     let id: String
 }
 
+/// Обёртка локализованного сообщения об ошибке из Presenter в `LocalizedError`,
+/// чтобы переиспользовать `HSErrorStateView(error:onRetry:)`.
+private struct FamilyHomeDisplayError: LocalizedError {
+    let message: String
+    var errorDescription: String? { message }
+}
+
 struct FamilyHomeView: View {
 
     // MARK: - Environment
@@ -61,17 +68,27 @@ struct FamilyHomeView: View {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
                     greetingSection
-                    childrenGrid
-                    actionButtons
+
+                    if viewModel.isLoading && viewModel.children.isEmpty {
+                        loadingState
+                    } else if let message = viewModel.errorMessage, viewModel.children.isEmpty {
+                        errorState(message)
+                    } else if viewModel.children.isEmpty {
+                        emptyState
+                    } else {
+                        familySummarySection
+                        childrenSection
+                        actionsSection
+                    }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp8)
             }
+            .scrollBounceBehavior(.basedOnSize)
             .background(
                 ZStack {
                     ColorTokens.Parent.bg
-                    HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                        .blendMode(.softLight)
+                    HSMeshGradientBackground(palette: .calm, animated: false)
                         .accessibilityHidden(true)
                 }
                 .ignoresSafeArea()
@@ -99,13 +116,23 @@ struct FamilyHomeView: View {
 
     private var greetingSection: some View {
         HStack(alignment: .center, spacing: SpacingTokens.sp3) {
-            Text(viewModel.greeting)
-                .font(TypographyTokens.headline(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .multilineTextAlignment(.leading)
-                .accessibilityAddTraits(.isHeader)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(viewModel.greeting)
+                    .font(TypographyTokens.headline(24))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.leading)
+                    .accessibilityAddTraits(.isHeader)
+
+                if !viewModel.children.isEmpty {
+                    Text(familySubtitle)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+            }
             Spacer(minLength: SpacingTokens.sp1)
             // F.tier1 v21: mascot мягче в dark.
             LyalyaMascotView(state: .waving, size: 60)
@@ -113,6 +140,130 @@ struct FamilyHomeView: View {
                 .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)
+    }
+
+    private var familySubtitle: String {
+        let count = viewModel.children.count
+        if count == 1 {
+            return String(localized: "family.home.subtitle.one_child")
+        }
+        return String(format: String(localized: "family.home.subtitle.many"), count)
+    }
+
+    // MARK: - Family Summary
+    //
+    // Сводка строится ИСКЛЮЧИТЕЛЬНО из реальных данных детей (viewModel.children):
+    // число профилей, лучшая активная серия дней, средний прогресс. Никаких
+    // фабрикаций — все три значения вычисляются из загруженных ChildSummary.
+
+    private var familySummarySection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionTitle(
+                String(localized: "family.home.summary.title"),
+                note: String(localized: "family.home.summary.note")
+            )
+
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                HStack(spacing: 0) {
+                    summaryStat(
+                        value: "\(viewModel.children.count)",
+                        label: String(localized: "family.home.summary.children"),
+                        icon: "person.2.fill",
+                        tint: ColorTokens.Brand.lilac
+                    )
+                    summaryDivider
+                    summaryStat(
+                        value: "\(bestStreak)",
+                        label: String(localized: "family.home.summary.best_streak"),
+                        icon: "flame.fill",
+                        tint: ColorTokens.Brand.primary
+                    )
+                    summaryDivider
+                    summaryStat(
+                        value: "\(averageProgressPercent)%",
+                        label: String(localized: "family.home.summary.avg_progress"),
+                        icon: "chart.line.uptrend.xyaxis",
+                        tint: ColorTokens.Brand.gold
+                    )
+                }
+            }
+        }
+    }
+
+    private var bestStreak: Int {
+        viewModel.children.map(\.currentStreak).max() ?? 0
+    }
+
+    private var averageProgressPercent: Int {
+        guard !viewModel.children.isEmpty else { return 0 }
+        let avg = viewModel.children.map(\.overallProgress).reduce(0, +) / Double(viewModel.children.count)
+        return Int((avg * 100).rounded())
+    }
+
+    private func summaryStat(value: String, label: String, icon: String, tint: Color) -> some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            ZStack {
+                RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                    .fill(tint.opacity(0.16))
+                    .frame(width: 34, height: 34)
+                Image(systemName: icon)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(tint)
+            }
+            .accessibilityHidden(true)
+
+            Text(value)
+                .font(TypographyTokens.headline(22).monospacedDigit())
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+
+            Text(label)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(value), \(label.replacingOccurrences(of: "\n", with: " "))")
+    }
+
+    private var summaryDivider: some View {
+        RoundedRectangle(cornerRadius: 1)
+            .fill(ColorTokens.Parent.line)
+            .frame(width: 1, height: 56)
+            .accessibilityHidden(true)
+    }
+
+    // MARK: - Section title helper
+
+    private func sectionTitle(_ title: String, note: String? = nil) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp2) {
+            Text(title)
+                .font(TypographyTokens.headline(19))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+            Spacer(minLength: SpacingTokens.sp1)
+            if let note {
+                Text(note)
+                    .font(TypographyTokens.caption(12).weight(.medium))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+        }
+        .padding(.horizontal, SpacingTokens.micro)
+    }
+
+    private var childrenSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionTitle(String(localized: "family.home.section.children"))
+            childrenGrid
+        }
     }
 
     private var childrenGrid: some View {
@@ -154,6 +305,13 @@ struct FamilyHomeView: View {
             AddChildCard {
                 coordinator.navigate(to: .onboarding)
             }
+        }
+    }
+
+    private var actionsSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionTitle(String(localized: "family.home.section.actions"))
+            actionButtons
         }
     }
 
@@ -277,6 +435,33 @@ struct FamilyHomeView: View {
         }
     }
 
+    // MARK: - States
+
+    private var loadingState: some View {
+        HSLoadingView(message: String(localized: "family.home.loading"))
+            .frame(maxWidth: .infinity, minHeight: 360)
+            .accessibilityLabel(String(localized: "family.home.loading"))
+    }
+
+    private var emptyState: some View {
+        HSEmptyStateView(
+            warmPanel: .waving,
+            title: String(localized: "family.home.empty.title"),
+            subtitle: String(localized: "family.home.empty.message"),
+            actionTitle: String(localized: "family.home.empty.action")
+        ) {
+            coordinator.navigate(to: .onboarding)
+        }
+        .frame(maxWidth: .infinity, minHeight: 360)
+    }
+
+    private func errorState(_ message: String) -> some View {
+        HSErrorStateView(error: FamilyHomeDisplayError(message: message)) {
+            Task { await refresh() }
+        }
+        .frame(maxWidth: .infinity, minHeight: 360)
+    }
+
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
@@ -348,7 +533,7 @@ private struct ChildCardView: View {
     var body: some View {
         HSLiquidGlassCard(style: .tinted(themeColor), padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                // Avatar (S12: с matchedGeometryEffect если namespace передан)
+                // Avatar + streak chip (S12: matchedGeometryEffect если namespace передан)
                 avatarSection
 
                 // Name + age
@@ -363,26 +548,17 @@ private struct ChildCardView: View {
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
 
-                // Progress bar
+                Spacer(minLength: 0)
+
+                // Progress bar + percent
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     HSProgressBar(value: child.overallProgress, style: .parent, tint: themeColor)
-                    Text("\(Int(child.overallProgress * 100))%")
+                    Text("\(Int((child.overallProgress * 100).rounded()))%")
                         .font(TypographyTokens.mono(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
-
-                // Streak
-                HStack(spacing: SpacingTokens.sp1) {
-                    Image(systemName: "flame.fill")
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .hsSymbolEffect(.pulse, value: child.currentStreak)
-                        .accessibilityHidden(true)
-                    Text("\(child.currentStreak) \(String(localized: "streak.days.short"))")
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                }
             }
+            .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
         }
         .scaleEffect(isPressed && !reduceMotion ? 0.96 : 1.0)
         .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7), value: isPressed)
@@ -392,7 +568,10 @@ private struct ChildCardView: View {
     private var avatarSection: some View {
         let baseCircle = ZStack {
             Circle()
-                .fill(themeColor.opacity(0.25))
+                .fill(themeColor.opacity(0.22))
+                .frame(width: 56, height: 56)
+            Circle()
+                .strokeBorder(themeColor.opacity(0.55), lineWidth: 2)
                 .frame(width: 56, height: 56)
             Image(avatarIllustration)
                 .resizable()
@@ -402,11 +581,40 @@ private struct ChildCardView: View {
                 .clipShape(Circle())
                 .accessibilityHidden(true)
         }
+
+        let circleWithBadge = baseCircle
+            .overlay(alignment: .bottomTrailing) {
+                if child.currentStreak > 0 {
+                    streakChip
+                        .offset(x: 4, y: 2)
+                }
+            }
+
         if let heroId = avatarHeroId, let ns = avatarNamespace {
-            baseCircle.matchedGeometryEffect(id: heroId, in: ns)
+            circleWithBadge.matchedGeometryEffect(id: heroId, in: ns)
         } else {
-            baseCircle
+            circleWithBadge
         }
+    }
+
+    private var streakChip: some View {
+        HStack(spacing: 2) {
+            Image(systemName: "flame.fill")
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.pulse, value: child.currentStreak)
+            Text("\(child.currentStreak)")
+                .font(TypographyTokens.caption(11).weight(.bold).monospacedDigit())
+                .foregroundStyle(ColorTokens.Parent.ink)
+        }
+        .padding(.horizontal, 6)
+        .padding(.vertical, 3)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+                .overlay(Capsule(style: .continuous).strokeBorder(ColorTokens.Parent.line, lineWidth: 1))
+        )
+        .accessibilityHidden(true)
     }
 }
 
@@ -424,21 +632,27 @@ private struct AddChildCard: View {
                         Circle()
                             .fill(ColorTokens.Brand.primary.opacity(0.12))
                             .frame(width: 56, height: 56)
+                        Circle()
+                            .strokeBorder(
+                                ColorTokens.Brand.primary.opacity(0.55),
+                                style: StrokeStyle(lineWidth: 2, dash: [4, 4])
+                            )
+                            .frame(width: 56, height: 56)
                         Image(systemName: "plus")
                             .font(TypographyTokens.headline(22))
                             .foregroundStyle(ColorTokens.Brand.primary)
                     }
 
                     Text(String(localized: "family.home.add_child"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .font(TypographyTokens.headline(14))
+                        .foregroundStyle(ColorTokens.Parent.ink)
                         .multilineTextAlignment(.center)
                         .lineLimit(2)
                         .minimumScaleFactor(0.85)
 
                     Spacer(minLength: 0)
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, minHeight: 150, alignment: .center)
             }
         }
         .accessibilityLabel(String(localized: "family.home.add_child"))

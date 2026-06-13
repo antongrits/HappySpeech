@@ -61,34 +61,7 @@ struct SiblingMultiplayerView: View {
                     }
                 )
             } else {
-                ZStack {
-                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                        .ignoresSafeArea()
-                        .blendMode(.softLight)
-                        .accessibilityHidden(true)
-                        .allowsHitTesting(false)
-                    HSLiquidGlassCard(style: .elevated) {
-                        VStack(spacing: SpacingTokens.medium) {
-                            LyalyaMascotView(state: .sad, size: 120)
-                                .accessibilityHidden(true)
-                            HStack(spacing: SpacingTokens.tiny) {
-                                Image(systemName: "wifi.exclamationmark")
-                                    .foregroundStyle(ColorTokens.Brand.rose)
-                                    .hsSymbolEffect(.bounce, value: true)
-                                    .accessibilityHidden(true)
-                                Text(String(localized: "sibling.error.connection"))
-                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                                    .lineLimit(nil)
-                                    .minimumScaleFactor(0.85)
-                                    .multilineTextAlignment(.center)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            .padding(.horizontal, SpacingTokens.regular)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                }
+                connectionErrorView
             }
 
         case .game(let peerDisplayName):
@@ -101,36 +74,42 @@ struct SiblingMultiplayerView: View {
                     localDisplayName: localDisplayName
                 )
             } else {
-                ZStack {
-                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                        .ignoresSafeArea()
-                        .blendMode(.softLight)
-                        .accessibilityHidden(true)
-                        .allowsHitTesting(false)
-                    HSLiquidGlassCard(style: .elevated) {
-                        VStack(spacing: SpacingTokens.medium) {
-                            LyalyaMascotView(state: .sad, size: 120)
-                                .accessibilityHidden(true)
-                            HStack(spacing: SpacingTokens.tiny) {
-                                Image(systemName: "wifi.exclamationmark")
-                                    .foregroundStyle(ColorTokens.Brand.rose)
-                                    .hsSymbolEffect(.bounce, value: true)
-                                    .accessibilityHidden(true)
-                                Text(String(localized: "sibling.error.connection"))
-                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                                    .lineLimit(nil)
-                                    .minimumScaleFactor(0.85)
-                                    .multilineTextAlignment(.center)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            .padding(.horizontal, SpacingTokens.regular)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                }
+                connectionErrorView
             }
         }
+    }
+
+    // MARK: - Connection error
+
+    private var connectionErrorView: some View {
+        ZStack {
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                .ignoresSafeArea()
+
+            HSLiquidGlassCard(style: .elevated) {
+                VStack(spacing: SpacingTokens.medium) {
+                    LyalyaMascotView(state: .sad, size: 120)
+                        .accessibilityHidden(true)
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "wifi.exclamationmark")
+                            .foregroundStyle(ColorTokens.Brand.rose)
+                            .hsSymbolEffect(.bounce, value: true)
+                            .accessibilityHidden(true)
+                        Text(String(localized: "sibling.error.connection"))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.horizontal, SpacingTokens.regular)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "sibling.error.connection"))
     }
 
     // MARK: - Navigation logic

@@ -191,12 +191,9 @@ struct CreateInviteView: View {
                     .font(TypographyTokens.caption(13).weight(.semibold))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .textCase(.uppercase)
-                Text(viewModel.shortCode ?? "")
-                    .font(TypographyTokens.mono(40).weight(.bold))
-                    .tracking(6)
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .multilineTextAlignment(.center)
+                codeBoxes(viewModel.shortCode ?? "")
+                    .accessibilityElement(children: .ignore)
                     .accessibilityLabel(codeAccessibilityLabel)
                 Text(viewModel.expiryText)
                     .font(TypographyTokens.body(14))
@@ -210,7 +207,16 @@ struct CreateInviteView: View {
             .padding(.horizontal, SpacingTokens.sp4)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Brand.butter.opacity(colorScheme == .dark ? 0.18 : 0.45))
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.22 : 0.40),
+                                ColorTokens.Brand.butter.opacity(colorScheme == .dark ? 0.16 : 0.32)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -273,6 +279,30 @@ struct CreateInviteView: View {
                 .fill(ColorTokens.Semantic.errorBg)
         )
         .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Code boxes
+
+    /// Код-приглашение в виде отдельных символов-плиток (как в дизайн-эталоне).
+    private func codeBoxes(_ code: String) -> some View {
+        let chars = Array(code)
+        return HStack(spacing: SpacingTokens.sp1) {
+            ForEach(Array(chars.enumerated()), id: \.offset) { _, ch in
+                Text(String(ch))
+                    .font(TypographyTokens.mono(26).weight(.bold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .frame(width: 40, height: 52)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(ColorTokens.Parent.surface)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .strokeBorder(ColorTokens.Brand.primaryLo, lineWidth: 1)
+                    )
+            }
+        }
+        .minimumScaleFactor(0.6)
     }
 
     // MARK: - Accessibility

@@ -56,14 +56,10 @@ struct SharePlayView: View {
                 .padding(.bottom, SpacingTokens.sp8)
             }
             .background(
-                ZStack {
-                    ColorTokens.Parent.bg
-                    HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
-                        .blendMode(.softLight)
-                        .accessibilityHidden(true)
-                        .allowsHitTesting(false)
-                }
-                .ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                    .ignoresSafeArea()
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
             )
             .navigationTitle(String(localized: "shareplay.title"))
             .navigationBarTitleDisplayMode(.large)
