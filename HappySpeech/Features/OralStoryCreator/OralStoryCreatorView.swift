@@ -69,7 +69,7 @@ struct OralStoryCreatorView: View {
                 // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра для
                 // тёплого «творческого» режима сочинения истории.
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)

@@ -284,16 +284,26 @@ private struct ParentDashboardTab: View {
 
     /// D-29 v27 — подпись профиля ребёнка: возраст + (опционально) звуки.
     /// Разделитель добавляется только когда `targetSoundsText` непустой.
+    /// Используется в accessibilityLabel карточки ребёнка.
     private var childSubtitleText: String {
         let age = String(localized: "\(viewModel.childAge) лет")
         let sounds = viewModel.targetSoundsText.trimmingCharacters(in: .whitespaces)
         return sounds.isEmpty ? age : "\(age) · \(sounds)"
     }
 
-    /// D-29 v27 — единый icon-badge для navigation-карточек дашборда:
-    /// SF Symbol в тонированном круге. Раньше иконки «висели» голым
-    /// 28pt-глифом — список карточек читался плоско и однообразно (как
-    /// системные Настройки). Круглый контейнер задаёт ритм и глубину.
+    /// Эталон — «Имя, N лет» в одну строку.
+    private var childNameAgeText: String {
+        "\(viewModel.childName), \(String(localized: "\(viewModel.childAge) лет"))"
+    }
+
+    /// Целевые звуки чипами (из `targetSoundsText` "Р, Ш"); пустые отброшены.
+    private var targetSoundChips: [String] {
+        viewModel.targetSoundsText.split(separator: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+    }
+
+    /// D-29 v27 — единый icon-badge для navigation-карточек: SF Symbol
+    /// в тонированном круге (задаёт ритм и глубину списку карточек).
     private func parentNavIcon(_ systemName: String, tint: Color) -> some View {
         ZStack {
             Circle()
@@ -309,10 +319,8 @@ private struct ParentDashboardTab: View {
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
-                // Fix #8 — sectionGap (32) на parent-dashboard выглядел
-                // воздушно-разреженным: 18 карточек разъезжались на
-                // ~600pt лишнего скролла. Сжато до `large` (24), карточки
-                // ближе друг к другу, дашборд читается сразу как структура.
+                // Fix #8 — sectionGap (32) выглядел разреженно; `large` (24)
+                // сводит карточки в читаемую структуру без лишнего скролла.
                 VStack(spacing: SpacingTokens.large) {
                     // Header
                     headerSection
@@ -342,6 +350,14 @@ private struct ParentDashboardTab: View {
                     // Streak & stats
                     statsRow
                         .hsScrollEffect(.scaleFade)
+
+                    // Эталон parenthome.png — недельная диаграмма + «Инсайт недели»
+                    // (реальные weekStats / weeklyInsight из Interactor).
+                    ParentWeeklyActivityCard(
+                        weekStats: viewModel.weekStats,
+                        insight: viewModel.weeklyInsight
+                    )
+                    .hsScrollEffect(.scaleFade)
 
                     // M6.16: Screening card (если скрининг пройден)
                     if let screening = viewModel.screeningCard {
@@ -517,19 +533,31 @@ private struct ParentDashboardTab: View {
                             .strokeBorder(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 1.5)
                     )
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(viewModel.childName)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    // Эталон parenthome.png — «Маша, 6 лет» одной строкой,
+                    // целевые звуки — коралловыми чипами под именем.
+                    Text(childNameAgeText)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
-                    // D-29 v27 — разделитель «·» показываем только при наличии
-                    // списка звуков, иначе на пустом профиле выводилось «0 лет · ».
-                    Text(childSubtitleText)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+
+                    if !targetSoundChips.isEmpty {
+                        HStack(spacing: SpacingTokens.micro) {
+                            ForEach(targetSoundChips, id: \.self) { sound in
+                                Text(String(localized: "Звук \(sound)"))
+                                    .font(TypographyTokens.caption(12).weight(.semibold))
+                                    .foregroundStyle(ColorTokens.Brand.primary)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.85)
+                                    .padding(.horizontal, SpacingTokens.sp2)
+                                    .padding(.vertical, 4)
+                                    .background(
+                                        Capsule().fill(ColorTokens.Brand.primary.opacity(0.14))
+                                    )
+                            }
+                        }
+                    }
                 }
 
                 Spacer(minLength: SpacingTokens.sp2)

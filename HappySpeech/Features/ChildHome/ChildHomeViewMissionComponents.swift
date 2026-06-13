@@ -20,11 +20,16 @@ struct ChildHomeDailyMissionDetailCard: View {
     var body: some View {
         Button(action: onTap) {
             HSLiquidGlassCard(style: .primary, padding: SpacingTokens.cardPad) {
-                VStack(spacing: SpacingTokens.sp4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                    tagRow
                     topRow
                     progressBlock
                     if mission.isCompleted {
                         completedRow
+                    } else {
+                        // Эталон childhome.png — заметный inline-CTA «Начать»
+                        // как фокус карточки задания дня (коралловый градиент).
+                        startCTA
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -38,13 +43,55 @@ struct ChildHomeDailyMissionDetailCard: View {
         .accessibilityIdentifier("childHomeDailyMissionCard")
     }
 
+    /// Тег-пилюля «Задание дня» в верхней части карточки (эталон).
+    private var tagRow: some View {
+        HStack(spacing: 0) {
+            Text(String(localized: "child.home.mission.tag"))
+                .font(TypographyTokens.caption(12).weight(.bold))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .textCase(.uppercase)
+                .tracking(0.5)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.sp3)
+                .padding(.vertical, 6)
+                .background(Capsule().fill(ColorTokens.Brand.primary))
+            Spacer(minLength: 0)
+        }
+        .accessibilityHidden(true)
+    }
+
+    /// Inline-CTA «Начать ▶» — крупная коралловая кнопка внутри карточки.
+    /// Декоративная (обёрнута в общий Button карточки), скрыта от VoiceOver.
+    private var startCTA: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Text(String(localized: "child.home.mission.start"))
+                .font(TypographyTokens.headline(18))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Image(systemName: "play.fill")
+                .font(TypographyTokens.body(15))
+        }
+        .foregroundStyle(ColorTokens.Overlay.onAccent)
+        .frame(maxWidth: .infinity, minHeight: 56)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+        )
+        .accessibilityHidden(true)
+    }
+
     private var topRow: some View {
         HStack(alignment: .top, spacing: SpacingTokens.sp4) {
-            ChildHomeSoundLetterBadge(letter: mission.targetSound, size: 64)
-
             VStack(alignment: .leading, spacing: 4) {
                 Text(mission.title)
-                    .font(TypographyTokens.headline(17))
+                    .font(TypographyTokens.kidHero(21))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
@@ -62,22 +109,7 @@ struct ChildHomeDailyMissionDetailCard: View {
 
             Spacer(minLength: 0)
 
-            playIcon
-        }
-    }
-
-    /// «Играть» — мягкий повторяющийся pulse привлекает внимание к CTA.
-    /// Под Reduce Motion — статичная иконка (symbolEffect не применяется).
-    @ViewBuilder
-    private var playIcon: some View {
-        let icon = Image(systemName: "play.circle.fill")
-            .font(TypographyTokens.title(32))
-            .foregroundStyle(ColorTokens.Brand.primary)
-            .accessibilityHidden(true)
-        if reduceMotion || mission.isCompleted {
-            icon
-        } else {
-            icon.symbolEffect(.pulse, options: .repeating)
+            ChildHomeSoundLetterBadge(letter: mission.targetSound, size: 56)
         }
     }
 

@@ -415,16 +415,12 @@ struct ChildHomeView: View {
 
     private var dailyMissionSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            HStack(spacing: SpacingTokens.sp2) {
-                sectionHeader(
-                    String(localized: "child.home.mission.section"),
-                    systemImage: "target",
-                    tint: ColorTokens.Brand.primary
-                )
-                Spacer(minLength: 0)
-                // B13: компактный таймер до конца дня (TimelineView, обновление 60с).
-                // Не показываем, если миссия уже завершена.
-                if !viewModel.dailyMissionDetail.isCompleted {
+            // Эталон childhome.png — отдельный заголовок «Миссия дня» убран:
+            // тег-пилюля «Задание дня» внутри карточки сама служит меткой секции.
+            // Таймер до конца дня показываем компактно над карточкой справа.
+            if !viewModel.dailyMissionDetail.isCompleted {
+                HStack(spacing: 0) {
+                    Spacer(minLength: 0)
                     ChildHomeMissionTimerLabel()
                 }
             }

@@ -88,7 +88,7 @@ struct StorytellingView: View {
                 // Step 10 Batch E — Pattern 1: mesh .calm палитра —
                 // спокойный, повествовательный режим «расскажи историю».
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)

@@ -30300,6 +30300,40 @@
         }
       }
     },
+  "missions.section.count": {
+      "comment": "Kid hub: completed-of-total chip, e.g. «3 из 5».",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d из %2$d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d of %2$d"
+          }
+        }
+      }
+    },
+  "missions.section.title": {
+      "comment": "Kid hub: section header above the missions list.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодняшние задания"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today’s missions"
+          }
+        }
+      }
+    },
     "missions.hero.subtitle": {
       "localizations": {
         "ru": {

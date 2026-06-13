@@ -68,7 +68,7 @@ struct CulturalContentView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)

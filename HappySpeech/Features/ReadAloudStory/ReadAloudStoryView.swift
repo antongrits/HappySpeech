@@ -104,7 +104,7 @@ struct ReadAloudStoryView: View {
                 // Step 10 Batch E — Pattern 1: mesh .calm палитра для
                 // спокойного «read mode» (тёплая бумага за глассом).
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
@@ -318,15 +318,22 @@ struct ReadAloudStoryView: View {
         } label: {
             Text(option.label)
                 .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(2)
                 .minimumScaleFactor(0.7)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, minHeight: 60)
                 .padding(SpacingTokens.sp3)
+                // Эталон kid-story-narrative: варианты ответа — тёплые
+                // surface-карточки с коралловым контуром (как .choice), а не
+                // сплошная синяя заливка Brand.sky на крупной кнопке.
                 .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Brand.sky)
+                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                        .strokeBorder(ColorTokens.Brand.primary, lineWidth: 1.5)
                 )
         }
         .buttonStyle(.plain)

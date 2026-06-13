@@ -155,7 +155,11 @@ struct StoryCompletionView: View {
 
     private var storyCard: some View {
         HSLiquidGlassCard(
-            style: .tinted(ColorTokens.Brand.sky.opacity(0.15)),
+            // Тёплая кремово-коралловая подложка нарратива (как в эталоне
+            // kid-story-narrative): narrative-area на warm surface, без off-palette
+            // голубого. Раньше был Brand.sky.opacity(0.15) — холодный синий на
+            // крупной карточке истории.
+            style: .tinted(ColorTokens.Brand.primaryLo.opacity(0.28)),
             padding: SpacingTokens.medium
         ) {
             Text(display.displayText)

@@ -1522,6 +1522,7 @@
 		AB565BAFC56E119C7806F3A0 /* AllScreensTourUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE0CFF07BFB79D2BA37F938 /* AllScreensTourUITests.swift */; };
 		AB6C4406CC6276FA4533CAB9 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 37D5F3B95074FBEDF3FD72EF /* MLXLMCommon */; };
 		AB8D6FAAAFF3A6844651EF45 /* MethodologyAssistantPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262AE2CD94B6D26BEFA720C9 /* MethodologyAssistantPresenter.swift */; };
+		ABCE06B84FA6EA099C5CBF11 /* ParentWeeklyActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C08EF683BABDF17D40D0BFC /* ParentWeeklyActivityCard.swift */; };
 		ABD53939B74089DF74D26533 /* FamilyHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96835D84F9B83AE60BCCF60B /* FamilyHomeRouter.swift */; };
 		ABE93274F6E6D2E931BA8D6D /* DialectAdaptationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F092A9E232B88AF080354A63 /* DialectAdaptationView.swift */; };
 		AC1B0A387E0DB7AF6E32C319 /* AuthSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB95CEFCAE87DF80CD8C6EC1 /* AuthSignUpView.swift */; };
@@ -2471,6 +2472,7 @@
 		1BB76300174DB09F2C0D3D9B /* SibilantAcousticsAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SibilantAcousticsAnalyzer.swift; sourceTree = "<group>"; };
 		1BBA3B7C52CFDF9E85C8B6CF /* OfflineStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineStateView.swift; sourceTree = "<group>"; };
 		1BF6F8A62ACE411BF89F8399 /* ParentGuideWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentGuideWorker.swift; sourceTree = "<group>"; };
+		1C08EF683BABDF17D40D0BFC /* ParentWeeklyActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentWeeklyActivityCard.swift; sourceTree = "<group>"; };
 		1C1AB70D88D42E96C4D4404C /* celebrate_collection_complete.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_collection_complete.json; sourceTree = "<group>"; };
 		1C29AB911D45C48131E8CFC8 /* EmotionDetection.mlpackage */ = {isa = PBXFileReference; path = EmotionDetection.mlpackage; sourceTree = "<group>"; };
 		1C4639D640A459FDA62EE2A1 /* WordFormationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordFormationModels.swift; sourceTree = "<group>"; };
@@ -6918,6 +6920,7 @@
 				775ED49815C46C0126CB7670 /* ParentHomeV31WaveBCards.swift */,
 				6ADE71E990B2583CF80B0172 /* ParentHomeView.swift */,
 				E45E0A638A03DC5C41C6071C /* ParentHomeViewModel.swift */,
+				1C08EF683BABDF17D40D0BFC /* ParentWeeklyActivityCard.swift */,
 			);
 			path = ParentHome;
 			sourceTree = "<group>";
@@ -11883,6 +11886,7 @@
 				B69A4978F80A9E85FC6F8D8A /* ParentVoiceNoteRouter.swift in Sources */,
 				FFD7F9E86D4C41FF169A9C63 /* ParentVoiceNoteView.swift in Sources */,
 				C47636A2AFF7670E380956D3 /* ParentVoiceNoteWorker.swift in Sources */,
+				ABCE06B84FA6EA099C5CBF11 /* ParentWeeklyActivityCard.swift in Sources */,
 				4675BB37F1EF498FCAB0B239 /* ParentalGate.swift in Sources */,
 				66534504603D589AAC87B075 /* PerformanceMonitorService.swift in Sources */,
 				2BF98C6D0A6AF80FE65C3DB7 /* PermissionFlowView.swift in Sources */,

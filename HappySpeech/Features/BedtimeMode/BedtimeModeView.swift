@@ -91,34 +91,20 @@ struct BedtimeModeView: View {
 
     @ViewBuilder
     private var background: some View {
-        ZStack {
-            if reduceMotion {
-                LinearGradient(
-                    colors: [
-                        ColorTokens.Celebration.backdropIndigo,
-                        ColorTokens.Celebration.backdropNight
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            } else {
-                // Низко-насыщенный градиент — холодный фиолетово-синий, без анимации
-                // (детский Reduce Motion-friendly режим по умолчанию).
-                LinearGradient(
-                    colors: [
-                        ColorTokens.Celebration.backdropIndigo,
-                        ColorTokens.Celebration.backdropNight,
-                        ColorTokens.Celebration.backdropDeep
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            }
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                .blendMode(.softLight)
-                .accessibilityHidden(true)
-                .allowsHitTesting(false)
-        }
+        // Тёплый «ночной» градиент — глубокий плюм → какао → шоколад.
+        // Всегда тёмный (это «ночь»), в пределах тёплого семейства: успокаивает
+        // ребёнка перед сном и остаётся в палитре приложения (никакого холодного
+        // индиго/синего на крупной заливке).
+        LinearGradient(
+            colors: [
+                ColorTokens.Bedtime.backdropTop,
+                ColorTokens.Bedtime.backdropMid,
+                ColorTokens.Bedtime.backdropBottom
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .accessibilityHidden(true)
     }
 
     // MARK: - Top bar
@@ -385,7 +371,7 @@ struct BedtimeModeView: View {
             } label: {
                 Text("bedtime.farewell.close")
                     .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Celebration.backdropIndigo)
+                    .foregroundStyle(ColorTokens.Bedtime.onLightButton)
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -412,7 +398,7 @@ struct BedtimeModeView: View {
         Button(action: action) {
             Text(title)
                 .font(TypographyTokens.headline(17))
-                .foregroundStyle(ColorTokens.Celebration.backdropIndigo)
+                .foregroundStyle(ColorTokens.Bedtime.onLightButton)
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(
                     RoundedRectangle(cornerRadius: RadiusTokens.card)

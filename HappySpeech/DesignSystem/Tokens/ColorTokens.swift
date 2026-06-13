@@ -608,6 +608,26 @@ public enum ColorTokens {
         public static let shelfUI = UIColor(red: 0.42, green: 0.30, blue: 0.20, alpha: 1.0)
     }
 
+    // MARK: - Bedtime (warm night)
+
+    /// Тёплая «ночная» палитра для экрана `BedtimeMode`.
+    ///
+    /// Экран засыпания всегда тёмный (и в Light, и в Dark теме — это «ночь»),
+    /// поэтому цвета фиксированные, НЕ адаптивные. Раньше фон использовал
+    /// холодные индиго/синие тона (`Celebration.backdrop*`) — это off-palette
+    /// для тёплого детского контура. Здесь — глубокий тёплый плюм/какао
+    /// в пределах кораллово-кремового семейства: успокаивает, остаётся «тёплым».
+    public enum Bedtime {
+        /// Верх фона — глубокий тёплый плюм (#231526).
+        public static let backdropTop    = Color(red: 0.137, green: 0.082, blue: 0.149)
+        /// Середина фона — тёплый какао-фиолет (#2E1A22).
+        public static let backdropMid     = Color(red: 0.180, green: 0.102, blue: 0.133)
+        /// Низ фона — тёмный тёплый шоколад (#1A1010).
+        public static let backdropBottom  = Color(red: 0.102, green: 0.063, blue: 0.063)
+        /// Тёмный тёплый текст на светлой (white) кнопке — какао (#3A2418).
+        public static let onLightButton   = Color(red: 0.227, green: 0.141, blue: 0.094)
+    }
+
     // MARK: - Award (FamilyAwardsCabinet tiers)
 
     /// Платиновый и расширенный серебряный тон для `FamilyAwardsCabinet` наград.

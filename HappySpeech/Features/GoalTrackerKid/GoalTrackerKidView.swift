@@ -65,6 +65,7 @@ struct GoalTrackerKidView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
         } else {
             ProgressView().controlSize(.large)
         }
@@ -117,7 +118,11 @@ struct GoalTrackerKidView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            HSCard(style: goal.isReached ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+            // Достигнутая цель — тёплый золотой тинт (достижение), без крупной
+            // зелёной заливки. Признак «готово» дублируется bounce-иконкой.
+            HSCard(style: goal.isReached
+                ? .tinted(ColorTokens.Brand.gold.opacity(0.10))
+                : .elevated) {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                     HStack(spacing: SpacingTokens.sp2) {
                         Image(systemName: goal.id.iconSystemName)

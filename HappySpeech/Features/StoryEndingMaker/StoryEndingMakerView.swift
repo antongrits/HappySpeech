@@ -21,7 +21,7 @@ struct StoryEndingMakerView: View {
                 // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра «придумай
                 // концовку» — тёплый креативный режим.
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
@@ -175,7 +175,9 @@ struct StoryEndingMakerView: View {
             .padding(SpacingTokens.sp3)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(selected ? ColorTokens.Brand.sky.opacity(0.20) : ColorTokens.Kid.surface)
+                    // Тёплая коралловая подсветка выбранной карточки (эталон
+                    // .choice.sel = primary-lo). Раньше был Brand.sky (синий).
+                    .fill(selected ? ColorTokens.Brand.primaryLo.opacity(0.40) : ColorTokens.Kid.surface)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -192,7 +194,10 @@ struct StoryEndingMakerView: View {
     }
 
     private var savedBanner: some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        // Тёплая «butter» подложка баннера «сохранено» вместо зелёного
+        // Semantic.successBg на крупной карточке (стандинг-ордер: тёплая палитра
+        // на больших заливках; зелёный success — только мелкие иконки/галочки).
+        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.30))) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 48)
                     .accessibilityHidden(true)

@@ -61,6 +61,7 @@ struct DailyMissionsHubView: View {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp3) {
                     hero(interactor: interactor)
+                    sectionHeader(interactor: interactor)
                     missionsList(interactor: interactor)
                     cta(interactor: interactor)
                 }
@@ -68,6 +69,7 @@ struct DailyMissionsHubView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
         } else {
             ProgressView().controlSize(.large)
         }
@@ -99,6 +101,36 @@ struct DailyMissionsHubView: View {
         }
     }
 
+    /// Заголовок секции с живым счётчиком «N из 5» (эталон kid-hub-list).
+    private func sectionHeader(interactor: DailyMissionsHubInteractor) -> some View {
+        let done = interactor.state.completed.count
+        let total = DailyMissionsHubModels.Mission.allCases.count
+        return HStack(spacing: SpacingTokens.sp2) {
+            Text(String(localized: "missions.section.title"))
+                .font(TypographyTokens.headline(17))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+            Text(String(
+                format: String(localized: "missions.section.count"),
+                done, total
+            ))
+            .font(TypographyTokens.caption(12).monospacedDigit())
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .padding(.horizontal, SpacingTokens.sp2)
+            .padding(.vertical, 3)
+            .background(Capsule().fill(ColorTokens.Brand.primaryLo.opacity(0.45)))
+        }
+        .padding(.top, SpacingTokens.sp1)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(String(localized: "missions.section.title")))
+        .accessibilityValue(Text(String(
+            format: String(localized: "missions.section.count"),
+            done, total
+        )))
+    }
+
     private func missionsList(interactor: DailyMissionsHubInteractor) -> some View {
         // Step 10 Batch A — Pattern 3+4: stagger entrance (fade+scale через
         // scrollTransition) и parallax-drift на каждой mission-карточке.
@@ -126,7 +158,12 @@ struct DailyMissionsHubView: View {
             interactor.markCompleted(mission)
             route(for: mission)
         } label: {
-            HSCard(style: done ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+            // Выполненная миссия остаётся на нейтральной тёплой поверхности
+            // (как в эталоне kid-hub-list): признак «готово» — мятная галочка-акцент
+            // справа, без крупной зелёной заливки карточки (off-palette).
+            HSCard(style: done
+                ? .tinted(ColorTokens.Brand.gold.opacity(0.10))
+                : .elevated) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: mission.icon)
                         .font(.system(size: 22, weight: .semibold))

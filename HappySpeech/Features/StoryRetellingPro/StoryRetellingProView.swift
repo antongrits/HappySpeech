@@ -21,7 +21,7 @@ struct StoryRetellingProView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
@@ -120,7 +120,9 @@ struct StoryRetellingProView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            HSCard(style: isSelected ? .tinted(ColorTokens.Brand.mint.opacity(0.20)) : .elevated) {
+            // Выбранная сказка — тёплая коралловая подсветка (эталон .choice.sel),
+            // а не мятно-зелёная: mint резервируем под success-галочки.
+            HSCard(style: isSelected ? .tinted(ColorTokens.Brand.primaryLo.opacity(0.34)) : .elevated) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: story.isCompleted ? "checkmark.seal.fill" : "book.fill")
                         .font(.system(size: 22))

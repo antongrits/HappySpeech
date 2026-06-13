@@ -58,6 +58,7 @@ struct MorningRoutineView: View {
                 .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp6)
             }
+            .scrollBounceBehavior(.basedOnSize)
         } else {
             ProgressView().controlSize(.large)
         }
@@ -111,7 +112,11 @@ struct MorningRoutineView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            HSCard(style: step.isDone ? .tinted(ColorTokens.Semantic.successBg) : .elevated) {
+            // Выполненный шаг — тёплый золотой тинт (достижение), без крупной
+            // зелёной заливки. Признак «готово» — мятная галочка-акцент справа.
+            HSCard(style: step.isDone
+                ? .tinted(ColorTokens.Brand.gold.opacity(0.10))
+                : .elevated) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: step.id.iconSystemName)
                         .font(.system(size: 22, weight: .semibold))
