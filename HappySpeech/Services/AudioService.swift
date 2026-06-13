@@ -301,6 +301,18 @@ public struct RouteStepItem: Sendable {
     /// F1-014: шаг-откат на предыдущий этап после регресса/долгого перерыва
     /// («повторим прошлое» — управляемый методический регресс, без наказания).
     public let isRollback: Bool
+    /// Лексическая тема выбранной вариации контента (`pack_lexical_themes`), если
+    /// шаг наполнен тематической четвёркой через ``ContentVariationGenerator``.
+    /// `nil` — шаг звуковой (без тематической окраски). Аддитивное поле:
+    /// потребитель маршрута (`SessionShellInteractor`) игнорирует его при
+    /// разрешении контента и продолжает работать со старым контрактом.
+    public let theme: String?
+    /// Стабильный id реально сгенерированной вариации (`GeneratedActivity.id`,
+    /// вида `gen_<latin>_<stage>_<theme?>_<template>`), которой наполнен шаг. `nil`
+    /// — шаг собран базовой rule-based матрицей без подбора вариации (graceful
+    /// fallback при недостаточном пуле). Используется как стабильный ключ
+    /// контента/повтора — не выдуманные данные, а ссылка на существующий срез пака.
+    public let variationId: String?
 
     public init(
         templateType: TemplateType,
@@ -311,7 +323,9 @@ public struct RouteStepItem: Sendable {
         durationTargetSec: Int,
         track: RouteTrack = .sound,
         isRetrospective: Bool = false,
-        isRollback: Bool = false
+        isRollback: Bool = false,
+        theme: String? = nil,
+        variationId: String? = nil
     ) {
         self.templateType = templateType
         self.targetSound = targetSound
@@ -322,6 +336,8 @@ public struct RouteStepItem: Sendable {
         self.track = track
         self.isRetrospective = isRetrospective
         self.isRollback = isRollback
+        self.theme = theme
+        self.variationId = variationId
     }
 }
 

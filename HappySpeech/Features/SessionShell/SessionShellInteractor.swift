@@ -574,7 +574,11 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
                     SessionActivity(
                         id: "\(request.childId)-adaptive-\(idx)",
                         gameType: Self.gameType(from: step.templateType),
-                        lessonId: "\(step.targetSound)-\(step.stage.rawValue)-\(idx)",
+                        // gap #2: при наличии реальной вариации контента (`variationId`)
+                        // ключ урока — её стабильный id (ссылка на конкретный
+                        // сгенерированный срез пака `звук × этап × тема × сложность`),
+                        // иначе — прежний `<звук>-<этап>-<idx>` контракт.
+                        lessonId: step.variationId ?? "\(step.targetSound)-\(step.stage.rawValue)-\(idx)",
                         soundTarget: step.targetSound,
                         difficulty: step.difficulty,
                         isCompleted: false

@@ -1148,6 +1148,14 @@ public extension AppContainer {
             LivePhonemeProfileService(
                 repository: LivePhonemeObservationRepository(realmActor: realmActor)
             )
+        // gap #2: рантайм-генератор вариаций контента над тем же `LiveContentService`,
+        // что и контент-слой (паки кэшируются внутри генератора-актора). Планировщик
+        // наполняет каждый звуковой шаг реальной вариацией, выбранной адаптивно.
+        let sharedVariationGenerator: any ContentVariationGenerating =
+            ContentVariationGenerator(contentService: LiveContentService())
+        // P0-4: персистентная стадия лестницы — источник истины текущего этапа
+        // ребёнка по звуку (тот же стор, что пишет `SessionShellInteractor`).
+        let sharedStageProgressStore: any StageProgressStoring = UserDefaultsStageProgressStore()
 
         let container = AppContainer(
             realmActor: realmActor,
@@ -1183,7 +1191,9 @@ public extension AppContainer {
                     childRepository: childRepo,
                     sessionRepository: sessionRepo,
                     reviewScheduler: sharedReviewScheduler,
-                    phonemeProfileService: sharedPhonemeProfileService
+                    phonemeProfileService: sharedPhonemeProfileService,
+                    variationGenerator: sharedVariationGenerator,
+                    stageProgressStore: sharedStageProgressStore
                 )
             },
             llmDecisionServiceFactory: {

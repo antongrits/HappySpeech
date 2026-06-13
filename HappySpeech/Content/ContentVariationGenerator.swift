@@ -71,6 +71,18 @@ struct TemplateSpec: Sendable {
     let minAge: Int
 }
 
+// MARK: - ContentVariationGenerating
+
+/// Абстракция рантайм-генератора вариаций контента (→ тестируемость
+/// планировщика без бандл-паков). Адаптивный планировщик зависит ТОЛЬКО от этого
+/// протокола; в проде его реализует ``ContentVariationGenerator``, в тестах —
+/// детерминированный мок.
+public protocol ContentVariationGenerating: Sendable {
+    /// Все валидные сгенерированные активности конкретного звука (детерминированный
+    /// порядок). Источник кандидатов для подбора вариации под шаг маршрута.
+    func generateActivities(for sound: String) async -> [GeneratedActivity]
+}
+
 // MARK: - ContentVariationGenerator
 
 /// Рантайм-генератор вариаций контента уроков (gap #2).
@@ -90,7 +102,7 @@ struct TemplateSpec: Sendable {
 ///   методически валидных пар, возрастные ограничения (§6).
 /// - **Детерминизм:** порядок звуков/этапов/тем/шаблонов фиксирован; выбор
 ///   элементов — стабильный `prefix` по difficulty-band (без `shuffled`).
-public actor ContentVariationGenerator {
+public actor ContentVariationGenerator: ContentVariationGenerating {
 
     // MARK: - Dependencies
 

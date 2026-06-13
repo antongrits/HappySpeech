@@ -592,17 +592,31 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
     /// адресной вставки упражнения minimal-pairs. Опционален — при отсутствии /
     /// нехватке данных маршрут не меняется (graceful).
     private let phonemeProfileService: (any PhonemeProfileServiceProtocol)?
+    /// Рантайм-генератор вариаций контента — наполняет каждый звуковой/позиционный
+    /// шаг маршрута РЕАЛЬНОЙ вариацией (`звук × этап × тема × сложность`),
+    /// выбранной адаптивно (`VariationSelectionPolicy`). Опционален — при
+    /// отсутствии или недостаточном пуле шаги остаются базовыми rule-based
+    /// (контракт маршрута неизменен, пустышка не создаётся).
+    private let variationGenerator: (any ContentVariationGenerating)?
+    /// Персистентная текущая стадия ребёнка по звуку (10-этапная лестница).
+    /// Опционален — при отсутствии стадия выводится из агрегата истории сессий
+    /// (back-compat со старой логикой и моками).
+    private let stageProgressStore: (any StageProgressStoring)?
 
     public init(
         childRepository: (any ChildRepository)? = nil,
         sessionRepository: (any SessionRepository)? = nil,
         reviewScheduler: (any ReviewSchedulerService)? = nil,
-        phonemeProfileService: (any PhonemeProfileServiceProtocol)? = nil
+        phonemeProfileService: (any PhonemeProfileServiceProtocol)? = nil,
+        variationGenerator: (any ContentVariationGenerating)? = nil,
+        stageProgressStore: (any StageProgressStoring)? = nil
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
         self.reviewScheduler = reviewScheduler
         self.phonemeProfileService = phonemeProfileService
+        self.variationGenerator = variationGenerator
+        self.stageProgressStore = stageProgressStore
     }
 
     // MARK: buildDailyRoute
@@ -629,10 +643,19 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
         let hour = Calendar.current.component(.hour, from: now)
         let fatigue = Self.computeFatigue(state: primary, hour: hour)
 
+        // P0-4: реальная текущая стадия лестницы — из персистентного стора
+        // (источник истины для прогрессии вперёд). При отсутствии стора стадия
+        // выводится из агрегата истории сессий (back-compat).
+        let persistedStage = stageProgressStore?.currentStage(
+            childId: childId,
+            sound: primary.soundTarget
+        )
+        let currentStage = persistedStage ?? primary.stage
+
         // F1-014: откат стадии на шаг назад при регрессе/долгом перерыве.
         let primarySessions = recentSessions.filter { $0.targetSound == primary.soundTarget }
         let decision = StageProgressionPlanner.recommendedStage(
-            current: primary.stage,
+            current: currentStage,
             soundSessions: primarySessions,
             now: now
         )
@@ -662,7 +685,24 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
         // v17: адресная дифференциация слабейшей confusion-пары из «Фонемного
         // паспорта» (если данные есть и пара имеет реальный minimal-pairs контент).
         let confusionStep = await weakestConfusionMinimalPairsStep(for: childId)
-        let combined = (confusionStep.map { [$0] } ?? []) + intro + steps
+        let assembled = (confusionStep.map { [$0] } ?? []) + intro + steps
+
+        // gap #2: наполняем каждый звуковой/позиционный шаг РЕАЛЬНОЙ вариацией
+        // контента (`звук × этап × тема × сложность`), выбранной адаптивно по
+        // сигналам ребёнка. При отсутствии генератора/пула шаги остаются базовыми.
+        let signals = ChildAdaptiveSignals(
+            workingStage: workingStage,
+            fatigue: fatigue,
+            recentSuccessRate: primary.successRate,
+            easinessFactor: primary.easinessFactor,
+            consecutiveWrong: primary.consecutiveWrong,
+            themeRotationSeed: Self.themeRotationSeed(childId: childId, now: now)
+        )
+        let combined = await enrichWithVariations(
+            steps: assembled,
+            signals: signals,
+            childAge: profile.age
+        )
 
         let stepsTotal = combined.reduce(0) { $0 + $1.durationTargetSec }
         let cap = DisorderRouteStrategy.sessionCap(for: profile.age, disorder: disorder)
@@ -760,6 +800,101 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
             limit: 3
         )
         return due.map { StageProgressionPlanner.reviewStep(for: $0) }
+    }
+
+    // MARK: - Content variation enrichment (gap #2)
+
+    /// Наполняет каждый совместимый шаг маршрута РЕАЛЬНОЙ вариацией контента,
+    /// выбранной адаптивно по сигналам ребёнка. Кандидаты — активности генератора
+    /// для звука шага (кэшируются на проход по звукам). Шаги без подходящей
+    /// вариации (нет генератора, недостаточный пул, несовместимый шаблон/этап,
+    /// возрастной гейт) остаются базовыми — контракт маршрута сохраняется,
+    /// пустышки не создаются.
+    private func enrichWithVariations(
+        steps: [RouteStepItem],
+        signals: ChildAdaptiveSignals,
+        childAge: Int
+    ) async -> [RouteStepItem] {
+        guard let variationGenerator else { return steps }
+
+        var candidatesBySound: [String: [GeneratedActivity]] = [:]
+        var result: [RouteStepItem] = []
+        result.reserveCapacity(steps.count)
+
+        for step in steps {
+            // Дифференциация confusion-пары и не-звуковые треки наполняются своей
+            // адресной логикой — вариации применяем только к звуковым шагам с
+            // целевым звуком (не пара «А-Б»).
+            guard step.track == .sound, !step.targetSound.contains("-") else {
+                result.append(step)
+                continue
+            }
+
+            let candidates: [GeneratedActivity]
+            if let cached = candidatesBySound[step.targetSound] {
+                candidates = cached
+            } else {
+                candidates = await variationGenerator.generateActivities(for: step.targetSound)
+                candidatesBySound[step.targetSound] = candidates
+            }
+
+            guard let variation = VariationSelectionPolicy.selectVariation(
+                template: step.templateType,
+                stage: step.stage,
+                candidates: candidates,
+                signals: signals,
+                childAge: childAge
+            ) else {
+                result.append(step)
+                continue
+            }
+            result.append(Self.applyVariation(variation, to: step))
+        }
+        return result
+    }
+
+    /// Накладывает выбранную вариацию на шаг маршрута: проставляет тему и
+    /// `variationId`, синхронизирует `wordCount` с реальным числом элементов
+    /// вариации и `difficulty` с её band'ом. `templateType`/`targetSound`/`stage`/
+    /// `track`/флаги сохраняются — потребитель маршрута видит тот же контракт,
+    /// но теперь шаг ссылается на РЕАЛЬНЫЙ срез контента.
+    static func applyVariation(
+        _ variation: GeneratedActivity,
+        to step: RouteStepItem
+    ) -> RouteStepItem {
+        let resolvedDifficulty = variation.difficultyBand.upperBound
+        return RouteStepItem(
+            templateType: step.templateType,
+            targetSound: step.targetSound,
+            stage: step.stage,
+            difficulty: max(1, resolvedDifficulty),
+            wordCount: max(1, variation.itemCount),
+            durationTargetSec: step.durationTargetSec,
+            track: step.track,
+            isRetrospective: step.isRetrospective,
+            isRollback: step.isRollback,
+            theme: variation.theme,
+            variationId: variation.id
+        )
+    }
+
+    /// Детерминированный seed ротации тем: «день года» сдвигает выбор темы между
+    /// сессиями (стабильно внутри дня, воспроизводимо в тестах через `now`).
+    /// childId добавляет СТАБИЛЬНЫЙ сдвиг (сумма скаляров — не `hashValue`, который
+    /// в Swift засеян per-process и недетерминирован между запусками), чтобы разные
+    /// профили не синхронно «застревали» на одной теме, сохраняя воспроизводимость.
+    static func themeRotationSeed(childId: String, now: Date) -> Int {
+        let calendar = Calendar.current
+        let dayOfYear = calendar.ordinality(of: .day, in: .year, for: now) ?? 0
+        let childShift = stableShift(for: childId)
+        return dayOfYear + childShift
+    }
+
+    /// Стабильный (между запусками) сдвиг 0…6 из строки — детерминированная сумма
+    /// unicode-скаляров по модулю 7. Используется только для разнесения ротации тем.
+    static func stableShift(for id: String) -> Int {
+        let sum = id.unicodeScalars.reduce(0) { $0 + Int($1.value) }
+        return sum % 7
     }
 
     /// Помечает первый звуковой (`.sound`) шаг маршрута как rollback-шаг.
@@ -1073,286 +1208,5 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
     /// Используется AdaptivePlannerService для вставки сторис-активности в маршрут.
     func recommendedStory(for sound: String) -> AnimatedStory? {
         StoryLibrary.shared.stories(for: sound).randomElement()
-    }
-}
-
-// MARK: - DisorderRouteStrategy (F1-021 / F1-013)
-
-/// Стратегия сборки дневного маршрута под тип речевого нарушения.
-///
-/// База — звуковой маршрут (`LiveAdaptivePlannerService.composeRoute`), затем
-/// в зависимости от `SpeechDisorder` добавляются параллельные методические
-/// треки. Новые игровые механики (Звуковой детектив, Слоговая улитка, Чей хвост,
-/// Конструктор предложения, Понимание-детектив) — это отдельные coordinator-routes,
-/// поэтому в `RouteStepItem` они представлены ближайшими по дидактике `TemplateType`
-/// (фонематика → minimalPairs/soundHunter/sorting; грамматика → dragAndMatch/
-/// storyCompletion; связная речь → narrativeQuest/storyCompletion).
-///
-/// Методическое обоснование маршрутов — `wiki/concepts/speech-methodology.md`:
-///   • дислалия    → звуковой трек (постановка/автоматизация);
-///   • ФФН         → + фонематический трек (дифференциация, минимальные пары);
-///   • ОНР III–IV  → 4 трека (произношение + фонематика + грамматика + связная речь);
-///   • ЗРР         → «медленный старт»: короткие сессии, звукоподражание, называние;
-///   • заикание    → дыхание/темп/плавность, без таймеров/скороговорок/соревнований;
-///   • дизартрия   → удлинённая артикуляц. гимнастика + Visual-Acoustic + звук.
-enum DisorderRouteStrategy {
-
-    /// Собирает маршрут с учётом нарушения.
-    static func composeRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel,
-        disorder: SpeechDisorder
-    ) -> [RouteStepItem] {
-        switch disorder {
-        case .dyslalia:
-            return baseSoundRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        case .ffn:
-            return ffnRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        case .onr:
-            return onrRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        case .zrr:
-            return zrrRoute(soundTarget: soundTarget, fatigue: fatigue)
-        case .stuttering:
-            return stutteringRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        case .dysarthria:
-            return dysarthriaRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        }
-    }
-
-    /// Лимит длительности сессии с учётом нарушения. ЗРР занижает базовый
-    /// возрастной cap до 5 минут («медленный старт»); остальные — по возрасту.
-    static func sessionCap(for age: Int, disorder: SpeechDisorder) -> Int {
-        let base = LiveAdaptivePlannerService.sessionMaxSec(for: age)
-        if disorder.isSlowStart {
-            return min(base, 300) // 5 минут
-        }
-        return base
-    }
-
-    // MARK: - Base sound track (reuse existing matrix, tag track = .sound)
-
-    /// Базовый звуковой маршрут — переиспользует существующую матрицу планировщика
-    /// и помечает шаги треком `.sound`.
-    private static func baseSoundRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        LiveAdaptivePlannerService.composeRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-            .map { tag($0, with: .sound) }
-    }
-
-    // MARK: - ФФН: звук + фонематика
-
-    private static func ffnRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        var steps = baseSoundRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        // Фонематический трек: дифференциация / минимальные пары (профилактика дисграфии).
-        steps.append(phonemicStep(soundTarget: soundTarget, fatigue: fatigue))
-        return cappedAntiFatigue(steps, fatigue: fatigue)
-    }
-
-    // MARK: - ОНР III–IV: 4 параллельных трека (F1-013)
-
-    private static func onrRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        // 1. Произношение (warm-up + core из базовой матрицы — берём первые 2 шага)
-        let base = baseSoundRoute(soundTarget: soundTarget, stage: stage, fatigue: fatigue)
-        var steps: [RouteStepItem] = Array(base.prefix(2))
-        // 2. Фонематика
-        steps.append(phonemicStep(soundTarget: soundTarget, fatigue: fatigue))
-        // 3. Грамматика
-        steps.append(grammarStep(soundTarget: soundTarget, fatigue: fatigue))
-        // 4. Связная речь
-        steps.append(coherentSpeechStep(soundTarget: soundTarget, fatigue: fatigue))
-        return cappedAntiFatigue(steps, fatigue: fatigue)
-    }
-
-    // MARK: - ЗРР: «медленный старт»
-
-    private static func zrrRoute(
-        soundTarget: String,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        // Короткая сессия: вызов речи и называние, без давления на чистоту звука.
-        // Звукоподражание / имитация (repeatAfterModel), называние (listenAndChoose).
-        let imitation = RouteStepItem(
-            templateType: .repeatAfterModel,
-            targetSound: soundTarget,
-            stage: .isolated,
-            difficulty: 1,
-            wordCount: 4,
-            durationTargetSec: 90,
-            track: .sound
-        )
-        let naming = RouteStepItem(
-            templateType: .listenAndChoose,
-            targetSound: soundTarget,
-            stage: .wordInit,
-            difficulty: 1,
-            wordCount: 4,
-            durationTargetSec: 90,
-            track: .coherentSpeech
-        )
-        let reward = RouteStepItem(
-            templateType: .puzzleReveal,
-            targetSound: soundTarget,
-            stage: .isolated,
-            difficulty: 1,
-            wordCount: 3,
-            durationTargetSec: 60,
-            track: .sound
-        )
-        // Усталость → ещё короче: имитация + награда.
-        return fatigue == .tired ? [imitation, reward] : [imitation, naming, reward]
-    }
-
-    // MARK: - Заикание: дыхание / темп / плавность
-
-    private static func stutteringRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        // Без таймеров/скороговорок/соревнований (hasFluencyGoal). Акцент на
-        // дыхание и ритм; звуковая работа — мягко, без timed-mode.
-        let breathing = RouteStepItem(
-            templateType: .breathing,
-            targetSound: soundTarget,
-            stage: .prep,
-            difficulty: 1,
-            wordCount: 1,
-            durationTargetSec: 120,
-            track: .breathingFluency
-        )
-        let rhythm = RouteStepItem(
-            templateType: .rhythm,
-            targetSound: soundTarget,
-            stage: stage,
-            difficulty: 1,
-            wordCount: 6,
-            durationTargetSec: 150,
-            track: .breathingFluency
-        )
-        let gentleSound = RouteStepItem(
-            templateType: .repeatAfterModel,
-            targetSound: soundTarget,
-            stage: stage,
-            difficulty: 1,
-            wordCount: 6,
-            durationTargetSec: 120,
-            track: .sound
-        )
-        return fatigue == .tired ? [breathing, rhythm] : [breathing, rhythm, gentleSound]
-    }
-
-    // MARK: - Дизартрия: усиленная артикуляция + Visual-Acoustic
-
-    private static func dysarthriaRoute(
-        soundTarget: String,
-        stage: CorrectionStage,
-        fatigue: FatigueLevel
-    ) -> [RouteStepItem] {
-        // Удлинённая артикуляционная гимнастика (3–4 мин) + Visual-Acoustic
-        // биообратная связь, затем звуковой трек.
-        let articulation = RouteStepItem(
-            templateType: .articulationImitation,
-            targetSound: soundTarget,
-            stage: .prep,
-            difficulty: 1,
-            wordCount: 4,
-            durationTargetSec: 210,
-            track: .articulation
-        )
-        let visualAcoustic = RouteStepItem(
-            templateType: .visualAcoustic,
-            targetSound: soundTarget,
-            stage: stage,
-            difficulty: 2,
-            wordCount: 6,
-            durationTargetSec: 150,
-            track: .articulation
-        )
-        let core = RouteStepItem(
-            templateType: LiveAdaptivePlannerService.composeRoute(
-                soundTarget: soundTarget, stage: stage, fatigue: fatigue
-            ).first(where: { $0.stage == stage })?.templateType ?? .repeatAfterModel,
-            targetSound: soundTarget,
-            stage: stage,
-            difficulty: 2,
-            wordCount: 6,
-            durationTargetSec: fatigue == .tired ? 120 : 180,
-            track: .sound
-        )
-        return fatigue == .tired ? [articulation, visualAcoustic] : [articulation, visualAcoustic, core]
-    }
-
-    // MARK: - Track step factories
-
-    private static func phonemicStep(soundTarget: String, fatigue: FatigueLevel) -> RouteStepItem {
-        // Дифференциация / минимальные пары (фонемный анализ).
-        RouteStepItem(
-            templateType: .minimalPairs,
-            targetSound: soundTarget,
-            stage: .diff,
-            difficulty: 2,
-            wordCount: 6,
-            durationTargetSec: fatigue == .tired ? 120 : 150,
-            track: .phonemic
-        )
-    }
-
-    private static func grammarStep(soundTarget: String, fatigue: FatigueLevel) -> RouteStepItem {
-        // Словоизменение/словообразование/синтаксис — Grammar Games на dragAndMatch.
-        RouteStepItem(
-            templateType: .dragAndMatch,
-            targetSound: soundTarget,
-            stage: .phrase,
-            difficulty: 2,
-            wordCount: 6,
-            durationTargetSec: fatigue == .tired ? 120 : 150,
-            track: .grammar
-        )
-    }
-
-    private static func coherentSpeechStep(soundTarget: String, fatigue: FatigueLevel) -> RouteStepItem {
-        // Связная речь — пересказ/рассказ по серии картинок.
-        RouteStepItem(
-            templateType: .narrativeQuest,
-            targetSound: soundTarget,
-            stage: .story,
-            difficulty: 2,
-            wordCount: 6,
-            durationTargetSec: fatigue == .tired ? 120 : 150,
-            track: .coherentSpeech
-        )
-    }
-
-    // MARK: - Helpers
-
-    private static func tag(_ step: RouteStepItem, with track: RouteTrack) -> RouteStepItem {
-        RouteStepItem(
-            templateType: step.templateType,
-            targetSound: step.targetSound,
-            stage: step.stage,
-            difficulty: step.difficulty,
-            wordCount: step.wordCount,
-            durationTargetSec: step.durationTargetSec,
-            track: track
-        )
-    }
-
-    /// Антифатиговое правило: при `.tired` ограничивает число шагов 3-мя
-    /// (тяжёлый день — не перегружать), сохраняя разнообразие треков.
-    private static func cappedAntiFatigue(_ steps: [RouteStepItem], fatigue: FatigueLevel) -> [RouteStepItem] {
-        guard fatigue == .tired, steps.count > 3 else { return steps }
-        return Array(steps.prefix(3))
     }
 }
