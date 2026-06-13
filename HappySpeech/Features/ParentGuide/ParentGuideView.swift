@@ -106,6 +106,7 @@ struct ParentGuideView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("parentGuide.screen.title"))
             .navigationBarTitleDisplayMode(.inline)

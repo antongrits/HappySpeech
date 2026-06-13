@@ -124,6 +124,8 @@ struct ParentVoiceNoteView: View {
     ) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HSPrivacyPill()
+
                 Text(loadVM.introMessage)
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Parent.ink)

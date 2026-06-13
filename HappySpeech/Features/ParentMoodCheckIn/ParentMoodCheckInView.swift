@@ -47,6 +47,7 @@ struct ParentMoodCheckInView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var hero: some View {
@@ -55,6 +56,8 @@ struct ParentMoodCheckInView: View {
                 Text(String(localized: "parentMood.hero.title"))
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                 Text(String(localized: "parentMood.hero.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
@@ -114,10 +117,10 @@ struct ParentMoodCheckInView: View {
     private var noteField: some View {
         HSCard(style: .flat) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Заметка (по желанию)")
+                Text(String(localized: "parentMood.note.label"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                TextField("Кратко о дне…", text: Binding(
+                TextField(String(localized: "parentMood.note.placeholder"), text: Binding(
                     get: { interactor.entry.note },
                     set: { interactor.entry.note = $0 }
                 ), axis: .vertical)

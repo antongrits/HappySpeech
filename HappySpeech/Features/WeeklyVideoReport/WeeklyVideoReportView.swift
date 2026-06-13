@@ -72,79 +72,121 @@ struct WeeklyVideoReportView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
-    // MARK: - Video card (Remotion template)
+    // MARK: - Video hero card (thumbnail + coral play overlay + duration)
 
     private var videoCard: some View {
-        HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                HStack(spacing: SpacingTokens.sp1) {
-                    Image(systemName: "film.stack")
-                        .font(.system(size: 13))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                    Text(String(localized: "weeklyVideoReport.video.label"))
-                        .font(TypographyTokens.caption(11))
-                        .textCase(.uppercase)
-                        .tracking(0.5)
+        HSCard(style: .elevated, padding: 0) {
+            VStack(spacing: 0) {
+                videoThumbnail
+                videoCaption
+            }
+        }
+    }
+
+    private var videoThumbnail: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Brand.primaryLo.opacity(0.45))
+                .aspectRatio(9 / 16, contentMode: .fit)
+
+            if let player {
+                VideoPlayer(player: player)
+                    .disabled(true)
+                    .aspectRatio(9 / 16, contentMode: .fit)
+                    .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+                    .allowsHitTesting(false)
+            } else {
+                VStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "film")
+                        .font(.system(size: 40))
+                        .foregroundStyle(ColorTokens.Brand.primary.opacity(0.4))
+                    Text(String(localized: "weeklyVideoReport.video.loading"))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                }
+                .aspectRatio(9 / 16, contentMode: .fit)
+            }
+
+            // Coral round play button overlay
+            Button {
+                togglePlayback()
+            } label: {
+                Image(systemName: reduceMotion ? "play.fill" : "arrow.counterclockwise")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .frame(width: 64, height: 64)
+                    .background(Circle().fill(ColorTokens.Brand.primary))
+                    .shadow(color: ColorTokens.Brand.primary.opacity(0.45), radius: 12, y: 6)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text(String(localized: "weeklyVideoReport.video.replay")))
+
+            // Duration badge (real metadata)
+            if let duration = durationLabel {
+                VStack {
                     Spacer()
-                    Button {
-                        togglePlayback()
-                    } label: {
-                        Image(systemName: reduceMotion ? "play.circle.fill" : "arrow.counterclockwise.circle")
-                            .font(.system(size: 22))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                    }
-                    .accessibilityLabel(Text(String(localized: "weeklyVideoReport.video.replay")))
-                }
-
-                ZStack {
-                    RoundedRectangle(cornerRadius: RadiusTokens.lg)
-                        .fill(ColorTokens.Brand.butter.opacity(0.22))
-                        .aspectRatio(9 / 16, contentMode: .fit)
-
-                    if let player {
-                        VideoPlayer(player: player)
-                            .disabled(true)
-                            .aspectRatio(9 / 16, contentMode: .fit)
-                            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg))
-                            .allowsHitTesting(false)
-                    } else {
-                        VStack(spacing: SpacingTokens.sp2) {
-                            Image(systemName: "film")
-                                .font(.system(size: 40))
-                                .foregroundStyle(ColorTokens.Brand.primary.opacity(0.4))
-                            Text(String(localized: "weeklyVideoReport.video.loading"))
-                                .font(TypographyTokens.caption(12))
-                                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        }
-                        .aspectRatio(9 / 16, contentMode: .fit)
+                    HStack {
+                        Spacer()
+                        Text(duration)
+                            .font(TypographyTokens.caption(11).weight(.bold).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                            .padding(.horizontal, SpacingTokens.sp2)
+                            .padding(.vertical, SpacingTokens.micro)
+                            .background(
+                                Capsule().fill(Color.black.opacity(0.55))
+                            )
+                            .accessibilityHidden(true)
                     }
                 }
-                .frame(maxHeight: 460)
-                .accessibilityLabel(Text(String(localized: "weeklyVideoReport.video.a11y")))
+                .padding(SpacingTokens.sp3)
+            }
+        }
+        .frame(maxHeight: 460)
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+        .accessibilityLabel(Text(String(localized: "weeklyVideoReport.video.a11y")))
+    }
 
+    private var videoCaption: some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: "film.stack")
+                .font(.system(size: 15))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .frame(width: 36, height: 36)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .fill(ColorTokens.Brand.primary.opacity(0.14))
+                )
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "weeklyVideoReport.video.label"))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Text(String(localized: "weeklyVideoReport.video.subtitle"))
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(SpacingTokens.sp4)
+            Spacer(minLength: 0)
         }
+        .padding(SpacingTokens.sp4)
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Real-data panel (overlay numbers)
 
     private var realDataPanel: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
             // Заголовок с именем + неделей
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(headerTitle)
-                    .font(TypographyTokens.title(20))
+                    .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
@@ -153,60 +195,100 @@ struct WeeklyVideoReportView: View {
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
-            // Метрики 2×2
-            let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
-            LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-                ForEach(interactor.state.overlayMetrics) { metric in
-                    metricTile(metric)
+            // «Эта неделя в цифрах» — 4 компактные карточки в ряд (SE-safe: 2×2 при сжатии).
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                sectionHeader(String(localized: "weeklyVideoReport.stats.title"))
+                let columns = Array(
+                    repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2),
+                    count: interactor.state.overlayMetrics.count >= 4 ? 4 : 2
+                )
+                LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
+                    ForEach(Array(interactor.state.overlayMetrics.enumerated()), id: \.element.id) { index, metric in
+                        metricTile(metric, accent: metricAccent(index))
+                    }
                 }
             }
 
-            // Звуки
+            // Прогресс по звукам
             if !interactor.state.sounds.isEmpty {
-                Text(String(localized: "weeklyVideoReport.sounds.title"))
-                    .font(TypographyTokens.headline(15))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .padding(.top, SpacingTokens.sp1)
-                VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(interactor.state.sounds) { row in
-                        soundRow(row)
+                VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                    sectionHeader(String(localized: "weeklyVideoReport.sounds.title"))
+                    VStack(spacing: SpacingTokens.sp2) {
+                        ForEach(interactor.state.sounds) { row in
+                            soundRow(row)
+                        }
                     }
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.lg)
-                .fill(ColorTokens.Brand.butter.opacity(0.15))
-        )
         .opacity(showOverlay ? 1 : 0)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.35), value: showOverlay)
     }
 
-    private func metricTile(_ metric: WeeklyVideoReportModels.OverlayMetric) -> some View {
-        HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                HStack {
-                    Image(systemName: metric.icon)
-                        .foregroundStyle(ColorTokens.Parent.accent)
-                    Spacer()
-                }
-                Text(metric.value)
-                    .font(TypographyTokens.titleLarge(26))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Text(metric.caption)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+    private func sectionHeader(_ title: String) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Circle()
+                .fill(ColorTokens.Brand.primary)
+                .frame(width: 6, height: 6)
+                .accessibilityHidden(true)
+            Text(title)
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
+        .padding(.leading, SpacingTokens.micro)
+        .accessibilityAddTraits(.isHeader)
+    }
+
+    private func metricAccent(_ index: Int) -> Color {
+        let palette = [
+            ColorTokens.Brand.primary,
+            ColorTokens.Brand.lilac,
+            ColorTokens.Brand.rose,
+            ColorTokens.Brand.gold
+        ]
+        return palette[index % palette.count]
+    }
+
+    private func metricTile(_ metric: WeeklyVideoReportModels.OverlayMetric, accent: Color) -> some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            Image(systemName: metric.icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(accent)
+                .frame(width: 28, height: 28)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .fill(accent.opacity(0.14))
+                )
+            Text(metric.value)
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            Text(metric.caption)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.sp3)
+        .padding(.horizontal, SpacingTokens.sp1)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(metric.caption): \(metric.value)"))
     }
@@ -214,29 +296,53 @@ struct WeeklyVideoReportView: View {
     private func soundRow(_ row: WeeklyVideoReportModels.SoundRow) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
             Text(row.sound)
-                .font(TypographyTokens.headline(18))
-                .foregroundStyle(.white)
-                .frame(width: 40, height: 40)
-                .background(Circle().fill(soundTint(row.sound)))
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(ColorTokens.Brand.butter.opacity(0.3))
-                    Capsule()
-                        .fill(soundTint(row.sound))
-                        .frame(width: geo.size.width * CGFloat(row.accuracyPercent) / 100)
+                .font(TypographyTokens.headline(20))
+                .foregroundStyle(soundTint(row.sound))
+                .frame(width: 44, height: 44)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .fill(soundTint(row.sound).opacity(0.14))
+                )
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(verbatim: "[\(row.sound)]")
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule()
+                            .fill(soundTint(row.sound).opacity(0.16))
+                        Capsule()
+                            .fill(soundTint(row.sound))
+                            .frame(width: geo.size.width * CGFloat(row.accuracyPercent) / 100)
+                    }
                 }
+                .frame(height: 8)
             }
-            .frame(height: 18)
-            Text("\(row.accuracyPercent)%")
-                .font(TypographyTokens.body(15).weight(.bold))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .frame(width: 52, alignment: .trailing)
-            Image(systemName: trendIcon(row.trend))
-                .font(.system(size: 14, weight: .bold))
-                .foregroundStyle(trendTint(row.trend))
-                .frame(width: 20)
+
+            HStack(spacing: SpacingTokens.sp1) {
+                Image(systemName: trendIcon(row.trend))
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(trendTint(row.trend))
+                    .frame(width: 22, height: 22)
+                    .background(Circle().fill(trendTint(row.trend).opacity(0.14)))
+                Text("\(row.accuracyPercent)%")
+                    .font(TypographyTokens.headline(15).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Parent.ink)
+            }
+            .frame(minWidth: 64, alignment: .trailing)
         }
+        .padding(SpacingTokens.sp3)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(
             String(
@@ -268,8 +374,12 @@ struct WeeklyVideoReportView: View {
         .frame(maxWidth: .infinity)
         .padding(SpacingTokens.sp4)
         .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.lg)
-                .fill(ColorTokens.Brand.butter.opacity(0.15))
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
         )
         .accessibilityElement(children: .combine)
     }
@@ -290,6 +400,16 @@ struct WeeklyVideoReportView: View {
     }
 
     // MARK: - Helpers
+
+    /// Длительность видео из реальных метаданных манифеста («0:45»), или nil.
+    private var durationLabel: String? {
+        guard let meta = VideoCatalog.metadata(for: .weeklyReport(.sample)),
+              meta.durationSeconds > 0 else { return nil }
+        let total = Int(meta.durationSeconds.rounded())
+        let minutes = total / 60
+        let seconds = total % 60
+        return String(format: "%d:%02d", minutes, seconds)
+    }
 
     private var headerTitle: String {
         let state = interactor.state
@@ -321,7 +441,8 @@ struct WeeklyVideoReportView: View {
 
     private func trendTint(_ trend: ProgressTrend) -> Color {
         switch trend {
-        case .up: return ColorTokens.Brand.gold
+        // Mint — крошечный позитивный акцент (по эталону отчёта), не на крупной заливке.
+        case .up: return ColorTokens.Brand.mint
         case .down: return ColorTokens.Brand.rose
         case .stable: return ColorTokens.Parent.inkMuted
         }

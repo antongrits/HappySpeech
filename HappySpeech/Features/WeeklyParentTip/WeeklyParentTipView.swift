@@ -47,14 +47,28 @@ struct WeeklyParentTipView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var hero: some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
-                Text(interactor.state.weekLabel)
-                    .font(TypographyTokens.caption(12).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Parent.accent)
+                HStack(spacing: SpacingTokens.sp1) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(ColorTokens.Brand.butter)
+                        .accessibilityHidden(true)
+                    Text(interactor.state.weekLabel)
+                        .font(TypographyTokens.caption(12).weight(.bold))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+                .padding(.horizontal, SpacingTokens.sp2)
+                .padding(.vertical, SpacingTokens.micro)
+                .background(
+                    Capsule().fill(ColorTokens.Brand.primary.opacity(0.14))
+                )
                 Text(String(localized: "weeklyTip.hero.title"))
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)

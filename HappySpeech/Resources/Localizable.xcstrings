@@ -12226,6 +12226,40 @@
         }
       }
     },
+    "conversationStarters.a11y.favorite": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В избранное"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to favorites"
+          }
+        }
+      }
+    },
+    "conversationStarters.a11y.unfavorite": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из избранного"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from favorites"
+          }
+        }
+      }
+    },
     "conversationStarters.cat.daily": {
       "localizations": {
         "ru": {
@@ -20256,6 +20290,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Перезаписать"
+          }
+        }
+      }
+    },
+    "family.voice.library.row.menu.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Действия с записью"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording actions"
           }
         }
       }
@@ -30300,40 +30351,6 @@
         }
       }
     },
-  "missions.section.count": {
-      "comment": "Kid hub: completed-of-total chip, e.g. «3 из 5».",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$d из %2$d"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$d of %2$d"
-          }
-        }
-      }
-    },
-  "missions.section.title": {
-      "comment": "Kid hub: section header above the missions list.",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодняшние задания"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Today’s missions"
-          }
-        }
-      }
-    },
     "missions.hero.subtitle": {
       "localizations": {
         "ru": {
@@ -30360,6 +30377,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Миссии дня"
+          }
+        }
+      }
+    },
+    "missions.section.count": {
+      "comment": "Kid hub: completed-of-total chip, e.g. «3 из 5».",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d из %2$d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d of %2$d"
+          }
+        }
+      }
+    },
+    "missions.section.title": {
+      "comment": "Kid hub: section header above the missions list.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодняшние задания"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today’s missions"
           }
         }
       }
@@ -33819,12 +33870,34 @@
         }
       }
     },
+    "parentDigest.moment.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Момент дня"
+          }
+        }
+      }
+    },
     "parentDigest.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Сводка дня"
+          }
+        }
+      }
+    },
+    "parentDigest.tip.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совет дня"
           }
         }
       }
@@ -35398,6 +35471,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ваше настроение"
+          }
+        }
+      }
+    },
+    "parentMood.note.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заметка (по желанию)"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note (optional)"
+          }
+        }
+      }
+    },
+    "parentMood.note.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кратко о дне…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Briefly about the day…"
           }
         }
       }
@@ -62162,6 +62269,40 @@
         }
       }
     },
+    "voice.clip.pause.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause"
+          }
+        }
+      }
+    },
+    "voice.clip.play.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести запись"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play recording"
+          }
+        }
+      }
+    },
     "voice.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -62470,6 +62611,23 @@
         }
       }
     },
+    "voice.privacy.onDevice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приватно · на устройстве"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Private · on this device"
+          }
+        }
+      }
+    },
     "voice.recorder.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -62631,6 +62789,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Перезаписать или удалить голос"
+          }
+        }
+      }
+    },
+    "voice.section.saved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранённые записи"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved recordings"
           }
         }
       }
@@ -62872,12 +63047,46 @@
         }
       }
     },
+    "voiceMessageHub.message.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сообщение от %@, %d секунд"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message from %@, %d seconds"
+          }
+        }
+      }
+    },
     "voiceMessageHub.nav.title": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Голосовые сообщения"
+          }
+        }
+      }
+    },
+    "voiceMessageHub.unread.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Непрочитано: %d"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unread: %d"
           }
         }
       }
@@ -63696,6 +63905,50 @@
         }
       }
     },
+    "weeklyRecap.chart.day.axis": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День"
+          }
+        }
+      }
+    },
+    "weeklyRecap.chart.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность по дням"
+          }
+        }
+      }
+    },
+    "weeklyRecap.chart.unit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "минут в день"
+          }
+        }
+      }
+    },
+    "weeklyRecap.chart.value.axis": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут"
+          }
+        }
+      }
+    },
     "weeklyRecap.cta.share": {
       "localizations": {
         "ru": {
@@ -63799,6 +64052,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%d дн"
+          }
+        }
+      }
+    },
+    "weeklyRecap.kpi.trend.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "динамика"
           }
         }
       }
@@ -64566,6 +64830,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Звуки недели"
+          }
+        }
+      }
+    },
+    "weeklyVideoReport.stats.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эта неделя в цифрах"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This week in numbers"
           }
         }
       }

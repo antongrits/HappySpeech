@@ -37,8 +37,13 @@ struct NeurolinguistInsightsView: View {
 
     var body: some View {
         ZStack {
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            ColorTokens.Parent.bg.ignoresSafeArea()
+
+            HSMeshGradientBackground(palette: .calm, animated: false)
                 .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
@@ -48,6 +53,7 @@ struct NeurolinguistInsightsView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp8)
             }
+            .scrollBounceBehavior(.basedOnSize)
             .refreshable {
                 await refresh(force: true)
             }

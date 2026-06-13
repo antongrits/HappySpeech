@@ -981,6 +981,7 @@
 		6FD16674947437D0A48B5D81 /* SessionHistoryViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB588CE07A2CE1EA30A6BC23 /* SessionHistoryViewComponents.swift */; };
 		700B257E6C3EB324003B4327 /* celebrate_new_island_unlocked.json in Resources */ = {isa = PBXBuildFile; fileRef = 75C645C076812E4E4FD47193 /* celebrate_new_island_unlocked.json */; };
 		702C1F272CF34D08F5A8243A /* SpecialistScheduleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFD9B4CE3D94B2CF80556DD /* SpecialistScheduleInteractor.swift */; };
+		70393B314994CACF52E34BD4 /* HSVoiceClipRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F9A5E0F82142451C076086 /* HSVoiceClipRow.swift */; };
 		7050D35B06E9283A5F72252D /* SessionCompleteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F3D3232F1F6AA579B5578A /* SessionCompleteModels.swift */; };
 		7068AF31016F3F56C54AFEF2 /* PlainProgressWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AD83116A3D7035846D56D4 /* PlainProgressWorkerTests.swift */; };
 		7073EABD4686C82DF840AFD3 /* ScreeningOutcomeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584ED79DF3CE2030E58C26EB /* ScreeningOutcomeRepository.swift */; };
@@ -1352,6 +1353,7 @@
 		978661480FEC79FCFE052D46 /* ScreeningScoringEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D8E6C164D6DC27259DBF30 /* ScreeningScoringEngineTests.swift */; };
 		9791F90331132F56E0F6DC5B /* ARMirrorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D29770EF1128CE98AA8CE6 /* ARMirrorInteractor.swift */; };
 		9799E957C2072D29FD7B821F /* ARStoryQuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4C7D300C26088E425309DC /* ARStoryQuestInteractor.swift */; };
+		97B425F62A33E9DF6F7DF434 /* HSPrivacyPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6F6EBADD8B40D6954EE31B /* HSPrivacyPill.swift */; };
 		97DE16E69A8BBBFFF7F32983 /* HSPictTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7B87507AD1FB4406B3A613B /* HSPictTile.swift */; };
 		97F653029BC050375097A1DC /* StageProgressionPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6054C1DC43383EEC2799AB /* StageProgressionPlannerTests.swift */; };
 		9801565FDADF990263970DF9 /* SoundAndFaceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DCE0CA8CD2353EBC266095 /* SoundAndFaceInteractorTests.swift */; };
@@ -3376,6 +3378,7 @@
 		87C6F5BCD32F4F626263B5C5 /* ImitationLabModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImitationLabModels.swift; sourceTree = "<group>"; };
 		87D4E1CE7B9FC89E68B45773 /* PuzzleRevealInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRevealInteractor.swift; sourceTree = "<group>"; };
 		87DA753ED6BB7C87AC7B593E /* LexicalThemesPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexicalThemesPresenterTests.swift; sourceTree = "<group>"; };
+		87F9A5E0F82142451C076086 /* HSVoiceClipRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSVoiceClipRow.swift; sourceTree = "<group>"; };
 		880DAB72A060A2D83E9BB5D5 /* SettingsExportWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsExportWorker.swift; sourceTree = "<group>"; };
 		88C8024910107078D143F304 /* BreathingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingModels.swift; sourceTree = "<group>"; };
 		88CA342FEABDC33B31126A72 /* ParentVoiceNoteModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVoiceNoteModels.swift; sourceTree = "<group>"; };
@@ -3538,6 +3541,7 @@
 		9A304220A40BB07D52CEACA9 /* FamilyHomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeInteractor.swift; sourceTree = "<group>"; };
 		9A42E34FDC5DC3D8924D6BD7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		9A4F2B17E23335EA0D2835F5 /* HSOnboardingParallax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSOnboardingParallax.swift; sourceTree = "<group>"; };
+		9A6F6EBADD8B40D6954EE31B /* HSPrivacyPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSPrivacyPill.swift; sourceTree = "<group>"; };
 		9A88A62A68669C98F5CD0B29 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9B023CA4C47E83D04D816208 /* LetterTracePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTracePresenter.swift; sourceTree = "<group>"; };
 		9B0EAABC6E557B28295245A8 /* VoiceJournalModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceJournalModels.swift; sourceTree = "<group>"; };
@@ -8094,6 +8098,7 @@
 				51BCC68484F50D943D115724 /* HSParallaxTile.swift */,
 				B7B87507AD1FB4406B3A613B /* HSPictTile.swift */,
 				5B71E1DD4A7433E78915E849 /* HSPressableStyle.swift */,
+				9A6F6EBADD8B40D6954EE31B /* HSPrivacyPill.swift */,
 				33FBF912606081B7D0A71329 /* HSProgressBar.swift */,
 				5ECC85DF512FE258194C72FA /* HSProgressRing.swift */,
 				0D8C9FB6C6EBDA3F3A273B6F /* HSRewardBurst.swift */,
@@ -8108,6 +8113,7 @@
 				D3561F9A717F4357CC920242 /* HSSwipeCardStack.swift */,
 				AADB64873378D29FDF30ED6A /* HSSymbolEffect.swift */,
 				164C1A3120C1F046F48D60DF /* HSTimelineView.swift */,
+				87F9A5E0F82142451C076086 /* HSVoiceClipRow.swift */,
 				39F9845CD62ADD524B2897A6 /* KidGameCanvasScaffold.swift */,
 				501E87AB08B4F2F25EC40C81 /* LyalyaHeroView.swift */,
 				3E6F01EB480BB165DBCD668A /* LyalyaMascotView.swift */,
@@ -11565,6 +11571,7 @@
 				083551CE5ACDA6F4EA7C5553 /* HSParallaxTile.swift in Sources */,
 				97DE16E69A8BBBFFF7F32983 /* HSPictTile.swift in Sources */,
 				86DFFF8E0F88E54BBB4C9737 /* HSPressableStyle.swift in Sources */,
+				97B425F62A33E9DF6F7DF434 /* HSPrivacyPill.swift in Sources */,
 				45FEB36C4095C94CC1745E2F /* HSProgressBar.swift in Sources */,
 				1AE4B7012872B51B8021E0A6 /* HSProgressRing.swift in Sources */,
 				3D78F802477AA3924192AA06 /* HSRewardBurst.swift in Sources */,
@@ -11581,6 +11588,7 @@
 				D981746B8D95DAE433A44E6A /* HSTimelineView.swift in Sources */,
 				8960963C1D331B5C22A4A866 /* HSTips.swift in Sources */,
 				ED3DD5430B6834AF615AFF82 /* HSTypes.swift in Sources */,
+				70393B314994CACF52E34BD4 /* HSVoiceClipRow.swift in Sources */,
 				BD9F5DC17FFE3EA984708117 /* HabitStreakDashboardInteractor.swift in Sources */,
 				CCEB336BE34226E8D5BC3B37 /* HabitStreakDashboardModels.swift in Sources */,
 				C6AF402825C184E18A926D44 /* HabitStreakDashboardView.swift in Sources */,

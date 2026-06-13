@@ -36,6 +36,8 @@ struct FamilyVoiceMessageHubView: View {
     private var content: some View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp4) {
+                HSPrivacyPill()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 hero
                 list
                 if !interactor.state.isEmpty {
@@ -62,7 +64,7 @@ struct FamilyVoiceMessageHubView: View {
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
                 if interactor.state.unreadCount > 0 {
-                    Text("Непрочитано: \(interactor.state.unreadCount)")
+                    Text(String(format: String(localized: "voiceMessageHub.unread.count"), interactor.state.unreadCount))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.accent)
                         .padding(.top, 4)
@@ -166,7 +168,7 @@ struct FamilyVoiceMessageHubView: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("Сообщение от \(message.sender.title), \(message.durationSeconds) секунд"))
+        .accessibilityLabel(Text(String(format: String(localized: "voiceMessageHub.message.a11y"), message.sender.title, message.durationSeconds)))
         .accessibilityAddTraits(.isButton)
     }
 

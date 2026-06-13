@@ -44,6 +44,7 @@ struct ConversationStartersParentView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var hero: some View {
@@ -80,9 +81,19 @@ struct ConversationStartersParentView: View {
     private func row(_ question: ConversationStartersParentModels.Question) -> some View {
         HSCard(style: question.isFavorite ? .tinted(ColorTokens.Parent.accent.opacity(0.10)) : .flat) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                VStack(alignment: .leading, spacing: 4) {
+                Image(systemName: "quote.opening")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.lilac)
+                    .frame(width: 40, height: 40)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                            .fill(ColorTokens.Brand.lilac.opacity(0.14))
+                    )
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: 6) {
                     Text(question.text)
-                        .font(TypographyTokens.body(15))
+                        .font(TypographyTokens.body(15).weight(.medium))
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(3)
                         .minimumScaleFactor(0.85)
@@ -110,7 +121,9 @@ struct ConversationStartersParentView: View {
                         .frame(width: 36, height: 36)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(Text(question.isFavorite ? "Убрать из избранного" : "В избранное"))
+                .accessibilityLabel(Text(question.isFavorite
+                    ? String(localized: "conversationStarters.a11y.unfavorite")
+                    : String(localized: "conversationStarters.a11y.favorite")))
             }
         }
     }

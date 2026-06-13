@@ -50,6 +50,7 @@ struct ParentInspirationBoardView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var filterToggle: some View {

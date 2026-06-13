@@ -122,7 +122,21 @@ struct VoiceJournalView: View {
 
     private func list(_ vm: VoiceJournalModels.LoadEntries.ViewModel) -> some View {
         ScrollView {
-            LazyVStack(spacing: SpacingTokens.sp2) {
+            LazyVStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HSPrivacyPill()
+                    .padding(.bottom, SpacingTokens.sp1)
+
+                HStack(alignment: .firstTextBaseline) {
+                    Text("voice.section.saved")
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Spacer()
+                    Text(String(format: String(localized: "parent_child.recordings.count"), vm.rows.count))
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                }
+                .padding(.bottom, SpacingTokens.sp1)
+
                 ForEach(Array(vm.rows.enumerated()), id: \.element.id) { index, row in
                     rowView(row)
                         .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
@@ -140,51 +154,14 @@ struct VoiceJournalView: View {
     }
 
     private func rowView(_ row: VoiceJournalModels.LoadEntries.Row) -> some View {
-        HSLiquidGlassCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                ZStack {
-                    Circle()
-                        .fill(ColorTokens.Brand.lilac.opacity(0.18))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(ColorTokens.Brand.lilac)
-                        .hsSymbolEffect(.pulse, value: row.id)
-                        .accessibilityHidden(true)
-                }
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(row.title)
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    HStack(spacing: SpacingTokens.sp2) {
-                        Text(row.dateText)
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        Text("·")
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .accessibilityHidden(true)
-                        Text(row.durationText)
-                            .font(TypographyTokens.caption(12).monospacedDigit())
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    }
-                }
-                Spacer(minLength: 0)
-                Button {
-                    Task { await play(row.entry) }
-                } label: {
-                    Image(systemName: "play.circle.fill")
-                        .font(.system(size: 36))
-                        .foregroundStyle(ColorTokens.Parent.accent)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(Text("voice.journal.row.play"))
-            }
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(row.accessibilityLabel))
+        HSVoiceClipRow(
+            title: row.title,
+            subtitle: row.dateText,
+            durationText: row.durationText,
+            isPlaying: false,
+            accessibilityLabel: row.accessibilityLabel,
+            onPlay: { Task { await play(row.entry) } }
+        )
         .contextMenu {
             Button(role: .destructive) {
                 Task { await delete(row.entry) }

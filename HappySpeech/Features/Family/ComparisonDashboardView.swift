@@ -58,6 +58,12 @@ struct ComparisonDashboardView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .calm, animated: false)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -104,6 +110,7 @@ struct ComparisonDashboardView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.sp8)
         }
+        .scrollBounceBehavior(.basedOnSize)
         .refreshable { await refresh() }
     }
 

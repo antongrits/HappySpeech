@@ -19,8 +19,14 @@ struct ParentDailyDigestView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                ColorTokens.Parent.bg.ignoresSafeArea()
+
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text(String(localized: "parentDigest.nav.title")))
@@ -65,6 +71,7 @@ struct ParentDailyDigestView: View {
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
         }
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var hero: some View {
@@ -126,7 +133,7 @@ struct ParentDailyDigestView: View {
                 Text(state.photoMomentEmoji)
                     .font(.system(size: 36))
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Момент дня")
+                    Text(String(localized: "parentDigest.moment.title"))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.accent)
                     Text(state.photoMomentCaption)
@@ -149,7 +156,7 @@ struct ParentDailyDigestView: View {
                         .font(.system(size: 14))
                         .foregroundStyle(ColorTokens.Parent.accent)
                         .hsSymbolEffect(.variableColor, value: state.tip.text)
-                    Text("Совет дня")
+                    Text(String(localized: "parentDigest.tip.title"))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.accent)
                 }
@@ -157,6 +164,8 @@ struct ParentDailyDigestView: View {
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text("— \(state.tip.author)")
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)

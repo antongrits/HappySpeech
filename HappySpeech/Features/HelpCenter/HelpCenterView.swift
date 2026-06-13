@@ -97,6 +97,7 @@ struct HelpCenterView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("helpCenter.screen.title"))
             .navigationBarTitleDisplayMode(.large)

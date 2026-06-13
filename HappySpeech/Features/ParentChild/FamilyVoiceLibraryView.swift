@@ -90,6 +90,9 @@ struct FamilyVoiceLibraryView: View {
 
                 ScrollView(showsIndicators: false) {
                     LazyVStack(spacing: SpacingTokens.sp2) {
+                        HSPrivacyPill()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
                         // Priority usage banner
                         priorityBanner
 
@@ -201,76 +204,54 @@ struct FamilyRecordingRow: View {
     let onDelete: () -> Void
     let onRerecord: () -> Void
 
+    private var dateSubtitle: String {
+        recording.recordedAt.formatted(date: .abbreviated, time: .omitted)
+    }
+
+    private var rowA11y: String {
+        String(localized: "family.voice.library.play") + " "
+            + recording.word + ", "
+            + dateSubtitle + ", "
+            + recording.durationText
+    }
+
     var body: some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
-            HStack(spacing: SpacingTokens.sp3) {
-                // Play / Stop button
-                Button(action: onPlay) {
-                    Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                        .font(TypographyTokens.display(36))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .hsSymbolEffect(.bounce, value: isPlaying)
-                        .frame(minWidth: 44, minHeight: 44)
-                        .animation(.easeInOut(duration: 0.2), value: isPlaying)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(
-                    isPlaying
-                        ? String(localized: "family.voice.library.play") + " " + recording.word
-                        : String(localized: "family.voice.library.play") + " " + recording.word
-                )
+        HStack(spacing: SpacingTokens.sp3) {
+            HSVoiceClipRow(
+                title: recording.word,
+                subtitle: dateSubtitle,
+                durationText: recording.durationText,
+                isPlaying: isPlaying,
+                accessibilityLabel: rowA11y,
+                onPlay: onPlay
+            )
 
-                // Word + date
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(recording.word)
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-
-                    Text(
-                        String(
-                            format: String(localized: "family.voice.library.last_recorded"),
-                            recording.recordedAt.formatted(date: .abbreviated, time: .omitted)
-                        )
+            Menu {
+                Button {
+                    onRerecord()
+                } label: {
+                    Label(
+                        String(localized: "family.voice.library.rerecord"),
+                        systemImage: "arrow.clockwise"
                     )
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-
-                    Text(recording.durationText)
-                        .font(TypographyTokens.mono(11))
-                        .foregroundStyle(ColorTokens.Parent.inkSoft)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
                 }
-
-                Spacer(minLength: SpacingTokens.tiny)
-
-                // Rerecord
-                Button(action: onRerecord) {
-                    Image(systemName: "arrow.clockwise")
-                        .font(TypographyTokens.body(16))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .frame(minWidth: 36, minHeight: 36)
+                Button(role: .destructive) {
+                    onDelete()
+                } label: {
+                    Label(
+                        String(localized: "parent_child.recorder.cta.delete"),
+                        systemImage: "trash"
+                    )
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(String(localized: "family.voice.library.rerecord") + " " + recording.word)
-
-                // Delete
-                Button(action: onDelete) {
-                    Image(systemName: "trash")
-                        .font(TypographyTokens.body(16))
-                        .foregroundStyle(ColorTokens.Semantic.error)
-                        .frame(minWidth: 36, minHeight: 36)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(String(localized: "parent_child.recorder.cta.delete") + " " + recording.word)
+            } label: {
+                Image(systemName: "ellipsis.circle")
+                    .font(.system(size: 22))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .frame(width: 44, height: 44)
             }
+            .accessibilityLabel(Text("family.voice.library.row.menu.a11y"))
         }
         .environment(\.circuitContext, .parent)
-        .accessibilityElement(children: .contain)
     }
 }
 

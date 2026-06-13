@@ -68,7 +68,7 @@ struct PlainProgressView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
@@ -98,6 +98,7 @@ struct PlainProgressView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("plainProgress.screen.title"))
             .navigationBarTitleDisplayMode(.large)

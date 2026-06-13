@@ -126,8 +126,11 @@ struct FamilyVoiceView: View {
         let vm = scene.display.viewModel
         ScrollView(showsIndicators: false) {
             VStack(spacing: SpacingTokens.sectionGap) {
+                HSPrivacyPill()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, SpacingTokens.sp4)
+
                 headerCard
-                    .padding(.top, SpacingTokens.sp6)
 
                 wordPickerSection(vm: vm, scene: scene)
 
@@ -362,14 +365,8 @@ struct FamilyVoiceView: View {
                                 showDeleteConfirm = true
                             }
                         )
-                        Divider()
                     }
                 }
-                .background(ColorTokens.Parent.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.card))
-                .overlay(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .strokeBorder(ColorTokens.Parent.inkSoft.opacity(0.15), lineWidth: 1)
-                )
             }
         }
     }
@@ -412,42 +409,26 @@ private struct RecordingRowView: View {
     let onDelete: () -> Void
 
     var body: some View {
-        HStack(spacing: SpacingTokens.xLarge) {
-            Button(action: onPlay) {
-                Image(systemName: "play.circle.fill")
-                    .font(.title2)
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(minWidth: 44, minHeight: 44)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(String(localized: "parent_child.recorder.cta.play") + " " + recording.word)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(recording.word)
-                    .font(TypographyTokens.headline())
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-                Text(recording.durationText)
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
-
-            Spacer(minLength: SpacingTokens.tiny)
+        HStack(spacing: SpacingTokens.sp3) {
+            HSVoiceClipRow(
+                title: recording.word,
+                durationText: recording.durationText,
+                isPlaying: false,
+                accessibilityLabel: String(localized: "parent_child.recorder.cta.play")
+                    + " " + recording.word + ", " + recording.durationText,
+                onPlay: onPlay
+            )
 
             Button(action: onDelete) {
                 Image(systemName: "trash")
-                    .font(.body)
+                    .font(.system(size: 18))
                     .foregroundStyle(ColorTokens.Semantic.error)
-                    .frame(minWidth: 44, minHeight: 44)
+                    .frame(width: 44, height: 44)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(String(localized: "parent_child.recorder.cta.delete") + " " + recording.word)
         }
-        .padding(.horizontal, SpacingTokens.sp4)
-        .frame(minHeight: 52)
+        .environment(\.circuitContext, .parent)
     }
 }
 

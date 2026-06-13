@@ -61,12 +61,13 @@ final class ComparisonDashboardViewModel {
     var isLoading: Bool = false
     var errorMessage: String?
 
-    // Charts need child-color mapping
+    // Charts need child-color mapping — warm parent palette only
+    // (coral / rose / gold / lilac), без off-palette синего/зелёного на заливках.
     func chartColor(for childId: String) -> Color {
         let colors: [Color] = [
             ColorTokens.Brand.primary,
-            ColorTokens.Brand.sky,
-            ColorTokens.Brand.mint,
+            ColorTokens.Brand.rose,
+            ColorTokens.Brand.gold,
             ColorTokens.Brand.lilac
         ]
         let idx = children.firstIndex { $0.id == childId } ?? 0

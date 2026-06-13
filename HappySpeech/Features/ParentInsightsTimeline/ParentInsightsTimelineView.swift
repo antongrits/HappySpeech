@@ -70,8 +70,13 @@ struct ParentInsightsTimelineView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                ColorTokens.Parent.bg.ignoresSafeArea()
+
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -87,6 +92,7 @@ struct ParentInsightsTimelineView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
                 .refreshable {
                     await refreshAction()
                 }

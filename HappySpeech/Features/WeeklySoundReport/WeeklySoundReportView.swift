@@ -93,6 +93,7 @@ struct WeeklySoundReportView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("weeklyReport.screen.title"))
             .navigationBarTitleDisplayMode(.large)
