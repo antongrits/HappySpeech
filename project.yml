@@ -184,7 +184,6 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.mmf.bsu.shared
-        com.apple.developer.personal-voice: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.mmf.bsu.HappySpeech
@@ -195,8 +194,17 @@ targets:
         Debug:
           ENABLE_TESTABILITY: YES
     dependencies:
+      # RealmSwift is the only first-party SPM product that builds as a DYNAMIC
+      # framework, so it must be embedded into .app/Frameworks/ (otherwise dyld
+      # fails on device: "Library not loaded: @rpath/RealmSwift.framework").
+      # All other products below build as STATIC libraries and are linked
+      # directly into the app binary — they must NOT be embedded.
+      # Firebase's closed-source dynamic internals (FirebaseFirestoreInternal,
+      # absl, grpc, grpcpp, openssl_grpc) are embedded automatically by Xcode as
+      # transitive dependencies of FirebaseFirestore.
       - package: RealmSwift
         product: RealmSwift
+        embed: true
       - package: FirebaseSDK
         product: FirebaseAuth
       - package: FirebaseSDK

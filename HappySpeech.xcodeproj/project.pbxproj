@@ -1016,6 +1016,7 @@
 		71EE00B4E81404F0395A5C81 /* StoryRetellingProInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E4B705251E4803F3589B4D /* StoryRetellingProInteractor.swift */; };
 		71F6979902B0A6E59BF9FCF8 /* WeeklyParentTipContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433A380BECB785946C05641E /* WeeklyParentTipContent.swift */; };
 		71FC4030EB2DD69DC043E0ED /* HomeTasksDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEDA279BD1078DAC926EB5F /* HomeTasksDisplayLogic.swift */; };
+		7205926E5D20B003302A0DEE /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B3B01FE75CF48E9BF5460664 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		720AE671D447C54C93926E97 /* ParentInsightsTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D7F5FDAEFE0D76141D1FD2 /* ParentInsightsTimelineView.swift */; };
 		7223C8BD76A74794322ECB38 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 79EC18ED0970841147981C77 /* FirebaseFirestore */; };
 		7223EE82C9B6969ACC17DD3D /* PronunciationScorer_velar.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = 64100505E39F7D217C8499BF /* PronunciationScorer_velar.mlpackage */; };
@@ -2234,6 +2235,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		2B38A4BA38BDA373B2E2BE39 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7205926E5D20B003302A0DEE /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		93327F9921EF0A5C0157DD92 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -10231,6 +10243,7 @@
 				ED9EFF263B036AB45CA5589D /* Resources */,
 				8F27177A9904315FEC107B89 /* Frameworks */,
 				93327F9921EF0A5C0157DD92 /* Embed Foundation Extensions */,
+				2B38A4BA38BDA373B2E2BE39 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
