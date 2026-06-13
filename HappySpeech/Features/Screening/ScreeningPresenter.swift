@@ -27,7 +27,7 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
         let estMinutes = max(1, response.prompts.count / 2)
         let vm = ScreeningModels.StartScreening.ViewModel(
             prompts: response.prompts,
-            progressText: String(localized: "screening.header.progress.\(response.prompts.count)"),
+            progressText: String(format: String(localized: "screening.header.progress %lld"), response.prompts.count),
             estimatedMinutes: estMinutes,
             lyalyaPhrase: response.lyalyaPhrase
         )
@@ -103,11 +103,13 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
         let testedLabel: String
         if response.wasAdaptiveStopped {
             testedLabel = String(
-                localized: "screening.tested.adaptive.\(response.testedSoundsCount)"
+                format: String(localized: "screening.tested.adaptive %lld"),
+                response.testedSoundsCount
             )
         } else {
             testedLabel = String(
-                localized: "screening.tested.full.\(response.totalSoundsCount)"
+                format: String(localized: "screening.tested.full %lld"),
+                response.totalSoundsCount
             )
         }
 
@@ -147,7 +149,7 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
     func presentRescreeningCheck(_ response: ScreeningModels.CheckRescreening.Response) async {
         let warning: String?
         if !response.isEligible, let days = response.daysSinceLastScreening {
-            warning = String(localized: "screening.rescreening.too_soon.\(days)")
+            warning = String(format: String(localized: "screening.rescreening.too_soon %lld"), days)
         } else {
             warning = nil
         }
@@ -157,7 +159,7 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
             let soundsList = prev.problematicSounds.isEmpty
                 ? String(localized: "screening.rescreening.no_problems")
                 : prev.problematicSounds.joined(separator: ", ")
-            previousSummary = String(localized: "screening.rescreening.previous.\(soundsList)")
+            previousSummary = String(format: String(localized: "screening.rescreening.previous %@"), soundsList)
         } else {
             previousSummary = nil
         }
@@ -177,7 +179,7 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
             return String(localized: "screening.summary.all_normal")
         }
         let list = outcome.priorityTargetSounds.joined(separator: ", ")
-        return String(localized: "screening.summary.intervention.\(list)")
+        return String(format: String(localized: "screening.summary.intervention %@"), list)
     }
 
     private func severityRank(_ verdict: SoundVerdict) -> Int {

@@ -684,13 +684,6 @@
           "imageAsset": "word_ukho"
         },
         {
-          "id": "kh-wm-2",
-          "word": "петух",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wm-2.m4a",
-          "imageAsset": "word_petukh"
-        },
-        {
           "id": "kh-wm-3",
           "word": "стихи",
           "difficulty": 2,
@@ -718,32 +711,6 @@
           "audio_file": "Audio/Content/KH/kh-wm-6.m4a"
         },
         {
-          "id": "kh-wm-7",
-          "word": "горох",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wm-7.m4a",
-          "imageAsset": "word_gorokh"
-        },
-        {
-          "id": "kh-wm-8",
-          "word": "мох",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/KH/kh-wm-8.m4a",
-          "imageAsset": "word_mokh"
-        },
-        {
-          "id": "kh-wm-9",
-          "word": "слух",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wm-9.m4a"
-        },
-        {
-          "id": "kh-wm-10",
-          "word": "нюх",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wm-10.m4a"
-        },
-        {
           "id": "kh-wm-11",
           "word": "ахать",
           "difficulty": 2,
@@ -760,13 +727,6 @@
           "word": "охать",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wm-13.m4a"
-        },
-        {
-          "id": "kh-wm-14",
-          "word": "орех",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/KH/kh-wm-14.m4a",
-          "imageAsset": "word_orekh"
         },
         {
           "id": "kh-wm-15",
@@ -800,13 +760,6 @@
           "imageAsset": "word_rubakha"
         },
         {
-          "id": "kh-wm-20",
-          "word": "лопух",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/KH/kh-wm-20.m4a",
-          "imageAsset": "word_lopukh"
-        },
-        {
           "id": "kh-wm-21",
           "word": "черепаха",
           "difficulty": 4,
@@ -826,13 +779,6 @@
           "audio_file": "Audio/Content/KH/kh-wm-23.m4a"
         },
         {
-          "id": "kh-wm-24",
-          "word": "монах",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/KH/kh-wm-24.m4a",
-          "imageAsset": "word_monakh"
-        },
-        {
           "id": "kh-wm-25",
           "word": "мухомор",
           "difficulty": 3,
@@ -850,13 +796,6 @@
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wm-27.m4a",
           "imageAsset": "word_okhotnik"
-        },
-        {
-          "id": "kh-wm-28",
-          "word": "пастух",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wm-28.m4a",
-          "imageAsset": "word_pastukh"
         },
         {
           "id": "kh-wm-29",
@@ -1004,6 +943,32 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wm-49.m4a"
+        },
+        {
+          "id": "kh-wf-14",
+          "word": "эпоха",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/KH/kh-wf-14.m4a",
+          "hint": "э-по-Ха. [Х] в слове.",
+          "imageAsset": "word_epokha"
+        },
+        {
+          "id": "kh-wf-26",
+          "word": "сухо",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/KH/kh-wf-26.m4a"
+        },
+        {
+          "id": "kh-wf-28",
+          "word": "тихо",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/KH/kh-wf-28.m4a"
+        },
+        {
+          "id": "kh-wf-29",
+          "word": "плохо",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/KH/kh-wf-29.m4a"
         }
       ]
     },
@@ -1097,21 +1062,6 @@
           "imageAsset": "word_vorokh"
         },
         {
-          "id": "kh-wf-13",
-          "word": "черепаха",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/KH/kh-wf-13.m4a",
-          "imageAsset": "word_cherepakha"
-        },
-        {
-          "id": "kh-wf-14",
-          "word": "эпоха",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/KH/kh-wf-14.m4a",
-          "hint": "э-по-Ха. [Х] в слове.",
-          "imageAsset": "word_epokha"
-        },
-        {
           "id": "kh-wf-15",
           "word": "шорох",
           "hint": "Шо-роХ. [Х] в конце.",
@@ -1185,30 +1135,6 @@
           "word": "грех",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wf-25.m4a"
-        },
-        {
-          "id": "kh-wf-26",
-          "word": "сухо",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/KH/kh-wf-26.m4a"
-        },
-        {
-          "id": "kh-wf-27",
-          "word": "лихо",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/KH/kh-wf-27.m4a"
-        },
-        {
-          "id": "kh-wf-28",
-          "word": "тихо",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/KH/kh-wf-28.m4a"
-        },
-        {
-          "id": "kh-wf-29",
-          "word": "плохо",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/KH/kh-wf-29.m4a"
         },
         {
           "id": "kh-wf-30",

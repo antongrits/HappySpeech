@@ -125,7 +125,7 @@ struct ScreeningView: View {
                     Text(progress)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                        .accessibilityLabel(String(localized: "screening.accessibility.progress.\(progress)"))
+                        .accessibilityLabel(String(format: String(localized: "screening.accessibility.progress %@"), progress))
                 }
                 HSProgressBar(value: progressFraction, style: .kid)
                     .accessibilityHidden(true)
@@ -417,7 +417,7 @@ private struct StageCard: View {
                         .lineLimit(nil)
                         .tracking(2)
                         .accessibilityLabel(
-                            String(localized: "screening.accessibility.word.\(vm.targetWord)")
+                            String(format: String(localized: "screening.accessibility.word %@"), vm.targetWord)
                         )
 
                     if !vm.targetSoundHint.isEmpty {

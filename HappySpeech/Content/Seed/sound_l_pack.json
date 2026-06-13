@@ -3343,10 +3343,9 @@
         },
         {
           "id": "l-diff-8",
-          "word": "лось — рось",
-          "hint": "Лось — зверь, роса — капли.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-8.m4a"
+          "word": "лама — рама",
+          "hint": "Лама — мохнатый зверь, рама — у окна.",
+          "difficulty": 2
         },
         {
           "id": "l-diff-9",
@@ -3357,10 +3356,9 @@
         },
         {
           "id": "l-diff-10",
-          "word": "клот — крот",
-          "hint": "Клот — морской, крот — зверёк.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/L/l-diff-10.m4a"
+          "word": "ложки — рожки",
+          "hint": "Ложки — едят суп, рожки — макароны-трубочки.",
+          "difficulty": 3
         },
         {
           "id": "l-diff-11",
@@ -3371,17 +3369,15 @@
         },
         {
           "id": "l-diff-12",
-          "word": "ляп — ряп",
-          "hint": "Ляп — Л', рябь — Р'.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/L/l-diff-12.m4a"
+          "word": "лейка — рейка",
+          "hint": "Лейка — поливать цветы, рейка — узкая дощечка.",
+          "difficulty": 3
         },
         {
           "id": "l-diff-13",
-          "word": "голень — горень",
-          "hint": "Голень — Л, горе — Р.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/L/l-diff-13.m4a"
+          "word": "жалко — жарко",
+          "hint": "Жалко — когда грустно, жарко — очень тепло.",
+          "difficulty": 3
         },
         {
           "id": "l-diff-14",
@@ -3420,10 +3416,9 @@
         },
         {
           "id": "l-diff-19",
-          "word": "блеск — бреск",
-          "hint": "Блеск — Л', бреск — Р.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/L/l-diff-19.m4a"
+          "word": "балка — барка",
+          "hint": "Балка — бревно-опора, барка — большая лодка.",
+          "difficulty": 4
         },
         {
           "id": "l-diff-20",
@@ -3434,10 +3429,9 @@
         },
         {
           "id": "l-diff-21",
-          "word": "лыко — рыко",
+          "word": "лад — рад",
           "difficulty": 1,
-          "audio_file": "Audio/Content/L/l-diff-21.m4a",
-          "hint": "Л против Р в начале."
+          "hint": "Лад — когда всё дружно, рад — радуется."
         },
         {
           "id": "l-diff-22",
@@ -3462,38 +3456,33 @@
         },
         {
           "id": "l-diff-25",
-          "word": "слон — срон",
+          "word": "уголь — угорь",
           "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-25.m4a",
-          "hint": "Стечение СЛ против СР."
+          "hint": "Уголь — чёрный, им рисуют, угорь — рыба."
         },
         {
           "id": "l-diff-26",
-          "word": "плот — прот",
+          "word": "булка — бурка",
           "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-26.m4a",
-          "hint": "Стечение ПЛ против ПР."
+          "hint": "Булка — её едят, бурка — тёплый плащ."
         },
         {
           "id": "l-diff-27",
-          "word": "клад — крад",
+          "word": "укол — укор",
           "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-27.m4a",
-          "hint": "Стечение КЛ против КР."
+          "hint": "Укол — у врача иголкой, укор — упрёк."
         },
         {
           "id": "l-diff-28",
-          "word": "лебедь — ребедь",
+          "word": "лука — рука",
           "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-28.m4a",
-          "hint": "Мягкие в начале."
+          "hint": "Лука — изгиб седла, рука — ею держим."
         },
         {
           "id": "l-diff-29",
-          "word": "соль — сорь",
+          "word": "малина — марина",
           "difficulty": 2,
-          "audio_file": "Audio/Content/L/l-diff-29.m4a",
-          "hint": "Мягкий Л' на конце против Р'."
+          "hint": "Малина — сладкая ягода, марина — имя девочки."
         }
       ]
     }

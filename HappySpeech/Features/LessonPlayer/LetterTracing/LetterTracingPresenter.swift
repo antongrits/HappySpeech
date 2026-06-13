@@ -39,7 +39,7 @@ final class LetterTracingPresenter: LetterTracingPresentationLogic {
         let voiceFeedback: String
         if response.finalScore >= 0.85 {
             feedbackText = String(localized: "letter_tracing.feedback.excellent")
-            voiceFeedback = String(localized: "letter_tracing.voice.excellent \(response.targetLetter)")
+            voiceFeedback = String(format: String(localized: "letter_tracing.voice.excellent %@"), response.targetLetter)
         } else if response.finalScore >= 0.65 {
             feedbackText = String(localized: "letter_tracing.feedback.good")
             voiceFeedback = String(localized: "letter_tracing.voice.good")
@@ -124,7 +124,7 @@ final class LetterTracingPresenter: LetterTracingPresentationLogic {
             achievedText = ""
         } else {
             let joined = response.achievedLetters.joined(separator: ", ")
-            achievedText = String(localized: "letter_tracing.achieved \(joined)")
+            achievedText = String(format: String(localized: "letter_tracing.achieved %@"), joined)
         }
         let celebrationText: String
         if response.averageScore >= 0.8 {

@@ -225,11 +225,11 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
         case .none:
             return ""
         case .startPoint:
-            return String(localized: "letter_tracing.hint.desc.start_point \(letter)")
+            return String(format: String(localized: "letter_tracing.hint.desc.start_point %@"), letter)
         case .direction:
-            return String(localized: "letter_tracing.hint.desc.direction \(letter)")
+            return String(format: String(localized: "letter_tracing.hint.desc.direction %@"), letter)
         case .fullTemplate:
-            return String(localized: "letter_tracing.hint.desc.full_template \(letter)")
+            return String(format: String(localized: "letter_tracing.hint.desc.full_template %@"), letter)
         }
     }
 
@@ -510,15 +510,18 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
         switch level {
         case .overTemplate:
             return String(
-                localized: "letter_tracing.voice.prompt_template \(letter) \(phonemeWord)"
+                format: String(localized: "letter_tracing.voice.prompt_template %@ %@"),
+                letter, phonemeWord
             )
         case .dotsOnly:
             return String(
-                localized: "letter_tracing.voice.prompt_dots \(letter) \(phonemeWord)"
+                format: String(localized: "letter_tracing.voice.prompt_dots %@ %@"),
+                letter, phonemeWord
             )
         case .freeWrite:
             return String(
-                localized: "letter_tracing.voice.prompt_free \(letter) \(phonemeWord)"
+                format: String(localized: "letter_tracing.voice.prompt_free %@ %@"),
+                letter, phonemeWord
             )
         }
     }

@@ -44,10 +44,13 @@ final class ObjectHuntPresenter: ObjectHuntPresentationLogic {
 
     func presentLoadScene(_ response: ObjectHuntModels.LoadScene.Response) {
         let badge = String(
-            localized: "object_hunt.round_badge \(response.sceneIndex + 1) \(response.totalScenes)"
+            format: String(localized: "object_hunt.round_badge %lld %lld"),
+            response.sceneIndex + 1,
+            response.totalScenes
         )
         let prompt = String(
-            localized: "object_hunt.find_sound \(response.targetSound)"
+            format: String(localized: "object_hunt.find_sound %@"),
+            response.targetSound
         )
         let vm = ObjectHuntModels.LoadScene.ViewModel(
             items: response.items,
@@ -68,7 +71,7 @@ final class ObjectHuntPresenter: ObjectHuntPresentationLogic {
         let scoreLabel: String
         if response.isCorrect {
             if response.streakCount >= 3 {
-                scoreLabel = String(localized: "object_hunt.score_streak \(response.streakCount)")
+                scoreLabel = String(format: String(localized: "object_hunt.score_streak %lld"), response.streakCount)
             } else {
                 scoreLabel = String(localized: "object_hunt.score_correct")
             }
@@ -120,13 +123,16 @@ final class ObjectHuntPresenter: ObjectHuntPresentationLogic {
 
     func presentCompleteScene(_ response: ObjectHuntModels.CompleteScene.Response) {
         let summary = String(
-            localized: "object_hunt.found_count \(response.foundCount) \(response.targetCount)"
+            format: String(localized: "object_hunt.found_count %lld %lld"),
+            response.foundCount,
+            response.targetCount
         )
         let timeText = String(
-            localized: "object_hunt.time_used \(response.timeUsedSec)"
+            format: String(localized: "object_hunt.time_used %lld"),
+            response.timeUsedSec
         )
         let streakBonusText: String = response.streakBonus > 0
-            ? String(localized: "object_hunt.streak_bonus \(response.streakBonus)")
+            ? String(format: String(localized: "object_hunt.streak_bonus %lld"), response.streakBonus)
             : ""
 
         let vm = ObjectHuntModels.CompleteScene.ViewModel(
@@ -143,8 +149,8 @@ final class ObjectHuntPresenter: ObjectHuntPresentationLogic {
 
     func presentCompleteGame(_ response: ObjectHuntModels.CompleteGame.Response) {
         let accuracy = Int(response.accuracy * 100)
-        let accuracyLabel = String(localized: "object_hunt.accuracy_label \(accuracy)")
-        let scoreLabel = String(localized: "object_hunt.total_score \(response.totalScore)")
+        let accuracyLabel = String(format: String(localized: "object_hunt.accuracy_label %lld"), accuracy)
+        let scoreLabel = String(format: String(localized: "object_hunt.total_score %lld"), response.totalScore)
         let summaryText: String
         switch response.starsEarned {
         case 3:  summaryText = String(localized: "object_hunt.summary.excellent")

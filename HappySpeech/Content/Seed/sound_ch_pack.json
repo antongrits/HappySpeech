@@ -1123,6 +1123,22 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wi-82.m4a"
+        },
+        {
+          "id": "ch-wm-31",
+          "word": "черепашка",
+          "imageAsset": "word_cherepashka",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CH/ch-wm-31.m4a"
+        },
+        {
+          "id": "ch-wm-39",
+          "word": "читать",
+          "imageAsset": "word_chitat",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CH/ch-wm-39.m4a"
         }
       ]
     },
@@ -1203,14 +1219,6 @@
           "audio_file": "Audio/Content/CH/ch-wm-8.m4a"
         },
         {
-          "id": "ch-wm-9",
-          "word": "мяч",
-          "imageAsset": "word_myach",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/CH/ch-wm-9.m4a"
-        },
-        {
           "id": "ch-wm-10",
           "word": "качели",
           "imageAsset": "word_kacheli",
@@ -1266,14 +1274,6 @@
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-16.m4a",
           "hint": "ту-Ча. [Ч] в середине."
-        },
-        {
-          "id": "ch-wm-17",
-          "word": "кирпич",
-          "imageAsset": "word_kirpichik",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/CH/ch-wm-17.m4a"
         },
         {
           "id": "ch-wm-18",
@@ -1382,14 +1382,6 @@
           "audio_file": "Audio/Content/CH/ch-wm-30.m4a"
         },
         {
-          "id": "ch-wm-31",
-          "word": "черепашка",
-          "imageAsset": "word_cherepashka",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/CH/ch-wm-31.m4a"
-        },
-        {
           "id": "ch-wm-32",
           "word": "подчинить",
           "imageAsset": null,
@@ -1446,22 +1438,6 @@
           "audio_file": "Audio/Content/CH/ch-wm-38.m4a"
         },
         {
-          "id": "ch-wm-39",
-          "word": "читать",
-          "imageAsset": "word_chitat",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/CH/ch-wm-39.m4a"
-        },
-        {
-          "id": "ch-wm-40",
-          "word": "мяч",
-          "imageAsset": "word_myach",
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/CH/ch-wm-40.m4a"
-        },
-        {
           "id": "ch-wm-41",
           "word": "источник",
           "imageAsset": "word_istochnik",
@@ -1493,14 +1469,6 @@
           "difficulty": 3,
           "audio_file": "Audio/Content/CH/ch-wm-44.m4a",
           "hint": "у-тоЧ-ка. [Ч] в середине."
-        },
-        {
-          "id": "ch-wm-45",
-          "word": "печь",
-          "imageAsset": "word_pech",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/CH/ch-wm-45.m4a"
         },
         {
           "id": "ch-wm-46",
@@ -1959,6 +1927,14 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-102.m4a"
+        },
+        {
+          "id": "ch-wf-28",
+          "word": "зодчий",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 4,
+          "audio_file": "Audio/Content/CH/ch-wf-28.m4a"
         }
       ]
     },
@@ -2147,46 +2123,6 @@
           "hint": "цир-каЧ. [Ч] в конце."
         },
         {
-          "id": "ch-wf-22",
-          "word": "задача",
-          "imageAsset": "word_zadacha",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/CH/ch-wf-22.m4a"
-        },
-        {
-          "id": "ch-wf-23",
-          "word": "удача",
-          "imageAsset": "word_udacha",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/CH/ch-wf-23.m4a"
-        },
-        {
-          "id": "ch-wf-24",
-          "word": "дача",
-          "imageAsset": "word_dacha",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/CH/ch-wf-24.m4a"
-        },
-        {
-          "id": "ch-wf-25",
-          "word": "тучка",
-          "imageAsset": "word_tucha",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/CH/ch-wf-25.m4a"
-        },
-        {
-          "id": "ch-wf-26",
-          "word": "тучка",
-          "imageAsset": "word_tuchka",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/CH/ch-wf-26.m4a"
-        },
-        {
           "id": "ch-wf-27",
           "word": "сургуч",
           "imageAsset": "word_surguch",
@@ -2194,14 +2130,6 @@
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wf-27.m4a",
           "hint": "сур-гуЧ. [Ч] в конце."
-        },
-        {
-          "id": "ch-wf-28",
-          "word": "зодчий",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 4,
-          "audio_file": "Audio/Content/CH/ch-wf-28.m4a"
         },
         {
           "id": "ch-wf-29",

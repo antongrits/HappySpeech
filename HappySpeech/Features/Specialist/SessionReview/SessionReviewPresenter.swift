@@ -41,7 +41,7 @@ final class SessionReviewPresenter: SessionReviewPresentationLogic {
     // MARK: - Per-attempt (existing)
 
     func presentLoadSession(_ response: SessionReviewModels.LoadSession.Response) async {
-        let title = String(localized: "review.title.\(response.session.targetSound)")
+        let title = String(format: String(localized: "review.title %@"), response.session.targetSound)
         let summary = SessionReviewInteractor.makeSummary(rows: response.attemptRows)
         display?.displayLoadSession(.init(
             titleText: title,

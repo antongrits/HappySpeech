@@ -188,7 +188,7 @@ struct LetterTracingView: View {
 
     private var mascotMessage: String {
         if let vm = exerciseVM, !vm.phonemeWord.isEmpty {
-            return String(localized: "letter_tracing.phoneme_example \(vm.phonemeWord)")
+            return String(format: String(localized: "letter_tracing.phoneme_example %@"), vm.phonemeWord)
         }
         return inputHintText
     }
@@ -255,7 +255,7 @@ struct LetterTracingView: View {
                 }
 
                 Text(
-                    String(localized: "letter_tracing.score_percent \(vm.scorePercent)")
+                    String(format: String(localized: "letter_tracing.score_percent %lld"), vm.scorePercent)
                 )
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -263,7 +263,9 @@ struct LetterTracingView: View {
                 if vm.attemptNumber > 1 {
                     Text(
                         String(
-                            localized: "letter_tracing.attempt \(vm.attemptNumber) \(vm.bestScorePercent)"
+                            format: String(localized: "letter_tracing.attempt %lld %lld"),
+                            vm.attemptNumber,
+                            vm.bestScorePercent
                         )
                     )
                     .font(TypographyTokens.caption())

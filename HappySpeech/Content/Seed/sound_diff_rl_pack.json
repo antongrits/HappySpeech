@@ -319,10 +319,9 @@
         },
         {
           "id": "rl-wi-3",
-          "word": "рыба — лыба",
-          "hint": "Рыба — в реке. Лыба — нет такого слова! Слушай: нужен Р.",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/RL/rl-wi-3.m4a"
+          "word": "рад — лад",
+          "hint": "Рад — радуется, лад — когда всё дружно.",
+          "difficulty": 1
         },
         {
           "id": "rl-wi-4",
@@ -347,10 +346,9 @@
         },
         {
           "id": "rl-wi-7",
-          "word": "рок — лок",
-          "hint": "Рок — судьба или музыка. Лок — локон, завиток волос.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wi-7.m4a"
+          "word": "рожки — ложки",
+          "hint": "Рожки — макароны, ложки — едят суп.",
+          "difficulty": 2
         },
         {
           "id": "rl-wi-8",
@@ -361,10 +359,9 @@
         },
         {
           "id": "rl-wi-9",
-          "word": "рупь — луп",
-          "hint": "Рубль — Р, лупа — Л. Слушай первый звук!",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wi-9.m4a"
+          "word": "рань — лань",
+          "hint": "Рань — раннее утро, лань — лесная козочка.",
+          "difficulty": 2
         },
         {
           "id": "rl-wi-10",
@@ -382,10 +379,9 @@
         },
         {
           "id": "rl-wi-12",
-          "word": "река — лека",
-          "hint": "Река — Р'. Лека — нет слова, нужен Р'!",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wi-12.m4a"
+          "word": "рейка — лейка",
+          "hint": "Рейка — дощечка, лейка — поливать цветы.",
+          "difficulty": 2
         },
         {
           "id": "rl-wi-13",
@@ -403,10 +399,9 @@
         },
         {
           "id": "rl-wi-15",
-          "word": "ряд — ляд",
-          "hint": "Ряд — Р'. Ляд — нет слова. В слове «лад» — Л.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/RL/rl-wi-15.m4a"
+          "word": "рай — лай",
+          "hint": "Рай — райский сад, лай — собака лает.",
+          "difficulty": 3
         },
         {
           "id": "rl-wi-16",
@@ -424,10 +419,9 @@
         },
         {
           "id": "rl-wi-18",
-          "word": "рысь — лысь",
-          "hint": "Рысь — зверь, Р. Лысь — нет слова. Лысый — Л.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wi-18.m4a"
+          "word": "раз — лаз",
+          "hint": "Раз — один раз, лаз — узкий проход.",
+          "difficulty": 2
         },
         {
           "id": "rl-wi-19",
@@ -452,17 +446,9 @@
         },
         {
           "id": "rl-wi-22",
-          "word": "рота — лота",
-          "hint": "Рота — воинское подразделение. Лота — нет, лодка. Слушай!",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/RL/rl-wi-22.m4a"
-        },
-        {
-          "id": "rl-wi-23",
-          "word": "рус — лус",
-          "hint": "Русый — Р. Лус — нет слова. Слушай первый звук!",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wi-23.m4a"
+          "word": "рука — лука",
+          "hint": "Рука — ею держим, лука — изгиб седла.",
+          "difficulty": 3
         },
         {
           "id": "rl-wi-24",
@@ -521,17 +507,15 @@
         },
         {
           "id": "rl-wm-1",
-          "word": "гора — гола",
-          "hint": "Гора — Р. Гола — нет, голая — Л. Слушай Р и Л!",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/RL/rl-wm-1.m4a"
+          "word": "жарко — жалко",
+          "hint": "Жарко — очень тепло, жалко — когда грустно.",
+          "difficulty": 2
         },
         {
           "id": "rl-wm-2",
-          "word": "крот — клот",
-          "hint": "Крот — Р (зверёк). Клот — Л (морское слово).",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/RL/rl-wm-2.m4a"
+          "word": "бурка — булка",
+          "hint": "Бурка — тёплый плащ, булка — её едят.",
+          "difficulty": 3
         },
         {
           "id": "rl-wm-3",
@@ -563,10 +547,9 @@
         },
         {
           "id": "rl-wm-7",
-          "word": "горе — голе",
-          "hint": "Горе — Р (беда). Голень — Л (часть ноги). Слушай!",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/RL/rl-wm-7.m4a"
+          "word": "марина — малина",
+          "hint": "Марина — имя, малина — сладкая ягода.",
+          "difficulty": 3
         },
         {
           "id": "rl-wm-8",
@@ -612,17 +595,15 @@
         },
         {
           "id": "rl-wm-14",
-          "word": "ларчик — балчик",
-          "hint": "Ларчик — Р'. Балчик — Л'. Мягкое в середине.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/RL/rl-wm-14.m4a"
+          "word": "укор — укол",
+          "hint": "Укор — упрёк, укол — у врача иголкой.",
+          "difficulty": 4
         },
         {
           "id": "rl-wm-15",
-          "word": "гарлем — галстук",
-          "hint": "Оба слова со стечениями — слушай Р и Л.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/RL/rl-wm-15.m4a"
+          "word": "балка — барка",
+          "hint": "Балка — бревно-опора, барка — большая лодка.",
+          "difficulty": 4
         },
         {
           "id": "rl-wm-16",
@@ -1315,10 +1296,9 @@
         },
         {
           "id": "rl-diff-19",
-          "word": "крот — клот",
-          "hint": "Крот — КР. Клот — КЛ. Всего один звук разный!",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/RL/rl-diff-19.m4a"
+          "word": "уголь — угорь",
+          "hint": "Уголь — чёрный, им рисуют, угорь — рыба.",
+          "difficulty": 4
         },
         {
           "id": "rl-diff-20",

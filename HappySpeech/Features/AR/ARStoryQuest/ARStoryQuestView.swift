@@ -108,7 +108,7 @@ struct ARStoryQuestView: View {
     private var progress: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
             HStack {
-                Text(String(localized: "ar.quest.step.label.\(display.stepNumber).\(display.totalSteps)"))
+                Text(String(format: String(localized: "ar.quest.step.label %lld %lld"), display.stepNumber, display.totalSteps))
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Spacer()
@@ -156,7 +156,7 @@ struct ARStoryQuestView: View {
             .frame(maxWidth: .infinity)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(String(localized: "ar.quest.a11y.targetWord \(display.targetWord)")))
+        .accessibilityLabel(Text(String(format: String(localized: "ar.quest.a11y.targetWord %@"), display.targetWord)))
     }
 
     // MARK: - Hint text
@@ -288,7 +288,7 @@ struct ARStoryQuestView: View {
 
             starsRow
 
-            Text(String(localized: "ar.quest.completed.score.\(Int(display.totalScore * 100))"))
+            Text(String(format: String(localized: "ar.quest.completed.score %lld"), Int(display.totalScore * 100)))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
 
@@ -335,7 +335,7 @@ struct ARStoryQuestView: View {
             }
         }
         .accessibilityElement()
-        .accessibilityLabel(Text(String(localized: "ar.quest.a11y.stars.\(display.starsEarned)")))
+        .accessibilityLabel(Text(String(format: String(localized: "ar.quest.a11y.stars %lld"), display.starsEarned)))
     }
 
     // MARK: - Error overlay

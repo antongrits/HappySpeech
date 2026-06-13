@@ -5237,10 +5237,9 @@
         },
         {
           "id": "r-diff-5",
-          "word": "рыбка — лыбка",
-          "hint": "Рыбка — плавает, лыбка — улыбка (народное).",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/R/r-diff-5.m4a"
+          "word": "рожки — ложки",
+          "hint": "Рожки — макароны-трубочки, ложки — едят суп.",
+          "difficulty": 3
         },
         {
           "id": "r-diff-6",
@@ -5258,10 +5257,9 @@
         },
         {
           "id": "r-diff-8",
-          "word": "рожок — ложок",
-          "hint": "Рожок — маленький рог, ложок — нет слова, ложка.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/R/r-diff-8.m4a"
+          "word": "укор — укол",
+          "hint": "Укор — упрёк, укол — у врача иголкой.",
+          "difficulty": 3
         },
         {
           "id": "r-diff-9",
@@ -5279,10 +5277,9 @@
         },
         {
           "id": "r-diff-11",
-          "word": "крот — клот",
-          "hint": "Крот — зверёк, клот — на корабле.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/R/r-diff-11.m4a"
+          "word": "угорь — уголь",
+          "hint": "Угорь — рыба, уголь — чёрный, им рисуют.",
+          "difficulty": 3
         },
         {
           "id": "r-diff-12",
@@ -5300,17 +5297,15 @@
         },
         {
           "id": "r-diff-14",
-          "word": "рось — лось",
-          "hint": "Роса — Р, лось — Л.",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/R/r-diff-14.m4a"
+          "word": "рад — лад",
+          "hint": "Рад — радуется, лад — когда всё дружно.",
+          "difficulty": 2
         },
         {
           "id": "r-diff-15",
-          "word": "горе — голе",
-          "hint": "Горе — Р, голе — нет, пример: голень — Л.",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/R/r-diff-15.m4a"
+          "word": "жарко — жалко",
+          "hint": "Жарко — очень тепло, жалко — когда грустно.",
+          "difficulty": 3
         },
         {
           "id": "r-diff-16",
@@ -5349,10 +5344,9 @@
         },
         {
           "id": "r-diff-21",
-          "word": "рыба — лыба",
+          "word": "рейка — лейка",
           "difficulty": 1,
-          "audio_file": "Audio/Content/R/r-diff-21.m4a",
-          "hint": "Р в начале против Л."
+          "hint": "Рейка — узкая дощечка, лейка — поливать цветы."
         },
         {
           "id": "r-diff-22",
@@ -5377,10 +5371,9 @@
         },
         {
           "id": "r-diff-25",
-          "word": "корень — колень",
+          "word": "бурка — булка",
           "difficulty": 2,
-          "audio_file": "Audio/Content/R/r-diff-25.m4a",
-          "hint": "Внутри слова: Р—Л."
+          "hint": "Бурка — тёплый плащ, булка — её едят."
         },
         {
           "id": "r-diff-26",
@@ -5398,17 +5391,15 @@
         },
         {
           "id": "r-diff-28",
-          "word": "кров — клов",
+          "word": "марина — малина",
           "difficulty": 2,
-          "audio_file": "Audio/Content/R/r-diff-28.m4a",
-          "hint": "Стечение КР против КЛ."
+          "hint": "Марина — имя девочки, малина — сладкая ягода."
         },
         {
           "id": "r-diff-29",
-          "word": "рубль — любль",
+          "word": "рука — лука",
           "difficulty": 2,
-          "audio_file": "Audio/Content/R/r-diff-29.m4a",
-          "hint": "Мягкие Р'—Л' в начале."
+          "hint": "Рука — ею держим, лука — изгиб седла у лошади."
         }
       ]
     }

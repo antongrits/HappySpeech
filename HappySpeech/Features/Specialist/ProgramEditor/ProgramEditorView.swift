@@ -490,7 +490,7 @@ private struct ProgramBlockRow: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                 if let sound = block.targetSound {
-                    Text(String(localized: "program.editor.sound.\(sound)"))
+                    Text(String(format: String(localized: "program.editor.sound %@"), sound))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                         .lineLimit(1)

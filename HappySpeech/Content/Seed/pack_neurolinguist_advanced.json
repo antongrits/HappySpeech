@@ -322,17 +322,15 @@
       "items": [
         {
           "id": "nl-mp-00",
-          "word": "СОМ — ЗОМ",
+          "word": "СУД — ЗУД",
           "hint": "С — глухой (без голоса). З — звонкий. Чувствуешь горлышко?",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-mp-00.m4a"
+          "difficulty": 3
         },
         {
           "id": "nl-mp-01",
-          "word": "ШАР — ЗАР",
-          "hint": "Ш — шипящий. З — свистящий. Разные!",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-mp-01.m4a"
+          "word": "ШАР — ЖАР",
+          "hint": "Ш — глухой шипящий. Ж — звонкий. Слышишь голос у Ж?",
+          "difficulty": 3
         },
         {
           "id": "nl-mp-02",
@@ -371,17 +369,15 @@
         },
         {
           "id": "nl-mp-07",
-          "word": "РЫБА — ЛЫБА",
-          "hint": "Р — дрожащий. Л — боковой. Слышишь?",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/NL/nl-mp-07.m4a"
+          "word": "РОЖКИ — ЛОЖКИ",
+          "hint": "Р — дрожащий язычок. Л — боковой. Слышишь разницу?",
+          "difficulty": 3
         },
         {
           "id": "nl-mp-08",
-          "word": "СОН — ЦОН",
+          "word": "СВЕТ — ЦВЕТ",
           "hint": "С — простой свистящий. Ц — аффриката (Т+С).",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/NL/nl-mp-08.m4a"
+          "difficulty": 4
         },
         {
           "id": "nl-mp-09",

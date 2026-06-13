@@ -783,14 +783,6 @@
           "audio_file": "Audio/Content/C/c-wm-3.m4a"
         },
         {
-          "id": "c-wm-4",
-          "word": "колодец",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/C/c-wm-4.m4a",
-          "hint": "Ко-ло-деЦ. [Ц] в слове.",
-          "imageAsset": "word_kolodets"
-        },
-        {
           "id": "c-wm-5",
           "word": "овца",
           "difficulty": 2,
@@ -819,68 +811,10 @@
           "imageAsset": "word_serdtse"
         },
         {
-          "id": "c-wm-9",
-          "word": "огурец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-9.m4a",
-          "imageAsset": "word_ogurets"
-        },
-        {
-          "id": "c-wm-10",
-          "word": "певец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-10.m4a",
-          "imageAsset": "word_pevitsa"
-        },
-        {
-          "id": "c-wm-11",
-          "word": "танец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-11.m4a",
-          "imageAsset": "word_tanets"
-        },
-        {
           "id": "c-wm-12",
           "word": "танцор",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wm-12.m4a"
-        },
-        {
-          "id": "c-wm-13",
-          "word": "кузнец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-13.m4a"
-        },
-        {
-          "id": "c-wm-14",
-          "word": "резец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-14.m4a"
-        },
-        {
-          "id": "c-wm-15",
-          "word": "молодец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-15.m4a"
-        },
-        {
-          "id": "c-wm-16",
-          "word": "конец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-16.m4a"
-        },
-        {
-          "id": "c-wm-17",
-          "word": "дворец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-17.m4a",
-          "imageAsset": "word_dvorets"
-        },
-        {
-          "id": "c-wm-18",
-          "word": "купец",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/C/c-wm-18.m4a"
         },
         {
           "id": "c-wm-19",
@@ -1253,6 +1187,21 @@
           "hint": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/C/c-wf-30.m4a"
+        },
+        {
+          "id": "c-wm-4",
+          "word": "колодец",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-wm-4.m4a",
+          "hint": "Ко-ло-деЦ. [Ц] в слове.",
+          "imageAsset": "word_kolodets"
+        },
+        {
+          "id": "c-wm-11",
+          "word": "танец",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-wm-11.m4a",
+          "imageAsset": "word_tanets"
         }
       ]
     },

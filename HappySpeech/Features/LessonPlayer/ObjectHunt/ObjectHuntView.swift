@@ -79,7 +79,7 @@ struct ObjectHuntView: View {
     private var playingView: some View {
         KidGameCanvasScaffold(
             title: Text(display.promptText.isEmpty
-                ? String(localized: "object_hunt.find_sound \(display.targetSoundLabel)")
+                ? String(format: String(localized: "object_hunt.find_sound %@"), display.targetSoundLabel)
                 : display.promptText),
             subtitle: display.roundBadge,
             palette: .kidWarm,
@@ -103,7 +103,7 @@ struct ObjectHuntView: View {
                     .frame(width: 44, height: 44)
                     .background(Circle().fill(ColorTokens.Brand.primary))
                     .accessibilityLabel(
-                        String(localized: "object_hunt.target_sound_a11y \(display.targetSoundLabel)")
+                        String(format: String(localized: "object_hunt.target_sound_a11y %@"), display.targetSoundLabel)
                     )
             }
             Spacer(minLength: 0)
@@ -268,7 +268,7 @@ struct ObjectHuntView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(String(localized: "object_hunt.stars_a11y \(display.starsEarned)"))
+        .accessibilityLabel(String(format: String(localized: "object_hunt.stars_a11y %lld"), display.starsEarned))
     }
 
     // MARK: - Bootstrap

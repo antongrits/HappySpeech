@@ -63,7 +63,7 @@ enum ReportsAggregator {
                     attempts: attempts,
                     successes: successes,
                     averageConfidence: confidence,
-                    currentStageTitle: String(localized: "reports.stage.\(group.last?.stage ?? "unknown")"),
+                    currentStageTitle: String(localized: String.LocalizationValue("reports.stage.\(group.last?.stage ?? "unknown")")),
                     weekOverWeekDelta: laterAvg - earlierAvg
                 )
             }

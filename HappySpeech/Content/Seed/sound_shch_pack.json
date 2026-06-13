@@ -1003,36 +1003,12 @@
           "audio_file": "Audio/Content/SHCH/shch-wm-16.m4a"
         },
         {
-          "id": "shch-wm-17",
-          "word": "товарищ",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SHCH/shch-wm-17.m4a"
-        },
-        {
           "id": "shch-wm-18",
           "word": "дощатый",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wm-18.m4a"
-        },
-        {
-          "id": "shch-wm-19",
-          "word": "плащ",
-          "imageAsset": "word_plashch",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wm-19.m4a"
-        },
-        {
-          "id": "shch-wm-20",
-          "word": "борщ",
-          "imageAsset": "word_borshch",
-          "audioAsset": null,
-          "difficulty": 1,
-          "audio_file": "Audio/Content/SHCH/shch-wm-20.m4a"
         },
         {
           "id": "shch-wm-21",
@@ -1275,6 +1251,57 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wm-50.m4a"
+        },
+        {
+          "id": "shch-wf-6",
+          "word": "сыщик",
+          "imageAsset": "word_syshchik",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-wf-6.m4a"
+        },
+        {
+          "id": "shch-wf-13",
+          "word": "плющик",
+          "imageAsset": "word_plyushchik",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-wf-13.m4a",
+          "hint": "плю-Щик. [Щ] в слове."
+        },
+        {
+          "id": "shch-wf-18",
+          "word": "тащить",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-wf-18.m4a"
+        },
+        {
+          "id": "shch-wf-19",
+          "word": "прыщик",
+          "imageAsset": "word_pryshchik",
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-wf-19.m4a",
+          "hint": "пры-Щик. [Щ] в слове."
+        },
+        {
+          "id": "shch-wf-23",
+          "word": "трещотка",
+          "imageAsset": "word_treshchotka",
+          "audioAsset": null,
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-wf-23.m4a",
+          "hint": "тре-Щот-ка. [Щ] в слове."
+        },
+        {
+          "id": "shch-wf-26",
+          "word": "обобщить",
+          "imageAsset": null,
+          "audioAsset": null,
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-wf-26.m4a"
         }
       ]
     },
@@ -1321,14 +1348,6 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wf-5.m4a"
-        },
-        {
-          "id": "shch-wf-6",
-          "word": "сыщик",
-          "imageAsset": "word_syshchik",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SHCH/shch-wf-6.m4a"
         },
         {
           "id": "shch-wf-7",
@@ -1382,15 +1401,6 @@
           "hint": "о-воЩ. [Щ] в конце."
         },
         {
-          "id": "shch-wf-13",
-          "word": "плющик",
-          "imageAsset": "word_plyushchik",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-13.m4a",
-          "hint": "плю-Щик. [Щ] в слове."
-        },
-        {
           "id": "shch-wf-14",
           "word": "хрящ",
           "imageAsset": "word_hrashch",
@@ -1413,31 +1423,6 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wf-16.m4a"
-        },
-        {
-          "id": "shch-wf-17",
-          "word": "овощи",
-          "imageAsset": "word_ovoshch",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-17.m4a"
-        },
-        {
-          "id": "shch-wf-18",
-          "word": "тащить",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-18.m4a"
-        },
-        {
-          "id": "shch-wf-19",
-          "word": "прыщик",
-          "imageAsset": "word_pryshchik",
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SHCH/shch-wf-19.m4a",
-          "hint": "пры-Щик. [Щ] в слове."
         },
         {
           "id": "shch-wf-20",
@@ -1464,29 +1449,12 @@
           "audio_file": "Audio/Content/SHCH/shch-wf-22.m4a"
         },
         {
-          "id": "shch-wf-23",
-          "word": "трещотка",
-          "imageAsset": "word_treshchotka",
-          "audioAsset": null,
-          "difficulty": 2,
-          "audio_file": "Audio/Content/SHCH/shch-wf-23.m4a",
-          "hint": "тре-Щот-ка. [Щ] в слове."
-        },
-        {
           "id": "shch-wf-25",
           "word": "прыщ",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-wf-25.m4a"
-        },
-        {
-          "id": "shch-wf-26",
-          "word": "обобщить",
-          "imageAsset": null,
-          "audioAsset": null,
-          "difficulty": 3,
-          "audio_file": "Audio/Content/SHCH/shch-wf-26.m4a"
         },
         {
           "id": "shch-wf-27",

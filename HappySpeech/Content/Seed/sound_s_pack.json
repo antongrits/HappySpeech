@@ -1249,6 +1249,14 @@
           "hint": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wi-89.m4a"
+        },
+        {
+          "id": "s-wm-69",
+          "word": "стрелять",
+          "hint": "СТР+ЕЛЯ — трёх-согласное стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-69.m4a",
+          "imageAsset": "word_strelyat"
         }
       ]
     },
@@ -1407,13 +1415,6 @@
           "imageAsset": "word_nasos"
         },
         {
-          "id": "s-wm-22",
-          "word": "лес",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/S/s-wm-22.m4a",
-          "imageAsset": "word_les"
-        },
-        {
           "id": "s-wm-23",
           "word": "сосуд",
           "difficulty": 3,
@@ -1432,12 +1433,6 @@
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wm-25.m4a",
           "imageAsset": "word_usy"
-        },
-        {
-          "id": "s-wm-26",
-          "word": "пёс",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/S/s-wm-26.m4a"
         },
         {
           "id": "s-wm-27",
@@ -1565,33 +1560,6 @@
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wm-45.m4a",
           "imageAsset": "word_kapusta"
-        },
-        {
-          "id": "s-wm-46",
-          "word": "автобус",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/S/s-wm-46.m4a",
-          "imageAsset": "word_avtobus"
-        },
-        {
-          "id": "s-wm-47",
-          "word": "фокус",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/S/s-wm-47.m4a"
-        },
-        {
-          "id": "s-wm-48",
-          "word": "лотос",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/S/s-wm-48.m4a",
-          "imageAsset": "word_lotos"
-        },
-        {
-          "id": "s-wm-49",
-          "word": "кокос",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/S/s-wm-49.m4a",
-          "imageAsset": "word_kokos"
         },
         {
           "id": "s-wm-50",
@@ -1735,14 +1703,6 @@
           "audio_file": "Audio/Content/S/s-wm-68.m4a"
         },
         {
-          "id": "s-wm-69",
-          "word": "стрелять",
-          "hint": "СТР+ЕЛЯ — трёх-согласное стечение.",
-          "difficulty": 4,
-          "audio_file": "Audio/Content/S/s-wm-69.m4a",
-          "imageAsset": "word_strelyat"
-        },
-        {
           "id": "s-wm-70",
           "word": "аист",
           "imageAsset": "word_aist",
@@ -1813,6 +1773,13 @@
           "hint": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wm-77.m4a"
+        },
+        {
+          "id": "s-wf-2",
+          "word": "лиса",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wf-2.m4a",
+          "imageAsset": "word_lisa"
         }
       ]
     },
@@ -1833,13 +1800,6 @@
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wf-1.m4a",
           "imageAsset": "word_les"
-        },
-        {
-          "id": "s-wf-2",
-          "word": "лиса",
-          "difficulty": 1,
-          "audio_file": "Audio/Content/S/s-wf-2.m4a",
-          "imageAsset": "word_lisa"
         },
         {
           "id": "s-wf-3",
@@ -1927,13 +1887,6 @@
           "word": "голос",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wf-15.m4a"
-        },
-        {
-          "id": "s-wf-16",
-          "word": "бусы",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/S/s-wf-16.m4a",
-          "imageAsset": "word_busy"
         },
         {
           "id": "s-wf-17",

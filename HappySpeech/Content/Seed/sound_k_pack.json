@@ -1150,101 +1150,6 @@
           "audio_file": "Audio/Content/K/k-wm-8.m4a"
         },
         {
-          "id": "k-wm-9",
-          "word": "кулак",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-9.m4a",
-          "imageAsset": "word_kulak"
-        },
-        {
-          "id": "k-wm-10",
-          "word": "моряк",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-10.m4a",
-          "imageAsset": "word_moryak"
-        },
-        {
-          "id": "k-wm-11",
-          "word": "рыбак",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-11.m4a",
-          "imageAsset": "word_rybak"
-        },
-        {
-          "id": "k-wm-12",
-          "word": "чудак",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-12.m4a",
-          "imageAsset": "word_chudak"
-        },
-        {
-          "id": "k-wm-13",
-          "word": "каток",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-13.m4a",
-          "imageAsset": "word_katok"
-        },
-        {
-          "id": "k-wm-14",
-          "word": "цветок",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-14.m4a",
-          "imageAsset": "word_tsvetok"
-        },
-        {
-          "id": "k-wm-15",
-          "word": "замок",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-15.m4a",
-          "imageAsset": "word_zamok"
-        },
-        {
-          "id": "k-wm-16",
-          "word": "порок",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-16.m4a"
-        },
-        {
-          "id": "k-wm-17",
-          "word": "молоток",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-17.m4a",
-          "imageAsset": "word_molotok"
-        },
-        {
-          "id": "k-wm-18",
-          "word": "колобок",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-18.m4a",
-          "imageAsset": "word_kolobok"
-        },
-        {
-          "id": "k-wm-19",
-          "word": "уток",
-          "hint": "Ищи К — вспомни: у-тюг или у-ток? В слове 'уток' есть К!",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-19.m4a"
-        },
-        {
-          "id": "k-wm-20",
-          "word": "курица",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-20.m4a",
-          "imageAsset": "word_kuritsa"
-        },
-        {
-          "id": "k-wm-21",
-          "word": "восток",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-21.m4a"
-        },
-        {
-          "id": "k-wm-22",
-          "word": "поток",
-          "difficulty": 3,
-          "audio_file": "Audio/Content/K/k-wm-22.m4a"
-        },
-        {
           "id": "k-wm-23",
           "word": "пакет",
           "difficulty": 2,
@@ -1276,13 +1181,6 @@
           "word": "закон",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-27.m4a"
-        },
-        {
-          "id": "k-wm-29",
-          "word": "пирог",
-          "difficulty": 2,
-          "audio_file": "Audio/Content/K/k-wm-29.m4a",
-          "imageAsset": "word_pirog"
         },
         {
           "id": "k-wm-31",
@@ -1673,6 +1571,45 @@
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-25.m4a",
           "imageAsset": "word_mak"
+        },
+        {
+          "id": "k-wm-9",
+          "word": "кулак",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-9.m4a",
+          "imageAsset": "word_kulak"
+        },
+        {
+          "id": "k-wm-12",
+          "word": "чудак",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wm-12.m4a",
+          "imageAsset": "word_chudak"
+        },
+        {
+          "id": "k-wm-16",
+          "word": "порок",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wm-16.m4a"
+        },
+        {
+          "id": "k-wm-19",
+          "word": "уток",
+          "hint": "Ищи К — вспомни: у-тюг или у-ток? В слове 'уток' есть К!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wm-19.m4a"
+        },
+        {
+          "id": "k-wm-21",
+          "word": "восток",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wm-21.m4a"
+        },
+        {
+          "id": "k-wm-22",
+          "word": "поток",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wm-22.m4a"
         }
       ]
     },

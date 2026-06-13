@@ -160,7 +160,7 @@ struct GrammarGameView: View {
         .sheet(item: $exitViewModel) { vm in
             exitConfirmationSheet(vm)
         }
-        .accessibilityLabel(String(localized: "grammar.game.title.\(modeTitle)"))
+        .accessibilityLabel(String(format: String(localized: "grammar.game.title %@"), modeTitle))
         .task {
             guard !didBootstrap, let onBootstrap else { return }
             didBootstrap = true
