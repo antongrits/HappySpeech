@@ -132,26 +132,6 @@ final class ParentDailyDigestInteractor {
     /// Считает серию активных дней подряд, заканчивающуюся сегодня или вчера.
     /// «Активный день» — день, в который есть хотя бы одна сессия.
     func activeDayStreak(in sessions: [SessionDTO], today: Date) -> Int {
-        let activeDays = Set(sessions.map { calendar.startOfDay(for: $0.date) })
-        guard !activeDays.isEmpty else { return 0 }
-
-        // Стартуем с сегодня; если сегодня нет активности, но есть вчера —
-        // допускаем «вчерашний» хвост, чтобы не обнулять серию до конца дня.
-        var cursor = today
-        if !activeDays.contains(cursor) {
-            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor),
-                  activeDays.contains(yesterday) else {
-                return 0
-            }
-            cursor = yesterday
-        }
-
-        var streak = 0
-        while activeDays.contains(cursor) {
-            streak += 1
-            guard let previous = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
-            cursor = previous
-        }
-        return streak
+        StreakCalculator.activeDayStreak(in: sessions, calendar: calendar, referenceDate: today)
     }
 }

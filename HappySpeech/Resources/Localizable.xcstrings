@@ -10942,17 +10942,6 @@
         }
       }
     },
-    "child.home.mission.section": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Миссия дня"
-          }
-        }
-      }
-    },
     "child.home.mission.start": {
       "extractionState": "manual",
       "localizations": {
@@ -19499,26 +19488,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сохранить дневник"
-          }
-        }
-      }
-    },
-    "evening.hero.subtitle": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поделись с Лялей — это поможет нам подбирать тебе занятия."
-          }
-        }
-      }
-    },
-    "evening.hero.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Как прошёл день?"
           }
         }
       }

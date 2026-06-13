@@ -55,15 +55,6 @@ public enum SpectrogramStyle: String, Sendable, CaseIterable {
     /// Без холодных тонов — соответствует тёплой палитре приложения.
     case warm
 
-    /// Лесная — зелёно-золотые тона.
-    case forest
-
-    /// Океанская — сине-бирюзовые тона.
-    case ocean
-
-    /// Космическая — тёмно-фиолетовые + сиреневые тона.
-    case space
-
     /// Нейтральная — стандартный синий→красный градиент.
     case neutral
 
@@ -73,9 +64,6 @@ public enum SpectrogramStyle: String, Sendable, CaseIterable {
     var lowHue: Double {
         switch self {
         case .warm:    return 18
-        case .forest:  return 130
-        case .ocean:   return 200
-        case .space:   return 260
         case .neutral: return 240
         }
     }
@@ -84,9 +72,6 @@ public enum SpectrogramStyle: String, Sendable, CaseIterable {
     var highHue: Double {
         switch self {
         case .warm:    return 48
-        case .forest:  return 50
-        case .ocean:   return 170
-        case .space:   return 300
         case .neutral: return 0
         }
     }
