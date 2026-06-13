@@ -502,12 +502,16 @@ export const sendWeeklySummaryFCM = onCall<SendWeeklySummaryFCMRequest, Promise<
       const childId = childDoc.id;
       const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
+      // Clients write `date` as epoch seconds (timeIntervalSince1970, a number) —
+      // see SessionPersistenceCoordinator.sessionPayloadJSON / SyncSnapshots.
+      // Comparing against an ISO string matched nothing → always "0 занятий".
+      const weekAgoEpoch = Math.floor(weekAgo.getTime() / 1000);
 
       const sessionsSnap = await db
         .collection("users").doc(parentId)
         .collection("children").doc(childId)
         .collection("sessions")
-        .where("date", ">=", weekAgo.toISOString())
+        .where("date", ">=", weekAgoEpoch)
         .get();
 
       totalSessions += sessionsSnap.size;
@@ -599,7 +603,7 @@ export const createFamilyInviteToken = onCall<
         .collection("family_invites").doc(token)
         .set(inviteData);
 
-      const deepLinkURL = `https://happyspeech.mmf.bsu.app/invite?token=${token}&code=${shortCode}`;
+      const deepLinkURL = `https://happyspeech.app/invite?token=${token}&code=${shortCode}`;
 
       logger.info("createFamilyInviteToken issued", {
         parentId: "[REDACTED]",

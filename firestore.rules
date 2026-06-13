@@ -288,10 +288,12 @@ service cloud.firestore {
       allow write: if request.auth != null
                    && request.auth.uid == uid
                    && request.auth.token.firebase.sign_in_provider != 'anonymous'
-                   && request.resource.data.keys().hasOnly(['skin', 'color', 'voice', 'updatedAt'])
+                   && request.resource.data.keys().hasOnly(['skin', 'colorVariant', 'voice', 'outfit', 'background', 'updatedAt'])
                    && request.resource.data.skin in ['classic', 'princess', 'scientist', 'athlete', 'artist']
-                   && request.resource.data.color in ['warm', 'cool', 'nature']
-                   && request.resource.data.voice in ['classic', 'soft', 'cheerful'];
+                   && request.resource.data.colorVariant in ['warm', 'cool', 'nature']
+                   && request.resource.data.voice in ['classic', 'soft', 'cheerful']
+                   && request.resource.data.outfit in ['everyday', 'beach', 'winter', 'school', 'birthday', 'space', 'pajama', 'raincoat', 'chef', 'doctor', 'musician', 'gardener', 'superhero', 'wizard']
+                   && request.resource.data.background in ['meadow', 'forest', 'sea', 'space', 'room', 'rainbow'];
     }
 
     // ------------------------------------------------------------------
@@ -511,6 +513,31 @@ service cloud.firestore {
     match /audits/{auditId} {
       allow read: if isAdmin();
       allow write: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // /family_invites/{token} — инвайт второго родителя / наблюдателя.
+    //
+    // Создаётся ТОЛЬКО Cloud Function `createFamilyInviteToken` (admin SDK,
+    // минует rules). Document id == 32-char hex token. Поля при создании:
+    //   parentId, role, token, shortCode, createdAt, expiresAt(Timestamp),
+    //   consumed=false, consumedBy=null, consumedAt=null.
+    //
+    // Применяет приглашение приглашённый пользователь (FamilyInviteService):
+    //   • читает документ по token (или находит по shortCode + consumed==false);
+    //   • атомарной транзакцией ставит consumed=true, consumedBy=auth.uid,
+    //     consumedAt=serverTimestamp; parentId неизменен; нельзя применить свой.
+    // Клиент create/delete НЕ выполняет.
+    // ------------------------------------------------------------------
+
+    match /family_invites/{token} {
+      allow read: if isSignedIn();
+      allow update: if isSignedIn()
+        && request.resource.data.parentId == resource.data.parentId
+        && request.resource.data.consumed == true
+        && request.resource.data.consumedBy == request.auth.uid
+        && request.auth.uid != resource.data.parentId;
+      allow create, delete: if false;
     }
 
     // ------------------------------------------------------------------

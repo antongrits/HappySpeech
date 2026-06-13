@@ -133,6 +133,14 @@
         { "fieldPath": "familyId", "order": "ASCENDING" },
         { "fieldPath": "status", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "family_invites",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "shortCode", "order": "ASCENDING" },
+        { "fieldPath": "consumed", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []
