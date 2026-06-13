@@ -31,6 +31,12 @@ struct ARMirrorView: View {
         session ?? mockSession
     }
 
+    /// Игра идёт по mock/обычной камере (TrueDepth недоступен) — показываем
+    /// дружелюбный fallback-chip из дизайн-эталона.
+    private var isFallbackCamera: Bool {
+        mockSession != nil
+    }
+
     var body: some View {
         ZStack {
             if ARFaceTrackingConfiguration.isSupported, let session {
@@ -72,13 +78,18 @@ struct ARMirrorView: View {
 
     @ViewBuilder
     private var overlay: some View {
-        VStack {
-            ARGameHUD(
-                title: "ar.mirror.title",
+        VStack(spacing: SpacingTokens.small) {
+            ARTaskPill(
+                iconSystemName: "face.smiling.fill",
+                title: String(localized: "ar.mirror.title"),
+                subtitle: String(localized: "ar.mirror.subtitle"),
                 scoreText: display.lastStars.map { "\($0)" },
-                scoreIcon: display.lastStars == nil ? nil : "star.fill",
                 onClose: { dismiss() }
             )
+
+            if isFallbackCamera {
+                ARTrueDepthFallbackBanner()
+            }
 
             if let currentVM = display.start {
                 exerciseHeader(currentVM)
@@ -86,26 +97,7 @@ struct ARMirrorView: View {
 
             Spacer()
 
-            VStack(spacing: SpacingTokens.small) {
-                if !display.instruction.isEmpty {
-                    Text(display.instruction)
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, SpacingTokens.medium)
-                        .padding(.vertical, SpacingTokens.small)
-                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
-                        .accessibilityAddTraits(.updatesFrequently)
-                }
-
-                symmetryBar
-
-                attentionIndicator
-
-                progressBar
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.xLarge)
+            metricsPanel
         }
 
         // Block L: Маскот Ляля с real-time lip-sync из ARFaceAnchor.
@@ -184,25 +176,61 @@ struct ARMirrorView: View {
     private func exerciseHeader(_ vm: ARMirrorModels.StartGame.ViewModel) -> some View {
         HStack {
             Text("\(vm.exerciseNumber) / \(vm.totalExercises)")
-                .font(TypographyTokens.body(13))
+                .font(TypographyTokens.body(13).weight(.bold))
                 .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             Spacer()
             Text(String(localized: String.LocalizationValue(vm.currentExercise.displayNameKey)))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
+        .padding(.horizontal, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(.ultraThinMaterial, in: Capsule())
+        .overlay(Capsule().stroke(ColorTokens.Overlay.highlight, lineWidth: 1))
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.tiny)
+    }
+
+    /// Нижняя стеклянная панель метрик упражнения (инструкция + полоски).
+    /// Тёплое стекло поверх камеры, НЕ закрывает кадр сплошным фоном.
+    private var metricsPanel: some View {
+        VStack(spacing: SpacingTokens.small) {
+            if !display.instruction.isEmpty {
+                Text(display.instruction)
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.updatesFrequently)
+            }
+            symmetryBar
+            attentionIndicator
+            progressBar
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.vertical, SpacingTokens.regular)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+        )
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.xLarge)
     }
 
     private var symmetryBar: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
             Text("ar.mirror.symmetry")
                 .font(TypographyTokens.body(12))
-                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Overlay.highlight)
+                    Capsule().fill(ColorTokens.Kid.line)
                     Capsule()
                         .fill(ColorTokens.Brand.mint)
                         .frame(width: proxy.size.width * CGFloat(display.lipSymmetry))
@@ -219,11 +247,11 @@ struct ARMirrorView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(eyeContactState.isEyeContact
                     ? ColorTokens.Brand.mint
-                    : ColorTokens.Overlay.onAccent.opacity(0.5))
+                    : ColorTokens.Kid.inkSoft)
                 .accessibilityHidden(true)
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Overlay.highlight)
+                    Capsule().fill(ColorTokens.Kid.line)
                     Capsule()
                         .fill(eyeContactState.attentionScore > 0.6
                             ? ColorTokens.Brand.mint
@@ -245,10 +273,10 @@ struct ARMirrorView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
             Text("ar.mirror.holdProgress")
                 .font(TypographyTokens.body(12))
-                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Overlay.highlight)
+                    Capsule().fill(ColorTokens.Kid.line)
                     Capsule()
                         .fill(LinearGradient(
                             colors: [ColorTokens.Brand.primary, ColorTokens.Brand.butter],

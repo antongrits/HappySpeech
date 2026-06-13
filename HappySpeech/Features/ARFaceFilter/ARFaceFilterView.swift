@@ -195,11 +195,15 @@ struct ARFaceFilterView: View {
             Button {
                 dismiss()
             } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title)
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .background(Circle().fill(ColorTokens.Overlay.dimmerHeavy))
+                Image(systemName: "xmark")
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .frame(width: 46, height: 46)
+                    .background(.ultraThinMaterial, in: Circle())
+                    .overlay(Circle().strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1))
             }
+            .frame(minWidth: 44, minHeight: 44)
+            .contentShape(Circle())
             .accessibilityLabel(Text("facefilter.close.a11y"))
         }
     }
@@ -218,8 +222,10 @@ struct ARFaceFilterView: View {
                         .accessibilityHidden(true)
                     Text(viewModel.promptText)
                         .font(.title2.bold())
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
                         .accessibilityLabel(Text(viewModel.promptText))
                 }
                 if let triggerVM = holder.triggerVM, triggerVM.isMatched {
@@ -232,7 +238,7 @@ struct ARFaceFilterView: View {
                     // Реальный речевой триггер активен: распознаём слово ребёнка.
                     Label(String(localized: "facefilter.listening"), systemImage: "mic.fill")
                         .font(.caption)
-                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                 } else {
                     // ASR недоступен (нет разрешения / симулятор): честная ручная
                     // кнопка-подтверждение — НЕ имитация распознавания речи.
@@ -288,21 +294,21 @@ struct ARFaceFilterView: View {
             VStack(spacing: 4) {
                 Image(systemName: mask.symbolName)
                     .font(.system(size: 36))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.ink)
                 Text(mask.localizedTitle)
                     .font(.caption2)
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
             }
             .frame(width: 72, height: 72)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? ColorTokens.Overlay.highlight : ColorTokens.Overlay.dimmerHeavy)
-            )
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(isSelected ? .white : .clear, lineWidth: 2)
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .strokeBorder(
+                        isSelected ? ColorTokens.Brand.primary : ColorTokens.Overlay.highlight,
+                        lineWidth: isSelected ? 2 : 1
+                    )
             )
         }
         .accessibilityLabel(Text(mask.localizedTitle))

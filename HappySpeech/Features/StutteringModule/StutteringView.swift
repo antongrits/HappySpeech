@@ -75,19 +75,14 @@ struct StutteringView: View {
     @State private var navigateTo: StutteringMode?
     @State private var showInfoType: InfoCardType?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
     @AppStorage("stuttering_welcome_shown") private var welcomeShown: Bool = false
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
-            // Step 10 Batch G — Pattern 1: calm mesh палитра поверх
-            // плоского cream baseline для модуля заикания (фокус, успокоение).
-            HSMeshGradientBackground(palette: .calm, animated: true)
+            // Редизайн stuttering-home (2026-06-13): спокойный ОДНОТОННЫЙ
+            // тёплый фон (cream), статичный — без softLight-наложения «радуги».
+            HSMeshGradientBackground(palette: .calm, animated: false)
                 .ignoresSafeArea()
-                .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                .blendMode(.softLight)
-                .allowsHitTesting(false)
                 .accessibilityHidden(true)
             scrollContent
         }
@@ -144,22 +139,38 @@ struct StutteringView: View {
     // MARK: - Mascot Header
 
     private var mascotHeader: some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            // E v21: 3D Ляля hero на StutteringView (требование «3D героев на каждом экране»).
-            LyalyaHeroView(state: .encouraging, size: 160)
-                .accessibilityLabel(String(localized: "stuttering.mascot.accessibility"))
+        // Редизайн: спокойная Ляля рядом с тёплым облачком-репликой —
+        // поддерживающий, не клинический тон (эталон stuttering-home).
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaHeroView(state: .encouraging, size: 96)
                 .accessibilityHidden(true)
 
-            Text(String(localized: "stuttering.entry.subtitle"))
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.sp4)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(String(localized: "stuttering.hub.bubble"))
+                    .font(TypographyTokens.body(15).weight(.medium))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(SpacingTokens.sp3)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+            )
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, SpacingTokens.sp2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(String(localized: "stuttering.mascot.accessibility")). \(String(localized: "stuttering.hub.bubble"))"
+        )
     }
 
     // MARK: - Voice Prompt Banner
@@ -216,29 +227,12 @@ struct StutteringView: View {
                         isWide: !useTwoColumns,
                         isRecommended: card.mode == scene.display.recommendedMode
                     )
-                    .opacity(1)
-                    .scaleEffect(1)
                     .animation(
                         reduceMotion
                             ? .linear(duration: 0.15)
                             : MotionTokens.spring.delay(Double(idx) * 0.08),
                         value: scene.display.cards.count
                     )
-                    // Fix v34 — Step 10 Batch G scrollTransition полностью
-                    // убран: при .visible(0.3) карточки ниже фолда рендерились
-                    // как стопка полупрозрачных призраков, а promotedный
-                    // .visible(0) с opacity 0.85 всё равно давал «стеклянный»
-                    // эффект на peach mesh-фоне. Без scrollTransition карточки
-                    // всегда читаемы; staggered появление сохранено через
-                    // .animation выше с delay по индексу.
-                    //
-                    // Fix v34 — `hsParallaxTile(factor: 0.25)` тоже убран.
-                    // Модификатор оборачивает каждую карточку в GeometryReader
-                    // и применяет y-offset пропорционально расстоянию до центра
-                    // экрана. В LazyVGrid это давало визуально «стопку призраков»
-                    // под видимым фолдом: соседние карточки получали разные
-                    // offset и перекрывали друг друга. На статичных скриншот-
-                    // снимках эффект особенно заметен.
                     .onTapGesture {
                         navigateTo = card.mode
                     }

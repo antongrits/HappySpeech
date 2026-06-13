@@ -4,12 +4,17 @@ import SwiftUI
 struct HoldThePoseView: View {
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
     @State private var interactor: HoldThePoseInteractor?
     @State private var presenter: HoldThePosePresenter?
     @State private var display = HoldThePoseDisplay()
+
+    /// Игра идёт по mock/обычной камере (TrueDepth недоступен).
+    private var isFallbackCamera: Bool { mockSession != nil }
+
+    /// Поза удержана достаточно долго (визуальный success-стейт капчер-кольца).
+    private var isHeld: Bool { display.lastStars != nil || display.progress >= 1.0 }
 
     var body: some View {
         ZStack {
@@ -18,7 +23,7 @@ struct HoldThePoseView: View {
                     .ignoresSafeArea()
             } else {
                 ColorTokens.Kid.bgDeep.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
@@ -26,48 +31,76 @@ struct HoldThePoseView: View {
                 ARUnsupportedView()
             }
 
-            VStack {
-                ARGameHUD(
-                    title: "ar.holdPose.title",
+            VStack(spacing: SpacingTokens.small) {
+                ARTaskPill(
+                    iconSystemName: "face.smiling.fill",
+                    title: String(localized: "ar.holdPose.title"),
+                    subtitle: postureSubtitle,
                     scoreText: display.lastStars.map { "\($0)" },
-                    scoreIcon: display.lastStars == nil ? nil : "star.fill",
                     onClose: { dismiss() }
                 )
-                Spacer()
-                HSLiquidGlassCard(style: .elevated) {
-                    VStack(spacing: SpacingTokens.small) {
-                        HStack(spacing: SpacingTokens.tiny) {
-                            Image(systemName: "face.smiling.fill")
-                                .font(TypographyTokens.headline())
-                                .foregroundStyle(ColorTokens.Brand.mint)
-                                .hsSymbolEffect(.pulse, value: display.confidencePercent)
-                                .accessibilityHidden(true)
-                            Text(display.postureName)
-                                .font(TypographyTokens.headline())
-                                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        }
-                        GeometryReader { proxy in
-                            ZStack(alignment: .leading) {
-                                Capsule().fill(ColorTokens.Overlay.highlight)
-                                Capsule()
-                                    .fill(ColorTokens.Brand.mint)
-                                    .frame(width: proxy.size.width * CGFloat(display.progress))
-                            }
-                        }
-                        .frame(height: 14)
-                        Text("\(display.confidencePercent)%")
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
-                    }
-                    .frame(maxWidth: .infinity)
+
+                if isFallbackCamera {
+                    ARTrueDepthFallbackBanner()
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.xLarge)
+
+                Spacer()
+
+                ARControlPanel(
+                    hintText: isHeld
+                        ? String(localized: "ar.holdPose.hint.done")
+                        : String(localized: "ar.holdPose.hint.hold"),
+                    isSuccess: isHeld,
+                    progress: display.progress,
+                    centerAction: nil,
+                    centerAccessibilityLabel: String(localized: "ar.holdPose.title"),
+                    leading: { sideMetric },
+                    trailing: { confidenceBadge }
+                )
             }
         }
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)
+    }
+
+    /// Подзаголовок task-pill: имя целевой позы (или общая подсказка, пока не задано).
+    private var postureSubtitle: String {
+        display.postureName.isEmpty
+            ? String(localized: "ar.holdPose.hud.subtitle")
+            : display.postureName
+    }
+
+    /// Левая боковая иконка-метрика панели — лицо-индикатор с pulse.
+    private var sideMetric: some View {
+        Image(systemName: "face.smiling.fill")
+            .font(.system(size: 22, weight: .semibold))
+            .foregroundStyle(ColorTokens.Brand.mint)
+            .frame(width: 56, height: 56)
+            .background(.ultraThinMaterial, in: Circle())
+            .overlay(Circle().strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1))
+            .hsSymbolEffect(.pulse, value: display.confidencePercent)
+            .accessibilityHidden(true)
+    }
+
+    /// Правый бейдж панели — текущая уверенность позы в процентах.
+    private var confidenceBadge: some View {
+        VStack(spacing: 2) {
+            Text("\(display.confidencePercent)")
+                .font(TypographyTokens.headline(18).weight(.heavy))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .monospacedDigit()
+            Text(verbatim: "%")
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        }
+        .frame(width: 56, height: 56)
+        .background(.ultraThinMaterial, in: Circle())
+        .overlay(Circle().strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("ar.holdPose.title"))
+        .accessibilityValue(Text("\(display.confidencePercent)%"))
+        .accessibilityAddTraits(.updatesFrequently)
     }
 
     private func bootstrap() async {

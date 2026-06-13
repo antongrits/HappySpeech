@@ -80,13 +80,10 @@ struct SpeechTempoView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                // Спокойный однотонный тёплый фон (cream), статичный.
+                HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
-                    .blendMode(.softLight)
                     .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)

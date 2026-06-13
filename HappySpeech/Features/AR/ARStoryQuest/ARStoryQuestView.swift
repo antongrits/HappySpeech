@@ -139,7 +139,7 @@ struct ARStoryQuestView: View {
     // MARK: - Target word card
 
     private var targetWordCard: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.22))) {
+        HSCard(style: .tinted(ColorTokens.Brand.primaryLo.opacity(0.45))) {
             VStack(spacing: SpacingTokens.tiny) {
                 Text(String(localized: "ar.quest.targetWord.caption"))
                     .font(TypographyTokens.caption())
@@ -194,8 +194,8 @@ struct ARStoryQuestView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                 .fill(display.canAdvance
-                      ? ColorTokens.Brand.mint.opacity(0.25)
-                      : ColorTokens.Brand.butter.opacity(0.25))
+                      ? ColorTokens.Brand.primaryLo.opacity(0.5)
+                      : ColorTokens.Brand.butter.opacity(0.3))
         )
         .transition(.opacity.combined(with: .move(edge: .bottom)))
         .accessibilityAddTraits(.isStaticText)
@@ -208,7 +208,14 @@ struct ARStoryQuestView: View {
             Button(action: toggleRecording) {
                 ZStack {
                     Circle()
-                        .fill(display.isListening ? ColorTokens.Brand.primary : ColorTokens.Brand.mint)
+                        .fill(
+                            LinearGradient(
+                                colors: display.isListening
+                                    ? [ColorTokens.Brand.primary, ColorTokens.Brand.primary.opacity(0.85)]
+                                    : [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                startPoint: .topLeading, endPoint: .bottomTrailing
+                            )
+                        )
                         .frame(width: 96, height: 96)
                         .scaleEffect(display.isListening && !reduceMotion && micPulse ? 1.12 : 1.0)
                         .shadow(color: ColorTokens.Brand.primary.opacity(0.3), radius: 12, y: 6)

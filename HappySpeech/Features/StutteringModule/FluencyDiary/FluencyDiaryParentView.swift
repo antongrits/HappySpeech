@@ -51,6 +51,8 @@ struct FluencyDiaryParentView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp5)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
         }
         .navigationTitle(String(localized: "Дневник плавности"))
         .navigationBarTitleDisplayMode(.inline)
@@ -71,18 +73,40 @@ struct FluencyDiaryParentView: View {
     }
 
     private var chartHeader: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(String(localized: "Спотыканий на 100 слогов"))
-                .font(TypographyTokens.headline(17))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-            Text(String(localized: "За последние 4 недели"))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
+        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "Спотыканий на 100 слогов"))
+                    .font(TypographyTokens.headline(17))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Text(String(localized: "За последние 4 недели"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            readOnlyBadge
         }
+    }
+
+    private var readOnlyBadge: some View {
+        Text(String(localized: "fluency_diary.parent.readonly"))
+            .font(TypographyTokens.caption(11).weight(.semibold))
+            .foregroundStyle(ColorTokens.Parent.inkSoft)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.vertical, SpacingTokens.sp1)
+            .background(
+                Capsule().fill(ColorTokens.Parent.bgDeep)
+            )
+            .overlay(
+                Capsule().strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+            )
+            .accessibilityLabel(String(localized: "fluency_diary.parent.readonly"))
     }
 
     private var diaryChart: some View {

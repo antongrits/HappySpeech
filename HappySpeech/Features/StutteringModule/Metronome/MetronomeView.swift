@@ -11,18 +11,27 @@ struct MetronomeView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            // Спокойный однотонный тёплый фон (cream), статичный.
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.sp6) {
-                mascotHeader
-                targetWordSection
-                trackSection
-                waveformSection
-                progressSection
-                controlButton
+            ScrollView {
+                VStack(spacing: SpacingTokens.sp5) {
+                    mascotHeader
+                    beatRingHero
+                    targetWordSection
+                    trackSection
+                    waveformSection
+                    progressSection
+                    controlButton
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.sp3)
+                .padding(.bottom, SpacingTokens.sp6)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.vertical, SpacingTokens.sp5)
+            .scrollBounceBehavior(.basedOnSize)
 
             if interactor.display.showReward {
                 rewardOverlay
@@ -47,6 +56,22 @@ struct MetronomeView: View {
         }
     }
 
+    // MARK: - Beat Ring Hero
+    //
+    // Центральный пульсирующий индикатор удара с реальным BPM из interactor
+    // (display.bpm — адаптивный темп). Пульс гейтится reduceMotion и работает
+    // только когда метроном запущен; коралловый акцент, тёплый круг.
+
+    private var beatRingHero: some View {
+        MetronomeBeatRing(
+            bpm: interactor.display.bpm,
+            isRunning: interactor.display.isRunning,
+            reduceMotion: reduceMotion
+        )
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.sp2)
+    }
+
     private var targetWordSection: some View {
         let syllables = interactor.display.syllables
         let activeIdx = interactor.display.currentSyllableIndex
@@ -64,16 +89,24 @@ struct MetronomeView: View {
     }
 
     private var trackSection: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            ForEach(interactor.display.syllables) { syllable in
-                SyllableCell(
-                    syllable: syllable,
-                    isActive: syllable.index == interactor.display.currentSyllableIndex,
-                    reduceMotion: reduceMotion
-                )
+        VStack(spacing: SpacingTokens.sp2) {
+            Text(String(localized: "stuttering.metronome.read_in_beat"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+
+            HStack(spacing: SpacingTokens.sp3) {
+                ForEach(interactor.display.syllables) { syllable in
+                    SyllableCell(
+                        syllable: syllable,
+                        isActive: syllable.index == interactor.display.currentSyllableIndex,
+                        reduceMotion: reduceMotion
+                    )
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
     }
 
     private var waveformSection: some View {
@@ -142,6 +175,103 @@ struct MetronomeView: View {
                 .fill(ColorTokens.Kid.surface)
         )
         .transition(.scale.combined(with: .opacity))
+    }
+}
+
+// MARK: - MetronomeBeatRing
+//
+// Тёплый коралловый круг с числом BPM в центре и двумя расходящимися
+// кольцами-пульсами. Пульс синхронизирован с реальным темпом (display.bpm),
+// работает только при isRunning и отключается при reduceMotion (HIG).
+
+private struct MetronomeBeatRing: View {
+
+    let bpm: Int
+    let isRunning: Bool
+    let reduceMotion: Bool
+
+    @State private var pulse = false
+
+    /// Длительность одного удара в секундах (60 / BPM), с защитой от деления.
+    private var beatDuration: Double {
+        bpm > 0 ? 60.0 / Double(bpm) : 1.0
+    }
+
+    private var animating: Bool {
+        isRunning && !reduceMotion
+    }
+
+    var body: some View {
+        ZStack {
+            // Расходящиеся кольца-пульсы (только во время хода).
+            if animating {
+                ForEach(0..<2, id: \.self) { i in
+                    Circle()
+                        .stroke(ColorTokens.Brand.primary.opacity(0.5), lineWidth: 2)
+                        .scaleEffect(pulse ? 1.18 : 0.7)
+                        .opacity(pulse ? 0 : 0.55)
+                        .animation(
+                            .easeOut(duration: beatDuration)
+                                .repeatForever(autoreverses: false)
+                                .delay(Double(i) * beatDuration / 2),
+                            value: pulse
+                        )
+                }
+            }
+
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                        center: .init(x: 0.5, y: 0.3),
+                        startRadius: 6,
+                        endRadius: 120
+                    )
+                )
+                .frame(width: 132, height: 132)
+                .scaleEffect(animating && pulse ? 1.05 : 1.0)
+                .animation(
+                    animating
+                        ? .easeInOut(duration: beatDuration).repeatForever(autoreverses: true)
+                        : .default,
+                    value: pulse
+                )
+                .overlay {
+                    VStack(spacing: SpacingTokens.sp1) {
+                        Text("\(bpm)")
+                            .font(TypographyTokens.kidDisplay(42))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                        Text(String(localized: "stuttering.metronome.bpm.unit"))
+                            .font(TypographyTokens.caption(12).weight(.bold))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                }
+                .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 16, y: 8)
+
+            // Спокойный мудлейбл под кольцом, привязан к нижнему краю стека.
+            VStack {
+                Spacer()
+                Text(String(localized: "stuttering.metronome.mood.calm"))
+                    .font(TypographyTokens.caption(13).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .padding(.top, SpacingTokens.sp2)
+            }
+        }
+        .frame(width: 196, height: 220)
+        .onAppear { if animating { pulse = true } }
+        .onChange(of: isRunning) { _, running in
+            pulse = running && !reduceMotion
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            String(format: String(localized: "stuttering.metronome.bpm.a11y"), bpm)
+        )
     }
 }
 

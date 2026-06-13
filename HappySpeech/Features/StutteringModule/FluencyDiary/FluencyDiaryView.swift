@@ -14,7 +14,10 @@ struct FluencyDiaryView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            // Спокойный однотонный тёплый фон (cream), статичный.
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
 
             if let interactor {
                 content(interactor: interactor)
@@ -82,6 +85,8 @@ struct FluencyDiaryView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.sp5)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.sp2)
     }
 
     @ViewBuilder

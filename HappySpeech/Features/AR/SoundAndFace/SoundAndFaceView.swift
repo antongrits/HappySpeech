@@ -10,9 +10,14 @@ struct SoundAndFaceView: View {
     @State private var presenter: SoundAndFacePresenter?
     @State private var display = SoundAndFaceDisplay()
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private var isFaceSupported: Bool { ARFaceTrackingConfiguration.isSupported }
+    private var isSuccess: Bool { display.postureProgress >= 1 }
+
     var body: some View {
         ZStack {
-            if ARFaceTrackingConfiguration.isSupported, let session {
+            if isFaceSupported, let session {
                 ARFaceViewContainer(session: session.underlyingSession)
                     .ignoresSafeArea()
             } else {
@@ -20,44 +25,74 @@ struct SoundAndFaceView: View {
                 ARUnsupportedView()
             }
 
-            VStack {
-                ARGameHUD(
-                    title: "ar.soundFace.title",
+            VStack(spacing: SpacingTokens.tiny) {
+                ARTaskPill(
+                    iconSystemName: "waveform",
+                    title: String(localized: "ar.soundFace.title"),
+                    subtitle: display.postureName.isEmpty ? nil : display.postureName,
                     scoreText: display.lastStars.map { "\($0)" },
-                    scoreIcon: display.lastStars == nil ? nil : "star.fill",
                     onClose: { dismiss() }
                 )
+
+                if !isFaceSupported {
+                    ARTrueDepthFallbackBanner()
+                }
+
+                // Большая целевая буква-звук поверх камеры — карточка-цель.
                 HStack(spacing: SpacingTokens.medium) {
                     Text(display.soundText)
-                        .font(TypographyTokens.kidDisplay(72))
+                        .font(TypographyTokens.kidDisplay(64))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                    VStack(alignment: .leading) {
-                        Text(display.postureName)
-                            .font(TypographyTokens.headline())
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        Text(display.instruction)
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
-                    }
+                        .minimumScaleFactor(0.85)
+                        .accessibilityHidden(true)
+                    Text(display.postureName)
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding()
-                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
-                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(SpacingTokens.small)
+                .frame(maxWidth: .infinity)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+                )
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.top, SpacingTokens.micro)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(Text("\(display.soundText). \(display.postureName)"))
 
                 Spacer()
 
-                GeometryReader { proxy in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(ColorTokens.Overlay.highlight)
-                        Capsule().fill(ColorTokens.Brand.mint)
-                            .frame(width: proxy.size.width * CGFloat(display.postureProgress))
-                    }
+                HStack {
+                    ARMascotGuide(
+                        state: isSuccess ? .celebrating : .explaining,
+                        message: display.instruction.isEmpty
+                            ? String(localized: "ar.soundFace.title")
+                            : display.instruction,
+                        detail: display.postureName.isEmpty ? nil : display.postureName
+                    )
+                    Spacer(minLength: 0)
                 }
-                .frame(height: 12)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.xLarge)
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.bottom, SpacingTokens.small)
+
+                ARControlPanel(
+                    hintText: isSuccess
+                        ? String(localized: "ar.soundFace.success")
+                        : String(localized: "ar.hold.hint"),
+                    isSuccess: isSuccess,
+                    progress: display.postureProgress,
+                    centerAction: nil,
+                    centerAccessibilityLabel: String(localized: "ar.hold.hint"),
+                    leading: { Color.clear.frame(width: 56, height: 56) },
+                    trailing: { Color.clear.frame(width: 56, height: 56) }
+                )
             }
         }
+        .animation(reduceMotion ? nil : .spring(duration: 0.4), value: isSuccess)
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)

@@ -924,6 +924,7 @@
 		692A63B51A8216FE1188381D /* NeurolinguistInsightsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576E21AD0C64EC54A8D80B72 /* NeurolinguistInsightsPresenterTests.swift */; };
 		6939E933F1E45BB55230FB9A /* FluencyDiaryInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD051FD3E5162033F116FE8 /* FluencyDiaryInteractorTests.swift */; };
 		695E065B7E07B7CACB392EDF /* AudioMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BED9A98AA8595E8C72E98B7 /* AudioMemoryGameView.swift */; };
+		69623609776661D52F592887 /* ARCameraOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CABACE942E968D33D33622B /* ARCameraOverlay.swift */; };
 		69A148AE93B97A15A92526D5 /* SpeechTempoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB0B5EEE8D433583BBB69C /* SpeechTempoWorker.swift */; };
 		69A5C0797A1EABA768317C4A /* StageAdvancementPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37653BBB0FDBFB78B083237A /* StageAdvancementPlannerTests.swift */; };
 		69EC1E29BAB1D7827FEEE029 /* FallbackVoiceSynthesisChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */; };
@@ -2757,6 +2758,7 @@
 		3C636B031CC3E508DD2FEF19 /* FamilyAwardsCabinetModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAwardsCabinetModels.swift; sourceTree = "<group>"; };
 		3C9DC01115983F437CD18577 /* BreatheAndSpeakPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheAndSpeakPresenterTests.swift; sourceTree = "<group>"; };
 		3CA76F518AED852858B59103 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		3CABACE942E968D33D33622B /* ARCameraOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARCameraOverlay.swift; sourceTree = "<group>"; };
 		3CCB41A86293C5E476A60F0D /* SoundTrafficLightModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundTrafficLightModels.swift; sourceTree = "<group>"; };
 		3CE9A73C2F121B1229C15FFB /* SessionHistorySubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistorySubviews.swift; sourceTree = "<group>"; };
 		3D14ACBEAC41DA3E7B1C9E48 /* FSRSSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSRSSchedulerTests.swift; sourceTree = "<group>"; };
@@ -5547,6 +5549,7 @@
 		30CED5CBDE25ED76A00AA74D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				3CABACE942E968D33D33622B /* ARCameraOverlay.swift */,
 				CBDC68D722DA985A4745FDDC /* ARDeviceCapability.swift */,
 				C950AC46D31523C7ECA7ABFD /* ARFaceViewContainer.swift */,
 			);
@@ -11089,6 +11092,7 @@
 				E2D293BE04554B6A8521BF5E /* ARActivityPresenter.swift in Sources */,
 				35A5E47E8B6A73AB781B6C3E /* ARActivityRouter.swift in Sources */,
 				FAB56AF2330A49BCD5C2F3F3 /* ARActivityView.swift in Sources */,
+				69623609776661D52F592887 /* ARCameraOverlay.swift in Sources */,
 				14938BB0F6A12774708D7779 /* ARDeviceCapability.swift in Sources */,
 				9A1D4B7AFEF9DF5DFA518912 /* ARFaceFilterInteractor.swift in Sources */,
 				F12ED7F511B8B77860761EC1 /* ARFaceFilterModels.swift in Sources */,

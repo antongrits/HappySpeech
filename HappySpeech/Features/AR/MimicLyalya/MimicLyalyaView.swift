@@ -17,9 +17,11 @@ struct MimicLyalyaView: View {
     // Задача обработки кадров камеры для hand pose
     @State private var handPoseTask: Task<Void, Never>?
 
+    private var isFaceSupported: Bool { ARFaceTrackingConfiguration.isSupported }
+
     var body: some View {
         ZStack {
-            if ARFaceTrackingConfiguration.isSupported, let session {
+            if isFaceSupported, let session {
                 ARFaceViewContainer(session: session.underlyingSession)
                     .ignoresSafeArea()
             } else {
@@ -27,26 +29,18 @@ struct MimicLyalyaView: View {
                 ARUnsupportedView()
             }
 
-            VStack {
-                ARGameHUD(
-                    title: "ar.mimic.title",
-                    scoreText: display.roundText,
+            VStack(spacing: SpacingTokens.tiny) {
+                ARTaskPill(
+                    iconSystemName: display.emoji,
+                    title: String(localized: "ar.mimic.title"),
+                    subtitle: display.postureName.isEmpty ? nil : display.postureName,
+                    scoreText: display.roundText.isEmpty ? nil : display.roundText,
                     onClose: { dismiss() }
                 )
-                HStack {
-                    Image(systemName: display.emoji)
-                        .font(.system(size: 56, weight: .regular))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .accessibilityHidden(true)
-                    Spacer()
-                    Text(display.postureName)
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .padding(.horizontal, SpacingTokens.small)
-                        .padding(.vertical, SpacingTokens.tiny)
-                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
+
+                if !isFaceSupported {
+                    ARTrueDepthFallbackBanner()
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
 
                 // Block J: Hand pose hint banner
                 if display.showHandPoseBanner {
@@ -55,37 +49,38 @@ struct MimicLyalyaView: View {
                         poseNameText: display.handPoseNameText,
                         isMatching: display.handPoseMatched
                     )
-                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.horizontal, SpacingTokens.regular)
                     .transition(.move(edge: .top).combined(with: .opacity))
                 }
 
                 Spacer()
-                VStack {
-                    GeometryReader { proxy in
-                        ZStack(alignment: .leading) {
-                            Capsule().fill(ColorTokens.Overlay.highlight)
-                            Capsule()
-                                .fill(ColorTokens.Brand.primary)
-                                .frame(width: proxy.size.width * CGFloat(display.progress))
-                        }
-                    }
-                    .frame(height: 14)
-                    Button {
-                        interactor?.nextRound()
-                    } label: {
-                        Text("ar.mimic.nextRound")
-                            .font(TypographyTokens.headline())
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .padding(.horizontal, SpacingTokens.medium)
-                            .padding(.vertical, SpacingTokens.small)
-                            .background(ColorTokens.Brand.primary, in: Capsule())
-                    }
+
+                HStack {
+                    ARMascotGuide(
+                        state: display.progress >= 1 ? .celebrating : .pointing,
+                        message: display.mascotHint,
+                        detail: display.postureName.isEmpty ? nil : display.postureName
+                    )
+                    Spacer(minLength: 0)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.xLarge)
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.bottom, SpacingTokens.small)
+
+                ARControlPanel(
+                    hintText: display.progress >= 1
+                        ? String(localized: "ar.mimic.roundComplete")
+                        : String(localized: "ar.hold.hint"),
+                    isSuccess: display.progress >= 1,
+                    progress: display.progress,
+                    centerAction: { interactor?.nextRound() },
+                    centerAccessibilityLabel: String(localized: "ar.mimic.nextRound"),
+                    leading: { Color.clear.frame(width: 56, height: 56) },
+                    trailing: { Color.clear.frame(width: 56, height: 56) }
+                )
             }
         }
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: display.showHandPoseBanner)
+        .animation(reduceMotion ? nil : .spring(duration: 0.4), value: display.progress >= 1)
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)
@@ -171,17 +166,17 @@ private struct HandPoseHintBanner: View {
         HStack(spacing: SpacingTokens.small) {
             Image(systemName: isMatching ? "hand.thumbsup.fill" : "hand.raised.fill")
                 .font(.title2)
-                .foregroundStyle(isMatching ? ColorTokens.Semantic.success : ColorTokens.Overlay.onAccent)
+                .foregroundStyle(isMatching ? ColorTokens.Brand.mint : ColorTokens.Brand.primary)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(hintText)
                     .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.8))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
                 Text(poseNameText)
                     .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .bold()
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
@@ -190,15 +185,19 @@ private struct HandPoseHintBanner: View {
             if isMatching {
                 Text("hand_pose.detect.matched")
                     .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .foregroundStyle(ColorTokens.Brand.mint)
                     .padding(.horizontal, SpacingTokens.tiny)
                     .padding(.vertical, 2)
-                    .background(ColorTokens.Semantic.success.opacity(0.15), in: Capsule())
+                    .background(ColorTokens.Brand.mint.opacity(0.15), in: Capsule())
             }
         }
         .padding(.horizontal, SpacingTokens.medium)
         .padding(.vertical, SpacingTokens.small)
-        .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md)
+                .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(isMatching
             ? String(localized: "hand_pose.detect.matched")
@@ -213,6 +212,7 @@ private struct HandPoseHintBanner: View {
 @MainActor
 final class MimicLyalyaDisplay: MimicLyalyaDisplayLogic {
     var postureName: String = ""
+    var mascotHint: String = ""
     var roundText: String = ""
     var progress: Float = 0
     // Block D v16: эмодзи заменены на SF Symbol name (UI chrome).
@@ -227,6 +227,7 @@ final class MimicLyalyaDisplay: MimicLyalyaDisplayLogic {
 
     func displayStartGame(_ viewModel: MimicLyalyaModels.StartGame.ViewModel) {
         postureName = viewModel.postureName
+        mascotHint = viewModel.mascotHint
         roundText = viewModel.roundText
     }
 

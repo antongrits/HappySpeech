@@ -13,11 +13,16 @@ struct PoseSequenceView: View {
     @State private var presenter: PoseSequencePresenter?
     @State private var display = PoseSequenceDisplay()
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private var isSuccess: Bool { display.progress >= 1 }
+
     var body: some View {
         ZStack {
             cameraBackground
             overlayContent
         }
+        .animation(reduceMotion ? nil : .spring(duration: 0.4), value: isSuccess)
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)
@@ -44,31 +49,43 @@ struct PoseSequenceView: View {
     // MARK: - Overlay
 
     private var overlayContent: some View {
-        VStack(spacing: 0) {
-            ARGameHUD(
-                title: "ar.poseSequence.title",
-                scoreText: display.lastStars.map { "\($0) \(String(localized: "ar.stars"))" },
+        VStack(spacing: SpacingTokens.tiny) {
+            ARTaskPill(
+                iconSystemName: display.mode == .body ? "figure.walk" : "face.smiling",
+                title: String(localized: "ar.poseSequence.title"),
+                subtitle: nil,
+                scoreText: display.lastStars.map { "\($0)" },
                 onClose: { dismiss() }
             )
 
+            if display.mode != .body, !ARFaceTrackingConfiguration.isSupported {
+                ARTrueDepthFallbackBanner()
+            }
+
             // Полоска прогресса по позам
             poseChipsRow
-                .padding(.top, SpacingTokens.tiny)
-
-            Spacer()
+                .padding(.top, SpacingTokens.micro)
 
             // Body-mode: score badge + hint
             if display.mode == .body {
                 bodyFeedbackSection
+                    .padding(.top, SpacingTokens.small)
             }
 
-            // Название текущей позы
+            // Название текущей позы — карточка-цель поверх камеры.
             Text(display.currentName)
-                .font(TypographyTokens.title(32))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .font(TypographyTokens.title(30))
+                .foregroundStyle(ColorTokens.Brand.primary)
                 .padding(.horizontal, SpacingTokens.medium)
                 .padding(.vertical, SpacingTokens.small)
-                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+                .frame(maxWidth: .infinity)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+                )
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.top, SpacingTokens.small)
                 .accessibilityLabel(Text("ar.poseSequence.currentPose \(display.currentName)"))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -76,8 +93,30 @@ struct PoseSequenceView: View {
 
             Spacer()
 
-            progressBar
-                .padding(.bottom, SpacingTokens.xLarge)
+            HStack {
+                ARMascotGuide(
+                    state: isSuccess ? .celebrating : .pointing,
+                    message: display.currentName.isEmpty
+                        ? String(localized: "ar.poseSequence.title")
+                        : display.currentName,
+                    detail: display.currentHint.isEmpty ? nil : display.currentHint
+                )
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.bottom, SpacingTokens.small)
+
+            ARControlPanel(
+                hintText: isSuccess
+                    ? String(localized: "ar.poseSequence.success")
+                    : String(localized: "ar.hold.hint"),
+                isSuccess: isSuccess,
+                progress: display.progress,
+                centerAction: nil,
+                centerAccessibilityLabel: String(localized: "ar.hold.hint"),
+                leading: { Color.clear.frame(width: 56, height: 56) },
+                trailing: { Color.clear.frame(width: 56, height: 56) }
+            )
         }
     }
 
@@ -87,15 +126,16 @@ struct PoseSequenceView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: SpacingTokens.tiny) {
                 ForEach(Array(display.postureNames.enumerated()), id: \.offset) { index, name in
+                    let isUpcoming = index > display.currentIndex
                     Text(name)
                         .font(TypographyTokens.body(11))
-                        .padding(.horizontal, SpacingTokens.tiny)
+                        .padding(.horizontal, SpacingTokens.small)
                         .padding(.vertical, SpacingTokens.micro)
                         .background(
-                            chipColor(for: index),
+                            isUpcoming ? AnyShapeStyle(.ultraThinMaterial) : AnyShapeStyle(chipColor(for: index)),
                             in: Capsule()
                         )
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .foregroundStyle(isUpcoming ? ColorTokens.Kid.ink : ColorTokens.Overlay.onAccent)
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel(
                             index < display.currentIndex
@@ -110,61 +150,34 @@ struct PoseSequenceView: View {
         }
     }
 
+    /// Цвет для пройденной (mint) и текущей (coral) позы. Будущие позы рисуются
+    /// на тёплом стекле в `poseChipsRow` (этот хелпер для них не вызывается).
     private func chipColor(for index: Int) -> Color {
-        if index < display.currentIndex { return ColorTokens.Brand.mint }
-        if index == display.currentIndex { return ColorTokens.Brand.primary }
-        return ColorTokens.Overlay.highlight
+        index < display.currentIndex ? ColorTokens.Brand.mint : ColorTokens.Brand.primary
     }
 
     // MARK: - Body feedback
 
     private var bodyFeedbackSection: some View {
-        VStack(spacing: SpacingTokens.small) {
-            // Score badge
-            Text("\(display.bodyScore)%")
-                .font(TypographyTokens.title(40))
-                .foregroundStyle(scoreColor(display.bodyScore))
-                .padding(.horizontal, SpacingTokens.medium)
-                .padding(.vertical, SpacingTokens.small)
-                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.lg))
-                .accessibilityLabel(Text("ar.poseSequence.score \(display.bodyScore)"))
-
-            // Hint text
-            if !display.currentHint.isEmpty {
-                Text(display.currentHint)
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.large)
-                    .padding(.vertical, SpacingTokens.tiny)
-                    .background(ColorTokens.Overlay.dimmer, in: RoundedRectangle(cornerRadius: RadiusTokens.sm))
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                    .accessibilityLabel(Text(display.currentHint))
-            }
-        }
-        .padding(.bottom, SpacingTokens.small)
+        // Score badge (только в body-режиме). Подсказка показывается в ARMascotGuide.
+        Text("\(display.bodyScore)%")
+            .font(TypographyTokens.title(38))
+            .foregroundStyle(scoreColor(display.bodyScore))
+            .monospacedDigit()
+            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.vertical, SpacingTokens.small)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                    .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
+            )
+            .accessibilityLabel(Text("ar.poseSequence.score \(display.bodyScore)"))
     }
 
     private func scoreColor(_ score: Int) -> Color {
         score >= 80 ? ColorTokens.Brand.mint
             : score >= 50 ? ColorTokens.Brand.primary
             : ColorTokens.Semantic.warning
-    }
-
-    // MARK: - Progress bar
-
-    private var progressBar: some View {
-        GeometryReader { proxy in
-            ZStack(alignment: .leading) {
-                Capsule().fill(ColorTokens.Overlay.highlight)
-                Capsule().fill(ColorTokens.Brand.primary)
-                    .frame(width: proxy.size.width * CGFloat(display.progress))
-            }
-        }
-        .frame(height: 12)
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityValue(Text("ar.poseSequence.progress \(Int(display.progress * 100))"))
     }
 
     // MARK: - Bootstrap
