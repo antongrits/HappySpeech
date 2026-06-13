@@ -204,7 +204,7 @@ struct RhythmView: View {
             // Reduce Motion: StaticSpectrogramView (один фрейм, без анимации).
             SpectrogramVisualizerView(
                 referenceSpectrogram: nil,
-                style: .space
+                style: .warm
             )
             .frame(maxWidth: .infinity)
             .frame(height: 110)

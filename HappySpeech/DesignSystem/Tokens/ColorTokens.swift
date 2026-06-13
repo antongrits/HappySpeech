@@ -107,6 +107,14 @@ public enum ColorTokens {
         public static let target     = Color("SpecTarget")
     }
 
+    // MARK: - Visualization (data-viz canvas)
+
+    /// Тёмный тёплый холст для спектрограммы / pitch-кривой. Data-viz требует
+    /// тёмного фона для контраста тёплой heat-шкалы (коралл → золото).
+    public enum Viz {
+        public static let canvasBg = Color("VizCanvasBg")
+    }
+
     // MARK: - Semantic
 
     public enum Semantic {

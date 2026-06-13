@@ -104,10 +104,9 @@ struct KaraokePitchView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
-                // музыкально-ритмического pitch-режима (прохладный resonance).
+                // Тёплый статичный однотонный фон (кремовое семейство).
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
@@ -219,7 +218,7 @@ struct KaraokePitchView: View {
                         drawContour(modelContour,
                                     in: ctx,
                                     size: size,
-                                    color: ColorTokens.Brand.lilac,
+                                    color: ColorTokens.Brand.primary,
                                     isModel: true)
                     }
                     // Reduce Motion: live-линия только когда есть score.
@@ -236,12 +235,13 @@ struct KaraokePitchView: View {
                             drawContour(live,
                                         in: ctx,
                                         size: size,
-                                        color: ColorTokens.Brand.primary,
+                                        color: ColorTokens.Brand.butter,
                                         isModel: false)
                         }
                     }
                 }
                 .frame(height: 180)
+                .overlay(alignment: .leading) { pitchAxisLabels }
                 .background(
                     RoundedRectangle(
                         cornerRadius: RadiusTokens.concentric(
@@ -249,7 +249,7 @@ struct KaraokePitchView: View {
                             inset: SpacingTokens.cardPad
                         )
                     )
-                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .fill(pitchCanvasBackground)
                 )
                 .clipShape(
                     RoundedRectangle(
@@ -271,10 +271,24 @@ struct KaraokePitchView: View {
         }
     }
 
+    /// Вертикальные ориентиры высоты голоса (выше / ниже) на холсте кривой.
+    private var pitchAxisLabels: some View {
+        VStack(alignment: .leading) {
+            Text("karaoke.axis.higher")
+            Spacer()
+            Text("karaoke.axis.lower")
+        }
+        .font(TypographyTokens.caption(9))
+        .foregroundStyle(ColorTokens.Brand.primaryLo.opacity(0.85))
+        .padding(.vertical, SpacingTokens.sp2)
+        .padding(.leading, SpacingTokens.sp2)
+        .accessibilityHidden(true)
+    }
+
     private var legendRow: some View {
         HStack(spacing: SpacingTokens.sp3) {
-            legendDot(color: ColorTokens.Brand.lilac, key: "karaoke.legend.model")
-            legendDot(color: ColorTokens.Brand.primary, key: "karaoke.legend.you")
+            legendDot(color: ColorTokens.Brand.primary, key: "karaoke.legend.model")
+            legendDot(color: ColorTokens.Brand.butter, key: "karaoke.legend.you")
             Spacer()
         }
         .accessibilityHidden(true)
@@ -435,6 +449,12 @@ struct KaraokePitchView: View {
 
     // MARK: - Canvas Drawing
 
+    /// Тёмный тёплый холст pitch-кривой (коричнево-чёрный, эталон `--viz-bg`)
+    /// для контраста коралл/золото-линий.
+    private var pitchCanvasBackground: Color {
+        ColorTokens.Viz.canvasBg
+    }
+
     private func drawGrid(ctx: GraphicsContext, size: CGSize) {
         var path = Path()
         let rowCount = 4
@@ -443,8 +463,9 @@ struct KaraokePitchView: View {
             path.move(to: CGPoint(x: 0, y: y))
             path.addLine(to: CGPoint(x: size.width, y: y))
         }
+        // Тёплая светлая сетка поверх тёмного холста (эталон `--viz-grid`).
         ctx.stroke(path,
-                   with: .color(ColorTokens.Kid.line.opacity(0.25)),
+                   with: .color(ColorTokens.Brand.primaryHi.opacity(0.16)),
                    lineWidth: 1)
     }
 

@@ -58,7 +58,7 @@ public struct SpectrogramVisualizerView: View {
 
     public init(
         referenceSpectrogram: Spectrogram? = nil,
-        style: SpectrogramStyle = .forest
+        style: SpectrogramStyle = .warm
     ) {
         self.referenceSpectrogram = referenceSpectrogram
         self.style = style
@@ -80,7 +80,7 @@ public struct SpectrogramVisualizerView: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color(hue: style.lowHue / 360.0, saturation: 0.1, brightness: 0.12))
+                .fill(vizCanvasBackground)
         )
         .task {
             await startRecording()
@@ -97,6 +97,18 @@ public struct SpectrogramVisualizerView: View {
         } message: { error in
             Text(error.localizedDescription)
         }
+    }
+
+    // MARK: - Canvas background
+
+    /// Тёмный тёплый холст спектрограммы (data-viz требует тёмного фона для
+    /// контраста heat-шкалы). Для тёплых стилей — тёплый коричнево-чёрный
+    /// (эталон `--viz-bg:#241A12`); для прочих — HSB по `lowHue`.
+    private var vizCanvasBackground: Color {
+        if style.usesWarmHeatRamp {
+            return ColorTokens.Viz.canvasBg
+        }
+        return Color(hue: style.lowHue / 360.0, saturation: 0.1, brightness: 0.12)
     }
 
     // MARK: - Reference Panel
@@ -175,7 +187,7 @@ public struct SpectrogramVisualizerView: View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)
-                .foregroundStyle(isLive ? ColorTokens.Semantic.success : ColorTokens.Brand.primary)
+                .foregroundStyle(isLive ? ColorTokens.Brand.primaryHi : ColorTokens.Brand.primary)
 
             Text(title)
                 .font(.caption.weight(.semibold))
@@ -243,7 +255,7 @@ public struct SpectrogramVisualizerView: View {
 // MARK: - Preview
 
 #if DEBUG
-#Preview("SpectrogramVisualizerView — лесная тема") {
+#Preview("SpectrogramVisualizerView — тёплая тема") {
     let mockFrames = (0..<30).map { (_: Int) in
         (0..<40).map { (_: Int) in Float.random(in: -2...2) }
     }
@@ -251,17 +263,17 @@ public struct SpectrogramVisualizerView: View {
 
     SpectrogramVisualizerView(
         referenceSpectrogram: ref,
-        style: .forest
+        style: .warm
     )
     .frame(maxWidth: .infinity)
     .padding()
-    .background(Color(hue: 0.3, saturation: 0.5, brightness: 0.1))
+    .background(ColorTokens.Kid.bg)
 }
 
 #Preview("SpectrogramVisualizerView — без эталона") {
-    SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
+    SpectrogramVisualizerView(referenceSpectrogram: nil, style: .warm)
         .frame(maxWidth: .infinity)
         .padding()
-        .background(Color(hue: 0.6, saturation: 0.5, brightness: 0.1))
+        .background(ColorTokens.Kid.bg)
 }
 #endif

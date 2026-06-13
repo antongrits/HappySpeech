@@ -109,6 +109,10 @@ public struct StaticSpectrogramView: View {
     }
 
     private func colorFromMagnitude(_ normalized: Float, style: SpectrogramStyle) -> Color {
+        if style.usesWarmHeatRamp {
+            let rgb = SpectrogramHeatRamp.color(for: Double(normalized))
+            return Color(red: rgb.red, green: rgb.green, blue: rgb.blue)
+        }
         let hue = style.lowHue + Double(normalized) * (style.highHue - style.lowHue)
         let wrappedHue = ((hue.truncatingRemainder(dividingBy: 360)) + 360)
             .truncatingRemainder(dividingBy: 360) / 360.0
@@ -124,7 +128,7 @@ public struct StaticSpectrogramView: View {
 
 #if DEBUG
 #Preview("StaticSpectrogramView — заглушка") {
-    StaticSpectrogramView(spectrogram: .empty, style: .ocean)
+    StaticSpectrogramView(spectrogram: .empty, style: .warm)
         .frame(width: 300, height: 80)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding()
@@ -133,7 +137,7 @@ public struct StaticSpectrogramView: View {
 #Preview("StaticSpectrogramView — с данными") {
     let frames = [(0..<40).map { Float($0) / 20.0 - 1.0 }]
     let spec = Spectrogram(frames: frames, sampleRate: 16_000, duration: 0.032)
-    StaticSpectrogramView(spectrogram: spec, style: .forest)
+    StaticSpectrogramView(spectrogram: spec, style: .warm)
         .frame(width: 300, height: 80)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding()

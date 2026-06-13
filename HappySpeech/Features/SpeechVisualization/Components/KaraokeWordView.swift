@@ -35,16 +35,28 @@ struct KaraokeWordView: View {
         syllable: SpeechVisualizationModels.Load.SyllableViewModel,
         isActive: Bool
     ) -> some View {
+        // Активный слог — сплошная тёплая butter-заливка с тёмным текстом
+        // и подъёмом (эталон караоке-дорожки); неактивный — мягкая подложка.
         Text(syllable.text)
             .font(.system(size: 32, weight: .bold, design: .rounded))
-            .foregroundStyle(syllable.state.color)
+            .foregroundStyle(isActive ? ColorTokens.Kid.ink : syllable.state.color)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp2)
             .background(
                 RoundedRectangle(cornerRadius: 14)
-                    .fill(syllable.state.color.opacity(0.12))
+                    .fill(isActive
+                          ? ColorTokens.Brand.butter
+                          : syllable.state.color.opacity(0.12))
+                    .shadow(
+                        color: isActive
+                            ? ColorTokens.Brand.butter.opacity(0.45)
+                            : .clear,
+                        radius: isActive ? 10 : 0,
+                        y: isActive ? 3 : 0
+                    )
             )
             .scaleEffect(isActive && !reduceMotion ? 1.12 : 1.0)
+            .offset(y: isActive && !reduceMotion ? -2 : 0)
             .animation(
                 reduceMotion ? nil : .spring(response: 0.32, dampingFraction: 0.65),
                 value: isActive

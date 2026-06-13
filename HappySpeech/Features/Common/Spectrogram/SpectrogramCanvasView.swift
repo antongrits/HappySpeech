@@ -151,8 +151,14 @@ public struct SpectrogramCanvasView: View {
         return max(0, min(1, (magnitude - renderConfig.logMin) / range))
     }
 
-    /// Переводит нормализованное значение [0, 1] в цвет через HSB градиент.
+    /// Переводит нормализованное значение [0, 1] в цвет.
+    /// Тёплые стили (``SpectrogramStyle/warm``) используют явный коралл→золото
+    /// heat-рамп; остальные — HSB-градиент.
     private func colorFromMagnitude(_ normalized: Float, style: SpectrogramStyle) -> Color {
+        if style.usesWarmHeatRamp {
+            let rgb = SpectrogramHeatRamp.color(for: Double(normalized))
+            return Color(red: rgb.red, green: rgb.green, blue: rgb.blue)
+        }
         let hue = style.lowHue + Double(normalized) * (style.highHue - style.lowHue)
         let wrappedHue = ((hue.truncatingRemainder(dividingBy: 360)) + 360)
             .truncatingRemainder(dividingBy: 360) / 360.0
@@ -177,7 +183,7 @@ public struct SpectrogramCanvasView: View {
         spectrogram: mock,
         label: "Ляля",
         isLive: false,
-        style: .forest
+        style: .warm
     )
     .frame(width: 300, height: 120)
     .clipShape(RoundedRectangle(cornerRadius: 16))

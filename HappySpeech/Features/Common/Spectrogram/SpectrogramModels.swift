@@ -51,7 +51,11 @@ public struct Spectrogram: Sendable, Equatable {
 /// Управляет градиентом `cool→warm` при рендере через ``SpectrogramCanvasView``.
 public enum SpectrogramStyle: String, Sendable, CaseIterable {
 
-    /// Лесная — зелёно-золотые тона (default для детского контура).
+    /// Тёплая heat-шкала: коралл → butter → золото (default детского контура).
+    /// Без холодных тонов — соответствует тёплой палитре приложения.
+    case warm
+
+    /// Лесная — зелёно-золотые тона.
     case forest
 
     /// Океанская — сине-бирюзовые тона.
@@ -68,6 +72,7 @@ public enum SpectrogramStyle: String, Sendable, CaseIterable {
     /// Начальный оттенок (low magnitude), градусы HSB 0–360.
     var lowHue: Double {
         switch self {
+        case .warm:    return 18
         case .forest:  return 130
         case .ocean:   return 200
         case .space:   return 260
@@ -78,11 +83,53 @@ public enum SpectrogramStyle: String, Sendable, CaseIterable {
     /// Конечный оттенок (high magnitude), градусы HSB 0–360.
     var highHue: Double {
         switch self {
+        case .warm:    return 48
         case .forest:  return 50
         case .ocean:   return 170
         case .space:   return 300
         case .neutral: return 0
         }
+    }
+
+    /// `true` для тёплых heat-шкал, рендерящихся через явный
+    /// коралл→butter→золото-рамп (а не HSB-hue интерполяцию).
+    var usesWarmHeatRamp: Bool { self == .warm }
+}
+
+// MARK: - Warm heat ramp
+
+/// Тёплая шкала интенсивности спектрограммы/питча: коралл → butter → золото.
+/// Без холодных цветов — соответствует палитре приложения (см. дизайн-эталон
+/// speech-visualization: heat-шкала «тихо → звонко»).
+public enum SpectrogramHeatRamp {
+
+    /// Контрольные точки рампа: (позиция 0…1, R, G, B) в sRGB 0…1.
+    /// От тёмно-ржавого (почти фон) к коралловому к золотому.
+    private static let stops: [(Double, Double, Double, Double)] = [
+        (0.00, 0.078, 0.055, 0.035),   // ~viz-bg, едва видимый
+        (0.20, 0.314, 0.157, 0.118),   // глубокий ржавый
+        (0.42, 0.647, 0.275, 0.188),   // обожжённый коралл
+        (0.60, 1.000, 0.482, 0.329),   // primary коралл
+        (0.78, 1.000, 0.604, 0.478),   // коралл hi
+        (1.00, 1.000, 0.843, 0.251)    // butter / золото
+    ]
+
+    /// Возвращает (R, G, B) sRGB-компоненты тёплого цвета для интенсивности `t` ∈ [0, 1].
+    public static func color(for t: Double) -> (red: Double, green: Double, blue: Double) {
+        let clamped = min(max(t, 0), 1)
+        for index in 1..<stops.count where clamped <= stops[index].0 {
+            let lower = stops[index - 1]
+            let upper = stops[index]
+            let span = upper.0 - lower.0
+            let f = span > 0 ? (clamped - lower.0) / span : 0
+            return (
+                lower.1 + (upper.1 - lower.1) * f,
+                lower.2 + (upper.2 - lower.2) * f,
+                lower.3 + (upper.3 - lower.3) * f
+            )
+        }
+        let last = stops[stops.count - 1]
+        return (last.1, last.2, last.3)
     }
 }
 

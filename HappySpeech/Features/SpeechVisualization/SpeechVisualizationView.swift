@@ -103,12 +103,12 @@ struct SpeechVisualizationView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            // Step 10 Batch E — Pattern 1: mesh .kidCool палитра — прохладный
-            // «лабораторный» visualization-режим.
+            // Тёплый статичный однотонный фон (кремовое семейство). Тёмный
+            // холст спектрограммы — это данные, а не фон.
             .background(
                 ZStack {
                     ColorTokens.Kid.bg.ignoresSafeArea()
-                    HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    HSMeshGradientBackground(palette: .kidWarm, animated: false)
                         .ignoresSafeArea()
                         .opacity(colorScheme == .dark ? 0.18 : 0.30)
                         .blendMode(.softLight)
@@ -186,11 +186,42 @@ struct SpeechVisualizationView: View {
         // спектрограммы остаётся внутри — data-viz требует тёмного фона.
         // Внешняя карточка «встраивает» блок в тёплую палитру экрана.
         HSCard(style: .flat) {
-            SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
-                .fixedSize(horizontal: false, vertical: true)
-                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
-                .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                heatLegendRow
+                SpectrogramVisualizerView(referenceSpectrogram: nil, style: .warm)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                    .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+            }
         }
+    }
+
+    /// Тёплая heat-легенда «тихо → звонко» (коралл → золото) над спектрограммой.
+    private var heatLegendRow: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Text("karaoke.heat.quiet")
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+            Capsule()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            ColorTokens.Brand.primary.opacity(0.35),
+                            ColorTokens.Brand.primaryHi,
+                            ColorTokens.Brand.butter
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+                .frame(height: 8)
+                .frame(maxWidth: .infinity)
+            Text("karaoke.heat.loud")
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("karaoke.heat.a11y"))
     }
 
     @ViewBuilder

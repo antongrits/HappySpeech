@@ -356,7 +356,7 @@ struct RepeatAfterModelView: View {
             // Reduce Motion: SpectrogramVisualizerView сам переключается на StaticSpectrogramView.
             SpectrogramVisualizerView(
                 referenceSpectrogram: nil,
-                style: .forest
+                style: .warm
             )
             .frame(maxWidth: .infinity)
             .frame(height: 120)
