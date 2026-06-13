@@ -37,7 +37,10 @@ struct FamilyCalendarView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            // Parent-контур: спокойный однотонный холст #F0EFF6 (light) /
+            // #181820 (dark). Статичный фон, соответствует эталону
+            // «Задания на дом / Календарь» (parent-палитра).
+            ColorTokens.Parent.bg
                 .ignoresSafeArea()
 
             if viewModel.isLoading {
@@ -153,12 +156,9 @@ struct FamilyCalendarView: View {
     // MARK: - Loading / Empty
 
     private var loadingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            ProgressView()
-                .tint(ColorTokens.Brand.primary)
-                .scaleEffect(1.4)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        HSLoadingView(message: String(localized: "family_calendar.loading"))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .accessibilityLabel(String(localized: "family_calendar.loading"))
     }
 
     private var emptyView: some View {

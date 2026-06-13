@@ -123,15 +123,18 @@ struct AuthForgotPasswordView: View {
         .padding(.top, SpacingTokens.sp10)
     }
 
+    // Унифицировано с AuthSignIn/AuthSignUp: тёплый mesh-«купол» вместо
+    // плоского эллипса — единый визуальный язык auth-экранов.
     private var topDecoration: some View {
         GeometryReader { geo in
-            Ellipse()
-                .fill(GradientTokens.kidHeroDecoration)
-                .opacity(heroDecorationOpacity)
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .frame(width: geo.size.width * 1.3, height: 220)
+                .clipShape(Ellipse())
+                .opacity(heroDecorationOpacity)
                 .offset(x: -geo.size.width * 0.15, y: -120)
         }
         .ignoresSafeArea()
+        .accessibilityHidden(true)
     }
 
     private var formGlassSection: some View {
@@ -183,7 +186,10 @@ struct AuthForgotPasswordView: View {
     }
 
     private func successState(message: String) -> some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Semantic.success), padding: SpacingTokens.sp6) {
+        // Крупная заливка карточки — тёплая (коралл), чтобы не вносить зелёный
+        // фон в auth-контур. Зелёная галочка остаётся как мелкий семантический
+        // акцент «успех».
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.primaryLo), padding: SpacingTokens.sp6) {
             VStack(spacing: SpacingTokens.sp5) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(TypographyTokens.kidDisplay(56))

@@ -76,9 +76,11 @@ struct CustomizationView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .accessibilityHidden(true)
 
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            // Kid-контур: тёплый кремовый однотонный холст (#FFF8F0 light /
+            // тёмный нейтрально-тёплый dark). Статичный, без softLight-оверлея,
+            // соответствует эталону «Образ Ляли» (kid тёплая палитра).
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .ignoresSafeArea()
-                .blendMode(.softLight)
                 .accessibilityHidden(true)
 
             ScrollView(.vertical, showsIndicators: false) {

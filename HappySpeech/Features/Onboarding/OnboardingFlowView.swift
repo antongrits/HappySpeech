@@ -44,16 +44,16 @@ struct OnboardingFlowView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                backgroundGradient
+                // Единый ТЁПЛЫЙ статичный фон онбординга (без off-palette
+                // sky/mint и без многоцветного движущегося градиента). Один
+                // кремовый тон семейства Kid удерживает все 10 шагов в одной
+                // спокойной палитре эталона onboarding-step.
+                ColorTokens.Kid.bg
                     .ignoresSafeArea()
 
-                // Step 10 Batch E — Pattern 1: HSMeshGradientBackground палитра .kidWarm
-                // (warm welcoming onboarding feel) поверх linear backgroundGradient.
-                // softLight blendMode + low opacity = mesh-слой проходит за CTA/hero,
-                // создавая «тёплый воздух» kavsoft-style.
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
-                    // F.tier1 v21: mesh мягче в dark поверх насыщенного gradient.
+                    // F.tier1 v21: mesh мягче в dark поверх кремового фона.
                     .opacity(colorScheme == .dark ? 0.22 : 0.35)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
@@ -88,10 +88,8 @@ struct OnboardingFlowView: View {
 
                     actionFooter
                         .background(
-                            GradientTokens.kidBottomFade(
-                                background: gradientColors(for: display.currentStep).last ?? ColorTokens.Kid.bg
-                            )
-                            .ignoresSafeArea(edges: .bottom)
+                            GradientTokens.kidBottomFade(background: ColorTokens.Kid.bg)
+                                .ignoresSafeArea(edges: .bottom)
                         )
                         .padding(.bottom, geometry.safeAreaInsets.bottom)
                 }
@@ -154,42 +152,6 @@ struct OnboardingFlowView: View {
             .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.currentStep)
             .id(slug)
             .ignoresSafeArea()
-    }
-
-    // MARK: - Background gradient (меняется по шагу)
-
-    private var backgroundGradient: some View {
-        LinearGradient(
-            colors: gradientColors(for: display.currentStep),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.currentStep)
-    }
-
-    private func gradientColors(for step: OnboardingStep) -> [Color] {
-        switch step {
-        case .welcome:
-            return [ColorTokens.Brand.butter.opacity(0.25), ColorTokens.Kid.bg]
-        case .role:
-            return [ColorTokens.Brand.lilac.opacity(0.20), ColorTokens.Kid.bg]
-        case .childName:
-            return [ColorTokens.Brand.rose.opacity(0.20), ColorTokens.Kid.bg]
-        case .childAge:
-            return [ColorTokens.Brand.sky.opacity(0.20), ColorTokens.Kid.bg]
-        case .goals:
-            return [ColorTokens.Brand.mint.opacity(0.20), ColorTokens.Kid.bg]
-        case .sounds:
-            return [ColorTokens.Brand.primary.opacity(0.18), ColorTokens.Kid.bg]
-        case .schedule:
-            return [ColorTokens.Brand.sky.opacity(0.20), ColorTokens.Brand.mint.opacity(0.10)]
-        case .permissions:
-            return [ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bg]
-        case .modelDownload:
-            return [ColorTokens.Brand.sky.opacity(0.22), ColorTokens.Kid.bg]
-        case .completion:
-            return [ColorTokens.Brand.butter.opacity(0.30), ColorTokens.Brand.primary.opacity(0.18)]
-        }
     }
 
     // MARK: - Header

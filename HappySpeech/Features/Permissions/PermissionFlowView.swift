@@ -50,7 +50,10 @@ struct PermissionFlowView: View {
 
     var body: some View {
         ZStack {
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            ColorTokens.Kid.bg
+                .ignoresSafeArea()
+
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .ignoresSafeArea()
                 .blendMode(.softLight)
                 .accessibilityHidden(true)

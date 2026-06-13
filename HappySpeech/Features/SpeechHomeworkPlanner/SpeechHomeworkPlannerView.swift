@@ -12,12 +12,9 @@ struct SpeechHomeworkPlannerView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Parent-контур: спокойный однотонный холст #F0EFF6 (light) /
+                // #181820 (dark). Без кремового mesh-оверлея — статичный фон.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "homeworkPlanner.nav.title")))
@@ -94,7 +91,10 @@ struct SpeechHomeworkPlannerView: View {
             hapticService.impact(.light)
             interactor.toggle(item.id)
         } label: {
-            HSCard(style: item.isDone ? .tinted(ColorTokens.Semantic.successBg) : .flat) {
+            // Done-состояние карточки — тёплая коралловая подложка (не зелёный
+            // Semantic.successBg: зелёная заливка off-palette на крупной карточке).
+            // Само «галочка» остаётся мелким семантическим success-акцентом.
+            HSCard(style: item.isDone ? .tinted(ColorTokens.Brand.primaryLo.opacity(0.45)) : .flat) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Text(item.dayOfWeek)
                         .font(TypographyTokens.caption(12).weight(.bold))
@@ -121,7 +121,9 @@ struct SpeechHomeworkPlannerView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(item.dayOfWeek). \(item.title)"))
-        .accessibilityValue(Text(item.isDone ? "Сделано" : "Не сделано"))
+        .accessibilityValue(Text(item.isDone
+            ? String(localized: "homeworkPlanner.a11y.done")
+            : String(localized: "homeworkPlanner.a11y.notDone")))
         .accessibilityAddTraits(.isButton)
     }
 

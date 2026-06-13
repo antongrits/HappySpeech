@@ -24,7 +24,6 @@ struct SettingsView: View {
     // обращаются к container и dismiss из extension того же типа.
     @Environment(AppContainer.self) var container
     @Environment(AppCoordinator.self) var coordinator
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) var dismiss
 
     // MARK: - VIP State
@@ -66,7 +65,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                // Parent-контур: спокойный однотонный холст #F0EFF6 (light) /
+                // #181820 (dark). Без кремового mesh-оверлея — фон статичный
+                // и соответствует эталону «Настройки» (parent-палитра).
+                ColorTokens.Parent.bg
                     .ignoresSafeArea()
 
                 List {

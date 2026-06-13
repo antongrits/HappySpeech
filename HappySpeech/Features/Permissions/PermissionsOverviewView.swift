@@ -88,16 +88,11 @@ struct PermissionsOverviewView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
+        // Тёплый однотонный кремовый фон (без off-palette mint на крупной
+        // заливке). Mesh статичен — спокойный воздух эталона permissions.
         ZStack {
-            LinearGradient(
-                colors: [
-                    ColorTokens.Parent.bg,
-                    ColorTokens.Brand.mint.opacity(0.08)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            ColorTokens.Kid.bg
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .blendMode(.softLight)
                 .accessibilityHidden(true)
         }

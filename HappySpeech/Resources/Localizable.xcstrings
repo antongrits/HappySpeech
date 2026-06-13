@@ -7697,6 +7697,23 @@
         }
       }
     },
+    "auth.gate.adults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For grown-ups"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вход для взрослых"
+          }
+        }
+      }
+    },
     "auth.google.cta": {
       "extractionState": "manual",
       "localizations": {
@@ -7704,6 +7721,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через Google"
+          }
+        }
+      }
+    },
+    "auth.password.show": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show password"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать пароль"
+          }
+        }
+      }
+    },
+    "auth.password.hide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide password"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыть пароль"
+          }
+        }
+      }
+    },
+    "auth.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech therapy through play"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопедия в игре"
           }
         }
       }
@@ -7781,6 +7849,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пароль"
+          }
+        }
+      }
+    },
+    "auth.role.select.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a profile — we'll tune lessons and hints just for it."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите профиль — настроим занятия и подсказки именно под него."
+          }
+        }
+      }
+    },
+    "auth.role.select.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Who will be learning?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кто будет заниматься?"
           }
         }
       }
@@ -21672,6 +21774,23 @@
         }
       }
     },
+    "family_calendar.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading calendar…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружаем календарь…"
+          }
+        }
+      }
+    },
     "family_calendar.error.load": {
       "extractionState": "manual",
       "localizations": {
@@ -25512,6 +25631,57 @@
         }
       }
     },
+    "homeTasks.summary.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d tasks, %d completed"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заданий: %d, выполнено: %d"
+          }
+        }
+      }
+    },
+    "homeTasks.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d done"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d выполнено"
+          }
+        }
+      }
+    },
+    "homeTasks.summary.total": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d tasks"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заданий: %d"
+          }
+        }
+      }
+    },
     "homeTasks.notify.action.dismiss": {
       "extractionState": "manual",
       "localizations": {
@@ -25995,6 +26165,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Homework due tomorrow"
+          }
+        }
+      }
+    },
+    "homeworkPlanner.a11y.done": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделано"
+          }
+        }
+      }
+    },
+    "homeworkPlanner.a11y.notDone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not done"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не сделано"
           }
         }
       }
@@ -48112,6 +48314,40 @@
         }
       }
     },
+    "screening.prompt.sayAloud": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Say the word out loud"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скажи слово вслух"
+          }
+        }
+      }
+    },
+    "screening.recording.inProgress": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю…"
+          }
+        }
+      }
+    },
     "screening.recording.listening": {
       "extractionState": "manual",
       "localizations": {
@@ -48222,6 +48458,23 @@
         }
       }
     },
+    "screening.summary.allGood": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other sounds are doing great!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остальные звуки звучат отлично!"
+          }
+        }
+      }
+    },
     "screening.summary.done": {
       "extractionState": "manual",
       "localizations": {
@@ -48229,6 +48482,57 @@
           "stringUnit": {
             "state": "translated",
             "value": "Готово"
+          }
+        }
+      }
+    },
+    "screening.summary.notDiagnosis": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is a starting point, not a diagnosis. The plan can be adjusted together with a specialist."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это не диагноз, а отправная точка. План можно менять вместе со специалистом."
+          }
+        }
+      }
+    },
+    "screening.summary.soundChip": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound “%@”"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%@»"
+          }
+        }
+      }
+    },
+    "screening.summary.targetSounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sounds to work on"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поработаем над звуками"
           }
         }
       }
@@ -68753,6 +69057,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Игра завершена"
+          }
+        }
+      }
+    },
+    "Игры и весёлые задания с Лялей": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Games and fun activities with Lyalya"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игры и весёлые задания с Лялей"
           }
         }
       }

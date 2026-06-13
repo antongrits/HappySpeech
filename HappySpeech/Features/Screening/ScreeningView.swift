@@ -36,7 +36,10 @@ struct ScreeningView: View {
 
     var body: some View {
         ZStack {
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+            ColorTokens.Kid.bg
+                .ignoresSafeArea()
+
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .ignoresSafeArea()
                 .blendMode(.softLight)
                 .accessibilityHidden(true)
@@ -100,25 +103,40 @@ struct ScreeningView: View {
     // MARK: - Subviews
 
     private var header: some View {
-        HStack {
+        // Эталон screening «слово и запись»: круглая close-кнопка слева +
+        // коралловый прогресс «Слово N из M» с коралловым треком. Маскот Ляля
+        // живёт в карточке слова (say-row), а не в шапке — шапка спокойная.
+        HStack(alignment: .center, spacing: SpacingTokens.small) {
             Button(action: onCancel) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(TypographyTokens.title(28))
+                Image(systemName: "xmark")
+                    .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 44, height: 44)
+                    .background(
+                        Circle()
+                            .fill(ColorTokens.Kid.surfaceAlt)
+                            .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                    )
             }
             .accessibilityLabel(String(localized: "screening.header.cancel"))
-            Spacer()
-            LyalyaMascotView(state: .encouraging, size: 56)
-                .accessibilityHidden(true)
-            Spacer()
-            if let progress = state.progressText {
-                Text(progress)
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .accessibilityLabel(String(localized: "screening.accessibility.progress.\(progress)"))
+
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                if let progress = state.progressText {
+                    Text(progress)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityLabel(String(localized: "screening.accessibility.progress.\(progress)"))
+                }
+                HSProgressBar(value: progressFraction, style: .kid)
+                    .accessibilityHidden(true)
             }
         }
+    }
+
+    /// Доля пройденного скрининга (0…1) для кораллового трека прогресса.
+    private var progressFraction: Double {
+        let total = max(1, state.prompts.count)
+        return min(1.0, Double(state.currentIndex + 1) / Double(total))
     }
 
     // MARK: - Wiring
@@ -385,53 +403,91 @@ private struct StageCard: View {
     let onPlay: () -> Void
 
     var body: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
-            VStack(spacing: SpacingTokens.medium) {
-                if !vm.lyalyaPhrase.isEmpty {
-                    Text(vm.lyalyaPhrase)
-                        .font(TypographyTokens.body(15))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+        VStack(spacing: SpacingTokens.large) {
+            // Карточка слова: картинка-диск + крупное слово + подсказка звука.
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+                VStack(spacing: SpacingTokens.medium) {
+                    pictureDisc
+
+                    Text(vm.targetWord)
+                        .font(TypographyTokens.title(36))
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.85)
                         .lineLimit(nil)
-                        .accessibilityLabel(vm.lyalyaPhrase)
-                }
+                        .tracking(2)
+                        .accessibilityLabel(
+                            String(localized: "screening.accessibility.word.\(vm.targetWord)")
+                        )
 
-                Text(vm.targetWord)
-                    .font(TypographyTokens.title(32))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.85)
-                    .lineLimit(nil)
-                    .accessibilityLabel(
-                        String(localized: "screening.accessibility.word.\(vm.targetWord)")
-                    )
-
-                if !vm.targetSoundHint.isEmpty {
-                    Text(vm.targetSoundHint)
-                        .font(TypographyTokens.caption(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                }
-
-                // Fix #16 — кнопки скрининга центрируются по карточке:
-                // listenButton прижимается к ширине card по `medium`-gap-у, recordButton
-                // справа, всё это через frame(maxWidth: .infinity, alignment: .center).
-                HStack(spacing: SpacingTokens.medium) {
-                    listenButton
-                    if vm.showRecordButton {
-                        recordButton
+                    if !vm.targetSoundHint.isEmpty {
+                        Text(vm.targetSoundHint)
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
+            }
 
-                if isRecording {
-                    Text(recordingLabel)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .accessibilityLabel(String(localized: "screening.accessibility.recording"))
+            // Say-row: маленькая Ляля + инструкция «скажи слово вслух».
+            HStack(spacing: SpacingTokens.small) {
+                LyalyaMascotView(state: .encouraging, size: 40)
+                    .accessibilityHidden(true)
+                Text(sayRowText)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(sayRowText)
+
+            // Mic-зона: крупная коралловая кнопка записи с мягким свечением.
+            if vm.showRecordButton {
+                VStack(spacing: SpacingTokens.small) {
+                    recordButton
+                    if isRecording {
+                        Text(recordingLabel)
+                            .font(TypographyTokens.headline(14))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .accessibilityLabel(String(localized: "screening.accessibility.recording"))
+                    }
                 }
+                .frame(maxWidth: .infinity)
+            }
+
+            // Ghost-контролы: «Послушать» (коралл) + «Пропустить».
+            listenButton
+        }
+    }
+
+    private var sayRowText: String {
+        isRecording
+            ? String(localized: "screening.recording.inProgress")
+            : String(localized: "screening.prompt.sayAloud")
+    }
+
+    // MARK: Picture disc
+
+    @ViewBuilder
+    private var pictureDisc: some View {
+        ZStack {
+            Circle()
+                .fill(ColorTokens.Kid.surfaceAlt)
+                .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                .frame(width: 144, height: 144)
+
+            if let asset = vm.imageAsset, !asset.isEmpty {
+                HSContentSymbol(asset, size: 92, tint: ColorTokens.Brand.primary)
+            } else {
+                Image(systemName: "text.bubble.fill")
+                    .font(TypographyTokens.kidDisplay(48))
+                    .foregroundStyle(ColorTokens.Brand.primary.opacity(0.55))
             }
         }
+        .accessibilityHidden(true)
     }
 
     // Fix v34-polish — раньше использовалась HSButton(.secondary), но под
@@ -451,7 +507,7 @@ private struct StageCard: View {
                 Image(systemName: "speaker.wave.2.fill")
             }
             .foregroundStyle(ColorTokens.Brand.primary)
-            .padding(.horizontal, SpacingTokens.medium)
+            .frame(maxWidth: .infinity)
             .frame(minHeight: 56)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
@@ -469,14 +525,28 @@ private struct StageCard: View {
     private var recordButton: some View {
         Button(action: onRecord) {
             ZStack {
+                // Мягкое коралловое свечение под кнопкой записи.
                 Circle()
-                    .fill(isRecording
-                          ? ColorTokens.Brand.primary.opacity(0.25)
-                          : ColorTokens.Kid.bg)
-                    .frame(width: 56, height: 56)
-                Image(systemName: isRecording ? "stop.circle.fill" : "mic.circle.fill")
-                    .font(TypographyTokens.display(34))
-                    .foregroundStyle(isRecording ? ColorTokens.Brand.primary : ColorTokens.Kid.ink)
+                    .fill(ColorTokens.Brand.primary.opacity(isRecording ? 0.22 : 0.12))
+                    .frame(width: 124, height: 124)
+                    .blur(radius: 12)
+
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .frame(width: 96, height: 96)
+                    .overlay(
+                        Circle().strokeBorder(Color.white.opacity(0.25), lineWidth: 1)
+                    )
+
+                Image(systemName: isRecording ? "stop.fill" : "mic.fill")
+                    .font(TypographyTokens.display(38))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .hsSymbolEffect(.pulse, value: isRecording)
             }
         }
@@ -548,34 +618,40 @@ private struct SummaryView: View {
     let isSaving: Bool
     let onDone: () -> Void
 
+    private var targetSounds: [String] { vm.outcome.priorityTargetSounds }
+
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: SpacingTokens.medium) {
+            VStack(spacing: SpacingTokens.medium) {
+                LyalyaMascotView(state: .celebrating, size: 110)
+                    .accessibilityHidden(true)
+
+                Text(String(localized: "screening.complete"))
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityAddTraits(.isHeader)
+
                 if !vm.lyalyaFinishPhrase.isEmpty {
                     Text(vm.lyalyaFinishPhrase)
-                        .font(TypographyTokens.body(15))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                         .frame(maxWidth: .infinity)
                 }
 
-                Text(String(localized: "screening.complete"))
-                    .font(TypographyTokens.title())
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
+                resultCard
 
-                Text(vm.summaryText)
-                    .font(TypographyTokens.body(16))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
-
-                HSProgressBar(value: 1.0)
-                    .accessibilityLabel(String(localized: "screening.accessibility.complete"))
+                disclaimerCard
 
                 if vm.wasAdaptiveStopped {
                     Text(String(localized: "screening.adaptive_stop.info"))
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
                         .lineLimit(nil)
                 }
 
@@ -587,6 +663,7 @@ private struct SummaryView: View {
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, SpacingTokens.small)
                 } else {
                     HSButton(
                         String(localized: "screening.summary.done"),
@@ -594,10 +671,99 @@ private struct SummaryView: View {
                         action: onDone
                     )
                     .frame(maxWidth: .infinity)
+                    .padding(.top, SpacingTokens.small)
                     .accessibilityLabel(String(localized: "screening.summary.done"))
                 }
             }
             .padding(SpacingTokens.large)
+            .frame(maxWidth: 520)
+            .frame(maxWidth: .infinity)
+        }
+        .scrollBounceBehavior(.basedOnSize)
+    }
+
+    // MARK: Result card
+
+    private var resultCard: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                Text(String(localized: "screening.summary.targetSounds"))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+
+                if targetSounds.isEmpty {
+                    // Все звуки в норме — тёплая ободряющая строка.
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .accessibilityHidden(true)
+                        Text(String(localized: "screening.summary.allGood"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(nil)
+                    }
+                } else {
+                    FlowChips(items: targetSounds)
+                }
+
+                Text(vm.summaryText)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(nil)
+                    .padding(.top, SpacingTokens.tiny)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: Disclaimer (honest — not a diagnosis)
+
+    private var disclaimerCard: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.small) {
+            Image(systemName: "info.circle.fill")
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .accessibilityHidden(true)
+            Text(String(localized: "screening.summary.notDiagnosis"))
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.regular)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surfaceAlt)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                )
+        )
+        .accessibilityElement(children: .combine)
+    }
+}
+
+// MARK: - FlowChips
+
+/// Тёплые коралловые чипы целевых звуков для сводки скрининга.
+private struct FlowChips: View {
+    let items: [String]
+
+    var body: some View {
+        HStack(spacing: SpacingTokens.small) {
+            ForEach(items, id: \.self) { sound in
+                Text(String(format: String(localized: "screening.summary.soundChip"), sound))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .padding(.horizontal, SpacingTokens.regular)
+                    .padding(.vertical, SpacingTokens.tiny)
+                    .background(
+                        Capsule().fill(ColorTokens.Brand.primary.opacity(0.14))
+                    )
+            }
+            Spacer(minLength: 0)
         }
     }
 }

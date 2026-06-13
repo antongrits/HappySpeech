@@ -27,30 +27,31 @@ struct RoleSelectView: View {
         let action: RoleAction
     }
 
+    // Порядок выровнен с эталоном: ведущая роль — ребёнок (первичный пользователь),
+    // затем взрослые роли. Детский контур всюду тёплый (коралл) — карточка ребёнка
+    // совпадает с ним, а не зелёная (mint). Взрослые роли (родитель/логопед)
+    // остаются прохладными sky/lilac как осознанный «взрослый» акцент.
     private let roles: [RoleEntry] = [
+        RoleEntry(
+            title: String(localized: "Ребёнок"),
+            subtitle: String(localized: "Игры и весёлые задания с Лялей"),
+            icon: "face.smiling.fill",
+            color: ColorTokens.Brand.primary,
+            action: .resolveChild
+        ),
         RoleEntry(
             title: String(localized: "Родитель"),
             subtitle: String(localized: "Настройка профиля и наблюдение за прогрессом"),
             icon: "person.2.fill",
-            color: ColorTokens.Brand.sky,
+            color: ColorTokens.Brand.lilac,
             action: .route(.parentHome)
         ),
         RoleEntry(
             title: String(localized: "Логопед"),
             subtitle: String(localized: "Специальные инструменты анализа и экспорта"),
             icon: "stethoscope",
-            color: ColorTokens.Brand.lilac,
+            color: ColorTokens.Brand.sky,
             action: .route(.specialistHome)
-        ),
-        RoleEntry(
-            title: String(localized: "Ребёнок"),
-            subtitle: String(localized: "Продолжить занятия"),
-            icon: "star.fill",
-            // Детский контур всюду тёплый (коралл/butter) — карточка ребёнка должна
-            // совпадать с ним, а не быть зелёной (mint). Взрослые роли (родитель/логопед)
-            // остаются прохладными sky/lilac как осознанный «взрослый» акцент.
-            color: ColorTokens.Brand.primary,
-            action: .resolveChild
         )
     ]
 
@@ -68,19 +69,21 @@ struct RoleSelectView: View {
                         .padding(.bottom, SpacingTokens.sp2)
 
                     // P3 v32: hero text → kidDisplay для большей выразительности.
-                    Text(String(localized: "Кто вы?"))
-                        .font(TypographyTokens.kidDisplay(32))
+                    // Текст выровнен с дизайн-эталоном (references/auth.html).
+                    Text(String(localized: "auth.role.select.title"))
+                        .font(TypographyTokens.kidDisplay(30))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.80)
 
-                    Text(String(localized: "Выберите профиль для начала"))
+                    Text(String(localized: "auth.role.select.subtitle"))
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.top, SpacingTokens.pageTop)
                 .padding(.horizontal, SpacingTokens.screenEdge)

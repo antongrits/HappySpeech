@@ -12,6 +12,7 @@ struct AuthSignInView: View {
     @State private var scene: AuthScene?
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var isPasswordVisible = false
     @FocusState private var focusedField: Field?
 
     private enum Field: Hashable { case email, password }
@@ -30,6 +31,7 @@ struct AuthSignInView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp4) {
+                    gateBadge
                     headerSection
                     welcomeSection
                     formSection
@@ -138,26 +140,59 @@ struct AuthSignInView: View {
         .accessibilityHidden(true)
     }
 
+    // Родитель-гейт: pill «Вход для взрослых» — подсказывает, что вход
+    // предназначен для взрослых (COPPA-канон эталона), оставаясь декоративным.
+    private var gateBadge: some View {
+        HStack(spacing: SpacingTokens.sp1) {
+            Image(systemName: "lock.fill")
+                .font(TypographyTokens.caption(11))
+            Text(String(localized: "auth.gate.adults"))
+                .font(TypographyTokens.caption(12).weight(.bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .foregroundStyle(ColorTokens.Kid.inkMuted)
+        .padding(.horizontal, SpacingTokens.sp3)
+        .padding(.vertical, SpacingTokens.sp1 + 2)
+        .background(
+            Capsule().fill(ColorTokens.Kid.surfaceAlt)
+        )
+        .overlay(
+            Capsule().strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+        )
+        .padding(.top, SpacingTokens.sp4)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "auth.gate.adults"))
+    }
+
     private var headerSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
+        VStack(spacing: SpacingTokens.sp2) {
             // E v21: 3D Ляля в header AuthSignIn (требование «3D героев на каждом экране»).
-            LyalyaHeroView(state: .happy, size: 120)
-                .padding(.top, SpacingTokens.sp8)
+            LyalyaHeroView(state: .happy, size: 108)
                 .accessibilityHidden(true)
 
-            // Fix #1 — wordmark must read on cream Kid.bg, not be invisible
-            // on the white onAccent tone. Bright Brand.primary + soft brand-tinted
-            // shadow гарантирует читаемость без зависимости от opacity hero-блока.
-            Text("HappySpeech")
-                .font(TypographyTokens.kidDisplay(30))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .shadow(
-                    color: ColorTokens.Brand.primary.opacity(0.18),
-                    radius: 6, x: 0, y: 2
-                )
-                .lineLimit(nil)
+            // Fix #1 — wordmark must read on cream Kid.bg. Двухцветный канон:
+            // «Happy» — ink, «Speech» — коралл (повторяет эталон auth.html).
+            (
+                Text("Happy").foregroundStyle(ColorTokens.Kid.ink)
+                + Text("Speech").foregroundStyle(ColorTokens.Brand.primary)
+            )
+            .font(TypographyTokens.kidDisplay(30))
+            .tracking(-0.6)
+            .shadow(
+                color: ColorTokens.Brand.primary.opacity(0.14),
+                radius: 6, x: 0, y: 2
+            )
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+            .accessibilityLabel("HappySpeech")
+            .accessibilityAddTraits(.isHeader)
+
+            Text(String(localized: "auth.tagline"))
+                .font(TypographyTokens.body(14).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
                 .minimumScaleFactor(0.85)
-                .accessibilityAddTraits(.isHeader)
         }
     }
 
@@ -181,39 +216,60 @@ struct AuthSignInView: View {
 
     private var formSection: some View {
         HSLiquidGlassCard(style: .elevated) {
-            VStack(spacing: SpacingTokens.sp3) {
-                authTextField(
-                    config: AuthFieldConfig(
-                        title: String(localized: "auth.email.label"),
-                        icon: "envelope",
-                        keyboard: .emailAddress,
-                        contentType: .emailAddress,
-                        isSecure: false,
-                        field: .email
-                    ),
-                    text: $email
-                )
-                .submitLabel(.next)
-                .onSubmit { focusedField = .password }
-                .accessibilityLabel(String(localized: "accessibility.email_field"))
-                .accessibilityHint(String(localized: "accessibility.email_field.hint"))
+            VStack(spacing: SpacingTokens.sp4) {
+                labeledField(label: String(localized: "auth.email.label")) {
+                    authTextField(
+                        config: AuthFieldConfig(
+                            title: String(localized: "auth.email.placeholder"),
+                            icon: "envelope",
+                            keyboard: .emailAddress,
+                            contentType: .emailAddress,
+                            isSecure: false,
+                            field: .email
+                        ),
+                        text: $email
+                    )
+                    .submitLabel(.next)
+                    .onSubmit { focusedField = .password }
+                    .accessibilityLabel(String(localized: "accessibility.email_field"))
+                    .accessibilityHint(String(localized: "accessibility.email_field.hint"))
+                }
 
-                authTextField(
-                    config: AuthFieldConfig(
-                        title: String(localized: "auth.password.label"),
-                        icon: "lock",
-                        keyboard: .default,
-                        contentType: .password,
-                        isSecure: true,
-                        field: .password
-                    ),
-                    text: $password
-                )
-                .submitLabel(.go)
-                .onSubmit(signIn)
-                .accessibilityLabel(String(localized: "accessibility.password_field"))
-                .accessibilityHint(String(localized: "accessibility.password_field.hint"))
+                labeledField(label: String(localized: "auth.password.label")) {
+                    authTextField(
+                        config: AuthFieldConfig(
+                            title: String(localized: "auth.password.label"),
+                            icon: "lock",
+                            keyboard: .default,
+                            contentType: .password,
+                            isSecure: true,
+                            field: .password
+                        ),
+                        text: $password
+                    )
+                    .submitLabel(.go)
+                    .onSubmit(signIn)
+                    .accessibilityLabel(String(localized: "accessibility.password_field"))
+                    .accessibilityHint(String(localized: "accessibility.password_field.hint"))
+                }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func labeledField<Content: View>(
+        label: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp1 + 2) {
+            Text(label)
+                .font(TypographyTokens.caption(13).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .padding(.leading, SpacingTokens.sp1)
+                .accessibilityHidden(true)
+            content()
         }
     }
 
@@ -319,7 +375,7 @@ struct AuthSignInView: View {
                 .hsSymbolEffect(.bounce, value: focusedField == field)
 
             Group {
-                if isSecure {
+                if isSecure && !isPasswordVisible {
                     SecureField(title, text: text)
                 } else {
                     TextField(title, text: text)
@@ -332,6 +388,24 @@ struct AuthSignInView: View {
             .foregroundStyle(ColorTokens.Kid.ink)
             .textContentType(contentType)
             .focused($focusedField, equals: field)
+
+            if isSecure {
+                Button {
+                    isPasswordVisible.toggle()
+                } label: {
+                    Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
+                        .font(TypographyTokens.body(16))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .frame(width: 24)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(
+                    isPasswordVisible
+                        ? String(localized: "auth.password.hide")
+                        : String(localized: "auth.password.show")
+                )
+            }
         }
         .padding(.horizontal, SpacingTokens.sp4)
         .frame(height: 52)

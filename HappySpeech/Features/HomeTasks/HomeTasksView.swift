@@ -15,7 +15,6 @@ struct HomeTasksView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -50,15 +49,11 @@ struct HomeTasksView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                backgroundGradient
+                // Parent-контур: спокойный однотонный холст #F0EFF6 (light) /
+                // #181820 (dark) — соответствует эталону «Задания на дом».
+                // Без кремового butter-оверлея (off-palette на крупной заливке).
+                ColorTokens.Parent.bg
                     .ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 content
                     .refreshable { performRefresh() }
@@ -103,24 +98,6 @@ struct HomeTasksView: View {
         }
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
-    }
-
-    // MARK: - Background
-
-    /// Мягкий тёплый градиент через токены DesignSystem — `Brand.butter`
-    /// (тёплый жёлтый) → `Parent.bg` (нейтральный фон). Соответствует
-    /// родительскому контуру, но добавляет «домашнее» настроение для секции
-    /// заданий.
-    private var backgroundGradient: some View {
-        // F.tier1 v21: butter accent мягче в dark, чтобы home-task header не «жёлтел».
-        LinearGradient(
-            colors: [
-                ColorTokens.Brand.butter.opacity(colorScheme == .dark ? 0.20 : 0.35),
-                ColorTokens.Parent.bg
-            ],
-            startPoint: .top,
-            endPoint: .center
-        )
     }
 
     /// Двусторонний binding для `.alert` — гасит prompt через
@@ -169,6 +146,9 @@ struct HomeTasksView: View {
             .accessibilityLabel(String(localized: "homeTasks.loading"))
         } else {
             VStack(spacing: 0) {
+                if !display.isEmpty {
+                    summaryPill
+                }
                 filterChipsBar
                 if display.isEmpty {
                     emptyStateView
@@ -177,6 +157,82 @@ struct HomeTasksView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Summary pill
+
+    /// Сводная «таблетка» под заголовком — кольцо прогресса + счётчики на
+    /// сегодня и выполнено. Все значения — реальные из `display` (Interactor),
+    /// без фабрикации. Соответствует эталону «Задания на дом».
+    private var summaryPill: some View {
+        let total = display.totalCount
+        let done = display.completedCount
+        let fraction = total > 0 ? Double(done) / Double(total) : 0
+
+        return HStack(spacing: SpacingTokens.small) {
+            ZStack {
+                Circle()
+                    .stroke(ColorTokens.Brand.primaryLo, lineWidth: 4)
+                Circle()
+                    .trim(from: 0, to: fraction)
+                    .stroke(
+                        ColorTokens.Brand.primary,
+                        style: StrokeStyle(lineWidth: 4, lineCap: .round)
+                    )
+                    .rotationEffect(.degrees(-90))
+                Text("\(done)/\(total)")
+                    .font(TypographyTokens.mono(9).weight(.bold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .minimumScaleFactor(0.6)
+            }
+            .frame(width: 30, height: 30)
+            .accessibilityHidden(true)
+
+            Text(String(
+                format: String(localized: "homeTasks.summary.total"),
+                display.activeCount + display.completedCount
+            ))
+            .font(TypographyTokens.headline(14))
+            .foregroundStyle(ColorTokens.Parent.ink)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
+
+            if done > 0 {
+                Circle()
+                    .fill(ColorTokens.Parent.inkSoft)
+                    .frame(width: 4, height: 4)
+                    .accessibilityHidden(true)
+                HStack(spacing: SpacingTokens.micro) {
+                    Image(systemName: "checkmark")
+                        .font(TypographyTokens.caption(11).weight(.bold))
+                    Text(String(
+                        format: String(localized: "homeTasks.summary.done"),
+                        done
+                    ))
+                    .font(TypographyTokens.body(13).weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                }
+                .foregroundStyle(ColorTokens.Semantic.success)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.vertical, SpacingTokens.small)
+        .background(
+            Capsule().fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            Capsule().strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+        )
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, SpacingTokens.regular)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(
+            format: String(localized: "homeTasks.summary.a11y"),
+            display.activeCount + display.completedCount,
+            done
+        ))
     }
 
     // MARK: - Toolbar

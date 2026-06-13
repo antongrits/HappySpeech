@@ -3,97 +3,54 @@ import SwiftUI
 
 // MARK: - SplashView
 
+/// Заставка приложения — первое впечатление. Тёплый кремовый бренд-канвас
+/// (light) / глубокий тёмный фон (dark), маскот Ляля по центру, вордмарк
+/// «HappySpeech» с коралловым акцентом, слоган и мягкий точечный лоадер.
+///
+/// Дизайн-эталон: `references/auth.html` (Splash · светлая/тёмная).
 struct SplashView: View {
-    @State private var mascotScale: CGFloat = 0.3
+    @State private var mascotScale: CGFloat = 0.6
     @State private var titleOpacity: Double = 0
-    @State private var progressWidth: CGFloat = 0
+    @State private var loaderPhase = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
 
-    // D-7 v27 — splash-фон адаптируется к тёмной теме: в dark вместо
-    // яркого кораллового градиента используется глубокий тёмный фон,
-    // чтобы splash не «светил» оранжевым на тёмной системе.
-    //
-    // v27 visual modernization (#3): в light-режиме монотонный coral заменён
-    // трёхцветным диагональным градиентом primary → primaryHi → rose —
-    // задаёт современную планку с первого экрана.
-    private var backgroundColors: [Color] {
-        colorScheme == .dark
-            ? [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep]
-            : [ColorTokens.Brand.primary, ColorTokens.Brand.primaryHi, ColorTokens.Brand.rose]
-    }
-
     var body: some View {
         ZStack {
-            // Background gradient matching design tokens (Brand coral / dark).
-            // v27: диагональный (topLeading → bottomTrailing) — даёт глубину.
-            // Batch F: layered HSMeshGradientBackground (.calm softLight) на
-            // диагональный gradient — даёт живой mesh-эффект под сплэшем.
-            LinearGradient(
-                colors: backgroundColors,
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Тёплый монотонный бренд-фон (cream / dark) — без off-palette
+            // градиентов. Лёгкий радиальный «купол» добавляет глубину,
+            // оставаясь в кремовой палитре.
+            backgroundLayer
 
-            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                .ignoresSafeArea()
-                .blendMode(.softLight)
-                .accessibilityHidden(true)
+            VStack(spacing: SpacingTokens.sp2) {
+                Spacer()
 
-            // Decorative circles
-            decorativeBackground
-
-            // Fix #13 — единый центрированный VStack для маскота +
-            // заголовка + прогресс-бара (вместо тройной Spacer-mascot-Spacer-
-            // Spacer-loading структуры, которая ломала вертикальную ось на
-            // iPhone 17 Pro). Mascot всегда виден (через mascotScale), title
-            // и loading появляются вместе через titleOpacity.
-            VStack(alignment: .center, spacing: SpacingTokens.small) {
-                HSMascotView(mood: .waving, size: 160)
+                HSMascotView(mood: .waving, size: 132)
                     .scaleEffect(mascotScale)
-                    .padding(.bottom, SpacingTokens.sp6)
+                    .accessibilityHidden(true)
 
-                Text("HappySpeech")
-                    .font(TypographyTokens.kidDisplay(40))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .tracking(-1)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                wordmark
                     .opacity(titleOpacity)
+                    .padding(.top, SpacingTokens.sp3)
 
-                Text(String(localized: "Говорим волшебно"))
-                    .font(TypographyTokens.caption(13).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .tracking(2.5)
-                    .textCase(.uppercase)
+                Text(String(localized: "auth.tagline"))
+                    .font(TypographyTokens.body(14).weight(.bold))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .lineLimit(nil)
                     .minimumScaleFactor(0.85)
-                    .padding(.bottom, SpacingTokens.sp8)
                     .opacity(titleOpacity)
 
-                VStack(spacing: SpacingTokens.sp3) {
-                    ZStack(alignment: .leading) {
-                        Capsule()
-                            .fill(ColorTokens.Overlay.onAccent.opacity(0.25))
-                            .frame(width: 80, height: 3)
-                        Capsule()
-                            .fill(ColorTokens.Overlay.onAccent)
-                            .frame(width: progressWidth * 80, height: 3)
-                    }
-                    Text(String(localized: "Загрузка..."))
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.5))
-                }
-                .opacity(titleOpacity)
+                Spacer()
+
+                loader
+                    .opacity(titleOpacity)
+                    .padding(.bottom, SpacingTokens.sp12)
             }
-            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .depthShadow(ShadowTokens.kidDepth)
         }
         .onAppear {
-            // Plan v22 Block 0.5 — Splash жизненный цикл (Instruments POI event).
             os_signpost(.event,
                         log: HSSignpost.pointsOfInterest,
                         name: "LaunchScreenAppear")
@@ -104,51 +61,95 @@ struct SplashView: View {
                         log: HSSignpost.pointsOfInterest,
                         name: "LaunchScreenDisappear")
         }
-        .accessibilityLabel("HappySpeech. Загрузка...")
+        .task {
+            // .task авто-отменяется при исчезновении экрана — не утечёт.
+            guard !reduceMotion else { return }
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(280))
+                loaderPhase = (loaderPhase + 1) % 3
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("HappySpeech. " + String(localized: "Загрузка..."))
         .accessibilityIdentifier("SplashRoot")
     }
 
-    private var decorativeBackground: some View {
+    // MARK: - Layers
+
+    private var backgroundLayer: some View {
         ZStack {
-            Circle()
-                .fill(ColorTokens.Overlay.glass)
-                .frame(width: 280, height: 280)
-                .offset(x: -80, y: -200)
+            ColorTokens.Kid.bg
+                .ignoresSafeArea()
 
-            Circle()
-                .fill(ColorTokens.Overlay.glass)
-                .frame(width: 200, height: 200)
-                .offset(x: 120, y: 100)
-
-            Circle()
-                .fill(ColorTokens.Overlay.glass)
-                .frame(width: 160, height: 160)
-                .offset(x: 100, y: -280)
+            RadialGradient(
+                colors: [
+                    ColorTokens.Kid.bgSoft,
+                    ColorTokens.Kid.bg,
+                    ColorTokens.Kid.bgDeep
+                ],
+                center: .init(x: 0.5, y: 0.32),
+                startRadius: 0,
+                endRadius: 520
+            )
+            .ignoresSafeArea()
         }
+        .accessibilityHidden(true)
     }
 
+    private var wordmark: some View {
+        (
+            Text("Happy").foregroundStyle(ColorTokens.Kid.ink)
+            + Text("Speech").foregroundStyle(ColorTokens.Brand.primary)
+        )
+        .font(TypographyTokens.kidDisplay(38))
+        .tracking(-0.8)
+        .lineLimit(1)
+        .minimumScaleFactor(0.7)
+        .shadow(color: ColorTokens.Brand.primary.opacity(0.16), radius: 8, x: 0, y: 3)
+    }
+
+    // Три коралловые точки, мягко «подпрыгивающие» по очереди — повторяет
+    // лоадер из эталона. Под Reduce Motion остаются статичными приглушёнными.
+    private var loader: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            ForEach(0..<3, id: \.self) { index in
+                Circle()
+                    .fill(ColorTokens.Brand.primary)
+                    .frame(width: 9, height: 9)
+                    .opacity(loaderPhase == index ? 1 : 0.3)
+                    .scaleEffect(loaderPhase == index ? 1.0 : 0.78)
+            }
+        }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.32), value: loaderPhase)
+        .accessibilityHidden(true)
+    }
+
+    // MARK: - Animation
+
     private func animateIn() {
-        if reduceMotion {
+        guard !reduceMotion else {
             mascotScale = 1.0
             titleOpacity = 1.0
-            progressWidth = 1.0
             return
         }
 
-        withAnimation(.spring(response: 0.6, dampingFraction: 0.65).delay(0.2)) {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.62).delay(0.1)) {
             mascotScale = 1.0
         }
-        withAnimation(.easeOut(duration: 0.4).delay(0.6)) {
+        withAnimation(.easeOut(duration: 0.4).delay(0.45)) {
             titleOpacity = 1.0
-        }
-        withAnimation(.linear(duration: 1.6).delay(0.8)) {
-            progressWidth = 1.0
         }
     }
 }
 
 // MARK: - Preview
 
-#Preview("Splash") {
+#Preview("Splash — Light") {
     SplashView()
+        .preferredColorScheme(.light)
+}
+
+#Preview("Splash — Dark") {
+    SplashView()
+        .preferredColorScheme(.dark)
 }

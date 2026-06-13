@@ -130,15 +130,17 @@ struct AuthVerifyEmailView: View {
 
     // MARK: - Sections
 
+    // Унифицировано с остальными auth-экранами: тёплый mesh-«купол».
     private var topDecoration: some View {
         GeometryReader { geo in
-            Ellipse()
-                .fill(GradientTokens.kidHeroDecoration)
-                .opacity(heroDecorationOpacity)
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .frame(width: geo.size.width * 1.3, height: 260)
+                .clipShape(Ellipse())
+                .opacity(heroDecorationOpacity)
                 .offset(x: -geo.size.width * 0.15, y: -140)
         }
         .ignoresSafeArea()
+        .accessibilityHidden(true)
     }
 
     private var header: some View {
