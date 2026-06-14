@@ -37,13 +37,9 @@ struct NeurolinguistInsightsView: View {
 
     var body: some View {
         ZStack {
+            // Чистый тёплый статичный фон Parent-контура (без декоративной
+            // mesh-подложки) — единый паттерн дашборд-аналитики.
             ColorTokens.Parent.bg.ignoresSafeArea()
-
-            HSMeshGradientBackground(palette: .calm, animated: false)
-                .ignoresSafeArea()
-                .blendMode(.softLight)
-                .accessibilityHidden(true)
-                .allowsHitTesting(false)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
@@ -99,9 +95,15 @@ struct NeurolinguistInsightsView: View {
     private var contentSection: some View {
         switch viewModel.state {
         case .loading:
-            ProgressView()
-                .frame(maxWidth: .infinity)
-                .padding(.top, SpacingTokens.sp4)
+            // Брендированный загрузчик (эталон states-empty-error-loading):
+            // тёплый, центрированный, с дружелюбным лоадером Ляли.
+            HSLoadingView(
+                message: String(localized: "insights.loading", defaultValue: "Собираю аналитику…"),
+                lottie: .loaderInitializing
+            )
+            .frame(maxWidth: .infinity, minHeight: 240)
+            .padding(.top, SpacingTokens.sp4)
+            .accessibilityLabel(String(localized: "insights.loading", defaultValue: "Собираю аналитику…"))
 
         case .empty:
             HSEmptyState(

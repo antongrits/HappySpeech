@@ -262,7 +262,8 @@ struct RetellingView: View {
                 Text(frame.sentence)
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(3)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
             }
             Spacer(minLength: 0)

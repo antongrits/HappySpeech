@@ -19,13 +19,9 @@ struct ParentDailyDigestView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Чистый тёплый статичный фон Parent-контура (без декоративной
+                // mesh-подложки) — единый паттерн дашборд-аналитики.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: false)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 content
             }
@@ -60,6 +56,11 @@ struct ParentDailyDigestView: View {
             VStack(spacing: SpacingTokens.sp4) {
                 hero
                 kpiGrid(state: interactor.state)
+                // Тихий день: занятий ещё не было — дружелюбная подсказка вместо
+                // ощущения «дыры» с нулями (метрики честно остаются нулевыми).
+                if interactor.state.isQuietDay {
+                    quietDayNote
+                }
                 // «Момент дня» показываем только при реальном событии сегодня.
                 if interactor.state.hasPhotoMoment {
                     momentCard(state: interactor.state)
@@ -125,6 +126,40 @@ struct ParentDailyDigestView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(kpi.label): \(kpi.value)"))
+    }
+
+    private var quietDayNote: some View {
+        let quietTitle = String(
+            localized: "parentDigest.quiet.title",
+            defaultValue: "Сегодня пока тихо"
+        )
+        let quietMessage = String(
+            localized: "parentDigest.quiet.message",
+            defaultValue: "Занятий ещё не было — самое время начать короткую игру вместе."
+        )
+        return HSCard(style: .tinted(ColorTokens.Brand.primary.opacity(0.10))) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                Image(systemName: "sun.max.fill")
+                    .font(.system(size: 22))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(quietTitle)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.85)
+                    Text(quietMessage)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(quietTitle + ". " + quietMessage)
     }
 
     private func momentCard(state: ParentDailyDigestModels.ViewState) -> some View {

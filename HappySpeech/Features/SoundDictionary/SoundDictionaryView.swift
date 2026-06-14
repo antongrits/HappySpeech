@@ -79,7 +79,7 @@ struct SoundDictionaryView: View {
                 // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
                 // словаря фонем (прохладный «энциклопедический» feel).
                 ColorTokens.Parent.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidCool, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)

@@ -112,7 +112,8 @@ struct StoryEndingMakerView: View {
                     Text(String(localized: "storyEnding.hero.subtitle"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     phaseLabel(state.phase)
                 }

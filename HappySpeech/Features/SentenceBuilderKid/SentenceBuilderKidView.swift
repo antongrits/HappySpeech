@@ -59,6 +59,7 @@ struct SentenceBuilderKidView: View {
         if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
+                    progressHeader(state: interactor.state)
                     hero
                     assembledZone(interactor: interactor)
                     availableZone(interactor: interactor)
@@ -74,6 +75,39 @@ struct SentenceBuilderKidView: View {
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    /// Прогресс-шапка эталонного класса kid-game-drag: тёплый бар + степ-чип
+    /// «N / M». Реальные данные из состояния (`sentenceIndex`/`totalSentences`),
+    /// никакой фабрикации.
+    private func progressHeader(state: SentenceBuilderKidModels.ViewState) -> some View {
+        let total = max(state.totalSentences, 1)
+        let current = min(state.sentenceIndex + 1, total)
+        return VStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.small) {
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(ColorTokens.Kid.line)
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                    startPoint: .leading, endPoint: .trailing
+                                )
+                            )
+                            .frame(width: max(0, geo.size.width * Double(current) / Double(total)))
+                    }
+                }
+                .frame(height: 12)
+                .accessibilityHidden(true)
+                KidStepChip(current: current, total: total)
+            }
+            Text(String(localized: "Прогресс"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
     }
 
     private var hero: some View {
@@ -147,33 +181,23 @@ struct SentenceBuilderKidView: View {
         }
     }
 
-    /// Простой wrap-flow для чипов — используем `FlowLayout`-like через HStack
-    /// внутри `LazyVStack` нельзя; пока маленькое количество чипов — обёртываем
-    /// руками через 2 HStack-строки.
+    /// Wrap-флоу для чипов (эталон `flex-wrap`): слова переносятся на новую
+    /// строку, заполняя поднос сверху вниз. Раньше был горизонтальный ScrollView,
+    /// из-за которого длинные предложения уезжали за край и слова прятались —
+    /// теперь все чипы видны на SE без overflow.
     private func flowLayout(
         chips: [SentenceBuilderKidModels.WordChip],
         isAssembled: Bool,
         onTap: @escaping (UUID) -> Void
     ) -> some View {
-        // Простая wrap-имитация: ScrollView horizontal с HStack.
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: SpacingTokens.sp2) {
-                ForEach(chips) { chip in
-                    chipView(chip, isAssembled: isAssembled) {
-                        onTap(chip.id)
-                    }
-                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                    }
-                    // Step 10 Batch G — Pattern 4: parallax drift на word chips.
-                    .hsParallaxTile(factor: 0.15)
+        KidWrapLayout(spacing: SpacingTokens.sp2, lineSpacing: SpacingTokens.sp2) {
+            ForEach(chips) { chip in
+                chipView(chip, isAssembled: isAssembled) {
+                    onTap(chip.id)
                 }
             }
-            .padding(.horizontal, 2)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func chipView(
@@ -187,6 +211,8 @@ struct SentenceBuilderKidView: View {
                 .foregroundStyle(
                     isAssembled ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink
                 )
+                .lineLimit(1)
+                .fixedSize()
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp2)
                 .background(
@@ -211,7 +237,12 @@ struct SentenceBuilderKidView: View {
     }
 
     private func resultCard(state: SentenceBuilderKidModels.ViewState) -> some View {
-        HSCard(style: .tinted(state.isCorrect ? ColorTokens.Semantic.successBg : ColorTokens.Semantic.errorBg)) {
+        // Тёплые заливки в палитре приложения (как Bingo/Memory): «верно» —
+        // мягкий мятный тинт-акцент, «попробуй ещё» — коралловый. Семантика
+        // дублируется иконкой; без больших зелёных/красных заливок.
+        HSCard(style: .tinted(state.isCorrect
+                              ? ColorTokens.Brand.mint.opacity(0.16)
+                              : ColorTokens.Brand.primaryLo.opacity(0.30))) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: state.isCorrect ? .celebrating : .thinking, size: 48)
                     .accessibilityHidden(true)
@@ -220,7 +251,9 @@ struct SentenceBuilderKidView: View {
                      : String(localized: "sentenceBuilder.result.retry"))
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                Spacer()
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+                Spacer(minLength: SpacingTokens.sp2)
                 // Step 10 Batch G — Pattern 5: bounce on result state.
                 Image(systemName: state.isCorrect ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill")
                     .font(.title3)
@@ -233,7 +266,7 @@ struct SentenceBuilderKidView: View {
     @ViewBuilder
     private func cta(interactor: SentenceBuilderKidInteractor) -> some View {
         if interactor.state.isGameComplete {
-            HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+            HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.16))) {
                 HStack(spacing: SpacingTokens.sp3) {
                     LyalyaMascotView(state: .celebrating, size: 48)
                         .accessibilityHidden(true)
@@ -241,14 +274,16 @@ struct SentenceBuilderKidView: View {
                         Text(String(localized: "sentenceBuilder.gameDone"))
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Kid.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.85)
                         Text(String(
                             format: String(localized: "kidGame.stars %lld"),
                             interactor.state.stars
                         ))
                             .font(TypographyTokens.body(14))
-                            .foregroundStyle(ColorTokens.Semantic.warning)
+                            .foregroundStyle(ColorTokens.Brand.gold)
                     }
-                    Spacer()
+                    Spacer(minLength: 0)
                 }
             }
         } else if interactor.state.isCorrect {

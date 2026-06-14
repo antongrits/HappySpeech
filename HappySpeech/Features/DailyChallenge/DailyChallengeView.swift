@@ -81,7 +81,7 @@ struct DailyChallengeView: View {
                 // v27 visual modernization (#2) — Daily Challenge ощущается как
                 // кульминация дня: тёплый золотой mesh-фон палитры .rewards
                 // вместо плоского Kid.bg. iOS 18+ — MeshGradient, iOS 17 — radial.
-                HSMeshGradientBackground(palette: .rewards, animated: true)
+                HSMeshGradientBackground(palette: .rewards, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.4 : 0.7)
                     .accessibilityHidden(true)

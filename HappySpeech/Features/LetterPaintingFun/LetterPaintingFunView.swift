@@ -89,8 +89,11 @@ struct LetterPaintingFunView: View {
                     }
             )
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text("Поле для рисования буквы \(interactor.state.currentLetter)"))
-            .accessibilityHint(Text("Проведи пальцем чтобы закрасить букву"))
+            .accessibilityLabel(Text(String(
+                format: String(localized: "letterPainting.canvas.a11yLabel %@", defaultValue: "Поле для рисования буквы %@"),
+                interactor.state.currentLetter
+            )))
+            .accessibilityHint(Text(String(localized: "letterPainting.canvas.a11yHint", defaultValue: "Проведи пальцем, чтобы закрасить букву")))
 
             colorPicker(interactor: interactor)
         }
@@ -122,7 +125,10 @@ struct LetterPaintingFunView: View {
                             )
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel(Text("Буква \(letter)"))
+                    .accessibilityLabel(Text(String(
+                        format: String(localized: "letterPainting.letter.a11y %@", defaultValue: "Буква %@"),
+                        letter
+                    )))
                     .accessibilityAddTraits(
                         interactor.state.currentLetter == letter ? [.isButton, .isSelected] : .isButton
                     )

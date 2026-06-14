@@ -56,17 +56,18 @@ struct ComparisonDashboardView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Чистый тёплый статичный фон Parent-контура (без декоративной
+                // mesh-подложки) — единый паттерн дашборд-аналитики.
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .calm, animated: false)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
-
                 if viewModel.isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    // Брендированный загрузчик (эталон states-empty-error-loading).
+                    HSLoadingView(
+                        message: String(localized: "comparison.loading", defaultValue: "Сравниваю прогресс…"),
+                        lottie: .loaderInitializing
+                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityLabel(String(localized: "comparison.loading", defaultValue: "Сравниваю прогресс…"))
                 } else if viewModel.hasData {
                     chartsContent
                 } else {
@@ -74,12 +75,16 @@ struct ComparisonDashboardView: View {
                 }
             }
             // v32 P1 — Ляля празднует прогресс детей: corner-pin 56pt, topTrailing.
+            // Показываем только над данными — у loading/empty состояний свой
+            // центральный маскот, чтобы не было двух «Ляль» на экране.
             .overlay(alignment: .topTrailing) {
-                LyalyaMascotView(state: .celebrating, size: 56)
-                    .padding(.top, SpacingTokens.regular)
-                    .padding(.trailing, SpacingTokens.screenEdge)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+                if !viewModel.isLoading && viewModel.hasData {
+                    LyalyaMascotView(state: .celebrating, size: 56)
+                        .padding(.top, SpacingTokens.regular)
+                        .padding(.trailing, SpacingTokens.screenEdge)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
             }
             .navigationTitle(String(localized: "comparison.title"))
             .navigationBarTitleDisplayMode(.large)
@@ -392,27 +397,20 @@ struct ComparisonDashboardView: View {
 
     // MARK: - Empty State
 
+    // Дружелюбное пустое состояние (эталон states-empty-error-loading):
+    // маскот Ляля + тёплый заголовок + пояснение + CTA «Понятно», ведущая
+    // обратно на родительскую главную. Сравнение доступно при ≥2 профилях —
+    // CTA выводит из тупика вместо «дыры».
     private var emptyState: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            LyalyaMascotView(state: .thinking, size: 140)
-                .accessibilityHidden(true)
-            Text(String(localized: "comparison.empty.title"))
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.center)
-            Text(String(localized: "comparison.empty.message"))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, SpacingTokens.large)
-        }
+        HSEmptyStateView(
+            mascot: .thinking,
+            title: String(localized: "comparison.empty.title"),
+            subtitle: String(localized: "comparison.empty.message"),
+            actionTitle: String(localized: "comparison.empty.cta", defaultValue: "Понятно"),
+            action: { router?.dismiss() }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, SpacingTokens.screenEdge)
+        .environment(\.circuitContext, .parent)
     }
 
     // MARK: - Helpers

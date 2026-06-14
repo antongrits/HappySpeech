@@ -55,7 +55,10 @@ struct BilingualPracticeView: View {
                 }
                 .padding(SpacingTokens.screenEdge)
             }
-            .navigationTitle(Text("Угадай перевод"))
+            .navigationTitle(Text(String(
+                localized: "bilingual.practice.cta.title",
+                defaultValue: "Угадай перевод"
+            )))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
         }
@@ -67,7 +70,13 @@ struct BilingualPracticeView: View {
     private func progressBar(current: Int, total: Int) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
             HStack {
-                Text("Раунд \(current + 1) из \(total)")
+                Text(String(
+                    format: String(
+                        localized: "bilingual.practice.round.label",
+                        defaultValue: "Раунд %1$d из %2$d"
+                    ),
+                    current + 1, total
+                ))
                     .font(TypographyTokens.caption(13).monospacedDigit())
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Spacer()
@@ -84,8 +93,17 @@ struct BilingualPracticeView: View {
                 }
             }
             .frame(height: 8)
-            .accessibilityLabel(Text("Прогресс тренировки"))
-            .accessibilityValue(Text("Раунд \(current + 1) из \(total)"))
+            .accessibilityLabel(Text(String(
+                localized: "bilingual.practice.progress.a11y",
+                defaultValue: "Прогресс тренировки"
+            )))
+            .accessibilityValue(Text(String(
+                format: String(
+                    localized: "bilingual.practice.round.label",
+                    defaultValue: "Раунд %1$d из %2$d"
+                ),
+                current + 1, total
+            )))
         }
     }
 
@@ -106,8 +124,14 @@ struct BilingualPracticeView: View {
                 .font(TypographyTokens.title(32))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.7)
-            Text("Как это будет на \(language.displayName.lowercased())?")
+                .minimumScaleFactor(0.85)
+            Text(String(
+                format: String(
+                    localized: "bilingual.practice.prompt",
+                    defaultValue: "Как это будет на %@?"
+                ),
+                language.displayName.lowercased()
+            ))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
@@ -167,7 +191,10 @@ struct BilingualPracticeView: View {
         .buttonStyle(.plain)
         .disabled(isLocked)
         .accessibilityLabel(Text(option.translation))
-        .accessibilityHint(Text("Нажми, чтобы выбрать этот вариант"))
+        .accessibilityHint(Text(String(
+            localized: "bilingual.practice.option.hint",
+            defaultValue: "Нажми, чтобы выбрать этот вариант"
+        )))
         .scaleEffect(isHighlighted(option) && !reduceMotion ? 1.02 : 1.0)
         .animation(reduceMotion ? .none : .easeInOut(duration: 0.15), value: lastSelectedOptionId)
     }
@@ -237,7 +264,13 @@ struct BilingualPracticeView: View {
                                          : ColorTokens.Kid.inkSoft)
                 }
             }
-            .accessibilityLabel(Text("\(finish.stars) из 3 звёзд"))
+            .accessibilityLabel(Text(String(
+                format: String(
+                    localized: "bilingual.practice.stars.a11y",
+                    defaultValue: "%d из 3 звёзд"
+                ),
+                finish.stars
+            )))
             Text(finish.body)
                 .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -250,8 +283,10 @@ struct BilingualPracticeView: View {
                 Button {
                     Task { await restartPractice() }
                 } label: {
-                    Text("Ещё раз")
+                    Text(String(localized: "bilingual.practice.again", defaultValue: "Ещё раз"))
                         .font(TypographyTokens.headline(16))
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .background(
                             RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -263,8 +298,10 @@ struct BilingualPracticeView: View {
                 Button {
                     onClose()
                 } label: {
-                    Text("Готово")
+                    Text(String(localized: "common.done", defaultValue: "Готово"))
                         .font(TypographyTokens.headline(16))
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .background(
                             RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -292,7 +329,7 @@ struct BilingualPracticeView: View {
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
             }
-            .accessibilityLabel(Text("Закрыть"))
+            .accessibilityLabel(Text(String(localized: "common.close")))
         }
     }
 

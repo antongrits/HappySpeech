@@ -27,11 +27,11 @@ enum LetterPaintingFunModels {
 
         var label: String {
             switch self {
-            case .coral:  return "Коралловый"
-            case .mint:   return "Мятный"
-            case .sky:    return "Небесный"
-            case .lilac:  return "Лиловый"
-            case .butter: return "Сливочный"
+            case .coral:  return String(localized: "letterPainting.color.coral", defaultValue: "Коралловый")
+            case .mint:   return String(localized: "letterPainting.color.mint", defaultValue: "Мятный")
+            case .sky:    return String(localized: "letterPainting.color.sky", defaultValue: "Небесный")
+            case .lilac:  return String(localized: "letterPainting.color.lilac", defaultValue: "Лиловый")
+            case .butter: return String(localized: "letterPainting.color.butter", defaultValue: "Сливочный")
             }
         }
     }

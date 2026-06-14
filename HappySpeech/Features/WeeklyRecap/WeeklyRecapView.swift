@@ -18,13 +18,9 @@ struct WeeklyRecapView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Чистый тёплый статичный фон Parent-контура (без декоративной
+                // mesh-подложки) — единый паттерн с ParentHome / ProgressDashboard.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: false)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 content
             }
@@ -69,25 +65,23 @@ struct WeeklyRecapView: View {
         }
     }
 
+    // Дружелюбное пустое состояние (эталон states-empty-error-loading):
+    // маскот Ляля + тёплый заголовок + пояснение + CTA «Начать занятие»,
+    // ведущая на родительскую главную. Не «дыра сверху» — центрировано,
+    // CTA даёт выход из тупика.
     private var emptyState: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: "calendar.badge.clock")
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Parent.accent)
-                .accessibilityHidden(true)
-            Text(String(localized: "weeklyRecap.empty.title"))
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .multilineTextAlignment(.center)
-            Text(String(localized: "weeklyRecap.empty.message"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-        }
-        .padding(.horizontal, SpacingTokens.sp5)
-        .accessibilityElement(children: .combine)
+        HSEmptyStateView(
+            mascot: .thinking,
+            title: String(localized: "weeklyRecap.empty.title"),
+            subtitle: String(localized: "weeklyRecap.empty.message"),
+            actionTitle: String(localized: "weeklyRecap.empty.cta", defaultValue: "Начать занятие"),
+            action: {
+                hapticService.impact(.light)
+                exitToParentHome()
+            }
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(\.circuitContext, .parent)
     }
 
     @MainActor

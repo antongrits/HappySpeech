@@ -138,8 +138,13 @@ struct VisualVocabularyFlipView: View {
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(flipped ? "Слово: \(card.word). Звук \(card.targetSound)" : "Карточка \(card.word)"))
-        .accessibilityHint(Text("Двойное касание перевернёт"))
+        .accessibilityLabel(Text(flipped
+            ? String(format: String(localized: "vocabFlip.card.flipped.a11y %@ %@",
+                                    defaultValue: "Слово: %@. Звук %@"), card.word, card.targetSound)
+            : String(format: String(localized: "vocabFlip.card.front.a11y %@",
+                                    defaultValue: "Карточка %@"), card.word)))
+        .accessibilityHint(Text(String(localized: "vocabFlip.card.hint",
+                                        defaultValue: "Двойное касание перевернёт")))
     }
 
     private func cardFront(_ card: VisualVocabularyFlipModels.Card) -> some View {
@@ -166,7 +171,8 @@ struct VisualVocabularyFlipView: View {
                 .lineLimit(nil)
                 .minimumScaleFactor(0.7)
                 .multilineTextAlignment(.center)
-            Text("Звук: \(card.targetSound)")
+            Text(String(format: String(localized: "vocabFlip.card.sound %@",
+                                        defaultValue: "Звук: %@"), card.targetSound))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }

@@ -73,9 +73,9 @@ struct DailyRitualsLyalyaView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
-                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра как фон.
+                // Тёплая статичная mesh-подложка (.kidWarm палитра).
                 // Тёплая палитра подчёркивает «утро/вечер» ритуал.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.22 : 0.40)
                     .accessibilityHidden(true)

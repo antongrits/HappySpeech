@@ -138,7 +138,9 @@ struct AudioMemoryGameView: View {
     }
 
     private func tileBackground(_ tile: AudioMemoryGameModels.Tile) -> Color {
-        if tile.isMatched { return ColorTokens.Semantic.successBg }
+        // Совпавшая пара — мягкий мятный акцент в одном семействе с холст-играми
+        // (SoundHunter / ObjectHunt), а не сплошная зелёная заливка.
+        if tile.isMatched { return ColorTokens.Feedback.correct.opacity(0.18) }
         if tile.isFlipped { return ColorTokens.Kid.surface }
         return ColorTokens.Brand.primary
     }

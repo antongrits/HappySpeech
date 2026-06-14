@@ -91,7 +91,8 @@ struct StoryRetellingProView: View {
                 Text(String(localized: "storyRetelling.hero.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(3)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }
@@ -145,7 +146,7 @@ struct StoryRetellingProView: View {
                     }
                     Spacer()
                     VStack(alignment: .trailing, spacing: 2) {
-                        Text("\(story.keyFactsCount) фактов")
+                        Text(factsCountLabel(story.keyFactsCount))
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                         if story.bestCoverage > 0 {
@@ -167,7 +168,16 @@ struct StoryRetellingProView: View {
         let status = story.isCompleted
             ? String(localized: "storyRetelling.status.done")
             : String(localized: "storyRetelling.status.todo")
-        return "\(story.title), \(story.keyFactsCount) ключевых фактов, \(status)"
+        return "\(story.title), \(factsCountLabel(story.keyFactsCount)), \(status)"
+    }
+
+    /// Локализованная подпись «N фактов» с поддержкой русского склонения
+    /// (плюрал-вариации добавляются в каталог; %lld-форма — fallback).
+    private func factsCountLabel(_ count: Int) -> String {
+        String(
+            format: String(localized: "storyRetelling.facts.count", defaultValue: "%lld фактов"),
+            count
+        )
     }
 
     // MARK: - Activity panel (record / scoring / result)

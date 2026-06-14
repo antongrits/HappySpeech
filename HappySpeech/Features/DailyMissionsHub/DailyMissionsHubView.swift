@@ -19,8 +19,8 @@ struct DailyMissionsHubView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
-                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра как фон.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                // Тёплая статичная mesh-подложка (.kidWarm палитра).
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.30 : 0.55)
                     .accessibilityHidden(true)

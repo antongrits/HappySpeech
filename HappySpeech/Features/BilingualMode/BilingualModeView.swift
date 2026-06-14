@@ -60,14 +60,17 @@ struct BilingualModeView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidCool, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
                 content
             }
-            .navigationTitle(Text("Билингвальный режим"))
+            .navigationTitle(Text(String(
+                localized: "bilingual.nav.title",
+                defaultValue: "Билингвальный режим"
+            )))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
@@ -116,17 +119,24 @@ struct BilingualModeView: View {
     // MARK: - Intro
 
     private var introCard: some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac)) {
+        let subtitle = String(
+            localized: "bilingual.intro.subtitle",
+            defaultValue: "Учимся называть одни и те же предметы и на русском, и на втором языке."
+        )
+        return HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac)) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .waving, size: 80)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                    Text("Два языка — два богатства")
+                    Text(String(
+                        localized: "bilingual.intro.title",
+                        defaultValue: "Два языка — два богатства"
+                    ))
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
-                    Text("Учимся называть одни и те же предметы и на русском, и на втором языке.")
+                    Text(subtitle)
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(nil)
@@ -149,17 +159,26 @@ struct BilingualModeView: View {
                         .foregroundStyle(ColorTokens.Brand.lilac)
                         .hsSymbolEffect(.variableColor, value: currentLanguage)
                         .accessibilityHidden(true)
-                    Text("Выбери второй язык")
+                    Text(String(
+                        localized: "bilingual.picker.title",
+                        defaultValue: "Выбери второй язык"
+                    ))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
                 }
-                Picker("Второй язык", selection: languageBinding) {
+                Picker(
+                    String(localized: "bilingual.picker.label", defaultValue: "Второй язык"),
+                    selection: languageBinding
+                ) {
                     ForEach(BilingualSecondLanguage.allCases, id: \.self) { lang in
                         Text(lang.displayName).tag(lang)
                     }
                 }
                 .pickerStyle(.segmented)
-                .accessibilityLabel(Text("Выбор второго языка"))
+                .accessibilityLabel(Text(String(
+                    localized: "bilingual.picker.a11y",
+                    defaultValue: "Выбор второго языка"
+                )))
                 .accessibilityValue(Text(currentLanguage?.displayName ?? ""))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -170,9 +189,15 @@ struct BilingualModeView: View {
 
     private var offHintCard: some View {
         HSEmptyStateView(
-            mascot: .thinking,
-            title: "Режим выключен",
-            subtitle: "Включи второй язык выше, чтобы увидеть словарик и поиграть в перевод."
+            warmPanel: .thinking,
+            title: String(
+                localized: "bilingual.off.title",
+                defaultValue: "Режим выключен"
+            ),
+            subtitle: String(
+                localized: "bilingual.off.subtitle",
+                defaultValue: "Включи второй язык выше, чтобы увидеть словарик и поиграть в перевод."
+            )
         )
         .padding(.top, SpacingTokens.sp4)
     }
@@ -191,10 +216,16 @@ struct BilingualModeView: View {
                     .background(Circle().fill(ColorTokens.Brand.lilac))
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Угадай перевод")
+                    Text(String(
+                        localized: "bilingual.practice.cta.title",
+                        defaultValue: "Угадай перевод"
+                    ))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Text("10 раундов • выбери правильный ответ")
+                    Text(String(
+                        localized: "bilingual.practice.cta.subtitle",
+                        defaultValue: "10 раундов • выбери правильный ответ"
+                    ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .fixedSize(horizontal: false, vertical: true)
@@ -219,8 +250,14 @@ struct BilingualModeView: View {
         }
         .buttonStyle(.plain)
         .tapFeedback()
-        .accessibilityLabel(Text("Начать тренировку: угадай перевод"))
-        .accessibilityHint(Text("10 раундов с тремя вариантами ответа"))
+        .accessibilityLabel(Text(String(
+            localized: "bilingual.practice.cta.a11y",
+            defaultValue: "Начать тренировку: угадай перевод"
+        )))
+        .accessibilityHint(Text(String(
+            localized: "bilingual.practice.cta.hint",
+            defaultValue: "10 раундов с тремя вариантами ответа"
+        )))
     }
 
     // MARK: - Vocabulary section
@@ -229,7 +266,10 @@ struct BilingualModeView: View {
     private var vocabularySection: some View {
         if let load = holder.loadVM, !load.categoriesInOrder.isEmpty {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                Text("Словарик")
+                Text(String(
+                    localized: "bilingual.vocabulary.section.title",
+                    defaultValue: "Словарик"
+                ))
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 ForEach(load.categoriesInOrder, id: \.self) { category in
@@ -301,8 +341,17 @@ struct BilingualModeView: View {
                     .foregroundStyle(ColorTokens.Brand.lilac)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(Text("Послушать \(translation)"))
-            .accessibilityHint(Text("Произносит слово на втором языке"))
+            .accessibilityLabel(Text(String(
+                format: String(
+                    localized: "bilingual.word.listen.a11y",
+                    defaultValue: "Послушать %@"
+                ),
+                translation
+            )))
+            .accessibilityHint(Text(String(
+                localized: "bilingual.word.listen.hint",
+                defaultValue: "Произносит слово на втором языке"
+            )))
         }
         .padding(SpacingTokens.sp2)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -330,7 +379,7 @@ struct BilingualModeView: View {
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
             }
-            .accessibilityLabel(Text("Закрыть"))
+            .accessibilityLabel(Text(String(localized: "common.close")))
         }
     }
 

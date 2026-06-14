@@ -70,13 +70,9 @@ struct ParentInsightsTimelineView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Чистый тёплый статичный фон Parent-контура (без декоративной
+                // mesh-подложки) — единый паттерн дашборд-аналитики.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: false)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -435,15 +431,15 @@ struct ParentInsightsTimelineView: View {
     // MARK: - Loading
 
     private var loadingSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            ProgressView()
-                .controlSize(.large)
-            Text("parentInsightsTimeline.loading")
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-        }
+        // Брендированный загрузчик (эталон states-empty-error-loading):
+        // тёплый, центрированный, с дружелюбным лоадером Ляли.
+        HSLoadingView(
+            message: String(localized: "parentInsightsTimeline.loading"),
+            lottie: .loaderInitializing
+        )
         .frame(maxWidth: .infinity)
         .padding(.top, SpacingTokens.sp10)
+        .accessibilityLabel(Text("parentInsightsTimeline.loading"))
     }
 
     // MARK: - Toast

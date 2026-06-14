@@ -31,7 +31,9 @@ struct PalindromeHunterView: View {
         if let interactor {
             let state = interactor.state
             KidGameTapScaffold(
-                stepLabel: state.currentRound.map { "Раунд \($0.id + 1)" },
+                stepLabel: state.currentRound.map {
+                    String(format: String(localized: "kidGame.round %lld", defaultValue: "Раунд %lld"), $0.id + 1)
+                },
                 progress: state.progress,
                 promptText: state.currentRound != nil
                     ? String(localized: "palindromeHunter.prompt")

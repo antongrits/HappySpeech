@@ -88,8 +88,8 @@ struct LexicalThemesView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (lexical themes).
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                // Тёплая статичная mesh-подложка (kidCool палитра, lexical themes).
+                HSMeshGradientBackground(palette: .kidCool, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.20 : 0.30)
                     .blendMode(.softLight)
@@ -140,31 +140,86 @@ struct LexicalThemesView: View {
     private func hubSection(
         _ hub: LexicalThemesModels.LoadThemes.ViewModel
     ) -> some View {
-        ScrollView {
-            VStack(spacing: SpacingTokens.sp4) {
-                Text(hub.masteredCountLabel)
-                    .font(TypographyTokens.headline(17).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .padding(.top, SpacingTokens.sp4)
-
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    spacing: SpacingTokens.sp3
-                ) {
-                    ForEach(hub.themes) { theme in
-                        themeCard(theme)
-                            // Step 10 Batch G — Pattern 3: scrollTransition stagger.
-                            .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
-                                content
-                                    .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                                    .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                            }
-                            // Step 10 Batch G — Pattern 4: parallax drift на theme cards.
-                            .hsParallaxTile(factor: 0.25)
+        Group {
+            if hub.themes.isEmpty {
+                // Контент-пак тем не загрузился — дружелюбный плейсхолдер вместо
+                // пустого экрана (эталон states-empty-error-loading.html).
+                HSEmptyStateView(
+                    warmPanel: .thinking,
+                    title: String(
+                        localized: "lexicalThemes.empty.title",
+                        defaultValue: "Темы скоро появятся"
+                    ),
+                    subtitle: String(
+                        localized: "lexicalThemes.empty.subtitle",
+                        defaultValue: "Заглянем позже — здесь будут весёлые слова по темам."
+                    ),
+                    actionTitle: String(localized: "common.close"),
+                    action: { exitGame() }
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                        hubHeader(hub)
+                        themesGrid(hub)
                     }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.sp6)
+                .scrollBounceBehavior(.basedOnSize)
+            }
+        }
+    }
+
+    /// Шапка хаба: заголовок секции + счётчик освоенных тем (эталон kid-hub-list).
+    private func hubHeader(
+        _ hub: LexicalThemesModels.LoadThemes.ViewModel
+    ) -> some View {
+        let sectionTitle = String(
+            localized: "lexicalThemes.hub.section.title",
+            defaultValue: "Темы слов"
+        )
+        return HStack(spacing: SpacingTokens.sp2) {
+            Text(sectionTitle)
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+            Text(hub.masteredCountLabel)
+                .font(TypographyTokens.caption(12).monospacedDigit())
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, SpacingTokens.sp2)
+                .padding(.vertical, 3)
+                .background(Capsule().fill(ColorTokens.Brand.primaryLo.opacity(0.45)))
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(sectionTitle))
+        .accessibilityValue(Text(hub.masteredCountLabel))
+    }
+
+    private func themesGrid(
+        _ hub: LexicalThemesModels.LoadThemes.ViewModel
+    ) -> some View {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: SpacingTokens.sp3),
+                GridItem(.flexible(), spacing: SpacingTokens.sp3)
+            ],
+            spacing: SpacingTokens.sp3
+        ) {
+            ForEach(hub.themes) { theme in
+                themeCard(theme)
+                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch G — Pattern 4: parallax drift на theme cards.
+                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -205,7 +260,7 @@ struct LexicalThemesView: View {
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .fixedSize(horizontal: false, vertical: true)
-                        .minimumScaleFactor(0.7)
+                        .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.center)
                     Text(theme.wordCountLabel)
                         .font(TypographyTokens.caption(11))
@@ -299,7 +354,7 @@ struct LexicalThemesView: View {
                     .font(TypographyTokens.headline(19))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, minHeight: 56)
             }

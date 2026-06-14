@@ -17,7 +17,7 @@ struct GoalTrackerKidView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
@@ -96,7 +96,27 @@ struct GoalTrackerKidView: View {
         }
     }
 
+    @ViewBuilder
     private func goalsList(interactor: GoalTrackerKidInteractor) -> some View {
+        if interactor.state.goals.isEmpty {
+            HSEmptyStateView(
+                warmPanel: .thinking,
+                title: String(
+                    localized: "goalTracker.kid.empty.title",
+                    defaultValue: "Целей пока нет"
+                ),
+                subtitle: String(
+                    localized: "goalTracker.kid.empty.subtitle",
+                    defaultValue: "Сыграй немного — и здесь появятся твои цели на сегодня."
+                )
+            )
+            .padding(.top, SpacingTokens.sp4)
+        } else {
+            goalsGrid(interactor: interactor)
+        }
+    }
+
+    private func goalsGrid(interactor: GoalTrackerKidInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.state.goals.enumerated()), id: \.element.id) { index, goal in
                 goalCard(goal) {

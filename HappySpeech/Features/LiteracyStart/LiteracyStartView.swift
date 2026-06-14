@@ -51,8 +51,8 @@ struct LiteracyStartView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (literacy).
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                // Тёплая статичная mesh-подложка (kidCool палитра, literacy).
+                HSMeshGradientBackground(palette: .kidCool, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.20 : 0.30)
                     .blendMode(.softLight)
@@ -152,7 +152,7 @@ struct LiteracyStartView: View {
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, minHeight: 110)
         .padding(SpacingTokens.sp2)

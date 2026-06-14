@@ -80,8 +80,10 @@ enum WeeklyRecapModels {
             )
         ]
 
-        // Дневной график = точность по дням окна, в процентах (0…100), масштаб для бар-чарта.
-        let chartValues = aggregate.daily.map { Double($0.accuracy) * 100.0 / 8.0 }
+        // Дневной график = точность по дням окна, в процентах (0…100).
+        // `DailyAccuracy.accuracy` — Float 0…1, поэтому ×100 даёт высоту столбца
+        // в процентах. Без магического делителя, ломавшего масштаб бар-чарта.
+        let chartValues = aggregate.daily.map { min(100.0, max(0.0, Double($0.accuracy) * 100.0)) }
 
         return ViewState(kpis: kpis, chartValues: chartValues)
     }

@@ -81,7 +81,7 @@ struct LogorhythmicsView: View {
                     .accessibilityHidden(true)
             }
             .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.phase)
-            .navigationTitle(Text("Логоритмика"))
+            .navigationTitle(Text(String(localized: "logorhythmics.nav.title", defaultValue: "Логоритмика")))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(holder.phase == .ready || holder.phase == .playing)
             .toolbar { toolbarContent }
@@ -177,7 +177,7 @@ struct LogorhythmicsView: View {
                         .font(.system(size: 22))
                         .foregroundStyle(ColorTokens.Brand.butter)
                         .accessibilityHidden(true)
-                    Text("\(exercise.bpm) уд/мин")
+                    Text(String(format: String(localized: "logorhythmics.bpm %lld", defaultValue: "%lld уд/мин"), exercise.bpm))
                         .font(TypographyTokens.caption(11).monospacedDigit())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -187,7 +187,10 @@ struct LogorhythmicsView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.leading)
-                Text("С \(exercise.ageMin) лет · \(exercise.totalBeats) долей")
+                Text(String(
+                    format: String(localized: "logorhythmics.card.meta %lld %lld", defaultValue: "С %1$lld лет · %2$lld долей"),
+                    exercise.ageMin, exercise.totalBeats
+                ))
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
@@ -204,7 +207,10 @@ struct LogorhythmicsView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(exercise.title))
-        .accessibilityHint(Text("Темп \(exercise.bpm) ударов в минуту. Нажми, чтобы открыть."))
+        .accessibilityHint(Text(String(
+            format: String(localized: "logorhythmics.card.a11yHint %lld", defaultValue: "Темп %lld ударов в минуту. Нажми, чтобы открыть."),
+            exercise.bpm
+        )))
     }
 
     private var instructionBar: some View {
@@ -224,7 +230,10 @@ struct LogorhythmicsView: View {
         if let vm = holder.selectVM {
             KidGameCanvasScaffold(
                 title: Text(vm.exercise.title),
-                subtitle: "\(vm.exercise.bpm) уд/мин · \(vm.totalBeats) долей",
+                subtitle: String(
+                    format: String(localized: "logorhythmics.ready.subtitle %lld %lld", defaultValue: "%1$lld уд/мин · %2$lld долей"),
+                    vm.exercise.bpm, vm.totalBeats
+                ),
                 palette: .kidWarm,
                 onExit: { Task { await backToPicking() } }
             ) {
@@ -294,7 +303,7 @@ struct LogorhythmicsView: View {
         if let vm = holder.selectVM {
             KidGameCanvasScaffold(
                 title: Text(vm.exercise.title),
-                subtitle: "\(vm.exercise.bpm) уд/мин",
+                subtitle: String(format: String(localized: "logorhythmics.bpm %lld", defaultValue: "%lld уд/мин"), vm.exercise.bpm),
                 palette: .kidWarm,
                 onExit: { Task { await stopPlayback() } }
             ) {
@@ -351,13 +360,16 @@ struct LogorhythmicsView: View {
                     Text("\(beatIndex + 1)")
                         .font(TypographyTokens.title(40).monospacedDigit())
                         .foregroundStyle(ColorTokens.Kid.ink)
-                    Text("из \(totalBeats)")
+                    Text(String(format: String(localized: "logorhythmics.beat.outOf %lld", defaultValue: "из %lld"), totalBeats))
                         .font(TypographyTokens.caption(12).monospacedDigit())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text(vm?.accessibilityLabel ?? "Доля \(beatIndex + 1) из \(totalBeats)"))
+            .accessibilityLabel(Text(vm?.accessibilityLabel ?? String(
+                format: String(localized: "logorhythmics.beat.a11y %lld %lld", defaultValue: "Доля %1$lld из %2$lld"),
+                beatIndex + 1, totalBeats
+            )))
         }
         .onChange(of: holder.beatVM?.beatIndex) { _, _ in
             guard !reduceMotion else { return }
@@ -413,7 +425,7 @@ struct LogorhythmicsView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
-                    Text("Темп \(vm.exercise.bpm) уд/мин")
+                    Text(String(format: String(localized: "logorhythmics.result.tempo %lld", defaultValue: "Темп %lld уд/мин"), vm.exercise.bpm))
                         .font(TypographyTokens.caption(12).monospacedDigit())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -454,17 +466,20 @@ struct LogorhythmicsView: View {
                 }
             }
         }
-        .accessibilityLabel(Text("\(vm.stars) из 3 звёзд"))
+        .accessibilityLabel(Text(String(
+            format: String(localized: "logorhythmics.result.stars.a11y %lld", defaultValue: "%lld из 3 звёзд"),
+            vm.stars
+        )))
     }
 
     private func resultStats(_ vm: LogorhythmicsModels.FinishExercise.ViewModel) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
             HStack {
-                Text("Точность ритма")
+                Text(String(localized: "logorhythmics.result.accuracy", defaultValue: "Точность ритма"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Spacer()
-                Text("\(vm.f1Percent)%")
+                Text(String(format: String(localized: "logorhythmics.result.percent %lld", defaultValue: "%lld%%"), vm.f1Percent))
                     .font(TypographyTokens.headline(14).monospacedDigit())
                     .foregroundStyle(ColorTokens.Kid.ink)
             }
@@ -509,8 +524,10 @@ struct LogorhythmicsView: View {
             Button {
                 Task { await restartFlow() }
             } label: {
-                Text("Ещё chant")
+                Text(String(localized: "logorhythmics.result.again", defaultValue: "Ещё разок"))
                     .font(TypographyTokens.headline(16))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -522,8 +539,10 @@ struct LogorhythmicsView: View {
             Button {
                 exitGame()
             } label: {
-                Text("Готово")
+                Text(String(localized: "logorhythmics.result.done", defaultValue: "Готово"))
                     .font(TypographyTokens.headline(16))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -548,7 +567,7 @@ struct LogorhythmicsView: View {
                         .font(.title3)
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                 }
-                .accessibilityLabel(Text("Назад к списку"))
+                .accessibilityLabel(Text(String(localized: "logorhythmics.a11y.back", defaultValue: "Назад к списку")))
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
@@ -560,7 +579,7 @@ struct LogorhythmicsView: View {
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
             }
-            .accessibilityLabel(Text("Закрыть"))
+            .accessibilityLabel(Text(String(localized: "logorhythmics.a11y.close", defaultValue: "Закрыть")))
         }
     }
 

@@ -179,6 +179,81 @@ struct KidCorrectTick: View {
     }
 }
 
+// MARK: - Wrap Layout
+
+/// Перенос-флоу для плиток-чипов (эталон `.tray`/`.syl-tray` с `flex-wrap`):
+/// плитки выкладываются слева направо и переносятся на новую строку, когда
+/// не помещаются по ширине. Это поведение из эталона — поднос НЕ скроллится
+/// горизонтально (иначе слова уезжают за край), а заполняет ряды сверху вниз.
+struct KidWrapLayout: Layout {
+    var spacing: CGFloat
+    var lineSpacing: CGFloat
+
+    init(spacing: CGFloat = SpacingTokens.small, lineSpacing: CGFloat = SpacingTokens.small) {
+        self.spacing = spacing
+        self.lineSpacing = lineSpacing
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) -> CGSize {
+        let maxWidth = proposal.width ?? .infinity
+        let rows = layoutRows(maxWidth: maxWidth, subviews: subviews)
+        let height = rows.reduce(CGFloat.zero) { $0 + $1.height }
+            + lineSpacing * CGFloat(max(0, rows.count - 1))
+        let width = rows.map(\.width).max() ?? 0
+        return CGSize(width: min(width, maxWidth), height: height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {
+        let rows = layoutRows(maxWidth: bounds.width, subviews: subviews)
+        var originY = bounds.minY
+        for row in rows {
+            var originX = bounds.minX
+            for element in row.elements {
+                let size = subviews[element.index].sizeThatFits(.unspecified)
+                subviews[element.index].place(
+                    at: CGPoint(x: originX, y: originY),
+                    proposal: ProposedViewSize(width: size.width, height: size.height)
+                )
+                originX += size.width + spacing
+            }
+            originY += row.height + lineSpacing
+        }
+    }
+
+    private struct RowElement { let index: Int; let width: CGFloat }
+    private struct Row {
+        var elements: [RowElement] = []
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+    }
+
+    private func layoutRows(maxWidth: CGFloat, subviews: Subviews) -> [Row] {
+        var rows: [Row] = []
+        var current = Row()
+        for index in subviews.indices {
+            let size = subviews[index].sizeThatFits(.unspecified)
+            let projected = current.width == 0
+                ? size.width
+                : current.width + spacing + size.width
+            if projected > maxWidth, !current.elements.isEmpty {
+                rows.append(current)
+                current = Row()
+                current.elements.append(RowElement(index: index, width: size.width))
+                current.width = size.width
+                current.height = size.height
+            } else {
+                current.elements.append(RowElement(index: index, width: size.width))
+                current.width = current.elements.count == 1
+                    ? size.width
+                    : current.width + spacing + size.width
+                current.height = max(current.height, size.height)
+            }
+        }
+        if !current.elements.isEmpty { rows.append(current) }
+        return rows
+    }
+}
+
 // MARK: - Preview
 
 #if DEBUG

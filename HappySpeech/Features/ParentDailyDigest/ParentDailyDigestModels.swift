@@ -26,6 +26,14 @@ enum ParentDailyDigestModels {
         /// Есть ли непустой «момент дня» (показывать карточку только тогда).
         var hasPhotoMoment: Bool { !photoMomentCaption.isEmpty }
 
+        /// «Тихий день» — сегодня ещё не было занятий: KPI «Занятий» = 0/—.
+        /// В этом случае показываем дружелюбную подсказку вместо ощущения «дыры»
+        /// с нулями. Метрики при этом честно остаются нулевыми (не фабрикуем).
+        var isQuietDay: Bool {
+            guard let sessions = kpis.first(where: { $0.id == "sessions" }) else { return false }
+            return sessions.value == "0" || sessions.value == "—"
+        }
+
         /// Стартовое состояние с НУЛЕВЫМИ KPI (без зашитых «8 мин»/«82%»/«5 дн»).
         /// Реальные KPI и «момент дня» подставляет `Interactor.makeState(from:)`
         /// из фактических сессий. `tip` — курируемый методический совет

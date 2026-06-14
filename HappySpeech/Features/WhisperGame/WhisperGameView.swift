@@ -161,18 +161,6 @@ struct WhisperGameView: View {
             }
         }
     }
-
-    private func cta(interactor: WhisperGameInteractor) -> some View {
-        HSButton(
-            String(localized: "whisperGame.cta.action"),
-            style: .primary,
-            size: .large,
-            icon: "checkmark"
-        ) {
-            hapticService.notification(.success)
-            interactor.completeRound()
-        }
-    }
 }
 
 // MARK: - Preview

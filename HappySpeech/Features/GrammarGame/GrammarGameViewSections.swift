@@ -341,7 +341,9 @@ extension GrammarGameView {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityLabel(
                 "\(String(localized: "grammar.game.party.title", bundle: .main)). " +
-                "\(currentRoundIndex) гостей из \(totalRounds)"
+                String(format: String(localized: "grammar.game.party.guests %lld %lld",
+                                      defaultValue: "%lld гостей из %lld"),
+                       currentRoundIndex, totalRounds)
             )
 
             if !questionText.isEmpty {

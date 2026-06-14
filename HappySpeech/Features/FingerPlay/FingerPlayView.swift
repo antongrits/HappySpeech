@@ -70,8 +70,8 @@ struct FingerPlayView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                // Тёплая статичная mesh-подложка (kidWarm палитра).
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.20 : 0.30)
                     .blendMode(.softLight)
@@ -174,7 +174,7 @@ struct FingerPlayView: View {
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.7)
+                    .minimumScaleFactor(0.85)
                 Text(vm.stageDescription)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -283,8 +283,8 @@ struct FingerPlayView: View {
         } label: {
             Text("fingerPlay.button.skip")
                 .font(TypographyTokens.headline(17))
-                .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.7)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(
                     RoundedRectangle(cornerRadius: RadiusTokens.card)

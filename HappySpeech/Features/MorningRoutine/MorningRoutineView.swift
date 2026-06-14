@@ -15,10 +15,12 @@ struct MorningRoutineView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "morning.nav.title")))

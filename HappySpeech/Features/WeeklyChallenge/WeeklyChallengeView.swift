@@ -73,7 +73,7 @@ struct WeeklyChallengeView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
