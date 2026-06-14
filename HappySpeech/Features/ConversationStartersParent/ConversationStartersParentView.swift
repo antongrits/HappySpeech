@@ -103,7 +103,7 @@ struct ConversationStartersParentView: View {
                     Text(question.category.title)
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .padding(.horizontal, 8)
+                        .padding(.horizontal, SpacingTokens.tiny)
                         .padding(.vertical, 3)
                         .background(
                             Capsule().fill(ColorTokens.Parent.bgDeep)

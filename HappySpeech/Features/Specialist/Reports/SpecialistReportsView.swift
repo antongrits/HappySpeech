@@ -715,7 +715,7 @@ private struct SoundBreakdownRowView: View {
         }
         .foregroundStyle(color)
         .padding(.horizontal, SpacingTokens.sp2)
-        .padding(.vertical, 4)
+        .padding(.vertical, SpacingTokens.micro)
         .background(Capsule().fill(color.opacity(0.12)))
     }
 }

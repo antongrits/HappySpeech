@@ -212,7 +212,7 @@ struct FamilyCalendarView: View {
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
             }
             .padding(.horizontal, -SpacingTokens.screenEdge)
         }
@@ -310,7 +310,7 @@ struct FamilyCalendarView: View {
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
             }
             .padding(.horizontal, -SpacingTokens.screenEdge)
         }
@@ -347,7 +347,7 @@ struct FamilyCalendarView: View {
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
             }
             .padding(.horizontal, -SpacingTokens.screenEdge)
         }

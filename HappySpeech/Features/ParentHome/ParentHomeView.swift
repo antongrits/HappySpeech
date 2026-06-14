@@ -475,7 +475,7 @@ private struct ParentDashboardTab: View {
                     Text(card.severityText)
                         .font(TypographyTokens.labelRounded(11, weight: .bold))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .padding(.horizontal, 8)
+                        .padding(.horizontal, SpacingTokens.tiny)
                         .padding(.vertical, 3)
                         .background(Capsule().fill(accentColor))
                 }

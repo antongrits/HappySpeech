@@ -79,7 +79,7 @@ struct Articulation3DCard: View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
             HStack(spacing: SpacingTokens.sp1) {
                 Image(systemName: "lungs.fill")
-                    .font(.system(size: 13))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Brand.primary)
                 Text("articulation3d.title")
                     .font(TypographyTokens.caption(11))
@@ -119,13 +119,13 @@ struct Articulation3DCard: View {
                 if !reduceMotion {
                     HStack(spacing: 4) {
                         Image(systemName: "hand.draw.fill")
-                            .font(.system(size: 10))
+                            .font(TypographyTokens.caption(10))
                         Text("articulation3d.hint.rotate")
                             .font(TypographyTokens.caption(9))
                     }
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 4)
+                    .padding(.horizontal, SpacingTokens.tiny)
+                    .padding(.vertical, SpacingTokens.micro)
                     .background(Capsule().fill(ColorTokens.Parent.surface.opacity(0.85)))
                     .padding(SpacingTokens.sp2)
                     .allowsHitTesting(false)
@@ -183,7 +183,7 @@ struct Articulation3DCard: View {
     ) -> some View {
         HStack(spacing: 5) {
             Image(systemName: systemImage)
-                .font(.system(size: 11))
+                .font(TypographyTokens.caption(11))
                 .foregroundStyle(tint)
             Text(titleKey)
                 .font(TypographyTokens.caption(10))
@@ -191,7 +191,7 @@ struct Articulation3DCard: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, SpacingTokens.tiny)
         .padding(.vertical, 5)
         .background(Capsule().fill(tint.opacity(0.12)))
     }

@@ -282,11 +282,11 @@ struct SoundExplorerMapView: View {
         switch mastery {
         case .known:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 12))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Brand.primary)
         case .learning:
             Image(systemName: "star.fill")
-                .font(.system(size: 11))
+                .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Brand.gold)
         case .untried:
             EmptyView()

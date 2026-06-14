@@ -19,7 +19,7 @@ private struct SettingsIconLabelX: View {
                 .fill(color.opacity(0.15))
                 .frame(width: 32, height: 32)
             Image(systemName: systemName)
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.headline(15))
                 .foregroundStyle(color)
         }
         .frame(width: 32, height: 32)

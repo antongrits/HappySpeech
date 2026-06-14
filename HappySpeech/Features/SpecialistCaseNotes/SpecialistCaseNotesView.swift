@@ -112,7 +112,7 @@ struct SpecialistCaseNotesView: View {
                     .minimumScaleFactor(0.85)
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "note.text")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                         .hsSymbolEffect(.bounce, value: state.notes.count)
                     Text(String(
@@ -168,7 +168,7 @@ struct SpecialistCaseNotesView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack {
                     Image(systemName: "calendar")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                     Text(Self.dateFormatter.string(from: note.date))
                         .font(TypographyTokens.caption(12))

@@ -379,7 +379,7 @@ struct InstructionStepCard: View {
                     Text("\(step.number)")
                         .font(TypographyTokens.body(11).weight(.bold))
                         .foregroundStyle(palette.first ?? ColorTokens.Brand.primary)
-                        .padding(4)
+                        .padding(SpacingTokens.micro)
                         .background(Circle().fill(ColorTokens.Kid.surface))
                         .offset(x: 6, y: -6)
                 }

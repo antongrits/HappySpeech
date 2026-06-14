@@ -276,7 +276,7 @@ struct RewardShopView: View {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.title3)
                             .foregroundStyle(ColorTokens.Brand.gold)
-                            .padding(4)
+                            .padding(SpacingTokens.micro)
                             .background(Circle().fill(Color.white.opacity(0.92)))
                             .accessibilityHidden(true)
                     }
@@ -297,7 +297,7 @@ struct RewardShopView: View {
                 .font(TypographyTokens.caption(11).weight(.semibold))
                 .foregroundStyle(ColorTokens.Brand.gold)
                 .padding(.horizontal, SpacingTokens.sp2)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
                 .background(
                     Capsule().fill(ColorTokens.Brand.gold.opacity(0.18))
                 )
@@ -313,7 +313,7 @@ struct RewardShopView: View {
                 sticker.isAffordable ? ColorTokens.Brand.gold : ColorTokens.Kid.inkSoft
             )
             .padding(.horizontal, SpacingTokens.sp2)
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
             .background(
                 Capsule().fill(
                     sticker.isAffordable

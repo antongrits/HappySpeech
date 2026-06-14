@@ -37,7 +37,7 @@ struct ArticulationVideoPlayerView: View {
             // Section header
             HStack(spacing: SpacingTokens.sp1) {
                 Image(systemName: "mouth.fill")
-                    .font(.system(size: 13))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Brand.primary)
                 Text(isVeo
                     ? "soundDictionary.detail.articulationVideo.veo.label"

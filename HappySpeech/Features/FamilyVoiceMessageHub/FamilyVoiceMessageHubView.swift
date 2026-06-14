@@ -67,7 +67,7 @@ struct FamilyVoiceMessageHubView: View {
                     Text(String(format: String(localized: "voiceMessageHub.unread.count"), interactor.state.unreadCount))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.accent)
-                        .padding(.top, 4)
+                        .padding(.top, SpacingTokens.micro)
                 }
             }
         }

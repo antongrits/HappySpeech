@@ -258,7 +258,7 @@ struct FamilyLeaderboardView: View {
                 .frame(height: pedestalHeight)
 
                 Text(verbatim: "\(row.rank)")
-                    .font(.system(size: 30, weight: .heavy, design: .rounded))
+                    .font(TypographyTokens.kidHero(30))
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.top, SpacingTokens.sp2)
             }
@@ -341,7 +341,7 @@ struct FamilyLeaderboardView: View {
                         .accessibilityLabel(Text(medalAccessibilityLabel(medal)))
                 } else {
                     Text(verbatim: "\(row.rank)")
-                        .font(.system(size: 17, weight: .bold, design: .rounded))
+                        .font(TypographyTokens.labelRounded(17, weight: .bold))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
             }

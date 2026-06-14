@@ -168,7 +168,7 @@ struct ChildLanguageMilestonesView: View {
                     .multilineTextAlignment(.leading)
                 Spacer()
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)

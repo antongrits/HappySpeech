@@ -77,7 +77,7 @@ public struct SpectrogramVisualizerView: View {
             // Нижняя панель — живая запись
             livePanel
         }
-        .padding(16)
+        .padding(SpacingTokens.regular)
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .fill(vizCanvasBackground)
@@ -173,7 +173,7 @@ public struct SpectrogramVisualizerView: View {
             Text(String(localized: "spectrogram.compare", defaultValue: "Сравни звуки"))
                 .font(.caption2)
                 .foregroundStyle(.secondary)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, SpacingTokens.tiny)
 
             Rectangle()
                 .fill(ColorTokens.Overlay.glass)

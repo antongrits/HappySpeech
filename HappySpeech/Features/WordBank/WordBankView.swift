@@ -236,7 +236,7 @@ struct WordBankView: View {
                 HStack(spacing: 2) {
                     ForEach(0..<tile.starRating, id: \.self) { _ in
                         Image(systemName: "star.fill")
-                            .font(.system(size: 11))
+                            .font(TypographyTokens.caption(11))
                             .foregroundStyle(ColorTokens.Brand.gold)
                     }
                 }

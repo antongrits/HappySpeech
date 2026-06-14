@@ -254,7 +254,7 @@ struct PronunciationLeaderboardView: View {
                 .frame(height: pedestalHeight)
 
                 Text("\(row.position)")
-                    .font(.system(size: 30, weight: .heavy, design: .rounded))
+                    .font(TypographyTokens.kidHero(30))
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.top, SpacingTokens.sp2)
             }
@@ -425,7 +425,7 @@ private struct LeaderboardRowView: View {
                             .foregroundStyle(positionColor)
                     } else {
                         Text("\(row.position)")
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
+                            .font(TypographyTokens.labelRounded(17, weight: .bold))
                             .foregroundStyle(row.isYou
                                              ? ColorTokens.Brand.primary
                                              : ColorTokens.Parent.inkMuted)
@@ -446,7 +446,7 @@ private struct LeaderboardRowView: View {
                             )
                         )
                     Text(String(row.childName.prefix(1)))
-                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .font(TypographyTokens.labelRounded(18, weight: .bold))
                         .foregroundStyle(ColorTokens.Parent.ink)
                 }
                 .accessibilityHidden(true)

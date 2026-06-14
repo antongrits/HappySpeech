@@ -142,7 +142,7 @@ struct WeeklySoundReportView: View {
 
                 VStack(spacing: SpacingTokens.micro) {
                     Image(systemName: "calendar")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .accessibilityHidden(true)
                     Text(viewModel.dateRangeLabel)
@@ -297,7 +297,7 @@ struct WeeklySoundReportView: View {
                                     .accessibilityLabel(Text(trendA11y(card.trendArrow)))
 
                                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                                    .font(.system(size: 11, weight: .medium))
+                                    .font(TypographyTokens.bodyMedium(11))
                                     .foregroundStyle(ColorTokens.Parent.inkSoft)
                                     .accessibilityHidden(true)
                             }
@@ -351,7 +351,7 @@ struct WeeklySoundReportView: View {
                             .fill(ColorTokens.Brand.butter.opacity(0.20))
                             .frame(width: 28, height: 28)
                         Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 13))
+                            .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Brand.butter)
                             .hsSymbolEffect(.variableColor, value: detail.tipText)
                     }

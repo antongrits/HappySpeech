@@ -22,7 +22,7 @@ struct PluralPreviewGrid: View {
                     .foregroundStyle(ColorTokens.Brand.primary.opacity(0.7))
             }
         }
-        .padding(8)
+        .padding(SpacingTokens.tiny)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Brand.primary.opacity(0.08))
@@ -98,7 +98,7 @@ struct GenitiveSceneView: View {
                 .font(TypographyTokens.kidDisplay(40))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.top, 20)
+                .padding(.top, SpacingTokens.medium)
 
             // Контейнеры в нижней части
             HStack(spacing: SpacingTokens.large) {

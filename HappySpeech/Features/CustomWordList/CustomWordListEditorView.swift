@@ -309,7 +309,7 @@ struct CustomWordListEditorView: View {
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.ink)
                     .padding(.horizontal, SpacingTokens.sp2)
-                    .padding(.vertical, 4)
+                    .padding(.vertical, SpacingTokens.micro)
                     .background(
                         Capsule()
                             .fill(ColorTokens.Brand.lilac.opacity(0.15))

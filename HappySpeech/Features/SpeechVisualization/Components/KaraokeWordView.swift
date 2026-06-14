@@ -38,7 +38,7 @@ struct KaraokeWordView: View {
         // Активный слог — сплошная тёплая butter-заливка с тёмным текстом
         // и подъёмом (эталон караоке-дорожки); неактивный — мягкая подложка.
         Text(syllable.text)
-            .font(.system(size: 32, weight: .bold, design: .rounded))
+            .font(TypographyTokens.titleLarge(32))
             .foregroundStyle(isActive ? ColorTokens.Kid.ink : syllable.state.color)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp2)

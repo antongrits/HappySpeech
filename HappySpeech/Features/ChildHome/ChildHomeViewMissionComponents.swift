@@ -393,7 +393,7 @@ struct ChildHomeMissionTimerLabel: View {
                     .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.sp2)
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
             .background(
                 Capsule().fill(ColorTokens.Brand.primary.opacity(0.10))
             )

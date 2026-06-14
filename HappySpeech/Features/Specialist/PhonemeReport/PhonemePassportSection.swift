@@ -313,8 +313,8 @@ extension PhonemeReportView {
                 .minimumScaleFactor(0.75)
         }
         .foregroundStyle(ColorTokens.Brand.rose)
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
+        .padding(.horizontal, SpacingTokens.tiny)
+        .padding(.vertical, SpacingTokens.micro)
         .background(Capsule().fill(ColorTokens.Brand.rose.opacity(0.14)))
     }
 
@@ -323,7 +323,7 @@ extension PhonemeReportView {
     private func passportDisclaimer(_ passport: PhonemePassportViewModel) -> some View {
         HStack(alignment: .top, spacing: SpacingTokens.sp2) {
             Image(systemName: "info.circle")
-                .font(.system(size: 13))
+                .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Spec.inkMuted)
             Text(passport.disclaimerText)
                 .font(TypographyTokens.caption(11))

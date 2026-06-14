@@ -329,7 +329,7 @@ extension GrammarGameView {
     var partyModeView: some View {
         VStack(spacing: SpacingTokens.xLarge) {
             Text(String(localized: "grammar.game.party.title", bundle: .main))
-                .font(.system(size: isSmallDevice ? 28 : 36, weight: .bold, design: .rounded))
+                .font(isSmallDevice ? TypographyTokens.titleLarge(28) : TypographyTokens.display(36))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .padding(.top, SpacingTokens.xxLarge)
 

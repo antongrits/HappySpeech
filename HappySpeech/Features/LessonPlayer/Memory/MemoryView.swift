@@ -273,7 +273,7 @@ struct MemoryView: View {
                 .font(TypographyTokens.caption(12).weight(.semibold))
         }
         .padding(.horizontal, SpacingTokens.small)
-        .padding(.vertical, 4)
+        .padding(.vertical, SpacingTokens.micro)
         .background(
             Capsule(style: .continuous)
                 .fill(display.megaStreak

@@ -491,7 +491,7 @@ private struct WallSnapshotView: View {
                 }
             }
         }
-        .padding(20)
+        .padding(SpacingTokens.medium)
     }
 }
 

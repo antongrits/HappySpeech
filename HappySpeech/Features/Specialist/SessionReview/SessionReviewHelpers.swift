@@ -220,7 +220,7 @@ struct AccuracyPill: View {
             .font(TypographyTokens.labelRounded(13))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.small)
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
             .background(Capsule().fill(pillColor))
     }
 

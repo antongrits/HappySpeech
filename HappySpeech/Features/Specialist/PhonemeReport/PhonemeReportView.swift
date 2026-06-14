@@ -126,7 +126,7 @@ struct PhonemeReportView: View {
                     .fixedSize(horizontal: false, vertical: true)
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "checklist")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                     Text(vm.coverageText)
                         .font(TypographyTokens.caption(12))
@@ -329,7 +329,7 @@ struct PhonemeReportView: View {
         HSCard(style: .flat) {
             HStack(alignment: .top, spacing: SpacingTokens.sp2) {
                 Image(systemName: "info.circle")
-                    .font(.system(size: 14))
+                    .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                 Text(String(localized: "phonemeReport.footnote"))
                     .font(TypographyTokens.caption(12))

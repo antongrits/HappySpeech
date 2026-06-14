@@ -108,7 +108,7 @@ struct AnimalSoundsBingoView: View {
                         .font(.system(size: 18))
                         .foregroundStyle(ColorTokens.Semantic.success)
                         .hsSymbolEffect(.bounce, value: cell.isMarked)
-                        .padding(4)
+                        .padding(SpacingTokens.micro)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 }
             }

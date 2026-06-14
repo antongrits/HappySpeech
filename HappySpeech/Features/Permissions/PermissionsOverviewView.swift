@@ -137,7 +137,7 @@ struct PermissionsOverviewView: View {
         if !display.overviewCards.isEmpty {
             HSLiquidGlassCard(
                 style: display.overviewAllGranted
-                    ? .tinted(ColorTokens.Semantic.success)
+                    ? .tinted(ColorTokens.Brand.mint)
                     : .primary,
                 padding: SpacingTokens.regular
             ) {

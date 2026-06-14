@@ -149,7 +149,7 @@ struct AttemptBreakdownRowView: View {
                 }
                 .accessibilityHint(String(localized: "review.breakdown.annotate.hint"))
             }
-            .padding(.leading, 40)
+            .padding(.leading, SpacingTokens.xxLarge)
         }
         .padding(.vertical, SpacingTokens.small)
         .padding(.horizontal, SpacingTokens.small)

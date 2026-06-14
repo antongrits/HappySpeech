@@ -289,7 +289,7 @@ struct DialectAdaptationView: View {
                                 Text(marker)
                                     .font(.caption2)
                                     .foregroundStyle(ColorTokens.Parent.accent)
-                                    .padding(.horizontal, 8)
+                                    .padding(.horizontal, SpacingTokens.tiny)
                                     .padding(.vertical, 3)
                                     .background(
                                         Capsule()

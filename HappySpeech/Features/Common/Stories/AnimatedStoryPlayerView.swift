@@ -89,7 +89,7 @@ struct AnimatedStoryPlayerView: View {
             avPlayerLayer
             skipButton
                 .padding(.top, 56)
-                .padding(.trailing, 20)
+                .padding(.trailing, SpacingTokens.medium)
         }
         .onAppear {
             setupAVPlayer()
@@ -188,7 +188,7 @@ struct AnimatedStoryPlayerView: View {
         VStack(spacing: 0) {
             progressDots
                 .padding(.top, 56)
-                .padding(.bottom, 12)
+                .padding(.bottom, SpacingTokens.small)
 
             backgroundEmojiRow
 
@@ -281,7 +281,7 @@ struct AnimatedStoryPlayerView: View {
                 Text(currentScene.targetWord)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .padding(.horizontal, 8)
+                    .padding(.horizontal, SpacingTokens.tiny)
                     .padding(.vertical, 3)
                     .background(
                         Capsule()
@@ -350,7 +350,7 @@ struct AnimatedStoryPlayerView: View {
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
+            .padding(.vertical, SpacingTokens.regular)
             .background(
                 Capsule()
                     .fill(ColorTokens.Overlay.highlight)

@@ -101,7 +101,7 @@ struct AchievementCalendarView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
-                .padding(.top, 4)
+                .padding(.top, SpacingTokens.micro)
             }
         }
     }

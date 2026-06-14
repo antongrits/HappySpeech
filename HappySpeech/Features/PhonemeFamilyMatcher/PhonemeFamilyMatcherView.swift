@@ -159,7 +159,7 @@ struct PhonemeFamilyMatcherView: View {
                             .fill(
                                 isAssigned
                                     ? (isCorrect
-                                        ? ColorTokens.Semantic.successBg
+                                        ? ColorTokens.Brand.mint.opacity(0.16)
                                         : ColorTokens.Kid.surfaceAlt)
                                     : ColorTokens.Kid.surface
                             )
@@ -178,7 +178,7 @@ struct PhonemeFamilyMatcherView: View {
                         .font(.caption2)
                         .foregroundStyle(ColorTokens.Semantic.success)
                         .hsSymbolEffect(.bounce, value: isCorrect)
-                        .padding(4)
+                        .padding(SpacingTokens.micro)
                 }
             }
             .kidTileShadow()

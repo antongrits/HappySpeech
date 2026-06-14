@@ -152,7 +152,7 @@ struct WeeklyVideoReportView: View {
     private var videoCaption: some View {
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: "film.stack")
-                .font(.system(size: 15))
+                .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .frame(width: 36, height: 36)
                 .background(
@@ -385,7 +385,7 @@ struct WeeklyVideoReportView: View {
     private var limitationNote: some View {
         HStack(alignment: .top, spacing: SpacingTokens.sp2) {
             Image(systemName: "info.circle")
-                .font(.system(size: 14))
+                .font(TypographyTokens.caption(14))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
             Text(String(localized: "weeklyVideoReport.limitation"))
                 .font(TypographyTokens.caption(11))

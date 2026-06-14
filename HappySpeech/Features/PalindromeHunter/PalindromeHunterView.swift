@@ -113,7 +113,7 @@ struct PalindromeHunterView: View {
         .padding(.vertical, SpacingTokens.large)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                .fill(ColorTokens.Semantic.successBg)
+                .fill(ColorTokens.Brand.mint.opacity(0.16))
         )
         .accessibilityElement(children: .combine)
     }

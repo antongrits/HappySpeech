@@ -133,7 +133,7 @@ struct SpecialistScheduleView: View {
                     .minimumScaleFactor(0.85)
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "calendar.badge.clock")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                         .hsSymbolEffect(.bounce, value: state.slots.count)
                     Text(String(
@@ -143,7 +143,7 @@ struct SpecialistScheduleView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
-                .padding(.top, 4)
+                .padding(.top, SpacingTokens.micro)
             }
         }
     }
@@ -246,7 +246,7 @@ struct SpecialistScheduleView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.sp2)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
                 .background(
                     Capsule().fill(ColorTokens.Spec.accent.opacity(0.14))
                 )

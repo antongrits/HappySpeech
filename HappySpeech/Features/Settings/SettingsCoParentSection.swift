@@ -100,7 +100,7 @@ extension SettingsView {
             RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
                 .fill(tint.opacity(0.15))
             Image(systemName: systemName)
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.headline(15))
                 .foregroundStyle(tint)
         }
         .frame(width: 32, height: 32)

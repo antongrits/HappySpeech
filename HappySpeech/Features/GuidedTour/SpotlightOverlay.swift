@@ -60,7 +60,7 @@ struct SpotlightOverlay: View {
         ColorTokens.Kid.bg.ignoresSafeArea()
         VStack {
             Text("Привет! Я подсвечен.")
-                .padding(24)
+                .padding(SpacingTokens.large)
                 .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: 20))
         }
         SpotlightOverlay(

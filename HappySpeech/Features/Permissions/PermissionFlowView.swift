@@ -468,7 +468,7 @@ struct PermissionFlowView: View {
             .padding(SpacingTokens.small)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Semantic.errorBg)
+                    .fill(ColorTokens.Brand.primaryLo.opacity(0.3))
             )
 
             HSButton(

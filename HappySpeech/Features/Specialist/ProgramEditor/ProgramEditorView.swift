@@ -479,7 +479,7 @@ private struct ProgramBlockRow: View {
                     .fill(ColorTokens.Spec.accent.opacity(0.14))
                     .frame(width: 40, height: 40)
                 Image(systemName: symbol(for: block.type))
-                    .font(.system(size: 18, weight: .medium))
+                    .font(TypographyTokens.bodyMedium(18))
                     .foregroundStyle(ColorTokens.Spec.accent)
             }
             .accessibilityHidden(true)
@@ -504,7 +504,7 @@ private struct ProgramBlockRow: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.sp2)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
                 .background(
                     Capsule().fill(ColorTokens.Spec.accent.opacity(0.12))
                 )

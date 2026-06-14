@@ -84,7 +84,7 @@ struct WeeklyParentTipView: View {
                 Text(interactor.state.tip.title)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .padding(.top, 8)
+                    .padding(.top, SpacingTokens.tiny)
             }
         }
     }

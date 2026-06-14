@@ -198,7 +198,7 @@ struct SortingView: View {
                 .font(TypographyTokens.caption(12))
         }
         .padding(.horizontal, SpacingTokens.tiny)
-        .padding(.vertical, 4)
+        .padding(.vertical, SpacingTokens.micro)
         .background(
             Capsule(style: .continuous)
                 .fill(ColorTokens.Brand.butter.opacity(0.25))

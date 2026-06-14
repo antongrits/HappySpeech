@@ -94,7 +94,7 @@ struct DailyMissionsHubView: View {
                         .minimumScaleFactor(0.85)
                     HSProgressBar(value: interactor.state.progress, style: .kid)
                         .frame(height: 8)
-                        .padding(.top, 4)
+                        .padding(.top, SpacingTokens.micro)
                 }
                 Spacer(minLength: 0)
             }

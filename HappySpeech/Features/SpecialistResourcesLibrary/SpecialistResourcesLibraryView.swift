@@ -135,7 +135,7 @@ struct SpecialistResourcesLibraryView: View {
                     query = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 16))
+                        .font(TypographyTokens.callout(16))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
                 }
                 .buttonStyle(.plain)

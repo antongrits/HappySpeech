@@ -137,7 +137,7 @@ struct SessionHistoryScoreBadge: View {
             .font(TypographyTokens.mono(13).weight(.bold))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.small)
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
             .background(
                 Capsule().fill(color)
             )

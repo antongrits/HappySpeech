@@ -193,7 +193,7 @@ struct NeurolinguistInsightsView: View {
         return Text(text)
             .font(TypographyTokens.caption(11).weight(.bold))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
-            .padding(.horizontal, 8)
+            .padding(.horizontal, SpacingTokens.tiny)
             .padding(.vertical, 3)
             .background(Capsule().fill(tint))
             .accessibilityLabel(text)

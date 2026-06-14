@@ -167,7 +167,7 @@ struct SpeechVisualizationView: View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(spacing: SpacingTokens.sp2) {
                 Text(viewModel.wordDisplay)
-                    .font(.system(size: 28, weight: .heavy, design: .rounded))
+                    .font(TypographyTokens.kidHero(28))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .accessibilityHidden(true)
 

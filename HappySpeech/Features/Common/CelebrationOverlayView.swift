@@ -118,7 +118,7 @@ struct CelebrationOverlayView: View {
                 .scaleEffect(buttonVisible ? 1 : 0.85)
                 .accessibilityLabel(String(localized: "celebration.continue_button.accessibility"))
             }
-            .padding(.horizontal, 32)
+            .padding(.horizontal, SpacingTokens.xLarge)
         }
         .onAppear { startAnimations() }
     }
