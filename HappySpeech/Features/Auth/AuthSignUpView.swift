@@ -69,7 +69,7 @@ struct AuthSignUpView: View {
         ))
         .task {
             if scene == nil {
-                scene = AuthScene(authService: container.authService)
+                scene = AuthScene(authService: container.authService, deviceRegistration: container.deviceRegistrationService)
             }
         }
         .onChange(of: scene?.state.signUpViewModel != nil) { _, done in

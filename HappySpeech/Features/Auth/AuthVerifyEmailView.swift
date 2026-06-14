@@ -66,7 +66,7 @@ struct AuthVerifyEmailView: View {
         }
         .task {
             if scene == nil {
-                scene = AuthScene(authService: container.authService)
+                scene = AuthScene(authService: container.authService, deviceRegistration: container.deviceRegistrationService)
             }
         }
         .onChange(of: scene?.state.emailVerificationViewModel) { _, newValue in

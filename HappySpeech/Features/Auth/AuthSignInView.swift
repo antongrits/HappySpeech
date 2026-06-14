@@ -55,12 +55,12 @@ struct AuthSignInView: View {
         .onAppear {
             // AA v18 — eager init on appear (before .task) so form is ready on first render.
             if scene == nil {
-                scene = AuthScene(authService: container.authService)
+                scene = AuthScene(authService: container.authService, deviceRegistration: container.deviceRegistrationService)
             }
         }
         .task {
             if scene == nil {
-                scene = AuthScene(authService: container.authService)
+                scene = AuthScene(authService: container.authService, deviceRegistration: container.deviceRegistrationService)
             }
         }
         .onChange(of: scene?.state.signInViewModel != nil) { _, didSignIn in
@@ -100,6 +100,20 @@ struct AuthSignInView: View {
             coordinator.navigate(to: .verifyEmail)
         } else {
             coordinator.navigate(to: .roleSelect)
+            // Регистрируем устройство (Installations ID + FCM-токен) для адресных
+            // push-напоминаний. Только полностью авторизованный не-анонимный
+            // родитель; сервис сам пропустит anon/пустой uid (COPPA).
+            registerDeviceForPush()
+        }
+    }
+
+    /// Best-effort регистрация устройства после успешного входа. Не блокирует
+    /// навигацию: ошибки (нет токена/сети) логируются внутри сервиса.
+    private func registerDeviceForPush() {
+        guard let uid = container.authService.currentUser?.uid, !uid.isEmpty else { return }
+        let service = container.deviceRegistrationService
+        Task {
+            try? await service.registerCurrentDevice(userId: uid)
         }
     }
 

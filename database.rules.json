@@ -28,6 +28,27 @@
           }
         }
       }
+    },
+    "chat_presence": {
+      "$chatId": {
+        ".read": "auth != null && $chatId.contains(auth.uid)",
+        "$uid": {
+          ".write": "auth != null && auth.uid === $uid && $chatId.contains(auth.uid)",
+          ".validate": "newData.hasChildren(['online'])",
+          "online": {
+            ".validate": "newData.isBoolean()"
+          },
+          "typing": {
+            ".validate": "newData.isBoolean()"
+          },
+          "lastActive": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
     }
   }
 }

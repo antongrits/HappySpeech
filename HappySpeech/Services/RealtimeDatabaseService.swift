@@ -37,6 +37,36 @@ public struct SharePlaySessionState: Sendable, Equatable {
     }
 }
 
+/// Эфемерное присутствие собеседника в треде чата (онлайн + «печатает…»).
+///
+/// Снимок собирается из RTDB-узла `chat_presence/{chatId}/{otherUid}` — это
+/// присутствие *другого* участника (не моё). Realtime Database выбрана для
+/// presence сознательно: узлы эфемерны, авто-очищаются `onDisconnect`, не
+/// тарифицируются как Firestore-документы и обновляются с малой задержкой.
+///
+/// > Important: COPPA — узел содержит только технические флаги (`online`,
+/// > `typing`, `lastActive`-timestamp). Никакого имени/PII ребёнка или
+/// > родителя. Участники — только auth-связанные parent/specialist треда.
+public struct ChatPresence: Sendable, Equatable {
+    /// Собеседник сейчас в сети (есть активное соединение с RTDB).
+    public let isOnline: Bool
+    /// Собеседник сейчас набирает сообщение.
+    public let isTyping: Bool
+    /// Последняя активность собеседника (для «был(а) в … »). `nil`, если
+    /// узел ещё ни разу не записывался.
+    public let lastActiveAt: Date?
+
+    public init(isOnline: Bool, isTyping: Bool, lastActiveAt: Date?) {
+        self.isOnline = isOnline
+        self.isTyping = isTyping
+        self.lastActiveAt = lastActiveAt
+    }
+
+    /// Нейтральное «никого нет» — используется до получения первого снапшота
+    /// и когда узел отсутствует.
+    public static let absent = ChatPresence(isOnline: false, isTyping: false, lastActiveAt: nil)
+}
+
 // MARK: - Errors
 
 public enum RealtimeDatabaseError: LocalizedError, Sendable {
@@ -159,6 +189,46 @@ public protocol RealtimeDatabaseServiceProtocol: AnyObject, Sendable {
 
     /// Отменяет активную подписку.
     func cancelObservation(_ observation: SharePlayObservation)
+
+    // MARK: - Chat presence (LogopedistChat)
+
+    /// Объявляет *моё* присутствие в треде чата и регистрирует авто-очистку при
+    /// разрыве соединения.
+    ///
+    /// Пишет узел `chat_presence/{chatId}/{myUid}` со флагами `online=true` и
+    /// текущим `typing`. Через `onDisconnect` RTDB сама обнулит `online` и
+    /// проставит `lastActive`, когда устройство потеряет связь — поэтому статус
+    /// «онлайн» не «залипает» при крэше/потере сети.
+    ///
+    /// - Parameters:
+    ///   - chatId: детерминированный идентификатор треда (`ChatIdentity.chatId`).
+    ///   - uid: auth UID текущего участника.
+    ///   - isTyping: набирает ли пользователь сообщение прямо сейчас.
+    /// - Throws: `RealtimeDatabaseError.writeFailed`.
+    func setChatPresence(chatId: String, uid: String, isTyping: Bool) async throws
+
+    /// Снимает *моё* присутствие в треде (online=false, typing=false) —
+    /// вызывается при уходе с экрана. Идемпотентно.
+    ///
+    /// - Parameters:
+    ///   - chatId: идентификатор треда.
+    ///   - uid: auth UID текущего участника.
+    func clearChatPresence(chatId: String, uid: String) async
+
+    /// Подписывается на присутствие *собеседника* (узел `otherUid`) в треде.
+    ///
+    /// - Parameters:
+    ///   - chatId: идентификатор треда.
+    ///   - otherUid: UID участника, чьё присутствие наблюдаем (НЕ мой).
+    ///   - onChange: вызывается при каждом изменении присутствия собеседника.
+    /// - Returns: `SharePlayObservation` — handle для отмены (снимает observer).
+    /// - Throws: `RealtimeDatabaseError.readFailed`.
+    @discardableResult
+    func observeChatPresence(
+        chatId: String,
+        otherUid: String,
+        onChange: @escaping @Sendable (ChatPresence) -> Void
+    ) async throws -> SharePlayObservation
 }
 
 // MARK: - Configuration
@@ -170,6 +240,10 @@ private enum RTDBConfig {
 
     /// Корневой путь для SharePlay сессий.
     static let sessionsPath = "shareplay_sessions"
+
+    /// Корневой путь для эфемерного присутствия в чате
+    /// (`chat_presence/{chatId}/{uid}`).
+    static let presencePath = "chat_presence"
 }
 
 // MARK: - Live Implementation
@@ -305,6 +379,103 @@ public final class LiveRealtimeDatabaseService: RealtimeDatabaseServiceProtocol,
         observation.cancel()
     }
 
+    // MARK: - Chat presence
+
+    public func setChatPresence(chatId: String, uid: String, isTyping: Bool) async throws {
+        guard !chatId.isEmpty, !uid.isEmpty else {
+            throw RealtimeDatabaseError.writeFailed("chatId или uid пустой")
+        }
+
+        let ref = database.reference()
+            .child(RTDBConfig.presencePath)
+            .child(chatId)
+            .child(uid)
+
+        // onDisconnect регистрируем ДО записи online=true: если соединение
+        // оборвётся между регистрацией и записью, RTDB всё равно сбросит статус.
+        // `online=false` + серверный timestamp `lastActive` — собеседник увидит
+        // «не в сети», а не вечный «онлайн».
+        _ = try? await ref.onDisconnectSetValue([
+            "online": false,
+            "typing": false,
+            "lastActive": ServerValue.timestamp()
+        ])
+
+        let payload: [String: Any] = [
+            "online": true,
+            "typing": isTyping,
+            "lastActive": ServerValue.timestamp()
+        ]
+
+        do {
+            try await ref.setValue(payload)
+        } catch {
+            logger.error("setChatPresence failed: \(error.localizedDescription)")
+            throw RealtimeDatabaseError.writeFailed(error.localizedDescription)
+        }
+    }
+
+    public func clearChatPresence(chatId: String, uid: String) async {
+        guard !chatId.isEmpty, !uid.isEmpty else { return }
+
+        let ref = database.reference()
+            .child(RTDBConfig.presencePath)
+            .child(chatId)
+            .child(uid)
+
+        // Отменяем отложенную onDisconnect-операцию (мы уходим штатно) и пишем
+        // финальный offline-снимок синхронно.
+        _ = try? await ref.cancelDisconnectOperations()
+        do {
+            try await ref.setValue([
+                "online": false,
+                "typing": false,
+                "lastActive": ServerValue.timestamp()
+            ])
+        } catch {
+            // Очистка best-effort: при оффлайне сработает onDisconnect на сервере.
+            logger.notice("clearChatPresence best-effort failed: \(error.localizedDescription)")
+        }
+    }
+
+    @discardableResult
+    public func observeChatPresence(
+        chatId: String,
+        otherUid: String,
+        onChange: @escaping @Sendable (ChatPresence) -> Void
+    ) async throws -> SharePlayObservation {
+        guard !chatId.isEmpty, !otherUid.isEmpty else {
+            throw RealtimeDatabaseError.readFailed("chatId или otherUid пустой")
+        }
+
+        let ref = database.reference()
+            .child(RTDBConfig.presencePath)
+            .child(chatId)
+            .child(otherUid)
+
+        let handle = ref.observe(.value) { snapshot in
+            guard snapshot.exists(), let dict = snapshot.value as? [String: Any] else {
+                onChange(.absent)
+                return
+            }
+            let online = (dict["online"] as? Bool) ?? false
+            let typing = (dict["typing"] as? Bool) ?? false
+            // RTDB ServerValue.timestamp() материализуется в миллисекунды.
+            let lastActive: Date?
+            if let ms = dict["lastActive"] as? Double {
+                lastActive = Date(timeIntervalSince1970: ms / 1000)
+            } else {
+                lastActive = nil
+            }
+            onChange(ChatPresence(isOnline: online, isTyping: typing, lastActiveAt: lastActive))
+        } withCancel: { [weak self] error in
+            self?.logger.error("observeChatPresence cancelled: \(error.localizedDescription)")
+        }
+
+        logger.info("Chat presence observation started")
+        return SharePlayObservation { ref.removeObserver(withHandle: handle) }
+    }
+
     // MARK: - Private Helpers
 
     private func encodeState(_ state: SharePlaySessionState) -> [String: Any] {
@@ -394,6 +565,26 @@ public final class MockRealtimeDatabaseService: RealtimeDatabaseServiceProtocol,
         func observerCallbacks(sessionId: String) -> [@Sendable (SharePlaySessionState) -> Void] {
             return observers[sessionId] ?? []
         }
+
+        // Presence (key: "chatId/uid").
+        var presence: [String: ChatPresence] = [:]
+        var presenceObservers: [String: [@Sendable (ChatPresence) -> Void]] = [:]
+
+        func setPresence(_ value: ChatPresence, key: String) {
+            presence[key] = value
+        }
+
+        func addPresenceObserver(
+            key: String,
+            callback: @escaping @Sendable (ChatPresence) -> Void
+        ) -> ChatPresence {
+            presenceObservers[key, default: []].append(callback)
+            return presence[key] ?? .absent
+        }
+
+        func presenceCallbacks(key: String) -> [@Sendable (ChatPresence) -> Void] {
+            presenceObservers[key] ?? []
+        }
     }
 
     private let store = Store()
@@ -467,10 +658,45 @@ public final class MockRealtimeDatabaseService: RealtimeDatabaseServiceProtocol,
         observation.cancel()
     }
 
+    public func setChatPresence(chatId: String, uid: String, isTyping: Bool) async throws {
+        if let error = shouldThrowError { throw error }
+        let key = "\(chatId)/\(uid)"
+        let value = ChatPresence(isOnline: true, isTyping: isTyping, lastActiveAt: Date())
+        await store.setPresence(value, key: key)
+        await notifyPresenceObservers(key: key, value: value)
+    }
+
+    public func clearChatPresence(chatId: String, uid: String) async {
+        let key = "\(chatId)/\(uid)"
+        let value = ChatPresence(isOnline: false, isTyping: false, lastActiveAt: Date())
+        await store.setPresence(value, key: key)
+        await notifyPresenceObservers(key: key, value: value)
+    }
+
+    @discardableResult
+    public func observeChatPresence(
+        chatId: String,
+        otherUid: String,
+        onChange: @escaping @Sendable (ChatPresence) -> Void
+    ) async throws -> SharePlayObservation {
+        if let error = shouldThrowError { throw error }
+        let key = "\(chatId)/\(otherUid)"
+        let snapshot = await store.addPresenceObserver(key: key, callback: onChange)
+        onChange(snapshot)
+        return SharePlayObservation {}
+    }
+
     private func notifyObservers(sessionId: String, state: SharePlaySessionState) async {
         let callbacks = await store.observerCallbacks(sessionId: sessionId)
         for callback in callbacks {
             callback(state)
+        }
+    }
+
+    private func notifyPresenceObservers(key: String, value: ChatPresence) async {
+        let callbacks = await store.presenceCallbacks(key: key)
+        for callback in callbacks {
+            callback(value)
         }
     }
 }

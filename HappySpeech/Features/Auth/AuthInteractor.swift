@@ -34,6 +34,9 @@ final class AuthInteractor: AuthBusinessLogic {
     private let authService: any AuthService
     private let workerEmail: EmailAuthWorker
     private let workerGoogle: GoogleSignInWorker
+    /// Снятие регистрации устройства (Installations + FCM) при выходе из аккаунта.
+    /// Опционально: тесты и legacy-вызовы могут не передавать (тогда no-op).
+    private let deviceRegistration: (any DeviceRegistrationServiceProtocol)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Auth")
 
     // MARK: - Retry configuration
@@ -57,10 +60,14 @@ final class AuthInteractor: AuthBusinessLogic {
 
     // MARK: - Init
 
-    init(authService: any AuthService) {
+    init(
+        authService: any AuthService,
+        deviceRegistration: (any DeviceRegistrationServiceProtocol)? = nil
+    ) {
         self.authService = authService
         self.workerEmail = EmailAuthWorker(authService: authService)
         self.workerGoogle = GoogleSignInWorker(authService: authService)
+        self.deviceRegistration = deviceRegistration
     }
 
     // MARK: - AuthState
@@ -300,6 +307,12 @@ final class AuthInteractor: AuthBusinessLogic {
     // MARK: - Sign Out / Delete
 
     func signOut(_ request: AuthModels.SignOut.Request) {
+        // Снимаем регистрацию устройства ДО signOut, пока uid ещё доступен:
+        // адресно удаляем device-документ этого устройства (push больше не нужен).
+        let uidBeforeSignOut = authService.currentUser?.uid
+        if let service = deviceRegistration, let uid = uidBeforeSignOut, !uid.isEmpty {
+            Task { await service.unregisterCurrentDevice(userId: uid) }
+        }
         do {
             try authService.signOut()
             parentalGatePassed = false

@@ -10436,6 +10436,23 @@
         }
       }
     },
+    "chat.specialist.typing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "typing…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "печатает…"
+          }
+        }
+      }
+    },
     "chat.specialist.unknown": {
       "extractionState": "manual",
       "localizations": {

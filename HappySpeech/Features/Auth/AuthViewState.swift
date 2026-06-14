@@ -127,8 +127,14 @@ final class AuthScene {
     let presenter: AuthPresenter
     let state: AuthViewState
 
-    init(authService: any AuthService) {
-        let interactor = AuthInteractor(authService: authService)
+    init(
+        authService: any AuthService,
+        deviceRegistration: (any DeviceRegistrationServiceProtocol)? = nil
+    ) {
+        let interactor = AuthInteractor(
+            authService: authService,
+            deviceRegistration: deviceRegistration
+        )
         let presenter = AuthPresenter()
         let state = AuthViewState()
 

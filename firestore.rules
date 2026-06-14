@@ -291,6 +291,25 @@ service cloud.firestore {
           allow delete: if isOwner(userId) || isAdmin();
         }
       }
+
+      // ------------------------------------------------------------------
+      // /users/{userId}/devices/{installationId}
+      // Регистрация устройства (Firebase Installation ID + FCM-токен) для
+      // адресных push-напоминаний. Только владелец-родитель. Технические поля
+      // без PII; анонимные сессии устройство не регистрируют (проверка на клиенте
+      // + правило ниже требует не-анонимного провайдера).
+      // ------------------------------------------------------------------
+
+      match /devices/{installationId} {
+        allow read: if isOwner(userId) || isAdmin();
+        allow create, update: if isOwner(userId)
+          && request.auth.token.firebase.sign_in_provider != 'anonymous'
+          && request.resource.data.keys().hasOnly(['installationId', 'fcmToken', 'platform', 'updatedAt'])
+          && isValidString(request.resource.data.installationId, 256)
+          && isValidString(request.resource.data.fcmToken, 4096)
+          && request.resource.data.platform == 'ios';
+        allow delete: if isOwner(userId) || isAdmin();
+      }
     }
 
     // ------------------------------------------------------------------

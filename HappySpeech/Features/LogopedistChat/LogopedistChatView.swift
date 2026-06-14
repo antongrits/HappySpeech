@@ -79,6 +79,9 @@ struct LogopedistChatView: View {
     @State private var subscriptionTask: Task<Void, Never>?
     /// Пульсация индикатора записи (выключена при Reduced Motion).
     @State private var recordingPulse: Bool = false
+    /// Эфемерное присутствие логопеда (онлайн + «печатает…») через Realtime DB.
+    /// `nil`, пока чат не подключён / не запущена presence-подписка.
+    @State private var presenceController: ChatPresenceController?
 
     /// DEBUG-only seam: при `true` `.task`-bootstrap делает ранний return и не
     /// перетирает инжектированное состояние async-загрузкой (snapshot-детерминизм).
@@ -179,9 +182,13 @@ struct LogopedistChatView: View {
             subscriptionTask = nil
             // Останавливаем запись/воспроизведение и отдаём аудиосессию.
             let activeInteractor = interactor
+            let activePresence = presenceController
+            presenceController = nil
             Task { @MainActor in
                 await activeInteractor?.cancelAudioRecording()
                 await activeInteractor?.stopAudioPlayback()
+                // Снимаем своё presence-присутствие (online=false) и отписываемся.
+                await activePresence?.stop()
             }
         }
     }
@@ -292,6 +299,15 @@ struct LogopedistChatView: View {
 
     @ViewBuilder
     private func chatHeader(viewModel: LogopedistChatModels.Load.ViewModel) -> some View {
+        // Живое presence из Realtime Database приоритетнее статичного снимка из
+        // профиля специалиста: «онлайн»/«печатает…» отражают реальное соединение.
+        let livePresence = presenceController?.otherPresence ?? .absent
+        let isLiveOnline = livePresence.isOnline || viewModel.isOnline
+        let isTyping = livePresence.isTyping
+        let presenceLabel: String? = isTyping
+            ? String(localized: "chat.specialist.typing")
+            : (isLiveOnline ? String(localized: "chat.specialist.online") : viewModel.onlineStatusLabel)
+
         HStack(spacing: SpacingTokens.sp3) {
             ZStack {
                 Circle()
@@ -300,10 +316,10 @@ struct LogopedistChatView: View {
                 Image(systemName: "person.fill")
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Parent.accent)
-                    .hsSymbolEffect(.bounce, value: viewModel.isOnline)
+                    .hsSymbolEffect(.bounce, value: isLiveOnline)
             }
             .overlay(alignment: .bottomTrailing) {
-                if viewModel.isOnline {
+                if isLiveOnline {
                     Circle()
                         .fill(ColorTokens.Semantic.success)
                         .frame(width: 12, height: 12)
@@ -326,16 +342,17 @@ struct LogopedistChatView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 // Presence-подпись — только когда специалист реально подключён.
-                if let onlineLabel = viewModel.onlineStatusLabel {
-                    Text(onlineLabel)
+                if let presenceLabel {
+                    Text(presenceLabel)
                         .font(TypographyTokens.caption(10))
                         .foregroundStyle(
-                            viewModel.isOnline
+                            (isTyping || isLiveOnline)
                                 ? ColorTokens.Semantic.success
                                 : ColorTokens.Parent.inkSoft
                         )
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
+                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isTyping)
                 }
             }
 
@@ -348,7 +365,7 @@ struct LogopedistChatView: View {
             format: String(localized: "chat.header.a11y"),
             viewModel.specialistName,
             viewModel.credentials,
-            viewModel.onlineStatusLabel ?? ""
+            presenceLabel ?? ""
         )))
     }
 
@@ -705,6 +722,13 @@ struct LogopedistChatView: View {
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp2)
                 .frame(minHeight: 44)
+                .onChange(of: composerText) { _, newValue in
+                    // Транслируем «печатает…» собеседнику через presence-канал.
+                    // Сам индикатор эфемерен — авто-сбрасывается по idle-таймеру.
+                    presenceController?.setTyping(
+                        !newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    )
+                }
             }
             .background(
                 RoundedRectangle(cornerRadius: 22)
@@ -862,11 +886,31 @@ struct LogopedistChatView: View {
 
         // Запускаем real-time подписку (живёт пока View на экране).
         startSubscriptionIfNeeded()
+        // Эфемерное присутствие — только когда логопед реально подключён.
+        await startPresenceIfNeeded()
     }
 
     private func startSubscriptionIfNeeded() {
         guard subscriptionTask == nil, let interactor else { return }
         subscriptionTask = Task { await interactor.subscribe() }
+    }
+
+    /// Поднимает presence-канал (онлайн/печатает) через Realtime Database, когда
+    /// логопед подключён. Я объявляю своё присутствие под `parentId`, наблюдаю
+    /// присутствие специалиста под `specialistId`.
+    private func startPresenceIfNeeded() async {
+        guard presenceController == nil,
+              holder.loadVM?.isConnected == true,
+              !parentId.isEmpty, !specialistId.isEmpty else { return }
+        let chatId = ChatIdentity(familyId: parentId, specialistId: specialistId).chatId
+        let controller = ChatPresenceController(
+            service: container.realtimeDatabaseService,
+            chatId: chatId,
+            myUid: parentId,
+            otherUid: specialistId
+        )
+        presenceController = controller
+        await controller.start()
     }
 
     private func connect() async {
@@ -880,6 +924,7 @@ struct LogopedistChatView: View {
         if holder.connectVM?.isConnected == true {
             connectCode = ""
             startSubscriptionIfNeeded()
+            await startPresenceIfNeeded()
         }
     }
 

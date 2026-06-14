@@ -139,6 +139,8 @@ public final class AppContainer {
     // Block AA (v17): Firebase missing services
     private var _cloudFunctionsService: (any CloudFunctionsServiceProtocol)?
     private var _installationsService: (any InstallationsServiceProtocol)?
+    // Регистрация устройства (Installations + FCM) для адресных push-напоминаний.
+    private var _deviceRegistrationService: (any DeviceRegistrationServiceProtocol)?
 
     // Block U (v18): Firebase full services replacement (Dynamic Links → Universal Links + Firestore)
     private var _familyInviteService: (any FamilyInviteServiceProtocol)?
@@ -650,13 +652,25 @@ public final class AppContainer {
         return new
     }
 
+    /// Регистрация устройства (Firebase Installations ID + FCM-токен) в Firestore
+    /// `users/{uid}/devices/{installationId}` для адресных push-напоминаний.
+    /// Только родительский контур (COPPA). См. ``DeviceRegistrationServiceProtocol``.
+    public var deviceRegistrationService: any DeviceRegistrationServiceProtocol {
+        if let existing = _deviceRegistrationService { return existing }
+        let new = LiveDeviceRegistrationService(installations: installationsService)
+        _deviceRegistrationService = new
+        return new
+    }
+
     /// Позволяет Preview/Tests подменить Block AA сервисы.
     public func overrideBlockAAServices(
         cloudFunctions: (any CloudFunctionsServiceProtocol)? = nil,
-        installations: (any InstallationsServiceProtocol)? = nil
+        installations: (any InstallationsServiceProtocol)? = nil,
+        deviceRegistration: (any DeviceRegistrationServiceProtocol)? = nil
     ) {
         if let cf = cloudFunctions { _cloudFunctionsService = cf }
         if let inst = installations { _installationsService = inst }
+        if let dr = deviceRegistration { _deviceRegistrationService = dr }
     }
 
     // MARK: - Block U (v18): Firebase full services replacement
@@ -1304,7 +1318,8 @@ public extension AppContainer {
         // Block AA (v17): Firebase missing services mock — без сети в preview/tests.
         container.overrideBlockAAServices(
             cloudFunctions: MockCloudFunctionsService(),
-            installations: MockInstallationsService()
+            installations: MockInstallationsService(),
+            deviceRegistration: MockDeviceRegistrationService()
         )
         // Block U (v18): Firebase full services replacement mock — без сети в preview/tests.
         container.overrideBlockUServices(
