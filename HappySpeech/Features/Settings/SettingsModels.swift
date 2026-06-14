@@ -3,9 +3,12 @@ import Foundation
 // MARK: - Settings VIP Models
 //
 // Доменные модели + transport-слои Request / Response / ViewModel.
-// Контур: parent. 7 секций — оформление, профиль, уведомления, контент,
+// Контур: parent. Секции — оформление, профиль, уведомления, контент,
 // данные, специалист, о приложении. Состояние хранится в `AppSettings`,
 // часть полей синхронизируется с `ThemeManager` / `UserDefaults`.
+//
+// Модели речи (ASR/LLM) встроены в бандл и заранее настроены на лучшее
+// качество — экран выбора/закачки моделей удалён намеренно.
 
 enum SettingsModels {
 
@@ -142,79 +145,6 @@ enum SettingsModels {
         }
     }
 
-    // MARK: - LoadModelPacks
-
-    enum LoadModelPacks {
-        struct Request: Sendable {}
-        struct Response: Sendable {
-            let asrPacks: [ASRPackState]
-            let llmPacks: [LLMPackState]
-        }
-        struct ViewModel: Sendable {
-            let asrItems: [ModelPackRowVM]
-            let llmItems: [ModelPackRowVM]
-        }
-    }
-
-    // MARK: - DownloadModelPack
-
-    enum DownloadModelPack {
-        enum Family: Sendable {
-            case asr(WhisperKitModelPack)
-            case llm(LLMModelPack)
-        }
-        struct Request: Sendable {
-            let family: Family
-        }
-        struct Response: Sendable {
-            let success: Bool
-            let identifier: String
-            let errorMessage: String?
-        }
-        struct ViewModel: Sendable {
-            let toastMessage: String
-            let toastIsError: Bool
-        }
-    }
-
-    // MARK: - DeleteModelPack
-
-    enum DeleteModelPack {
-        struct Request: Sendable {
-            let family: DownloadModelPack.Family
-        }
-        struct Response: Sendable {
-            let success: Bool
-            let identifier: String
-            let errorMessage: String?
-        }
-        struct ViewModel: Sendable {
-            let toastMessage: String
-            let toastIsError: Bool
-        }
-    }
-
-    // MARK: - DownloadProgress
-
-    enum DownloadProgress {
-        struct Response: Sendable {
-            let identifier: String
-            let progress: Double         // 0.0–1.0
-            let bytesDownloaded: Int64
-            let totalBytes: Int64
-            let isFinished: Bool
-            let isFailed: Bool
-            let errorMessage: String?
-        }
-        struct ViewModel: Sendable {
-            let identifier: String
-            let progress: Double
-            let progressLine: String     // «12.3 МБ / 150 МБ»
-            let isFinished: Bool
-            let isFailed: Bool
-        }
-    }
-
     // MARK: - LoadLicenses
 
     enum LoadLicenses {
@@ -329,39 +259,7 @@ enum SettingsModels {
     }
 }
 
-// MARK: - Model packs domain types
-
-/// Состояние ASR-пака (WhisperKit) для UI.
-struct ASRPackState: Sendable, Equatable {
-    let pack: WhisperKitModelPack
-    let isInstalled: Bool
-    let isActive: Bool
-    let isDownloading: Bool
-    let progress: Double
-}
-
-/// Состояние LLM-пака (Qwen) для UI.
-struct LLMPackState: Sendable, Equatable {
-    let pack: LLMModelPack
-    let isInstalled: Bool
-    let isInUse: Bool
-    let isDownloading: Bool
-    let progress: Double
-}
-
-/// ViewModel строки пака для отображения в списке.
-struct ModelPackRowVM: Sendable, Equatable, Identifiable {
-    let id: String                // "whisper.tiny" / "llm.qwen15b"
-    let title: String             // «Whisper tiny»
-    let subtitle: String          // «150 МБ · быстрый, базовое качество»
-    let sizeText: String          // «~150 МБ»
-    let isInstalled: Bool
-    let isActive: Bool            // активный пак (используется сейчас)
-    let isDownloading: Bool
-    let progress: Double          // 0.0–1.0
-    let canDelete: Bool
-    let actionTitle: String       // «Скачать» / «Удалить» / «Активный»
-}
+// MARK: - Open-source licenses domain types
 
 /// Один пункт в списке «Лицензии открытого ПО».
 struct OpenSourceLicense: Sendable, Equatable, Identifiable {

@@ -66,13 +66,8 @@ struct PlainProgressView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Чистый тёплый статичный фон (без декоративной mesh-подложки).
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: false)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -460,32 +455,28 @@ struct PlainProgressView: View {
     // MARK: - Loading / error
 
     private var loadingSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            ProgressView()
-                .controlSize(.large)
-            Text("plainProgress.loading")
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-        }
+        // Брендированный загрузчик (эталон states-empty-error-loading):
+        // тёплый, центрированный, с дружелюбным лоадером Ляли.
+        HSLoadingView(
+            message: String(localized: "plainProgress.loading"),
+            lottie: .loaderInitializing
+        )
         .frame(maxWidth: .infinity)
         .padding(.top, SpacingTokens.sp10)
+        .accessibilityLabel(Text("plainProgress.loading"))
     }
 
     private func errorSection(_ message: String) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: "exclamationmark.triangle")
-                .font(.system(size: 32))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
-                .accessibilityHidden(true)
-            Text(message)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-        }
+        // Эталон «ошибка»: маскот + заголовок + пояснение + CTA «Ещё раз».
+        HSEmptyStateView(
+            mascot: .thinking,
+            title: String(localized: "plainProgress.error.title"),
+            subtitle: message,
+            actionTitle: String(localized: "plainProgress.error.retry"),
+            action: { Task { await reloadAfterError() } }
+        )
         .frame(maxWidth: .infinity)
-        .padding(.top, SpacingTokens.sp10)
-        .accessibilityElement(children: .combine)
+        .padding(.top, SpacingTokens.sp6)
     }
 
     // MARK: - Helpers
@@ -522,6 +513,13 @@ struct PlainProgressView: View {
 
     private func prepareShare() async {
         await interactor?.share(request: .init())
+    }
+
+    /// Повторная загрузка после ошибки: сбрасываем сообщение и просим
+    /// интерактор перезагрузить данные.
+    private func reloadAfterError() async {
+        holder.errorMessage = nil
+        await interactor?.load(request: .init(childId: childId))
     }
 }
 

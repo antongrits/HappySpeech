@@ -21,9 +21,6 @@ final class SettingsPresenterTests: XCTestCase {
         var exportDataVM: SettingsModels.ExportData.ViewModel?
         var clearCacheVM: SettingsModels.ClearCache.ViewModel?
         var connectSpecialistVM: SettingsModels.ConnectSpecialist.ViewModel?
-        var loadModelPacksVM: SettingsModels.LoadModelPacks.ViewModel?
-        var downloadModelPackVM: SettingsModels.DownloadModelPack.ViewModel?
-        var deleteModelPackVM: SettingsModels.DeleteModelPack.ViewModel?
         var loadLicensesVM: SettingsModels.LoadLicenses.ViewModel?
         var exportShareVM: SettingsModels.ExportShare.ViewModel?
         var failureVM: SettingsModels.Failure.ViewModel?
@@ -37,9 +34,6 @@ final class SettingsPresenterTests: XCTestCase {
         func displayExportData(_ viewModel: SettingsModels.ExportData.ViewModel) { exportDataVM = viewModel }
         func displayClearCache(_ viewModel: SettingsModels.ClearCache.ViewModel) { clearCacheVM = viewModel }
         func displayConnectSpecialist(_ viewModel: SettingsModels.ConnectSpecialist.ViewModel) { connectSpecialistVM = viewModel }
-        func displayLoadModelPacks(_ viewModel: SettingsModels.LoadModelPacks.ViewModel) { loadModelPacksVM = viewModel }
-        func displayDownloadModelPack(_ viewModel: SettingsModels.DownloadModelPack.ViewModel) { downloadModelPackVM = viewModel }
-        func displayDeleteModelPack(_ viewModel: SettingsModels.DeleteModelPack.ViewModel) { deleteModelPackVM = viewModel }
         func displayLoadLicenses(_ viewModel: SettingsModels.LoadLicenses.ViewModel) { loadLicensesVM = viewModel }
         func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel) { exportShareVM = viewModel }
         func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel) { failureVM = viewModel }
@@ -205,90 +199,6 @@ final class SettingsPresenterTests: XCTestCase {
         XCTAssertFalse(spy.connectSpecialistVM?.toastMessage.isEmpty ?? true)
     }
 
-    // MARK: - presentLoadModelPacks
-
-    func test_presentLoadModelPacks_allASRPacksPresent() {
-        let (sut, spy) = makeSUT()
-        let asrPacks = WhisperKitModelPack.allCases.map { pack in
-            ASRPackState(pack: pack, isInstalled: true, isActive: pack == .tiny, isDownloading: false, progress: 0)
-        }
-        let llmPacks = LLMModelPack.allCases.map { pack in
-            LLMPackState(pack: pack, isInstalled: false, isInUse: false, isDownloading: false, progress: 0)
-        }
-        sut.presentLoadModelPacks(.init(asrPacks: asrPacks, llmPacks: llmPacks))
-        XCTAssertEqual(spy.loadModelPacksVM?.asrItems.count, WhisperKitModelPack.allCases.count)
-        XCTAssertEqual(spy.loadModelPacksVM?.llmItems.count, LLMModelPack.allCases.count)
-    }
-
-    func test_presentLoadModelPacks_activeASR_hasActiveAction() {
-        let (sut, spy) = makeSUT()
-        let asrPacks = [ASRPackState(pack: .tiny, isInstalled: true, isActive: true, isDownloading: false, progress: 0)]
-        sut.presentLoadModelPacks(.init(asrPacks: asrPacks, llmPacks: []))
-        let item = spy.loadModelPacksVM?.asrItems.first
-        XCTAssertFalse(item?.canDelete ?? true, "Активный пак нельзя удалить")
-    }
-
-    func test_presentLoadModelPacks_downloadingASR_showsDownloadingAction() {
-        let (sut, spy) = makeSUT()
-        let asrPacks = [ASRPackState(pack: .base, isInstalled: false, isActive: false, isDownloading: true, progress: 0.5)]
-        sut.presentLoadModelPacks(.init(asrPacks: asrPacks, llmPacks: []))
-        let item = spy.loadModelPacksVM?.asrItems.first
-        XCTAssertNotNil(item)
-        XCTAssertFalse(item?.actionTitle.isEmpty ?? true)
-    }
-
-    func test_presentLoadModelPacks_installedNotActiveASR_canDelete() {
-        let (sut, spy) = makeSUT()
-        let asrPacks = [ASRPackState(pack: .base, isInstalled: true, isActive: false, isDownloading: false, progress: 0)]
-        sut.presentLoadModelPacks(.init(asrPacks: asrPacks, llmPacks: []))
-        let item = spy.loadModelPacksVM?.asrItems.first
-        XCTAssertTrue(item?.canDelete ?? false, "Установленный неактивный пак можно удалить")
-    }
-
-    func test_presentLoadModelPacks_llmInUse_hasActiveAction() {
-        let (sut, spy) = makeSUT()
-        let llmPacks = [LLMPackState(pack: .qwen15b, isInstalled: true, isInUse: true, isDownloading: false, progress: 0)]
-        sut.presentLoadModelPacks(.init(asrPacks: [], llmPacks: llmPacks))
-        let item = spy.loadModelPacksVM?.llmItems.first
-        XCTAssertFalse(item?.canDelete ?? true, "Используемый LLM-пак нельзя удалить")
-    }
-
-    // MARK: - presentDownloadModelPack
-
-    func test_presentDownloadModelPack_success_notError() {
-        let (sut, spy) = makeSUT()
-        sut.presentDownloadModelPack(.init(success: true, identifier: "whisper.tiny", errorMessage: nil))
-        XCTAssertFalse(spy.downloadModelPackVM?.toastIsError ?? true)
-    }
-
-    func test_presentDownloadModelPack_failure_isError() {
-        let (sut, spy) = makeSUT()
-        sut.presentDownloadModelPack(.init(success: false, identifier: "whisper.tiny", errorMessage: "Нет места"))
-        XCTAssertTrue(spy.downloadModelPackVM?.toastIsError ?? false)
-        XCTAssertEqual(spy.downloadModelPackVM?.toastMessage, "Нет места")
-    }
-
-    func test_presentDownloadModelPack_failure_nilError_usesDefault() {
-        let (sut, spy) = makeSUT()
-        sut.presentDownloadModelPack(.init(success: false, identifier: "x", errorMessage: nil))
-        XCTAssertTrue(spy.downloadModelPackVM?.toastIsError ?? false)
-        XCTAssertFalse(spy.downloadModelPackVM?.toastMessage.isEmpty ?? true)
-    }
-
-    // MARK: - presentDeleteModelPack
-
-    func test_presentDeleteModelPack_success_notError() {
-        let (sut, spy) = makeSUT()
-        sut.presentDeleteModelPack(.init(success: true, identifier: "whisper.tiny", errorMessage: nil))
-        XCTAssertFalse(spy.deleteModelPackVM?.toastIsError ?? true)
-    }
-
-    func test_presentDeleteModelPack_failure_isError() {
-        let (sut, spy) = makeSUT()
-        sut.presentDeleteModelPack(.init(success: false, identifier: "whisper.tiny", errorMessage: "Ошибка"))
-        XCTAssertTrue(spy.deleteModelPackVM?.toastIsError ?? false)
-    }
-
     // MARK: - presentLoadLicenses
 
     func test_presentLoadLicenses_withURL_formatsSubtitle() {
@@ -351,32 +261,6 @@ final class SettingsPresenterTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.presentFailure(.init(message: "Что-то пошло не так"))
         XCTAssertEqual(spy.failureVM?.toastMessage, "Что-то пошло не так")
-    }
-
-    // MARK: - formatBytes helper (indirect via presentLoadModelPacks)
-
-    func test_formatBytes_bundledLLMPack_showsSize() {
-        let (sut, spy) = makeSUT()
-        // Встроенная LLM-модель qwen15b (~900 МБ) — sizeText не должен быть пустым.
-        let llmPacks = [LLMPackState(pack: .qwen15b, isInstalled: true, isInUse: false, isDownloading: false, progress: 0)]
-        sut.presentLoadModelPacks(.init(asrPacks: [], llmPacks: llmPacks))
-        let item = spy.loadModelPacksVM?.llmItems.first
-        XCTAssertFalse(item?.sizeText.isEmpty ?? true, "Размер встроенной модели должен отображаться")
-    }
-
-    // MARK: - subtitleASR (indirect via presentLoadModelPacks)
-
-    func test_subtitleASR_allPacksHaveSubtitles() {
-        let (sut, spy) = makeSUT()
-        let asrPacks = WhisperKitModelPack.allCases.map {
-            ASRPackState(pack: $0, isInstalled: false, isActive: false, isDownloading: false, progress: 0)
-        }
-        sut.presentLoadModelPacks(.init(asrPacks: asrPacks, llmPacks: []))
-        let items = spy.loadModelPacksVM?.asrItems ?? []
-        XCTAssertEqual(items.count, WhisperKitModelPack.allCases.count)
-        for item in items {
-            XCTAssertFalse(item.subtitle.isEmpty, "\(item.title) должен иметь subtitle")
-        }
     }
 
     // MARK: - A-08: Calm Mode

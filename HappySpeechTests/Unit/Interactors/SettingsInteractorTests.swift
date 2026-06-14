@@ -22,9 +22,6 @@ final class SettingsInteractorTests: XCTestCase {
         var exportDataCalled = false
         var clearCacheCalled = false
         var connectSpecialistCalled = false
-        var loadModelPacksCalled = false
-        var downloadModelPackCalled = false
-        var deleteModelPackCalled = false
         var loadLicensesCalled = false
         var exportShareCalled = false
         var failureCalled = false
@@ -59,15 +56,6 @@ final class SettingsInteractorTests: XCTestCase {
         }
         func presentConnectSpecialist(_ response: SettingsModels.ConnectSpecialist.Response) {
             connectSpecialistCalled = true; lastConnectSpecialist = response
-        }
-        func presentLoadModelPacks(_ response: SettingsModels.LoadModelPacks.Response) {
-            loadModelPacksCalled = true
-        }
-        func presentDownloadModelPack(_ response: SettingsModels.DownloadModelPack.Response) {
-            downloadModelPackCalled = true
-        }
-        func presentDeleteModelPack(_ response: SettingsModels.DeleteModelPack.Response) {
-            deleteModelPackCalled = true
         }
         func presentLoadLicenses(_ response: SettingsModels.LoadLicenses.Response) {
             loadLicensesCalled = true; lastLoadLicenses = response
@@ -295,113 +283,6 @@ final class SettingsInteractorTests: XCTestCase {
         sut.loadSettings(.init())
         sut.connectSpecialist(.init(code: "1234567"))
         XCTAssertFalse(spy.lastConnectSpecialist?.success ?? true)
-    }
-
-    // MARK: - 17. loadModelPacks без менеджеров — возвращает пустые stub-списки
-
-    func test_loadModelPacks_noManagers_returnsStubs() async throws {
-        let (sut, spy) = makeSUT()
-        sut.loadModelPacks(.init())
-        // Ждём Task внутри loadModelPacks детерминированно.
-        try await waitUntil { spy.loadModelPacksCalled }
-        XCTAssertTrue(spy.loadModelPacksCalled)
-    }
-
-    // MARK: - 18. loadModelPacks с MockWhisperKitModelManager и MockLLMModelManager
-
-    func test_loadModelPacks_withManagers_callsPresenter() async throws {
-        let whisperMock = MockWhisperKitModelManager(installed: [.tiny])
-        let llmMock = MockLLMModelManager(installed: [.qwen15b])
-        let sut = SettingsInteractor(
-            themeManager: ThemeManager(),
-            notificationService: MockNotificationService(),
-            hapticService: MockHapticService(),
-            sessionRepository: MockSessionRepository(),
-            whisperKitModelManager: whisperMock,
-            llmModelManager: llmMock,
-            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
-        )
-        let spy = SpyPresenter()
-        sut.presenter = spy
-        sut.loadModelPacks(.init())
-        try await waitUntil { spy.loadModelPacksCalled }
-        XCTAssertTrue(spy.loadModelPacksCalled)
-    }
-
-    // MARK: - 19. downloadModelPack ASR — без менеджера → failure
-
-    func test_downloadModelPack_asr_noManager_callsPresenterFailure() async throws {
-        let (sut, spy) = makeSUT()
-        sut.downloadModelPack(.init(family: .asr(.tiny)))
-        try await waitUntil { spy.downloadModelPackCalled }
-        XCTAssertTrue(spy.downloadModelPackCalled)
-    }
-
-    // MARK: - 20. downloadModelPack LLM — без менеджера → failure
-
-    func test_downloadModelPack_llm_noManager_callsPresenterFailure() async throws {
-        let (sut, spy) = makeSUT()
-        sut.downloadModelPack(.init(family: .llm(.qwen15b)))
-        try await waitUntil { spy.downloadModelPackCalled }
-        XCTAssertTrue(spy.downloadModelPackCalled)
-    }
-
-    // MARK: - 21. deleteModelPack ASR — без менеджера → failure
-
-    func test_deleteModelPack_asr_noManager_callsPresenterFailure() async throws {
-        let (sut, spy) = makeSUT()
-        sut.deleteModelPack(.init(family: .asr(.tiny)))
-        try await waitUntil { spy.deleteModelPackCalled }
-        XCTAssertTrue(spy.deleteModelPackCalled)
-    }
-
-    // MARK: - 22. deleteModelPack LLM — без менеджера → failure
-
-    func test_deleteModelPack_llm_noManager_callsPresenterFailure() async throws {
-        let (sut, spy) = makeSUT()
-        sut.deleteModelPack(.init(family: .llm(.qwen15b)))
-        try await waitUntil { spy.deleteModelPackCalled }
-        XCTAssertTrue(spy.deleteModelPackCalled)
-    }
-
-    // MARK: - 23. downloadModelPack с менеджером → success
-
-    func test_downloadModelPack_asr_withManager_succeeds() async throws {
-        let whisperMock = MockWhisperKitModelManager(installed: [])
-        let sut = SettingsInteractor(
-            themeManager: ThemeManager(),
-            notificationService: MockNotificationService(),
-            hapticService: MockHapticService(),
-            sessionRepository: MockSessionRepository(),
-            whisperKitModelManager: whisperMock,
-            llmModelManager: nil,
-            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
-        )
-        let spy = SpyPresenter()
-        sut.presenter = spy
-        sut.downloadModelPack(SettingsModels.DownloadModelPack.Request(family: .asr(.tiny)))
-        try await waitUntil { spy.downloadModelPackCalled }
-        XCTAssertTrue(spy.downloadModelPackCalled)
-    }
-
-    // MARK: - 24. deleteModelPack с менеджером → success
-
-    func test_deleteModelPack_asr_withManager_succeeds() async throws {
-        let whisperMock = MockWhisperKitModelManager(installed: [.base])
-        let sut = SettingsInteractor(
-            themeManager: ThemeManager(),
-            notificationService: MockNotificationService(),
-            hapticService: MockHapticService(),
-            sessionRepository: MockSessionRepository(),
-            whisperKitModelManager: whisperMock,
-            llmModelManager: nil,
-            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
-        )
-        let spy = SpyPresenter()
-        sut.presenter = spy
-        sut.deleteModelPack(SettingsModels.DeleteModelPack.Request(family: .asr(.base)))
-        try await waitUntil { spy.deleteModelPackCalled }
-        XCTAssertTrue(spy.deleteModelPackCalled)
     }
 
     // MARK: - 25. exportShare записывает файл и вызывает presenter

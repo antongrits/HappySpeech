@@ -13,9 +13,6 @@ protocol SettingsBusinessLogic: AnyObject {
     func exportData(_ request: SettingsModels.ExportData.Request)
     func clearCache(_ request: SettingsModels.ClearCache.Request)
     func connectSpecialist(_ request: SettingsModels.ConnectSpecialist.Request)
-    func loadModelPacks(_ request: SettingsModels.LoadModelPacks.Request)
-    func downloadModelPack(_ request: SettingsModels.DownloadModelPack.Request)
-    func deleteModelPack(_ request: SettingsModels.DeleteModelPack.Request)
     func loadLicenses(_ request: SettingsModels.LoadLicenses.Request)
     func exportShare(_ request: SettingsModels.ExportShare.Request)
     /// L9
@@ -47,8 +44,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
     private let hapticService: any HapticService
     private let performanceMonitorService: (any PerformanceMonitorService)?
     private let calmModeManager: CalmModeManager?
-    private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
-    private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
     private let cacheClearWorker: CacheClearWorker
     private let exportWorker: SettingsExportWorker
@@ -57,7 +52,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
     // MARK: - State
 
     private var settings: AppSettings = .default
-    private var asrProgress: [WhisperKitModelPack: Double] = [:]
 
     // MARK: - Init
 
@@ -68,8 +62,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
         sessionRepository: any SessionRepository,
         performanceMonitorService: (any PerformanceMonitorService)? = nil,
         calmModeManager: CalmModeManager? = nil,
-        whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
-        llmModelManager: (any LLMModelManagerProtocol)? = nil,
         defaults: UserDefaults = .standard
     ) {
         self.themeManager = themeManager
@@ -77,8 +69,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
         self.hapticService = hapticService
         self.performanceMonitorService = performanceMonitorService
         self.calmModeManager = calmModeManager
-        self.whisperKitModelManager = whisperKitModelManager
-        self.llmModelManager = llmModelManager
         self.defaults = defaults
         self.cacheClearWorker = CacheClearWorker()
         self.exportWorker = SettingsExportWorker(
@@ -399,44 +389,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
         presenter?.presentToggleCalmMode(.init(settings: settings))
     }
 
-    // MARK: - Model packs
-
-    func loadModelPacks(_ request: SettingsModels.LoadModelPacks.Request) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            let asrStates = await collectASRPackStates()
-            let llmStates = await collectLLMPackStates()
-            presenter?.presentLoadModelPacks(.init(
-                asrPacks: asrStates,
-                llmPacks: llmStates
-            ))
-        }
-    }
-
-    func downloadModelPack(_ request: SettingsModels.DownloadModelPack.Request) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            switch request.family {
-            case .asr(let pack):
-                await downloadASRPack(pack)
-            case .llm(let pack):
-                await downloadLLMPack(pack)
-            }
-        }
-    }
-
-    func deleteModelPack(_ request: SettingsModels.DeleteModelPack.Request) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            switch request.family {
-            case .asr(let pack):
-                await deleteASRPack(pack)
-            case .llm(let pack):
-                await deleteLLMPack(pack)
-            }
-        }
-    }
-
     func loadLicenses(_ request: SettingsModels.LoadLicenses.Request) {
         let licenses: [OpenSourceLicense] = [
             OpenSourceLicense(
@@ -510,134 +462,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
                 ))
             }
         }
-    }
-
-    // MARK: - Model packs helpers
-
-    private func collectASRPackStates() async -> [ASRPackState] {
-        guard let manager = whisperKitModelManager else {
-            // Деградация без manager — возвращаем минимальный набор для UI.
-            return WhisperKitModelPack.allCases.map { pack in
-                ASRPackState(pack: pack, isInstalled: false, isActive: false, isDownloading: false, progress: 0)
-            }
-        }
-        let installed = await manager.installedPacks()
-        let active = await manager.currentlyInstalledPack()
-        let installedSet = Set(installed)
-        return WhisperKitModelPack.allCases.map { pack in
-            ASRPackState(
-                pack: pack,
-                isInstalled: installedSet.contains(pack),
-                isActive: active == pack,
-                isDownloading: asrProgress[pack] != nil,
-                progress: asrProgress[pack] ?? 0
-            )
-        }
-    }
-
-    private func collectLLMPackStates() async -> [LLMPackState] {
-        guard let manager = llmModelManager else {
-            return LLMModelPack.allCases.map { pack in
-                LLMPackState(pack: pack, isInstalled: false, isInUse: false, isDownloading: false, progress: 0)
-            }
-        }
-        var states: [LLMPackState] = []
-        for pack in LLMModelPack.allCases {
-            let installed = await manager.isModelInstalled(pack)
-            let inUse = await manager.isCurrentlyInUse(pack)
-            // Модель встроена в бандл — операций загрузки нет.
-            states.append(LLMPackState(
-                pack: pack,
-                isInstalled: installed,
-                isInUse: inUse,
-                isDownloading: false,
-                progress: 0
-            ))
-        }
-        return states
-    }
-
-    private func downloadASRPack(_ pack: WhisperKitModelPack) async {
-        guard let manager = whisperKitModelManager else {
-            presenter?.presentDownloadModelPack(.init(
-                success: false,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: String(localized: "settings.models.error.unavailable")
-            ))
-            return
-        }
-        asrProgress[pack] = 0
-        logger.info("ASR pack download start: \(pack.rawValue, privacy: .public)")
-        do {
-            try await manager.download(pack: pack)
-            asrProgress[pack] = nil
-            logger.info("ASR pack downloaded: \(pack.rawValue, privacy: .public)")
-            presenter?.presentDownloadModelPack(.init(
-                success: true,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: nil
-            ))
-            // Обновим список паков.
-            loadModelPacks(.init())
-        } catch {
-            asrProgress[pack] = nil
-            logger.error("ASR download failed: \(error.localizedDescription, privacy: .public)")
-            presenter?.presentDownloadModelPack(.init(
-                success: false,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: error.localizedDescription
-            ))
-        }
-    }
-
-    /// LLM-модель поставляется внутри бандла приложения — отдельной загрузки нет.
-    /// Метод подтверждает, что модель уже встроена и доступна для работы.
-    private func downloadLLMPack(_ pack: LLMModelPack) async {
-        logger.info("LLM pack is bundled, no download needed: \(pack.rawValue, privacy: .public)")
-        presenter?.presentDownloadModelPack(.init(
-            success: true,
-            identifier: "llm.\(pack.rawValue)",
-            errorMessage: nil
-        ))
-        loadModelPacks(.init())
-    }
-
-    private func deleteASRPack(_ pack: WhisperKitModelPack) async {
-        guard let manager = whisperKitModelManager else {
-            presenter?.presentDeleteModelPack(.init(
-                success: false,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: String(localized: "settings.models.error.unavailable")
-            ))
-            return
-        }
-        do {
-            try await manager.deletePack(pack)
-            logger.info("ASR pack deleted: \(pack.rawValue, privacy: .public)")
-            presenter?.presentDeleteModelPack(.init(
-                success: true,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: nil
-            ))
-            loadModelPacks(.init())
-        } catch {
-            logger.error("ASR delete failed: \(error.localizedDescription, privacy: .public)")
-            presenter?.presentDeleteModelPack(.init(
-                success: false,
-                identifier: "whisper.\(pack.rawValue)",
-                errorMessage: error.localizedDescription
-            ))
-        }
-    }
-
-    /// LLM-модель встроена в бандл приложения и не может быть удалена.
-    private func deleteLLMPack(_ pack: LLMModelPack) async {
-        logger.info("LLM pack is bundled, cannot be deleted: \(pack.rawValue, privacy: .public)")
-        presenter?.presentDeleteModelPack(.init(
-            success: false,
-            identifier: "llm.\(pack.rawValue)",
-            errorMessage: String(localized: "settings.models.error.bundled")
-        ))
     }
 
     // MARK: - Export helpers

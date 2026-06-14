@@ -226,10 +226,12 @@ struct SpecChildRow: View {
                     .minimumScaleFactor(0.85)
 
                 HStack(spacing: SpacingTokens.sp2) {
-                    Text(ageLine)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Text("·")
+                    if let ageLine {
+                        Text(ageLine)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Text("·")
+                    }
                     ForEach(child.targetSounds, id: \.self) { sound in
                         HSBadge(sound, style: .filled(ColorTokens.Spec.accent))
                     }
@@ -272,20 +274,21 @@ struct SpecChildRow: View {
         .accessibilityAddTraits(.isButton)
     }
 
-    private var ageLine: String {
-        let suffix: String
-        switch child.age {
-        case 1: suffix = "год"
-        case 2, 3, 4: suffix = "года"
-        default: suffix = "лет"
-        }
-        return "\(child.age) \(suffix)"
+    /// Локализованная подпись возраста или `nil`, если возраст неизвестен.
+    private var ageLine: String? {
+        ChildAgeFormatter.yearsLabel(for: child.age)
     }
 
     private var accessibilityLabel: String {
         let sounds = child.targetSounds.joined(separator: ", ")
-        return "\(child.name), \(ageLine). Звуки: \(sounds). Прогресс \(overallProgressPercent)%. " +
-               "Последнее занятие: \(lastSessionLabel)"
+        let nameAge = ChildAgeFormatter.nameWithAge(name: child.name, age: child.age)
+        return String(
+            format: String(localized: "specialistHome.childRow.a11y"),
+            nameAge,
+            sounds,
+            overallProgressPercent,
+            lastSessionLabel
+        )
     }
 }
 
@@ -342,7 +345,7 @@ struct SpecDashboardHeader: View {
                             .foregroundStyle(ColorTokens.Spec.ink)
                             .lineLimit(1)
                             .minimumScaleFactor(0.85)
-                        Text("\(child.age) лет · звуки: \(child.targetSounds.joined(separator: ", "))")
+                        Text(childRowSubtitle(age: child.age, sounds: child.targetSounds))
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
                             .lineLimit(2)
@@ -378,13 +381,32 @@ struct SpecDashboardHeader: View {
         .accessibilityLabel(headerA11yLabel)
     }
 
-    private var headerA11yLabel: String {
-        guard let summary else {
-            return "\(child.name), \(child.age) лет"
+    /// Подпись «6 лет · звуки: …», либо «Звуки: …», если возраст неизвестен.
+    private func childRowSubtitle(age: Int, sounds: [String]) -> String {
+        let soundsText = sounds.joined(separator: ", ")
+        guard let years = ChildAgeFormatter.yearsLabel(for: age) else {
+            return String(
+                format: String(localized: "specialistHome.childRow.soundsOnly"),
+                soundsText
+            )
         }
-        return "\(child.name), \(child.age) лет. " +
-               "Занятий: \(summary.totalSessions), минут: \(summary.totalMinutes), " +
-               "успешность: \(Int(summary.overallSuccessRate * 100))%"
+        return String(
+            format: String(localized: "specialistHome.childRow.ageSounds"),
+            years,
+            soundsText
+        )
+    }
+
+    private var headerA11yLabel: String {
+        let nameAge = ChildAgeFormatter.nameWithAge(name: child.name, age: child.age)
+        guard let summary else { return nameAge }
+        return String(
+            format: String(localized: "specialistHome.header.a11y.withSummary"),
+            nameAge,
+            summary.totalSessions,
+            summary.totalMinutes,
+            Int(summary.overallSuccessRate * 100)
+        )
     }
 }
 

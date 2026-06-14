@@ -3,8 +3,13 @@ import SwiftUI
 
 // MARK: - SettingsView
 //
-// Parent-контур. 8 секций: оформление, профиль ребёнка, уведомления,
-// контент, данные, аналитика, специалист, о приложении.
+// Parent-контур. Сгруппированные inset-секции: оформление, кастомизация Ляли,
+// профиль ребёнка, уведомления, тактильная отдача, спокойный режим, контент,
+// данные, производительность, со-родительство, специалист, караоке-режим,
+// о приложении.
+//
+// Модели речи (ASR/LLM) встроены в бандл и заранее настроены на лучшее
+// качество — экран выбора/закачки моделей удалён намеренно.
 //
 // VIP: View → Interactor (запросы) → Presenter (форматирование) → Display.
 
@@ -45,7 +50,6 @@ struct SettingsView: View {
     @State var showLicensesSheet = false
     @State var selectedLicense: OpenSourceLicenseVM?
     @State var showShareSheet = false
-    @State var pendingDeletePackId: String?
     @State var showCustomizationSheet = false
     @State private var parentalGatePendingURL: ParentalGateURL?
     @State private var showChangelog = false
@@ -80,7 +84,6 @@ struct SettingsView: View {
                     hapticsSection
                     calmModeSection
                     contentSection
-                    modelPacksSection
                     dataSection
                     performanceSection
                     coParentSection
@@ -143,30 +146,6 @@ struct SettingsView: View {
                 Button(String(localized: "settings.export.confirm.cancel"), role: .cancel) {}
             } message: {
                 Text(String(localized: "settings.export.confirm.message"))
-            }
-            .confirmationDialog(
-                String(localized: "settings.models.delete.confirm.title"),
-                isPresented: Binding(
-                    get: { pendingDeletePackId != nil },
-                    set: { if !$0 { pendingDeletePackId = nil } }
-                ),
-                titleVisibility: .visible
-            ) {
-                Button(String(localized: "settings.models.delete.confirm.action"), role: .destructive) {
-                    if let id = pendingDeletePackId {
-                        if let pack = whisperPack(forId: id) {
-                            interactor?.deleteModelPack(.init(family: .asr(pack)))
-                        } else if let pack = llmPack(forId: id) {
-                            interactor?.deleteModelPack(.init(family: .llm(pack)))
-                        }
-                    }
-                    pendingDeletePackId = nil
-                }
-                Button(String(localized: "settings.models.delete.confirm.cancel"), role: .cancel) {
-                    pendingDeletePackId = nil
-                }
-            } message: {
-                Text(String(localized: "settings.models.delete.confirm.message"))
             }
             .sheet(isPresented: $showProfileSheet) {
                 SettingsProfileEditor(
@@ -303,9 +282,7 @@ struct SettingsView: View {
             hapticService: container.hapticService,
             sessionRepository: container.sessionRepository,
             performanceMonitorService: container.performanceMonitorService,
-            calmModeManager: container.calmModeManager,
-            whisperKitModelManager: container.whisperKitModelManager,
-            llmModelManager: container.llmModelManager
+            calmModeManager: container.calmModeManager
         )
         let presenter = SettingsPresenter()
         let router = SettingsRouter()
@@ -318,7 +295,6 @@ struct SettingsView: View {
         self.router = router
 
         interactor.loadSettings(.init())
-        interactor.loadModelPacks(.init())
         interactor.loadLicenses(.init())
     }
 }

@@ -1260,6 +1260,7 @@
 		8B84B719218827BC05A72AFA /* OpenSoundTrafficLightIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142732EAD20431E771087A23 /* OpenSoundTrafficLightIntent.swift */; };
 		8B88CF91CF83198D4C3865A2 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD20778DE53826EFE2AE1A82 /* DailyChallengeView.swift */; };
 		8B8CF29F162465351A4D6A6C /* BedtimeModeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C79DEA110AC0C25FE1AD67 /* BedtimeModeModels.swift */; };
+		8B9FAB7A0A82C834DFB6661F /* ChildAgeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380AA3242849195E102B0796 /* ChildAgeFormatter.swift */; };
 		8BDE22CB0234125CB8CAB599 /* FluencyDiaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404035B51720695C525D0092 /* FluencyDiaryInteractor.swift */; };
 		8BE467FA412E9D084A0776EE /* SpecialistResourcesLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182EE28AA2813B7287893B20 /* SpecialistResourcesLibraryView.swift */; };
 		8BE486521BDE1B89504F37EA /* WordRhymeGameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE661526AC3C2232D8BE227 /* WordRhymeGameModels.swift */; };
@@ -2741,6 +2742,7 @@
 		37653BBB0FDBFB78B083237A /* StageAdvancementPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageAdvancementPlannerTests.swift; sourceTree = "<group>"; };
 		37D8EDEABCA73C893E1779A7 /* VisualAcousticPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAcousticPresenterTests.swift; sourceTree = "<group>"; };
 		380942638B6F4831581ADEFD /* VideoPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerService.swift; sourceTree = "<group>"; };
+		380AA3242849195E102B0796 /* ChildAgeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildAgeFormatter.swift; sourceTree = "<group>"; };
 		382BFEC0139C77750C3124E3 /* SessionPersistenceCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionPersistenceCoordinatorTests.swift; sourceTree = "<group>"; };
 		386B6D439703C33BF5578B05 /* VoiceJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceJournalView.swift; sourceTree = "<group>"; };
 		38734DAA0D9063D720AA88B1 /* TargetPosesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetPosesRepository.swift; sourceTree = "<group>"; };
@@ -7802,6 +7804,7 @@
 				378D0A5162342BA08DBE94CE /* Accessibility */,
 				551F5A52CFBFA60D6EB25980 /* Navigation */,
 				27C00F49261ABD82D6B77C8B /* ViewModifiers */,
+				380AA3242849195E102B0796 /* ChildAgeFormatter.swift */,
 				49D6E18F2B2C1C917C047217 /* KidGameDragKit.swift */,
 				38E8FFF4CF5F532DA94FEF4F /* KidGameTapScaffold.swift */,
 				7D68E9CE7ED09EA31E3ACB38 /* MapJourneyComponents.swift */,
@@ -11336,6 +11339,7 @@
 				FFACABB6CE2C4008899CC1E0 /* ChildAchievementShareInteractor.swift in Sources */,
 				D68E0D81C3571860E4F4F0EE /* ChildAchievementShareModels.swift in Sources */,
 				521082CD23C059C958BAAC9E /* ChildAchievementShareView.swift in Sources */,
+				8B9FAB7A0A82C834DFB6661F /* ChildAgeFormatter.swift in Sources */,
 				AC276543B1346357125FBB31 /* ChildHomeDisplayLogic.swift in Sources */,
 				02DF6972C9C694DEA20EDE28 /* ChildHomeInteractor.swift in Sources */,
 				198C95BFE48F515AA1CC617B /* ChildHomeModels.swift in Sources */,

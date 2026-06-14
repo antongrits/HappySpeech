@@ -258,7 +258,6 @@ private struct ParentDashboardTab: View {
 
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(AppContainer.self) private var container
-    @Environment(\.colorScheme) private var colorScheme
 
     /// Block R.2 v18 — sheet с LogopedistChatView (parent ↔ specialist).
     @State private var showLogopedistChatSheet: Bool = false
@@ -271,29 +270,16 @@ private struct ParentDashboardTab: View {
     // характер контура без потери спокойствия. Static, чтобы не отвлекать.
     @ViewBuilder
     private var dashboardBackground: some View {
-        ZStack {
-            ColorTokens.Parent.bg
-            HSMeshGradientBackground(palette: .calm, animated: false)
-                .opacity(colorScheme == .dark ? 0.12 : 0.20)
-                .blendMode(.softLight)
-                .allowsHitTesting(false)
-        }
-        .ignoresSafeArea()
-        .accessibilityHidden(true)
+        // Чистый тёплый статичный фон (без декоративной mesh-подложки).
+        ColorTokens.Parent.bg
+            .ignoresSafeArea()
+            .accessibilityHidden(true)
     }
 
-    /// D-29 v27 — подпись профиля ребёнка: возраст + (опционально) звуки.
-    /// Разделитель добавляется только когда `targetSoundsText` непустой.
-    /// Используется в accessibilityLabel карточки ребёнка.
-    private var childSubtitleText: String {
-        let age = String(localized: "\(viewModel.childAge) лет")
-        let sounds = viewModel.targetSoundsText.trimmingCharacters(in: .whitespaces)
-        return sounds.isEmpty ? age : "\(age) · \(sounds)"
-    }
-
-    /// Эталон — «Имя, N лет» в одну строку.
+    /// Эталон — «Имя, N лет» в одну строку (без возраста, если он неизвестен).
+    /// Никогда не показывает «0 лет»: при невалидном возрасте остаётся только имя.
     private var childNameAgeText: String {
-        "\(viewModel.childName), \(String(localized: "\(viewModel.childAge) лет"))"
+        ChildAgeFormatter.nameWithAge(name: viewModel.childName, age: viewModel.childAge)
     }
 
     /// Целевые звуки чипами (из `targetSoundsText` "Р, Ш"); пустые отброшены.

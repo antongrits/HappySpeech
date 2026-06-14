@@ -16,7 +16,7 @@ struct ProgressDashboardView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.exitToParentHome) private var exitToParentHome
 
     // MARK: - VIP State
 
@@ -44,17 +44,9 @@ struct ProgressDashboardView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
+                // Чистый тёплый статичный фон (без декоративной mesh-подложки и
+                // движущейся «волны» — по требованию владельца).
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                // Block J v18 — kavsoft-style mesh gradient (iOS 18+) с soft-light blend.
-                // На iOS 17 fallback на RadialGradient (component-internal).
-                HSMeshGradientBackground(palette: .calm, animated: true)
-                    .ignoresSafeArea()
-                    // F.tier1 v21: чуть мягче mesh в dark поверх Parent.bg.
-                    .opacity(colorScheme == .dark ? 0.14 : 0.22)
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 content
                     .refreshable { performRefresh() }
@@ -304,6 +296,44 @@ struct ProgressDashboardView: View {
         }
     }
 
+    // MARK: - Chart data sufficiency
+
+    /// `true`, когда точек с ненулевым значением < 2 — рисовать полноценный
+    /// график бессмысленно (одна точка/всё по нулям выглядит «сломанным»).
+    /// Вместо этого показываем дружелюбный плейсхолдер «данных пока мало».
+    private func needsMoreData(_ values: [Double]) -> Bool {
+        values.filter { $0 > 0 }.count < 2
+    }
+
+    /// Плейсхолдер внутри карточки графика при недостатке данных.
+    private var chartNeedMoreDataPlaceholder: some View {
+        VStack(spacing: SpacingTokens.small) {
+            Image(systemName: "chart.bar.xaxis")
+                .font(.system(size: 30))
+                .foregroundStyle(ColorTokens.Brand.primary.opacity(0.65))
+                .accessibilityHidden(true)
+            Text(String(localized: "progressDashboard.chart.needMoreData.title"))
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+            Text(String(localized: "progressDashboard.chart.needMoreData.subtitle"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 180)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(String(localized: "progressDashboard.chart.needMoreData.title")). " +
+            "\(String(localized: "progressDashboard.chart.needMoreData.subtitle"))"
+        )
+    }
+
     // MARK: - Daily chart
 
     private var dailyChartSection: some View {
@@ -314,38 +344,42 @@ struct ProgressDashboardView: View {
             )
 
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-                Chart(display.dailyChart) { point in
-                    BarMark(
-                        x: .value(String(localized: "progressDashboard.chart.day"), point.day),
-                        y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
-                    )
-                    .foregroundStyle(barColor(for: point.value))
-                    .cornerRadius(6)
-                }
-                .chartYScale(domain: 0...100)
-                .chartYAxis {
-                    AxisMarks(position: .leading, values: [0, 50, 100]) { value in
-                        AxisValueLabel {
-                            if let intValue = value.as(Int.self) {
-                                Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(12))
-                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                if needsMoreData(display.dailyChart.map(\.value)) {
+                    chartNeedMoreDataPlaceholder
+                } else {
+                    Chart(display.dailyChart) { point in
+                        BarMark(
+                            x: .value(String(localized: "progressDashboard.chart.day"), point.day),
+                            y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
+                        )
+                        .foregroundStyle(barColor(for: point.value))
+                        .cornerRadius(6)
+                    }
+                    .chartYScale(domain: 0...100)
+                    .chartYAxis {
+                        AxisMarks(position: .leading, values: [0, 50, 100]) { value in
+                            AxisValueLabel {
+                                if let intValue = value.as(Int.self) {
+                                    Text("\(intValue)%")
+                                        .font(TypographyTokens.caption(12))
+                                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                }
                             }
+                            AxisGridLine()
+                                .foregroundStyle(ColorTokens.Parent.line.opacity(0.5))
                         }
-                        AxisGridLine()
-                            .foregroundStyle(ColorTokens.Parent.line.opacity(0.5))
                     }
-                }
-                .chartXAxis {
-                    AxisMarks(values: .automatic) { _ in
-                        AxisValueLabel()
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .chartXAxis {
+                        AxisMarks(values: .automatic) { _ in
+                            AxisValueLabel()
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
                     }
+                    .frame(height: 180)
+                    .accessibilityLabel(String(localized: "progressDashboard.a11y.dailyChart"))
+                    .accessibilityValue(dailyChartAccessibilityValue)
                 }
-                .frame(height: 180)
-                .accessibilityLabel(String(localized: "progressDashboard.a11y.dailyChart"))
-                .accessibilityValue(dailyChartAccessibilityValue)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
         }
@@ -367,56 +401,60 @@ struct ProgressDashboardView: View {
             )
 
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-                Chart(display.weeklyChart) { point in
-                    LineMark(
-                        x: .value(String(localized: "progressDashboard.chart.week"), point.label),
-                        y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
-                    )
-                    .foregroundStyle(ColorTokens.Parent.accent)
-                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                    .interpolationMethod(.catmullRom)
-                    .symbol(.circle)
-
-                    AreaMark(
-                        x: .value(String(localized: "progressDashboard.chart.week"), point.label),
-                        y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
-                    )
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [
-                                ColorTokens.Parent.accent.opacity(0.18),
-                                ColorTokens.Parent.accent.opacity(0.0)
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
+                if needsMoreData(display.weeklyChart.map(\.value)) {
+                    chartNeedMoreDataPlaceholder
+                } else {
+                    Chart(display.weeklyChart) { point in
+                        LineMark(
+                            x: .value(String(localized: "progressDashboard.chart.week"), point.label),
+                            y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
                         )
-                    )
-                    .interpolationMethod(.catmullRom)
-                }
-                .chartYScale(domain: 0...100)
-                .chartYAxis {
-                    AxisMarks(position: .leading, values: [0, 50, 100]) { value in
-                        AxisValueLabel {
-                            if let intValue = value.as(Int.self) {
-                                Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(12))
-                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                        .interpolationMethod(.catmullRom)
+                        .symbol(.circle)
+
+                        AreaMark(
+                            x: .value(String(localized: "progressDashboard.chart.week"), point.label),
+                            y: .value(String(localized: "progressDashboard.chart.accuracy"), point.value)
+                        )
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [
+                                    ColorTokens.Parent.accent.opacity(0.18),
+                                    ColorTokens.Parent.accent.opacity(0.0)
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                        )
+                        .interpolationMethod(.catmullRom)
+                    }
+                    .chartYScale(domain: 0...100)
+                    .chartYAxis {
+                        AxisMarks(position: .leading, values: [0, 50, 100]) { value in
+                            AxisValueLabel {
+                                if let intValue = value.as(Int.self) {
+                                    Text("\(intValue)%")
+                                        .font(TypographyTokens.caption(12))
+                                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                }
                             }
+                            AxisGridLine()
+                                .foregroundStyle(ColorTokens.Parent.line.opacity(0.5))
                         }
-                        AxisGridLine()
-                            .foregroundStyle(ColorTokens.Parent.line.opacity(0.5))
                     }
-                }
-                .chartXAxis {
-                    AxisMarks(values: .automatic) { _ in
-                        AxisValueLabel()
-                            .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .chartXAxis {
+                        AxisMarks(values: .automatic) { _ in
+                            AxisValueLabel()
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
                     }
+                    .frame(height: 180)
+                    .accessibilityLabel(String(localized: "progressDashboard.a11y.weeklyChart"))
+                    .accessibilityValue(weeklyChartAccessibilityValue)
                 }
-                .frame(height: 180)
-                .accessibilityLabel(String(localized: "progressDashboard.a11y.weeklyChart"))
-                .accessibilityValue(weeklyChartAccessibilityValue)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
         }
@@ -533,6 +571,8 @@ struct ProgressDashboardView: View {
 
     private var emptyStateView: some View {
         // Анимированный Lottie empty-state «нет данных прогресса», parent-контур.
+        // CTA ведёт обратно на родительскую главную, где можно начать занятие —
+        // раньше кнопка только логировала (dead-end).
         HSEmptyStateView(
             lottie: .emptyNoHistory,
             fallbackSymbol: "chart.line.uptrend.xyaxis",
@@ -542,6 +582,7 @@ struct ProgressDashboardView: View {
             action: {
                 container.hapticService.impact(.medium)
                 logger.info("emptyState start lesson tapped")
+                exitToParentHome()
             }
         )
     }

@@ -24,8 +24,15 @@ final class AchievementWallPresenter: AchievementWallPresentationLogic {
     // MARK: - Wall
 
     func presentWall(response: AchievementWallModels.LoadWall.Response) async {
-        let heroTitle = "\(response.childName), \(response.childAge) лет"
-        let heroSubtitle = "\(response.totalUnlocked) / \(response.totalCount) наград"
+        let heroTitle = ChildAgeFormatter.nameWithAge(
+            name: response.childName,
+            age: response.childAge
+        )
+        let heroSubtitle = String(
+            format: String(localized: "achievementWall.hero.subtitle"),
+            response.totalUnlocked,
+            response.totalCount
+        )
         let cells = response.entries.map { entry in
             AchievementWallCellViewModel(
                 id: entry.id,
@@ -36,7 +43,10 @@ final class AchievementWallPresenter: AchievementWallPresentationLogic {
                 accessibilityLabel: makeCellA11y(entry: entry)
             )
         }
-        let summary = "Моя стена. \(heroSubtitle)."
+        let summary = String(
+            format: String(localized: "achievementWall.summary"),
+            heroSubtitle
+        )
 
         let viewModel = AchievementWallModels.LoadWall.ViewModel(
             heroTitle: heroTitle,
@@ -53,10 +63,13 @@ final class AchievementWallPresenter: AchievementWallPresentationLogic {
         let entry = response.entry
         let dateLabel: String? = entry.unlockedDate.map { date in
             let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ru_RU")
+            formatter.locale = Locale.current
             formatter.dateStyle = .long
             formatter.timeStyle = .none
-            return "Получено: \(formatter.string(from: date))"
+            return String(
+                format: String(localized: "achievementWall.detail.unlockedDate"),
+                formatter.string(from: date)
+            )
         }
         let tint = tintForRarity(entry.achievement.rarity)
         let mascotState: LyalyaState = entry.unlocked ? .celebrating : .thinking
@@ -92,16 +105,23 @@ final class AchievementWallPresenter: AchievementWallPresentationLogic {
     }
 
     private func makeCellA11y(entry: WallEntry) -> String {
-        if entry.unlocked {
-            return "\(entry.achievement.localizedTitle), получено"
-        }
-        return "\(entry.achievement.localizedTitle), не получено"
+        let key = entry.unlocked
+            ? "achievementWall.cell.unlocked.a11y"
+            : "achievementWall.cell.locked.a11y"
+        return String(
+            format: String(localized: String.LocalizationValue(key)),
+            entry.achievement.localizedTitle
+        )
     }
 
     private func makeDetailA11y(entry: WallEntry) -> String {
-        if entry.unlocked {
-            return "\(entry.achievement.localizedTitle). \(entry.achievement.localizedDescription). Получено."
-        }
-        return "\(entry.achievement.localizedTitle). \(entry.achievement.localizedDescription). Ещё не получено."
+        let key = entry.unlocked
+            ? "achievementWall.detail.unlocked.a11y"
+            : "achievementWall.detail.locked.a11y"
+        return String(
+            format: String(localized: String.LocalizationValue(key)),
+            entry.achievement.localizedTitle,
+            entry.achievement.localizedDescription
+        )
     }
 }

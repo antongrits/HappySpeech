@@ -144,17 +144,6 @@
         }
       }
     },
-    "\\(viewModel.childAge) лет · \\(viewModel.targetSoundsText)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "\\(viewModel.childAge) лет · \\(viewModel.targetSoundsText)"
-          }
-        }
-      }
-    },
     "a11y.audio.playing": {
       "extractionState": "manual",
       "localizations": {
@@ -53859,72 +53848,6 @@
         }
       }
     },
-    "settings.a11y.modelPack.active": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Активный"
-          }
-        }
-      }
-    },
-    "settings.a11y.modelPack.active.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Этот пакет используется приложением сейчас"
-          }
-        }
-      }
-    },
-    "settings.a11y.modelPack.delete.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажмите, чтобы удалить пакет"
-          }
-        }
-      }
-    },
-    "settings.a11y.modelPack.download.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажмите, чтобы скачать пакет"
-          }
-        }
-      }
-    },
-    "settings.a11y.modelPack.installed": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Установлен"
-          }
-        }
-      }
-    },
-    "settings.a11y.modelPack.progress": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Загрузка %d процентов"
-          }
-        }
-      }
-    },
     "settings.a11y.off": {
       "extractionState": "manual",
       "localizations": {
@@ -54813,226 +54736,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Открыть исходный код"
-          }
-        }
-      }
-    },
-    "settings.models.action.delete": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить"
-          }
-        }
-      }
-    },
-    "settings.models.action.download": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Скачать"
-          }
-        }
-      }
-    },
-    "settings.models.badge.active": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "АКТИВЕН"
-          }
-        }
-      }
-    },
-    "settings.models.delete.confirm.action": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить"
-          }
-        }
-      }
-    },
-    "settings.models.delete.confirm.cancel": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмена"
-          }
-        }
-      }
-    },
-    "settings.models.delete.confirm.message": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Файлы пакета будут удалены с устройства. Их можно будет скачать снова."
-          }
-        }
-      }
-    },
-    "settings.models.delete.confirm.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить пакет?"
-          }
-        }
-      }
-    },
-    "settings.models.error.bundled": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Модель встроена в приложение и не может быть удалена"
-          }
-        }
-      }
-    },
-    "settings.models.error.unavailable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось загрузить список пакетов"
-          }
-        }
-      }
-    },
-    "settings.models.footer": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Языковые пакеты используются для распознавания речи и адаптивных подсказок. Загрузка возможна только по Wi-Fi."
-          }
-        }
-      }
-    },
-    "settings.models.loading": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Загружаем список пакетов…"
-          }
-        }
-      }
-    },
-    "settings.models.status.active": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Активный"
-          }
-        }
-      }
-    },
-    "settings.models.status.downloading": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Загрузка…"
-          }
-        }
-      }
-    },
-    "settings.models.toast.deleteFailed": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось удалить пакет"
-          }
-        }
-      }
-    },
-    "settings.models.toast.deleted": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пакет удалён"
-          }
-        }
-      }
-    },
-    "settings.models.toast.downloadFailed": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось скачать пакет"
-          }
-        }
-      }
-    },
-    "settings.models.toast.downloaded": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пакет загружен"
-          }
-        }
-      }
-    },
-    "settings.models.whisper.base.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Стандартное качество для большинства занятий"
-          }
-        }
-      }
-    },
-    "settings.models.whisper.small.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Высокое качество для шумных условий"
-          }
-        }
-      }
-    },
-    "settings.models.whisper.tiny.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Базовое распознавание, экономия места"
           }
         }
       }
@@ -78351,6 +78054,322 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
+          }
+        }
+      }
+    },
+    "child.age.years": {
+      "comment": "Child age label with plural agreement. %lld is the age in years.",
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d год"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d года"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d лет"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d лет"
+                }
+              }
+            }
+          }
+        },
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d year"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d years"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "achievementWall.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld наград"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld awards"
+          }
+        }
+      },
+      "comment": "Unlocked count / total awards"
+    },
+    "achievementWall.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Моя стена. %@."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My wall. %@."
+          }
+        }
+      },
+      "comment": "%@ is the subtitle (count of awards)"
+    },
+    "achievementWall.cell.unlocked.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, получено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, unlocked"
+          }
+        }
+      }
+    },
+    "achievementWall.cell.locked.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, не получено"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, locked"
+          }
+        }
+      }
+    },
+    "achievementWall.detail.unlocked.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. %2$@. Получено."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. %2$@. Unlocked."
+          }
+        }
+      }
+    },
+    "achievementWall.detail.locked.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. %2$@. Ещё не получено."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. %2$@. Not yet unlocked."
+          }
+        }
+      }
+    },
+    "achievementWall.detail.unlockedDate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unlocked: %@"
+          }
+        }
+      },
+      "comment": "%@ is the localized date"
+    },
+    "specialistHome.childRow.ageSounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · звуки: %2$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · sounds: %2$@"
+          }
+        }
+      },
+      "comment": "%1$@=age label, %2$@=comma-separated sounds"
+    },
+    "specialistHome.childRow.soundsOnly": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки: %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sounds: %@"
+          }
+        }
+      },
+      "comment": "%@=comma-separated sounds, when age unknown"
+    },
+    "specialistHome.header.a11y.withSummary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. Занятий: %2$lld, минут: %3$lld, успешность: %4$lld%%"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. Sessions: %2$lld, minutes: %3$lld, success: %4$lld%%"
+          }
+        }
+      },
+      "comment": "%1$@=name with age, then session/minutes/success metrics"
+    },
+    "specialistHome.childRow.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. Звуки: %2$@. Прогресс %3$lld%%. Последнее занятие: %4$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. Sounds: %2$@. Progress %3$lld%%. Last session: %4$@"
+          }
+        }
+      },
+      "comment": "%1$@=name with age, %2$@=sounds, %3$lld=progress%, %4$@=last session"
+    },
+    "plainProgress.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что-то пошло не так"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something went wrong"
+          }
+        }
+      }
+    },
+    "plainProgress.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробовать ещё раз"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try again"
+          }
+        }
+      }
+    },
+    "progressDashboard.chart.needMoreData.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данных пока мало"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough data yet"
+          }
+        }
+      }
+    },
+    "progressDashboard.chart.needMoreData.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "График появится после нескольких занятий"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The chart appears after a few sessions"
           }
         }
       }

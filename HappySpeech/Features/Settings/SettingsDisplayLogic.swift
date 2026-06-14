@@ -13,9 +13,6 @@ protocol SettingsDisplayLogic: AnyObject {
     func displayExportData(_ viewModel: SettingsModels.ExportData.ViewModel)
     func displayClearCache(_ viewModel: SettingsModels.ClearCache.ViewModel)
     func displayConnectSpecialist(_ viewModel: SettingsModels.ConnectSpecialist.ViewModel)
-    func displayLoadModelPacks(_ viewModel: SettingsModels.LoadModelPacks.ViewModel)
-    func displayDownloadModelPack(_ viewModel: SettingsModels.DownloadModelPack.ViewModel)
-    func displayDeleteModelPack(_ viewModel: SettingsModels.DeleteModelPack.ViewModel)
     func displayLoadLicenses(_ viewModel: SettingsModels.LoadLicenses.ViewModel)
     func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel)
     func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel)
@@ -46,9 +43,7 @@ final class SettingsDisplay: SettingsDisplayLogic {
     var toastMessage: String?
     var toastIsError: Bool = false
 
-    // Models / licenses / share state.
-    var asrModelItems: [ModelPackRowVM] = []
-    var llmModelItems: [ModelPackRowVM] = []
+    // Licenses / share state.
     var licenses: [OpenSourceLicenseVM] = []
     var shareFileURL: URL?
 
@@ -106,21 +101,6 @@ final class SettingsDisplay: SettingsDisplayLogic {
         toastMessage = viewModel.toastMessage
         toastIsError = viewModel.toastIsError
         isLoading = false
-    }
-
-    func displayLoadModelPacks(_ viewModel: SettingsModels.LoadModelPacks.ViewModel) {
-        asrModelItems = viewModel.asrItems
-        llmModelItems = viewModel.llmItems
-    }
-
-    func displayDownloadModelPack(_ viewModel: SettingsModels.DownloadModelPack.ViewModel) {
-        toastMessage = viewModel.toastMessage
-        toastIsError = viewModel.toastIsError
-    }
-
-    func displayDeleteModelPack(_ viewModel: SettingsModels.DeleteModelPack.ViewModel) {
-        toastMessage = viewModel.toastMessage
-        toastIsError = viewModel.toastIsError
     }
 
     func displayLoadLicenses(_ viewModel: SettingsModels.LoadLicenses.ViewModel) {

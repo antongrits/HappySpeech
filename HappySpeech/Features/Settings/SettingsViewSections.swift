@@ -60,11 +60,14 @@ extension SettingsView {
                 }
             }
             .listRowBackground(Color.clear)
+            // Симметричный горизонтальный inset = системный inset-grouped (20pt),
+            // чтобы карточка-приветствие шла по тем же полям, что и сгруппированные
+            // секции ниже (слева = справа, без overflow на SE).
             .listRowInsets(EdgeInsets(
                 top: SpacingTokens.tiny,
-                leading: 0,
+                leading: SpacingTokens.medium,
                 bottom: SpacingTokens.small,
-                trailing: 0
+                trailing: SpacingTokens.medium
             ))
             .listRowSeparator(.hidden)
         }
@@ -171,7 +174,7 @@ extension SettingsView {
                         Text(display.settings.childName)
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
+                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
                         Text(String(
                             format: String(localized: "settings.profile.agePattern"),
@@ -179,6 +182,8 @@ extension SettingsView {
                         ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
@@ -210,7 +215,7 @@ extension SettingsView {
                         Text(String(localized: "settings.dialect.row.title"))
                             .font(TypographyTokens.body(15))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
+                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
                         Text(String(localized: "settings.dialect.row.subtitle"))
                             .font(TypographyTokens.caption(12))

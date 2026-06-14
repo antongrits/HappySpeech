@@ -29,8 +29,8 @@ private struct SettingsIconLabelX: View {
 
 // MARK: - SettingsView Sections + Bindings (extras)
 //
-// Вторая часть секций settings: content/model packs/data/performance/
-// specialist/about + bindings + helpers. Извлечено из
+// Вторая часть секций settings: content/data/performance/calm-mode/
+// specialist/karaoke/about + bindings. Извлечено из
 // `SettingsViewSections.swift` (Block K.11 v16) для удержания LOC ≤500.
 
 extension SettingsView {
@@ -73,44 +73,6 @@ extension SettingsView {
                 .font(TypographyTokens.caption(12).weight(.semibold))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .textCase(.uppercase)
-        }
-    }
-
-    // MARK: Model Packs
-
-    var modelPacksSection: some View {
-        Section {
-            if display.asrModelItems.isEmpty && display.llmModelItems.isEmpty {
-                HStack {
-                    ProgressView()
-                        .tint(ColorTokens.Parent.accent)
-                    Text(String(localized: "settings.models.loading"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .padding(.leading, SpacingTokens.tiny)
-                }
-                .frame(minHeight: 44)
-            } else {
-                ForEach(display.asrModelItems) { item in
-                    ModelPackRow(item: item) {
-                        handleModelPackTap(item, isASR: true)
-                    }
-                }
-                ForEach(display.llmModelItems) { item in
-                    ModelPackRow(item: item) {
-                        handleModelPackTap(item, isASR: false)
-                    }
-                }
-            }
-        } header: {
-            Text(String(localized: "settings.section.models"))
-                .font(TypographyTokens.caption(12).weight(.semibold))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .textCase(.uppercase)
-        } footer: {
-            Text(String(localized: "settings.models.footer"))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
         }
     }
 
@@ -490,35 +452,5 @@ extension SettingsView {
             get: { display.settings.calmModeEnabled },
             set: { newValue in interactor?.toggleCalmMode(.init(enabled: newValue)) }
         )
-    }
-
-    // MARK: Model pack helpers
-
-    func handleModelPackTap(_ item: ModelPackRowVM, isASR: Bool) {
-        if item.isActive { return }
-        if item.isDownloading { return }
-        if item.isInstalled {
-            pendingDeletePackId = item.id
-        } else {
-            if isASR, let pack = whisperPack(forId: item.id) {
-                interactor?.downloadModelPack(.init(family: .asr(pack)))
-            } else if !isASR, let pack = llmPack(forId: item.id) {
-                interactor?.downloadModelPack(.init(family: .llm(pack)))
-            }
-        }
-    }
-
-    func whisperPack(forId id: String) -> WhisperKitModelPack? {
-        let prefix = "whisper."
-        guard id.hasPrefix(prefix) else { return nil }
-        let raw = String(id.dropFirst(prefix.count))
-        return WhisperKitModelPack(rawValue: raw)
-    }
-
-    func llmPack(forId id: String) -> LLMModelPack? {
-        let prefix = "llm."
-        guard id.hasPrefix(prefix) else { return nil }
-        let raw = String(id.dropFirst(prefix.count))
-        return LLMModelPack(rawValue: raw)
     }
 }

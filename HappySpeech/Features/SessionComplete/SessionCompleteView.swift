@@ -1,6 +1,3 @@
-import CryptoKit
-import OSLog
-import Particles
 import SwiftUI
 
 // MARK: - SessionCompleteView
@@ -60,8 +57,6 @@ struct SessionCompleteView: View {
     @State private var confettiVisible = false
     @State private var stickerFlipped = false
     @State private var achievementPopVisible = false
-
-    private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionCompleteView")
 
     /// Fix #11f — screenshot-tour mode (true when launched with
     /// `-HSStartRoute`). Заморозить анимированный mesh-фон + конфетти, чтобы
@@ -773,11 +768,12 @@ struct SessionCompleteView: View {
 
     // MARK: - Background
 
-    // v27 visual modernization (#2) — celebration screen получает фон
-    // HSMeshGradientBackground(palette: .rewards): золотое сияние под
-    // reward-reveal. v30: control-points медленно дрейфуют (TimelineView),
-    // поэтому золотой фон «дышит» вместе с reward-reveal. Под Reduce Motion
-    // дрейф автоматически замораживается.
+    // Тёплый celebration-фон: чистый кремовый Kid.bg + золотое mesh-сияние
+    // под reward-reveal + два radial-блика (gold/primaryLo). Растровой
+    // подложки-«wash» (Hero/celebration_*.png с blendMode .screen) больше нет —
+    // PNG имели непрозрачный белый прямоугольник, давали бахрому по краям и
+    // «грязнили» тёплый фон. Эталон session-complete.html — чистый тёплый
+    // градиент без растровых иллюстраций на фоне.
     @ViewBuilder
     private var backgroundLayer: some View {
         ZStack {
@@ -796,71 +792,27 @@ struct SessionCompleteView: View {
             // gold/primaryLo сияние через radial overlay. Banding больше не
             // появляется (radial — не интерполяция между точками), а золотой
             // характер celebration-экрана остаётся.
-            ZStack {
-                RadialGradient(
-                    colors: [
-                        ColorTokens.Brand.gold.opacity(colorScheme == .dark ? 0.18 : 0.32),
-                        Color.clear
-                    ],
-                    center: UnitPoint(x: 0.5, y: 0.35),
-                    startRadius: 30,
-                    endRadius: 380
-                )
-                RadialGradient(
-                    colors: [
-                        ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.10 : 0.18),
-                        Color.clear
-                    ],
-                    center: UnitPoint(x: 0.85, y: 0.92),
-                    startRadius: 30,
-                    endRadius: 320
-                )
-            }
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
-
-            // Fix v32-postreaudit — декоративный celebration banner
-            // (Hero/celebration_*) использовал `scaledToFill().frame(maxWidth:
-            // .infinity).clipped()`. PNG с aspect ratio шире screen раздувал
-            // intrinsic-width родительского ZStack body (через ignoresSafeArea
-            // на backgroundLayer), и весь контент SessionComplete уезжал
-            // вправо за пределы safe area. Используем GeometryReader для
-            // bounded ширины + .frame(width:height:) явно — Image не может
-            // больше расширить родителя.
-            GeometryReader { proxy in
-                Image(Self.celebrationHeroSlug(for: result))
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                    .clipped()
-                    .opacity(colorScheme == .dark ? 0.08 : 0.12)
-                    .blendMode(.screen)
-            }
+            RadialGradient(
+                colors: [
+                    ColorTokens.Brand.gold.opacity(colorScheme == .dark ? 0.18 : 0.32),
+                    Color.clear
+                ],
+                center: UnitPoint(x: 0.5, y: 0.35),
+                startRadius: 30,
+                endRadius: 380
+            )
+            RadialGradient(
+                colors: [
+                    ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.10 : 0.18),
+                    Color.clear
+                ],
+                center: UnitPoint(x: 0.85, y: 0.92),
+                startRadius: 30,
+                endRadius: 320
+            )
         }
+        .allowsHitTesting(false)
         .accessibilityHidden(true)
-    }
-
-    /// Детерминированный выбор celebration-баннера для session.
-    /// Один и тот же урок всегда даёт ту же иллюстрацию.
-    ///
-    /// `Swift.Hasher` инициализируется случайным per-launch seed → `sessionId.hashValue`
-    /// давал РАЗНЫЙ баннер при каждом запуске (комментарий «детерминированный» врал).
-    /// Берём первые 8 байт `SHA256` от `sessionId` как стабильный беззнаковый ключ —
-    /// хеш одинаков между запусками, поэтому один и тот же урок всегда показывает
-    /// ту же иллюстрацию (как сделано для LyalyaMail stableId).
-    private static func celebrationHeroSlug(for result: SessionResult) -> String {
-        let slugs = [
-            "celebration_balloons",
-            "celebration_fireworks",
-            "celebration_rainbow",
-            "celebration_stars",
-            "celebration_trophy_glow"
-        ]
-        let digest = SHA256.hash(data: Data(result.sessionId.utf8))
-        let key = digest.prefix(8).reduce(into: UInt64(0)) { acc, byte in
-            acc = (acc << 8) | UInt64(byte)
-        }
-        return slugs[Int(key % UInt64(slugs.count))]
     }
 
     // MARK: - Helpers

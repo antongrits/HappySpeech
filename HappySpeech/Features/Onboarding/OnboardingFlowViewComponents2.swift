@@ -11,30 +11,35 @@ struct OnboardingScheduleStep: View {
     let onSelect: (Int) -> Void
 
     var body: some View {
-        // Компактная вёрстка без скролла: шапка + 4 карточки расписания.
-        VStack(spacing: SpacingTokens.medium) {
-            OnboardingStepHeader(
-                mascotState: .happy,
-                title: String(localized: "onboarding.schedule.title"),
-                subtitle: String(localized: "onboarding.schedule.subtitle"),
-                mascotSize: 96
-            )
-            .padding(.top, SpacingTokens.small)
+        // SE-fix: шапка (маскот в круге) + 4 карточки расписания переполняют
+        // 375×667 → footer «Далее» уезжал за нижний край и был недостижим.
+        // Обёртка в ScrollView гарантирует достижимость footer на SE; на 16/17
+        // Pro контент влезает и скролл не появляется (scrollBounceBehavior).
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                OnboardingStepHeader(
+                    mascotState: .happy,
+                    title: String(localized: "onboarding.schedule.title"),
+                    subtitle: String(localized: "onboarding.schedule.subtitle"),
+                    mascotSize: 96
+                )
+                .padding(.top, SpacingTokens.small)
 
-            VStack(spacing: SpacingTokens.small) {
-                ForEach(DailySchedulePreset.allPresets) { preset in
-                    ScheduleRow(
-                        preset: preset,
-                        isSelected: preset.minutes == selectedMinutes,
-                        onTap: { onSelect(preset.minutes) }
-                    )
+                VStack(spacing: SpacingTokens.small) {
+                    ForEach(DailySchedulePreset.allPresets) { preset in
+                        ScheduleRow(
+                            preset: preset,
+                            isSelected: preset.minutes == selectedMinutes,
+                            onTap: { onSelect(preset.minutes) }
+                        )
+                    }
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Spacer(minLength: 0)
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
+        .scrollBounceBehavior(.basedOnSize)
     }
 }
 
@@ -58,23 +63,30 @@ struct ScheduleRow: View {
                     Text(preset.title)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .lineLimit(1)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
+                    // Подзаголовок ОБЯЗАН переноситься целиком (без «…»): lineLimit(nil)
+                    // + fixedSize(vertical) заставляют текст занять нужную высоту вместо
+                    // обрезки. Раньше карточка сжималась и .lineLimit(2) усекал строку.
                     Text(preset.subtitle)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
-                Spacer()
+                Spacer(minLength: SpacingTokens.tiny)
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
                     .accessibilityHidden(true)
             }
-            .padding(SpacingTokens.medium)
+            // Компактнее по вертикали (small вместо medium), чтобы 4 карточки +
+            // маскот занимали меньше высоты на SE.
+            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.vertical, SpacingTokens.small)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
@@ -116,6 +128,8 @@ struct OnboardingPermissionsStep: View {
     let cameraGranted: Bool
     let notificationsGranted: Bool
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     init(
         onRequestMicrophone: (() -> Void)? = nil,
         onRequestCamera: (() -> Void)? = nil,
@@ -133,55 +147,61 @@ struct OnboardingPermissionsStep: View {
     }
 
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            OnboardingStepHeader(
-                mascotState: .pointing,
-                title: String(localized: "onboarding.permissions.title"),
-                subtitle: String(localized: "onboarding.permissions.subtitle"),
-                mascotSize: 92
-            )
-            .padding(.top, SpacingTokens.small)
+        // SE-fix: шапка (маскот в круге) + 3 карточки разрешений могут переполнить
+        // 375×667 (особенно с раскрытыми grantedBadge) → footer уезжал за край.
+        // Обёртка в ScrollView гарантирует достижимость footer на SE; на 16/17 Pro
+        // скролла нет (scrollBounceBehavior(.basedOnSize)).
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                OnboardingStepHeader(
+                    mascotState: .pointing,
+                    title: String(localized: "onboarding.permissions.title"),
+                    subtitle: String(localized: "onboarding.permissions.subtitle"),
+                    mascotSize: 92
+                )
+                .padding(.top, SpacingTokens.small)
 
-            VStack(spacing: SpacingTokens.small) {
-                permissionCard(
-                    icon: "mic.circle.fill",
-                    texts: (
-                        title: String(localized: "onboarding.permissions.mic.title"),
-                        body: String(localized: "onboarding.permissions.mic.body"),
-                        allowLabel: String(localized: "permissions.mic.allow")
-                    ),
-                    color: ColorTokens.Brand.primary,
-                    granted: micGranted,
-                    action: onRequestMicrophone
-                )
-                permissionCard(
-                    icon: "camera.circle.fill",
-                    texts: (
-                        title: String(localized: "onboarding.permissions.camera.title"),
-                        body: String(localized: "onboarding.permissions.camera.body"),
-                        allowLabel: String(localized: "permissions.camera.allow")
-                    ),
-                    color: ColorTokens.Brand.lilac,
-                    granted: cameraGranted,
-                    action: onRequestCamera
-                )
-                permissionCard(
-                    icon: "bell.circle.fill",
-                    texts: (
-                        title: String(localized: "onboarding.permissions.notifications.title"),
-                        body: String(localized: "onboarding.permissions.notifications.body"),
-                        allowLabel: String(localized: "permissions.notif.allow")
-                    ),
-                    color: ColorTokens.Brand.butter,
-                    granted: notificationsGranted,
-                    action: onRequestNotifications
-                )
+                VStack(spacing: SpacingTokens.small) {
+                    permissionCard(
+                        icon: "mic.circle.fill",
+                        texts: (
+                            title: String(localized: "onboarding.permissions.mic.title"),
+                            body: String(localized: "onboarding.permissions.mic.body"),
+                            allowLabel: String(localized: "permissions.mic.allow")
+                        ),
+                        color: ColorTokens.Brand.primary,
+                        granted: micGranted,
+                        action: onRequestMicrophone
+                    )
+                    permissionCard(
+                        icon: "camera.circle.fill",
+                        texts: (
+                            title: String(localized: "onboarding.permissions.camera.title"),
+                            body: String(localized: "onboarding.permissions.camera.body"),
+                            allowLabel: String(localized: "permissions.camera.allow")
+                        ),
+                        color: ColorTokens.Brand.lilac,
+                        granted: cameraGranted,
+                        action: onRequestCamera
+                    )
+                    permissionCard(
+                        icon: "bell.circle.fill",
+                        texts: (
+                            title: String(localized: "onboarding.permissions.notifications.title"),
+                            body: String(localized: "onboarding.permissions.notifications.body"),
+                            allowLabel: String(localized: "permissions.notif.allow")
+                        ),
+                        color: ColorTokens.Brand.butter,
+                        granted: notificationsGranted,
+                        action: onRequestNotifications
+                    )
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Spacer(minLength: 0)
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private func permissionCard(
@@ -202,12 +222,15 @@ struct OnboardingPermissionsStep: View {
                         Text(texts.title)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .lineLimit(1)
                             .minimumScaleFactor(0.85)
+                        // Причина разрешения переносится целиком (без «…») —
+                        // карточка в ScrollView, высоты хватает.
                         Text(texts.body)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(3)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer()
@@ -236,6 +259,11 @@ struct OnboardingPermissionsStep: View {
                 }
             }
         }
+        // Плавная смена CTA «Разрешить» → бейдж «Разрешено» при изменении `granted`.
+        // Анимация по `value: granted` дополнительно гарантирует ре-композицию
+        // карточки сразу после публикации статуса из Interactor (карточка больше
+        // не «застревает» на кнопке «Разрешить» после выдачи доступа).
+        .animation(reduceMotion ? nil : MotionTokens.spring, value: granted)
         .accessibilityElement(children: .contain)
         .accessibilityValue(granted ? String(localized: "onboarding.permissions.mic.granted") : "")
     }
@@ -257,99 +285,6 @@ struct OnboardingPermissionsStep: View {
                 .fill(ColorTokens.Semantic.success.opacity(0.14))
         )
         .accessibilityLabel(String(localized: "onboarding.permissions.mic.granted"))
-    }
-}
-
-// MARK: - Step 9: Model Download
-
-struct OnboardingModelDownloadStep: View {
-    let status: ModelDownloadStatus
-    let statusLabel: String
-    let onStart: () -> Void
-
-    @State private var appeared = false
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private var heroState: LyalyaState {
-        switch status {
-        case .completed: return .celebrating
-        case .downloading: return .thinking
-        default: return .idle
-        }
-    }
-
-    var body: some View {
-        // SE-fix: обёртка в GeometryReader + ScrollView гарантирует, что
-        // footer (Далее / Пропустить) всегда виден на iPhone SE (375×667).
-        // Маскот 220pt + тексты + прогресс-бар = ~480pt контента, footer ~96pt
-        // → суммарно ~576pt > 667-96(safeArea+footer) → без скролла footer уезжал
-        // за нижний край. scrollBounceBehavior(.basedOnSize) скролл показывает
-        // только когда контент реально переполняет (на 16/17 Pro никакого скролла).
-        ScrollView {
-            VStack(spacing: SpacingTokens.large) {
-                Spacer(minLength: SpacingTokens.medium)
-
-                // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: heroState, size: 200)
-                    .opacity(appeared ? 1 : 0)
-                    .accessibilityHidden(true)
-
-                VStack(spacing: SpacingTokens.small) {
-                    Text(String(localized: "onboarding.model.title"))
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                        .padding(.horizontal, SpacingTokens.medium)
-                        .accessibilityAddTraits(.isHeader)
-                    Text(String(localized: "onboarding.model.subtitle"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .padding(.horizontal, SpacingTokens.large)
-                }
-
-                VStack(spacing: SpacingTokens.tiny) {
-                    Text(statusLabel)
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .frame(maxWidth: .infinity)
-
-                    if case .downloading(let progress) = status {
-                        HSProgressBar(value: progress, style: .kid)
-                            .padding(.horizontal, SpacingTokens.large)
-                    }
-                }
-                .accessibilityElement(children: .combine)
-                .accessibilityLabel(statusLabel)
-
-                if status == .idle {
-                    HSButton(
-                        String(localized: "onboarding.cta.startDownload"),
-                        style: .secondary,
-                        size: .medium,
-                        icon: "arrow.down.circle",
-                        action: onStart
-                    )
-                    .padding(.horizontal, SpacingTokens.xLarge)
-                }
-
-                Spacer(minLength: SpacingTokens.medium)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .scrollBounceBehavior(.basedOnSize)
-        .onAppear {
-            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
-                appeared = true
-            }
-        }
-        .onChange(of: status) { _, _ in
-            withAnimation(reduceMotion ? nil : MotionTokens.spring) {}
-        }
     }
 }
 

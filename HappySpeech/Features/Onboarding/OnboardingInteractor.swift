@@ -258,6 +258,12 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
 
     /// Запрашивает разрешение на микрофон через AVFoundation.
     /// Результат сохраняется в `permissionsStatus.microphoneGranted`.
+    ///
+    /// КРИТИЧНО (карточка не обновлялась на «Разрешено»): сначала ДОЖИДАЕМСЯ
+    /// (`await`) резолва системного диалога, и ТОЛЬКО потом публикуем результат
+    /// через presenter — на `@MainActor`. `permissionsStatus` — value-type, мы
+    /// присваиваем его заново целиком, так что `@Observable`-display фиксирует
+    /// запись и SwiftUI перерисовывает карточку в `grantedBadge`.
     func requestMicrophonePermission(_ request: OnboardingModels.RequestPermission.Request) {
         Task { [weak self] in
             guard let self else { return }

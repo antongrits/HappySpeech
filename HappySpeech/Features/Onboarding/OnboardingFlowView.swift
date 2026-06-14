@@ -190,11 +190,11 @@ struct OnboardingFlowView: View {
                     notificationsGranted: display.permissionsStatus.notificationsGranted
                 )
             case .modelDownload:
-                OnboardingModelDownloadStep(
-                    status: display.modelStatus,
-                    statusLabel: display.modelStatusLabel,
-                    onStart: { interactor?.startModelDownload(.init()) }
-                )
+                // Недостижимо: ML-модели зашиты в бандл, поэтому `.modelDownload`
+                // исключён из `OnboardingStep.flowSteps` и `shouldShow(.modelDownload)`
+                // всегда false — навигация этот шаг проскакивает. Case оставлен лишь
+                // для exhaustive-switch (enum-case используется VIP-сценами/тестами).
+                EmptyView()
             case .completion:
                 OnboardingCompletionStep(
                     profile: display.profile,
@@ -254,17 +254,12 @@ struct OnboardingFlowView: View {
     }
 
     private var primaryButtonTitle: String {
+        // `.modelDownload` недостижим (исключён из flow), но входит в exhaustive-switch.
         switch display.currentStep {
         case .welcome:
             return String(localized: "onboarding.cta.start")
-        case .role, .childName, .childAge, .goals, .sounds, .schedule, .permissions:
+        case .role, .childName, .childAge, .goals, .sounds, .schedule, .permissions, .modelDownload:
             return String(localized: "onboarding.cta.next")
-        case .modelDownload:
-            switch display.modelStatus {
-            case .downloading: return String(localized: "onboarding.cta.downloading")
-            case .completed, .skipped: return String(localized: "onboarding.cta.next")
-            default: return String(localized: "onboarding.cta.startDownload")
-            }
         case .completion:
             return String(localized: "onboarding.cta.enter")
         }
@@ -273,8 +268,6 @@ struct OnboardingFlowView: View {
     private var primaryButtonIcon: String {
         switch display.currentStep {
         case .completion: return "sparkles"
-        case .modelDownload:
-            return display.modelStatus == .completed ? "arrow.right" : "arrow.down.circle"
         default: return "arrow.right"
         }
     }
