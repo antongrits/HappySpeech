@@ -180,7 +180,7 @@ struct WordOfTheDayView: View {
         case .recording:
             HStack(spacing: SpacingTokens.sp2) {
                 ProgressView().controlSize(.regular)
-                Text("Слушаю…")
+                Text(String(localized: "wotd.listening", defaultValue: "Слушаю…"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
@@ -202,13 +202,15 @@ struct WordOfTheDayView: View {
                 }
             }
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(Text("Оценка: \(stars) из 3"))
+            .accessibilityLabel(Text(
+                String(format: String(localized: "wotd.stars.a11y", defaultValue: "Оценка: %lld из 3"), stars)
+            ))
         case .tryAgain:
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
                     .font(.system(size: 24))
-                Text(String(localized: "Давай попробуем ещё раз!"))
+                Text(String(localized: "wotd.tryAgain", defaultValue: "Давай попробуем ещё раз!"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }

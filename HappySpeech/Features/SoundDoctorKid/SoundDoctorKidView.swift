@@ -178,7 +178,7 @@ struct SoundDoctorKidView: View {
     }
 
     private func completionCard(state: SoundDoctorKidModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.successBg)) {
+        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
             VStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "stethoscope")
                     .font(.system(size: 36))

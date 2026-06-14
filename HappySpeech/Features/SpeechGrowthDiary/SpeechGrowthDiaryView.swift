@@ -266,10 +266,14 @@ struct SpeechGrowthDiaryView: View {
                         tagPill("/\(row.targetSound)/")
                     }
                     if row.isShared {
-                        tagPill(row.isShareExpired ? "Истёк" : "Расшарено",
-                                tint: row.isShareExpired
-                                      ? ColorTokens.Semantic.warning
-                                      : ColorTokens.Semantic.success)
+                        tagPill(
+                            row.isShareExpired
+                                ? String(localized: "diary.tag.expired", defaultValue: "Истёк")
+                                : String(localized: "diary.tag.shared", defaultValue: "Расшарено"),
+                            tint: row.isShareExpired
+                                  ? ColorTokens.Brand.gold
+                                  : ColorTokens.Brand.lilac
+                        )
                     }
                     Spacer()
                 }

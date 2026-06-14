@@ -173,7 +173,11 @@ struct ChildLanguageMilestonesView: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(item.title))
-        .accessibilityValue(Text(item.isAchieved ? "Достигнуто" : "Не достигнуто"))
+        .accessibilityValue(Text(
+            item.isAchieved
+                ? String(localized: "languageMilestones.value.achieved", defaultValue: "Достигнуто")
+                : String(localized: "languageMilestones.value.notAchieved", defaultValue: "Не достигнуто")
+        ))
         .accessibilityAddTraits(.isButton)
     }
 

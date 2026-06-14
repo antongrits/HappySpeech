@@ -166,13 +166,13 @@ struct SiblingLobbyView: View {
             Text(String(format: String(localized: "sibling.lobby.ready_count"), readyCount, 2))
                 .font(TypographyTokens.headline(13))
         }
-        .foregroundStyle(readyCount == 2 ? ColorTokens.Brand.mint : ColorTokens.Kid.inkMuted)
+        .foregroundStyle(readyCount == 2 ? ColorTokens.Brand.primary : ColorTokens.Kid.inkMuted)
         .padding(.horizontal, SpacingTokens.sp3)
         .padding(.vertical, SpacingTokens.sp1)
         .background(
             Capsule().fill(
                 readyCount == 2
-                    ? ColorTokens.Semantic.successBg
+                    ? ColorTokens.Brand.primaryLo.opacity(0.5)
                     : ColorTokens.Kid.bgSoft
             )
         )

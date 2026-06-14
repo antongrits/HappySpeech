@@ -12,8 +12,10 @@ struct ConversationStartersParentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                // Parent-контур: спокойный прохладный холст #F0EFF6 (light) /
+                // #181820 (dark) из эталона. Статичный, без тёплого Kid-mesh —
+                // как HomeTasks / SpeechHomeworkPlanner / FamilyCalendar.
+                ColorTokens.Parent.bg.ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "conversationStarters.nav.title")))

@@ -48,7 +48,8 @@ struct ChildAvatarCard: View {
                         Image(systemName: "flame.fill")
                             .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Brand.primary)
-                        Text("\(child.streak)д")
+                        Text(String(format: String(localized: "family_calendar.streak.badge",
+                                                   defaultValue: "%lldд"), child.streak))
                             .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     }
@@ -232,7 +233,8 @@ struct WeekGoalCard: View {
                             Image(systemName: "flame.fill")
                                 .font(TypographyTokens.caption(10))
                                 .foregroundStyle(ColorTokens.Brand.primary)
-                            Text("\(card.streakDays)д")
+                            Text(String(format: String(localized: "family_calendar.streak.badge",
+                                                       defaultValue: "%lldд"), card.streakDays))
                                 .font(TypographyTokens.caption(10))
                                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                         }

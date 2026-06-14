@@ -209,7 +209,7 @@ struct RepeatAfterModelView: View {
                         systemImage: "lightbulb.fill"
                     )
                     .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Brand.sky)
+                    .foregroundStyle(ColorTokens.Brand.lilac)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "repeat.button.hint"))

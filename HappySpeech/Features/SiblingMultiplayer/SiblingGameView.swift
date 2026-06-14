@@ -208,8 +208,8 @@ struct SiblingGameView: View {
                 }
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Записать ответ")
-            .accessibilityHint("Нажми и произнеси слово")
+            .accessibilityLabel(String(localized: "sibling.game.mic_label"))
+            .accessibilityHint(String(localized: "sibling.game.mic_hint"))
         }
         .frame(maxWidth: .infinity)
     }
@@ -233,14 +233,21 @@ struct SiblingGameView: View {
                 result: display.ourRoundResult,
                 points: display.ourScore,
                 barColor: ColorTokens.Brand.primary,
-                a11yLabel: "Твой результат \(Int(display.ourRoundResult * 100)) процентов"
+                a11yLabel: String(
+                    format: String(localized: "sibling.game.score_self_a11y"),
+                    Int(display.ourRoundResult * 100)
+                )
             )
             scoreRow(
                 name: display.peerDisplayName,
                 result: display.peerRoundResult,
                 points: display.peerScore,
                 barColor: ColorTokens.Brand.lilac,
-                a11yLabel: "\(display.peerDisplayName): \(Int(display.peerRoundResult * 100)) процентов"
+                a11yLabel: String(
+                    format: String(localized: "sibling.game.score_peer_a11y"),
+                    display.peerDisplayName,
+                    Int(display.peerRoundResult * 100)
+                )
             )
         }
     }

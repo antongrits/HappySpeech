@@ -53,7 +53,10 @@ struct VisualAcousticView: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Визуально-акустическая игра: найди слово с целевым звуком"))
+        .accessibilityLabel(String(
+            localized: "visualAcoustic.screen.a11y",
+            defaultValue: "Визуально-акустическая игра: найди слово с целевым звуком"
+        ))
     }
 
     // MARK: - Content switch
@@ -78,12 +81,12 @@ struct VisualAcousticView: View {
                 .progressViewStyle(.circular)
                 .tint(ColorTokens.Brand.primary)
                 .scaleEffect(1.4)
-            Text(String(localized: "Готовим игру…"))
+            Text(String(localized: "visualAcoustic.loading", defaultValue: "Готовим игру…"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .accessibilityLabel(String(localized: "Загрузка"))
+        .accessibilityLabel(String(localized: "common.loading", defaultValue: "Загрузка"))
     }
 
     // MARK: - Playing
@@ -93,7 +96,13 @@ struct VisualAcousticView: View {
             VStack(spacing: SpacingTokens.small) {
                 RecordLessonHeader(
                     sound: Self.soundBadge(for: activity.soundTarget),
-                    subtitle: String(localized: "Раунд \(display.roundIndex + 1) из \(display.totalRounds)"),
+                    subtitle: String(
+                        format: String(
+                            localized: "visualAcoustic.round.subtitle %lld %lld",
+                            defaultValue: "Раунд %lld из %lld"
+                        ),
+                        display.roundIndex + 1, display.totalRounds
+                    ),
                     progress: display.progressFraction
                 )
                 emojiTile
@@ -142,7 +151,7 @@ struct VisualAcousticView: View {
                                 .padding(SpacingTokens.small)
                                 .background(Circle().fill(.ultraThinMaterial))
                                 .padding(SpacingTokens.small)
-                                .accessibilityLabel(String(localized: "Звук играет"))
+                                .accessibilityLabel(String(localized: "visualAcoustic.playing.a11y", defaultValue: "Звук играет"))
                         }
                         Spacer()
                     }
@@ -171,8 +180,8 @@ struct VisualAcousticView: View {
     private var listenButton: some View {
         HSButton(
             display.isPlaying
-                ? String(localized: "Слушаю…")
-                : String(localized: "Слушать"),
+                ? String(localized: "visualAcoustic.listen.playing", defaultValue: "Слушаю…")
+                : String(localized: "visualAcoustic.listen.button", defaultValue: "Слушать"),
             style: .secondary,
             size: .medium,
             icon: "speaker.wave.2.fill",
@@ -262,15 +271,15 @@ struct VisualAcousticView: View {
         switch result(at: index) {
         case .none:
             return isChoiceEnabled
-                ? String(localized: "Нажми, чтобы выбрать это слово")
-                : String(localized: "Сначала послушай вопрос")
+                ? String(localized: "visualAcoustic.choice.hint.enabled", defaultValue: "Нажми, чтобы выбрать это слово")
+                : String(localized: "visualAcoustic.choice.hint.locked", defaultValue: "Сначала послушай вопрос")
         case .correct:
-            return String(localized: "Правильно")
+            return String(localized: "visualAcoustic.choice.correct", defaultValue: "Правильно")
         case .wrong(let correctIndex):
             if correctIndex == index {
-                return String(localized: "Правильный ответ")
+                return String(localized: "visualAcoustic.choice.answer", defaultValue: "Правильный ответ")
             }
-            return String(localized: "Неверно")
+            return String(localized: "visualAcoustic.choice.wrong", defaultValue: "Неверно")
         }
     }
 
@@ -299,7 +308,7 @@ struct VisualAcousticView: View {
         .safeAreaInset(edge: .bottom) {
             HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
                 HSButton(
-                    String(localized: "Завершить"),
+                    String(localized: "visualAcoustic.finish.button", defaultValue: "Завершить"),
                     style: .primary,
                     icon: "checkmark.circle.fill"
                 ) {
@@ -311,7 +320,7 @@ struct VisualAcousticView: View {
             .padding(.bottom, SpacingTokens.tiny)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Игра завершена"))
+        .accessibilityLabel(String(localized: "visualAcoustic.completed.a11y", defaultValue: "Игра завершена"))
     }
 
     private var starsRow: some View {
@@ -335,7 +344,13 @@ struct VisualAcousticView: View {
             }
         }
         .accessibilityLabel(
-            String(localized: "Получено звёзд: \(display.starsEarned) из 3")
+            String(
+                format: String(
+                    localized: "visualAcoustic.stars.a11y %lld",
+                    defaultValue: "Получено звёзд: %lld из 3"
+                ),
+                display.starsEarned
+            )
         )
     }
 

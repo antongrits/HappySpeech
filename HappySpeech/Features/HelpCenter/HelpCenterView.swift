@@ -74,13 +74,10 @@ struct HelpCenterView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Parent-контур: спокойный прохладный холст #F0EFF6 (light) /
+                // #181820 (dark) из эталона. Статичный, без тёплого Kid-mesh
+                // softLight-оверлея — как остальные parent-экраны.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
-                    .blendMode(.softLight)
-                    .accessibilityHidden(true)
-                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {

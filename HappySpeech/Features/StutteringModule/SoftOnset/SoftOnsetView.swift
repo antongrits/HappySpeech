@@ -32,6 +32,10 @@ struct SoftOnsetView: View {
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.sp5)
+
+            if interactor.display.sessionComplete {
+                sessionCompleteOverlay
+            }
         }
         .navigationTitle(String(localized: "stuttering.exercise.soft_start.title"))
         .navigationBarTitleDisplayMode(.inline)
@@ -41,6 +45,7 @@ struct SoftOnsetView: View {
         }
         .onDisappear {
             interactor.stopListening()
+            LessonVoiceWorker.shared.stop()
         }
     }
 
@@ -149,7 +154,9 @@ struct SoftOnsetView: View {
     }
 
     private var listenButton: some View {
-        Button(action: {}) {
+        Button {
+            playSample()
+        } label: {
             Image(systemName: "speaker.wave.2.fill")
                 .font(TypographyTokens.headline(22))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -158,7 +165,16 @@ struct SoftOnsetView: View {
                     Circle().fill(ColorTokens.Brand.sky)
                 )
         }
+        .disabled(interactor.display.isRecording || interactor.display.currentWord.isEmpty)
         .accessibilityLabel(String(localized: "stuttering.soft_start.listen_button"))
+    }
+
+    /// Озвучивает текущее слово голосом Ляли как эталон мягкого начала —
+    /// чуть медленнее для слышимого плавного «soft onset».
+    private func playSample() {
+        let word = interactor.display.currentWord
+        guard !word.isEmpty else { return }
+        Task { await LessonVoiceWorker.shared.speak(word, lessonType: "soft_onset", rate: 0.9) }
     }
 
     private var recordButton: some View {
@@ -223,6 +239,74 @@ struct SoftOnsetView: View {
         )
         .font(TypographyTokens.caption(12))
         .foregroundStyle(ColorTokens.Kid.inkMuted)
+    }
+
+    // MARK: - Session Complete Overlay
+
+    /// Итог сессии — реальный счёт из интерактора (слов мягко начато / всего,
+    /// общий балл). Закрывает «застрявший» терминальный экран осмысленным
+    /// результатом по эталону системных состояний (centered, тёплый).
+    private var sessionCompleteOverlay: some View {
+        VStack(spacing: SpacingTokens.sp4) {
+            LyalyaMascotView(state: .celebrating, size: 110)
+                .accessibilityHidden(true)
+
+            Text(String(
+                localized: "stuttering.soft_start.session_done.title",
+                defaultValue: "Отличная работа!"
+            ))
+            .font(TypographyTokens.title(24))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Text(String(
+                format: String(
+                    localized: "stuttering.soft_start.session_done.summary",
+                    defaultValue: "Мягко начато слов: %1$lld из %2$lld · %3$lld%%"
+                ),
+                interactor.display.wordsSucceeded,
+                interactor.display.totalWords,
+                interactor.display.sessionScore
+            ))
+            .font(TypographyTokens.body(16).monospacedDigit())
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            .fixedSize(horizontal: false, vertical: true)
+
+            VStack(spacing: SpacingTokens.sp3) {
+                HSButton(
+                    String(
+                        localized: "stuttering.soft_start.session_done.again",
+                        defaultValue: "Ещё раз"
+                    ),
+                    style: .primary,
+                    icon: "arrow.counterclockwise",
+                    action: {
+                        Task { await interactor.startSession(difficulty: difficulty) }
+                    }
+                )
+                .frame(height: 56)
+
+                HSButton(
+                    String(localized: "common.done"),
+                    style: .secondary,
+                    action: { dismiss() }
+                )
+                .frame(height: 56)
+            }
+        }
+        .padding(SpacingTokens.sp6)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+        .accessibilityElement(children: .contain)
     }
 }
 

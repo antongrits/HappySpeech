@@ -309,21 +309,27 @@ struct ARZoneView: View {
     // MARK: - Accessibility helper
 
     private func arCardAccessibilityLabel(card: ARGameCard) -> String {
-        var label = "AR игра: \(card.title), \(card.estimatedMinutes) мин"
+        var label = String(
+            format: String(
+                localized: "ar.card.a11y.game",
+                defaultValue: "AR-игра: %1$@, %2$lld мин"
+            ),
+            card.title, card.estimatedMinutes
+        )
         switch card.badge {
         case .recommendedByLyalya:
-            label += ", рекомендовано Лялей"
+            label += String(localized: "ar.card.a11y.recommended", defaultValue: ", рекомендовано Лялей")
         case .newGame:
-            label += ", новая игра"
+            label += String(localized: "ar.card.a11y.new", defaultValue: ", новая игра")
         case .completed:
-            label += ", пройдено сегодня"
+            label += String(localized: "ar.card.a11y.completed", defaultValue: ", пройдено сегодня")
         case .none:
             break
         }
         switch card.difficulty {
-        case 1: label += ", лёгкий уровень"
-        case 2: label += ", средний уровень"
-        case 3: label += ", сложный уровень"
+        case 1: label += String(localized: "ar.card.a11y.easy", defaultValue: ", лёгкий уровень")
+        case 2: label += String(localized: "ar.card.a11y.medium", defaultValue: ", средний уровень")
+        case 3: label += String(localized: "ar.card.a11y.hard", defaultValue: ", сложный уровень")
         default: break
         }
         return label

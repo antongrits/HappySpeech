@@ -12,8 +12,10 @@ struct ParentInspirationBoardView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                // Parent-контур: спокойный прохладный холст #F0EFF6 (light) /
+                // #181820 (dark) из эталона. Статичный, без тёплого Kid-mesh —
+                // как HomeTasks / SpeechHomeworkPlanner / FamilyCalendar.
+                ColorTokens.Parent.bg.ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "inspirationBoard.nav.title")))
@@ -40,6 +42,10 @@ struct ParentInspirationBoardView: View {
                 filterToggle
                 if let quote = interactor.state.current {
                     quoteCard(quote)
+                        .id(quote.id)
+                        .transition(reduceMotion
+                            ? .opacity
+                            : .opacity.combined(with: .move(edge: .trailing)))
                     navControls
                 } else {
                     emptyFavorites
@@ -49,6 +55,8 @@ struct ParentInspirationBoardView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp6)
+            .animation(reduceMotion ? .easeInOut(duration: 0.15) : .spring(response: 0.4, dampingFraction: 0.85),
+                       value: interactor.state.current?.id)
         }
         .scrollBounceBehavior(.basedOnSize)
     }

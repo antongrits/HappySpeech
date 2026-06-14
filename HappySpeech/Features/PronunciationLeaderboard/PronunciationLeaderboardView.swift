@@ -123,12 +123,12 @@ struct PronunciationLeaderboardView: View {
                 .padding(.top, SpacingTokens.sp4)
 
         case .empty:
-            HSEmptyState(
-                icon: "person.3.sequence",
+            HSEmptyStateView(
+                mascot: .thinking,
                 title: String(localized: "leaderboard.empty.title"),
-                message: String(localized: "leaderboard.empty.message"),
-                actionTitle: nil
+                subtitle: String(localized: "leaderboard.empty.message")
             )
+            .frame(maxWidth: .infinity, minHeight: 320)
 
         case .ready:
             VStack(spacing: SpacingTokens.sp3) {
@@ -141,14 +141,15 @@ struct PronunciationLeaderboardView: View {
             }
 
         case .error(let message):
-            HSEmptyState(
-                icon: "exclamationmark.triangle",
+            HSEmptyStateView(
+                mascot: .sad,
                 title: String(localized: "leaderboard.error.title"),
-                message: message,
+                subtitle: message,
                 actionTitle: String(localized: "leaderboard.error.retry")
             ) {
                 Task { await refresh() }
             }
+            .frame(maxWidth: .infinity, minHeight: 320)
         }
     }
 
@@ -474,13 +475,14 @@ private struct LeaderboardRowView: View {
                         .minimumScaleFactor(0.85)
                 }
 
-                Spacer(minLength: SpacingTokens.sp1)
+                Spacer(minLength: SpacingTokens.sp2)
 
                 VStack(alignment: .trailing, spacing: 2) {
                     Text(row.accuracyText)
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .monospacedDigit()
+                        .fixedSize()
                     HStack(spacing: 2) {
                         Image(systemName: row.trendIcon)
                             .font(TypographyTokens.caption(11))
@@ -489,10 +491,11 @@ private struct LeaderboardRowView: View {
                         Text(row.trendLabel)
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(trendColor)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.85)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                     }
                 }
+                .layoutPriority(1)
             }
             .padding(SpacingTokens.sp3)
             .background(

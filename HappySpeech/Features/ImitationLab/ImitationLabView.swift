@@ -141,9 +141,9 @@ struct ImitationLabView: View {
         onPracticed: @escaping () -> Void
     ) -> some View {
         HSCard(style: isActive
-            ? .tinted(ColorTokens.Brand.sky.opacity(0.22))
+            ? .tinted(ColorTokens.Brand.primaryLo.opacity(0.35))
             : (sample.isPracticed
-                ? .tinted(sample.didPass ? ColorTokens.Semantic.successBg : ColorTokens.Kid.surface)
+                ? .tinted(sample.didPass ? ColorTokens.Brand.mint.opacity(0.16) : ColorTokens.Kid.surface)
                 : .elevated)) {
             VStack(spacing: 6) {
                 Text(sample.emoji)
@@ -170,7 +170,7 @@ struct ImitationLabView: View {
                         systemImage: sample.didPass ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill"
                     )
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(sample.didPass ? ColorTokens.Semantic.success : ColorTokens.Brand.sky)
+                    .foregroundStyle(sample.didPass ? ColorTokens.Semantic.success : ColorTokens.Brand.primary)
                     .hsSymbolEffect(.bounce, value: sample.isPracticed)
                 } else {
                     HStack(spacing: SpacingTokens.sp1) {

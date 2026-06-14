@@ -68,7 +68,7 @@ struct LyalyaMailView: View {
                     .allowsHitTesting(false)
                 content
             }
-            .navigationTitle(Text("Письма от Ляли"))
+            .navigationTitle(Text("lyalya.mail.nav.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
@@ -94,7 +94,6 @@ struct LyalyaMailView: View {
                         VStack(spacing: SpacingTokens.sp2) {
                             ForEach(Array(vm.rows.enumerated()), id: \.element.id) { index, row in
                                 letterCard(row)
-                                    .onTapGesture { openLetter(row.id) }
                                     .scrollTransition(
                                         .animated(
                                             reduceMotion
@@ -195,6 +194,25 @@ struct LyalyaMailView: View {
     // MARK: - Letter card
 
     private func letterCard(_ row: LyalyaLetterRowViewModel) -> some View {
+        Button {
+            openLetter(row.id)
+        } label: {
+            letterCardLabel(row)
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            Button(role: .destructive) {
+                Task { await deleteLetter(row.id) }
+            } label: {
+                Label(String(localized: "action.delete"), systemImage: "trash")
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(row.accessibilityLabel))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private func letterCardLabel(_ row: LyalyaLetterRowViewModel) -> some View {
         HStack(alignment: .top, spacing: SpacingTokens.sp3) {
             // Конверт-аватар: цвет зависит от прочитанности.
             ZStack {
@@ -249,8 +267,12 @@ struct LyalyaMailView: View {
         .background(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(row.isRead
-                      ? ColorTokens.Kid.surface
-                      : ColorTokens.Kid.surface)
+                      ? AnyShapeStyle(ColorTokens.Kid.surface)
+                      : AnyShapeStyle(LinearGradient(
+                          colors: [ColorTokens.Kid.surface, ColorTokens.Brand.primaryLo.opacity(0.22)],
+                          startPoint: .top,
+                          endPoint: .bottom
+                        )))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -259,16 +281,6 @@ struct LyalyaMailView: View {
                     lineWidth: row.isRead ? 1 : 1.5
                 )
         )
-        .contextMenu {
-            Button(role: .destructive) {
-                Task { await deleteLetter(row.id) }
-            } label: {
-                Label("Удалить", systemImage: "trash")
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(row.accessibilityLabel))
-        .accessibilityAddTraits(.isButton)
     }
 
     // MARK: - Empty state
@@ -277,16 +289,18 @@ struct LyalyaMailView: View {
         VStack(spacing: SpacingTokens.sp3) {
             LyalyaMascotView(state: .thinking, size: 120)
                 .accessibilityHidden(true)
-            Text("Ляля скоро напишет тебе!")
+            Text("lyalya.mail.empty.title")
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
-            Text("Загляни сюда позже — здесь появятся тёплые сообщения.")
+            Text("lyalya.mail.empty.subtitle")
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.screenEdge)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -373,7 +387,7 @@ struct LyalyaMailView: View {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                         }
-                        .accessibilityLabel(Text("Закрыть"))
+                        .accessibilityLabel(Text("action.close"))
                     }
                 }
             }
@@ -393,7 +407,7 @@ struct LyalyaMailView: View {
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
             }
-            .accessibilityLabel(Text("Закрыть"))
+            .accessibilityLabel(Text("action.close"))
         }
     }
 

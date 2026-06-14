@@ -87,8 +87,10 @@ struct ParentGuideView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
-                    .ignoresSafeArea()
+                // Parent-контур: спокойный прохладный холст #F0EFF6 (light) /
+                // #181820 (dark) из эталона. Статичный, без тёплого Kid-mesh —
+                // как HomeTasks / SpeechHomeworkPlanner / FamilyCalendar.
+                ColorTokens.Parent.bg.ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
