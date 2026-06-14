@@ -100,6 +100,13 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     /// Pending ML-score из PronunciationScorerService (хранится до получения ASR).
     private var pendingMLScore: Float?
 
+    /// URL последней успешно записанной попытки ребёнка (16kHz mono WAV из
+    /// `AudioService`). Источник РЕАЛЬНОГО аудио для on-device анализа эмоции
+    /// (`EmotionDetectionService`) на уровне `SessionShell`. Обновляется в
+    /// `stopAndTranscribe` после успешной остановки записи; nil до первой записи
+    /// или при сбое (тогда эмоция не анализируется — без фабрикации).
+    private(set) var lastRecordedURL: URL?
+
     /// Фоновая задача LLM-feedback (Block H). Отменяется при advanceWord/cancel.
     private var llmFeedbackTask: Task<Void, Never>?
 
@@ -275,6 +282,9 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
 
         do {
             let url = try await audioService.stopRecording()
+            // Сохраняем URL реальной записи — SessionShell прочитает из него PCM
+            // для on-device анализа эмоции (COPPA: on-device, не сохраняется в облако).
+            lastRecordedURL = url
             // Word-list biasing: ожидаемое слово урока повышает устойчивость
             // распознавания искажённой детской речи.
             let expected = currentIndex < words.count ? words[currentIndex].word : nil

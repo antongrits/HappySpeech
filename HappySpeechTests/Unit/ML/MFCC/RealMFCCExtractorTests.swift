@@ -156,6 +156,42 @@ final class RealMFCCExtractorTests: XCTestCase {
         _ = deltaDeltaNorm
     }
 
+    // MARK: - testExtract40AppendsRealEnergyChannel
+
+    /// `extract40` даёт 40-канальный вектор (39 MFCC + log-энергия кадра) под
+    /// вход моделей `EmotionDetection` / `SpeakerVerification` (`mfcc [1, 40, 150]`).
+    /// 40-й канал — РЕАЛЬНАЯ энергия кадра (не паддинг-нуль): для громкого кадра
+    /// он выше, чем для тихого, и совпадает с первыми 39 каналами из `extract`.
+    func testExtract40AppendsRealEnergyChannel() async throws {
+        let loud = (0 ..< 16_000).map { i in
+            sin(2.0 * Float.pi * 440 * Float(i) / 16_000) * 0.8
+        }
+        let quiet = loud.map { $0 * 0.02 }
+
+        let loudData = loud.withUnsafeBytes { Data($0) }
+        let quietData = quiet.withUnsafeBytes { Data($0) }
+
+        let loudFrames = try await extractor.extract40(from: loudData)
+        let quietFrames = try await extractor.extract40(from: quietData)
+        let base39 = await extractor.extract(from: loud)
+
+        XCTAssertFalse(loudFrames.isEmpty)
+        XCTAssertEqual(loudFrames.count, base39.count, "Число кадров совпадает с 39-мерным путём")
+        for frame in loudFrames {
+            XCTAssertEqual(frame.count, 40, "40 = 39 MFCC + log-энергия")
+        }
+        // Первые 39 каналов идентичны базовому extract.
+        let mid = loudFrames.count / 2
+        for c in 0 ..< 39 {
+            XCTAssertEqual(loudFrames[mid][c], base39[mid][c], accuracy: 1e-5)
+        }
+        // 40-й канал конечен и отражает реальную громкость (loud > quiet).
+        let loudEnergy = loudFrames[mid][39]
+        let quietEnergy = quietFrames[mid][39]
+        XCTAssertTrue(loudEnergy.isFinite, "Энергетический канал конечен")
+        XCTAssertGreaterThan(loudEnergy, quietEnergy, "Громкий кадр даёт большую log-энергию, чем тихий")
+    }
+
     // MARK: - testMelFilterbankCoverage
 
     /// Проверяет что Mel filterbank содержит 40 фильтров и покрывает весь диапазон 0–8000 Гц.

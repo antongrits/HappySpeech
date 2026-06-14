@@ -107,6 +107,9 @@ struct SessionShellHost: View {
                 // персистенция стикеров/стрика/ачивок. Раньше показывался фейк .sample.
                 guard let result = interactor?.buildSessionResult() else { return }
                 router?.routeToResults(result: result)
+            },
+            onRecordedAudio: { url in
+                await analyzeEmotion(from: url)
             }
         )
         .task {
@@ -148,6 +151,22 @@ struct SessionShellHost: View {
             }
         }
     }
+
+    /// Читает РЕАЛЬНОЕ аудио записи ребёнка (16kHz mono Float32) из файла и
+    /// запускает on-device анализ эмоции. Декодирование файла выполняется вне
+    /// MainActor (detached), результат подаётся в `@MainActor` interactor.
+    /// COPPA: всё on-device, аудио в облако не уходит. При ошибке чтения —
+    /// тихо пропускаем (без фабрикации эмоции).
+    private func analyzeEmotion(from url: URL) async {
+        guard let interactor else { return }
+        let pcmData: Data? = await Task.detached(priority: .utility) {
+            guard let samples = try? LiveAcousticMirrorService.loadPCM16kMono(url: url),
+                  !samples.isEmpty else { return nil }
+            return samples.withUnsafeBytes { Data($0) }
+        }.value
+        guard let pcmData, !pcmData.isEmpty else { return }
+        await interactor.analyzeEmotion(.init(pcmData: pcmData))
+    }
 }
 
 // MARK: - SessionShellState
@@ -181,6 +200,10 @@ struct SessionShellBinder: View {
     let onResume: () -> Void
     let onExitConfirmed: () async -> Void
     let onSessionFinished: () -> Void
+    /// Колбэк с URL реальной записи голоса ребёнка из игр с микрофоном
+    /// (`RepeatAfterModel`). Хост читает из него PCM и запускает on-device анализ
+    /// эмоции (COPPA). Дефолт — no-op для превью/тестов без эмоции.
+    var onRecordedAudio: (URL) async -> Void = { _ in }
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     // A-08 «Спокойный режим» — мягче переходы и фон практической сессии.
@@ -446,7 +469,10 @@ struct SessionShellBinder: View {
                 Task { await onComplete(activity.id, score) }
             }
         case .repeatAfterModel:
-            RepeatAfterModelView(activity: activity) { score in
+            RepeatAfterModelView(
+                activity: activity,
+                onRecordedAudio: { url in Task { await onRecordedAudio(url) } }
+            ) { score in
                 Task { await onComplete(activity.id, score) }
             }
         case .breathing:

@@ -98,8 +98,14 @@ public protocol SpeakerVerificationServiceProtocol: Sendable {
 /// Живая реализация верификации голоса через ECAPA d-vector модель.
 ///
 /// Модель: `SpeakerVerification.mlpackage`
-/// Входной тензор: `[1, 40, 150]` — 40 MFCC коэффициентов, 150 фреймов (1.5 сек, 16kHz)
+/// Входной тензор: `[1, 40, 150]` — 40-канальный признаковый стек (39 MFCC +
+/// log-энергия кадра), 150 фреймов (1.5 сек, 16kHz). Признаки — `extract40`.
 /// Выходной тензор: `[1, 64]` — 64-мерный d-vector эмбеддинг
+///
+/// **v31:** d-vector обучен контрастивно на СИНТЕТИЧЕСКИХ «дикторах» (см.
+/// `_workshop/scripts/v31/train_speaker_verification_v31.py`), **не валидирован на
+/// реальных голосах**. Используется как мягкий COPPA-гейт «родитель vs ребёнок»
+/// в семейном голосовом потоке, не как биометрия.
 ///
 /// Порог косинусного сходства: 0.70
 /// - Выше 0.70 → isMatch = true, speakerType = .parent
@@ -196,7 +202,11 @@ public actor LiveSpeakerVerificationService: SpeakerVerificationServiceProtocol 
     // MARK: - Private: Embedding Computation
 
     private func computeEmbedding(from pcmData: Data, model: MLModel) async throws -> [Float] {
-        let mfccFrames = try await mfccExtractor.extract(from: pcmData)
+        // 40-канальный стек (39 MFCC + log-энергия кадра) под вход модели
+        // `mfcc [1, 40, 150]`. Базовый `extract` даёт 39 каналов — 40-й канал
+        // тензора оставался нулевым (input skew); `extract40` несёт реальную
+        // энергию кадра.
+        let mfccFrames = try await mfccExtractor.extract40(from: pcmData)
         let inputArray = try buildMFCCArray(frames: mfccFrames)
         let input = try MLDictionaryFeatureProvider(dictionary: [Self.inputName: inputArray])
         let output = try await model.prediction(from: input)

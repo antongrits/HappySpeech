@@ -340,6 +340,67 @@ extension RealMFCCExtractor: MFCCExtractorProtocol {
     }
 }
 
+// MARK: - RealMFCCExtractor + 40-dim feature stack
+
+extension RealMFCCExtractor {
+
+    /// Размерность 40-канального вектора: 39 (13 base + 13 delta + 13 delta-delta)
+    /// + 1 канал log-энергии кадра. Соответствует входу `mfcc [1, 40, 150]`
+    /// моделей `EmotionDetection` и `SpeakerVerification`.
+    public static let extendedCoeffs = 40
+
+    /// Извлекает 40-канальный признаковый вектор из сырого Float32 PCM Data.
+    ///
+    /// 40-й канал — РЕАЛЬНАЯ log-энергия кадра (`log(Σ x[n]² + ε)`), классический
+    /// энергетический терм, дополняющий 39-мерный MFCC до полного 40-канального
+    /// стека. Это акустически осмысленный признак, вычисляемый из самого кадра, а
+    /// не паддинг-нуль и не плейсхолдер: он несёт громкость/динамику произнесения.
+    ///
+    /// Используется потребителями, чей CoreML-вход — `[1, 40, 150]`
+    /// (`EmotionDetection`, `SpeakerVerification`). 39-мерный путь
+    /// (`RussianPhonemeClassifier`, вход `[1, 39, 150]`) использует базовый
+    /// `extract(from:)` без энергетического канала.
+    ///
+    /// - Parameter audio: сырой Float32 PCM Data, 16 kHz mono
+    /// - Returns: массив фреймов [[Float]], каждый — 40 коэффициентов
+    public func extract40(from audio: Data) async throws -> [[Float]] {
+        let floatCount = audio.count / MemoryLayout<Float>.size
+        guard floatCount > 0 else {
+            throw RealMFCCExtractorError.emptyAudio
+        }
+        let samples = audio.withUnsafeBytes { rawBytes -> [Float] in
+            Array(rawBytes.bindMemory(to: Float.self))
+        }
+        let base39 = extract(from: samples)
+        guard !base39.isEmpty else {
+            throw RealMFCCExtractorError.tooShort(sampleCount: floatCount)
+        }
+        let energies = frameLogEnergies(samples)
+        return base39.enumerated().map { idx, frame in
+            let energy = idx < energies.count ? energies[idx] : 0
+            return frame + [energy]
+        }
+    }
+
+    /// Per-frame log-энергия по тем же окнам, что и основной MFCC-пайплайн
+    /// (frameSize 400, hopSize 160). `log(Σ x[n]² + ε)` — стабильная мера
+    /// громкости кадра. Число элементов совпадает с числом базовых MFCC-кадров.
+    private func frameLogEnergies(_ audio: [Float]) -> [Float] {
+        var energies: [Float] = []
+        var frameStart = 0
+        while frameStart + Self.frameSize <= audio.count {
+            var sumSquares: Float = 0
+            audio.withUnsafeBufferPointer { buf in
+                guard let base = buf.baseAddress else { return }
+                vDSP_svesq(base + frameStart, 1, &sumSquares, vDSP_Length(Self.frameSize))
+            }
+            energies.append(log(sumSquares + 1e-10))
+            frameStart += Self.hopSize
+        }
+        return energies
+    }
+}
+
 // MARK: - RealMFCCExtractorError
 
 /// Ошибки RealMFCCExtractor.

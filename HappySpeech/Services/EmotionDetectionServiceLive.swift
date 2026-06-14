@@ -93,13 +93,16 @@ public protocol EmotionDetectionServiceProtocol: Sendable {
 /// Живая реализация обнаружения эмоций через Conv1d-LSTM CoreML модель.
 ///
 /// Модель: `EmotionDetection.mlpackage`
-/// Входной тензор: `[1, 40, 150]` — 40 MFCC коэффициентов, 150 фреймов (1.5 сек, 16kHz)
+/// Входной тензор: `[1, 40, 150]` — 40-канальный признаковый стек (39 MFCC +
+/// log-энергия кадра), 150 фреймов (1.5 сек, 16kHz). Признаки извлекаются
+/// `RealMFCCExtractor.extract40` из реального PCM записи ребёнка.
 /// Выходной тензор: `[1, 4]` — logits для [happy, sad, frustrated, neutral]
 ///
-/// **Block B v15:** обучено на СИНТЕТИЧЕСКИХ данных; **не валидировано на реальной
+/// **Block B v15:** модель обучена на СИНТЕТИЧЕСКИХ MFCC-подобных массивах (см.
+/// `_workshop/scripts/v31/train_emotion_v31.py`), **не валидирована на реальной
 /// детской речи**. Метрика val accuracy 94.2% получена на held-out синтетической
-/// выборке, а не на живых детских голосах. Используется только для мягкой адаптации
-/// UI, не для диагностики.
+/// выборке, а не на живых детских голосах. Используется ТОЛЬКО для мягкой
+/// адаптации UI (ускорение предложения перерыва), не для диагностики.
 public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
 
     // MARK: - Constants
@@ -151,8 +154,11 @@ public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
         }
 
         do {
-            // 1. MFCC extraction (40 коэффициентов, 150 фреймов)
-            let mfccFrames = try await mfccExtractor.extract(from: pcmData)
+            // 1. MFCC extraction — 40-канальный стек (39 MFCC + log-энергия кадра),
+            //    под вход модели `mfcc [1, 40, 150]`. Базовый `extract` даёт 39
+            //    каналов, из-за чего 40-й канал тензора оставался нулевым (input
+            //    skew). `extract40` заполняет его реальной энергией кадра.
+            let mfccFrames = try await mfccExtractor.extract40(from: pcmData)
 
             // 2. Строим входной тензор [1, 40, 150]
             let inputArray = try buildMFCCArray(frames: mfccFrames)

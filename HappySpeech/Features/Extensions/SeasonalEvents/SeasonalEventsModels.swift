@@ -2,7 +2,8 @@ import Foundation
 import SwiftUI
 
 // MARK: - SeasonalEventsModels
-// Clean Swift: Request / Response / ViewModel для SeasonalEvents
+// Доменная модель сезонного события: окно активности по дате, методический
+// целевой звук тематической сессии и оформление баннера.
 
 // MARK: - SeasonalEvent
 
@@ -20,11 +21,21 @@ enum SeasonalEvent: String, CaseIterable, Sendable {
         }
     }
 
-    var packId: String {
+    /// Целевой звук тематической сессии события. Выбран по методике русской
+    /// логопедии так, чтобы праздничная лексика реально тренировала группу:
+    ///   * Хэллоуин → «Ш» (шипящие: шуршит, шорох, шипит, шляпа) — звукоподражание
+    ///     осенне-страшной темы естественно изобилует шипящими.
+    ///   * Новый год → «С» (свистящие: снег, снеговик, санки, сосулька) — зимняя
+    ///     лексика концентрирует свистящие.
+    ///   * Пасха → «К» (заднеязычные: кулич, краска, корзинка) — весенне-пасхальная
+    ///     лексика опирается на заднеязычные.
+    /// Эти группы реально наполнены словами с картинками в `word_manifest`, поэтому
+    /// сессия открывает работающий word-picture контент, а не пустые слоты.
+    var targetSound: String {
         switch self {
-        case .halloween: return "pack_halloween"
-        case .newYear:   return "pack_new_year"
-        case .easter:    return "pack_easter"
+        case .halloween: return "Ш"
+        case .newYear:   return "С"
+        case .easter:    return "К"
         }
     }
 
@@ -51,13 +62,4 @@ enum SeasonalEvent: String, CaseIterable, Sendable {
         case .easter:    return ColorTokens.Brand.mint
         }
     }
-}
-
-// MARK: - SeasonalEventsViewModel
-
-@Observable
-final class SeasonalEventsViewModel {
-    var activeEvent: SeasonalEvent?
-    var isLoading: Bool = false
-    var packLoaded: Bool = false
 }

@@ -107,8 +107,18 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
         coordinator?.navigate(to: .siblingMultiplayer(childId: childId))
     }
 
+    /// Открывает тематическую сессию активного сезонного события. `event` несёт
+    /// методически обоснованную группу звуков (`event.targetSound`), которая реально
+    /// наполнена словами с картинками в `word_manifest`; шаблон `listen-and-choose`
+    /// строит word-picture сессию по этому звуку через стандартный игровой конвейер.
+    /// Раньше `event` отбрасывался и хардкодился `repeat-after-model` без целевого
+    /// звука — сезонный баннер вёл в нетематический урок чужого звука.
     func routeToSeasonalLesson(event: SeasonalEvent, childId: String) {
-        coordinator?.navigate(to: .lessonPlayer(templateType: "repeat-after-model", childId: childId))
+        coordinator?.navigate(to: .lessonPlayer(
+            templateType: "listen-and-choose",
+            childId: childId,
+            targetSound: event.targetSound
+        ))
     }
 
     func routeToAchievements(childId: String) {

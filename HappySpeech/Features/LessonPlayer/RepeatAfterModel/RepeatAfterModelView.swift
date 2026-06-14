@@ -25,6 +25,11 @@ struct RepeatAfterModelView: View {
 
     let activity: SessionActivity
     let onComplete: (Float) -> Void
+    /// Опциональный колбэк с URL реальной записи попытки ребёнка. Вызывается
+    /// после успешной остановки записи (фаза `.processing`). `SessionShell`
+    /// использует его для on-device анализа эмоции (COPPA). `nil` — игра вне
+    /// сессионного контейнера (запись не анализируется на эмоцию).
+    let onRecordedAudio: ((URL) -> Void)?
 
     // MARK: - Environment
 
@@ -47,8 +52,13 @@ struct RepeatAfterModelView: View {
 
     // MARK: - Init
 
-    init(activity: SessionActivity, onComplete: @escaping (Float) -> Void) {
+    init(
+        activity: SessionActivity,
+        onRecordedAudio: ((URL) -> Void)? = nil,
+        onComplete: @escaping (Float) -> Void
+    ) {
         self.activity = activity
+        self.onRecordedAudio = onRecordedAudio
         self.onComplete = onComplete
 
         let display = RepeatAfterModelDisplay()
@@ -622,7 +632,14 @@ struct RepeatAfterModelView: View {
         switch newPhase {
         case .modelPlaying:
             startLetterHighlight()
-        case .wordPreview, .recording, .processing, .feedback, .completed, .loading, .waiting:
+        case .processing:
+            stopLetterHighlight()
+            // Запись только что остановлена и сохранена в interactor — передаём
+            // её URL наверх для on-device анализа эмоции (если колбэк подключён).
+            if let onRecordedAudio, let url = interactor.lastRecordedURL {
+                onRecordedAudio(url)
+            }
+        case .wordPreview, .recording, .feedback, .completed, .loading, .waiting:
             stopLetterHighlight()
         }
     }
