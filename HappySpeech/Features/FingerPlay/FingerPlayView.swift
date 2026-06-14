@@ -173,7 +173,7 @@ struct FingerPlayView: View {
                 Text(vm.exerciseTitle)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
                 Text(vm.stageDescription)
                     .font(TypographyTokens.body(14))
@@ -283,7 +283,7 @@ struct FingerPlayView: View {
         } label: {
             Text("fingerPlay.button.skip")
                 .font(TypographyTokens.headline(17))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(

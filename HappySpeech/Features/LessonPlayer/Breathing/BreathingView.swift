@@ -102,7 +102,7 @@ struct BreathingView: View {
                 .font(TypographyTokens.kidTitle(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)

@@ -209,7 +209,7 @@ struct CustomWordListView: View {
             Text(row.name)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Spec.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             HStack(spacing: SpacingTokens.sp2) {
                 Text(row.targetSoundText)

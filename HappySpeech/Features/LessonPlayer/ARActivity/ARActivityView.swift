@@ -464,7 +464,7 @@ private struct ARActivityGameCardView: View {
                     .font(TypographyTokens.body(15))
                     .fontWeight(.semibold)
                     .foregroundStyle(titleColor)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text(card.description)
@@ -488,7 +488,7 @@ private struct ARActivityGameCardView: View {
                     Text(card.unavailableReason)
                         .font(TypographyTokens.body(11))
                         .foregroundStyle(ColorTokens.Semantic.warning)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                 }
             }

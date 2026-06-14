@@ -229,7 +229,7 @@ struct SpeechTempoView: View {
                     .hsSymbolEffect(.bounce, value: holder.tappedSyllables)
                 Text(label)
                     .font(TypographyTokens.title(26))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.6)
             }
             .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -254,7 +254,7 @@ struct SpeechTempoView: View {
                 .hsSymbolEffect(.bounce, value: rating)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -289,7 +289,7 @@ struct SpeechTempoView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(summary.scoreText)

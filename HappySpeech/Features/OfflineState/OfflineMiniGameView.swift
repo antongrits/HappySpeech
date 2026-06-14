@@ -108,13 +108,13 @@ struct OfflineMiniGameView: View {
                     Text(String(localized: titleKey))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(String(localized: instrKey))
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 

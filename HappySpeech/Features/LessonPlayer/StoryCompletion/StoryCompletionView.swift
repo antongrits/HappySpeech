@@ -388,7 +388,7 @@ private struct ChoiceButton: View {
                 Text(title)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(foregroundColor)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
                 Spacer()
             }

@@ -76,7 +76,7 @@ struct SessionHistoryMetricCard: View {
                 Text(title)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -226,12 +226,12 @@ struct SessionHistoryExportSheet: View {
                     Text(title)
                         .font(TypographyTokens.body(15).weight(.semibold))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(subtitle)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer()

@@ -501,7 +501,7 @@ private struct StageCard: View {
             Label {
                 Text(String(localized: "screening.prompt.listen"))
                     .font(TypographyTokens.cta())
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
             } icon: {
                 Image(systemName: "speaker.wave.2.fill")

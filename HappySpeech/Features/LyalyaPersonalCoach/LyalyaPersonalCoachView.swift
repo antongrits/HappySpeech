@@ -106,7 +106,7 @@ struct LyalyaPersonalCoachView: View {
                     Text(String(localized: "coach.hero.title"))
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: "coach.hero.subtitle"))
                         .font(TypographyTokens.body(14))

@@ -433,7 +433,7 @@ struct SoundTrafficLightView: View {
             Text(label)
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .accessibilityElement(children: .combine)

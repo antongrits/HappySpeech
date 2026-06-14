@@ -275,7 +275,7 @@ struct SessionHistoryView: View {
                 // P0.5 fix v19: use ink (high-contrast) instead of inkMuted for
                 // session summary captions. inkMuted fails WCAG AA on warm backgrounds.
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.85)
         }

@@ -93,7 +93,7 @@ struct MetronomeView: View {
             Text(String(localized: "stuttering.metronome.read_in_beat"))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
 
             HStack(spacing: SpacingTokens.sp3) {
@@ -258,7 +258,7 @@ private struct MetronomeBeatRing: View {
                 Text(String(localized: "stuttering.metronome.mood.calm"))
                     .font(TypographyTokens.caption(13).weight(.semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .padding(.top, SpacingTokens.sp2)
             }

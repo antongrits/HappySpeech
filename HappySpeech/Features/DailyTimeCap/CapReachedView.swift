@@ -120,7 +120,7 @@ struct CapReachedView: View {
             .font(TypographyTokens.title(27))
             .foregroundStyle(ColorTokens.Kid.ink)
             .multilineTextAlignment(.center)
-            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
             .padding(.horizontal, SpacingTokens.sp2)
             .accessibilityAddTraits(.isHeader)

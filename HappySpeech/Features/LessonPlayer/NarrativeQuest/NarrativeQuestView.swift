@@ -393,7 +393,7 @@ struct NarrativeQuestView: View {
                 Text(display.questTitle)
                     .font(TypographyTokens.headline(18))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(localized: "Квест с Лялей"))
                     .font(TypographyTokens.caption(12))

@@ -119,7 +119,7 @@ struct OfflineStateView: View {
                 .accessibilityHidden(true)
             Text(String(localized: "offline.banner"))
                 .font(TypographyTokens.labelRounded(15))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(.white)
@@ -204,7 +204,6 @@ struct OfflineStateView: View {
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
 

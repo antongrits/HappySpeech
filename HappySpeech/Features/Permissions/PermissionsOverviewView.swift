@@ -303,13 +303,13 @@ private struct PermissionOverviewCardView: View {
             Text(card.title)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
 
             Text(card.description)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
 
             if card.canRequest {
@@ -369,7 +369,7 @@ private struct PermissionOverviewCardView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(statusColor)
                 .multilineTextAlignment(.trailing)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .frame(maxWidth: 70)
         }

@@ -300,7 +300,7 @@ struct VoiceRow: View {
                 )
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Brand.primary)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             }
             .frame(minWidth: 56, minHeight: 44)

@@ -86,7 +86,7 @@ struct Articulation3DCard: View {
                     .textCase(.uppercase)
                     .tracking(0.5)
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer(minLength: 0)
             }
@@ -188,7 +188,7 @@ struct Articulation3DCard: View {
             Text(titleKey)
                 .font(TypographyTokens.caption(10))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, 8)

@@ -207,12 +207,24 @@ struct SessionShellBinder: View {
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
 
-            VStack(spacing: SpacingTokens.regular) {
+            VStack(spacing: SpacingTokens.small) {
                 SessionHUDView(
                     state: state,
+                    onExitTap: handleExitTap,
                     onPauseTap: handlePauseTap
                 )
                 .padding(.horizontal, SpacingTokens.screenEdge)
+
+                // Эталон session-shell.html: fatigue-chip «Сделаем паузу?»
+                // центрирован под session-bar, появляется при списанном сердечке.
+                // Условие — на уровне VStack, чтобы при скрытии не оставался
+                // пустой 12pt-зазор между bar'ом и игрой.
+                if state.fatigueHearts < 3 {
+                    SessionFatigueChip(fatigueHearts: state.fatigueHearts)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
+                }
 
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -324,7 +336,15 @@ struct SessionShellBinder: View {
         }
     }
 
-    // MARK: - Pause handler
+    // MARK: - Bar handlers
+
+    /// Эталон session-shell.html: ✕ в session-bar открывает confirm-alert
+    /// «Выйти из игры?» (прогресс не сохранится). Используем существующий
+    /// exit-alert + onExitConfirmed pipeline — отдельной логики не вводим.
+    private func handleExitTap() {
+        container.hapticService.selection()
+        state.isShowingExitAlert = true
+    }
 
     private func handlePauseTap() {
         guard !state.isPaused else { return }
@@ -387,9 +407,23 @@ struct SessionShellBinder: View {
         VStack(spacing: SpacingTokens.large) {
             // E v21: 3D Ляля на завершении сессии (требование пользователя).
             LyalyaHeroView(state: .celebrating, size: 160)
-            Text(String(localized: "session.completed.title"))
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
+
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "session.completed.title"))
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+
+                Text(String(localized: "session.completed.subtitle"))
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.horizontal, SpacingTokens.large)
+
             HSButton(
                 String(localized: "session.completed.cta"),
                 style: .primary,
@@ -400,6 +434,7 @@ struct SessionShellBinder: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityIdentifier("sessionCompletedButton")
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityIdentifier("sessionCompletedView")
     }
 

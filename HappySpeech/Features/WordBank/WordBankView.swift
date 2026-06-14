@@ -229,7 +229,7 @@ struct WordBankView: View {
                 Text(tile.word)
                     .font(TypographyTokens.headline(15).weight(.bold))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
 

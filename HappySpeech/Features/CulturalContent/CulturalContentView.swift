@@ -159,7 +159,7 @@ struct CulturalContentView: View {
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -211,7 +211,7 @@ struct CulturalContentView: View {
                     .accessibilityHidden(true)
                 Text("cultural.category.all")
                     .font(TypographyTokens.body(13))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.sp3)
@@ -251,7 +251,7 @@ struct CulturalContentView: View {
                     .accessibilityHidden(true)
                 Text(row.title)
                     .font(TypographyTokens.body(13))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(verbatim: "\(row.count)")
                     .font(.caption2)
@@ -344,7 +344,7 @@ struct CulturalContentView: View {
                         Text(item.title)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                             .multilineTextAlignment(.leading)
                         Spacer(minLength: 0)
@@ -360,7 +360,7 @@ struct CulturalContentView: View {
                         Text(author)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
 
@@ -530,14 +530,14 @@ private struct CulturalContentReaderView: View {
                     Text(viewModel.title)
                         .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     if let author = viewModel.author {
                         Text(author)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
 
@@ -670,7 +670,7 @@ private struct CulturalContentReaderView: View {
                          ? String(localized: "cultural.reader.pause")
                          : String(localized: "cultural.reader.play"))
                         .font(TypographyTokens.callout())
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 .foregroundStyle(ColorTokens.Overlay.onAccent)

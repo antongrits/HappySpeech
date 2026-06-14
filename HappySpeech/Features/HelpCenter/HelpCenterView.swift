@@ -144,7 +144,7 @@ struct HelpCenterView: View {
                     Text("helpCenter.hero.title")
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text("helpCenter.hero.subtitle")
@@ -191,7 +191,7 @@ struct HelpCenterView: View {
                 Text(category.title)
                     .font(TypographyTokens.body(15).weight(.medium))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .padding(.leading, SpacingTokens.sp1)
@@ -345,14 +345,14 @@ struct HelpCenterView: View {
                     Text(cell.title)
                         .font(TypographyTokens.body(14).weight(.medium))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
 
                     Text(cell.description)
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
@@ -395,7 +395,7 @@ struct HelpCenterView: View {
                 Text(detail.videoTitle)
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer()
                 Text(detail.durationLabel)
@@ -457,7 +457,7 @@ struct HelpCenterView: View {
                         Text("helpCenter.contact.title")
                             .font(TypographyTokens.body(15).weight(.medium))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         Text(viewModel.contactDescription)
@@ -473,7 +473,7 @@ struct HelpCenterView: View {
                 } label: {
                     Label {
                         Text(viewModel.contactCta)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     } icon: {
                         Image(systemName: "bubble.left.and.bubble.right.fill")

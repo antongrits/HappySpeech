@@ -158,7 +158,7 @@ struct AuthSignUpView: View {
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .padding(.horizontal, SpacingTokens.medium)
 
@@ -258,7 +258,7 @@ struct AuthSignUpView: View {
                     .fontWeight(.semibold)
             }
             .font(TypographyTokens.body(14))
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
         }
     }

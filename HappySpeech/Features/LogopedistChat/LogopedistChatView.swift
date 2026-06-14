@@ -216,7 +216,7 @@ struct LogopedistChatView: View {
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text("chat.connect.subtitle")
@@ -318,12 +318,12 @@ struct LogopedistChatView: View {
                 Text(viewModel.specialistName)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(viewModel.credentials)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 // Presence-подпись — только когда специалист реально подключён.
                 if let onlineLabel = viewModel.onlineStatusLabel {
@@ -334,7 +334,7 @@ struct LogopedistChatView: View {
                                 ? ColorTokens.Semantic.success
                                 : ColorTokens.Parent.inkSoft
                         )
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }
@@ -362,7 +362,7 @@ struct LogopedistChatView: View {
             Text(text)
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Semantic.warning)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.leading)
             Spacer()
@@ -397,7 +397,7 @@ struct LogopedistChatView: View {
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text(hint)
@@ -594,7 +594,7 @@ struct LogopedistChatView: View {
                                 ? ColorTokens.Overlay.onAccent
                                 : ColorTokens.Parent.ink
                         )
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     if let dur = att.durationLabel {
                         Text(dur)
@@ -766,7 +766,7 @@ struct LogopedistChatView: View {
                 Text("chat.audio.recording")
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer(minLength: 0)
             }
@@ -801,7 +801,7 @@ struct LogopedistChatView: View {
             Text(text)
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Semantic.warning)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.leading)
             Spacer(minLength: 0)

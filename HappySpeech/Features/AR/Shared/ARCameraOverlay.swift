@@ -62,14 +62,14 @@ struct ARTaskPill: View {
                     Text(title)
                         .font(TypographyTokens.headline(14))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                     if let subtitle, !subtitle.isEmpty {
                         Text(subtitle)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
                             .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -134,8 +134,8 @@ struct ARTrueDepthFallbackBanner: View {
             Text("ar.fallback.noTrueDepth")
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, SpacingTokens.small)
         .padding(.vertical, SpacingTokens.micro + 2)
@@ -164,14 +164,14 @@ struct ARMascotGuide: View {
                 Text(message)
                     .font(TypographyTokens.headline(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(3)
                     .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
                 if let detail, !detail.isEmpty {
                     Text(detail)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(.horizontal, SpacingTokens.small)
@@ -222,9 +222,9 @@ struct ARControlPanel<Leading: View, Trailing: View>: View {
                 Text(hintText)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(isSuccess ? ColorTokens.Brand.mint : ColorTokens.Kid.ink)
-                    .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
             HStack(spacing: SpacingTokens.large) {

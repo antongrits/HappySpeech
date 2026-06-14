@@ -142,7 +142,7 @@ struct ParentGuideView: View {
                 Text(viewModel.headerTitle)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(viewModel.headerSubtitle)
                     .font(TypographyTokens.body(14))
@@ -187,7 +187,7 @@ struct ParentGuideView: View {
                 Text(tip.title)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text(tip.summary)
@@ -257,7 +257,7 @@ struct ParentGuideView: View {
                     Text(topic.title)
                         .font(TypographyTokens.body(15).weight(.medium))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Spacer()
@@ -325,7 +325,7 @@ struct ParentGuideView: View {
                         Text(lesson.title)
                             .font(TypographyTokens.body(14).weight(.medium))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                             .multilineTextAlignment(.leading)
                         if lesson.isRecommended {
@@ -340,7 +340,7 @@ struct ParentGuideView: View {
                     Text(lesson.summary)
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
@@ -418,7 +418,7 @@ struct ParentGuideView: View {
                                     ? "parentGuide.lesson.removeFavorite"
                                     : "parentGuide.lesson.addFavorite"
                             )
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                         } icon: {
                             Image(systemName: holder.favoriteIds.contains(lesson.id)
@@ -437,7 +437,7 @@ struct ParentGuideView: View {
                                     ? "parentGuide.lesson.alreadyRead"
                                     : "parentGuide.lesson.markRead"
                             )
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                         } icon: {
                             Image(systemName: "checkmark")

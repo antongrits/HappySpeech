@@ -145,7 +145,7 @@ struct CoPlayView: View {
                 .font(TypographyTokens.title(25))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
 
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
@@ -281,7 +281,7 @@ struct CoPlayView: View {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "checkmark.circle.fill")
                     Text("coPlay.turn.done")
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                 }
                 .font(TypographyTokens.headline(18))
@@ -318,7 +318,7 @@ struct CoPlayView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(summary.turnsLabel)

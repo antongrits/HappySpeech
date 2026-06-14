@@ -108,7 +108,7 @@ struct SoundHunterView: View {
             Text(String(localized: "Найдено: \(display.correctCount) из \(display.totalCorrectNeeded)"))
                 .font(TypographyTokens.kidCardTitle(17))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .monospacedDigit()
             Spacer(minLength: 0)

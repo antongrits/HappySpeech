@@ -298,7 +298,7 @@ struct ARFaceFilterView: View {
                 Text(mask.localizedTitle)
                     .font(.caption2)
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .frame(width: 72, height: 72)

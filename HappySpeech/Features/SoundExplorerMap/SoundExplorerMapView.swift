@@ -233,7 +233,7 @@ struct SoundExplorerMapView: View {
                     Text(cell.group)
                         .font(TypographyTokens.caption(8))
                         .foregroundStyle(textColor.opacity(0.70))
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                     if cell.activityCount > 0 {
                         // Число реально-наполняемых игр-вариаций для звука

@@ -305,7 +305,7 @@ struct ArticulationGymView: View {
                 Text(exercise.title)
                     .font(TypographyTokens.title(22).weight(.bold))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
 

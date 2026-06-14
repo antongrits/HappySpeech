@@ -141,7 +141,7 @@ struct AnimalSoundsBingoView: View {
             Label(String(localized: "kidGame.restart"), systemImage: "arrow.counterclockwise")
                 .font(TypographyTokens.labelRounded(14, weight: .semibold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity)
                 .frame(minHeight: 44)

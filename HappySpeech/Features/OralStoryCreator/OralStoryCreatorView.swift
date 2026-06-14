@@ -133,12 +133,12 @@ struct OralStoryCreatorView: View {
                     Text("storyCreator.pick.heading")
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                     Text("storyCreator.pick.sub")
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer(minLength: 0)
@@ -209,7 +209,7 @@ struct OralStoryCreatorView: View {
                     .foregroundStyle(isSelected
                                      ? ColorTokens.Overlay.onAccent
                                      : ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
             }
             .frame(maxWidth: .infinity, minHeight: 96)

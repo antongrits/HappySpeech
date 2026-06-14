@@ -125,7 +125,7 @@ struct PlainProgressView: View {
                     Text(viewModel.headerTitle)
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(viewModel.headerSubtitle)
@@ -162,7 +162,7 @@ struct PlainProgressView: View {
                     Text(narrative.title)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -348,7 +348,7 @@ struct PlainProgressView: View {
             Text(milestone.title)
                 .font(TypographyTokens.body(14).weight(.medium))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -424,7 +424,7 @@ struct PlainProgressView: View {
                 ShareLink(item: shareText) {
                     Label {
                         Text(viewModel.shareButtonTitle)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     } icon: {
                         Image(systemName: "square.and.arrow.up")
@@ -439,7 +439,7 @@ struct PlainProgressView: View {
                 } label: {
                     Label {
                         Text(viewModel.shareButtonTitle)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     } icon: {
                         Image(systemName: "square.and.arrow.up")

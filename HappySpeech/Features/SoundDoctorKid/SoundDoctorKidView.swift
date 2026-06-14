@@ -105,7 +105,7 @@ struct SoundDoctorKidView: View {
                     Text(String(localized: "soundDoctor.hero.title"))
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: "soundDoctor.hero.subtitle"))
                         .font(TypographyTokens.body(14))

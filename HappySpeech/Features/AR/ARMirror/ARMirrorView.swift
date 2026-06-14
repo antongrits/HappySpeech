@@ -182,8 +182,9 @@ struct ARMirrorView: View {
             Text(String(localized: String.LocalizationValue(vm.currentExercise.displayNameKey)))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .lineLimit(1)
+                .multilineTextAlignment(.trailing)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, SpacingTokens.medium)
         .padding(.vertical, SpacingTokens.tiny)

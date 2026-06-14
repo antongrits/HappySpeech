@@ -175,7 +175,7 @@ struct ProfileEditorView: View {
             Text(viewModel.name.isEmpty ? String(localized: "profile.editor.name.placeholder") : viewModel.name)
                 .font(TypographyTokens.headline(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .padding(.top, SpacingTokens.sp5)

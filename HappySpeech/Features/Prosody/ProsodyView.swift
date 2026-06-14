@@ -202,7 +202,7 @@ struct ProsodyView: View {
                             .font(.title3)
                         Text(option.label)
                             .font(TypographyTokens.headline(19))
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.7)
                         Spacer()
                     }
@@ -252,7 +252,7 @@ struct ProsodyView: View {
                 .hsSymbolEffect(.bounce, value: isCorrect)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -285,7 +285,7 @@ struct ProsodyView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(summary.scoreText)

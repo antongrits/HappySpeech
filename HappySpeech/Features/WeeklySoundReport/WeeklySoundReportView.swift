@@ -129,7 +129,7 @@ struct WeeklySoundReportView: View {
                         Image(systemName: "chevron.left")
                             .font(TypographyTokens.caption(13).weight(.semibold))
                         Text("weeklyReport.nav.previous")
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
                     .font(TypographyTokens.caption(13))
@@ -148,7 +148,7 @@ struct WeeklySoundReportView: View {
                     Text(viewModel.dateRangeLabel)
                         .font(TypographyTokens.headline(14))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                 }
 
@@ -159,7 +159,7 @@ struct WeeklySoundReportView: View {
                 } label: {
                     HStack(spacing: SpacingTokens.sp1) {
                         Text("weeklyReport.nav.next")
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                         Image(systemName: "chevron.right")
                             .font(TypographyTokens.caption(13).weight(.semibold))
@@ -274,7 +274,7 @@ struct WeeklySoundReportView: View {
                                 Text(card.soundLabel)
                                     .font(TypographyTokens.headline(17))
                                     .foregroundStyle(ColorTokens.Parent.ink)
-                                    .lineLimit(1)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .minimumScaleFactor(0.85)
 
                                 Text(
@@ -387,7 +387,7 @@ struct WeeklySoundReportView: View {
                     Text(word)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }
@@ -402,7 +402,7 @@ struct WeeklySoundReportView: View {
             ShareLink(item: text) {
                 Label {
                     Text("weeklyReport.share.button")
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 } icon: {
                     Image(systemName: "square.and.arrow.up")

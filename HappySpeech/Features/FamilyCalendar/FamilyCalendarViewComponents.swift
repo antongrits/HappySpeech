@@ -38,7 +38,7 @@ struct ChildAvatarCard: View {
                 Text(child.name)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .frame(width: 88)
                     .multilineTextAlignment(.center)
@@ -96,7 +96,7 @@ struct AddChildCapsule: View {
                 Text(String(localized: "family_calendar.children.add"))
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .frame(width: 88)
                     .multilineTextAlignment(.center)
@@ -225,7 +225,7 @@ struct WeekGoalCard: View {
                     Text(card.childName)
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     if card.streakDays > 0 {
                         HStack(spacing: 2) {
@@ -451,7 +451,7 @@ struct ChildSummaryCard: View {
             Text(card.name)
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             HStack(spacing: 4) {
                 Image(systemName: "star.fill")
@@ -470,7 +470,7 @@ struct ChildSummaryCard: View {
                 Text(text)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(delta >= 0 ? ColorTokens.Semantic.success : ColorTokens.Semantic.error)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
             }

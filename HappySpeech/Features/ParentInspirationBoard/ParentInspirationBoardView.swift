@@ -104,7 +104,7 @@ struct ParentInspirationBoardView: View {
                 Text(String(localized: "inspirationBoard.hero.title"))
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(localized: "inspirationBoard.hero.subtitle"))
                     .font(TypographyTokens.body(14))

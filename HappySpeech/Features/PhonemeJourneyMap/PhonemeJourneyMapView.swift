@@ -121,7 +121,7 @@ struct PhonemeJourneyMapView: View {
                         ))
                         .font(TypographyTokens.caption(13).weight(.semibold))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                     }
                     Text(String(localized: "phonemeJourney.hero.subtitle"))
@@ -179,12 +179,12 @@ struct PhonemeJourneyMapView: View {
                     Text(item.id.title)
                         .font(TypographyTokens.headline(15).weight(.bold))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(item.id.caption)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

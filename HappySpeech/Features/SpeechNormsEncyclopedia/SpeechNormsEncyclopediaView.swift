@@ -129,7 +129,7 @@ struct SpeechNormsEncyclopediaView: View {
                     Text(viewModel.headerTitle)
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(viewModel.headerSubtitle)
                         .font(TypographyTokens.body(14))
@@ -274,7 +274,7 @@ struct SpeechNormsEncyclopediaView: View {
                 Text(section.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.9)
 
                 Spacer()

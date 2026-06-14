@@ -131,13 +131,11 @@ struct HabitStreakDashboardView: View {
                         Text(String(localized: "habitStreak.hero.title"))
                             .font(TypographyTokens.kidTitle(22))
                             .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
                             .fixedSize(horizontal: false, vertical: true)
                         Text(String(localized: "habitStreak.hero.subtitle"))
                             .font(TypographyTokens.kidBody(14))
                             .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
-                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -219,7 +217,7 @@ struct HabitStreakDashboardView: View {
             Text(caption)
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.88))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -235,7 +233,6 @@ struct HabitStreakDashboardView: View {
         Text(text)
             .font(TypographyTokens.kidBody(14).weight(.semibold))
             .foregroundStyle(ColorTokens.Kid.ink)
-            .lineLimit(2)
             .minimumScaleFactor(0.85)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.horizontal, SpacingTokens.sp3)
@@ -258,13 +255,12 @@ struct HabitStreakDashboardView: View {
                     Text(String(localized: "habitStreak.week.title"))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                     Text(String(format: String(localized: "habitStreak.week.meta"), practicedCount))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -321,7 +317,7 @@ struct HabitStreakDashboardView: View {
             Text(item.label)
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
     }
@@ -335,13 +331,12 @@ struct HabitStreakDashboardView: View {
                     Text(String(localized: "habitStreak.heatmap.title"))
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                     Text(String(localized: "habitStreak.heatmap.meta"))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -413,7 +408,7 @@ struct HabitStreakDashboardView: View {
             Text(String(localized: "habitStreak.legend.less"))
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             ForEach(0..<5, id: \.self) { intensity in
                 RoundedRectangle(cornerRadius: 3)
@@ -423,7 +418,7 @@ struct HabitStreakDashboardView: View {
             Text(String(localized: "habitStreak.legend.more"))
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .accessibilityHidden(true)
@@ -441,15 +436,13 @@ struct HabitStreakDashboardView: View {
                 ))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 Text(day.minutes > 0
                     ? String(format: String(localized: "habitStreak.day.detail.practiced"), day.minutes)
                     : String(localized: "habitStreak.day.detail.empty"))
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

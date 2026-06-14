@@ -88,8 +88,8 @@ struct PoseSequenceView: View {
                 .padding(.top, SpacingTokens.small)
                 .accessibilityLabel(Text("ar.poseSequence.currentPose \(display.currentName)"))
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
 
             Spacer()
 

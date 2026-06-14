@@ -299,7 +299,7 @@ private struct SharePlayLessonCard: View {
                         Text(lesson.title)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         Text(templateLabel(lesson.templateKind))

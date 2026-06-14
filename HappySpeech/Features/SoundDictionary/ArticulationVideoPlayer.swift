@@ -46,7 +46,7 @@ struct ArticulationVideoPlayerView: View {
                     .textCase(.uppercase)
                     .tracking(0.5)
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer()
                 Text(isVeo
@@ -54,7 +54,7 @@ struct ArticulationVideoPlayerView: View {
                     : String(localized: "soundDictionary.detail.articulationVideo.badge"))
                     .font(TypographyTokens.caption(9))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)

@@ -2,16 +2,23 @@ import SwiftUI
 
 // MARK: - SessionCompleteView
 //
-// Финальный экран сессии (kid-контур). 7-стадийный reward reveal с задержками:
-//   .celebration  — Ляля появляется (scale 0→1, spring)    [0.0–0.5s]
-//   .scoreReveal  — count-up score (0→N)                    [0.5–1.2s]
-//   .stars        — 3 звезды последовательно                [1.2–2.0s]
-//   .achievement  — разблокированные достижения              [2.0–2.8s]
-//   .sticker      — новая наклейка с flip animation          [2.8–3.4s]
-//   .streak       — серия дней + milestone                   [3.4–4.0s]
-//   .nextPreview  — карточки stat + preview след. сессии     [4.0–4.5s]
+// Финальный экран сессии (kid-контур). Компактная вёрстка по эталону
+// `session-complete.html`: hero (маскот в золотой медали + награда «+N» +
+// 3 звезды) → одна карточка «Итоги занятия» с 2×2 чипами (слова / правильно /
+// время / звёзды) + строка-похвала → опциональные reveal-карточки (достижение /
+// наклейка / серия) → CTA в нижней safe-area-вставке.
 //
-// CTA: "Играть ещё" (secondary) + "Продолжить" (primary) + "Поделиться" (ghost).
+// Стадийный reward-reveal сохранён (RewardStage) — каждая стадия раскрывается с
+// задержкой, что синхронизирует появление элементов и persistence-pipeline:
+//   .celebration — маскот + награда + заголовок (opacity fade-in)
+//   .scoreReveal — карточка «Итоги занятия» (заменяет прежнее кольцо счёта)
+//   .stars       — 3 звезды последовательным bounce
+//   .achievement — разблокированное достижение (если есть)
+//   .sticker     — новая наклейка (flip animation, если есть)
+//   .streak      — серия дней + milestone (если есть)
+//   .nextPreview — показ CTA («Продолжить» / «Ещё раз» / «Поделиться»)
+//
+// CTA: "Продолжить" (primary) + ряд "Ещё раз" (secondary) / "Поделиться" (ghost).
 // Сигнатура `init(result:onContinue:onReplay:)` сохранена для AppCoordinator.
 //
 // Permissions (P1-2 v31 SE 3 audit):
@@ -50,8 +57,6 @@ struct SessionCompleteView: View {
 
     // MARK: - Local UI state
 
-    @State private var animatedScore: Int = 0
-    @State private var ringFraction: Double = 0
     @State private var sharePresented = false
     @State private var shareText: String = ""
     @State private var confettiVisible = false
@@ -100,17 +105,20 @@ struct SessionCompleteView: View {
                 .ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.xLarge) {
+                // Эталон session-complete.html — компактный, сбалансированный по
+                // высоте экран: hero (маскот + награда + звёзды) → одна карточка
+                // «Итоги занятия» с 2×2 чипами → опциональные reveal-карточки
+                // (достижение / наклейка / серия) → CTA в нижней safe-area-вставке.
+                VStack(spacing: SpacingTokens.large) {
                     celebrationPhase
-                    scoreRevealPhase
                     starsPhase
+                    summaryCard
                     achievementPhase
                     stickerPhase
                     streakPhase
-                    summaryPhase
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.xLarge)
+                .padding(.top, SpacingTokens.large)
                 .padding(.bottom, SpacingTokens.large)
                 .frame(maxWidth: .infinity)
             }
@@ -221,15 +229,6 @@ struct SessionCompleteView: View {
             display.consumeProceed()
             onContinue()
         }
-        .onChange(of: display.scoreInt) { _, target in
-            animateScoreCountUp(to: target)
-        }
-        .onChange(of: display.currentPhase) { _, phase in
-            // Подстраховка: если scoreInt был выставлен до регистрации onChange,
-            // count-up не стартует. Запускаем его при появлении кольца счёта.
-            guard phase >= .scoreReveal, animatedScore == 0, display.scoreInt > 0 else { return }
-            animateScoreCountUp(to: display.scoreInt)
-        }
     }
 
     /// Подбирает Lottie-салют по числу заработанных звёзд.
@@ -246,16 +245,14 @@ struct SessionCompleteView: View {
     @ViewBuilder
     private var celebrationPhase: some View {
         let visible = display.isPhaseVisible(.celebration)
-        VStack(spacing: SpacingTokens.medium) {
+        VStack(spacing: SpacingTokens.small) {
+            // Эталон session-complete.html (.hero): маскот в круглой золотой
+            // медали-виньетке + награда «+N» в правом-верхнем углу.
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
-            // F.tier1 v21: hero — мягче в dark.
-            // E v21: 3D hero на SessionComplete (celebration phase).
-            // Fix v32-postreaudit — PNG ассета mascot_lyalya_*
-            // содержит непрозрачный белый прямоугольник (не альфа-канал), из-за
-            // чего celebration hero выглядел как «фотография на белом листе»
-            // поверх золотого фона. Клипуем по кругу и оборачиваем в мягкий
-            // gradient-«сияние», который сам прозрачен — белый прямоугольник
-            // больше не виден, маскот вписан в круглую медаль-«виньетку».
+            // Fix v32-postreaudit — PNG ассета mascot_lyalya_* содержит
+            // непрозрачный белый прямоугольник (не альфа-канал); клипуем по кругу
+            // и оборачиваем в прозрачный gradient-«сияние» — белый прямоугольник
+            // больше не виден, маскот вписан в круглую медаль.
             LyalyaHeroView(state: lyalyaResultState, size: 160)
                 .clipShape(Circle())
                 .overlay(
@@ -277,6 +274,16 @@ struct SessionCompleteView: View {
                         )
                         .frame(width: 200, height: 200)
                 )
+                .overlay(alignment: .topTrailing) {
+                    rewardBadge
+                        .opacity(visible ? 1 : 0)
+                        .scaleEffect(visible ? 1 : 0.6)
+                        .animation(
+                            reduceMotion ? nil : MotionTokens.bounce.delay(0.25),
+                            value: visible
+                        )
+                        .offset(x: SpacingTokens.regular, y: -SpacingTokens.tiny)
+                }
                 .opacity(visible ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .animation(
                     reduceMotion ? nil : MotionTokens.spring,
@@ -285,116 +292,207 @@ struct SessionCompleteView: View {
                 .accessibilityHidden(true)
 
             Text(display.mascotTagline)
-                .font(TypographyTokens.title(22))
+                .font(TypographyTokens.title(28))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 .opacity(visible ? 1 : 0)
                 .padding(.horizontal, SpacingTokens.large)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(display.mascotTagline)
-    }
 
-    // MARK: - Stage 2: Score reveal (кольцо + счёт)
-
-    @ViewBuilder
-    private var scoreRevealPhase: some View {
-        let visible = display.isPhaseVisible(.scoreReveal)
-        VStack(spacing: SpacingTokens.medium) {
-            ZStack {
-                // Fix #11b — track использует Kid.line (заметно темнее
-                // чем surfaceAlt) поверх золотого mesh-фона celebration screen,
-                // иначе кольцо «white-on-white» и невидимо на скриншотах.
-                Circle()
-                    .stroke(
-                        ColorTokens.Kid.line.opacity(0.4),
-                        style: StrokeStyle(lineWidth: 14, lineCap: .round)
-                    )
-
-                Circle()
-                    .trim(from: 0, to: ringFraction)
-                    .stroke(
-                        scoreColor,
-                        style: StrokeStyle(lineWidth: 14, lineCap: .round)
-                    )
-                    .rotationEffect(.degrees(-90))
-                    .shadow(color: scoreColor.opacity(0.35), radius: 8, x: 0, y: 0)
-
-                VStack(spacing: SpacingTokens.micro) {
-                    // Fix #11c — score-number поверх mesh-фона должен
-                    // иметь высокий контраст: используем Kid.ink + kidDisplay(48).
-                    Text("\(animatedScore)")
-                        .font(TypographyTokens.kidDisplay(48))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .monospacedDigit()
-                        .accessibilityHidden(true)
-
-                    Text(String(localized: "sessionComplete.score.label"))
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .accessibilityHidden(true)
-                }
-            }
-            .frame(width: 180, height: 180)
-            .opacity(visible ? 1 : 0)
-            .scaleEffect(visible ? 1 : 0.85)
-            .animation(
-                reduceMotion ? nil : MotionTokens.spring,
-                value: visible
-            )
-
-            // Breakdown detail (появляется вместе с кольцом)
-            if visible {
-                scoreBreakdownRow
-                    .transition(reduceMotion ? .identity : .opacity.combined(with: .move(edge: .bottom)))
-            }
+            Text(String(localized: "sessionComplete.hero.subtitle"))
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .opacity(visible ? 1 : 0)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(format: String(localized: "sessionComplete.summaryRing.a11y"), animatedScore)
+            "\(display.mascotTagline). \(String(localized: "sessionComplete.hero.subtitle"))"
         )
     }
 
-    @ViewBuilder
-    private var scoreBreakdownRow: some View {
-        // Fix #11d — chip-ряд (баллы / бонус / штраф) центрируется по
-        // экрану. Раньше «Бонус» прижимался к правому краю на узких устройствах
-        // из-за natural-content alignment в HStack.
-        HStack(spacing: SpacingTokens.small) {
-            breakdownChip(label: display.baseScoreLabel, color: ColorTokens.Feedback.correct)
-            if !display.streakBonusLabel.isEmpty {
-                breakdownChip(label: display.streakBonusLabel, color: ColorTokens.Brand.gold)
-            }
-            if display.hintPenaltyLabel.contains("-") || display.hintPenaltyLabel.contains("штраф") {
-                breakdownChip(label: display.hintPenaltyLabel, color: ColorTokens.Feedback.incorrect)
-            }
+    /// Награда «+N ⭐» в углу медали (эталон .reward-badge). N — итоговый счёт
+    /// сессии (`display.scoreInt`), реальные баллы из Interactor.
+    private var rewardBadge: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Text("+\(display.scoreInt)")
+                .font(TypographyTokens.headline(16).weight(.heavy).monospacedDigit())
+            Image(systemName: "star.fill")
+                .font(TypographyTokens.caption(13).weight(.bold))
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: display.baseScoreLabel)
+        .foregroundStyle(ColorTokens.Brand.gold)
+        .padding(.horizontal, SpacingTokens.small)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Brand.butter.opacity(0.95))
+        )
+        .overlay(
+            Capsule(style: .continuous)
+                .strokeBorder(ColorTokens.Brand.gold.opacity(0.5), lineWidth: 1.5)
+        )
+        .shadow(color: ColorTokens.Brand.butter.opacity(0.5), radius: 8, x: 0, y: 3)
+        .accessibilityHidden(true)
     }
 
-    private func breakdownChip(label: String, color: Color) -> some View {
-        // Fix v34 — chip-ряд лежит поверх gold mesh-фона. Старый
-        // вариант `color text on color.opacity(0.12) bg` делал «бонус» pill
-        // невидимым (gold-on-gold). Используем непрозрачный Kid.surface как
-        // подложку с цветным border, текст оставляем цветным с увеличенным
-        // contrast (weight .bold). Так chip читается на любом фоне.
-        Text(label)
-            .font(TypographyTokens.caption(11).weight(.bold))
-            .foregroundStyle(color)
-            .padding(.horizontal, SpacingTokens.small)
-            .padding(.vertical, SpacingTokens.micro)
-            .background(
-                Capsule()
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                Capsule()
-                    .strokeBorder(color.opacity(0.65), lineWidth: 1.2)
-            )
-            .accessibilityLabel(label)
+    // MARK: - Summary card («Итоги занятия» — эталон .card)
+
+    /// Консолидированная карточка итогов: заголовок + 2×2 сетка чипов
+    /// (слова / правильно / время / звёзды) + строка-похвала. Заменяет прежнее
+    /// большое кольцо счёта и разрозненные stat-карточки — компактно и
+    /// сбалансировано по высоте, как в эталоне session-complete.html.
+    @ViewBuilder
+    private var summaryCard: some View {
+        let visible = display.isPhaseVisible(.scoreReveal)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                Text(String(localized: "sessionComplete.summary.title"))
+                    .font(TypographyTokens.headline(17).weight(.heavy))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+
+                summaryChipGrid
+
+                praiseRow
+
+                if let next = display.nextLessonTitle {
+                    nextLessonRow(title: next)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .opacity(visible ? 1 : 0)
+        .scaleEffect(visible ? 1 : 0.96)
+        .animation(reduceMotion ? nil : MotionTokens.spring, value: visible)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("sessionSummaryCard")
+    }
+
+    private var summaryChipGrid: some View {
+        VStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.tiny) {
+                summaryChip(
+                    icon: "text.book.closed.fill",
+                    tint: ColorTokens.Brand.primary,
+                    value: wordsChipValue,
+                    label: String(localized: "sessionComplete.chip.words")
+                )
+                summaryChip(
+                    icon: "checkmark.circle.fill",
+                    tint: ColorTokens.Feedback.correct,
+                    value: correctChipValue,
+                    label: String(localized: "sessionComplete.chip.correct")
+                )
+            }
+            HStack(spacing: SpacingTokens.tiny) {
+                summaryChip(
+                    icon: "clock.fill",
+                    tint: ColorTokens.Brand.lilac,
+                    value: display.durationLabel,
+                    label: String(localized: "sessionComplete.chip.time")
+                )
+                summaryChip(
+                    icon: "star.fill",
+                    tint: ColorTokens.Brand.gold,
+                    value: starsChipValue,
+                    label: String(localized: "sessionComplete.chip.stars")
+                )
+            }
+        }
+    }
+
+    private func summaryChip(icon: String, tint: Color, value: String, label: String) -> some View {
+        HStack(spacing: SpacingTokens.small) {
+            Image(systemName: icon)
+                .font(TypographyTokens.body(16).weight(.semibold))
+                .foregroundStyle(tint)
+                .frame(width: 34, height: 34)
+                .background(tint.opacity(0.16), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(value)
+                    .font(TypographyTokens.headline(17).weight(.heavy))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Text(label)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.small)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(ColorTokens.Kid.surfaceAlt, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label): \(value)")
+    }
+
+    /// Строка-похвала (эталон .praise): «Звук X стал чётче!» — мягкий
+    /// rose-tinted блок с золотой искрой. Текст из presenter (mascotTagline уже
+    /// в заголовке hero — здесь даём предметную похвалу по целевому звуку).
+    private var praiseRow: some View {
+        HStack(spacing: SpacingTokens.small) {
+            Image(systemName: "sparkles")
+                .font(TypographyTokens.body(16).weight(.semibold))
+                .foregroundStyle(ColorTokens.Brand.gold)
+                .accessibilityHidden(true)
+            Text(praiseText)
+                .font(TypographyTokens.body(14).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.small)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            ColorTokens.Brand.rose.opacity(0.12),
+            in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(praiseText)
+    }
+
+    /// Превью следующего занятия — встроено в карточку итогов (lilac-акцент).
+    private func nextLessonRow(title: String) -> some View {
+        HStack(spacing: SpacingTokens.small) {
+            Image(systemName: "arrow.right.circle.fill")
+                .font(TypographyTokens.body(16).weight(.semibold))
+                .foregroundStyle(ColorTokens.Brand.lilac)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 1) {
+                Text(String(localized: "sessionComplete.nextLesson.label"))
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.uppercase)
+                    .tracking(0.4)
+                Text(title)
+                    .font(TypographyTokens.body(14).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.small)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            ColorTokens.Brand.lilac.opacity(0.12),
+            in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(String(localized: "sessionComplete.nextLesson.label")): \(title)"
+        )
     }
 
     // MARK: - Stage 3: Stars
@@ -618,119 +716,6 @@ struct SessionCompleteView: View {
         }
     }
 
-    // MARK: - Stage 7: Summary (stat cards + next lesson)
-
-    @ViewBuilder
-    private var summaryPhase: some View {
-        let visible = display.isPhaseVisible(.nextPreview)
-        VStack(spacing: SpacingTokens.medium) {
-            HStack(spacing: SpacingTokens.medium) {
-                statCard(
-                    icon: "music.note.list",
-                    title: display.gameTitle,
-                    caption: String(localized: "sessionComplete.summary.gameCaption")
-                )
-                .modifier(StaggeredAppear(visible: visible, index: 0, reduceMotion: reduceMotion))
-
-                statCard(
-                    icon: "speaker.wave.2.fill",
-                    title: display.soundLabel,
-                    caption: String(localized: "sessionComplete.summary.soundCaption")
-                )
-                .modifier(StaggeredAppear(visible: visible, index: 1, reduceMotion: reduceMotion))
-            }
-
-            HStack(spacing: SpacingTokens.medium) {
-                statCard(
-                    icon: "checkmark.seal.fill",
-                    title: display.attemptsLabel,
-                    caption: String(localized: "sessionComplete.summary.attemptsCaption")
-                )
-                .modifier(StaggeredAppear(visible: visible, index: 2, reduceMotion: reduceMotion))
-
-                statCard(
-                    icon: "clock.fill",
-                    title: display.durationLabel,
-                    caption: String(localized: "sessionComplete.summary.durationCaption")
-                )
-                .modifier(StaggeredAppear(visible: visible, index: 3, reduceMotion: reduceMotion))
-            }
-
-            if display.hintsLabel != String(localized: "sessionComplete.summary.noHints") {
-                statCard(
-                    icon: "lightbulb.fill",
-                    title: display.hintsLabel,
-                    caption: String(localized: "sessionComplete.summary.hintsCaption")
-                )
-                .modifier(StaggeredAppear(visible: visible, index: 4, reduceMotion: reduceMotion))
-            }
-
-            if let next = display.nextLessonTitle {
-                nextLessonCard(title: next)
-                    .modifier(StaggeredAppear(visible: visible, index: 5, reduceMotion: reduceMotion))
-            }
-        }
-    }
-
-    private func statCard(icon: String, title: String, caption: String) -> some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                HStack(spacing: SpacingTokens.tiny) {
-                    Image(systemName: icon)
-                        .font(TypographyTokens.caption(14).weight(.semibold))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .accessibilityHidden(true)
-                    Text(caption)
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.4)
-                }
-                Text(title)
-                    .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger + parallax
-        // на stat-карточках summary. Гейтятся reduce-motion в HSParallaxTileModifier.
-        .scrollTransition(.animated.threshold(.visible(0.25))) { [reduceMotion] content, phase in
-            content
-                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
-        }
-        .hsParallaxTile(factor: 0.25)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(caption): \(title)")
-    }
-
-    private func nextLessonCard(title: String) -> some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac), padding: SpacingTokens.medium) {
-            HStack(spacing: SpacingTokens.medium) {
-                Image(systemName: "sparkles")
-                    .font(TypographyTokens.title(22).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Brand.lilac)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(String(localized: "sessionComplete.nextLesson.label"))
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.4)
-                    Text(title)
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                }
-                Spacer()
-            }
-        }
-        .accessibilityElement(children: .combine)
-    }
-
     // MARK: - Action buttons
 
     private var actionButtons: some View {
@@ -826,13 +811,35 @@ struct SessionCompleteView: View {
         .celebrating
     }
 
-    private var scoreColor: Color {
-        switch result.score {
-        case 0.9...:    return ColorTokens.Feedback.excellent
-        case 0.7..<0.9: return ColorTokens.Feedback.correct
-        case 0.5..<0.7: return ColorTokens.Brand.butter
-        default:        return ColorTokens.Feedback.incorrect
-        }
+    // MARK: - Summary chip values (реальные данные из result/display)
+
+    /// «N слов» — число сыгранных слов в сессии (= число попыток).
+    private var wordsChipValue: String {
+        String(format: String(localized: "sessionComplete.chip.words.value"), result.attempts)
+    }
+
+    /// «N из M» — правильных из всех (эталон «7 из 8»). Из реального
+    /// `correctAttempts` / `attempts`.
+    private var correctChipValue: String {
+        String(
+            format: String(localized: "sessionComplete.chip.correct.value"),
+            result.correctAttempts,
+            max(result.attempts, result.correctAttempts)
+        )
+    }
+
+    /// «N звёзд» — заработанные звёзды (склонение через String Catalog).
+    private var starsChipValue: String {
+        String(format: String(localized: "sessionComplete.chip.stars.value"), display.starsEarned)
+    }
+
+    /// Предметная похвала «Звук X стал чётче!» при хорошем результате; при
+    /// слабом — мягкое «Звук X ещё тренируем». Из реального `soundTarget`/score.
+    private var praiseText: String {
+        let template = result.score >= 0.6
+            ? String(localized: "sessionComplete.praise.clearer")
+            : String(localized: "sessionComplete.praise.keepPracticing")
+        return String(format: template, result.soundTarget)
     }
 
     // MARK: - Bootstrap
@@ -968,39 +975,6 @@ struct SessionCompleteView: View {
             withAnimation(reduceMotion ? nil : MotionTokens.bounce) {
                 achievementPopVisible = true
             }
-        }
-    }
-
-    // MARK: - Score count-up animation
-
-    private func animateScoreCountUp(to target: Int) {
-        guard target > 0 else {
-            animatedScore = 0
-            ringFraction = 0
-            return
-        }
-        let targetFraction = Double(target) / 100.0
-        // Fix v33 P1 — в screenshot-туре (-HSStartRoute) пропускаем
-        // count-up анимацию: ринг сразу заполняется на нужную долю, иначе
-        // на захвате на 12 с кадр ловится с пустым кольцом (0%) и
-        // непропорциональным числом «75» внутри пустого круга.
-        if reduceMotion || Self.isScreenshotMode {
-            animatedScore = target
-            ringFraction = targetFraction
-            return
-        }
-        withAnimation(.easeOut(duration: 1.1)) {
-            ringFraction = targetFraction
-        }
-        let steps = max(8, target / 4)
-        let stepDelay: UInt64 = 22_000_000
-        Task { @MainActor in
-            for i in 1...steps {
-                let value = Int(Double(target) * Double(i) / Double(steps))
-                animatedScore = value
-                try? await Task.sleep(nanoseconds: stepDelay)
-            }
-            animatedScore = target
         }
     }
 }

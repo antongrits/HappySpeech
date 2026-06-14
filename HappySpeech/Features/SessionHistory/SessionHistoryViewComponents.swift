@@ -39,13 +39,13 @@ struct SessionHistoryRowContent: View {
                 Text(row.title)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.9)
 
                 Text(row.metaLine)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.9)
             }
 
@@ -79,7 +79,7 @@ struct SessionHistoryFilterChipBadge: View {
                 .font(TypographyTokens.caption(10))
             Text(label)
                 .font(TypographyTokens.caption(12).weight(.semibold))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Parent.accent)
@@ -364,7 +364,7 @@ struct SessionFilterChipButton: View {
         Button(action: action) {
             Text(title)
                 .font(TypographyTokens.body(14).weight(.semibold))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink)
                 .padding(.horizontal, SpacingTokens.regular)
@@ -421,7 +421,7 @@ struct DateFieldButton: View {
                 Text(date.map(formatted) ?? String(localized: "sessionHistory.filter.notSet"))
                     .font(TypographyTokens.body(15).weight(.semibold))
                     .foregroundStyle(date == nil ? ColorTokens.Parent.inkMuted : ColorTokens.Parent.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, alignment: .leading)

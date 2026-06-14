@@ -115,7 +115,7 @@ struct AudioMemoryGameView: View {
                     Text(tile.pairKey)
                         .font(TypographyTokens.headline(16).weight(.bold))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.6)
                         .multilineTextAlignment(.center)
                         .padding(2)
@@ -151,7 +151,7 @@ struct AudioMemoryGameView: View {
                 Text(String(localized: "audioMemory.complete"))
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer(minLength: 0)
             }

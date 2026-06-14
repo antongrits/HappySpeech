@@ -129,7 +129,7 @@ struct RetellingView: View {
                         .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                         .padding(.top, SpacingTokens.sp4)
 
@@ -226,7 +226,7 @@ struct RetellingView: View {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "checkmark.circle.fill")
                     Text("retelling.finishButton")
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                 }
                 .font(TypographyTokens.headline(18))
@@ -324,7 +324,7 @@ struct RetellingView: View {
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
 
                 Text(finish.scoreText)

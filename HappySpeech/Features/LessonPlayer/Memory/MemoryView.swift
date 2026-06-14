@@ -156,12 +156,12 @@ struct MemoryView: View {
                          : display.greeting)
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(display.roundLabel)
                         .font(TypographyTokens.caption(12.5))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer(minLength: SpacingTokens.tiny)
@@ -183,7 +183,7 @@ struct MemoryView: View {
                 }
                 .font(TypographyTokens.caption(11.5))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             }
         }
@@ -232,7 +232,7 @@ struct MemoryView: View {
                 Text(label)
                     .font(TypographyTokens.caption(10.5).weight(.medium))
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
             }
         }
@@ -448,7 +448,7 @@ struct MemoryView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity)
         }
@@ -471,7 +471,7 @@ struct MemoryView: View {
                     .accessibilityHidden(true)
                 Text(String(localized: "Заново"))
                     .font(TypographyTokens.caption(15).weight(.bold))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.regular)

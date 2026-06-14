@@ -100,7 +100,7 @@ struct DailyTimeCapView: View {
                     Text(String(localized: "dailyTimeCap.intro.title"))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .allowsTightening(true)
                 }
@@ -127,7 +127,7 @@ struct DailyTimeCapView: View {
                         Text(String(localized: "dailyTimeCap.toggle.subtitle"))
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                 }
@@ -136,7 +136,7 @@ struct DailyTimeCapView: View {
                 Text(viewModel.footnote)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }

@@ -72,7 +72,7 @@ struct DativeDropTargetView: View {
             Text(character.dativeName)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .accessibilityLabel("\(character.dativeName), поле для перетаскивания")
@@ -144,7 +144,7 @@ struct ContainerTapTargetView: View {
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .accessibilityLabel("\(container.genitiveName), нажмите чтобы выбрать")

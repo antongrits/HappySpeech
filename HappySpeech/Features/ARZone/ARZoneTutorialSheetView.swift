@@ -196,7 +196,7 @@ struct ARZoneTutorialSheetView: View {
                     Image(systemName: "play.fill")
                         .accessibilityHidden(true)
                     Text("ar.tutorial.cta.start")
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 .font(TypographyTokens.headline(17).weight(.bold))

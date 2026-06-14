@@ -71,7 +71,7 @@ struct HomeTaskDetailSheet: View {
                 Text(viewModel.subtitle)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }
@@ -181,7 +181,7 @@ struct HomeTaskDetailSheet: View {
                 Text(value)
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer(minLength: 0)

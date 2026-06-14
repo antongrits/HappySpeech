@@ -65,7 +65,7 @@ struct RepeatAfterModelLiveTranscriptView: View {
             Text(displayText)
                 .font(TypographyTokens.headline(17).monospacedDigit())
                 .foregroundStyle(isFinal ? ColorTokens.Kid.ink : ColorTokens.Kid.inkMuted)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
                 .multilineTextAlignment(.center)
         }

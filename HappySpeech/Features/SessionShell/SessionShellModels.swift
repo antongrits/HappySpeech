@@ -141,7 +141,7 @@ enum SessionShellModels {
     }
 
     /// Lyalya mood requested by the Presenter for the current shell state.
-    /// View picks the matching `MascotMood` via `mascotMood(for:)`.
+    /// View maps it to `LyalyaState` via `lyalyaState(for:)` in the feedback overlay.
     enum MascotState: Sendable, Equatable {
         case idle
         case encouraging

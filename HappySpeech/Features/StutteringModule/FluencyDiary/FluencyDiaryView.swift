@@ -56,7 +56,7 @@ struct FluencyDiaryView: View {
             Text(String(localized: "stuttering.feedback.complete"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.regular)

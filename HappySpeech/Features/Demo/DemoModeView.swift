@@ -428,7 +428,7 @@ struct DemoModeView: View {
                             .font(TypographyTokens.mono(11))
                             .foregroundStyle(step.accent.resolvedColor.opacity(0.9))
                             .tracking(1.5)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Text(step.title)
@@ -589,7 +589,7 @@ struct DemoModeView: View {
                 Text(message)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .padding(.horizontal, SpacingTokens.medium)

@@ -144,7 +144,7 @@ struct SyllableConstructorView: View {
                             .foregroundStyle(chip.isSelected
                                 ? ColorTokens.Overlay.onAccent
                                 : ColorTokens.Kid.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                             .padding(.horizontal, SpacingTokens.sp3)
                             .padding(.vertical, SpacingTokens.sp1)
@@ -349,7 +349,7 @@ struct SyllableConstructorView: View {
                     Label {
                         Text("syllable.hear")
                             .font(TypographyTokens.headline(17))
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     } icon: {
                         Image(systemName: "speaker.wave.2.fill")
@@ -373,7 +373,7 @@ struct SyllableConstructorView: View {
                 } label: {
                     Text(primaryButtonTitle(startVM))
                         .font(TypographyTokens.headline(17))
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .frame(maxWidth: .infinity, minHeight: 56)

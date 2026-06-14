@@ -157,7 +157,7 @@ struct SoundDictionaryView: View {
                         Text("soundDictionary.hero.title")
                             .font(TypographyTokens.title(22))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         Text(viewModel.totalCountLabel)
@@ -204,7 +204,7 @@ struct SoundDictionaryView: View {
                 Text(section.groupTitle)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Spacer()
@@ -303,7 +303,7 @@ struct SoundDictionaryView: View {
                     Text(viewModel.exampleWord)
                         .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -124,7 +124,7 @@ struct BilingualModeView: View {
                     Text("Два языка — два богатства")
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text("Учимся называть одни и те же предметы и на русском, и на втором языке.")
                         .font(TypographyTokens.body(14))
@@ -197,7 +197,7 @@ struct BilingualModeView: View {
                     Text("10 раундов • выбери правильный ответ")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer()
@@ -289,7 +289,7 @@ struct BilingualModeView: View {
                 Text(translation)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer()

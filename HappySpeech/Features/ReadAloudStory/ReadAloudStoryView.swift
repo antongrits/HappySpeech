@@ -163,7 +163,7 @@ struct ReadAloudStoryView: View {
                         Text(start.title)
                             .font(TypographyTokens.title(24))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                             .padding(.bottom, SpacingTokens.sp2)
 
@@ -190,7 +190,7 @@ struct ReadAloudStoryView: View {
                     Label {
                         Text(playButtonLabel(for: start))
                             .font(TypographyTokens.headline(17))
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     } icon: {
                         Image(systemName: holder.highlightedSentenceIndex == nil
@@ -319,7 +319,7 @@ struct ReadAloudStoryView: View {
             Text(option.label)
                 .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, minHeight: 60)
@@ -349,7 +349,7 @@ struct ReadAloudStoryView: View {
                 .font(.title3)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -382,7 +382,7 @@ struct ReadAloudStoryView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(summary.scoreText)

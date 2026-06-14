@@ -129,7 +129,7 @@ struct MusicalSoundDrumsView: View {
                 Text(String(localized: "musicalDrums.roundDone"))
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Spacer(minLength: 0)
             }

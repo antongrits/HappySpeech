@@ -184,7 +184,7 @@ struct LogorhythmicsView: View {
                 Text(exercise.title)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.leading)
                 Text("С \(exercise.ageMin) лет · \(exercise.totalBeats) долей")
@@ -410,7 +410,7 @@ struct LogorhythmicsView: View {
                             .font(TypographyTokens.title(20))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .multilineTextAlignment(.center)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
                     Text("Темп \(vm.exercise.bpm) уд/мин")

@@ -186,7 +186,6 @@ private struct StoryCoverCard: View {
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.leading)
-                    .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -275,7 +274,7 @@ private struct StoryCoverCard: View {
                 .accessibilityHidden(true)
             Text(String(localized: "storyLibrary.card.watch"))
                 .font(TypographyTokens.caption(13).weight(.semibold))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Brand.primary)

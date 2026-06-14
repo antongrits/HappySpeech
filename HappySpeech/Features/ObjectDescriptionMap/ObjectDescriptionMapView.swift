@@ -227,7 +227,7 @@ struct ObjectDescriptionMapView: View {
                 Text(object.title)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
             }
@@ -288,7 +288,7 @@ struct ObjectDescriptionMapView: View {
                         Text(vm.object.title)
                             .font(TypographyTokens.title(24))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
                     Text(vm.hintMessage)
@@ -329,7 +329,7 @@ struct ObjectDescriptionMapView: View {
                 Text(item.prompt)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer(minLength: 0)
@@ -382,7 +382,7 @@ struct ObjectDescriptionMapView: View {
                         Text(vm.object.title)
                             .font(TypographyTokens.title(22))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                         Spacer(minLength: 0)
                     }
@@ -597,7 +597,7 @@ struct ObjectDescriptionMapView: View {
                     Text(decorated.matchedKeywords.prefix(3).joined(separator: ", "))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }

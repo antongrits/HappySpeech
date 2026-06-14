@@ -124,7 +124,7 @@ struct FamilyAwardsCabinetView: View {
                 Text(viewModel.heroTitle)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
 
@@ -253,7 +253,7 @@ struct FamilyAwardsCabinetView: View {
                 Text(shelf.tierTitle)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Spacer()
@@ -316,14 +316,14 @@ struct FamilyAwardsCabinetView: View {
                 Text(trophy.title)
                     .font(TypographyTokens.caption(11).weight(.semibold))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
 
                 Text(trophy.childName)
                     .font(TypographyTokens.caption(10))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, minHeight: 110)
@@ -425,7 +425,7 @@ struct FamilyAwardsCabinetView: View {
                         Text(viewModel.subtitle)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer()

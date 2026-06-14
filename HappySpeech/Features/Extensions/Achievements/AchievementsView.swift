@@ -177,7 +177,7 @@ struct AchievementsView: View {
                         Text(vm.progressText)
                             .font(TypographyTokens.caption(14))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer(minLength: 0)
@@ -469,7 +469,7 @@ struct AchievementsView: View {
             Text(toast.message)
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, SpacingTokens.sp5)

@@ -107,7 +107,7 @@ struct StoryEndingMakerView: View {
                     Text(String(localized: "storyEnding.hero.title"))
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: "storyEnding.hero.subtitle"))
                         .font(TypographyTokens.body(14))
@@ -167,7 +167,7 @@ struct StoryEndingMakerView: View {
                 Text(card.label)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
             }

@@ -230,7 +230,7 @@ private struct IslandCard: View {
             Text(card.name)
                 .font(TypographyTokens.headline(17).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
 
             statusLine
@@ -251,19 +251,19 @@ private struct IslandCard: View {
             Text(String(localized: "worldmap.island.locked"))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
         } else if !card.soundsLabel.isEmpty {
             Text(card.soundsLabel)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
         } else {
             Text(card.progressLabel)
                 .font(TypographyTokens.caption(13).weight(.semibold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
     }
@@ -274,7 +274,7 @@ private struct IslandCard: View {
         Text(String(localized: "worldmap.island.current"))
             .font(TypographyTokens.caption(13).weight(.bold))
             .foregroundStyle(ColorTokens.Overlay.onAccent)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.7)
             .padding(.horizontal, SpacingTokens.small)
             .padding(.vertical, 6)

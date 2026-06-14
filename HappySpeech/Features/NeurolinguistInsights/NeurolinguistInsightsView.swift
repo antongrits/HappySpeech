@@ -73,7 +73,7 @@ struct NeurolinguistInsightsView: View {
                 Text(String(localized: "insights.hero.title"))
                     .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
 
@@ -150,7 +150,7 @@ struct NeurolinguistInsightsView: View {
                     Text(card.title)
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Spacer()

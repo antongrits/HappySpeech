@@ -75,7 +75,7 @@ struct SharePlaySessionView: View {
                 Text(label)
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .transition(.opacity)
             } else {
@@ -87,7 +87,7 @@ struct SharePlaySessionView: View {
                 )
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             }
 
@@ -100,7 +100,7 @@ struct SharePlaySessionView: View {
                         .font(TypographyTokens.caption(12))
                     Text(String(localized: "shareplay.session.end"))
                         .font(TypographyTokens.caption(12))
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -139,7 +139,7 @@ struct SharePlaySessionView: View {
                 Text(text)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, SpacingTokens.sp4)
@@ -166,7 +166,6 @@ struct SharePlaySessionView: View {
                     Text(String(localized: "shareplay.celebration.together"))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)

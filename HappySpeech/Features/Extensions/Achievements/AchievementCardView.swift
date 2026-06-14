@@ -17,14 +17,14 @@ struct AchievementCardView: View {
                 Text(item.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(item.isUnlocked ? ColorTokens.Kid.ink : ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 if item.isUnlocked, !item.description.isEmpty {
                     Text(item.description)
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 

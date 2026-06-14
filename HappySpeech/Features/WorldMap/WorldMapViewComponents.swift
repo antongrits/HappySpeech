@@ -90,12 +90,12 @@ struct WorldZoneTile: View {
                 Text(card.name)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(card.foregroundColor)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(card.soundsLabel)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(card.foregroundColor.opacity(0.85))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
             }
 
@@ -247,7 +247,7 @@ struct WorldZoneDetailSheet: View {
                     Text(viewModel.soundsLabel)
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(viewModel.backgroundColor)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }
@@ -290,13 +290,13 @@ struct WorldZoneDetailSheet: View {
                         .foregroundStyle(viewModel.isLocked
                             ? ColorTokens.Kid.inkSoft
                             : viewModel.backgroundColor)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(viewModel.lessonsLabel)
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer(minLength: 0)
@@ -413,7 +413,7 @@ struct WorldZoneDetailSheet: View {
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .frame(maxWidth: .infinity)

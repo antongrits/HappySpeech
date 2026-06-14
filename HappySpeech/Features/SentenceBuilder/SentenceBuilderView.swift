@@ -284,7 +284,7 @@ struct SentenceBuilderView: View {
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                         .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
                 }
@@ -472,7 +472,7 @@ struct SentenceBuilderView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(summary.scoreText)

@@ -232,14 +232,14 @@ struct DragAndMatchView: View {
                 .font(TypographyTokens.kidTitle(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
             if let pairLabel = display.confusedPairLabel {
                 Text(pairLabel)
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }
@@ -363,7 +363,7 @@ struct DragAndMatchView: View {
                 Text(bucket.title)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
             }
             LazyVGrid(

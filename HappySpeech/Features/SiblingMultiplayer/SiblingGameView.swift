@@ -91,7 +91,7 @@ struct SiblingGameView: View {
                 Text(display.roundLabel)
                     .font(TypographyTokens.headline(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
             }
             .accessibilityHidden(true)
@@ -252,7 +252,7 @@ struct SiblingGameView: View {
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .frame(width: 60, alignment: .leading)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
 
             GeometryReader { geo in

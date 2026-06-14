@@ -93,8 +93,9 @@ struct ARStoryQuestView: View {
             Text(display.questTitle)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
 
             Spacer()
 
@@ -150,7 +151,7 @@ struct ARStoryQuestView: View {
                     .fontWeight(.bold)
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.6)
             }
             .frame(maxWidth: .infinity)

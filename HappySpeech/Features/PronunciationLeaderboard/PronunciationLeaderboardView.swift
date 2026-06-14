@@ -65,7 +65,7 @@ struct PronunciationLeaderboardView: View {
                     Text(String(localized: "leaderboard.header.title"))
                         .font(TypographyTokens.headline(20))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .accessibilityAddTraits(.isHeader)
 
@@ -74,7 +74,7 @@ struct PronunciationLeaderboardView: View {
                          : viewModel.totalChildrenText)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -219,7 +219,7 @@ struct PronunciationLeaderboardView: View {
             Text(row.childName)
                 .font(TypographyTokens.headline(14))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .padding(.top, 2)
 
@@ -300,12 +300,12 @@ struct PronunciationLeaderboardView: View {
                 Text("leaderboard.champions.footer.title")
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text("leaderboard.champions.footer.subtitle")
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer(minLength: 0)
@@ -455,7 +455,7 @@ private struct LeaderboardRowView: View {
                         Text(row.childName)
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         if row.isYou {
                             Text("leaderboard.you.tag")
@@ -489,7 +489,7 @@ private struct LeaderboardRowView: View {
                         Text(row.trendLabel)
                             .font(TypographyTokens.caption(11))
                             .foregroundStyle(trendColor)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                 }

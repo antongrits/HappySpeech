@@ -315,7 +315,7 @@ struct AssignedHomeworkView: View {
                 Text(template.name)
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Spec.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                 Spacer(minLength: 0)
             }

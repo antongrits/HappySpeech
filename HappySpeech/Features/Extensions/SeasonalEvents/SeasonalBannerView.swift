@@ -71,13 +71,11 @@ struct SeasonalBannerView: View {
                 Text(event.localizedTitle)
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .fixedSize(horizontal: false, vertical: true)
                 Text(String(localized: "seasonal.banner.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -97,7 +95,7 @@ struct SeasonalBannerView: View {
                 .font(TypographyTokens.caption(11).weight(.heavy))
                 .textCase(.uppercase)
                 .tracking(0.6)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Kid.ink)
@@ -117,7 +115,7 @@ struct SeasonalBannerView: View {
             HStack(spacing: SpacingTokens.sp1) {
                 Text(String(localized: "seasonal.banner.cta"))
                     .font(TypographyTokens.body(15).weight(.heavy))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Image(systemName: "arrow.right")
                     .font(.system(size: 13, weight: .bold))

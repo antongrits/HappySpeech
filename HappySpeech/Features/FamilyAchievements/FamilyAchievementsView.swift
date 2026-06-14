@@ -144,7 +144,7 @@ struct FamilyAchievementsView: View {
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text(hero.subtitleLabel)
@@ -255,7 +255,7 @@ struct FamilyAchievementsView: View {
                     Text(row.name)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(row.ageLabel)
                         .font(TypographyTokens.caption(11))
@@ -274,7 +274,7 @@ struct FamilyAchievementsView: View {
                     Text(row.masteredSoundsLabel)
                         .font(.caption2)
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }
@@ -357,7 +357,7 @@ struct FamilyAchievementsView: View {
                                 ? ColorTokens.Parent.ink
                                 : ColorTokens.Parent.inkMuted
                         )
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(row.categoryLabel)
@@ -463,7 +463,7 @@ struct FamilyAchievementsView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)

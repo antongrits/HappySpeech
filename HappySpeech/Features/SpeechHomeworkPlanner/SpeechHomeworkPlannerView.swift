@@ -106,7 +106,7 @@ struct SpeechHomeworkPlannerView: View {
                     Text(item.title)
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Spacer()
                     Image(systemName: item.isDone ? "checkmark.circle.fill" : "circle")

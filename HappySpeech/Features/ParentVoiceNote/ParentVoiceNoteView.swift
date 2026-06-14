@@ -219,7 +219,7 @@ struct ParentVoiceNoteView: View {
                     Text(template.title)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     if template.hasClip,
                        let duration = template.durationLabel,

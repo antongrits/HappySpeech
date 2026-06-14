@@ -254,7 +254,7 @@ struct BingoView: View {
                     Text(String(localized: "bingo.celebration.bingo"))
                         .font(TypographyTokens.display(40))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.6)
                     Text(String(localized: "bingo.celebration.five_in_row"))
                         .font(TypographyTokens.body(17))

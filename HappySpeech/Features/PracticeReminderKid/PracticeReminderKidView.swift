@@ -141,7 +141,7 @@ struct PracticeReminderKidView: View {
             .font(TypographyTokens.title(27))
             .foregroundStyle(ColorTokens.Kid.ink)
             .multilineTextAlignment(.center)
-            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
             .accessibilityAddTraits(.isHeader)
     }
@@ -158,7 +158,7 @@ struct PracticeReminderKidView: View {
                 .font(TypographyTokens.body(15).weight(.medium))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.leading)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .padding(.vertical, SpacingTokens.sp2)
@@ -203,7 +203,7 @@ struct PracticeReminderKidView: View {
             Text(label)
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)

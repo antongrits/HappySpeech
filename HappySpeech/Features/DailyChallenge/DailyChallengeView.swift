@@ -147,7 +147,7 @@ struct DailyChallengeView: View {
                     Text(viewModel.heroSubtitle)
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .accessibilityAddTraits(.isHeader)
 
@@ -188,7 +188,7 @@ struct DailyChallengeView: View {
                         Text(viewModel.goalTitle)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         Text(viewModel.goalSubtitle)
@@ -251,13 +251,13 @@ struct DailyChallengeView: View {
                     Text(viewModel.streakTitle)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(viewModel.longestStreakLabel)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
                 Spacer()
@@ -286,7 +286,7 @@ struct DailyChallengeView: View {
                     Text(viewModel.rewardTitle)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     HSBadge(

@@ -175,7 +175,7 @@ struct AuthVerifyEmailView: View {
                         Text(displayEmail)
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Brand.primary)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -280,7 +280,7 @@ struct AuthVerifyEmailView: View {
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .underline()
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.medium)

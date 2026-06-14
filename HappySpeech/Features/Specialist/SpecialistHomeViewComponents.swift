@@ -208,7 +208,16 @@ struct SpecChildRow: View {
     }
 
     var body: some View {
-        HStack(spacing: SpacingTokens.sp4) {
+        // РЕДИЗАЙН specialist-home (эталон `.client` карточки): avatar →
+        // info-колонка (имя + возраст inline, звук-чипы, прогресс-бар) → правая
+        // колонка (процент-пилюля + статус последнего занятия) → chevron.
+        //
+        // Fix-обрезка возраста: прежде «6 лет» усекалось до «6…», потому что
+        // подзаголовок-HStack делил ширину строки с длинной правой меткой «Не
+        // отрабатывали» (lineLimit 2). Теперь возраст и звук-чипы вынесены в
+        // отдельные строки и получают `.fixedSize`/`layoutPriority`, а правая
+        // колонка ограничена по ширине — возраст всегда виден целиком.
+        HStack(spacing: SpacingTokens.sp3) {
             ZStack {
                 Circle()
                     .fill(ColorTokens.Spec.accent.opacity(0.12))
@@ -217,51 +226,64 @@ struct SpecChildRow: View {
                     .font(TypographyTokens.titleSmall(20))
                     .foregroundStyle(ColorTokens.Spec.accent)
             }
+            .accessibilityHidden(true)
 
-            VStack(alignment: .leading, spacing: 3) {
-                Text(child.name)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Spec.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-
-                HStack(spacing: SpacingTokens.sp2) {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp2) {
+                    Text(child.name)
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                        .layoutPriority(1)
                     if let ageLine {
                         Text(ageLine)
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
                             .lineLimit(1)
-                            .minimumScaleFactor(0.85)
-                        Text("·")
-                    }
-                    ForEach(child.targetSounds, id: \.self) { sound in
-                        HSBadge(sound, style: .filled(ColorTokens.Spec.accent))
+                            .fixedSize(horizontal: true, vertical: false)
                     }
                 }
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Spec.inkMuted)
+
+                if !child.targetSounds.isEmpty {
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Text(String(localized: "spec.child.row.goalPrefix", defaultValue: "Цель:"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .fixedSize(horizontal: true, vertical: false)
+                        ForEach(child.targetSounds.prefix(3), id: \.self) { sound in
+                            HSBadge(sound, style: .filled(ColorTokens.Spec.accent))
+                        }
+                    }
+                }
 
                 SpecProgressBar(percent: overallProgressPercent)
                     .frame(height: 4)
-                    .padding(.top, 2)
+                    .padding(.top, 1)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
-            Spacer(minLength: SpacingTokens.sp1)
-
-            // Fix #9b — «Не отрабатывали» жалось вплотную к chevron
-            // справа: добавлен trailing-padding `regular` (16pt) у внутреннего
-            // VStack, благодаря которому между датой/статусом и иконкой-стрелкой
-            // появляется dедающее «дышать» пространство.
-            VStack(alignment: .trailing, spacing: 2) {
+            VStack(alignment: .trailing, spacing: 4) {
+                Text("\(overallProgressPercent)%")
+                    .font(TypographyTokens.headline(14))
+                    .foregroundStyle(progressPillColor)
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .padding(.horizontal, SpacingTokens.sp2)
+                    .padding(.vertical, 3)
+                    .background(Capsule().fill(progressPillColor.opacity(0.14)))
                 Text(lastSessionLabel)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.trailing)
+                    .frame(maxWidth: 96, alignment: .trailing)
             }
-            .padding(.trailing, SpacingTokens.regular)
+            .fixedSize(horizontal: false, vertical: true)
 
             Image(systemName: "chevron.right")
-                .font(TypographyTokens.caption(12))
+                .font(TypographyTokens.caption(12).weight(.semibold))
                 .foregroundStyle(ColorTokens.Spec.inkMuted)
                 .accessibilityHidden(true)
         }
@@ -272,6 +294,16 @@ struct SpecChildRow: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHint(String(localized: "spec.child.row.hint"))
         .accessibilityAddTraits(.isButton)
+    }
+
+    /// Цвет процент-пилюли по уровню прогресса (мелкий семантический акцент,
+    /// не крупная заливка): низкий — rose, средний — warning, высокий — gold.
+    private var progressPillColor: Color {
+        switch overallProgressPercent {
+        case ..<50: return ColorTokens.Brand.rose
+        case ..<80: return ColorTokens.Semantic.warning
+        default: return ColorTokens.Brand.gold
+        }
     }
 
     /// Локализованная подпись возраста или `nil`, если возраст неизвестен.
@@ -350,6 +382,7 @@ struct SpecDashboardHeader: View {
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
                             .lineLimit(2)
                             .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Spacer(minLength: SpacingTokens.sp1)
                 }

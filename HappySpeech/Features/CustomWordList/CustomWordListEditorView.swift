@@ -155,7 +155,7 @@ struct CustomWordListEditorView: View {
                         Text("customWordList.autoPick.subtitle")
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer(minLength: 0)
@@ -314,7 +314,7 @@ struct CustomWordListEditorView: View {
                         Capsule()
                             .fill(ColorTokens.Brand.lilac.opacity(0.15))
                     )
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .accessibilityLabel(word)
             }

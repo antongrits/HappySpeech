@@ -101,7 +101,7 @@ struct PhonemeFamilyMatcherView: View {
                     Text(family.title)
                         .font(TypographyTokens.labelRounded(12, weight: .semibold))
                         .foregroundStyle(selectedFamily == family ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, SpacingTokens.small)

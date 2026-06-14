@@ -125,7 +125,7 @@ struct ARFallbackBannerView: View {
                         Image(systemName: "play.fill")
                             .accessibilityHidden(true)
                         Text("ar.zone.fallbackCTA")
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     .font(TypographyTokens.headline(15))
@@ -186,13 +186,12 @@ struct ARPlannerBannerView: View {
                     Text(String(localized: String.LocalizationValue(banner.titleKey)))
                         .font(TypographyTokens.headline(14).weight(.semibold))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(String(localized: String.LocalizationValue(banner.bodyKey)))
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -238,7 +237,7 @@ struct ARGameCardView: View {
                     Text(card.title)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     HStack(spacing: SpacingTokens.micro) {
                         Image(systemName: "clock")

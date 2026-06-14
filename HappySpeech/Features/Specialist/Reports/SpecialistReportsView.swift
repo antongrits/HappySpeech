@@ -47,6 +47,7 @@ struct SpecialistReportsView: View {
                             summaryCard
                             soundBreakdownSection
                             exportSection
+                            honestNote
                         }
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
@@ -133,40 +134,41 @@ struct SpecialistReportsView: View {
     // MARK: - Custom word list entry (v31 Wave C Ф.4)
 
     private var customWordListEntryCard: some View {
-        HSCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                ZStack {
-                    Circle()
-                        .fill(ColorTokens.Spec.accent.opacity(0.14))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "list.bullet.rectangle.fill")
-                        .font(TypographyTokens.subtitle(20))
-                        .foregroundStyle(ColorTokens.Spec.accent)
-                }
-                .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(String(localized: "customWordList.entry.title"))
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Spec.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "customWordList.entry.hint"))
-                        .font(TypographyTokens.body())
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                }
-                Spacer(minLength: 0)
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    .accessibilityHidden(true)
-            }
-            .padding(SpacingTokens.sp3)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             showCustomWordList = true
+        } label: {
+            HSCard(style: .elevated) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Spec.accent.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "list.bullet.rectangle.fill")
+                            .font(TypographyTokens.subtitle(20))
+                            .foregroundStyle(ColorTokens.Spec.accent)
+                    }
+                    .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "customWordList.entry.title"))
+                            .font(TypographyTokens.headline())
+                            .foregroundStyle(ColorTokens.Spec.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "customWordList.entry.hint"))
+                            .font(TypographyTokens.body())
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .accessibilityHidden(true)
+                }
+                .padding(SpacingTokens.sp3)
+            }
         }
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "customWordList.entry.title") + ". " +
@@ -179,40 +181,41 @@ struct SpecialistReportsView: View {
     // MARK: - Methodology assistant entry (Cad-task-1: Vertex AI Search)
 
     private var methodologyAssistantEntryCard: some View {
-        HSCard(style: .elevated) {
-            HStack(spacing: SpacingTokens.sp3) {
-                ZStack {
-                    Circle()
-                        .fill(ColorTokens.Spec.accent.opacity(0.14))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: "graduationcap.fill")
-                        .font(TypographyTokens.subtitle(20))
-                        .foregroundStyle(ColorTokens.Spec.accent)
-                }
-                .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(String(localized: "methodologyAssistant.entry.title"))
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Spec.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "methodologyAssistant.entry.hint"))
-                        .font(TypographyTokens.body())
-                        .foregroundStyle(ColorTokens.Spec.inkMuted)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                }
-                Spacer(minLength: 0)
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    .accessibilityHidden(true)
-            }
-            .padding(SpacingTokens.sp3)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
+        Button {
             coordinator.navigate(to: .methodologyAssistant)
+        } label: {
+            HSCard(style: .elevated) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Spec.accent.opacity(0.14))
+                            .frame(width: 44, height: 44)
+                        Image(systemName: "graduationcap.fill")
+                            .font(TypographyTokens.subtitle(20))
+                            .foregroundStyle(ColorTokens.Spec.accent)
+                    }
+                    .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "methodologyAssistant.entry.title"))
+                            .font(TypographyTokens.headline())
+                            .foregroundStyle(ColorTokens.Spec.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "methodologyAssistant.entry.hint"))
+                            .font(TypographyTokens.body())
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .accessibilityHidden(true)
+                }
+                .padding(SpacingTokens.sp3)
+            }
         }
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "methodologyAssistant.entry.title") + ". " +
@@ -390,6 +393,44 @@ struct SpecialistReportsView: View {
             .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .accessibilityLabel(title)
+    }
+
+    // MARK: - Honest note (эталон specialist-report `.note`)
+
+    /// Текст честной ремарки. `defaultValue` — строковый литерал, чтобы
+    /// корректно отрисоваться до добавления ключа в каталог.
+    private var honestNoteText: String {
+        String(
+            localized: "reports.honestNote",
+            defaultValue: "Это интерпретируемая педагогическая обратная связь, а не диагноз. Решения о коррекции принимает специалист."
+        )
+    }
+
+    /// Честная методологическая ремарка: показатели — интерпретируемая
+    /// педагогическая обратная связь, а не клинический диагноз. Это требование
+    /// App Store (Kids) и этики продукта (CLAUDE.md §11).
+    private var honestNote: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            Image(systemName: "info.circle.fill")
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Spec.accent)
+                .accessibilityHidden(true)
+            Text(honestNoteText)
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(SpacingTokens.sp3)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Spec.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Spec.line, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
     }
 
     private func lastExportRow(url: URL) -> some View {

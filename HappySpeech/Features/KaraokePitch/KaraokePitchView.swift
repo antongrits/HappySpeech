@@ -335,7 +335,7 @@ struct KaraokePitchView: View {
                      ? "karaoke.button.stop"
                      : "karaoke.button.record")
                     .font(TypographyTokens.headline(18))
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
             }
             .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -359,7 +359,7 @@ struct KaraokePitchView: View {
         } label: {
             Text("karaoke.button.retry")
                 .font(TypographyTokens.headline(17))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(
@@ -378,7 +378,7 @@ struct KaraokePitchView: View {
         } label: {
             Text("karaoke.button.next")
                 .font(TypographyTokens.headline(17))
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.7)
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(

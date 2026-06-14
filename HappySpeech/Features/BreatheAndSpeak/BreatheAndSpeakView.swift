@@ -134,7 +134,7 @@ struct BreatheAndSpeakView: View {
                     .font(TypographyTokens.kidTitle(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
 
                 progressDots(startVM: startVM, step: step)
@@ -346,7 +346,7 @@ struct BreatheAndSpeakView: View {
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             // Реальный итог упражнения (из ViewModel) — заполняет середину

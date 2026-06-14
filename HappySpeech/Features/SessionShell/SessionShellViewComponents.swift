@@ -9,62 +9,98 @@ import SwiftUI
 
 // MARK: - SessionHUDView
 
-/// HUD строка над контентом сессии:
-///   [Прогресс-бар] [mm:ss таймер] [♥♥♥] [⏸]
-/// Обёрнуто в `HSLiquidGlassCard(.primary)`. Таймер использует `TimelineView`
-/// и считает живое время от `state.sessionStartReference`.
+/// Верхняя session-bar над контентом занятия — перенос эталона
+/// `session-shell.html` (.sessionbar):
+///
+///   [✕ выход] · [сегментированный прогресс + «шаг N из M»] · [⏱ mm:ss] · [⏸ пауза]
+///
+/// Обёрнуто в `HSLiquidGlassCard(.primary)` (glass-подложка эталона). Прогресс —
+/// сегментированный (по одному сегменту на шаг, активный пульсирует), а не
+/// плоский linear, как в дизайне. Таймер использует `TimelineView` и считает
+/// живое время от `state.sessionStartReference`. Сердечки усталости вынесены из
+/// bar'а в отдельный fatigue-chip под ней (см. `SessionFatigueChip`).
 struct SessionHUDView: View {
     let state: SessionShellState
+    let onExitTap: () -> Void
     let onPauseTap: () -> Void
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    private var stepIndex: Int { min(state.currentIndex, max(state.totalSteps - 1, 0)) }
+    private var totalSteps: Int { max(state.totalSteps, 1) }
 
     var body: some View {
-        // Fix #10a — единый sp3 (medium) gap между progress/timer/
-        // hearts/pause, чтобы header HUD выглядел ровно на всех устройствах
-        // (раньше использовался regular=16 — слишком воздушно на SE 3).
         HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.small) {
+                exitButton
                 progressBlock
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity)
                 timerBlock
-                fatigueBlock
                 pauseButton
             }
         }
         .accessibilityElement(children: .contain)
     }
 
-    // MARK: Progress
+    // MARK: Exit
+
+    private var exitButton: some View {
+        Button(action: onExitTap) {
+            Image(systemName: "xmark")
+                .font(TypographyTokens.body(16).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .frame(width: 40, height: 40)
+                .background(ColorTokens.Kid.surface, in: Circle())
+                .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                .contentShape(Circle())
+                .accessibilityHidden(true)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("sessionExitButton")
+        .accessibilityLabel(String(localized: "session.hud.exit"))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: Progress (segmented — эталон .segs)
 
     private var progressBlock: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+        VStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: 4) {
+                ForEach(0..<totalSteps, id: \.self) { idx in
+                    Capsule(style: .continuous)
+                        .fill(segmentColor(idx))
+                        .frame(height: 7)
+                        .overlay(activeRing(idx))
+                }
+            }
             Text(String(
-                localized: "session.hud.step_format \(state.currentIndex + 1) \(max(state.totalSteps, 1))"
+                localized: "session.hud.step_format \(stepIndex + 1) \(totalSteps)"
             ))
-            .font(TypographyTokens.caption())
+            .font(TypographyTokens.caption(13).weight(.bold))
             .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-            ProgressView(
-                value: max(0, min(progressFraction, 1))
-            )
-            .progressViewStyle(.linear)
-            .tint(ColorTokens.Brand.primary)
-            .frame(height: 6)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(String(
-            localized: "session.hud.progress.a11y \(state.currentIndex + 1) \(max(state.totalSteps, 1))"
+            localized: "session.hud.progress.a11y \(stepIndex + 1) \(totalSteps)"
         ))
-        // UI-тест: стабильный identifier + value со строкой "step/total" для
-        // отслеживания продвижения сессии без знания внутренней игры.
+        // UI-тест: стабильный identifier + value "step/total" для отслеживания
+        // продвижения сессии без знания внутренней игры.
         .accessibilityIdentifier("sessionHUDProgress")
-        .accessibilityValue("\(state.currentIndex + 1)/\(max(state.totalSteps, 1))")
+        .accessibilityValue("\(stepIndex + 1)/\(totalSteps)")
     }
 
-    private var progressFraction: Double {
-        guard state.totalSteps > 0 else { return 0 }
-        return Double(state.currentIndex) / Double(state.totalSteps)
+    private func segmentColor(_ idx: Int) -> Color {
+        idx <= stepIndex ? ColorTokens.Brand.primary : ColorTokens.Kid.line
+    }
+
+    @ViewBuilder
+    private func activeRing(_ idx: Int) -> some View {
+        if idx == stepIndex {
+            // Статичное кольцо-акцент вокруг текущего сегмента (эталон .segs .now).
+            // Без анимации — стандинг-ордер: фон/HUD не «дышит».
+            Capsule(style: .continuous)
+                .strokeBorder(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 3)
+        }
     }
 
     // MARK: Timer
@@ -72,13 +108,20 @@ struct SessionHUDView: View {
     private var timerBlock: some View {
         TimelineView(.periodic(from: state.sessionStartReference, by: 1.0)) { context in
             let elapsed = max(0, context.date.timeIntervalSince(state.sessionStartReference))
-            Text(Self.formatElapsed(elapsed))
-                .font(TypographyTokens.caption(13).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .frame(minWidth: 44, alignment: .trailing)
-                .accessibilityLabel(String(
-                    localized: "session.hud.timer.a11y \(Int(elapsed / 60)) \(Int(elapsed) % 60)"
-                ))
+            HStack(spacing: 4) {
+                Image(systemName: "clock")
+                    .font(TypographyTokens.caption(12).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .accessibilityHidden(true)
+                Text(Self.formatElapsed(elapsed))
+                    .font(TypographyTokens.caption(13).weight(.bold).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Kid.ink)
+            }
+            .frame(minWidth: 56, alignment: .trailing)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(String(
+                localized: "session.hud.timer.a11y \(Int(elapsed / 60)) \(Int(elapsed) % 60)"
+            ))
         }
     }
 
@@ -87,41 +130,62 @@ struct SessionHUDView: View {
         return String(format: "%02d:%02d", total / 60, total % 60)
     }
 
-    // MARK: Fatigue (3 hearts)
-
-    private var fatigueBlock: some View {
-        HStack(spacing: 2) {
-            ForEach(0..<3, id: \.self) { idx in
-                Image(systemName: idx < state.fatigueHearts ? "heart.fill" : "heart")
-                    .font(TypographyTokens.caption(13).weight(.semibold))
-                    .foregroundStyle(idx < state.fatigueHearts
-                        ? ColorTokens.Semantic.error
-                        : ColorTokens.Kid.line)
-                    .scaleEffect(reduceMotion ? 1.0 : (idx < state.fatigueHearts ? 1.0 : 0.85))
-                    .animation(reduceMotion ? nil : .spring(duration: 0.4), value: state.fatigueHearts)
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(String(
-            localized: "session.hud.fatigue.a11y \(state.fatigueHearts)"
-        ))
-    }
-
     // MARK: Pause
 
     private var pauseButton: some View {
         Button(action: onPauseTap) {
-            Image(systemName: "pause.circle.fill")
-                .font(TypographyTokens.title(28).weight(.semibold))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .frame(width: 56, height: 56)
-                .contentShape(Rectangle())
+            Image(systemName: "pause.fill")
+                .font(TypographyTokens.body(16).weight(.bold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .frame(width: 40, height: 40)
+                .background(ColorTokens.Kid.surface, in: Circle())
+                .overlay(Circle().strokeBorder(ColorTokens.Brand.primary.opacity(0.45), lineWidth: 1.5))
+                .contentShape(Circle())
                 .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("sessionPauseButton")
         .accessibilityLabel(String(localized: "session.hud.pause"))
         .accessibilityAddTraits(.isButton)
+    }
+}
+
+// MARK: - SessionFatigueChip
+
+/// Тёплая «пилюля» под session-bar — перенос эталона `session-shell.html`
+/// (.fatigue): warning-tinted капсула «Сделаем паузу?». Видимость гейтится
+/// родителем (`state.fatigueHearts < 3`), чтобы при скрытии не оставался зазор.
+/// Заменяет ряд из 3 сердец в bar'е — для детей понятнее мягкая
+/// подсказка-приглашение, чем «потерянные жизни».
+struct SessionFatigueChip: View {
+    let fatigueHearts: Int
+
+    var body: some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Image(systemName: "cup.and.saucer.fill")
+                .font(TypographyTokens.caption(13).weight(.bold))
+                .accessibilityHidden(true)
+            Text(String(localized: "session.fatigue.chip"))
+                .font(TypographyTokens.caption(13).weight(.bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+        .foregroundStyle(ColorTokens.Semantic.warning)
+        .padding(.horizontal, SpacingTokens.small)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Semantic.warningBg)
+        )
+        .overlay(
+            Capsule(style: .continuous)
+                .strokeBorder(ColorTokens.Semantic.warning.opacity(0.4), lineWidth: 1)
+        )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(
+            localized: "session.hud.fatigue.a11y \(fatigueHearts)"
+        ))
+        .accessibilityIdentifier("sessionFatigueChip")
     }
 }
 
@@ -252,17 +316,6 @@ struct FeedbackOverlayView: View {
                     shakeOffset = value
                 }
             }
-        }
-    }
-
-    private func mascotMood(for state: SessionShellModels.MascotState) -> MascotMood {
-        switch state {
-        case .idle:        return .idle
-        case .encouraging: return .encouraging
-        case .celebrating: return .celebrating
-        case .thinking:    return .thinking
-        case .explaining:  return .explaining
-        case .waving:      return .waving
         }
     }
 

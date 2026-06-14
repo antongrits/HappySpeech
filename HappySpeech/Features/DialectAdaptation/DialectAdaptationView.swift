@@ -263,7 +263,7 @@ struct DialectAdaptationView: View {
                         Text(row.title)
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         Spacer(minLength: 0)

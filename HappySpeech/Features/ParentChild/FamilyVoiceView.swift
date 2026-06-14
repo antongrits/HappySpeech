@@ -184,7 +184,7 @@ struct FamilyVoiceView: View {
                 Text(String(localized: "parent_child.recorder.title"))
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
 
@@ -292,7 +292,7 @@ struct FamilyVoiceView: View {
                             systemImage: "play.circle"
                         )
                         .font(TypographyTokens.body(15).weight(.medium))
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .frame(maxWidth: .infinity)
                     }
@@ -310,7 +310,7 @@ struct FamilyVoiceView: View {
                             systemImage: "trash"
                         )
                         .font(TypographyTokens.body(15).weight(.medium))
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .frame(maxWidth: .infinity)
                     }
@@ -379,7 +379,7 @@ struct FamilyVoiceView: View {
         } label: {
             Text(String(localized: "parent_child.recorder.cta.done"))
                 .font(TypographyTokens.headline())
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity, minHeight: 56)
         }

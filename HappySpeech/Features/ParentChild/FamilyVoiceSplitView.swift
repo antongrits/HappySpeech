@@ -248,7 +248,7 @@ struct FamilyVoiceSplitView: View {
                 Text(transcript)
                     .font(TypographyTokens.body())
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .animation(.easeInOut(duration: 0.15), value: transcript)
             } else if let vm, !vm.waveformLevels.isEmpty, vm.recordingState == .recording {

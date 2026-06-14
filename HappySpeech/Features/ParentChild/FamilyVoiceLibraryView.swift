@@ -181,7 +181,7 @@ struct FamilyVoiceLibraryView: View {
                     systemImage: "mic.badge.plus"
                 )
                 .font(TypographyTokens.headline())
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .frame(minWidth: 200, minHeight: 48)
             }

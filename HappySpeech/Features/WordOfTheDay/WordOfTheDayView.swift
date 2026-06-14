@@ -85,7 +85,7 @@ struct WordOfTheDayView: View {
                     Text(String(localized: "wotd.hero.title"))
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: "wotd.hero.subtitle"))
                         .font(TypographyTokens.body(14))

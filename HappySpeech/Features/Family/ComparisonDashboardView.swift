@@ -127,7 +127,7 @@ struct ComparisonDashboardView: View {
                         Text(child.name)
                             .font(TypographyTokens.body(14))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                 }
@@ -353,7 +353,7 @@ struct ComparisonDashboardView: View {
                     Text(child.name)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     HStack(spacing: SpacingTokens.sp3) {
@@ -399,7 +399,7 @@ struct ComparisonDashboardView: View {
             Text(String(localized: "comparison.empty.title"))
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
             Text(String(localized: "comparison.empty.message"))

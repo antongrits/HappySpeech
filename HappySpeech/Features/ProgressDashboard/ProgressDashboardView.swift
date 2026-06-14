@@ -199,7 +199,7 @@ struct ProgressDashboardView: View {
                     Text(title)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -316,7 +316,7 @@ struct ProgressDashboardView: View {
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             Text(String(localized: "progressDashboard.chart.needMoreData.subtitle"))
                 .font(TypographyTokens.caption(12))
@@ -492,7 +492,6 @@ struct ProgressDashboardView: View {
                             Text(summary.title)
                                 .font(TypographyTokens.headline(17))
                                 .foregroundStyle(ColorTokens.Parent.ink)
-                                .lineLimit(2)
                                 .minimumScaleFactor(0.85)
                                 .fixedSize(horizontal: false, vertical: true)
                             Text(summary.bodyText)
@@ -507,7 +506,7 @@ struct ProgressDashboardView: View {
                                 Text(String(localized: "progressDashboard.llm.fallbackBadge"))
                                     .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkSoft)
-                                    .lineLimit(1)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .minimumScaleFactor(0.85)
                             }
                         } else {
@@ -595,7 +594,7 @@ struct ProgressDashboardView: View {
             Text(title)
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             if let subtitle {
                 Text(subtitle)

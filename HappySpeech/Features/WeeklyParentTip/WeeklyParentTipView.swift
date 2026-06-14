@@ -72,7 +72,7 @@ struct WeeklyParentTipView: View {
                 Text(String(localized: "weeklyTip.hero.title"))
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(localized: "weeklyTip.hero.subtitle"))
                     .font(TypographyTokens.body(14))

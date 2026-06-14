@@ -194,7 +194,6 @@ struct DailyStreakView: View {
                         Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
                             .font(TypographyTokens.kidBody(15))
                             .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
-                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
@@ -387,7 +386,7 @@ struct DailyStreakView: View {
                 Text("streak.saver.title")
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
 
@@ -404,7 +403,7 @@ struct DailyStreakView: View {
             } label: {
                 Text("streak.saver.cta")
                     .font(TypographyTokens.cta())
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity)
             }
@@ -434,12 +433,12 @@ struct DailyStreakView: View {
                 Text("streak.longest.title")
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(format: String(localized: "streak.longest.value"), viewModel.longestStreak))
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer()

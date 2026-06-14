@@ -194,7 +194,7 @@ struct HomeTasksView: View {
             ))
             .font(TypographyTokens.headline(14))
             .foregroundStyle(ColorTokens.Parent.ink)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
 
             if done > 0 {
@@ -210,7 +210,7 @@ struct HomeTasksView: View {
                         done
                     ))
                     .font(TypographyTokens.body(13).weight(.semibold))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 }
                 .foregroundStyle(ColorTokens.Semantic.success)
@@ -548,7 +548,7 @@ private struct HomeTaskCard: View {
                     Text(row.subtitle)
                         .font(TypographyTokens.caption())
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
             }
@@ -604,7 +604,7 @@ private struct HomeTaskCard: View {
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .strikethrough(row.isCompleted, color: ColorTokens.Parent.inkSoft)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.9)
 
             Text(row.description)

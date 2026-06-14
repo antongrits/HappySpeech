@@ -85,7 +85,7 @@ struct DailyMissionsHubView: View {
                     Text(String(localized: "missions.hero.title"))
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: "missions.hero.subtitle"))
                         .font(TypographyTokens.body(14))
@@ -109,7 +109,7 @@ struct DailyMissionsHubView: View {
             Text(String(localized: "missions.section.title"))
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             Spacer(minLength: 0)
             Text(String(
@@ -176,7 +176,7 @@ struct DailyMissionsHubView: View {
                         Text(mission.subtitle)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer()

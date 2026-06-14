@@ -437,7 +437,7 @@ private struct ChoiceTile: View {
                 Text(title)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(foregroundColor)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.65)
                 Spacer(minLength: 0)
             }

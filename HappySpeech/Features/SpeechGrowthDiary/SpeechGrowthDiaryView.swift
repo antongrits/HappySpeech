@@ -119,7 +119,7 @@ struct SpeechGrowthDiaryView: View {
                             .font(TypographyTokens.title(20))
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .multilineTextAlignment(.leading)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                             .allowsTightening(true)
                     }
@@ -248,7 +248,7 @@ struct SpeechGrowthDiaryView: View {
                     Text(row.recordedAtLabel)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .allowsTightening(true)
                     Spacer()

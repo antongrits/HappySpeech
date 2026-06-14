@@ -182,7 +182,7 @@ struct StorytellingView: View {
                 Text(topic.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
                     .multilineTextAlignment(.center)
             }
@@ -220,7 +220,7 @@ struct StorytellingView: View {
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                     Text("storytelling.telling.prompt")
                         .font(TypographyTokens.body(14))
@@ -256,7 +256,7 @@ struct StorytellingView: View {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "book.fill")
                     Text("storytelling.finishButton")
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.7)
                 }
                 .font(TypographyTokens.headline(18))
@@ -340,7 +340,7 @@ struct StorytellingView: View {
                 .font(TypographyTokens.title(25))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
 
             Text(finish.scoreText)

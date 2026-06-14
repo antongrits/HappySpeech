@@ -309,7 +309,7 @@ struct SyllableRaceView: View {
             Text(text)
                 .font(TypographyTokens.caption(13).weight(.semibold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
         }
         .padding(.horizontal, SpacingTokens.small)

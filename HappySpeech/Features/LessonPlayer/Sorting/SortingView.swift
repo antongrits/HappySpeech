@@ -147,7 +147,7 @@ struct SortingView: View {
                 Text(display.setTitle)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                 Spacer()
                 // D-10 v27 — убран дублирующий внутриигровой таймер:
@@ -275,7 +275,7 @@ struct SortingView: View {
                 Text(category.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
             }
@@ -439,7 +439,7 @@ struct SortingView: View {
                     )
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 
@@ -495,7 +495,7 @@ struct SortingView: View {
                     Text(stat.title)
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Spacer()
                     Text("\(stat.correct)/\(stat.total)")

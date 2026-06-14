@@ -78,12 +78,12 @@ struct FluencyDiaryParentView: View {
                 Text(String(localized: "Спотыканий на 100 слогов"))
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(localized: "За последние 4 недели"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -96,7 +96,7 @@ struct FluencyDiaryParentView: View {
         Text(String(localized: "fluency_diary.parent.readonly"))
             .font(TypographyTokens.caption(11).weight(.semibold))
             .foregroundStyle(ColorTokens.Parent.inkSoft)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)
@@ -170,7 +170,7 @@ struct FluencyDiaryParentView: View {
             )
             .font(TypographyTokens.caption(12))
             .foregroundStyle(ColorTokens.Semantic.success)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
 
             Label(
@@ -179,7 +179,7 @@ struct FluencyDiaryParentView: View {
             )
             .font(TypographyTokens.caption(12))
             .foregroundStyle(ColorTokens.Semantic.warning)
-            .lineLimit(1)
+            .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
         }
     }
@@ -191,7 +191,7 @@ struct FluencyDiaryParentView: View {
             Text(String(localized: "История сессий"))
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
 
             ForEach(sessions) { session in
@@ -273,7 +273,7 @@ private struct DiarySessionRow: View {
                     )
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 }
 
@@ -286,7 +286,7 @@ private struct DiarySessionRow: View {
                             ? ColorTokens.Semantic.success
                             : ColorTokens.Semantic.warning
                     )
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }

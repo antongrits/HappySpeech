@@ -305,12 +305,12 @@ struct ARStartRecommendedButton: View {
                     Text("ar.zone.recommended.cta")
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(card.title)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.surface)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 

@@ -100,7 +100,7 @@ struct VoiceCloningView: View {
                 Text(String(localized: "voice_cloning.hero.title"))
                     .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
 
@@ -385,7 +385,7 @@ private struct ArchiveRowView: View {
                         Text(row.title)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
 
                         HSBadge(row.targetSound, style: .neutral)

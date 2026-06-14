@@ -153,14 +153,14 @@ struct ParentInsightsTimelineView: View {
                 Text(viewModel.heroTitle)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
 
                 Text(viewModel.heroSubtitle)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 HSBadge(viewModel.llmSourceLabel, style: .info, icon: "sparkles")
@@ -213,7 +213,7 @@ struct ParentInsightsTimelineView: View {
                 Text(stat.label)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             Spacer()
@@ -286,7 +286,7 @@ struct ParentInsightsTimelineView: View {
                     Text(cell.metricsLine)
                         .font(TypographyTokens.body(13).monospacedDigit())
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     Text(cell.comment)
@@ -347,7 +347,7 @@ struct ParentInsightsTimelineView: View {
                 Text(viewModel.titleLabel)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
                     .padding(.top, SpacingTokens.sp4)
@@ -400,7 +400,7 @@ struct ParentInsightsTimelineView: View {
                 } label: {
                     Label {
                         Text("parentInsightsTimeline.detail.cta.dashboard")
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     } icon: {
                         Image(systemName: "chart.bar.fill")

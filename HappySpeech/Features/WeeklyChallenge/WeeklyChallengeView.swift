@@ -158,7 +158,7 @@ struct WeeklyChallengeView: View {
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
 
             Text(viewModel.challengeDescription)
@@ -357,7 +357,7 @@ struct WeeklyChallengeView: View {
                 Text(viewModel.rewardTitle)
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
 
@@ -440,12 +440,12 @@ struct WeeklyChallengeView: View {
                     Text(String(localized: String.LocalizationValue(kind.titleKey)))
                         .font(TypographyTokens.body(14).weight(.medium))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     Text(String(localized: String.LocalizationValue(kind.descriptionKey)))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
 

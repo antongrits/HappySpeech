@@ -170,7 +170,7 @@ struct PuzzleRevealView: View {
             Text(display.lastFeedback)
                 .font(TypographyTokens.headline(18))
                 .foregroundStyle(feedbackColor)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .accessibilityHidden(true)
         }
@@ -257,7 +257,7 @@ struct PuzzleRevealView: View {
             Text(String(localized: "Пазл собран!"))
                 .font(TypographyTokens.title(28))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
             HSContentSymbol(display.emoji, size: 120, tint: ColorTokens.Brand.primary)
                 .scaleEffect(reduceMotion ? 1 : 1.0)

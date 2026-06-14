@@ -127,7 +127,6 @@ struct SoundJournalKidView: View {
                     Text(String(localized: "soundJournal.hero.title"))
                         .font(TypographyTokens.kidTitle(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
                         .fixedSize(horizontal: false, vertical: true)
                     Text(String(localized: "soundJournal.hero.subtitle"))
@@ -257,12 +256,12 @@ struct SoundJournalKidView: View {
                         Text(String(format: String(localized: "soundJournal.entry.sound"), entry.sound))
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         Text(String(format: String(localized: "soundJournal.entry.times"), entry.timesPracticed))
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                     Spacer(minLength: SpacingTokens.sp2)
@@ -275,7 +274,7 @@ struct SoundJournalKidView: View {
                         Text(String(localized: "soundJournal.entry.score"))
                             .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                 }
@@ -301,7 +300,7 @@ struct SoundJournalKidView: View {
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text(String(localized: "soundJournal.empty.subtitle"))
                     .font(TypographyTokens.body(13))
@@ -339,14 +338,14 @@ struct SoundJournalKidView: View {
             Text(title)
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
             Spacer()
             if let meta {
                 Text(meta)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
         }

@@ -72,7 +72,7 @@ struct SiblingDiscoveryView: View {
             Text(String(localized: "sibling.discovery.subtitle"))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, SpacingTokens.sp4)
@@ -204,7 +204,7 @@ struct SiblingDiscoveryView: View {
                     Text(peer.displayName)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
 
                     HStack(spacing: SpacingTokens.micro) {
@@ -214,7 +214,7 @@ struct SiblingDiscoveryView: View {
                         Text(String(localized: "sibling.discovery.device_ready"))
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
                 }

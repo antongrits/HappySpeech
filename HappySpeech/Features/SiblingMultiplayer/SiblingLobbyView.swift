@@ -74,7 +74,7 @@ struct SiblingLobbyView: View {
             Text(String(localized: "sibling.lobby.subtitle"))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, SpacingTokens.sp4)
@@ -194,7 +194,7 @@ struct SiblingLobbyView: View {
                     Text(name)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.8)
 
                     HStack(spacing: SpacingTokens.micro) {
@@ -208,7 +208,7 @@ struct SiblingLobbyView: View {
                         }
                         Text(statusText)
                             .font(TypographyTokens.caption(11))
-                            .lineLimit(1)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.8)
                     }
                     .foregroundStyle(statusColor)
@@ -292,7 +292,7 @@ struct SiblingLobbyView: View {
                     .font(TypographyTokens.caption(11))
                 Text(String(localized: "sibling.lobby.safe_note"))
                     .font(TypographyTokens.caption(11))
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
             .foregroundStyle(ColorTokens.Kid.inkSoft)

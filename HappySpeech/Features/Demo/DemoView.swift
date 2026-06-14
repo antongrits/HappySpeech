@@ -195,7 +195,7 @@ struct DemoOverviewSheet: View {
                                 Text(step.title)
                                     .font(TypographyTokens.headline(15))
                                     .foregroundStyle(ColorTokens.Kid.ink)
-                                    .lineLimit(1)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .minimumScaleFactor(0.85)
 
                                 if !step.subtitle.isEmpty {

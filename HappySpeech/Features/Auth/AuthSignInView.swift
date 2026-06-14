@@ -148,7 +148,7 @@ struct AuthSignInView: View {
                 .font(TypographyTokens.caption(11))
             Text(String(localized: "auth.gate.adults"))
                 .font(TypographyTokens.caption(12).weight(.bold))
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -191,7 +191,7 @@ struct AuthSignInView: View {
             Text(String(localized: "auth.tagline"))
                 .font(TypographyTokens.body(14).weight(.semibold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
     }
@@ -265,7 +265,7 @@ struct AuthSignInView: View {
             Text(label)
                 .font(TypographyTokens.caption(13).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
                 .padding(.leading, SpacingTokens.sp1)
                 .accessibilityHidden(true)
