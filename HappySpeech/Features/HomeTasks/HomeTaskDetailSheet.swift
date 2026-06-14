@@ -65,6 +65,7 @@ struct HomeTaskDetailSheet: View {
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
                     .strikethrough(viewModel.isCompleted, color: ColorTokens.Parent.inkSoft)
                     .accessibilityAddTraits(.isHeader)
 
@@ -115,6 +116,7 @@ struct HomeTaskDetailSheet: View {
                     .lineLimit(nil)
                     .lineSpacing(4)
                     .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }

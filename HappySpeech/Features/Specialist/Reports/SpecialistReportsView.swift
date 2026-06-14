@@ -735,9 +735,13 @@ private struct SoundDetailSheet: View {
                     Text(row.currentStageTitle)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text(String(localized: "reports.detail.subtitle"))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer()
             }

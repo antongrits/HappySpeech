@@ -200,6 +200,7 @@ struct SettingsSpecialistConnectSheet: View {
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 TextField(

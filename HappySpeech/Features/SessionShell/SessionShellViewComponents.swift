@@ -348,43 +348,48 @@ struct PauseSheetView: View {
     var body: some View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
-            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
-                VStack(spacing: SpacingTokens.large) {
-                    // E v21: 3D Ляля в pause sheet (требование пользователя).
-                    LyalyaHeroView(state: .encouraging, size: 140)
-                        .accessibilityHidden(true)
+            ScrollView {
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+                    VStack(spacing: SpacingTokens.large) {
+                        // E v21: 3D Ляля в pause sheet (требование пользователя).
+                        LyalyaHeroView(state: .encouraging, size: 140)
+                            .accessibilityHidden(true)
 
-                    Text(motivationalPhrase.isEmpty
-                        ? String(localized: "session.pause.motivational")
-                        : motivationalPhrase)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .padding(.horizontal, SpacingTokens.regular)
+                        Text(motivationalPhrase.isEmpty
+                            ? String(localized: "session.pause.motivational")
+                            : motivationalPhrase)
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal, SpacingTokens.regular)
 
-                    VStack(spacing: SpacingTokens.small) {
-                        HSButton(
-                            String(localized: "session.hud.resume"),
-                            style: .primary,
-                            icon: "play.fill"
-                        ) {
-                            onResume()
-                            dismiss()
-                        }
+                        VStack(spacing: SpacingTokens.small) {
+                            HSButton(
+                                String(localized: "session.hud.resume"),
+                                style: .primary,
+                                icon: "play.fill"
+                            ) {
+                                onResume()
+                                dismiss()
+                            }
 
-                        HSButton(
-                            String(localized: "session.hud.exit"),
-                            style: .secondary,
-                            icon: "xmark"
-                        ) {
-                            onExitTap()
+                            HSButton(
+                                String(localized: "session.hud.exit"),
+                                style: .secondary,
+                                icon: "xmark"
+                            ) {
+                                onExitTap()
+                            }
                         }
                     }
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.vertical, SpacingTokens.large)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+            .scrollBounceBehavior(.basedOnSize)
         }
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)

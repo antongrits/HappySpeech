@@ -290,11 +290,14 @@ struct ParentVoiceNoteView: View {
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(promptForRecorderState())
                     .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, SpacingTokens.sp4)
 
                 elapsedDial()

@@ -420,6 +420,7 @@ struct FamilyAwardsCabinetView: View {
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .lineLimit(3)
                             .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
                             .accessibilityAddTraits(.isHeader)
 
                         Text(viewModel.subtitle)

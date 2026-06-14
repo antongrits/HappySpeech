@@ -574,11 +574,16 @@ struct GrammarGameView: View {
             Text(vm.title)
                 .font(TypographyTokens.headline(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(vm.body)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
 
             HStack(spacing: SpacingTokens.regular) {
                 HSButton(vm.confirmLabel, style: .secondary) {

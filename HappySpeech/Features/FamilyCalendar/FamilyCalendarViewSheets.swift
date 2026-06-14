@@ -41,6 +41,8 @@ struct DayDetailSheet: View {
                                                     item.childName, item.sessionCount, item.accuracyPercent))
                                             .font(TypographyTokens.body())
                                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                            .lineLimit(nil)
+                                            .fixedSize(horizontal: false, vertical: true)
                                     }
                                     Spacer()
                                     Text("\(item.accuracyPercent)%")
@@ -103,6 +105,8 @@ struct DayDetailSheet: View {
                                         Text(visit.notes)
                                             .font(TypographyTokens.caption())
                                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                            .lineLimit(nil)
+                                            .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
                                 Spacer()
@@ -297,6 +301,7 @@ struct WeekSummaryRow: View {
                         .font(TypographyTokens.caption())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer()
                 if row.goalReached {

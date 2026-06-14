@@ -310,6 +310,7 @@ struct LyalyaMailView: View {
                             .multilineTextAlignment(.center)
                             .lineLimit(3)
                             .minimumScaleFactor(0.8)
+                            .fixedSize(horizontal: false, vertical: true)
                         Text(vm.dateLabel)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)

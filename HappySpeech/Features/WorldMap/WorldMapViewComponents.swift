@@ -231,6 +231,7 @@ struct WorldZoneDetailSheet: View {
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                         .accessibilityAddTraits(.isHeader)
                     Spacer(minLength: 0)
                     Button(action: onDismiss) {
@@ -269,6 +270,7 @@ struct WorldZoneDetailSheet: View {
                     .lineLimit(nil)
                     .lineSpacing(3)
                     .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
             }
         }
@@ -342,6 +344,7 @@ struct WorldZoneDetailSheet: View {
                 .lineLimit(nil)
                 .lineSpacing(4)
                 .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 

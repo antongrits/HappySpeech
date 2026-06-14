@@ -208,6 +208,8 @@ struct VoiceJournalView: View {
                     .font(TypographyTokens.headline(17))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 TextField(
                     String(localized: "voice.journal.sheet.title.placeholder"),
                     text: $newEntryTitle
@@ -220,6 +222,8 @@ struct VoiceJournalView: View {
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Semantic.error)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)
                 VStack(spacing: SpacingTokens.sp2) {

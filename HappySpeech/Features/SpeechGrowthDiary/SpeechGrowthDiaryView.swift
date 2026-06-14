@@ -350,6 +350,8 @@ struct SpeechGrowthDiaryView: View {
                 Text(shareVM.token)
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(SpacingTokens.sp2)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(

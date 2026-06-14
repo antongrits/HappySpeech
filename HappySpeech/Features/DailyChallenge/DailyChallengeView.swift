@@ -439,6 +439,8 @@ private struct DailyChallengeShareSheet: View {
                 .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.sp4)
 
             Spacer(minLength: SpacingTokens.sp4)

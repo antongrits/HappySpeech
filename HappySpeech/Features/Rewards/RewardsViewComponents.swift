@@ -268,6 +268,9 @@ struct StickerDetailSheet: View {
                 Text(detail.name)
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(detail.collectionName)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -281,6 +284,8 @@ struct StickerDetailSheet: View {
                         Text(detail.unlockCondition)
                             .font(TypographyTokens.body(14))
                             .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                     } icon: {
                         Image(systemName: "info.circle")
                             .foregroundStyle(ColorTokens.Brand.primary)
