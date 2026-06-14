@@ -168,24 +168,31 @@ struct ChildHomeAchievementBanner: View {
                     .foregroundStyle(ColorTokens.Brand.gold)
                     .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(String(localized: "child.home.achievement.kicker"))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Brand.gold)
                         .textCase(.uppercase)
                         .tracking(1)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
 
+                    // Fix (text truncation) — заголовок «Отличная серия!» и
+                    // описание ачивки не должны усекаться «…». Снимаем жёсткий
+                    // lineLimit, переносим текст полностью через fixedSize(vertical).
                     Text(achievement.title)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
+                        .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text(achievement.description)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
+                        .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Spacer(minLength: 0)
@@ -227,25 +234,35 @@ struct ChildHomeStreakBanner: View {
             HStack(alignment: .center, spacing: SpacingTokens.sp4) {
                 flameIcon
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(streakCountText)
-                        .font(TypographyTokens.headline(18))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                VStack(alignment: .leading, spacing: 3) {
+                    // Fix (text truncation, SE 375pt) — заголовок «7 дней подряд»
+                    // ранее имел .lineLimit(1) и при наличии чипа «В ударе» в той
+                    // же строке усекался («7 дней под…»). Теперь .lineLimit(2) +
+                    // .fixedSize(vertical) гарантируют полный перенос без «…»,
+                    // а чип «В ударе» вынесен под текст (см. ниже), чтобы не
+                    // конкурировал за ширину строки на узком экране.
+                    HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp2) {
+                        Text(streakCountText)
+                            .font(TypographyTokens.headline(18))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        if isHot {
+                            hotChip
+                        }
+                    }
 
                     Text(String(localized: "child.home.streak.subtitle"))
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
+                        .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Spacer(minLength: 0)
-
-                if isHot {
-                    hotChip
-                }
             }
             .scaleEffect(pulse)
         }
@@ -313,6 +330,54 @@ struct ChildHomeStreakBanner: View {
         ) {
             flameRotation = 6
         }
+    }
+}
+
+// MARK: - StartStreakBanner (первый запуск — приглашение начать серию)
+//
+// Полноразмерный дружелюбный баннер, показывается между маскотом и daily
+// mission, когда серия == 0. Заменяет пустоту скрытого `ChildHomeStreakBanner`
+// дружелюбным «Начни серию сегодня!» (defect #4). Тёплый коралловый стиль,
+// без обрезки текста (fixedSize vertical), tap → DailyStreakView.
+
+struct ChildHomeStartStreakBanner: View {
+
+    var body: some View {
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.primary)) {
+            HStack(alignment: .center, spacing: SpacingTokens.sp4) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.16))
+                        .frame(width: 56, height: 56)
+                    Image(systemName: "flame")
+                        .font(TypographyTokens.title(28).weight(.bold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(String(localized: "child.home.streak.start"))
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    Text(String(localized: "child.home.streak.start.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Spacer(minLength: 0)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(String(localized: "child.home.streak.start"))
+            + Text(". ")
+            + Text(String(localized: "child.home.streak.start.subtitle")))
     }
 }
 

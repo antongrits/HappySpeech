@@ -118,7 +118,8 @@ struct StickerCellView: View {
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 if cell.isNew {
@@ -220,7 +221,8 @@ struct StickerCellView: View {
                 .font(TypographyTokens.caption(12).weight(.medium))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, minHeight: 88)

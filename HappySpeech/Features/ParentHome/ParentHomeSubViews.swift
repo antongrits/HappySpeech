@@ -317,32 +317,60 @@ struct SoundProgressCard: View {
 
 struct ParentStatCard: View {
     let value: String
+    /// Малый суффикс рядом со значением («дн.», «мин», «%»). Пустая строка — без юнита.
+    var unit: String = ""
     let label: String
     let icon: String
     let color: Color
 
     var body: some View {
-        HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp2) {
+        // Эталон parenthome.html (.stat): иконка-плашка вверху слева, крупное
+        // значение с малым юнитом, метка снизу. Лево-выравнивание, единый
+        // внутренний отступ. Карточка тянется на равную ширину в 3-grid.
+        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+            ZStack {
+                RoundedRectangle(cornerRadius: RadiusTokens.xs, style: .continuous)
+                    .fill(color.opacity(0.18))
+                    .frame(width: 28, height: 28)
                 Image(systemName: icon)
-                    .font(TypographyTokens.titleSmall(20))
+                    .font(TypographyTokens.caption(15).weight(.bold))
                     .foregroundStyle(color)
-
-                Text(value)
-                    .font(TypographyTokens.kidDisplay(20))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-
-                Text(label)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                    .ctaTextStyle()
             }
-            .frame(maxWidth: .infinity)
+
+            HStack(alignment: .firstTextBaseline, spacing: 2) {
+                Text(value)
+                    .font(TypographyTokens.kidDisplay(21))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                if !unit.isEmpty {
+                    Text(unit)
+                        .font(TypographyTokens.caption(12).weight(.bold))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+            }
+
+            Text(label)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(SpacingTokens.sp3)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .strokeBorder(ColorTokens.Parent.line.opacity(0.6), lineWidth: 0.5)
+        )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(label): \(value)")
+        .accessibilityLabel("\(label): \(value) \(unit)")
     }
 }

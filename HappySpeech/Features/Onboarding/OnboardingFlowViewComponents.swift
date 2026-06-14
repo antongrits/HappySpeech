@@ -40,7 +40,8 @@ struct OnboardingWelcomeStep: View {
                     .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                     .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
@@ -73,31 +74,35 @@ struct OnboardingRoleStep: View {
 
     var body: some View {
         // Компактная вёрстка по эталону onboarding-step: шапка (маскот в круге +
-        // заголовок + подзаголовок) + 3 карточки ролей. Всё влезает на SE 375×667
-        // без скролла — гигантский 200pt-маскот заменён на 96pt-медальон.
-        VStack(spacing: SpacingTokens.medium) {
-            OnboardingStepHeader(
-                mascotState: .pointing,
-                title: String(localized: "onboarding.role.title"),
-                subtitle: String(localized: "onboarding.role.subtitle"),
-                mascotSize: 96
-            )
-            .padding(.top, SpacingTokens.small)
+        // заголовок + подзаголовок) + 3 карточки ролей. Подзаголовки карточек
+        // переносятся полностью (.fixedSize) — на SE 375×667 это может слегка
+        // переполнять высоту, поэтому контент обёрнут в ScrollView, чтобы footer
+        // «Далее» оставался достижим; на 16/17 Pro скролла нет (basedOnSize).
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                OnboardingStepHeader(
+                    mascotState: .pointing,
+                    title: String(localized: "onboarding.role.title"),
+                    subtitle: String(localized: "onboarding.role.subtitle"),
+                    mascotSize: 96
+                )
+                .padding(.top, SpacingTokens.small)
 
-            VStack(spacing: SpacingTokens.small) {
-                ForEach(UserRole.allCases) { role in
-                    OnboardingRoleCard(
-                        role: role,
-                        isSelected: role == selectedRole,
-                        onTap: { onSelect(role) }
-                    )
+                VStack(spacing: SpacingTokens.small) {
+                    ForEach(UserRole.allCases) { role in
+                        OnboardingRoleCard(
+                            role: role,
+                            isSelected: role == selectedRole,
+                            onTap: { onSelect(role) }
+                        )
+                    }
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Spacer(minLength: 0)
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
+        .scrollBounceBehavior(.basedOnSize)
     }
 }
 
@@ -128,8 +133,7 @@ struct OnboardingRoleCard: View {
                             .font(TypographyTokens.body(14))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Spacer()
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")

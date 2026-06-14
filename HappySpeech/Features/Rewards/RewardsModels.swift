@@ -275,6 +275,7 @@ enum RewardsModels {
             let unlockedCount: Int
             let totalCount: Int
             let progressLabel: String
+            let headerSubtitle: String
             let progress: Double
             let isEmpty: Bool
             let emptyTitle: String

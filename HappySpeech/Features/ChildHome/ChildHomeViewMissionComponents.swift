@@ -67,7 +67,7 @@ struct ChildHomeDailyMissionDetailCard: View {
         HStack(spacing: SpacingTokens.sp2) {
             Text(String(localized: "child.home.mission.start"))
                 .font(TypographyTokens.headline(18))
-                .lineLimit(1)
+                .lineLimit(nil)
                 .minimumScaleFactor(0.85)
             Image(systemName: "play.fill")
                 .font(TypographyTokens.body(15))

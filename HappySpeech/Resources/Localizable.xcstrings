@@ -49013,6 +49013,12 @@
             "state": "translated",
             "value": "Собирай стикеры за каждое достижение"
           }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collect a sticker for every achievement"
+          }
         }
       }
     },
@@ -56673,7 +56679,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Шипящие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hushing sounds"
           }
         }
       }
@@ -56684,7 +56696,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Другие звуки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other sounds"
           }
         }
       }
@@ -56695,7 +56713,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Соноры"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonorant sounds"
           }
         }
       }
@@ -56706,7 +56730,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Заднеязычные"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Velar sounds"
           }
         }
       }
@@ -56717,7 +56747,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Свистящие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whistling sounds"
           }
         }
       }
@@ -78370,6 +78406,499 @@
           "stringUnit": {
             "state": "translated",
             "value": "The chart appears after a few sessions"
+          }
+        }
+      }
+    },
+    "child.home.greeting.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готов к новым звукам?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ready for new sounds?"
+          }
+        }
+      }
+    },
+    "child.home.streak.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни серию сегодня!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start your streak today!"
+          }
+        }
+      }
+    },
+    "child.home.streak.start.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start!"
+          }
+        }
+      }
+    },
+    "child.home.streak.start.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позанимайся сегодня — и зажжётся огонёк серии."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practise today to light up your streak."
+          }
+        }
+      }
+    },
+    "rewards.header.subtitle.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занимайся — и здесь появятся твои награды!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep practising — your rewards will show up here!"
+          }
+        }
+      }
+    },
+    "parentHome.child.soundChip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sound"
+          }
+        }
+      }
+    },
+    "parentHome.child.streakDays": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дней"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "days"
+          }
+        }
+      }
+    },
+    "parentHome.disclaimer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это понятная обратная связь для занятий дома — педагогическая поддержка, а не медицинский диагноз."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is clear feedback for home practice — educational support, not a medical diagnosis."
+          }
+        }
+      }
+    },
+    "parentHome.empty.firstSession.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать занятие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a session"
+          }
+        }
+      }
+    },
+    "parentHome.empty.firstSession.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятия ребёнка появятся здесь после первого сеанса"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your child’s sessions will appear here after the first one"
+          }
+        }
+      }
+    },
+    "parentHome.empty.firstSession.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятий пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sessions yet"
+          }
+        }
+      }
+    },
+    "parentHome.homeTask.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать занятие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start a session"
+          }
+        }
+      }
+    },
+    "parentHome.homeTask.meta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5–7 минут"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5–7 minutes"
+          }
+        }
+      }
+    },
+    "parentHome.homeTask.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание на дом"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home task"
+          }
+        }
+      }
+    },
+    "parentHome.lastSession.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "точность"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "accuracy"
+          }
+        }
+      }
+    },
+    "parentHome.lastSession.duration": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "длительность"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "duration"
+          }
+        }
+      }
+    },
+    "parentHome.lastSession.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последнее занятие"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Last session"
+          }
+        }
+      }
+    },
+    "parentHome.lastSession.words": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "слова"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "words"
+          }
+        }
+      }
+    },
+    "parentHome.overview.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор за неделю"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekly overview"
+          }
+        }
+      }
+    },
+    "parentHome.recommendations.meta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "советы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tips"
+          }
+        }
+      }
+    },
+    "parentHome.section.tools": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Инструменты и материалы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tools & resources"
+          }
+        }
+      }
+    },
+    "parentHome.soundProgress.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс по звукам появится после первых занятий"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound progress will appear after the first sessions"
+          }
+        }
+      }
+    },
+    "parentHome.soundProgress.meta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "за всё время"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all time"
+          }
+        }
+      }
+    },
+    "parentHome.soundProgress.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс по звукам"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound progress"
+          }
+        }
+      }
+    },
+    "parentHome.stat.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия занятий"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice streak"
+          }
+        }
+      }
+    },
+    "parentHome.stat.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий успех"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overall success"
+          }
+        }
+      }
+    },
+    "parentHome.stat.totalMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут всего"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Total minutes"
+          }
+        }
+      }
+    },
+    "parentHome.stat.unit.days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дн."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "d"
+          }
+        }
+      }
+    },
+    "parentHome.stat.unit.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "мин"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "min"
           }
         }
       }

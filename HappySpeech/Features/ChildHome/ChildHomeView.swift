@@ -91,11 +91,10 @@ struct ChildHomeView: View {
                     mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
 
-                    // Fix #1c — «Новое достижение» и streak-баннер должны
-                    // отображаться с одинаковым ритмом отступов: оборачиваем оба
-                    // в общий VStack(spacing: sp3) с единым screenEdge-паддингом,
-                    // чтобы карточки выглядели одной группой, а не двумя случайно
-                    // выровненными секциями (audit defect #1c).
+                    // «Новое достижение» и streak-баннер (или start-streak для
+                    // новичка) — одна группа с единым ритмом отступов sp3.
+                    // Боковые поля наследуются от родительского screenEdge —
+                    // та же ширина, что и все прочие секции (defect #2).
                     VStack(spacing: SpacingTokens.sp3) {
                         if viewModel.hasAchievement, let ach = viewModel.achievement {
                             ChildHomeAchievementBanner(achievement: ach) {
@@ -110,9 +109,24 @@ struct ChildHomeView: View {
                                 isHot: viewModel.isStreakHot
                             )
                             .transition(.scale.combined(with: .opacity))
+                        } else {
+                            // Defect #4 — первый запуск (серия 0): вместо пустоты
+                            // показываем дружелюбное приглашение начать серию.
+                            // Tap → DailyStreakView (milestones / saver).
+                            Button {
+                                showDailyStreakSheet = true
+                            } label: {
+                                ChildHomeStartStreakBanner()
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityHint(Text("child.home.streak.tap.hint"))
+                            .transition(.scale.combined(with: .opacity))
                         }
                     }
-                    .padding(.horizontal, SpacingTokens.sp3)
+                    // Defect #2 (единые отступы) — баннеры выравниваются по тому
+                    // же screenEdge, что и все остальные карточки/секции.
+                    // Прежний дополнительный sp3 делал группу на 12pt уже прочих
+                    // секций (асимметрия между секциями на SE).
 
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
@@ -271,32 +285,24 @@ struct ChildHomeView: View {
 
     // MARK: - Background
 
-    /// G.3 v17 — три слоя: бренд-фон → mesh gradient (низкая opacity) → облака.
-    /// Mesh gradient НЕ заменяет KidBackgroundView, а добавляет «дыхание»
-    /// цвета сверху. На iOS 17 fallback на radial gradient (см. компонент).
-    /// Reduce Motion компонент учитывает сам.
+    /// Фон детского экрана — два СТАТИЧНЫХ тёплых слоя: бренд-mesh
+    /// (KidBackgroundView) → тёплый mesh-gradient (низкая opacity, softLight).
+    ///
+    /// Defect #3 / стандинг-ордер владельца: фон статичный и тёплый — никакой
+    /// движущейся «волновой»/«дышащей» анимации и плавающих облаков (убраны).
+    /// Только ColorTokens, без растровых подложек. `animated: false` всегда.
     private var kidBackground: some View {
         ZStack {
             KidBackgroundView()
                 .ignoresSafeArea()
 
-            // A-08: в спокойном режиме mesh не «дышит» (animated: false) и сильнее
-            // притушён, чтобы фон оставался тихим и однородным.
-            HSMeshGradientBackground(palette: .kidWarm, animated: !calmMode)
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .ignoresSafeArea()
                 // F.tier1 v21: чуть притушеваем mesh в dark, чтобы не «выгорало» поверх тёмного фона.
                 .opacity(calmMode ? 0.14 : (colorScheme == .dark ? 0.22 : 0.35))
                 .blendMode(.softLight)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
-
-            // A-08: плавающие декоративные облака — источник лишнего движения и
-            // визуального шума; в спокойном режиме скрываем полностью.
-            if !calmMode {
-                ChildHomeCloudDecoration()
-                    // F.tier1 v21: облака мягче в dark, чтобы не перетягивали внимание.
-                    .opacity(colorScheme == .dark ? 0.85 : 1.0)
-            }
         }
     }
 
@@ -305,30 +311,43 @@ struct ChildHomeView: View {
     private var heroSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(String(localized: "child.home.greeting"))
-                        .font(TypographyTokens.body(15))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                VStack(alignment: .leading, spacing: 3) {
+                    // Эталон childhome.html — приветствие одной строкой:
+                    // «Привет, <Имя>!» с именем в коралловом акценте, затем
+                    // дружелюбный подзаголовок. Без обрезки: имя переносится,
+                    // подзаголовок раскрывается полностью (.fixedSize vertical).
+                    (
+                        Text(String(localized: "child.home.greeting") + " ")
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                        + Text("\(viewModel.displayedName)!")
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    )
+                    .font(TypographyTokens.kidHero(28))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                    Text("\(viewModel.displayedName)!")
-                        .font(TypographyTokens.kidHero(30))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
+                    Text(String(localized: "child.home.greeting.subtitle"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     if !viewModel.formattedDate.isEmpty {
                         Text(viewModel.formattedDate.capitalizedFirstLetter)
                             .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .padding(.top, 2)
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                            .padding(.top, 1)
                     }
                 }
 
                 Spacer()
 
-                // Block J v18 — HSProgressRing для дневной миссии (Activity Ring style).
-                // Showing 1.0 if mission completed, 0.0 если нет.
-                // Hidden если streak > 0 (показывается streak badge).
+                // Block J v18 — справа от приветствия: streak badge (если серия
+                // идёт) или дневное кольцо миссии. Первый запуск (streak == 0,
+                // миссия не закрыта) → дружелюбный «Начни серию!» бейдж вместо
+                // пустого кольца, чтобы экран новичка не выглядел уныло (defect #4).
                 if viewModel.currentStreak > 0 {
                     Button {
                         showDailyStreakSheet = true
@@ -340,22 +359,26 @@ struct ChildHomeView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityHint(Text("child.home.streak.tap.hint"))
-                } else {
+                } else if viewModel.dailyMissionDetail.isCompleted {
                     // Part 2: completed mission ring → Brand.gold вместо Semantic.success
                     HSProgressRing(
-                        value: viewModel.dailyMissionDetail.isCompleted ? 1.0 : 0.0,
+                        value: 1.0,
                         size: 56,
                         lineWidth: 6,
-                        color: viewModel.dailyMissionDetail.isCompleted
-                            ? ColorTokens.Brand.gold
-                            : ColorTokens.Brand.primary,
-                        label: viewModel.dailyMissionDetail.isCompleted ? "✓" : ""
+                        color: ColorTokens.Brand.gold,
+                        label: "✓"
                     )
-                    .accessibilityLabel(
-                        viewModel.dailyMissionDetail.isCompleted
-                            ? String(localized: "child.home.mission.completed.a11y")
-                            : String(localized: "child.home.mission.pending.a11y")
-                    )
+                    .accessibilityLabel(String(localized: "child.home.mission.completed.a11y"))
+                } else {
+                    // Первый запуск / нет серии: приглашение начать серию.
+                    Button {
+                        showDailyStreakSheet = true
+                    } label: {
+                        ChildHomeStartStreakBadge()
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(String(localized: "child.home.streak.start"))
+                    .accessibilityHint(Text("child.home.streak.tap.hint"))
                 }
             }
         }
@@ -856,7 +879,7 @@ struct ChildHomeView: View {
                     .accessibilityHidden(true)
                 Text(String(localized: "child.home.sos.button"))
                     .font(TypographyTokens.body(14))
-                    .lineLimit(1)
+                    .lineLimit(nil)
                     .minimumScaleFactor(0.85)
             }
             .foregroundStyle(ColorTokens.Brand.primary)

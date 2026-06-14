@@ -256,7 +256,6 @@ private struct ParentDashboardTab: View {
     let viewModel: ParentHomeViewModel
     let coordinator: AppCoordinator
 
-    @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(AppContainer.self) private var container
 
     /// Block R.2 v18 — sheet с LogopedistChatView (parent ↔ specialist).
@@ -308,122 +307,97 @@ private struct ParentDashboardTab: View {
                 // Fix #8 — sectionGap (32) выглядел разреженно; `large` (24)
                 // сводит карточки в читаемую структуру без лишнего скролла.
                 VStack(spacing: SpacingTokens.large) {
-                    // Header
-                    headerSection
+                    // ── Секция 1: Обзор (эталон parenthome.html) ──────────────
+
+                    // Header (greeting + 3D Ляля)
+                    ParentHeaderSection(greeting: viewModel.greeting)
                         .modifier(ParentDashboardTipModifier())
 
-                    // Child selector (if multiple children)
-                    childSection
+                    // Карточка ребёнка (аватар + имя/возраст + чипы + streak)
+                    ParentChildCard(
+                        name: viewModel.childName,
+                        nameWithAge: childNameAgeText,
+                        soundChips: targetSoundChips,
+                        streak: viewModel.currentStreak
+                    )
 
-                    // Last session card
-                    Group {
-                        if let lastSession = viewModel.lastSession {
-                            lastSessionCard(lastSession)
-                        } else {
-                            noSessionCard
-                        }
-                    }
+                    // Stat-strip (3-grid: серия / минуты / успех)
+                    ParentStatStrip(
+                        streak: viewModel.currentStreak,
+                        totalMinutes: viewModel.totalSessionMinutes,
+                        overallRate: viewModel.overallRate
+                    )
                     .hsScrollEffect(.scaleFade)
 
-                    // F-301 v25 — Weekly Sound Report «Итоги недели».
-                    weeklyReportCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // п.26 — Анимированный видео-отчёт недели (Remotion).
-                    weeklyVideoReportCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Streak & stats
-                    statsRow
-                        .hsScrollEffect(.scaleFade)
-
-                    // Эталон parenthome.png — недельная диаграмма + «Инсайт недели»
-                    // (реальные weekStats / weeklyInsight из Interactor).
+                    // Недельная диаграмма + «Инсайт недели» (реальные данные;
+                    // дружелюбный empty-state при отсутствии активности).
                     ParentWeeklyActivityCard(
                         weekStats: viewModel.weekStats,
                         insight: viewModel.weeklyInsight
                     )
                     .hsScrollEffect(.scaleFade)
 
-                    // M6.16: Screening card (если скрининг пройден)
+                    // Прогресс по звукам (реальный soundProgress; эталонная
+                    // карточка с пер-звуковыми барами; empty-state при пустоте).
+                    ParentSoundProgressCard(progress: viewModel.soundProgress)
+                        .hsScrollEffect(.scaleFade)
+
+                    // Последнее занятие (3-cell grid + дисклеймер) либо
+                    // дружелюбное пустое состояние с маскотом и CTA.
+                    Group {
+                        if let lastSession = viewModel.lastSession {
+                            ParentLastSessionCard(session: lastSession)
+                        } else {
+                            ParentNoSessionCard {
+                                coordinator.navigate(to: .childHome(childId: viewModel.childId))
+                            }
+                        }
+                    }
+                    .hsScrollEffect(.scaleFade)
+
+                    // M6.16: Карточка скрининга (если скрининг пройден).
                     if let screening = viewModel.screeningCard {
                         screeningCard(screening)
                             .hsScrollEffect(.scaleFade)
                     }
 
-                    // Home task from LLM
+                    // Задание на дом (нумерованные шаги + CTA), если есть.
                     if let homeTask = viewModel.homeTask {
-                        homeTaskCard(homeTask)
-                            .hsScrollEffect(.scaleFade)
+                        ParentHomeTaskCard(task: homeTask) {
+                            coordinator.navigate(to: .childHome(childId: viewModel.childId))
+                        }
+                        .hsScrollEffect(.scaleFade)
                     }
 
-                    // Family Voice card
-                    familyVoiceCard
+                    // Рекомендации обычным языком (реальные из Presenter).
+                    ParentRecommendationsCard(recommendations: viewModel.recommendations)
                         .hsScrollEffect(.scaleFade)
 
-                    // Block T v17 — Pronunciation Leaderboard (parent-only, COPPA-safe).
-                    pronunciationLeaderboardCard
-                        .hsScrollEffect(.scaleFade)
+                    // ── Секция 2: Инструменты и материалы ─────────────────────
+                    // Все навигационные точки входа сгруппированы под единым
+                    // заголовком секции — даёт иерархию и заполняет высоту, не
+                    // создавая «стену» одинаковых карточек без структуры.
 
-                    // Block T v17 — Neurolinguist Insights (rule-based summary).
-                    neurolinguistInsightsCard
-                        .hsScrollEffect(.scaleFade)
+                    ParentToolsSectionHeader()
 
-                    // v29 Фаза 8 Ф.9 — «Понятный прогресс»: аналитика обычным языком.
-                    plainProgressCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v29 Фаза 8 Ф.3 — «Логопед для родителей»: обучающая база.
-                    parentGuideCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Словарь звуков: справочник артикуляции со 3D-разрезом.
-                    soundDictionaryCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Cad-task-1 — «Помощник по методике» (Vertex AI Search).
-                    methodologyAssistantCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v31 Волна A Ф.10 — «Что должно быть в возрасте»: справочник речевых норм.
-                    speechNormsEncyclopediaCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v31 Волна A Ф.8 — «Утро и вечер с Лялей»: ежедневные речевые ритуалы.
-                    dailyRitualsLyalyaCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v31 Волна B Ф.4 — «Мамин голос»: голосовые записки родителя.
-                    parentVoiceNoteCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v31 Wave E Ф.4 — «Дневник речевого роста»: шифрованные видео.
-                    speechGrowthDiaryCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // v31 Wave F F-05 — «Лимит времени в день» (no Family Controls).
-                    dailyTimeCapCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Family Calendar card
-                    familyCalendarCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Block R.2 v18 — Logopedist chat card.
-                    logopedistChatCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Block R.4 v18 — Family achievements card.
-                    familyAchievementsCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Stuttering / Fluency module (if hasFluencyGoal enabled)
-                    stutteringCard
-                        .hsScrollEffect(.scaleFade)
-
-                    // Recommendations
-                    recommendationsSection
-                        .hsScrollEffect(.scaleFade)
+                    weeklyReportCard.hsScrollEffect(.scaleFade)
+                    weeklyVideoReportCard.hsScrollEffect(.scaleFade)
+                    plainProgressCard.hsScrollEffect(.scaleFade)
+                    neurolinguistInsightsCard.hsScrollEffect(.scaleFade)
+                    pronunciationLeaderboardCard.hsScrollEffect(.scaleFade)
+                    familyVoiceCard.hsScrollEffect(.scaleFade)
+                    parentVoiceNoteCard.hsScrollEffect(.scaleFade)
+                    dailyRitualsLyalyaCard.hsScrollEffect(.scaleFade)
+                    speechGrowthDiaryCard.hsScrollEffect(.scaleFade)
+                    parentGuideCard.hsScrollEffect(.scaleFade)
+                    soundDictionaryCard.hsScrollEffect(.scaleFade)
+                    speechNormsEncyclopediaCard.hsScrollEffect(.scaleFade)
+                    methodologyAssistantCard.hsScrollEffect(.scaleFade)
+                    logopedistChatCard.hsScrollEffect(.scaleFade)
+                    familyAchievementsCard.hsScrollEffect(.scaleFade)
+                    familyCalendarCard.hsScrollEffect(.scaleFade)
+                    dailyTimeCapCard.hsScrollEffect(.scaleFade)
+                    stutteringCard.hsScrollEffect(.scaleFade)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp16 + SpacingTokens.sp10)
@@ -470,217 +444,6 @@ private struct ParentDashboardTab: View {
                 }
             }
         }
-    }
-
-    private var headerSection: some View {
-        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                // D-29 v27 — приветствие получает полноценную иерархию: тёмный
-                // ink + title-вес. Раньше inkMuted + headline → терялось на фоне,
-                // экран читался как generic Settings. Заголовок-уровень даёт
-                // родительскому контуру характер и точку входа взгляда.
-                Text(viewModel.greeting)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.8)
-                    .multilineTextAlignment(.leading)
-                Text(String(localized: "Прогресс и занятия вашего ребёнка"))
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            Spacer(minLength: SpacingTokens.sp2)
-            // E v21: 3D Ляля в greeting header ParentHome (требование пользователя).
-            // size: 96 — выше threshold 80 → автоматически 3D через LyalyaHeroView.
-            LyalyaHeroView(state: .waving, size: 96)
-                .accessibilityHidden(true)
-        }
-        .padding(.top, SpacingTokens.sp3)
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
-    }
-
-    private var childSection: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp4) {
-            HStack(spacing: SpacingTokens.sp3) {
-                // Avatar
-                Circle()
-                    .fill(ColorTokens.Brand.primary.opacity(0.15))
-                    .frame(width: 52, height: 52)
-                    .overlay(
-                        Text(String(viewModel.childName.prefix(1)))
-                            .font(TypographyTokens.titleSmall(22))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                    )
-                    .overlay(
-                        Circle()
-                            .strokeBorder(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 1.5)
-                    )
-
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    // Эталон parenthome.png — «Маша, 6 лет» одной строкой,
-                    // целевые звуки — коралловыми чипами под именем.
-                    Text(childNameAgeText)
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-
-                    if !targetSoundChips.isEmpty {
-                        HStack(spacing: SpacingTokens.micro) {
-                            ForEach(targetSoundChips, id: \.self) { sound in
-                                Text(String(localized: "Звук \(sound)"))
-                                    .font(TypographyTokens.caption(12).weight(.semibold))
-                                    .foregroundStyle(ColorTokens.Brand.primary)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.85)
-                                    .padding(.horizontal, SpacingTokens.sp2)
-                                    .padding(.vertical, 4)
-                                    .background(
-                                        Capsule().fill(ColorTokens.Brand.primary.opacity(0.14))
-                                    )
-                            }
-                        }
-                    }
-                }
-
-                Spacer(minLength: SpacingTokens.sp2)
-
-                Button {
-                    // Switch child
-                } label: {
-                    Image(systemName: "chevron.down.circle")
-                        .foregroundStyle(ColorTokens.Parent.inkSoft)
-                }
-            }
-        }
-    }
-
-    private func lastSessionCard(_ session: ParentHomeModels.SessionSummary) -> some View {
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                HStack {
-                    HSBadge(session.targetSound, style: .filled(ColorTokens.Brand.primary))
-                    HSBadge(session.templateName, style: .neutral)
-                    Spacer()
-                    Text(session.dateText)
-                        .font(TypographyTokens.mono(11))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                }
-
-                HStack(alignment: .bottom) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(String(localized: "Результат занятия"))
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
-                        // Part 2: success (зелёный) → Brand.gold
-                        Text(session.resultText)
-                            .font(TypographyTokens.headline(20))
-                            .foregroundStyle(session.successRate >= 0.7 ? ColorTokens.Brand.gold : ColorTokens.Semantic.warning)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.85)
-                    }
-
-                    Spacer(minLength: SpacingTokens.sp2)
-
-                    VStack(alignment: .trailing, spacing: 2) {
-                        Text(String(localized: "Попыток"))
-                            .font(TypographyTokens.body(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
-                        Text("\(session.totalAttempts)")
-                            .font(TypographyTokens.headline(18))
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
-                    }
-                }
-
-                // Part 2: success (зелёный) → Brand.gold для progress bar
-                let tint = session.successRate >= 0.7
-                    ? ColorTokens.Brand.gold
-                    : ColorTokens.Semantic.warning
-                HSProgressBar(value: session.successRate, style: .parent, tint: tint)
-            }
-        }
-        .environment(\.circuitContext, .parent)
-    }
-
-    private var noSessionCard: some View {
-        HSEmptyState(
-            icon: "play.circle",
-            title: String(localized: "Занятий пока нет"),
-            message: String(localized: "Начните первое занятие вместе с ребёнком"),
-            actionTitle: String(localized: "Начать занятие")
-        ) {}
-    }
-
-    private var statsRow: some View {
-        // Regular (iPad): горизонтальный ряд из 3 карточек.
-        // Compact (iPhone / Slide Over): вертикальный стек 3 карточек.
-        Group {
-            if hSizeClass == .regular {
-                HStack(spacing: SpacingTokens.sp3) {
-                    statCards
-                }
-            } else {
-                VStack(spacing: SpacingTokens.sp3) {
-                    statCards
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var statCards: some View {
-        ParentStatCard(
-            value: "\(viewModel.currentStreak)",
-            label: String(localized: "Дней подряд"),
-            icon: "flame.fill",
-            color: ColorTokens.Brand.gold
-        )
-        ParentStatCard(
-            value: "\(viewModel.totalSessionMinutes)",
-            label: String(localized: "Минут всего"),
-            icon: "clock.fill",
-            color: ColorTokens.Brand.sky
-        )
-        // Part 2: success (зелёный) → Brand.gold для stat-карточки «Средний результат»
-        ParentStatCard(
-            value: "\(Int((viewModel.overallRate) * 100))%",
-            label: String(localized: "Средний результат"),
-            icon: "checkmark.seal.fill",
-            color: ColorTokens.Brand.gold
-        )
-    }
-
-    private func homeTaskCard(_ task: String) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.15))) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                parentNavIcon("house.fill", tint: ColorTokens.Brand.gold)
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "Домашнее задание"))
-                        .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Brand.gold)
-                        .textCase(.uppercase)
-                        .tracking(1)
-
-                    Text(task)
-                        .font(TypographyTokens.body())
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(4)
-                        .minimumScaleFactor(0.85)
-                        .ctaTextStyle()
-                }
-            }
-        }
-        .environment(\.circuitContext, .parent)
     }
 
     // MARK: - M6.16: Screening card
@@ -1170,30 +933,6 @@ private struct ParentDashboardTab: View {
     private var parentVoiceNoteCard: some View {
         ParentVoiceNoteEntryCard {
             coordinator.navigate(to: .parentVoiceNote(childId: viewModel.childId))
-        }
-    }
-
-    private var recommendationsSection: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp5) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                Text(String(localized: "Рекомендации"))
-                    .font(TypographyTokens.headline())
-                    .foregroundStyle(ColorTokens.Parent.ink)
-
-                ForEach(viewModel.recommendations, id: \.self) { rec in
-                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                        Image(systemName: "lightbulb.fill")
-                            .font(TypographyTokens.caption(14))
-                            .foregroundStyle(ColorTokens.Brand.butter)
-                            .padding(.top, 2)
-
-                        Text(rec)
-                            .font(TypographyTokens.body(14))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .ctaTextStyle()
-                    }
-                }
-            }
         }
     }
 }

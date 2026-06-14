@@ -131,6 +131,25 @@ final class RewardsPresenterTests: XCTestCase {
         XCTAssertFalse(spy.loadRewardsVM?.progressLabel.isEmpty ?? true)
     }
 
+    func test_presentLoadRewards_noUnlocked_headerSubtitleIsEncouraging() {
+        let (sut, spy) = makeSUT()
+        // Ни одна наклейка не открыта → дружелюбный empty-подзаголовок.
+        sut.presentLoadRewards(makeLoadResponse(stickers: [makeSticker(isUnlocked: false)]))
+        XCTAssertEqual(
+            spy.loadRewardsVM?.headerSubtitle,
+            String(localized: "rewards.header.subtitle.empty")
+        )
+    }
+
+    func test_presentLoadRewards_withUnlocked_headerSubtitleIsDefault() {
+        let (sut, spy) = makeSUT()
+        sut.presentLoadRewards(makeLoadResponse(stickers: [makeSticker(isUnlocked: true)]))
+        XCTAssertEqual(
+            spy.loadRewardsVM?.headerSubtitle,
+            String(localized: "rewards.header.subtitle")
+        )
+    }
+
     func test_presentLoadRewards_walletAvailableBalance_correct() {
         let (sut, spy) = makeSUT()
         sut.presentLoadRewards(makeLoadResponse())

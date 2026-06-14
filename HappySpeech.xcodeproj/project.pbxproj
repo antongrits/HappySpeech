@@ -372,6 +372,7 @@
 		2ACD0D075027D6648080EE87 /* StoryCompletionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B4FB935C72AC3B5A476E5F /* StoryCompletionRouter.swift */; };
 		2AE7AD5B771F82F6EB28CEFA /* SortingDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4269D9F775177D1AC7B9B366 /* SortingDisplayLogic.swift */; };
 		2B03DB48BAB5C0BE6D230A2F /* NavigationFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823292CC309386CF6FB9E1F /* NavigationFlowUITests.swift */; };
+		2B3003FA153FB3C90AE7C8AE /* ParentHomeOverviewCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFDB61AF3BFBC816C229E06 /* ParentHomeOverviewCards.swift */; };
 		2B425319579E044883ACAD4C /* ARActivityDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2985A9359357685EEB975CE9 /* ARActivityDisplayLogic.swift */; };
 		2B546BB91004C7D426C92D5D /* MethodologyRetriever.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853FD4A298DE35FACB899BF4 /* MethodologyRetriever.swift */; };
 		2B83C9115D587D7190F95AD1 /* SpecialistScheduleWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EBD938F58048A3A4B68AAD /* SpecialistScheduleWorker.swift */; };
@@ -2538,6 +2539,7 @@
 		1FC61845BD8C4BD1272BCB32 /* WhoseTailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseTailPresenterTests.swift; sourceTree = "<group>"; };
 		1FDC496477DF8914487EB90D /* PerformanceMonitorServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitorServiceTests.swift; sourceTree = "<group>"; };
 		1FE6A4504310752D85A61F28 /* ReadAloudStoryWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAloudStoryWorkerTests.swift; sourceTree = "<group>"; };
+		1FFDB61AF3BFBC816C229E06 /* ParentHomeOverviewCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomeOverviewCards.swift; sourceTree = "<group>"; };
 		20144C10420A31F39D23AE2B /* RetellingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetellingPresenterTests.swift; sourceTree = "<group>"; };
 		202588CFA1F9A28CE28ACD3D /* CulturalContentPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalContentPresenterTests.swift; sourceTree = "<group>"; };
 		206393E34B8251F478C7B2CD /* WhoseTailModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseTailModels.swift; sourceTree = "<group>"; };
@@ -6965,6 +6967,7 @@
 				F8DD985EF4676F14BF5D560C /* ParentHomeDisplayLogic.swift */,
 				E6B64EC3BC720BB62956D401 /* ParentHomeInteractor.swift */,
 				F048839EA09E81476772DD80 /* ParentHomeModels.swift */,
+				1FFDB61AF3BFBC816C229E06 /* ParentHomeOverviewCards.swift */,
 				B9A77A1254C95FA88BFA6D59 /* ParentHomePresenter.swift */,
 				D59E3E59E9F0E068EB405027 /* ParentHomeSubViews.swift */,
 				FFED170F37FC74D650D654F2 /* ParentHomeV31Cards.swift */,
@@ -11937,6 +11940,7 @@
 				9BFD1C68F7DBE86D84C8D17A /* ParentHomeDisplayLogic.swift in Sources */,
 				58D2E7F7B258E12785EEBC89 /* ParentHomeInteractor.swift in Sources */,
 				4FC52A9E90240D3739BC9243 /* ParentHomeModels.swift in Sources */,
+				2B3003FA153FB3C90AE7C8AE /* ParentHomeOverviewCards.swift in Sources */,
 				F1A60C55C6B1D84569BA8D1F /* ParentHomePresenter.swift in Sources */,
 				895531C42876C80B81DD1FAD /* ParentHomeSubViews.swift in Sources */,
 				38A8FAFCFB5DD591495EB60F /* ParentHomeV31Cards.swift in Sources */,

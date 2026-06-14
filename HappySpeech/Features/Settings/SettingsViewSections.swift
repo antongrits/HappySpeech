@@ -51,11 +51,15 @@ extension SettingsView {
                         Text(String(localized: "settings.header.greeting"))
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2).minimumScaleFactor(0.85)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.85)
                         Text(String(localized: "settings.header.subtitle"))
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(2).minimumScaleFactor(0.85)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.85)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
@@ -174,7 +178,8 @@ extension SettingsView {
                         Text(display.settings.childName)
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         Text(String(
                             format: String(localized: "settings.profile.agePattern"),
@@ -182,7 +187,8 @@ extension SettingsView {
                         ))
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(1)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                     }
                     Spacer()
@@ -215,12 +221,14 @@ extension SettingsView {
                         Text(String(localized: "settings.dialect.row.title"))
                             .font(TypographyTokens.body(15))
                             .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         Text(String(localized: "settings.dialect.row.subtitle"))
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(2)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
 

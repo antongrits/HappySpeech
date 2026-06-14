@@ -209,13 +209,15 @@ struct RewardsView: View {
                             .font(TypographyTokens.title(22))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .accessibilityAddTraits(.isHeader)
-                            .lineLimit(1)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         Text(String(localized: "rewards.progress"))
                             .font(TypographyTokens.body(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .textCase(.lowercase)
-                            .lineLimit(1)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                     }
 
@@ -226,11 +228,13 @@ struct RewardsView: View {
                         .accessibilityHidden(true)
                 }
 
-                // Subtitle row
-                Text(String(localized: "rewards.header.subtitle"))
+                // Subtitle row — на первом запуске Presenter подставляет
+                // дружелюбное приглашение (headerSubtitle), иначе обычный текст.
+                Text(display.headerSubtitle)
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.9)
             }
         }
@@ -323,10 +327,13 @@ struct RewardsView: View {
                                     : ColorTokens.Brand.primary
                             )
                             .frame(width: 22, height: 22)
+                            // Чип в горизонтальном ScrollView: название берёт свою
+                            // полную intrinsic-ширину (.fixedSize) и НЕ усекается «…»
+                            // («Космос»→«Кос…» раньше). Скролл обрабатывает overflow.
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)
-                                .minimumScaleFactor(0.85)
+                                .fixedSize(horizontal: true, vertical: false)
                             Text("\(tab.count)")
                                 .font(TypographyTokens.mono(11))
                                 .padding(.horizontal, 6)

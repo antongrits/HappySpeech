@@ -412,6 +412,7 @@ final class RewardsDisplayTests: XCTestCase {
             unlockedCount: unlocked,
             totalCount: cellCount,
             progressLabel: "\(unlocked) из \(cellCount)",
+            headerSubtitle: "Собери все наклейки!",
             progress: cellCount > 0 ? Double(unlocked) / Double(cellCount) : 0,
             isEmpty: cells.isEmpty,
             emptyTitle: "",

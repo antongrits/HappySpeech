@@ -14,24 +14,18 @@ import SwiftUI
 
 // MARK: - KidBackgroundView
 //
-// iOS 18+: MeshGradient — органичный многоточечный тёплый фон.
+// iOS 18+: MeshGradient — органичный многоточечный тёплый фон (СТАТИЧНЫЙ).
 // iOS 17 fallback: GradientTokens.kidBackground (LinearGradient).
-// Reduced Motion: анимация фазы отключается, но градиент остаётся.
+//
+// Defect #3 / стандинг-ордер владельца: фон ДОЛЖЕН быть статичным и тёплым —
+// никакой «дышащей»/волновой анимации фазы. Mesh-точки фиксированы, цвета —
+// только тёплые ColorTokens. Никаких растровых подложек.
 
 struct KidBackgroundView: View {
-
-    @State private var phase: CGFloat = 0
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         if #available(iOS 18.0, *) {
             meshBackground
-                .onAppear {
-                    guard !reduceMotion else { return }
-                    withAnimation(.easeInOut(duration: 8).repeatForever(autoreverses: true)) {
-                        phase = .pi
-                    }
-                }
         } else {
             GradientTokens.kidBackground
         }
@@ -39,14 +33,12 @@ struct KidBackgroundView: View {
 
     @available(iOS 18.0, *)
     private var meshBackground: some View {
-        let s = Float(sin(phase) * 0.08)
-        let c = Float(cos(phase) * 0.08)
-        return MeshGradient(
+        MeshGradient(
             width: 3,
             height: 3,
             points: [
                 SIMD2(0, 0),        SIMD2(0.5, 0),        SIMD2(1, 0),
-                SIMD2(0, 0.5 + s),  SIMD2(0.5, 0.5),      SIMD2(1, 0.5 - c),
+                SIMD2(0, 0.5),      SIMD2(0.5, 0.5),      SIMD2(1, 0.5),
                 SIMD2(0, 1),        SIMD2(0.5, 1),         SIMD2(1, 1)
             ],
             colors: [
@@ -55,54 +47,6 @@ struct KidBackgroundView: View {
                 ColorTokens.Kid.bgDeep.opacity(0.6), ColorTokens.Kid.bgSoft, ColorTokens.Kid.bgSofter
             ]
         )
-    }
-}
-
-// MARK: - CloudDecoration
-
-struct ChildHomeCloudDecoration: View {
-
-    private struct CloudSpec {
-        let width: CGFloat
-        let height: CGFloat
-        let offsetX: CGFloat
-        let offsetY: CGFloat
-        let blur: CGFloat
-        let opacity: Double
-    }
-
-    private static let specs: [CloudSpec] = [
-        .init(width: 140, height: 70, offsetX: -90, offsetY: 80, blur: 22, opacity: 0.6),
-        .init(width: 100, height: 50, offsetX: 110, offsetY: 110, blur: 18, opacity: 0.45),
-        .init(width: 80, height: 40, offsetX: -40, offsetY: 200, blur: 16, opacity: 0.35)
-    ]
-
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var phase: CGFloat = 0
-
-    var body: some View {
-        ZStack {
-            ForEach(0..<Self.specs.count, id: \.self) { index in
-                cloud(spec: Self.specs[index])
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .offset(x: phase)
-        .onAppear {
-            guard !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 8.0).repeatForever(autoreverses: true)) {
-                phase = 12
-            }
-        }
-    }
-
-    private func cloud(spec: CloudSpec) -> some View {
-        Ellipse()
-            .fill(ColorTokens.Overlay.onAccent.opacity(spec.opacity))
-            .frame(width: spec.width, height: spec.height)
-            .blur(radius: spec.blur)
-            .offset(x: spec.offsetX, y: spec.offsetY)
-            .accessibilityHidden(true)
     }
 }
 
@@ -231,6 +175,36 @@ struct ChildHomeStreakBadge: View {
             pulse = 1.25
             pulseOpacity = 0.0
         }
+    }
+}
+
+// MARK: - StartStreakBadge (первый запуск — приглашение начать серию)
+//
+// Показывается в hero справа, когда streak == 0 и миссия ещё не закрыта.
+// Дружелюбный «Начни!» вместо пустого кольца прогресса, чтобы экран новичка
+// не выглядел уныло (defect #4). Тёплый коралловый акцент.
+
+struct ChildHomeStartStreakBadge: View {
+
+    var body: some View {
+        VStack(spacing: 2) {
+            ZStack {
+                Circle()
+                    .fill(ColorTokens.Brand.primary.opacity(0.12))
+                    .frame(width: 44, height: 44)
+                Image(systemName: "flame")
+                    .font(TypographyTokens.title(20).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+            }
+
+            Text(String(localized: "child.home.streak.start.short"))
+                .font(TypographyTokens.caption(11).weight(.bold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(width: 56)
     }
 }
 

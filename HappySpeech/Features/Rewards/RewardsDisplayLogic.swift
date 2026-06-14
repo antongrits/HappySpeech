@@ -41,6 +41,7 @@ final class RewardsDisplay: RewardsDisplayLogic {
     var unlockedCount: Int = 0
     var totalCount: Int = 0
     var progressLabel: String = ""
+    var headerSubtitle: String = ""
     var progress: Double = 0
     var currentStreak: Int = 0
 
@@ -104,6 +105,7 @@ final class RewardsDisplay: RewardsDisplayLogic {
         unlockedCount = viewModel.unlockedCount
         totalCount = viewModel.totalCount
         progressLabel = viewModel.progressLabel
+        headerSubtitle = viewModel.headerSubtitle
         progress = viewModel.progress
         isEmpty = viewModel.isEmpty
         emptyTitle = viewModel.emptyTitle

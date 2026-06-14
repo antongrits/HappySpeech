@@ -67,6 +67,12 @@ final class RewardsPresenter: RewardsPresentationLogic {
             collection: response.activeCollection,
             isFilterActive: response.activeCollection != .all
         )
+        // Первый запуск (ничего ещё не открыто) — вместо сухого «N из M» в шапке
+        // показываем дружелюбное приглашение заниматься, чтобы пустой альбом не
+        // выглядел уныло. Дальше — обычный поясняющий подзаголовок.
+        let headerSubtitle = unlockedCount == 0
+            ? String(localized: "rewards.header.subtitle.empty")
+            : String(localized: "rewards.header.subtitle")
 
         display?.displayLoadRewards(.init(
             cells: cells,
@@ -75,6 +81,7 @@ final class RewardsPresenter: RewardsPresentationLogic {
             unlockedCount: unlockedCount,
             totalCount: totalCount,
             progressLabel: progressLabel,
+            headerSubtitle: headerSubtitle,
             progress: progress,
             isEmpty: isEmpty,
             emptyTitle: emptyTitle,
