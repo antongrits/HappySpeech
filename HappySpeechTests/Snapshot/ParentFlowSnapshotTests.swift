@@ -61,6 +61,7 @@ final class ParentFlowSnapshotTests: XCTestCase {
 
     func test_settings_bothThemes() throws {
         let view = SettingsView()
+            .environment(AppCoordinator())
             .environment(AppContainer.preview())
         // reduceMotion: true замораживает анимированный HSMeshGradientBackground
         // (.calm) → детерминированный снимок, толерантность снова тесная.

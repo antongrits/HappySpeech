@@ -82,6 +82,7 @@ final class DynamicTypeSnapshotTests: XCTestCase {
 
     func test_settings_dynamicType() throws {
         let view = SettingsView()
+            .environment(AppCoordinator())
             .environment(AppContainer.preview())
         // reduceMotion: true замораживает анимированный HSMeshGradientBackground
         // (.calm) → детерминированный снимок.

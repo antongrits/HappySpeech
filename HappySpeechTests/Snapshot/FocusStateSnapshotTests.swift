@@ -32,6 +32,7 @@ final class FocusStateSnapshotTests: XCTestCase {
 
     func test_settingsTextField_focusEdgeCase() throws {
         let view = SettingsView()
+            .environment(AppCoordinator())
             .environment(AppContainer.preview())
         // reduceMotion: true замораживает анимированный HSMeshGradientBackground
         // (.calm) → детерминированный снимок.
