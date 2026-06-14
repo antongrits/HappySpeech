@@ -508,6 +508,7 @@ struct StutteringWelcomeSheet: View {
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, SpacingTokens.sp5)
 
@@ -524,7 +525,7 @@ struct StutteringWelcomeSheet: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.vertical, SpacingTokens.sp8)
         .background(ColorTokens.Kid.bg.ignoresSafeArea())
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.large])
         .environment(\.circuitContext, .kid)
     }
 }
