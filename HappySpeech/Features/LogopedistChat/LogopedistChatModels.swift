@@ -10,8 +10,9 @@ import Foundation
 //   • MessageSender — parent | specialist (НЕ child — COPPA-safe)
 //   • Request/Response/ViewModel — VIP контракты
 //
-// Persistence: in-memory + UserDefaults seed.
-// Производство: Firestore real-time listener (не реализуется в MVP).
+// Persistence: Firestore-backed репозиторий за Worker-границей с offline-очередью.
+// Real-time доставка — через `subscribe()` (см. LogopedistChatInteractor), который
+// слушает поток обновлений треда и пере-`load`-ит ViewModel при каждом изменении.
 //
 // COPPA: ребёнок никогда не пишет и не читает chat. Чат строго parent →
 // specialist. Доступ только из parent контура.

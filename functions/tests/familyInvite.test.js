@@ -7,6 +7,8 @@ const {
   isAllowedRole,
   buildInviteUrl,
   generateInviteId,
+  generateShortCode,
+  toRedeemableRole,
 } = require('../lib/familyInvite');
 
 test('isValidEmail accepts simple emails', () => {
@@ -31,9 +33,10 @@ test('isAllowedRole only accepts parent | specialist', () => {
   assert.equal(isAllowedRole(null), false);
 });
 
-test('buildInviteUrl uses canonical happyspeech.page.link host', () => {
-  const url = buildInviteUrl('abc123');
-  assert.equal(url, 'https://happyspeech.page.link/invite?token=abc123');
+test('buildInviteUrl uses the happyspeech.app Universal Link (no page.link)', () => {
+  const url = buildInviteUrl('abc123', 'XY7K2M');
+  assert.equal(url, 'https://happyspeech.app/invite?token=abc123&code=XY7K2M');
+  assert.ok(!url.includes('page.link'));
 });
 
 test('generateInviteId returns 32-char hex string', () => {
@@ -46,4 +49,15 @@ test('generateInviteId returns unique ids', () => {
   const a = generateInviteId();
   const b = generateInviteId();
   assert.notEqual(a, b);
+});
+
+test('generateShortCode returns 6 unambiguous uppercase chars', () => {
+  const code = generateShortCode();
+  assert.equal(code.length, 6);
+  assert.match(code, /^[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{6}$/);
+});
+
+test('toRedeemableRole maps extended role into the ParentRole space', () => {
+  assert.equal(toRedeemableRole('parent'), 'secondary');
+  assert.equal(toRedeemableRole('specialist'), 'observer');
 });

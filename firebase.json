@@ -32,12 +32,11 @@
   "appcheck": {
     "enforcementMode": "ENFORCED",
     "providers": {
-      "deviceCheck": {
+      "appAttest": {
         "enabled": true
       },
-      "debug": {
-        "enabled": true,
-        "comment": "Debug provider for iOS Simulator — disable before App Store submission"
+      "deviceCheck": {
+        "enabled": true
       }
     }
   },

@@ -9,10 +9,9 @@ import XCTest
 // Покрытые компоненты:
 //   1. LyalyaMascotView — 5 состояний × 2 темы (post-emoji-purge fallbackSFSymbol)
 //   2. HSCustomAlertView — 3 варианта × 2 темы (symbol, mascot, no-illustration)
-//   3. HSOnboardingParallax — первая страница × 2 темы × 2 устройства
 //
 // Хранение: __Snapshots__/BlockCComponents/
-// Итог: (10 + 6 + 4) = 20 PNG референсов.
+// Итог: (10 + 6) = 16 PNG референсов.
 //
 // Перегенерировать: удали __Snapshots__/BlockCComponents/ и перезапусти тесты.
 
@@ -22,16 +21,6 @@ final class BlockCComponentsSnapshotTests: XCTestCase {
     private let appearances: [(String, UIUserInterfaceStyle)] = [
         ("Light", .light),
         ("Dark", .dark)
-    ]
-
-    private struct DeviceConfig {
-        let name: String
-        let size: CGSize
-    }
-
-    private let devices: [DeviceConfig] = [
-        DeviceConfig(name: "iPhoneSE3",   size: CGSize(width: 375, height: 667)),
-        DeviceConfig(name: "iPhone17Pro", size: CGSize(width: 402, height: 874))
     ]
 
     // MARK: - 1. LyalyaMascotView — 5 состояний post-emoji-purge
@@ -96,34 +85,6 @@ final class BlockCComponentsSnapshotTests: XCTestCase {
         try recordComponent(view, name: "HSCustomAlert_destructive")
     }
 
-    // MARK: - 3. HSOnboardingParallax — первая страница
-
-    func test_onboardingParallax_firstPage_bothDevices() throws {
-        let pages: [HSOnboardingParallax.Page] = [
-            HSOnboardingParallax.Page(
-                imageName: "onboarding-welcome",
-                title: "Привет! Я Ляля!",
-                subtitle: "Будем учиться говорить вместе",
-                mascotState: .waving
-            )
-        ]
-        let view = HSOnboardingParallax(pages: pages, onFinish: {})
-
-        for device in devices {
-            for (appearanceName, style) in appearances {
-                let image = renderView(view, size: device.size, style: style)
-                let url = snapshotURL(
-                    category: "BlockCComponents",
-                    name: "HSOnboardingParallax_page1",
-                    device: device.name,
-                    appearance: appearanceName
-                )
-                let label = "HSOnboardingParallax_page1·\(device.name)·\(appearanceName)"
-                try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
-            }
-        }
-    }
-
     // MARK: - Rendering helpers
 
     private func renderView<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
@@ -161,18 +122,5 @@ final class BlockCComponentsSnapshotTests: XCTestCase {
             let label = "\(name)·\(appearanceName)"
             try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
         }
-    }
-
-    private func snapshotURL(
-        category: String,
-        name: String,
-        device: String,
-        appearance: String
-    ) -> URL {
-        let dir = SnapshotTestHelper.snapshotsBaseDir
-            .appendingPathComponent(category)
-            .appendingPathComponent("\(name)")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir.appendingPathComponent("\(device)_\(appearance).png")
     }
 }

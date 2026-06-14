@@ -17,7 +17,7 @@ public struct HSErrorStateView: View {
                 .font(.system(size: 48))
                 .foregroundStyle(ColorTokens.Semantic.warning)
             VStack(spacing: SpacingTokens.small) {
-                Text("Что-то пошло не так")
+                Text(String(localized: "errorState.title"))
                     .font(TypographyTokens.headline())
                     .bold()
                 Text(error.localizedDescription)
@@ -26,7 +26,7 @@ public struct HSErrorStateView: View {
                     .multilineTextAlignment(.center)
             }
             if let onRetry {
-                HSButton("Попробовать снова", style: .primary, action: onRetry)
+                HSButton(String(localized: "errorState.retry"), style: .primary, action: onRetry)
                     .padding(.horizontal, SpacingTokens.xLarge)
             }
         }

@@ -69,21 +69,3 @@ public extension EnvironmentValues {
         set { self[CircuitContextKey.self] = newValue }
     }
 }
-
-// MARK: - ThemeApplier ViewModifier
-
-public struct ThemeApplier: ViewModifier {
-    @State private var themeManager = ThemeManager()
-
-    public func body(content: Content) -> some View {
-        content
-            .preferredColorScheme(themeManager.preferredColorScheme)
-            .environment(themeManager)
-    }
-}
-
-public extension View {
-    func applyHSTheme() -> some View {
-        modifier(ThemeApplier())
-    }
-}

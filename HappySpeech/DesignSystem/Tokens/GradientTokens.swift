@@ -17,9 +17,8 @@ import SwiftUI
 /// GradientTokens.kidBackground
 ///     .ignoresSafeArea()
 ///
-/// // Родительский фон
-/// GradientTokens.parentBackground
-///     .ignoresSafeArea()
+/// // Золотой акцент наград
+/// GradientTokens.celebrationGold
 /// ```
 public enum GradientTokens {
 
@@ -33,44 +32,11 @@ public enum GradientTokens {
         endPoint: .bottom
     )
 
-    /// Акцентный фон героя: primary → primaryLo (topLeading → bottomTrailing).
-    /// Используется для декоративных ellipse-элементов на auth-экранах.
-    public static let kidHeroDecoration = LinearGradient(
-        colors: [
-            ColorTokens.Brand.primary.opacity(0.9),
-            ColorTokens.Brand.primaryLo.opacity(0.7)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
     /// Глубокий детский фон: bgDeep → bg (тёмный к светлому снизу вверх).
     public static let kidDeep = LinearGradient(
         colors: [ColorTokens.Kid.bgDeep, ColorTokens.Kid.bg],
         startPoint: .bottom,
         endPoint: .top
-    )
-
-    /// Splash-фон: трёхцветный диагональный градиент primary → primaryHi → rose.
-    /// Заменяет плоский моноцветный coral на splash-экране — задаёт современную
-    /// планку первого впечатления (v27-spec, изменение #3).
-    public static let splashHero = LinearGradient(
-        colors: [
-            ColorTokens.Brand.primary,
-            ColorTokens.Brand.primaryHi,
-            ColorTokens.Brand.rose
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    // MARK: - Parent Circuit Backgrounds
-
-    /// Нейтральный фон родительского контура.
-    public static let parentBackground = LinearGradient(
-        colors: [ColorTokens.Parent.bg, ColorTokens.Parent.bgDeep],
-        startPoint: .top,
-        endPoint: .bottom
     )
 
     // MARK: - Celebration / Rewards
@@ -82,14 +48,7 @@ public enum GradientTokens {
         endPoint: .trailing
     )
 
-    /// Burst-фон для экрана достижений: butter → rose (topLeading → bottomTrailing).
-    public static let rewardBurst = LinearGradient(
-        colors: [ColorTokens.Brand.butter.opacity(0.8), ColorTokens.Brand.rose.opacity(0.5)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    // MARK: - Story / AR
+    // MARK: - Story
 
     /// Магический фон истории: lilac → sky (top → bottom).
     /// Используется в AnimatedStoryPlayerView как fallback вместо Color.blue/purple.
@@ -99,50 +58,13 @@ public enum GradientTokens {
         endPoint: .bottomTrailing
     )
 
-    /// AR-сцена фон: lilac → mint (top → bottom).
-    public static let arScene = LinearGradient(
-        colors: [ColorTokens.Brand.lilac, ColorTokens.Brand.mint],
-        startPoint: .top,
-        endPoint: .bottom
-    )
-
     // MARK: - Functional Gradients
-
-    /// Стеклянный оверлей (glassmorphic): white → white (прозрачный).
-    public static let glassMorphic = LinearGradient(
-        colors: [Color.white.opacity(0.4), Color.white.opacity(0.1)],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    /// Спокойный синий: skyBlue → mint (top → bottom).
-    public static let calmBlue = LinearGradient(
-        colors: [ColorTokens.Brand.sky, ColorTokens.Brand.mint],
-        startPoint: .top,
-        endPoint: .bottom
-    )
 
     /// Тёплый закат: peach → rose (leading → trailing).
     public static let warmSunset = LinearGradient(
         colors: [ColorTokens.Brand.primaryLo, ColorTokens.Brand.rose],
         startPoint: .leading,
         endPoint: .trailing
-    )
-
-    /// Энергичный оранжевый: honey → peach (topLeading → bottomTrailing).
-    public static let energeticOrange = LinearGradient(
-        colors: [ColorTokens.Brand.butter, ColorTokens.Brand.primaryLo],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    // MARK: - Specialist Circuit
-
-    /// Нейтральный фон специалиста.
-    public static let specBackground = LinearGradient(
-        colors: [ColorTokens.Spec.bg, ColorTokens.Spec.panel],
-        startPoint: .top,
-        endPoint: .bottom
     )
 
     // MARK: - Card Tint Presets (v32 — design-modernization Wave A)

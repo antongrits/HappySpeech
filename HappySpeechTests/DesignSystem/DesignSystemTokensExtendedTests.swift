@@ -397,10 +397,6 @@ final class DesignSystemTokensExtendedTests: XCTestCase {
         XCTAssertNotNil(gradient)
     }
 
-    func test_gradientTokens_parentBackground_notNil() {
-        XCTAssertNotNil(GradientTokens.parentBackground)
-    }
-
     func test_gradientTokens_celebrationGold_notNil() {
         XCTAssertNotNil(GradientTokens.celebrationGold)
     }

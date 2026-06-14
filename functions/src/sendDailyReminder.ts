@@ -37,8 +37,11 @@ async function hadSessionToday(
   childId: string,
 ): Promise<boolean> {
   const today = todayUTC();
-  const startOfDay = new Date(today + "T00:00:00.000Z");
-  const endOfDay = new Date(today + "T23:59:59.999Z");
+  // Clients write `date` as epoch seconds (timeIntervalSince1970, a number) —
+  // see SessionPersistenceCoordinator.sessionPayloadJSON. Comparing against a
+  // Date object matched nothing → the reminder fired even after a session.
+  const startOfDay = Math.floor(new Date(today + "T00:00:00.000Z").getTime() / 1000);
+  const endOfDay = Math.floor(new Date(today + "T23:59:59.999Z").getTime() / 1000);
 
   const snap = await db
     .collection("users")

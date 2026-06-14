@@ -13,7 +13,11 @@ import type {
 } from "./types";
 
 interface SessionDataWithDate {
-  date?: admin.firestore.Timestamp | { toDate(): Date };
+  // Clients write `date` as epoch seconds (timeIntervalSince1970, a number) —
+  // see SessionPersistenceCoordinator.sessionPayloadJSON / SyncSnapshots.
+  // Legacy docs may still carry a Firestore Timestamp; toEpochSeconds() copes
+  // with both so historical data keeps charting.
+  date?: number | admin.firestore.Timestamp | { toDate(): Date };
   targetSound?: string;
   durationSeconds?: number;
   totalAttempts?: number;
@@ -30,15 +34,32 @@ function daysAgo(days: number): Date {
   return d;
 }
 
-/** Map period string to a Firestore Timestamp cutoff. */
-export function periodToCutoff(
-  period: ReportPeriod,
-): admin.firestore.Timestamp | null {
+/**
+ * Map period string to a numeric epoch-seconds cutoff.
+ * Clients write `date` as epoch seconds (a number), so the range filter must
+ * compare against a number — a Firestore Timestamp would never match.
+ */
+export function periodToCutoff(period: ReportPeriod): number | null {
   if (period === "week") {
-    return admin.firestore.Timestamp.fromDate(daysAgo(7));
+    return Math.floor(daysAgo(7).getTime() / 1000);
   }
   if (period === "month") {
-    return admin.firestore.Timestamp.fromDate(daysAgo(30));
+    return Math.floor(daysAgo(30).getTime() / 1000);
+  }
+  return null;
+}
+
+/**
+ * Normalises a stored `date` field to a JS Date.
+ * Primary path: numeric epoch seconds (current client). Falls back to a
+ * Firestore Timestamp / `{ toDate() }` for legacy documents.
+ */
+function dateValueToJsDate(raw: SessionDataWithDate["date"]): Date | null {
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    return new Date(raw * 1000);
+  }
+  if (raw && typeof (raw as { toDate?: () => Date }).toDate === "function") {
+    return (raw as { toDate: () => Date }).toDate();
   }
   return null;
 }
@@ -56,10 +77,7 @@ export function buildDailySeries(sessions: ReadonlyArray<DocLike>): DailySeriesE
 
   for (const doc of sessions) {
     const data = doc.data() as SessionDataWithDate;
-    const rawDate = data.date;
-    const ts: Date | null = rawDate && typeof (rawDate as { toDate?: () => Date }).toDate === "function" ?
-      (rawDate as { toDate: () => Date }).toDate() :
-      null;
+    const ts = dateValueToJsDate(data.date);
     if (!ts) continue;
 
     const dayKey = ts.toISOString().slice(0, 10);

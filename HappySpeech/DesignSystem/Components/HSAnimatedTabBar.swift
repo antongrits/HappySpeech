@@ -143,7 +143,11 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label.title)
         .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
-        .accessibilityValue(badge > 0 ? Text("\(badge) новых") : Text(""))
+        .accessibilityValue(
+            badge > 0
+                ? Text(String.localizedStringWithFormat(String(localized: "tabBar.badge.newCount"), badge))
+                : Text("")
+        )
     }
 
     // MARK: - Badge

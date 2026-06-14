@@ -12,7 +12,6 @@
  *   - createFamilyInviteToken       (HTTPS callable — Firestore-based invite,
  *                                    replaces Dynamic Links)
  *   - onSessionComplete             (Firestore trigger, v2)
- *   - moderateUserContent           (Firestore trigger, v2, placeholder)
  *   - sendWeeklyReport              (scheduled, every Sunday 10:00 MSK)
  *   - sendDailyReminder             (scheduled, every day 17:00 UTC = 20:00 MSK)
  *   - sendWeeklySummary             (scheduled, every Sunday 19:00 UTC = 22:00 MSK)
@@ -28,10 +27,7 @@ import {
   HttpsError,
   type CallableRequest,
 } from "firebase-functions/v2/https";
-import {
-  onDocumentCreated,
-  onDocumentWritten,
-} from "firebase-functions/v2/firestore";
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
 import { randomBytes, randomInt } from "node:crypto";
@@ -49,7 +45,6 @@ import { assertAuthorized } from "./auth";
 import { runWeeklyReport } from "./weeklyReport";
 import { exportUserDataBundle } from "./export";
 import { deleteUserDataCascade } from "./delete";
-import { moderateUserDocument } from "./moderation";
 import { setAdminClaimHandler } from "./admin";
 import { runDailyReminder } from "./sendDailyReminder";
 import { runWeeklySummary } from "./sendWeeklySummary";
@@ -58,10 +53,7 @@ import { runWeeklySummary } from "./sendWeeklySummary";
 export { scoreSpeechQuality } from "./speechQuality";
 export { generateNeurolinguistSummary } from "./neurolinguistSummary";
 export { sendFamilyInvite } from "./familyInvite";
-import { askMethodology } from "./methodologyAssistant";
 import type {
-  AskMethodologyRequest,
-  AskMethodologyResponse,
   CalculateProgressRequest,
   CalculateProgressResult,
   CreateFamilyInviteTokenRequest,
@@ -205,27 +197,6 @@ export const getUserStats = onCall<GetUserStatsRequest, Promise<UserStats>>(
 );
 
 // ------------------------------------------------------------------
-// Callable: askMethodologyAssistant
-// Adult-only RAG over the speech-therapy methodology corpus
-// (Vertex AI Search / Discovery Engine). Behind parental gate on iOS.
-// App Check enforced. Text-only — no child audio / PII. PII-free logging.
-// ------------------------------------------------------------------
-
-export const askMethodologyAssistant = onCall<
-  AskMethodologyRequest,
-  Promise<AskMethodologyResponse>
->(
-  { enforceAppCheck: true, cors: true, timeoutSeconds: 60, memory: "256MiB" },
-  async (request) => {
-    if (!request.auth || !request.auth.uid) {
-      throw new HttpsError("unauthenticated", "Требуется вход в аккаунт.");
-    }
-    const { question, sessionId } = request.data || {};
-    return askMethodology(request.auth.uid, question, sessionId);
-  },
-);
-
-// ------------------------------------------------------------------
 // Firestore Trigger: onSessionComplete
 // Path: /users/{userId}/children/{childId}/sessions/{sessionId}
 // Fires on document create — recomputes progress for the affected sound.
@@ -362,35 +333,6 @@ export const deleteUserData = onCall<DeleteUserDataRequest, Promise<DeleteUserDa
     } catch (error) {
       logger.error("deleteUserData failed", { userId, error: String(error) });
       throw new HttpsError("internal", "Failed to delete user data");
-    }
-  },
-);
-
-// ------------------------------------------------------------------
-// Firestore trigger: moderateUserContent
-// ------------------------------------------------------------------
-
-export const moderateUserContent = onDocumentWritten(
-  {
-    document: "users/{userId}/children/{childId}/sessions/{sessionId}/attempts/{attemptId}",
-    region: REGION,
-  },
-  async (event) => {
-    const { userId, childId, sessionId, attemptId } = event.params;
-    try {
-      await moderateUserDocument(admin, {
-        userId,
-        childId,
-        sessionId,
-        attemptId,
-        before: event.data?.before ? event.data.before.data() ?? null : null,
-        after: event.data?.after ? event.data.after.data() ?? null : null,
-      });
-    } catch (error) {
-      // Never throw from triggers
-      logger.error("moderateUserContent error", {
-        userId, childId, sessionId, attemptId, error: String(error),
-      });
     }
   },
 );

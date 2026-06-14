@@ -58,14 +58,20 @@ async function getWeekStats(
   weekStart: Date,
   weekEnd: Date,
 ): Promise<WeekStats> {
+  // Clients write `date` as epoch seconds (timeIntervalSince1970, a number) —
+  // see SessionPersistenceCoordinator.sessionPayloadJSON. Comparing against Date
+  // objects matched nothing → every weekly summary reported "0 занятий".
+  const weekStartEpoch = Math.floor(weekStart.getTime() / 1000);
+  const weekEndEpoch = Math.floor(weekEnd.getTime() / 1000);
+
   const snap = await db
     .collection("users")
     .doc(userId)
     .collection("children")
     .doc(childId)
     .collection("sessions")
-    .where("date", ">=", weekStart)
-    .where("date", "<=", weekEnd)
+    .where("date", ">=", weekStartEpoch)
+    .where("date", "<=", weekEndEpoch)
     .get();
 
   if (snap.empty) return { sessionCount: 0, totalMinutes: 0 };

@@ -36,13 +36,32 @@ public struct HSContentSymbol: View {
                 .foregroundStyle(tint)
                 .frame(width: size + 4, height: size + 4)
                 .accessibilityHidden(true)
-        } else {
+        } else if UIImage(named: name) != nil {
             Image(name)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: size + 8, height: size + 8)
                 .accessibilityHidden(true)
+        } else {
+            // Ассет отсутствует в каталоге — рисуем тёплый плейсхолдер вместо
+            // невидимого `Image(name)`. Раньше пропущенная картинка слова рендерилась
+            // пустым слотом (исторический баг «пустые слоты»). Палитра — только тёплая.
+            placeholder
         }
+    }
+
+    /// Тёплый плейсхолдер для отсутствующего ассета: мягкая скруглённая карточка
+    /// с дженерик-символом в Brand-тоне. Никогда не остаётся невидимым.
+    private var placeholder: some View {
+        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+            .fill(ColorTokens.Brand.primaryLo.opacity(0.18))
+            .overlay(
+                Image(systemName: "photo")
+                    .font(.system(size: size * 0.55, weight: .regular))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+            )
+            .frame(width: size + 8, height: size + 8)
+            .accessibilityHidden(true)
     }
 
     /// Эвристика: SF Symbol либо содержит точку (multi-word), либо это известное

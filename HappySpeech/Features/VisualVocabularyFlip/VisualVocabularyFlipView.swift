@@ -7,6 +7,7 @@ struct VisualVocabularyFlipView: View {
     let childId: String
 
     @State private var interactor: VisualVocabularyFlipInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -22,11 +23,20 @@ struct VisualVocabularyFlipView: View {
             .navigationBarHidden(true)
             .task {
                 if interactor == nil {
-                    interactor = VisualVocabularyFlipInteractor(childId: childId)
+                    interactor = VisualVocabularyFlipInteractor(
+                        childId: childId,
+                        sessionPersistence: container.sessionPersistenceCoordinator
+                    )
                 }
             }
         }
         .environment(\.circuitContext, .kid)
+    }
+
+    /// Фиксирует сессию вовлечённости и выходит из игры.
+    private func finishAndExit(_ interactor: VisualVocabularyFlipInteractor) {
+        Task { await interactor.finish() }
+        exitGame()
     }
 
     @ViewBuilder
@@ -40,9 +50,9 @@ struct VisualVocabularyFlipView: View {
                     icon: "play.fill"
                 ) {
                     hapticService.notification(.success)
-                    exitGame()
+                    finishAndExit(interactor)
                 },
-                onClose: { exitGame() }
+                onClose: { finishAndExit(interactor) }
             ) {
                 filterBar(interactor: interactor)
                 grid(interactor: interactor)

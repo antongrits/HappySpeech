@@ -41,19 +41,19 @@ public struct UniversalLinkHandler {
             components.scheme == "https" || components.scheme == "http",
             components.host == expectedHost
         else {
-            logger.debug("UniversalLinkHandler: не наш хост — \(url.absoluteString, privacy: .public)")
+            logger.debug("UniversalLinkHandler: не наш хост — \(url.absoluteString, privacy: .private)")
             return false
         }
 
         let path = components.path
-        logger.info("UniversalLinkHandler: обрабатываем путь \(path, privacy: .public)")
+        logger.info("UniversalLinkHandler: обрабатываем путь \(path, privacy: .private)")
 
         if let action = action(for: path, queryItems: components.queryItems ?? []) {
             DeepLinkRouter.shared.dispatch(action)
             return true
         }
 
-        logger.warning("UniversalLinkHandler: неизвестный путь \(path, privacy: .public)")
+        logger.warning("UniversalLinkHandler: неизвестный путь \(path, privacy: .private)")
         return false
     }
 

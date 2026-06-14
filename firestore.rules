@@ -73,6 +73,13 @@ service cloud.firestore {
       return data.keys().hasAll(fields);
     }
 
+    // True if the write touches ONLY the fields listed in `allowed` — every
+    // other key must keep its previous value. Prevents a narrowly-scoped writer
+    // (consented specialist) from silently rewriting unrelated fields.
+    function onlyChanges(allowed) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(allowed);
+    }
+
     function isValidTimestamp(value) {
       return value is timestamp;
     }
@@ -115,7 +122,11 @@ service cloud.firestore {
           && request.resource.data.age <= 8
           && isValidTimestamp(request.resource.data.createdAt);
 
-        allow update: if (isOwner(userId) || isOwnerParent(userId, childId))
+        // Core child profile (name/age/consent/…) is owned by the parent.
+        // A consented specialist has READ access only — it must NOT be able to
+        // rewrite the child's name, age, or consent flags. Specialist input
+        // belongs in notes/assignments, not the profile document.
+        allow update: if isOwner(userId)
           && request.resource.data.id == resource.data.id
           && request.resource.data.age is int
           && request.resource.data.age >= 5
@@ -149,10 +160,17 @@ service cloud.firestore {
             && isValidString(request.resource.data.targetSound, 8)
             && isValidString(request.resource.data.stage, 32);
 
-          // Sessions are immutable once written, except specialist can add annotations
+          // Sessions are immutable once written. A consented specialist (or
+          // admin) may ONLY attach an annotation — the recorded metrics
+          // (date, sounds, attempts, duration, …) can never be rewritten.
+          // The write may touch only `specialistNote` / `annotatedAt`; every
+          // other field must keep its previous value.
           allow update: if (isAdmin() || isOwnerParent(userId, childId))
-            && request.resource.data.id == resource.data.id
-            && request.resource.data.childId == resource.data.childId;
+            && onlyChanges(['specialistNote', 'annotatedAt'])
+            && (
+              !('specialistNote' in request.resource.data)
+              || isValidString(request.resource.data.specialistNote, 2000)
+            );
 
           allow delete: if isOwner(userId) || isAdmin();
 

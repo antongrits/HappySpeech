@@ -158,7 +158,24 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
     private let hopLength  = AudioAnalysisConstants.hopLength
     private let sampleRate = AudioAnalysisConstants.sampleRate
 
-    public init() {}
+    // MARK: FFT setup (vDSP, кэшируется на время жизни актора)
+    // nFft = 512 → log2 = 9. Тот же радикс-2 in-place real FFT, что в
+    // ``MelSpectrogramExtractor``: окно → FFT → |X|² → mel-фильтрбанк.
+    nonisolated(unsafe) private let fftSetup: OpaquePointer
+    private let fftLog2n: vDSP_Length
+
+    public init() {
+        let log2n = vDSP_Length(Int(log2(Double(AudioAnalysisConstants.nFft))))
+        fftLog2n = log2n
+        guard let setup = vDSP_create_fftsetup(log2n, FFTRadix(kFFTRadix2)) else {
+            fatalError("LiveAudioAnalysisService: не удалось создать vDSP FFT setup")
+        }
+        fftSetup = setup
+    }
+
+    deinit {
+        vDSP_destroy_fftsetup(fftSetup)
+    }
 
     // MARK: AudioAnalysisService
 
@@ -244,11 +261,10 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
                 frame[k] = sample * window[k]
             }
 
-            // Мощность спектра (упрощённый подход — элемент в квадрате)
-            var power = [Float](repeating: 0, count: halfN)
-            for k in 0 ..< halfN {
-                power[k] = frame[k] * frame[k]
-            }
+            // Спектр мощности через настоящий FFT (vDSP), а не квадрат
+            // time-domain сэмплов. Соответствует nFft=512 и audio_to_logmel()
+            // в train_sound_classifier.py.
+            let power = powerSpectrum(of: frame)
 
             // Применяем Mel-фильтрбанк из кэша
             for melIdx in 0 ..< nMels {
@@ -261,6 +277,57 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         return melFrames   // [nFrames, nMels]
+    }
+
+    /// Спектр мощности |X[k]|² оконного фрейма через radix-2 real FFT (vDSP).
+    ///
+    /// Делит пайплайн с ``MelSpectrogramExtractor.computeMagnitudeSpectrum``:
+    /// `vDSP_ctoz` → `vDSP_fft_zrip` → `vDSP_zvmags` (квадрат магнитуды).
+    /// Возвращает `nFft/2 + 1` бинов (включая Найквист), готовых для mel-фильтрбанка.
+    private func powerSpectrum(of frame: [Float]) -> [Float] {
+        let halfN  = nFft / 2          // 256
+        let outLen = nFft / 2 + 1      // 257 (с бином Найквиста)
+
+        var realPart = [Float](repeating: 0, count: halfN)
+        var imagPart = [Float](repeating: 0, count: halfN)
+        var power    = [Float](repeating: 0, count: outLen)
+
+        realPart.withUnsafeMutableBufferPointer { realBuf in
+            imagPart.withUnsafeMutableBufferPointer { imagBuf in
+                guard let rPtr = realBuf.baseAddress,
+                      let iPtr = imagBuf.baseAddress else { return }
+
+                var split = DSPSplitComplex(realp: rPtr, imagp: iPtr)
+
+                // Деинтерливинг real-сигнала в комплексный split-формат.
+                frame.withUnsafeBufferPointer { frameBuf in
+                    guard let fPtr = frameBuf.baseAddress else { return }
+                    fPtr.withMemoryRebound(to: DSPComplex.self, capacity: halfN) { complexPtr in
+                        vDSP_ctoz(complexPtr, 2, &split, 1, vDSP_Length(halfN))
+                    }
+                }
+
+                vDSP_fft_zrip(fftSetup, &split, 1, fftLog2n, FFTDirection(FFT_FORWARD))
+
+                // Формат zrip пакует Найквист в imagp[0], поэтому считаем |X|²
+                // для бинов 1..<halfN через vDSP_zvmags, а DC и Найквист — отдельно
+                // из их вещественных компонент (иначе бин 0 смешает DC+Найквист).
+                power.withUnsafeMutableBufferPointer { powBuf in
+                    guard let pPtr = powBuf.baseAddress else { return }
+                    vDSP_zvmags(&split, 1, pPtr, 1, vDSP_Length(halfN))
+                    pPtr[0]     = rPtr[0] * rPtr[0]   // DC
+                    pPtr[halfN] = iPtr[0] * iPtr[0]   // Найквист
+                }
+            }
+        }
+
+        // zrip даёт удвоенный спектр (фактор 2 относительно прямого DFT) → нормализуем
+        // мощность на (1/nFft)². Mel-фильтрбанк работает с относительными энергиями,
+        // финальная калибровка нивелируется per-frame log + z-score нормализацией.
+        var scale: Float = 1.0 / Float(nFft * nFft)
+        vDSP_vsmul(power, 1, &scale, &power, 1, vDSP_Length(outLen))
+
+        return power
     }
 
     // MARK: Private — Inference

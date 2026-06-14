@@ -220,23 +220,6 @@ export interface CreateFamilyInviteTokenResponse {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// Trigger context payloads
-// ────────────────────────────────────────────────────────────────────────────
-
-export interface ModerationContext {
-  userId: string;
-  childId: string;
-  sessionId: string;
-  attemptId: string;
-  before: admin.firestore.DocumentData | null;
-  after: admin.firestore.DocumentData | null;
-}
-
-export interface ModerationResult {
-  flagged: boolean;
-}
-
-// ────────────────────────────────────────────────────────────────────────────
 // Deep features (C-07): scoreSpeechQuality
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -312,33 +295,3 @@ export interface SendFamilyInviteResponse {
   emailDispatched: boolean;
 }
 
-// ────────────────────────────────────────────────────────────────────────────
-// Methodology Assistant (Vertex AI Search / Discovery Engine answer API).
-//
-// Adult-only feature (parent / specialist), behind parental gate on iOS.
-// Accepts ONLY an adult's free-text question about speech-therapy methodology.
-// COPPA: no child audio, no child PII — text-only methodology queries.
-// ────────────────────────────────────────────────────────────────────────────
-
-export interface AskMethodologyRequest {
-  /** Free-text adult question, Russian. */
-  question?: unknown;
-  /** Optional opaque session id to chain follow-up questions (no PII). */
-  sessionId?: unknown;
-}
-
-export interface MethodologyCitation {
-  /** Human-readable title of the source document. */
-  title: string;
-  /** Original markdown source filename (e.g. "therapy-stages.md"). */
-  source: string;
-}
-
-export interface AskMethodologyResponse {
-  /** Generated grounded answer, Russian markdown. */
-  answer: string;
-  /** Sources the answer was grounded on (deduplicated). */
-  citations: MethodologyCitation[];
-  /** Opaque session id to pass back for follow-up questions. */
-  sessionId: string | null;
-}

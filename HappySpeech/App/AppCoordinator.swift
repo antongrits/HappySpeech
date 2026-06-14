@@ -488,20 +488,12 @@ final class AppCoordinator {
 // MARK: - AppSheet
 
 enum AppSheet: Identifiable, Hashable {
-    case settings
-    case childProfile(childId: String)
-    case exportReport(childId: String)
-    case parentGuide
     /// v31 Wave F F-05 — превышен дневной лимит, ребёнок видит «время вышло».
     case capReached
 
     var id: String {
         switch self {
-        case .settings:             return "settings"
-        case .childProfile(let id): return "childProfile_\(id)"
-        case .exportReport(let id): return "exportReport_\(id)"
-        case .parentGuide:          return "parentGuide"
-        case .capReached:           return "capReached"
+        case .capReached: return "capReached"
         }
     }
 }
@@ -1315,14 +1307,6 @@ struct AppCoordinatorView: View {
     @ViewBuilder
     private func sheetContent(for sheet: AppSheet) -> some View {
         switch sheet {
-        case .settings:
-            SettingsView()
-        case .childProfile(let id):
-            Text("Профиль ребёнка \(id)")
-        case .exportReport(let id):
-            Text("Экспорт отчёта \(id)")
-        case .parentGuide:
-            Text("Руководство для родителей")
         case .capReached:
             CapReachedView()
                 .interactiveDismissDisabled(true)

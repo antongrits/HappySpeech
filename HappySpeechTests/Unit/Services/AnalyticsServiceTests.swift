@@ -78,29 +78,6 @@ final class AnalyticsServiceTests: XCTestCase {
         XCTAssertEqual(stored?.parameters["score"], "0.92")
     }
 
-    // MARK: - Batch 2.8.4 v25: LiveAnalyticsService (no-op OSLog bus)
-    //
-    // LiveAnalyticsService — per ADR-004 локальное логирование через OSLog,
-    // без внешних SDK (Kids Category). Проверяем, что track() не падает на
-    // любых событиях и фабрики AnalyticsEvent формируют корректные payload.
-
-    func test_liveAnalyticsService_track_doesNotCrash() {
-        let live = LiveAnalyticsService()
-        live.track(event: AnalyticsEvent(name: "live_test"))
-    }
-
-    func test_liveAnalyticsService_track_withParameters() {
-        let live = LiveAnalyticsService()
-        live.track(event: AnalyticsEvent(name: "with_params", parameters: ["k": "v"]))
-    }
-
-    func test_liveAnalyticsService_track_manyEvents() {
-        let live = LiveAnalyticsService()
-        for i in 0..<30 {
-            live.track(event: AnalyticsEvent(name: "event_\(i)"))
-        }
-    }
-
     // MARK: - AnalyticsEvent factories
 
     func test_factory_sessionStarted() {
@@ -159,12 +136,5 @@ final class AnalyticsServiceTests: XCTestCase {
         let event = AnalyticsEvent.onboardingCompleted(role: "parent")
         XCTAssertEqual(event.name, "onboarding_completed")
         XCTAssertEqual(event.parameters["role"], "parent")
-    }
-
-    func test_factory_eventsTrackableThroughLiveService() {
-        let live = LiveAnalyticsService()
-        live.track(event: .sessionStarted(childId: "c1", sound: "С", template: "bingo"))
-        live.track(event: .demoModeEntered())
-        live.track(event: .onboardingCompleted(role: "child"))
     }
 }

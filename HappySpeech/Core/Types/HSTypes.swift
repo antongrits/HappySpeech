@@ -11,10 +11,10 @@ public enum SoundFamily: String, CaseIterable, Codable, Sendable {
 
     public var displayName: String {
         switch self {
-        case .whistling: return "Свистящие"
-        case .hissing:   return "Шипящие"
-        case .sonorant:  return "Сонорные"
-        case .velar:     return "Заднеязычные"
+        case .whistling: return String(localized: "soundFamily.whistling")
+        case .hissing:   return String(localized: "soundFamily.hissing")
+        case .sonorant:  return String(localized: "soundFamily.sonorant")
+        case .velar:     return String(localized: "soundFamily.velar")
         }
     }
 
@@ -60,16 +60,16 @@ public enum CorrectionStage: String, CaseIterable, Codable, Sendable, Comparable
 
     public var displayName: String {
         switch self {
-        case .prep:      return "Артикуляция"
-        case .isolated:  return "Звук"
-        case .syllable:  return "Слоги"
-        case .wordInit:  return "Слова"
-        case .wordMed:   return "Слова"
-        case .wordFinal: return "Слова"
-        case .phrase:    return "Фразы"
-        case .sentence:  return "Предложения"
-        case .story:     return "Рассказ"
-        case .diff:      return "Различение"
+        case .prep:      return String(localized: "correctionStage.prep")
+        case .isolated:  return String(localized: "correctionStage.isolated")
+        case .syllable:  return String(localized: "correctionStage.syllable")
+        case .wordInit:  return String(localized: "correctionStage.word")
+        case .wordMed:   return String(localized: "correctionStage.word")
+        case .wordFinal: return String(localized: "correctionStage.word")
+        case .phrase:    return String(localized: "correctionStage.phrase")
+        case .sentence:  return String(localized: "correctionStage.sentence")
+        case .story:     return String(localized: "correctionStage.story")
+        case .diff:      return String(localized: "correctionStage.diff")
         }
     }
 
@@ -140,24 +140,24 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
 
     public var displayName: String {
         switch self {
-        case .listenAndChoose:       return "Слушай и выбирай"
-        case .repeatAfterModel:      return "Повторяй за мной"
-        case .dragAndMatch:          return "Перетащи и совмести"
-        case .storyCompletion:       return "Закончи историю"
-        case .puzzleReveal:          return "Собери пазл"
-        case .sorting:               return "Разложи по группам"
-        case .memory:                return "Запомни пары"
-        case .bingo:                 return "Лото"
-        case .soundHunter:           return "Охотник за звуком"
-        case .articulationImitation: return "Повтори движение"
-        case .arActivity:            return "AR-зеркало"
-        case .visualAcoustic:        return "Вижу звук"
-        case .breathing:             return "Дышим правильно"
-        case .rhythm:                return "Ритм речи"
-        case .narrativeQuest:        return "Сказка"
-        case .minimalPairs:          return "Похожие звуки"
-        case .objectHunt:            return "Найди предмет"
-        case .letterTracing:         return "Напиши букву"
+        case .listenAndChoose:       return String(localized: "template.listenAndChoose")
+        case .repeatAfterModel:      return String(localized: "template.repeatAfterModel")
+        case .dragAndMatch:          return String(localized: "template.dragAndMatch")
+        case .storyCompletion:       return String(localized: "template.storyCompletion")
+        case .puzzleReveal:          return String(localized: "template.puzzleReveal")
+        case .sorting:               return String(localized: "template.sorting")
+        case .memory:                return String(localized: "template.memory")
+        case .bingo:                 return String(localized: "template.bingo")
+        case .soundHunter:           return String(localized: "template.soundHunter")
+        case .articulationImitation: return String(localized: "template.articulationImitation")
+        case .arActivity:            return String(localized: "template.arActivity")
+        case .visualAcoustic:        return String(localized: "template.visualAcoustic")
+        case .breathing:             return String(localized: "template.breathing")
+        case .rhythm:                return String(localized: "template.rhythm")
+        case .narrativeQuest:        return String(localized: "template.narrativeQuest")
+        case .minimalPairs:          return String(localized: "template.minimalPairs")
+        case .objectHunt:            return String(localized: "template.objectHunt")
+        case .letterTracing:         return String(localized: "template.letterTracing")
         }
     }
 }

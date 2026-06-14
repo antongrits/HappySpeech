@@ -7,6 +7,7 @@ struct PalindromeHunterView: View {
     let childId: String
 
     @State private var interactor: PalindromeHunterInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
 
@@ -19,7 +20,10 @@ struct PalindromeHunterView: View {
             .navigationBarHidden(true)
             .task {
                 if interactor == nil {
-                    interactor = PalindromeHunterInteractor(childId: childId)
+                    interactor = PalindromeHunterInteractor(
+                        childId: childId,
+                        sessionPersistence: container.sessionPersistenceCoordinator
+                    )
                 }
             }
         }

@@ -7,8 +7,25 @@ interface ChildDocData {
 }
 
 interface SessionDocData {
-  date?: { toDate?: () => Date } | string;
+  // Clients write `date` as epoch seconds (timeIntervalSince1970, a number).
+  // Legacy docs may carry a Firestore Timestamp or ISO string.
+  date?: number | { toDate?: () => Date } | string;
   durationSeconds?: number;
+}
+
+/** Normalise a stored `date` value (epoch seconds | Timestamp | ISO) to a Date. */
+function sessionDateToJsDate(raw: SessionDocData["date"]): Date | null {
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    return new Date(raw * 1000);
+  }
+  if (typeof raw === "object" && raw && typeof raw.toDate === "function") {
+    return raw.toDate();
+  }
+  if (typeof raw === "string" && raw.length > 0) {
+    const d = new Date(raw);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+  return null;
 }
 
 /** Aggregate statistics across all children of a parent user. */
@@ -36,11 +53,8 @@ export async function aggregateUserStats(
     );
 
     const latest = sessionsSnap.docs
-      .map((d) => (d.data() as SessionDocData).date)
-      .filter((v): v is NonNullable<SessionDocData["date"]> => Boolean(v))
-      .map((ts) => (typeof ts === "object" && typeof ts.toDate === "function" ?
-        ts.toDate() :
-        new Date(ts as unknown as string)))
+      .map((d) => sessionDateToJsDate((d.data() as SessionDocData).date))
+      .filter((v): v is Date => v !== null)
       .sort((a, b) => b.getTime() - a.getTime())[0] ?? null;
 
     if (latest && (!lastActiveAt || latest > lastActiveAt)) {

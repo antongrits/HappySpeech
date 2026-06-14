@@ -364,8 +364,16 @@ function stableSeed(input: string): number {
   return value / 2 ** 48;
 }
 
-/** Нормализует Firestore Timestamp | ISO-строку | Date в ISO-строку. */
+/**
+ * Нормализует значение `date` в ISO-строку для сортировки/тренда.
+ * Основной формат клиента — epoch-секунды (число, timeIntervalSince1970),
+ * см. SessionPersistenceCoordinator.sessionPayloadJSON. Поддерживаются также
+ * legacy-форматы: Firestore Timestamp | ISO-строка | Date.
+ */
 function normalizeDate(raw: unknown): string {
+  if (typeof raw === "number" && Number.isFinite(raw)) {
+    return new Date(raw * 1000).toISOString();
+  }
   if (typeof raw === "string") return raw;
   if (raw && typeof (raw as { toDate?: () => Date }).toDate === "function") {
     return (raw as { toDate: () => Date }).toDate().toISOString();

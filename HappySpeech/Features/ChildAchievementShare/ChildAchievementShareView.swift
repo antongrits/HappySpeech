@@ -4,8 +4,9 @@ import SwiftUI
 
 struct ChildAchievementShareView: View {
 
-    @State private var interactor = ChildAchievementShareInteractor()
+    @State private var interactor: ChildAchievementShareInteractor?
     @State private var shareItem: ChildAchievementShareItem?
+    @Environment(AppContainer.self) private var container
     @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -17,7 +18,12 @@ struct ChildAchievementShareView: View {
                     .ignoresSafeArea()
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
-                content
+                if let interactor {
+                    content(interactor)
+                } else {
+                    ProgressView().controlSize(.large)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
             .navigationTitle(Text(String(localized: "achievementShare.nav.title")))
             .navigationBarTitleDisplayMode(.inline)
@@ -35,20 +41,29 @@ struct ChildAchievementShareView: View {
             .sheet(item: $shareItem) { item in
                 ChildAchievementShareSheet(items: [item.text])
             }
+            .task {
+                if interactor == nil {
+                    let new = ChildAchievementShareInteractor(
+                        childRepository: container.childRepository
+                    )
+                    interactor = new
+                    await new.loadChildName()
+                }
+            }
         }
         .environment(\.circuitContext, .parent)
     }
 
-    private var content: some View {
+    private func content(_ interactor: ChildAchievementShareInteractor) -> some View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp3) {
                 hero
                 sectionLabel("achievementShare.section.list")
-                list
+                list(interactor)
                 if let selected = interactor.selected {
-                    previewCard(selected)
+                    previewCard(selected, childName: interactor.childName)
                 }
-                cta
+                cta(interactor)
                 gateNote
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -101,7 +116,7 @@ struct ChildAchievementShareView: View {
     }
 
     // kid-diary-journal share-inset: тёплая открытка-превью выбранного достижения.
-    private func previewCard(_ item: ChildAchievementShareModels.Item) -> some View {
+    private func previewCard(_ item: ChildAchievementShareModels.Item, childName: String) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
             HStack {
                 Text("achievementShare.card.brand")
@@ -122,7 +137,7 @@ struct ChildAchievementShareView: View {
                 .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.92))
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
-            Text(interactor.childName)
+            Text(childName)
                 .font(TypographyTokens.caption(12).weight(.semibold))
                 .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.88))
                 .padding(.top, SpacingTokens.micro)
@@ -157,10 +172,10 @@ struct ChildAchievementShareView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private var list: some View {
+    private func list(_ interactor: ChildAchievementShareInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.items.enumerated()), id: \.element.id) { index, item in
-                row(item)
+                row(item, interactor: interactor)
                     .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
                         content
                             .opacity(phase.isIdentity ? 1 : 0)
@@ -172,7 +187,7 @@ struct ChildAchievementShareView: View {
         }
     }
 
-    private func row(_ item: ChildAchievementShareModels.Item) -> some View {
+    private func row(_ item: ChildAchievementShareModels.Item, interactor: ChildAchievementShareInteractor) -> some View {
         let selected = interactor.selectedId == item.id
         return Button {
             hapticService.impact(.light)
@@ -215,7 +230,7 @@ struct ChildAchievementShareView: View {
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
     }
 
-    private var cta: some View {
+    private func cta(_ interactor: ChildAchievementShareInteractor) -> some View {
         HSButton(
             String(localized: "achievementShare.cta.share"),
             style: .primary,

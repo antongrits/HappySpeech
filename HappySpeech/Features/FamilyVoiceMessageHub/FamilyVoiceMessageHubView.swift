@@ -4,7 +4,11 @@ import SwiftUI
 
 struct FamilyVoiceMessageHubView: View {
 
-    @State private var interactor = FamilyVoiceMessageHubInteractor()
+    /// id родителя — канонический локальный профиль (как в остальных FamilyVoice-экранах).
+    var parentId: String = "local-parent"
+
+    @State private var interactor: FamilyVoiceMessageHubInteractor?
+    @Environment(AppContainer.self) private var container
     @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -14,7 +18,12 @@ struct FamilyVoiceMessageHubView: View {
             ZStack {
                 HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
                     .ignoresSafeArea()
-                content
+                if let interactor {
+                    content(interactor)
+                } else {
+                    ProgressView().controlSize(.large)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
             .navigationTitle(Text(String(localized: "voiceMessageHub.nav.title")))
             .navigationBarTitleDisplayMode(.inline)
@@ -29,19 +38,29 @@ struct FamilyVoiceMessageHubView: View {
                     .accessibilityLabel(Text(String(localized: "action.close")))
                 }
             }
+            .task {
+                if interactor == nil {
+                    let new = FamilyVoiceMessageHubInteractor(
+                        parentId: parentId,
+                        recordingStore: FamilyRecordingStoreWorker(realmActor: container.realmActor)
+                    )
+                    interactor = new
+                    await new.load()
+                }
+            }
         }
         .environment(\.circuitContext, .parent)
     }
 
-    private var content: some View {
+    private func content(_ interactor: FamilyVoiceMessageHubInteractor) -> some View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp4) {
                 HSPrivacyPill()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                hero
-                list
+                hero(interactor)
+                list(interactor)
                 if !interactor.state.isEmpty {
-                    cta
+                    cta(interactor)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -50,7 +69,7 @@ struct FamilyVoiceMessageHubView: View {
         }
     }
 
-    private var hero: some View {
+    private func hero(_ interactor: FamilyVoiceMessageHubInteractor) -> some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "voiceMessageHub.hero.title"))
@@ -74,11 +93,11 @@ struct FamilyVoiceMessageHubView: View {
     }
 
     @ViewBuilder
-    private var list: some View {
+    private func list(_ interactor: FamilyVoiceMessageHubInteractor) -> some View {
         if interactor.state.isEmpty {
             emptyState
         } else {
-            messageList
+            messageList(interactor)
         }
     }
 
@@ -104,7 +123,7 @@ struct FamilyVoiceMessageHubView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private var messageList: some View {
+    private func messageList(_ interactor: FamilyVoiceMessageHubInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.state.messages.enumerated()), id: \.element.id) { index, message in
                 row(message) {
@@ -172,7 +191,7 @@ struct FamilyVoiceMessageHubView: View {
         .accessibilityAddTraits(.isButton)
     }
 
-    private var cta: some View {
+    private func cta(_ interactor: FamilyVoiceMessageHubInteractor) -> some View {
         HSButton(
             String(localized: "voiceMessageHub.cta.action"),
             style: .primary,

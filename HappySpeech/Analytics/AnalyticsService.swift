@@ -1,17 +1,4 @@
 import Foundation
-import OSLog
-
-// MARK: - LiveAnalyticsService
-
-/// No-op live analytics service. All events logged locally via OSLog per ADR-004.
-public final class LiveAnalyticsService: AnalyticsService, @unchecked Sendable {
-
-    public init() {}
-
-    public func track(event: AnalyticsEvent) {
-        HSLogger.analytics.info("[\(event.name)] \(event.parameters)")
-    }
-}
 
 // MARK: - AnalyticsEvent Names
 

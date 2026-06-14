@@ -8,6 +8,7 @@ struct LetterPaintingFunView: View {
 
     @State private var interactor: LetterPaintingFunInteractor?
     @State private var currentDragPoints: [CGPoint] = []
+    @Environment(AppContainer.self) private var container
     @Environment(\.exitGame) private var exitGame
     @Environment(\.hapticService) private var hapticService
 
@@ -18,7 +19,10 @@ struct LetterPaintingFunView: View {
                     title: Text(String(localized: "letterPainting.hero.title")),
                     subtitle: String(localized: "letterPainting.hero.subtitle"),
                     palette: .kidWarm,
-                    onExit: { exitGame() }
+                    onExit: {
+                        Task { await interactor.finish() }
+                        exitGame()
+                    }
                 ) {
                     canvasContent(interactor: interactor)
                 } toolbar: {
@@ -35,6 +39,7 @@ struct LetterPaintingFunView: View {
                         systemImage: "paintbrush.fill"
                     ) {
                         hapticService.notification(.success)
+                        Task { await interactor.finish() }
                         interactor.clear()
                     }
                 }
@@ -47,7 +52,10 @@ struct LetterPaintingFunView: View {
         }
         .task {
             if interactor == nil {
-                interactor = LetterPaintingFunInteractor(childId: childId)
+                interactor = LetterPaintingFunInteractor(
+                    childId: childId,
+                    sessionPersistence: container.sessionPersistenceCoordinator
+                )
             }
         }
         .environment(\.circuitContext, .kid)

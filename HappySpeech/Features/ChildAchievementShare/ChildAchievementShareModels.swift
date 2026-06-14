@@ -12,6 +12,13 @@ enum ChildAchievementShareModels {
         let emoji: String
     }
 
+    /// Нейтральный дефолт имени, пока реальный профиль не загружен и когда
+    /// активного ребёнка нет (Preview/тесты). Не персональные данные.
+    static let defaultChildName = String(
+        localized: "achievementShare.defaultChildName",
+        defaultValue: "Малыш"
+    )
+
     static let seed: [Item] = [
         .init(id: "first-session", title: "Первый шаг",
               subtitle: "Завершил первую сессию", emoji: "🌱"),

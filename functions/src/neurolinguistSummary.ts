@@ -324,11 +324,16 @@ export const generateNeurolinguistSummary = onCall<
     const { start, end } = weekBoundaries(new Date(), offset);
     const startIso = start.toISOString();
     const endIso = end.toISOString();
+    // Clients write `date` as epoch seconds (timeIntervalSince1970, a number) —
+    // see SessionPersistenceCoordinator.sessionPayloadJSON. Range filters must
+    // compare against numbers; ISO-string bounds matched nothing → empty week.
+    const startEpoch = Math.floor(start.getTime() / 1000);
+    const endEpoch = Math.floor(end.getTime() / 1000);
 
     // Прошлая неделя — для динамики неделя-к-неделе.
     const prevBounds = weekBoundaries(new Date(), offset + 1);
-    const prevStartIso = prevBounds.start.toISOString();
-    const prevEndIso = prevBounds.end.toISOString();
+    const prevStartEpoch = Math.floor(prevBounds.start.getTime() / 1000);
+    const prevEndEpoch = Math.floor(prevBounds.end.getTime() / 1000);
 
     try {
       const db = admin.firestore();
@@ -339,12 +344,12 @@ export const generateNeurolinguistSummary = onCall<
 
       const [snap, prevSnap, progressSnap] = await Promise.all([
         sessionsRef
-          .where("date", ">=", startIso)
-          .where("date", "<", endIso)
+          .where("date", ">=", startEpoch)
+          .where("date", "<", endEpoch)
           .get(),
         sessionsRef
-          .where("date", ">=", prevStartIso)
-          .where("date", "<", prevEndIso)
+          .where("date", ">=", prevStartEpoch)
+          .where("date", "<", prevEndEpoch)
           .get(),
         db
           .collection("users").doc(callerUid)
