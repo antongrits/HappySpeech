@@ -64,6 +64,17 @@ final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
         }
     }
 
+    // MARK: - Voice character (выбранный голос Ляли)
+
+    /// Множитель скорости плеера от выбранного в кастомизации голоса Ляли
+    /// (`LyalyaVoice.speechPitch`: soft 0.85 / classic 1.0 / cheerful 1.2).
+    /// `AVAudioPlayer.rate` сдвигает темп и высоту тона вместе, поэтому выбор
+    /// голоса становится РЕАЛЬНО слышимым в наррации (раньше нарратор играл m4a
+    /// без `.rate`, и выбранный голос игнорировался).
+    private var voiceRateMultiplier: Float {
+        LyalyaCustomizationStorage.shared.voice.speechPitch
+    }
+
     // MARK: - Speaking
 
     func speakSentence(_ text: String, storyId: String, sentenceIndex: Int) async {
@@ -87,6 +98,7 @@ final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
             return
         }
 
+        let rate = voiceRateMultiplier
         await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
             do {
                 player?.stop()
@@ -95,9 +107,13 @@ final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
                 let newPlayer = try AVAudioPlayer(contentsOf: url)
                 newPlayer.delegate = self
                 newPlayer.prepareToPlay()
+                if rate != 1.0 {
+                    newPlayer.enableRate = true
+                    newPlayer.rate = max(0.5, min(2.0, rate))
+                }
                 player = newPlayer
                 newPlayer.play()
-                Self.logger.debug("ReadAloud: playing '\(audioName, privacy: .public)'")
+                Self.logger.debug("ReadAloud: playing '\(audioName, privacy: .public)' rate=\(rate, format: .fixed(precision: 2))")
             } catch {
                 Self.logger.warning(
                     "ReadAloudStoryWorker: AVAudioPlayer failed: \(error.localizedDescription, privacy: .public)"

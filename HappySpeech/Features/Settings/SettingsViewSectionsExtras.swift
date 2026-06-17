@@ -329,9 +329,10 @@ extension SettingsView {
 
             Button {
                 // Перезапуск обзорного тура. Закрываем Settings, чтобы spotlight-overlay
-                // лёг поверх основного экрана.
+                // лёг поверх основного экрана. exitToParentHome() работает в обоих
+                // режимах (top-level и tab), dismiss() — no-op при route-замене.
                 container.guidedTourCoordinator.start(force: true)
-                dismiss()
+                exitToParentHome()
             } label: {
                 Label {
                     Text(String(localized: "settings.about.tour"))

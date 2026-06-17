@@ -24,6 +24,9 @@ struct WorldMapView: View {
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.colorScheme) private var colorScheme
+    /// Единая точка выхода из kid-маршрутов (заменяет dismiss() — маршрут
+    /// меняется через navigate(to:), поэтому dismiss() — no-op).
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - VIP State
 
@@ -71,7 +74,7 @@ struct WorldMapView: View {
                     starsCollected: starsCollectedLabel,
                     starsTotal: starsTotalLabel,
                     progress: display.totalProgressFraction,
-                    onLeadingTap: onDismiss.map { dismiss in { dismiss() } },
+                    onLeadingTap: { exitGame() },
                     reduceMotion: reduceMotion
                 )
                 .padding(.top, SpacingTokens.tiny)

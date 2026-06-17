@@ -25,6 +25,9 @@ struct RewardsView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    /// Единая точка выхода из kid-маршрутов (navigate(to:) заменяет root,
+    /// поэтому dismiss() — no-op в top-level режиме).
+    @Environment(\.exitGame) private var exitGame
 
     // MARK: - VIP State
 
@@ -142,6 +145,18 @@ struct RewardsView: View {
             }
             .navigationTitle(String(localized: "rewards.navTitle"))
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        exitGame()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                    }
+                    .accessibilityLabel(String(localized: "action.back", defaultValue: "Назад"))
+                }
+            }
             .sheet(item: $detailViewModel) { detail in
                 StickerDetailSheet(detail: detail) {
                     detailViewModel = nil

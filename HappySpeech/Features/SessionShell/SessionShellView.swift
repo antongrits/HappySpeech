@@ -114,6 +114,21 @@ struct SessionShellHost: View {
         )
         .task {
             guard interactor == nil else { return }
+
+            // v31 Wave F F-05 — daily time cap gate на СТАРТЕ сессии. Раньше cap
+            // проверялся только в `ChildHomeView.onAppear`, поэтому входы мимо
+            // главной (Siri / Spotlight / deep-link / прямой route на lessonPlayer)
+            // не гейтились — ребёнок начинал урок несмотря на исчерпанный лимит.
+            // Эта точка перехватывает ВСЕ входы в сессию (любой запуск идёт через
+            // SessionShellHost): при превышении показываем CapReached-экран и
+            // выходим обратно на детскую главную, не запуская урок.
+            if container.dailyUsageTracker.isOverCap() {
+                let routerInstance = SessionShellRouter(coordinator: coordinator)
+                coordinator.checkDailyCap(using: container.dailyUsageTracker)
+                routerInstance.routeBack()
+                return
+            }
+
             let presenterInstance = SessionShellPresenter()
             let routerInstance = SessionShellRouter(coordinator: coordinator)
             let interactorInstance = SessionShellInteractor(

@@ -65,26 +65,26 @@ final class GrammarFeedbackWorker: NSObject {
             if playLyalyaAsset(named: assetName) { return }
         }
         if playLyalyaAsset(named: LyalyaAsset.intro) { return }
-        speakTTS(text, rate: 0.45, pitch: 1.10)
+        speakTTS(text, rate: 0.45)
     }
 
     /// Озвучивает подтверждение правильного ответа (случайная из 3 вариаций).
     func speakCorrectFeedback(_ text: String) {
         let variant = LyalyaAsset.correctVariants.randomElement() ?? LyalyaAsset.correctVariants[0]
         if playLyalyaAsset(named: variant) { return }
-        speakTTS(text, rate: 0.50, pitch: 1.15)
+        speakTTS(text, rate: 0.50)
     }
 
     /// Озвучивает поощрение при неверном ответе.
     func speakIncorrectFeedback(_ text: String) {
         if playLyalyaAsset(named: LyalyaAsset.tryAgain) { return }
-        speakTTS(text, rate: 0.48, pitch: 1.05)
+        speakTTS(text, rate: 0.48)
     }
 
     /// Озвучивает подсказку.
     func speakHint(_ text: String) {
         if playLyalyaAsset(named: LyalyaAsset.hint) { return }
-        speakTTS(text, rate: 0.42, pitch: 1.05)
+        speakTTS(text, rate: 0.42)
     }
 
     /// Озвучивает завершение уровня.
@@ -96,7 +96,7 @@ final class GrammarFeedbackWorker: NSObject {
         default:       assetName = LyalyaAsset.completeMedium
         }
         if playLyalyaAsset(named: assetName) { return }
-        speakTTS(String(localized: "grammar.game.feedback.level_complete", bundle: .main), rate: 0.50, pitch: 1.15)
+        speakTTS(String(localized: "grammar.game.feedback.level_complete", bundle: .main), rate: 0.50)
     }
 
     func stopSpeaking() {
@@ -121,6 +121,15 @@ final class GrammarFeedbackWorker: NSObject {
 
     // MARK: - Private
 
+    /// Множитель скорости плеера от выбранного в кастомизации голоса Ляли
+    /// (`LyalyaVoice.speechPitch`: soft 0.85 / classic 1.0 / cheerful 1.2).
+    /// `AVAudioPlayer.rate` сдвигает темп и высоту тона вместе, поэтому выбор
+    /// голоса слышен и на m4a-пути обратной связи (раньше m4a играли без `.rate`,
+    /// и голос применялся только на TTS-фоллбэке через LessonVoiceWorker).
+    private var voiceRateMultiplier: Float {
+        LyalyaCustomizationStorage.shared.voice.speechPitch
+    }
+
     /// Воспроизводит m4a-файл из Audio/Lyalya/.
     /// Audio/ подключён как folder reference, путь в бандле: <bundle>/Audio/Lyalya/<name>.m4a.
     /// Возвращает true если файл найден и воспроизведение запущено.
@@ -135,10 +144,16 @@ final class GrammarFeedbackWorker: NSObject {
             return false
         }
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
-            logger.debug("Lyalya playing: \(name, privacy: .public)")
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            let rate = voiceRateMultiplier
+            if rate != 1.0 {
+                player.enableRate = true
+                player.rate = max(0.5, min(2.0, rate))
+            }
+            player.play()
+            audioPlayer = player
+            logger.debug("Lyalya playing: \(name, privacy: .public) rate=\(rate, format: .fixed(precision: 2))")
             return true
         } catch {
             logger.error("AVAudioPlayer failed for \(name, privacy: .public): \(error)")
@@ -146,7 +161,7 @@ final class GrammarFeedbackWorker: NSObject {
         }
     }
 
-    private func speakTTS(_ text: String, rate: Float, pitch: Float) {
+    private func speakTTS(_ text: String, rate: Float) {
         speakTask?.cancel()
         speakTask = Task { @MainActor [weak self] in
             guard let self else { return }

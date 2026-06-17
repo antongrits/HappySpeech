@@ -30,6 +30,11 @@ struct SettingsView: View {
     @Environment(AppContainer.self) var container
     @Environment(AppCoordinator.self) var coordinator
     @Environment(\.dismiss) var dismiss
+    /// Единая точка возврата из top-level parent-маршрутов (navigate(to:) заменяет
+    /// root, поэтому dismiss() — no-op). Когда Settings встроены вкладкой в
+    /// ParentHome — возвращает на родительский главный экран (нейтральное действие).
+    /// Видимость internal — обращается extension SettingsViewSectionsExtras.
+    @Environment(\.exitToParentHome) var exitToParentHome
 
     // MARK: - VIP State
 
@@ -111,6 +116,22 @@ struct SettingsView: View {
             }
             .navigationTitle(String(localized: "settings.navTitle"))
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                // Кнопка «Назад» для top-level режима (FamilyHome → navigate(to: .settings)):
+                // dismiss() — no-op при route-замене, поэтому используем exitToParentHome.
+                // В tab-режиме (ParentHome) exitToParentHome тоже безопасен:
+                // возвращает на parentHome — фактически уже текущий экран.
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        exitToParentHome()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                    }
+                    .accessibilityLabel(String(localized: "action.back", defaultValue: "Назад"))
+                }
+            }
             .modifier(SettingsThemeTipModifier())
             // D-26 v27 — убран дублирующий маленький маскот из toolbar:
             // крупная Ляля уже присутствует в settingsHeaderSection.

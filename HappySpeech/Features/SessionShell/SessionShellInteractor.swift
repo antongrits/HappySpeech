@@ -35,8 +35,12 @@ extension SessionShellBusinessLogic {
 ///
 /// Fatigue model:
 ///   * 3 hearts at session start.
-///   * Every 3 consecutive incorrect answers (`score < 0.5`) drain 1 heart.
-///   * 0 hearts → fatigueDetected, session is offered to end gracefully.
+///   * Every `errorsPerHeart` consecutive incorrect answers (`score < 0.5`)
+///     drain 1 heart. Серия ошибок теряет сердце, но сессия НЕ завершается
+///     на первой потере — ребёнок проходит всю «лесенку» сердец 3→2→1→0.
+///   * Session ends by fatigue ТОЛЬКО когда потеряны ВСЕ сердца
+///     (`fatigueHearts == 0`), а не на N-й подряд ошибке. Это делает HUD из
+///     3 сердец рабочей моделью (а не косметикой) и достижимым состояние «0».
 ///   * Session also auto-stops at `maxSessionMinutes` of *active* time
 ///     (excludes accumulated pause time).
 @MainActor
@@ -108,7 +112,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
 
     // MARK: - Fatigue thresholds
 
-    private let maxConsecutiveErrors = 3
+    /// Сколько подряд неправильных ответов (`score < 0.5`) теряют ОДНО сердце.
     private let errorsPerHeart = 3
     private let initialHearts = 3
     private let maxSessionMinutes: Double = 15
@@ -548,10 +552,15 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         collectedAttempts.append(attempt)
     }
 
+    /// Конец сессии по усталости наступает, когда потеряны ВСЕ сердца
+    /// (`fatigueHearts == 0`) — серия ошибок дренирует сердца по одному
+    /// (`errorsPerHeart` ошибок = −1 сердце), а не завершает сессию на N-й
+    /// подряд ошибке. Дополнительно сессия авто-стопится по лимиту активного
+    /// времени. Негативные эмоции дренируют сердца тем же путём (см.
+    /// `analyzeEmotion`), поэтому отдельной ветки для них здесь не нужно.
     private func detectFatigue() -> Bool {
         let elapsed = activeElapsedSeconds / 60
         return fatigueHearts == 0
-            || consecutiveErrors >= maxConsecutiveErrors
             || elapsed >= maxSessionMinutes
     }
 

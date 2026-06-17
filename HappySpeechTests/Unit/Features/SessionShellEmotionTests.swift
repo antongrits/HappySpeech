@@ -112,6 +112,24 @@ final class SessionShellEmotionTests: XCTestCase {
         XCTAssertEqual(spy.emotionResponses.last?.fatigueHearts, 2, "Грусть тоже считается негативом")
     }
 
+    /// M1: 6 подряд негативных эмоций дренируют ВСЕ три сердца (negativeEmotionsPerHeart=2:
+    /// 2→сердце2, 4→сердце1, 6→сердце0). На 0 сердец предлагается перерыв
+    /// (`suggestBreak == detectFatigue`). Раньше «0 сердец» было недостижимо.
+    func test_sixNegatives_drainAllHearts_to_zero_suggestsBreak() async {
+        let mock = MockEmotionDetectionService(emotion: .frustrated, confidence: 0.95)
+        let (sut, spy) = await startedSUT(emotion: mock)
+        let pcm = samplePCM()
+
+        for _ in 0..<6 {
+            await sut.analyzeEmotion(.init(pcmData: pcm))
+        }
+
+        XCTAssertEqual(spy.emotionResponses.last?.fatigueHearts, 0,
+                       "6 подряд негативов списывают все 3 сердца (3→2→1→0)")
+        XCTAssertTrue(spy.emotionResponses.last?.suggestBreak ?? false,
+                      "При 0 сердцах предлагается перерыв")
+    }
+
     // MARK: - Низкая уверенность не учитывается
 
     func test_lowConfidenceNegative_doesNotDrainHeart() async {

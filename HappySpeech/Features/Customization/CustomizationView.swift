@@ -89,7 +89,6 @@ struct CustomizationView: View {
                     lyalyaPromptBubble
                     tabPicker
                     tabContent
-                    accessoriesSection
                     Spacer(minLength: SpacingTokens.xLarge)
                     actionButtons
                 }
@@ -394,6 +393,13 @@ struct CustomizationView: View {
     }
 
     // MARK: - Color tab
+    //
+    // Показываем только выбор цветового варианта (LyalyaColorVariant) —
+    // единственная категория, которая реально влияет на превью маскота
+    // (gradient в mascotHeader). Секции hair/eye/skinTone удалены: для них
+    // нет компонуемых PNG-слоёв в Assets.xcassets — выбор ничего не менял
+    // на экране (мёртвый UI). Данные по-прежнему хранятся в Realm через
+    // saveCustomization/autoSave, но редактор этих значений скрыт до появления ассетов.
 
     private var colorTab: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -408,54 +414,6 @@ struct CustomizationView: View {
                         withAnimation(reduceMotion ? .linear(duration: 0.3) : .easeInOut(duration: 0.25)) {
                             interactor?.selectColor(.init(color: variant))
                         }
-                    }
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.regular)
-
-            sectionTitle(String(localized: "customization.section.hair"))
-            HStack(spacing: SpacingTokens.regular) {
-                ForEach(LyalyaHairColor.allCases) { hairColor in
-                    ColorCircle(
-                        color: hairColor.previewColor,
-                        label: hairColor.localizedName,
-                        isSelected: viewModel.selectedHairColor == hairColor
-                    )
-                    .onTapGesture {
-                        interactor?.selectHairColor(.init(color: hairColor))
-                    }
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.regular)
-
-            sectionTitle(String(localized: "customization.section.eyes"))
-            HStack(spacing: SpacingTokens.regular) {
-                ForEach(LyalyaEyeColor.allCases) { eyeColor in
-                    ColorCircle(
-                        color: eyeColor.previewColor,
-                        label: eyeColor.localizedName,
-                        isSelected: viewModel.selectedEyeColor == eyeColor
-                    )
-                    .onTapGesture {
-                        interactor?.selectEyeColor(.init(color: eyeColor))
-                    }
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.regular)
-
-            sectionTitle(String(localized: "customization.section.skintone"))
-            HStack(spacing: SpacingTokens.regular) {
-                ForEach(LyalyaSkinTone.allCases) { tone in
-                    ColorCircle(
-                        color: tone.previewColor,
-                        label: tone.localizedName,
-                        isSelected: viewModel.selectedSkinTone == tone
-                    )
-                    .onTapGesture {
-                        interactor?.selectSkinTone(.init(tone: tone))
                     }
                 }
             }
@@ -508,30 +466,6 @@ struct CustomizationView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
             }
             .frame(height: isCompactWidth ? 120 : 140)
-            .padding(.bottom, SpacingTokens.regular)
-        }
-    }
-
-    // MARK: - Accessories section (всегда видна)
-
-    private var accessoriesSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-            sectionTitle(String(localized: "customization.section.accessories"))
-            HStack(spacing: SpacingTokens.small) {
-                ForEach(Array(viewModel.accessoryItems.enumerated()), id: \.element.id) { index, item in
-                    AccessoryToggleButton(item: item) {
-                        interactor?.toggleAccessory(.init(accessory: item.accessory))
-                    }
-                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
-                        content
-                            .opacity(phase.isIdentity ? 1 : 0)
-                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
-                    }
-                    .hsParallaxTile(factor: 0.15)
-                    .zIndex(Double(viewModel.accessoryItems.count - index))
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
         }
     }

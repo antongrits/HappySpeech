@@ -92,14 +92,20 @@ final class SessionShellInteractorTests: XCTestCase {
         //  (b) the session naturally completes once all activities exhaust.
         // Both outcomes are equally valid: the interactor must eventually mark
         // isSessionComplete so the presenter can roll the child to the summary.
+        // M1-fix: усталость дренирует сердца по одному (errorsPerHeart подряд
+        // ошибок = −1 сердце), конец сессии — при hearts==0 ИЛИ исчерпании
+        // активностей. Малый adaptive-маршрут не успевает слить все 3 сердца,
+        // поэтому здесь проверяется ветка ИСЧЕРПАНИЯ: проходим КАЖДУЮ активность
+        // маршрута (разные id → индекс продвигается) → сессия обязана завершиться.
+        // Полная лесенка 3→0 покрыта test_heartsDrainFullLadder_to_zero_endsSession.
         let (sut, spy) = makeSUT()
         await sut.startSession(.init(childId: "c1", targetSoundId: "Р", sessionType: .adaptive))
-        let firstActivityId = spy.startResponses.first!.activities.first!.id
+        let activities = spy.startResponses.first!.activities
 
-        for _ in 0..<3 where !(spy.completeResponses.last?.isSessionComplete ?? false) {
+        for activity in activities where !(spy.completeResponses.last?.isSessionComplete ?? false) {
             await sut.completeActivity(.init(
-                activityId: firstActivityId, score: 0.2,
-                durationSeconds: 10, errorCount: 3
+                activityId: activity.id, score: 0.2,
+                durationSeconds: 10, errorCount: 1
             ))
         }
 
@@ -140,6 +146,69 @@ final class SessionShellInteractorTests: XCTestCase {
             spy.completeResponses.last?.fatigueDetected ?? true,
             "Counter should have reset after the success"
         )
+    }
+
+    // MARK: - M1: hearts model decoupled from session-end
+
+    /// M1: 3 подряд ошибки дренируют ОДНО сердце (3→2), но сессия НЕ завершается
+    /// по усталости — раньше `detectFatigue` срабатывал на 3-й подряд ошибке, и
+    /// сердце никогда не падало ниже 2 (HUD «3 сердца» был косметикой). Берём
+    /// quickPractice (5 шагов): после 3 ошибок остаются шаги, сессия живёт.
+    func test_threeConsecutiveErrors_drainOneHeart_butDoNotEndSession() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c-m1", targetSoundId: "Р", sessionType: .quickPractice))
+        XCTAssertEqual(spy.startResponses.first?.activities.count, 5)
+
+        for activity in spy.startResponses.first!.activities.prefix(3) {
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 0.2, durationSeconds: 5, errorCount: 1
+            ))
+        }
+
+        let last = spy.completeResponses.last
+        XCTAssertEqual(last?.fatigueHearts, 2, "3 подряд ошибки списывают ровно одно сердце (3→2)")
+        XCTAssertFalse(last?.fatigueDetected ?? true,
+                       "Сессия НЕ завершается по усталости при первой потере сердца")
+        XCTAssertFalse(last?.isSessionComplete ?? true,
+                       "Остаются шаги 4 и 5 — сессия продолжается")
+    }
+
+    /// M1: проигрывание всей «лесенки» сердец 3→2→1→0 → конец сессии по усталости.
+    /// Используем длинный adaptive-маршрут (9 шагов), где 9 подряд ошибок = 3
+    /// потерянных сердца → `fatigueDetected`. Каждые `errorsPerHeart`(3) ошибок
+    /// списывают одно сердце; на 0 сердец сессия завершается.
+    func test_heartsDrainFullLadder_to_zero_endsSession() async {
+        let longRoute = AdaptiveRoute(
+            steps: (0..<9).map { _ in
+                RouteStepItem(templateType: .listenAndChoose, targetSound: "Р",
+                              stage: .wordInit, difficulty: 1, wordCount: 6, durationTargetSec: 60)
+            },
+            maxDurationSec: 900,
+            fatigueLevel: .fresh
+        )
+        let planner = MockAdaptivePlannerService(route: longRoute)
+        let (sut, spy) = makeSUT(adaptivePlanner: planner)
+        await sut.startSession(.init(childId: "c-ladder", targetSoundId: "Р", sessionType: .adaptive))
+        XCTAssertEqual(spy.startResponses.first?.activities.count, 9)
+
+        var heartsTrail: [Int] = []
+        for activity in spy.startResponses.first!.activities {
+            guard !(spy.completeResponses.last?.isSessionComplete ?? false) else { break }
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 0.1, durationSeconds: 3, errorCount: 1
+            ))
+            if let hearts = spy.completeResponses.last?.fatigueHearts {
+                heartsTrail.append(hearts)
+            }
+        }
+
+        // Сердца реально прошли лесенку 3→2→1→0 (значения 2,1,0 встречаются).
+        XCTAssertTrue(heartsTrail.contains(2), "Сердце 3→2 после 3 ошибок")
+        XCTAssertTrue(heartsTrail.contains(1), "Сердце 2→1 после 6 ошибок")
+        XCTAssertTrue(heartsTrail.contains(0), "Сердце 1→0 после 9 ошибок")
+        XCTAssertEqual(sut.currentFatigueHearts, 0, "Все сердца потеряны")
+        XCTAssertTrue(spy.completeResponses.last?.fatigueDetected ?? false,
+                      "При 0 сердцах сессия завершается по усталости")
     }
 
     // MARK: - pause

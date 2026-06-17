@@ -38,7 +38,8 @@ protocol SessionCompleteBusinessLogic: AnyObject {
 ///
 /// Persistence:
 ///   - SessionResult → сохранить RewardRecord в Realm (тип «sticker»)
-///   - ChildProfile.currentStreak обновить через ChildRepository
+///   - ChildProfile.currentStreak — ЧИТАЕТСЯ для reveal (запись принадлежит
+///     LiveSessionPersistenceCoordinator, единый авторитетный источник)
 ///   - AchievementEvent → NotificationCenter → AchievementsInteractor
 ///
 /// COPPA: kid circuit — никаких HF Tier B вызовов.
@@ -218,12 +219,29 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
     /// Последовательный конвейер: сохранение → стрик → стикер → ачивки.
     /// Все ошибки логируются, не пробрасываются — экран должен работать offline.
     private func runPostSessionPersistence(result: SessionResult, breakdown: ScoreBreakdown) async {
+        // M5-гард: награды начисляются ТОЛЬКО за реальную работу. `attempts` —
+        // число завершённых НЕ-пропущенных шагов (`buildSessionResult` отфильтровывает
+        // `skipped`). Сессия, где все шаги пропущены (`attempts == 0`), не должна
+        // выдавать стикер (= монета, 1 RewardRecord ≈ 1 монета) и публиковать
+        // achievement-события за 0 усилий. Тот же критерий «была работа», что и в
+        // `SessionShellInteractor.advanceStageProgress` (`totalAttempts > 0`).
+        guard result.attempts > 0 else {
+            logger.info("runPostSessionPersistence skipped — no real attempts (full skip), no reward/streak event")
+            return
+        }
+
         // 1. Сохранить RewardRecord (стикер) в Realm
         let sticker = pickSticker(for: result.soundTarget, score: breakdown.accuracy)
         await persistStickerReward(childId: result.childId, sessionId: result.sessionId, sticker: sticker)
 
-        // 2. Обновить стрик ChildProfile
-        let streakInfo = await updateStreak(childId: result.childId)
+        // 2. Прочитать актуальный стрик из профиля.
+        // M4: запись стрика — ЕДИНСТВЕННАЯ точка в `LiveSessionPersistenceCoordinator`
+        // (trailing-run `StreakCalculator` по реальным датам сессий + `lastSessionAt`),
+        // которая отрабатывает в `SessionShell.saveSession()` ДО навигации на этот
+        // экран. Раньше здесь поверх писалась инкрементная эвристика БЕЗ `lastSessionAt`
+        // (двойной писатель → расхождение источников). Теперь экран только ЧИТАЕТ
+        // авторитетное значение для reveal-стадии «серия дней».
+        let streakInfo = await readStreak(childId: result.childId)
 
         // 3. Опубликовать ивенты достижений (AchievementsInteractor обработает через NotificationCenter)
         publishAchievementEvents(for: result, breakdown: breakdown, streak: streakInfo)
@@ -294,56 +312,32 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
         logger.debug("persistStickerReward saved sticker=\(sticker.id, privacy: .public) for session=\(sessionId, privacy: .private)")
     }
 
-    // MARK: - Streak update
+    // MARK: - Streak read
 
-    /// Инкрементирует currentStreak в ChildProfile.
-    /// Логика: если lastSessionAt — вчера или ранее сегодня → streak+1, иначе → 1.
-    private func updateStreak(childId: String) async -> StreakInfo {
+    /// Читает актуальный `currentStreak` из профиля ребёнка для reveal-стадии
+    /// «серия дней». Только ЧТЕНИЕ — запись стрика принадлежит
+    /// `LiveSessionPersistenceCoordinator` (trailing-run `StreakCalculator` +
+    /// `lastSessionAt`), который отрабатывает в `SessionShell.saveSession()` до
+    /// перехода на этот экран. Так у стрика один авторитетный источник, без
+    /// гонки двух писателей и расхождения значений.
+    private func readStreak(childId: String) async -> StreakInfo {
         guard !childId.isEmpty else {
             return StreakInfo(currentStreak: 0, isMilestone: false, milestoneLabel: nil)
         }
         do {
             let profile = try await childRepository.fetch(id: childId)
-            let newStreak = computeNewStreak(
-                current: profile.currentStreak,
-                lastSessionAt: profile.lastSessionAt
-            )
-            try await childRepository.updateStreak(childId: childId, streak: newStreak)
+            let streak = profile.currentStreak
 
-            let isMilestone = Self.streakMilestones.contains(newStreak)
+            let isMilestone = Self.streakMilestones.contains(streak)
             let milestoneLabel: String? = isMilestone
-                ? String(format: String(localized: "sessionComplete.streak.milestone"), newStreak)
+                ? String(format: String(localized: "sessionComplete.streak.milestone"), streak)
                 : nil
 
-            logger.info("updateStreak childId=\(childId, privacy: .private) streak=\(newStreak, privacy: .public)")
-            return StreakInfo(currentStreak: newStreak, isMilestone: isMilestone, milestoneLabel: milestoneLabel)
+            logger.info("readStreak childId=\(childId, privacy: .private) streak=\(streak, privacy: .public)")
+            return StreakInfo(currentStreak: streak, isMilestone: isMilestone, milestoneLabel: milestoneLabel)
         } catch {
-            logger.error("updateStreak failed: \(error.localizedDescription, privacy: .public)")
+            logger.error("readStreak failed: \(error.localizedDescription, privacy: .public)")
             return StreakInfo(currentStreak: 0, isMilestone: false, milestoneLabel: nil)
-        }
-    }
-
-    /// Вычисляет новый streak с учётом даты последней сессии.
-    private func computeNewStreak(current: Int, lastSessionAt: Date?) -> Int {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-
-        guard let last = lastSessionAt else {
-            return 1
-        }
-        let lastDay = calendar.startOfDay(for: last)
-        let diff = calendar.dateComponents([.day], from: lastDay, to: today).day ?? 0
-
-        switch diff {
-        case 0:
-            // Уже играли сегодня — не меняем streak
-            return max(1, current)
-        case 1:
-            // Вчера — продолжаем серию
-            return current + 1
-        default:
-            // Пропустили день — сбрасываем
-            return 1
         }
     }
 

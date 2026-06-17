@@ -282,4 +282,93 @@ final class SessionCompleteInteractorTests: XCTestCase {
         sut.advancePhase(.init(to: .celebration))
         XCTAssertTrue(spy.advancePhaseCalled)
     }
+
+    // MARK: - M4: стрик ТОЛЬКО читается из профиля (единый авторитетный источник)
+
+    /// M4: экран итогов читает `currentStreak` из профиля (его пишет
+    /// LiveSessionPersistenceCoordinator), а НЕ инкрементит поверх. Профиль со
+    /// стриком 12 → reveal показывает 12, и значение в репозитории НЕ меняется
+    /// (раньше был двойной писатель: SessionComplete делал streak+1 без lastSessionAt).
+    func test_streakReveal_readsProfileValue_withoutWriting() async throws {
+        let profile = ChildProfileDTO(
+            id: "c-streak", name: "Аня", age: 6, targetSounds: ["С"],
+            parentId: "p1", currentStreak: 12
+        )
+        let childRepo = MockChildRepository(children: [profile])
+        let sut = SessionCompleteInteractor(
+            realmActor: RealmActor(),
+            sessionRepository: MockSessionRepository(),
+            childRepository: childRepo
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        let result = SessionResult(
+            score: 0.9, starsEarned: 3, gameTitle: "Игра", soundTarget: "С",
+            attempts: 8, correctAttempts: 7, hintsUsed: 0, durationSec: 120,
+            nextLessonTitle: nil, childId: "c-streak", sessionId: "sess-streak"
+        )
+        sut.loadResult(.init(result: result))
+        try await waitUntil { spy.streakUpdateCalled }
+
+        XCTAssertEqual(spy.lastStreakUpdate?.streak.currentStreak, 12,
+                       "Reveal показывает авторитетный стрик из профиля без инкремента")
+        let stored = try await childRepo.fetch(id: "c-streak")
+        XCTAssertEqual(stored.currentStreak, 12,
+                       "SessionComplete НЕ перезаписывает стрик — единый писатель остался один")
+    }
+
+    // MARK: - M5: полностью пропущенная сессия не выдаёт награду/монету/стрик
+
+    /// M5: при `attempts == 0` (все шаги сессии пропущены) награды не начисляются —
+    /// нет стикера (= монеты, 1 RewardRecord ≈ 1 монета) и нет reveal стрика. Гард
+    /// тот же критерий «была работа», что и в SessionShellInteractor.advanceStageProgress.
+    func test_fullSkipSession_attemptsZero_noStickerNoStreakReward() async throws {
+        let childRepo = MockChildRepository(children: [TestDataBuilder.childProfile(id: "c-skip")])
+        let sut = SessionCompleteInteractor(
+            realmActor: RealmActor(),
+            sessionRepository: MockSessionRepository(),
+            childRepository: childRepo
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        let result = SessionResult(
+            score: 0.0, starsEarned: 1, gameTitle: "Игра", soundTarget: "С",
+            attempts: 0, correctAttempts: 0, hintsUsed: 0, durationSec: 40,
+            nextLessonTitle: nil, childId: "c-skip", sessionId: "sess-skip"
+        )
+        sut.loadResult(.init(result: result))
+
+        // Даём pipeline шанс отработать (он сразу выходит по гарду). loadResult
+        // презентится синхронно — дожидаемся его и убеждаемся, что reveal-стадии
+        // награды НЕ вызваны.
+        try await waitUntil { spy.loadResultCalled }
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        XCTAssertFalse(spy.stickerRevealCalled,
+                       "Полностью пропущенная сессия не должна выдавать стикер/монету")
+        XCTAssertFalse(spy.streakUpdateCalled,
+                       "Полностью пропущенная сессия не двигает reveal стрика")
+        XCTAssertFalse(spy.achievementUnlockedCalled,
+                       "Нет achievement-событий за 0 работы")
+    }
+
+    /// M5: сессия с реальной работой (attempts > 0) — награды начисляются как прежде.
+    func test_sessionWithAttempts_stillAwardsSticker() async throws {
+        let childRepo = MockChildRepository(children: [TestDataBuilder.childProfile(id: "c-work")])
+        let sut = SessionCompleteInteractor(
+            realmActor: RealmActor(),
+            sessionRepository: MockSessionRepository(),
+            childRepository: childRepo
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        let result = SessionResult(
+            score: 0.7, starsEarned: 2, gameTitle: "Игра", soundTarget: "С",
+            attempts: 4, correctAttempts: 3, hintsUsed: 0, durationSec: 120,
+            nextLessonTitle: nil, childId: "c-work", sessionId: "sess-work"
+        )
+        sut.loadResult(.init(result: result))
+        try await waitUntil { spy.stickerRevealCalled }
+        XCTAssertTrue(spy.stickerRevealCalled, "Сессия с работой выдаёт стикер как прежде")
+    }
 }
