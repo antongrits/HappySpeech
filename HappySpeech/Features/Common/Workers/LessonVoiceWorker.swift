@@ -500,20 +500,33 @@ final class LessonVoiceWorker: NSObject {
 extension LessonVoiceWorker: AVAudioPlayerDelegate {
 
     nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        // ObjectIdentifier — Sendable; захватываем идентичность ДО async-границы,
+        // не пересылая сам non-Sendable AVAudioPlayer в @MainActor-контекст.
+        let finishedID = ObjectIdentifier(player)
         Task { @MainActor [weak self] in
             guard let self else { return }
+            // Делегат-колбэк проходит через async-границу (Task @MainActor), поэтому
+            // к моменту выполнения текущий плеер мог уже смениться (быстрая смена
+            // озвучки). Резюмить continuation должен ТОЛЬКО колбэк актуального
+            // плеера — иначе старый делегат преждевременно завершит ожидание новой
+            // озвучки и она «глотается». Колбэк устаревшего плеера игнорируем.
+            guard let current = self.player, ObjectIdentifier(current) == finishedID else { return }
             let cont = self.playbackContinuation
             self.playbackContinuation = nil
+            self.player = nil
             cont?.resume()
         }
     }
 
     nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        let finishedID = ObjectIdentifier(player)
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.logger.error("AVAudioPlayer decode error: \(error?.localizedDescription ?? "unknown")")
+            guard let current = self.player, ObjectIdentifier(current) == finishedID else { return }
             let cont = self.playbackContinuation
             self.playbackContinuation = nil
+            self.player = nil
             cont?.resume()
         }
     }

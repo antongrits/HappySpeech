@@ -29,12 +29,14 @@ final class WeeklyRecapInteractorTests: XCTestCase {
             DailyAccuracy(day: "Пн", accuracy: 0.6),
             DailyAccuracy(day: "Вт", accuracy: 0.8)
         ]
+        // 2 активных дня, но 5 реальных сессий — KPI «Занятий» обязан показать 5.
         return DashboardAggregate(
             summary: DashboardSummary(overallAccuracy: 0.7, streakDays: 5, totalMinutes: 57, totalStars: 18),
             daily: daily,
             weekly: [WeeklyAccuracy(weekIndex: 1, label: "Нед 1", accuracy: 0.7)],
             sounds: [SoundProgress(sound: "Р", accuracy: 0.7, sessions: 2, trend: .up)],
-            soundHistory: ["Р": daily]
+            soundHistory: ["Р": daily],
+            sessionCount: 5
         )
     }
 
@@ -114,5 +116,20 @@ final class WeeklyRecapInteractorTests: XCTestCase {
         let state = WeeklyRecapModels.makeState(from: nonEmptyAggregate())
         let ids = state.kpis.map(\.id)
         XCTAssertEqual(Set(ids).count, ids.count)
+    }
+
+    // MARK: - Sessions KPI counts sessions, not active days
+
+    func test_makeState_sessionsKPI_usesSessionCountNotDayCount() {
+        // Агрегат: 2 активных дня, 5 сессий. KPI «Занятий» = 5 (а не 2).
+        let aggregate = nonEmptyAggregate()
+        XCTAssertEqual(aggregate.daily.count, 2, "Sanity: фикстура содержит 2 дня")
+        XCTAssertEqual(aggregate.sessionCount, 5, "Sanity: фикстура содержит 5 сессий")
+
+        let state = WeeklyRecapModels.makeState(from: aggregate)
+        let sessionsKPI = state.kpis.first { $0.id == "sessions" }
+        XCTAssertNotNil(sessionsKPI)
+        XCTAssertEqual(sessionsKPI?.value, "5", "KPI «Занятий» должен считать сессии, а не активные дни")
+        XCTAssertNotEqual(sessionsKPI?.value, "2", "KPI «Занятий» не должен показывать число дней")
     }
 }

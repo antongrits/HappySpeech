@@ -45,7 +45,9 @@ enum WeeklyRecapModels {
         guard !aggregate.isEmpty else { return .empty }
 
         let accuracyPercent = Int((aggregate.summary.overallAccuracy * 100).rounded())
-        let sessionCount = aggregate.daily.count
+        // KPI «Занятий» = число РЕАЛЬНЫХ сессий за неделю (а не активных дней):
+        // у ребёнка может быть несколько занятий в один день.
+        let sessionCount = aggregate.sessionCount
         let kpis: [KPI] = [
             .init(
                 id: "min",

@@ -16,6 +16,8 @@ protocol VoiceColorsDisplayLogic: AnyObject {
     func displayLiveSample(_ viewModel: VoiceColorsModels.LiveSample.ViewModel)
     func displayScore(_ viewModel: VoiceColorsModels.Score.ViewModel)
     func displayComplete(_ viewModel: VoiceColorsModels.Complete.ViewModel)
+    /// Микрофон не разрешён: показать понятное сообщение, снять состояние записи.
+    func displayMicrophoneDenied(message: String)
 }
 
 // MARK: - VoiceColorsStartViewModel
@@ -89,6 +91,8 @@ extension VoiceColorsDisplay: VoiceColorsDisplayLogic {
         resultMessage = ""
         isRecording = false
         isPlaying = false
+        micDenied = false
+        micDeniedMessage = ""
     }
 
     func displaySelectIntonation(_ response: VoiceColorsModels.SelectIntonation.Response) {
@@ -121,7 +125,17 @@ extension VoiceColorsDisplay: VoiceColorsDisplayLogic {
             showResult = false
             liveContour = []
             liveAmplitude = 0
+            micDenied = false
+            micDeniedMessage = ""
         }
+    }
+
+    func displayMicrophoneDenied(message: String) {
+        isRecording = false
+        showResult = false
+        micDenied = true
+        micDeniedMessage = message
+        mascotState = .encouraging
     }
 
     func displayPlaying(_ playing: Bool) {

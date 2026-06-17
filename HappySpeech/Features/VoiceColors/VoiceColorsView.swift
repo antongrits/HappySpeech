@@ -131,6 +131,36 @@ struct VoiceColorsView: View {
         .padding(.horizontal, 2)
     }
 
+    /// Баннер «нет доступа к микрофону» — показывается вместо тихого 1★, когда
+    /// разрешение на запись не выдано. Тёплый surface + мелкий warning-акцент
+    /// (рамка/иконка), без крупной off-theme заливки.
+    private var micDeniedBanner: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.small) {
+            Image(systemName: "mic.slash.fill")
+                .font(TypographyTokens.headline(18).weight(.bold))
+                .foregroundStyle(ColorTokens.Semantic.warning)
+                .accessibilityHidden(true)
+            Text(display.micDeniedMessage)
+                .font(TypographyTokens.body(14).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(SpacingTokens.regular)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Semantic.warning.opacity(0.5), lineWidth: 1.5)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(display.micDeniedMessage)
+    }
+
     // MARK: - Loading
 
     private var loadingView: some View {
@@ -155,7 +185,8 @@ struct VoiceColorsView: View {
 
                 phraseMelodyCard
                 intonationHouses
-                mascotRow(text: display.mascotText)
+                mascotRow(text: display.micDenied ? display.micDeniedMessage : display.mascotText)
+                if display.micDenied { micDeniedBanner }
 
                 recordCTA(
                     title: recordTitleIntonation,
@@ -268,7 +299,8 @@ struct VoiceColorsView: View {
                 stressPhraseCard
                 stressPicker
                 if display.isRecording { recordingStrip }
-                mascotRow(text: display.mascotText)
+                mascotRow(text: display.micDenied ? display.micDeniedMessage : display.mascotText)
+                if display.micDenied { micDeniedBanner }
                 recordCTA(title: recordTitleStress, accent: ColorTokens.Brand.primary)
             }
             .padding(.horizontal, VoiceColorsMetrics.contentPadding)
@@ -432,7 +464,8 @@ struct VoiceColorsView: View {
                 emotionPhraseCard
                 emotionMirror
                 emotionPicker
-                mascotRow(text: display.mascotText)
+                mascotRow(text: display.micDenied ? display.micDeniedMessage : display.mascotText)
+                if display.micDenied { micDeniedBanner }
                 recordCTA(title: recordTitleEmotion, accent: display.chosenEmotion.accent)
             }
             .padding(.horizontal, VoiceColorsMetrics.contentPadding)

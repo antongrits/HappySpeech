@@ -218,8 +218,16 @@ final class VoiceColorsInteractor: VoiceColorsBusinessLogic {
             presenter?.presentRecording(true)
             startLiveStream()
             logger.info("recording started mode=\(self.currentMode.rawValue, privacy: .public)")
+        } catch VoiceCaptureError.microphonePermissionDenied {
+            // Без доступа к микрофону игра молча давала бы 1★ — показываем
+            // понятное сообщение вместо тихого провала.
+            isRecording = false
+            logger.info("recording blocked: microphone permission denied")
+            presenter?.presentRecording(false)
+            presenter?.presentMicrophoneDenied()
         } catch {
             logger.error("capture start failed: \(error.localizedDescription, privacy: .public)")
+            isRecording = false
             presenter?.presentRecording(false)
         }
     }

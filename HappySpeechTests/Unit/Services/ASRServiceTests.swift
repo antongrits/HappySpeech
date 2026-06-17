@@ -90,6 +90,35 @@ final class ASRServiceTests: XCTestCase {
             XCTFail("Ожидался AppError.asrModelNotLoaded (offline lazy-load), получено: \(error)")
         }
     }
+
+    /// Конкурентные `loadModel` (warm-up Tier A + Tier B одновременно) должны
+    /// дедуплицироваться без гонки доступа к разделяемому состоянию (`whisper`/
+    /// `_isReady`/`_activeTier` под `loadLock`) и без краша. Итоговое состояние
+    /// согласовано: либо готово, либо `asrModelNotLoaded` — но единое для всех.
+    func test_liveASR_concurrentLoad_dedupesWithoutDataRace() async {
+        let sut = LiveASRService()
+        await withTaskGroup(of: Void.self) { group in
+            for tier in [ASRTier.kidOnDevice, .parentQuality, .specialistQuality, .kidOnDevice] {
+                group.addTask { try? await sut.loadModel(tier: tier) }
+            }
+            await group.waitForAll()
+        }
+        // Состояние читается без краша (getters под локом) и согласовано.
+        let ready = sut.isReady
+        _ = sut.activeTier
+        if !ready {
+            // Offline-тест-окружение без bundled-модели: повторная загрузка
+            // по-прежнему детерминированно бросает asrModelNotLoaded.
+            do {
+                try await sut.loadModel(tier: .kidOnDevice)
+                XCTAssertTrue(sut.isReady)
+            } catch let error as AppError {
+                XCTAssertEqual(error, .asrModelNotLoaded)
+            } catch {
+                XCTFail("Ожидался AppError.asrModelNotLoaded, получено: \(error)")
+            }
+        }
+    }
 }
 
 private func XCTAssertNoThrowAsync(

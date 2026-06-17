@@ -25,6 +25,14 @@ protocol VoiceCaptureControlling: AnyObject {
     func finalSnapshot() async -> VoiceCaptureSnapshot
 }
 
+// MARK: - VoiceCaptureError
+
+/// Типизированные ошибки захвата «Голосовых красок».
+enum VoiceCaptureError: Error, Equatable {
+    /// Разрешение на микрофон не выдано (или отозвано в Настройках).
+    case microphonePermissionDenied
+}
+
 /// Снимок захвата.
 struct VoiceCaptureSnapshot: Sendable, Equatable {
     let contour: [PitchPoint]
@@ -89,11 +97,35 @@ final class VoiceColorsAudioCapture: VoiceCaptureControlling {
 
     func start() async throws {
         guard !isRunning else { return }
+        // Без разрешения на запись `installTap` на input с нулевым числом каналов
+        // бросает NSException (не ловится Swift try) → краш игры, запускаемой
+        // прямо из ChildHome. Проверяем/запрашиваем доступ к микрофону ДО tap
+        // (как VoiceStrongman) и при отказе бросаем типизированную ошибку, чтобы
+        // UI показал понятное сообщение вместо падения.
+        guard await Self.ensureRecordPermission() else {
+            logger.info("VoiceColors: микрофон не разрешён")
+            throw VoiceCaptureError.microphonePermissionDenied
+        }
         await accumulator.clear()
         try configureSession()
         try startTap()
         isRunning = true
         logger.info("VoiceColors capture started")
+    }
+
+    /// Возвращает true, если доступ к микрофону есть; при `.undetermined`
+    /// запрашивает системно (iOS 17+ `AVAudioApplication`).
+    private static func ensureRecordPermission() async -> Bool {
+        switch AVAudioApplication.shared.recordPermission {
+        case .granted:
+            return true
+        case .denied:
+            return false
+        case .undetermined:
+            return await AVAudioApplication.requestRecordPermission()
+        @unknown default:
+            return await AVAudioApplication.requestRecordPermission()
+        }
     }
 
     func stop() {

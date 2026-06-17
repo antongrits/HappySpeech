@@ -216,6 +216,40 @@ final class LessonVoiceWorkerPlaybackTests: XCTestCase {
             "Второй stop() не должен крашить — continuation уже nil"
         )
     }
+
+    // MARK: - 07b. Быстрая смена озвучки: обе continuation завершаются (stale-delegate guard)
+    //
+    // Регрессия: делегат AVAudioPlayer проходит через async-границу (Task @MainActor).
+    // К моменту колбэка плеер мог смениться — резюмить новую continuation должен
+    // ТОЛЬКО колбэк актуального плеера (`player === self.player`), иначе старый
+    // делегат преждевременно завершит ожидание новой озвучки («глотание»), а при
+    // утере резюма — зависание await. Тест проверяет, что обе озвучки, запущенные
+    // почти одновременно, гарантированно завершают свой await (нет зависших
+    // continuation), и что stop() корректно дренирует ожидающих.
+
+    func test_rapidSwitch_bothSpeakTasksComplete_noHang() async {
+        let firstDone = expectation(description: "первая speak завершилась")
+        let secondDone = expectation(description: "вторая speak завершилась")
+
+        Task { @MainActor in
+            await LessonVoiceWorker.shared.speak("мяч")
+            firstDone.fulfill()
+        }
+        // Быстрая смена: вторая озвучка стартует сразу за первой и заменяет плеер.
+        try? await Task.sleep(nanoseconds: 20_000_000) // 20ms
+        Task { @MainActor in
+            await LessonVoiceWorker.shared.speak("сани")
+            secondDone.fulfill()
+        }
+
+        // Дать задачам стартовать, затем дренировать через stop() — обе continuation
+        // должны резюмиться (нет потерянных/зависших), без преждевременного двойного
+        // резюма одной и той же continuation (это крашнуло бы CheckedContinuation).
+        try? await Task.sleep(nanoseconds: 60_000_000) // 60ms
+        LessonVoiceWorker.shared.stop()
+
+        await fulfillment(of: [firstDone, secondDone], timeout: 3.0)
+    }
 }
 
 // MARK: - Тест 09: AVAudioSession

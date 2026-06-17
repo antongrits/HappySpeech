@@ -15,6 +15,10 @@ public final class MockLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
 
     public private(set) var callLog: [String] = []
 
+    /// Захват входов `generateParentSummary` — для проверки, что в LLM уходят
+    /// РЕАЛЬНЫЕ счётчики попыток (а не фиктивный 0).
+    public private(set) var capturedParentSummaryInputs: [SessionSummaryInput] = []
+
     private let rules = RuleBasedDecisionService()
 
     public init(onDeviceReady: Bool = true, useFallbackFlag: Bool = false) {
@@ -48,6 +52,7 @@ public final class MockLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
 
     public func generateParentSummary(session: SessionSummaryInput) async -> ParentSummaryDecisionOutcome {
         callLog.append("parentSummary")
+        capturedParentSummaryInputs.append(session)
         if useFallbackFlag || !onDeviceReady {
             let summary = rules.generateParentSummary(session: session)
             return ParentSummaryDecisionOutcome(summary: summary, meta: meta(.ruleBased, true))

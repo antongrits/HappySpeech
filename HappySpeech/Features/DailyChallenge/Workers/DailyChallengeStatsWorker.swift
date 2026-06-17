@@ -31,20 +31,32 @@ final class DailyChallengeStatsWorker: DailyChallengeStatsWorkerProtocol {
     private let sessionRepository: any SessionRepository
     private let childRepository: any ChildRepository
     private let calendar: Calendar
+    private let userDefaults: UserDefaults
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
         category: "DailyChallenge.StatsWorker"
     )
 
+    // MARK: - Persistence keys
+
+    private enum Keys {
+        static let prefix = "happyspeech.dailyChallenge."
+        static func longestStreak(_ childId: String) -> String {
+            "\(prefix)\(childId).longestStreak"
+        }
+    }
+
     init(
         sessionRepository: any SessionRepository,
         childRepository: any ChildRepository,
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        userDefaults: UserDefaults = .standard
     ) {
         self.sessionRepository = sessionRepository
         self.childRepository = childRepository
         self.calendar = calendar
+        self.userDefaults = userDefaults
     }
 
     func fetchTodaySessions(childId: String, day: Date) async -> [SessionDTO] {
@@ -90,17 +102,31 @@ final class DailyChallengeStatsWorker: DailyChallengeStatsWorkerProtocol {
             let lastISO: String? = profile.lastSessionAt.map {
                 ISO8601DateFormatter().string(from: $0)
             }
-            // Текущий streak храним в Realm; «longest» оцениваем как max(current, current).
-            // Реальный longest можно отслеживать в отдельной коллекции — для AE batch 2 v21
-            // достаточно эвристики «не меньше текущего».
+            // Текущий streak — ground-truth из Realm. Исторический рекорд («longest»)
+            // персистим в UserDefaults: после обрыва серии текущая обнуляется в Realm,
+            // но рекорд должен сохраниться. На каждом чтении подтягиваем рекорд вверх
+            // до текущего значения, если оно его превысило.
+            let longest = updatedLongestStreak(childId: childId, current: profile.currentStreak)
             return StreakState(
                 current: profile.currentStreak,
-                longest: max(profile.currentStreak, profile.currentStreak),
+                longest: longest,
                 lastSessionISO: lastISO
             )
         } catch {
             Self.logger.error("computeStreak failed: \(error.localizedDescription, privacy: .public)")
             return StreakState(current: 0, longest: 0, lastSessionISO: nil)
         }
+    }
+
+    /// Читает сохранённый рекорд серии, поднимает его до `current`, если нужно,
+    /// и возвращает актуальный максимум. Persist только при росте — без лишних записей.
+    private func updatedLongestStreak(childId: String, current: Int) -> Int {
+        let key = Keys.longestStreak(childId)
+        let stored = userDefaults.integer(forKey: key)
+        let longest = max(stored, current)
+        if longest != stored {
+            userDefaults.set(longest, forKey: key)
+        }
+        return longest
     }
 }

@@ -25,24 +25,32 @@ import WhisperKit
 public final class LiveASRService: ASRService, @unchecked Sendable {
 
     // MARK: - State
+    //
+    // Всё изменяемое состояние защищено единым `loadLock`. Сервис помечен
+    // `@unchecked Sendable` и вызывается конкурентно (warm-up Tier A/B + ленивая
+    // загрузка из разных экранов), поэтому доступ к каждому полю — строго через
+    // `withLock` (синхронные чтения/записи), а дорогие `await` (создание
+    // WhisperKit) выполняются ВНЕ лока, после чего результат фиксируется под
+    // локом. Так снимается формальная гонка для TSan без смены сигнатур протокола
+    // и без риска дедлока (лок берётся только синхронно, без вложенности).
 
-    nonisolated(unsafe) private var whisper: WhisperKit?
-    nonisolated(unsafe) private var _isReady: Bool = false
-    nonisolated(unsafe) private var _activeTier: ASRTier = .kidOnDevice
+    private var whisper: WhisperKit?
+    private var _isReady: Bool = false
+    private var _activeTier: ASRTier = .kidOnDevice
     /// Опциональная пред-проверка (реальный VAD + SoundClassifier). При наличии —
     /// коротит ASR на уверенной тишине (см. ``SpeechPreflightGating``). nil → как раньше.
-    nonisolated(unsafe) private var preflightGate: (any SpeechPreflightGating)?
+    private var preflightGate: (any SpeechPreflightGating)?
 
     /// P2-10: in-flight задача загрузки. `loadModel` может вызываться конкурентно
     /// (`EnsembleASRService.warmUp` Tier B + `MLModelWarmupService` Tier A) — без
     /// дедупликации это создаёт два WhisperKit-инстанса и всплеск памяти. Лок
     /// защищает доступ к задаче из разных потоков; повторные вызовы во время
     /// загрузки ждут уже идущую задачу вместо старта новой.
-    nonisolated(unsafe) private var loadTask: Task<Void, Error>?
+    private var loadTask: Task<Void, Error>?
     private let loadLock = NSLock()
 
-    public var isReady: Bool { _isReady }
-    public var activeTier: ASRTier { _activeTier }
+    public var isReady: Bool { loadLock.withLock { _isReady } }
+    public var activeTier: ASRTier { loadLock.withLock { _activeTier } }
 
     // MARK: - Bundled model paths
 
@@ -92,7 +100,7 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     /// Подключает пред-проверку речи (реальный VAD + SoundClassifier). Вызывается из
     /// DI после создания сервиса. Без неё транскрипция работает как прежде.
     public func setPreflightGate(_ gate: any SpeechPreflightGating) {
-        preflightGate = gate
+        loadLock.withLock { preflightGate = gate }
     }
 
     // MARK: - Load
@@ -147,12 +155,12 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         case .specialistQuality:
             // Tier C: максимальное качество — whisper-small, fallback на base.
             if await tryLoadBundledSmall() {
-                _activeTier = .specialistQuality
+                setActiveTier(.specialistQuality)
                 return
             }
             HSLogger.asr.warning("ASRService: bundled whisper-small unavailable, falling back to bundled whisper-base")
             if await tryLoadBundledBase() {
-                _activeTier = .parentQuality
+                setActiveTier(.parentQuality)
                 return
             }
             throw AppError.asrModelNotLoaded
@@ -162,15 +170,28 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
             // whisper-tiny НЕ используется — его нет в bundle, а сетевая загрузка с
             // HuggingFace нарушила бы offline-first.
             if await tryLoadBundledBase() {
-                _activeTier = tier
+                setActiveTier(tier)
                 return
             }
             HSLogger.asr.warning("ASRService: bundled whisper-base unavailable, falling back to bundled whisper-small")
             if await tryLoadBundledSmall() {
-                _activeTier = .specialistQuality
+                setActiveTier(.specialistQuality)
                 return
             }
             throw AppError.asrModelNotLoaded
+        }
+    }
+
+    /// Синхронная запись активного tier под `loadLock`.
+    private func setActiveTier(_ tier: ASRTier) {
+        loadLock.withLock { _activeTier = tier }
+    }
+
+    /// Фиксирует готовую модель под `loadLock` (после дорогого `await`-создания).
+    private func storeLoadedModel(_ kit: WhisperKit) {
+        loadLock.withLock {
+            whisper = kit
+            _isReady = true
         }
     }
 
@@ -203,16 +224,20 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         // пропущен), грузим bundled-модель текущего tier перед транскрипцией вместо
         // отказа. `loadModel(tier:)` дедуплицирован (loadLock/loadTask) — конкурентные
         // вызовы из разных экранов ждут одну загрузку, второй WhisperKit не создаётся.
-        if !_isReady {
-            try await loadModel(tier: _activeTier)
+        // Снимок состояния берём под локом (синхронно), все `await` — вне лока.
+        let (readyBefore, tierBefore) = loadLock.withLock { (_isReady, _activeTier) }
+        if !readyBefore {
+            try await loadModel(tier: tierBefore)
         }
-        guard let whisper, _isReady else {
+        let (whisper, readyNow) = loadLock.withLock { (self.whisper, _isReady) }
+        guard let whisper, readyNow else {
             throw AppError.asrModelNotLoaded
         }
 
         // Пред-проверка речи (реальный VAD + SoundClassifier): коротим дорогой проход
         // WhisperKit только на уверенной тишине. Консервативно — искажённая/тихая
         // детская речь всегда проходит дальше (gate возвращает .proceed при сомнении).
+        let preflightGate = loadLock.withLock { self.preflightGate }
         if let preflightGate, await preflightGate.evaluate(url: url) == .likelySilent {
             HSLogger.asr.info("ASRService: preflight detected silence — returning empty transcript")
             return ASRResult(transcript: "", confidence: 0.0, wordTimestamps: [])
@@ -290,8 +315,7 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
             HSLogger.asr.info("ASRService: loading bundled whisper-small from \(folder.path)")
             let config = WhisperKitConfig(modelFolder: folder.path)
             let kit = try await WhisperKit(config)
-            whisper = kit
-            _isReady = true
+            storeLoadedModel(kit)
             HSLogger.asr.info("ASRService: whisper-small (bundled) ready — Tier C")
             return true
         } catch {
@@ -310,8 +334,7 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
             HSLogger.asr.info("ASRService: loading bundled whisper-base from \(folder.path)")
             let config = WhisperKitConfig(modelFolder: folder.path)
             let kit = try await WhisperKit(config)
-            whisper = kit
-            _isReady = true
+            storeLoadedModel(kit)
             HSLogger.asr.info("ASRService: whisper-base (bundled) ready — Tier B")
             return true
         } catch {

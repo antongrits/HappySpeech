@@ -144,10 +144,14 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
 
         Task { @MainActor [weak self] in
             guard let self else { return }
+            // Передаём РЕАЛЬНЫЕ счётчики попыток за период из агрегата (а не 0),
+            // чтобы LLM не выдавал родителю фиктивную «точность ~0%».
             let insights = await insightsWorker.generateInsights(
                 childName: request.childName,
                 sounds: request.sounds,
-                streakDays: request.streakDays
+                streakDays: request.streakDays,
+                totalAttempts: summary.totalAttempts,
+                correctAttempts: summary.correctAttempts
             )
             presenter?.presentLoadInsights(.init(insights: insights))
         }

@@ -125,16 +125,21 @@ final class FamilyAchievementsInteractor: FamilyAchievementsBusinessLogic, Famil
             )
         }
 
-        // Считаем family streak.
+        // Считаем family streak. Единый источник истины для героя И достижений:
+        // семейная серия засчитывается ТОЛЬКО когда сегодня активны все члены
+        // семьи (`allActiveToday`); иначе семейная серия равна 0. Раньше hero
+        // использовал гейтованное значение, а прогресс ачивки `.streak` —
+        // негейтованное → на экране показывались два разных числа.
         let activeTodayCount = memberSummaries.filter { $0.isActive }.count
         let allActiveToday = activeTodayCount == memberSummaries.count
             && !memberSummaries.isEmpty
-        let combinedDays = memberSummaries
+        let minMemberStreak = memberSummaries
             .map { $0.currentStreak }
             .min() ?? 0
+        let familyStreakDays = allActiveToday ? minMemberStreak : 0
 
         let streakState = FamilyStreakState(
-            combinedDays: allActiveToday ? combinedDays : 0,
+            combinedDays: familyStreakDays,
             allActiveToday: allActiveToday,
             totalMembers: memberSummaries.count,
             activeTodayCount: activeTodayCount
@@ -145,7 +150,7 @@ final class FamilyAchievementsInteractor: FamilyAchievementsBusinessLogic, Famil
         for ach in FamilyAchievement.catalog {
             switch ach.category {
             case .streak:
-                progressById[ach.id] = combinedDays
+                progressById[ach.id] = familyStreakDays
             case .sounds:
                 progressById[ach.id] = totalMasteredSounds.count
             case .sessions:

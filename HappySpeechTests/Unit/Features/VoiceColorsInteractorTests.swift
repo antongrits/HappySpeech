@@ -24,6 +24,7 @@ final class VoiceColorsInteractorTests: XCTestCase {
         var recordingLog: [Bool] = []
         var playingLog: [Bool] = []
         var liveSamples: [VoiceColorsModels.LiveSample.Response] = []
+        var micDeniedCount = 0
 
         func presentStart(_ viewModel: VoiceColorsStartViewModel) { starts.append(viewModel) }
         func presentSelectIntonation(_ r: VoiceColorsModels.SelectIntonation.Response) { selectIntonations.append(r) }
@@ -34,6 +35,7 @@ final class VoiceColorsInteractorTests: XCTestCase {
         func presentLiveSample(_ r: VoiceColorsModels.LiveSample.Response) { liveSamples.append(r) }
         func presentScore(_ r: VoiceColorsModels.Score.Response) { scores.append(r) }
         func presentComplete(_ r: VoiceColorsModels.Complete.Response) { completes.append(r) }
+        func presentMicrophoneDenied() { micDeniedCount += 1 }
     }
 
     // MARK: - Planner spy
@@ -59,10 +61,15 @@ final class VoiceColorsInteractorTests: XCTestCase {
 
     private final class MockVoiceCapture: VoiceCaptureControlling {
         var scripted: VoiceCaptureSnapshot = .empty
+        /// Если задано — `start()` бросит эту ошибку (эмуляция отказа микрофона).
+        var startError: Error?
         private(set) var started = false
         private(set) var stopped = false
 
-        func start() async throws { started = true }
+        func start() async throws {
+            if let startError { throw startError }
+            started = true
+        }
         func stop() { stopped = true }
         func liveSnapshot() async -> VoiceCaptureSnapshot { scripted }
         func finalSnapshot() async -> VoiceCaptureSnapshot { scripted }
@@ -473,6 +480,40 @@ final class VoiceColorsInteractorTests: XCTestCase {
         await sut.start(.init(childId: "child-1"))
         sut.cancel()
         XCTAssertTrue(capture.stopped)
+    }
+
+    // MARK: - Microphone permission denied
+
+    func test_startRecording_micDenied_presentsDeniedAndNoScore() async {
+        // Отказ микрофона: интерактор ловит typed-ошибку, снимает запись и
+        // показывает понятное сообщение вместо тихого 1★ (или краша).
+        let (sut, spy, _, capture) = makeSUT(session: session(intonation: [mamaIntonation()]))
+        await sut.start(.init(childId: "child-1"))
+        capture.startError = VoiceCaptureError.microphonePermissionDenied
+
+        await sut.startRecording()
+
+        XCTAssertEqual(spy.micDeniedCount, 1, "Должно показаться сообщение об отказе микрофона")
+        XCTAssertFalse(capture.started, "Запись не должна стартовать без разрешения")
+        // Запись снята: последний флаг recording — false.
+        XCTAssertEqual(spy.recordingLog.last, false)
+
+        // Без активной записи stopRecording не должен оценивать (нет звёзд за тишину).
+        await sut.stopRecording()
+        XCTAssertTrue(spy.scores.isEmpty, "Без записи не должно быть оценки")
+    }
+
+    func test_startRecording_genericError_noMicDeniedBanner() async {
+        // Иная ошибка захвата не должна показывать баннер «нет микрофона».
+        struct OtherError: Error {}
+        let (sut, spy, _, capture) = makeSUT(session: session(intonation: [mamaIntonation()]))
+        await sut.start(.init(childId: "child-1"))
+        capture.startError = OtherError()
+
+        await sut.startRecording()
+
+        XCTAssertEqual(spy.micDeniedCount, 0)
+        XCTAssertEqual(spy.recordingLog.last, false)
     }
 }
 

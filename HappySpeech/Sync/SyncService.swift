@@ -264,12 +264,11 @@ public actor LiveSyncService: SyncService {
         }
 
         publish(.syncing(progress: 0.0))
-        let pendingBefore = _pendingCount
+        var succeeded = 0
         for (index, item) in pendingItems.enumerated() {
-            await drain(item: item)
+            if await drain(item: item) { succeeded += 1 }
             publish(.syncing(progress: Double(index + 1) / Double(total)))
         }
-        let succeeded = max(0, pendingBefore - _pendingCount)
         publish(.completed(itemsSynced: succeeded))
         publish(.idle)
         // P2-1: после каждого прохода чистим мёртвые элементы очереди.
@@ -545,7 +544,9 @@ public actor LiveSyncService: SyncService {
 
     /// Один проход дренажа. Уважает retryCount, экспоненциально ждёт перед повторной
     /// попыткой, при ошибке инкрементирует retryCount в Realm.
-    private func drain(item: SyncQueueItemDTO) async {
+    /// - Returns: `true`, если item успешно отправлен; `false` при ошибке/исчерпании.
+    @discardableResult
+    private func drain(item: SyncQueueItemDTO) async -> Bool {
         let itemId = item.id
         let entityId = item.entityId
         let entityType = item.entityType
@@ -572,6 +573,7 @@ public actor LiveSyncService: SyncService {
             }
             _pendingCount = max(0, _pendingCount - 1)
             HSLogger.sync.debug("Synced \(entityType):\(entityId, privacy: .private)")
+            return true
         } catch {
             let message = error.localizedDescription
             await realmActor.asyncWrite { realm in
@@ -581,6 +583,21 @@ public actor LiveSyncService: SyncService {
                 }
             }
             HSLogger.sync.error("Sync failed for \(entityId, privacy: .private) (\(entityType)): \(message)")
+
+            // Если после инкремента retryCount достиг лимита — item больше не
+            // попадёт в drain-фильтр (`retryCount < maxRetryCount`), т.е. выбыл из
+            // backlog. Декрементируем `_pendingCount`, иначе бейдж переоценивает
+            // очередь до cold-start hydrate. Ровно один декремент на item: переход
+            // через границу происходит единственный раз (retryCount монотонно растёт).
+            let exhaustedRetryCount = item.retryCount + 1
+            let maxRetry = policy.maxRetryCount
+            if exhaustedRetryCount >= maxRetry {
+                _pendingCount = max(0, _pendingCount - 1)
+                HSLogger.sync.info(
+                    "Item \(entityType):\(entityId, privacy: .private) exhausted retries (\(exhaustedRetryCount)/\(maxRetry)) — dropped from backlog"
+                )
+            }
+            return false
         }
     }
 

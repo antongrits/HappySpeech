@@ -125,4 +125,47 @@ final class ParentInsightsWorkerTests: XCTestCase {
         // useFallbackFlag=true → meta.usedFallback=true → tryLLMInsights возвращает nil → Tier C
         XCTAssertFalse(insights.isEmpty)
     }
+
+    // MARK: - Tier B: РЕАЛЬНЫЕ попытки уходят в LLM (не фиктивный 0)
+
+    func test_tierB_passesRealAttemptCountsToLLM() async {
+        let mockLLM = MockLLMDecisionService(onDeviceReady: true, useFallbackFlag: false)
+        let sut = ParentInsightsWorker(llmService: mockLLM)
+        let sounds = [makeSound(sound: "Р", accuracy: 0.80, sessions: 5)]
+
+        _ = await sut.generateInsights(
+            childName: "Маша",
+            sounds: sounds,
+            streakDays: 0,
+            totalAttempts: 40,
+            correctAttempts: 32
+        )
+
+        let captured = mockLLM.capturedParentSummaryInputs.first
+        XCTAssertNotNil(captured, "LLM должен быть вызван в Tier B")
+        XCTAssertEqual(captured?.totalAttempts, 40, "В LLM должны уйти реальные totalAttempts")
+        XCTAssertEqual(captured?.correctAttempts, 32, "В LLM должны уйти реальные correctAttempts (не 0)")
+    }
+
+    func test_tierB_neverPassesZeroCorrectWhenAccuracyIsHigh() async {
+        // Регрессия: раньше correctAttempts всегда = 0 → LLM мог выдать «точность ~0%».
+        // Без явных счётчиков correct реконструируется из реальной точности.
+        let mockLLM = MockLLMDecisionService(onDeviceReady: true, useFallbackFlag: false)
+        let sut = ParentInsightsWorker(llmService: mockLLM)
+        let sounds = [makeSound(sound: "Р", accuracy: 0.90, sessions: 10)]
+
+        _ = await sut.generateInsights(childName: "Ваня", sounds: sounds, streakDays: 0)
+
+        let captured = mockLLM.capturedParentSummaryInputs.first
+        XCTAssertNotNil(captured)
+        XCTAssertGreaterThan(captured?.totalAttempts ?? 0, 0, "totalAttempts реконструируются из сессий")
+        XCTAssertGreaterThan(
+            captured?.correctAttempts ?? 0,
+            0,
+            "При высокой точности correctAttempts не должны быть 0"
+        )
+        if let c = captured {
+            XCTAssertLessThanOrEqual(c.correctAttempts, c.totalAttempts, "correct ≤ total")
+        }
+    }
 }

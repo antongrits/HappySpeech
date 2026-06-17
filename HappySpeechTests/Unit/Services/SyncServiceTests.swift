@@ -261,6 +261,85 @@ final class SyncServiceTests: XCTestCase {
             "Item с retryCount == maxRetryCount должен быть пропущен: syncedAt не установлен")
     }
 
+    // MARK: - Test 4a: при достижении max-retry pendingCount декрементится
+
+    func testDrainQueue_maxRetryReached_decrementsPendingCount() async throws {
+        let realm = try await makeRealmActor()
+        // maxRetryCount=3 → item с retryCount=2 ещё попадёт в drain (2 < 3).
+        let policy = SyncPolicy(baseDelaySec: 0, maxDelaySec: 0, maxRetryCount: 3, wifiOnly: false)
+        let sut = makeSUT(realmActor: realm, isConnected: true, policy: policy)
+        let itemId = UUID().uuidString
+
+        // payload "{}" → performNetworkUpload бросит SyncError.invalidPayload
+        // (нет parentId) ДЕТЕРМИНИРОВАННО, без сети/Firestore. retryCount=2 → после
+        // инкремента станет 3 == maxRetryCount → item выбывает из backlog.
+        await realm.asyncWrite { realmInstance in
+            let item = SyncQueueItem()
+            item.id = itemId
+            item.entityType = "session"
+            item.entityId = UUID().uuidString
+            item.operation = "upsert"
+            item.payload = "{}"
+            item.retryCount = 2
+            realmInstance.add(item)
+        }
+
+        // Дать hydratePendingCount() из init учесть наш item (retryCount=2 < 3).
+        try await Task.sleep(nanoseconds: 500_000_000)
+        let countBefore = await sut.pendingCount()
+        XCTAssertEqual(countBefore, 1, "До drain backlog содержит 1 item")
+
+        try await sut.drainQueue()
+
+        // retryCount стал 3 (== max), а pendingCount декрементился до 0.
+        let dtos = await realm.asyncFetchMapped(SyncQueueItem.self) { item in
+            (id: item.id, retryCount: item.retryCount, syncedAt: item.syncedAt)
+        }
+        let target = dtos.first { $0.id == itemId }
+        XCTAssertEqual(target?.retryCount, 3, "retryCount должен достичь maxRetryCount")
+        XCTAssertNil(target?.syncedAt, "Item не синхронизирован (upload упал)")
+
+        let countAfter = await sut.pendingCount()
+        XCTAssertEqual(countAfter, 0,
+            "При достижении max-retry pendingCount должен декрементиться (item выбыл из backlog)")
+    }
+
+    // MARK: - Test 4b: до max-retry pendingCount НЕ декрементится при ошибке
+
+    func testDrainQueue_failureBeforeMaxRetry_keepsPendingCount() async throws {
+        let realm = try await makeRealmActor()
+        let policy = SyncPolicy(baseDelaySec: 0, maxDelaySec: 0, maxRetryCount: 3, wifiOnly: false)
+        let sut = makeSUT(realmActor: realm, isConnected: true, policy: policy)
+        let itemId = UUID().uuidString
+
+        // retryCount=0 → после неудачи станет 1 (< max) → item остаётся в backlog.
+        await realm.asyncWrite { realmInstance in
+            let item = SyncQueueItem()
+            item.id = itemId
+            item.entityType = "session"
+            item.entityId = UUID().uuidString
+            item.operation = "upsert"
+            item.payload = "{}"
+            item.retryCount = 0
+            realmInstance.add(item)
+        }
+
+        try await Task.sleep(nanoseconds: 500_000_000)
+        let countBefore = await sut.pendingCount()
+        XCTAssertEqual(countBefore, 1)
+
+        try await sut.drainQueue()
+
+        let dtos = await realm.asyncFetchMapped(SyncQueueItem.self) { item in
+            (id: item.id, retryCount: item.retryCount)
+        }
+        XCTAssertEqual(dtos.first { $0.id == itemId }?.retryCount, 1)
+
+        let countAfter = await sut.pendingCount()
+        XCTAssertEqual(countAfter, 1,
+            "До исчерпания ретраев item остаётся в backlog — pendingCount не меняется")
+    }
+
     // MARK: - Test 5: syncState первым значением публикует .idle
 
     func testSyncStatePublishesIdle() async throws {

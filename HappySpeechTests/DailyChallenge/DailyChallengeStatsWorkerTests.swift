@@ -192,4 +192,61 @@ final class DailyChallengeStatsWorkerTests: XCTestCase {
 
         XCTAssertNotNil(streak.lastSessionISO, "lastSessionISO должен быть установлен")
     }
+
+    // MARK: - computeStreak: longest persistence (исторический рекорд)
+
+    private func isolatedDefaults() -> UserDefaults {
+        let suite = "test.dailyChallenge.\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        defaults.removePersistentDomain(forName: suite)
+        return defaults
+    }
+
+    func test_computeStreak_persistsLongest_andSurvivesStreakReset() async {
+        let defaults = isolatedDefaults()
+        let repo = SpySessionRepository(sessions: [])
+
+        // Шаг 1: серия = 10, рекорд должен зафиксироваться.
+        let highProfile = TestDataBuilder.childProfile(id: "child-001", currentStreak: 10)
+        let highRepo = SpyChildRepository(children: [highProfile])
+        let sut1 = DailyChallengeStatsWorker(
+            sessionRepository: repo,
+            childRepository: highRepo,
+            userDefaults: defaults
+        )
+        let high = await sut1.computeStreak(childId: "child-001")
+        XCTAssertEqual(high.current, 10)
+        XCTAssertEqual(high.longest, 10, "Рекорд должен зафиксироваться на 10")
+
+        // Шаг 2: серия оборвалась (current = 2), но рекорд обязан сохраниться.
+        let lowProfile = TestDataBuilder.childProfile(id: "child-001", currentStreak: 2)
+        let lowRepo = SpyChildRepository(children: [lowProfile])
+        let sut2 = DailyChallengeStatsWorker(
+            sessionRepository: repo,
+            childRepository: lowRepo,
+            userDefaults: defaults
+        )
+        let low = await sut2.computeStreak(childId: "child-001")
+        XCTAssertEqual(low.current, 2)
+        XCTAssertEqual(low.longest, 10, "Исторический рекорд НЕ должен теряться после обрыва серии")
+    }
+
+    func test_computeStreak_longest_isPerChild() async {
+        let defaults = isolatedDefaults()
+        let repo = SpySessionRepository(sessions: [])
+
+        let childA = TestDataBuilder.childProfile(id: "child-A", currentStreak: 8)
+        let childB = TestDataBuilder.childProfile(id: "child-B", currentStreak: 3)
+        let childRepo = SpyChildRepository(children: [childA, childB])
+        let sut = DailyChallengeStatsWorker(
+            sessionRepository: repo,
+            childRepository: childRepo,
+            userDefaults: defaults
+        )
+
+        let a = await sut.computeStreak(childId: "child-A")
+        let b = await sut.computeStreak(childId: "child-B")
+        XCTAssertEqual(a.longest, 8, "Рекорд ребёнка A")
+        XCTAssertEqual(b.longest, 3, "Рекорд ребёнка B независим от A")
+    }
 }

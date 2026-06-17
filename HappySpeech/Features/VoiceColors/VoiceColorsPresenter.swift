@@ -14,6 +14,8 @@ protocol VoiceColorsPresentationLogic: AnyObject {
     func presentLiveSample(_ response: VoiceColorsModels.LiveSample.Response)
     func presentScore(_ response: VoiceColorsModels.Score.Response)
     func presentComplete(_ response: VoiceColorsModels.Complete.Response)
+    /// Микрофон не разрешён — показать понятное сообщение вместо тихого 1★.
+    func presentMicrophoneDenied()
 }
 
 // MARK: - VoiceColorsPresenter
@@ -55,6 +57,16 @@ final class VoiceColorsPresenter: VoiceColorsPresentationLogic {
 
     func presentRecording(_ isRecording: Bool) {
         display?.displayRecording(isRecording)
+    }
+
+    func presentMicrophoneDenied() {
+        logger.info("presentMicrophoneDenied")
+        display?.displayMicrophoneDenied(
+            message: String(
+                localized: "voiceColors.mic.denied",
+                defaultValue: "Чтобы услышать твой голос, разреши доступ к микрофону в Настройках телефона."
+            )
+        )
     }
 
     func presentPlaying(_ isPlaying: Bool) {

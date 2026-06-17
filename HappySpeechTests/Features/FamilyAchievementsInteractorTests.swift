@@ -153,6 +153,44 @@ final class FamilyAchievementsInteractorTests: XCTestCase {
         XCTAssertEqual(spy.lastLoad?.streakState.activeTodayCount, 1)
     }
 
+    // MARK: - 6a. Единый источник стрика: герой == ачивка .streak
+
+    func test_load_streakAchievementProgress_matchesHeroCombinedDays_whenAllActive() async {
+        let today = Calendar.current.startOfDay(for: Date())
+        let children = [
+            makeChild(id: "c1", streak: 5, lastSessionAt: today),
+            makeChild(id: "c2", streak: 3, lastSessionAt: today)
+        ]
+        let (sut, spy) = makeSUT(children: children)
+        await sut.load(request: .init(familyId: "family-fa"))
+
+        let heroDays = spy.lastLoad?.streakState.combinedDays
+        let streakAch = FamilyAchievement.catalog.first { $0.category == .streak }!
+        let achProgress = spy.lastLoad?.progressById[streakAch.id]
+        XCTAssertEqual(heroDays, 3)
+        XCTAssertEqual(achProgress, heroDays, "Прогресс ачивки .streak должен совпадать с числом героя")
+    }
+
+    func test_load_streakAchievementProgress_isZero_whenPartialActive() async {
+        // Регрессия: раньше герой показывал 0 (гейтованный), а ачивка .streak — min
+        // стриков (негейтованный, тут было бы 3). Теперь оба = 0.
+        let today = Calendar.current.startOfDay(for: Date())
+        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: today)
+        let children = [
+            makeChild(id: "c1", streak: 5, lastSessionAt: today),
+            makeChild(id: "c2", streak: 3, lastSessionAt: yesterday)
+        ]
+        let (sut, spy) = makeSUT(children: children)
+        await sut.load(request: .init(familyId: "family-fa"))
+
+        let heroDays = spy.lastLoad?.streakState.combinedDays
+        let streakAch = FamilyAchievement.catalog.first { $0.category == .streak }!
+        let achProgress = spy.lastLoad?.progressById[streakAch.id]
+        XCTAssertEqual(heroDays, 0)
+        XCTAssertEqual(achProgress, 0, "Ачивка .streak не должна показывать негейтованный min при partial active")
+        XCTAssertEqual(achProgress, heroDays, "Единый источник стрика")
+    }
+
     // MARK: - 7. load — sounds achievement: освоенные звуки агрегируются
 
     func test_load_masteredSoundsAggregated() async {

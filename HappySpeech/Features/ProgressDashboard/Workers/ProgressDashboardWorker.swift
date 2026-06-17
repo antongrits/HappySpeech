@@ -32,13 +32,33 @@ struct DashboardAggregate: Sendable, Equatable {
     let weekly: [WeeklyAccuracy]
     let sounds: [SoundProgress]
     let soundHistory: [String: [DailyAccuracy]]
+    /// Число РЕАЛЬНЫХ сессий за период (а не активных дней). У ребёнка может быть
+    /// несколько сессий в один день — KPI «Занятий» считает именно сессии.
+    let sessionCount: Int
+
+    init(
+        summary: DashboardSummary,
+        daily: [DailyAccuracy],
+        weekly: [WeeklyAccuracy],
+        sounds: [SoundProgress],
+        soundHistory: [String: [DailyAccuracy]],
+        sessionCount: Int = 0
+    ) {
+        self.summary = summary
+        self.daily = daily
+        self.weekly = weekly
+        self.sounds = sounds
+        self.soundHistory = soundHistory
+        self.sessionCount = sessionCount
+    }
 
     static let empty = DashboardAggregate(
         summary: DashboardSummary(overallAccuracy: 0, streakDays: 0, totalMinutes: 0, totalStars: 0),
         daily: [],
         weekly: [],
         sounds: [],
-        soundHistory: [:]
+        soundHistory: [:],
+        sessionCount: 0
     )
 
     var isEmpty: Bool { sounds.isEmpty && daily.isEmpty }
@@ -128,7 +148,8 @@ final class ProgressDashboardWorker: ProgressDashboardAggregating {
             daily: daily,
             weekly: weekly,
             sounds: sounds,
-            soundHistory: soundHistory
+            soundHistory: soundHistory,
+            sessionCount: sessions.count
         )
     }
 

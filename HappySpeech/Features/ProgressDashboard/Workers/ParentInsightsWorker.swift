@@ -73,10 +73,15 @@ final class ParentInsightsWorker {
     ///   - childName: Имя ребёнка (для персонализации текста).
     ///   - sounds: Список прогресса по звукам из дашборда.
     ///   - streakDays: Текущая серия дней.
+    ///   - totalAttempts: РЕАЛЬНОЕ суммарное число попыток за период (из агрегата).
+    ///     `nil` — данных нет, в LLM-промпт счётчики попыток не передаются.
+    ///   - correctAttempts: РЕАЛЬНОЕ число правильных попыток за период.
     func generateInsights(
         childName: String,
         sounds: [SoundProgress],
-        streakDays: Int
+        streakDays: Int,
+        totalAttempts: Int? = nil,
+        correctAttempts: Int? = nil
     ) async -> [ParentInsight] {
         guard !sounds.isEmpty else {
             logger.info("generateInsights: no sounds — returning empty placeholder")
@@ -95,12 +100,16 @@ final class ParentInsightsWorker {
         // Tier B — пробуем LLM (parent circuit только)
         if let service = llmService {
             logger.info("generateInsights: attempting LLM Tier B")
+            let resolved = resolveAttempts(
+                totalAttempts: totalAttempts,
+                correctAttempts: correctAttempts,
+                sounds: sounds
+            )
             if let llmInsights = await tryLLMInsights(
                 service: service,
                 childName: childName,
                 bestStat: bestStat,
-                worstStat: worstStat,
-                sounds: sounds
+                attempts: resolved
             ) {
                 logger.info("generateInsights: LLM succeeded, \(llmInsights.count) insights")
                 return llmInsights
@@ -124,9 +133,10 @@ final class ParentInsightsWorker {
         service: any LLMDecisionServiceProtocol,
         childName: String,
         bestStat: PerSoundStat?,
-        worstStat: PerSoundStat?,
-        sounds: [SoundProgress]
+        attempts: (total: Int, correct: Int)
     ) async -> [ParentInsight]? {
+        // В LLM уходят РЕАЛЬНЫЕ счётчики попыток (см. resolveAttempts) — никогда
+        // не фиктивный 0 (раньше correctAttempts:0 → LLM мог выдать «точность ~0%»).
         let summaryInput = SessionSummaryInput(
             sessionId: "insights-\(Int(Date().timeIntervalSince1970))",
             childId: "child-default",
@@ -134,8 +144,8 @@ final class ParentInsightsWorker {
             age: 6,
             targetSound: bestStat?.sound ?? "—",
             stage: .wordInit,
-            totalAttempts: sounds.reduce(0) { $0 + $1.sessions },
-            correctAttempts: 0,
+            totalAttempts: attempts.total,
+            correctAttempts: attempts.correct,
             errorWords: [],
             durationSec: 0,
             date: Date()
@@ -227,6 +237,35 @@ final class ParentInsightsWorker {
         }
 
         return insights
+    }
+
+    // MARK: - Attempts resolution
+
+    /// Возвращает реальные счётчики попыток для LLM-входа.
+    /// Приоритет — явные значения из агрегата (totalAttempts/correctAttempts).
+    /// Если их нет, реконструируем correct из total и реальной средней точности
+    /// по звукам; total в этом случае оценивается как ~один заход на сессию-звук.
+    /// Никаких фиктивных нулей: correct согласован с реальной точностью.
+    private func resolveAttempts(
+        totalAttempts: Int?,
+        correctAttempts: Int?,
+        sounds: [SoundProgress]
+    ) -> (total: Int, correct: Int) {
+        if let total = totalAttempts, let correct = correctAttempts, total > 0 {
+            return (total, min(correct, total))
+        }
+
+        // Реконструкция из реальных данных по звукам.
+        let totalSessions = sounds.reduce(0) { $0 + $1.sessions }
+        guard totalSessions > 0 else { return (0, 0) }
+
+        // Взвешенная по числу сессий средняя точность (0…1) — реальная метрика.
+        let weightedCorrect = sounds.reduce(0.0) { acc, sp in
+            acc + Double(sp.accuracy) * Double(sp.sessions)
+        }
+        let meanAccuracy = weightedCorrect / Double(totalSessions)
+        let correct = Int((Double(totalSessions) * meanAccuracy).rounded())
+        return (totalSessions, min(correct, totalSessions))
     }
 
     // MARK: - Aggregation
