@@ -3217,6 +3217,57 @@
         }
       }
     },
+    "ar.breathing.hint.blowing": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep blowing!"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжай дуть!"
+          }
+        }
+      }
+    },
+    "ar.breathing.hint.inhale": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take a deep breath"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай глубокий вдох"
+          }
+        }
+      }
+    },
+    "ar.breathing.hud.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blow to catch dandelions"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дуй, чтобы сдуть одуванчики"
+          }
+        }
+      }
+    },
     "ar.breathing.title": {
       "extractionState": "manual",
       "localizations": {
@@ -35188,6 +35239,176 @@
           "stringUnit": {
             "state": "translated",
             "value": "Today’s missions"
+          }
+        }
+      }
+    },
+    "missions.section.today": {
+      "comment": "Kid hub: section header ‘Today’s missions’ (used in sectionHeader).",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодняшние задания"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today’s missions"
+          }
+        }
+      }
+    },
+    "missions.greeting.remaining": {
+      "comment": "Kid hub greeting banner: ‘%d tasks remaining today’. Uses %d for count.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня нас ждут %d задания. Начнём?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We have %d tasks today. Let’s start!"
+          }
+        }
+      }
+    },
+    "missions.greeting.allDone": {
+      "comment": "Kid hub greeting banner: all missions completed for today.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Все задания выполнены!"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Great job! All tasks are done!"
+          }
+        }
+      }
+    },
+    "missions.challenge.badge": {
+      "comment": "Kid hub weekly challenge banner: badge label text (uppercased in code).",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Челлендж недели"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekly challenge"
+          }
+        }
+      }
+    },
+    "missions.challenge.daysLeft": {
+      "comment": "Kid hub weekly challenge banner: days remaining chip. Uses %d for count.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось %d дн."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d days left"
+          }
+        }
+      }
+    },
+    "missions.challenge.title": {
+      "comment": "Kid hub weekly challenge banner: challenge title.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорки на «Р»"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue Twisters with R"
+          }
+        }
+      }
+    },
+    "missions.challenge.subtitle": {
+      "comment": "Kid hub weekly challenge banner: challenge description.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори чистоговорку 5 дней подряд — получишь медаль"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat the tongue twister 5 days in a row to earn a medal"
+          }
+        }
+      }
+    },
+    "missions.challenge.cta": {
+      "comment": "Kid hub weekly challenge banner: CTA button label.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "missions.tab.tasks": {
+      "comment": "Kid hub filter tab: tasks count. Uses %d for count.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d задач"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d tasks"
+          }
+        }
+      }
+    },
+    "missions.tab.allThemes": {
+      "comment": "Kid hub filter tab: all themes.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все темы"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All themes"
           }
         }
       }

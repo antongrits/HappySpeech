@@ -175,26 +175,41 @@ struct StorytellingView: View {
         Button {
             Task { await startTopic(topicId: topic.id) }
         } label: {
-            VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: topic.symbolName)
-                    .font(.system(size: 40))
-                    .foregroundStyle(ColorTokens.Brand.lilac)
+            // Эталон kid-story-narrative: тема-карточка с крупным иконкой
+            // в тёплом коралловом кружке + заголовок + стрелка-шеврон.
+            VStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primaryLo.opacity(0.50))
+                        .frame(width: 72, height: 72)
+                    Image(systemName: topic.symbolName)
+                        .font(.system(size: 32, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .accessibilityHidden(true)
+
                 Text(topic.title)
-                    .font(TypographyTokens.headline(16))
+                    .font(TypographyTokens.headline(15).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.7)
                     .multilineTextAlignment(.center)
+                    .lineLimit(3)
+
+                Image(systemName: "chevron.right.circle.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(ColorTokens.Brand.primary.opacity(0.70))
+                    .accessibilityHidden(true)
             }
-            .frame(maxWidth: .infinity, minHeight: 120)
-            .padding(SpacingTokens.sp3)
+            .frame(maxWidth: .infinity, minHeight: 148)
+            .padding(SpacingTokens.sp4)
             .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.primary.opacity(0.18), lineWidth: 1.5)
             )
             .depthShadow(ShadowTokens.kidDepth)
         }
@@ -209,34 +224,18 @@ struct StorytellingView: View {
         _ start: StorytellingModels.StartTopic.ViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            // Step 10 Batch E — Pattern 2: hero телл-режима на HSLiquidGlassCard.
-            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-                VStack(spacing: SpacingTokens.sp2) {
-                    Image(systemName: start.symbolName)
-                        .font(.system(size: 44))
-                        .foregroundStyle(ColorTokens.Brand.lilac)
-                        .accessibilityHidden(true)
-                    Text(start.topicTitle)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .minimumScaleFactor(0.7)
-                    Text("storytelling.telling.prompt")
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .padding(.horizontal, SpacingTokens.sp4)
-                    if !holder.progressLabel.isEmpty {
-                        Text(holder.progressLabel)
-                            .font(TypographyTokens.caption(13).monospacedDigit())
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                    }
-                }
-            }
+            // Эталон kid-story-narrative: шапка нарратива — тема как бейдж,
+            // прогресс шагов + полоска в лиловом (нарративный акцент).
+            RecordLessonHeader(
+                sound: start.topicTitle,
+                subtitle: holder.progressLabel.isEmpty
+                    ? String(localized: "storytelling.telling.prompt")
+                    : holder.progressLabel,
+                progress: holder.progressFraction,
+                tint: ColorTokens.Brand.lilac
+            )
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp2)
+            .padding(.top, SpacingTokens.sp3)
 
             ScrollView {
                 VStack(spacing: SpacingTokens.sp3) {

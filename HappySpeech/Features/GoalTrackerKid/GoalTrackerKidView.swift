@@ -57,6 +57,7 @@ struct GoalTrackerKidView: View {
         if let interactor {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
+                    dateHeader
                     hero(state: interactor.state)
                     goalsList(interactor: interactor)
                     cta
@@ -69,6 +70,30 @@ struct GoalTrackerKidView: View {
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    // MARK: - Date header row (kid-hub-list pattern: «Понедельник · 13 июня»)
+
+    private var dateHeader: some View {
+        HStack {
+            Text(formattedDateLine)
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+            LyalyaMascotView(state: .idle, size: 36)
+                .accessibilityHidden(true)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(formattedDateLine))
+    }
+
+    private var formattedDateLine: String {
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ru_RU")
+        df.dateFormat = "EEEE · d MMMM"
+        return df.string(from: Date()).localizedCapitalized
     }
 
     private func hero(state: GoalTrackerKidModels.ViewState) -> some View {

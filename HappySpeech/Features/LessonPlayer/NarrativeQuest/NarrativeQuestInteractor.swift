@@ -15,6 +15,8 @@ protocol NarrativeQuestBusinessLogic: AnyObject {
     func advanceStage(_ request: NarrativeQuestModels.AdvanceStage.Request)
     func completeQuest(_ request: NarrativeQuestModels.CompleteQuest.Request)
     func cancel()
+    /// Повторно озвучивает нарратив текущего этапа (для кнопки «Послушать квест»).
+    func replayCurrentNarration()
 }
 
 // MARK: - NarrativeQuestInteractor
@@ -412,6 +414,17 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
         // Финальный голос Ляли.
         speak(script.finalMessage)
+    }
+
+    // MARK: - Replay narration
+
+    /// Повторно озвучивает нарратив текущего этапа через LessonVoiceWorker
+    /// (тот же путь, что и при авто-нарации в startStage).
+    func replayCurrentNarration() {
+        guard let script else { return }
+        let idx = currentStageIndex
+        guard idx >= 0, idx < script.stages.count else { return }
+        speak(script.stages[idx].narration)
     }
 
     // MARK: - Cancel

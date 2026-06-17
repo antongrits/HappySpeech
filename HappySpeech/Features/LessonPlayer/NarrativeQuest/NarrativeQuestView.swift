@@ -36,7 +36,6 @@ struct NarrativeQuestView: View {
 
     @State private var bootstrapped = false
     @State private var overlayTask: Task<Void, Never>?
-    @State private var micPulse = false
 
     // MARK: - Constants
 
@@ -195,6 +194,18 @@ struct NarrativeQuestView: View {
             }
             .scrollBounceBehavior(.basedOnSize)
 
+            // Эталон kid-story-narrative: аудио-строка для повтора нарратива
+            // (маскот + «Послушать квест / Голос Ляли» + coral play button).
+            RecordLessonListenRow(
+                title: String(localized: "narrative.listen.title", defaultValue: "Послушать квест"),
+                subtitle: String(localized: "narrative.listen.subtitle", defaultValue: "Голос Ляли"),
+                onListen: {
+                    container.soundService.playUISound(.tap)
+                    interactor.replayCurrentNarration()
+                }
+            )
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
             HSButton(String(localized: "Я готов!"), style: .primary, icon: "mic.fill") {
                 container.soundService.playUISound(.tap)
                 // gap #10: запись/ASR в Interactor — View шлёт только интент.
@@ -214,46 +225,28 @@ struct NarrativeQuestView: View {
             stageIndicator
             Spacer(minLength: 0)
 
-            VStack(spacing: SpacingTokens.medium) {
-                ZStack {
-                    Circle()
-                        .fill(ColorTokens.Brand.primary.opacity(0.12))
-                        .frame(width: 220, height: 220)
-                        .scaleEffect(reduceMotion ? 1.0 : (micPulse ? 1.12 : 1.0))
-                        .animation(
-                            reduceMotion
-                                ? nil
-                                : .easeInOut(duration: 0.9).repeatForever(autoreverses: true),
-                            value: micPulse
-                        )
-                    Image(systemName: "mic.fill")
-                        .font(TypographyTokens.kidDisplay(88))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .accessibilityHidden(true)
-                }
-                .onAppear { if !reduceMotion { micPulse = true } }
-                .onDisappear { micPulse = false }
+            // Целевое слово — RecordLessonWordCard для единого визуального языка.
+            Text(display.targetWord)
+                .font(TypographyTokens.kidDisplay(40).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.7)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .accessibilityLabel(display.targetWord)
 
-                Text(display.targetWord)
-                    .font(TypographyTokens.kidDisplay(36))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.8)
-                    .padding(.horizontal, SpacingTokens.small)
-                    .accessibilityLabel(display.targetWord)
-
-                Text(display.micLabel.isEmpty ? String(localized: "Говори!") : display.micLabel)
-                    .font(TypographyTokens.headline(18))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+            // Эталон kid-game-record: RecordMicButton (состояние записи) вместо
+            // кастомного оверсайзного кольца — единый scaffold всего класса.
+            RecordMicButton(
+                state: .recording,
+                hint: display.micLabel.isEmpty
+                    ? String(localized: "narrative.mic.hint", defaultValue: "Говори!")
+                    : display.micLabel
+            ) {
+                interactor.stopListeningEarlyIntent()
             }
 
             Spacer(minLength: 0)
-
-            HSButton(String(localized: "Готово"), style: .secondary, icon: "stop.fill") {
-                interactor.stopListeningEarlyIntent()
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityHint(String(localized: "Остановить запись раньше"))
         }
         .padding(.vertical, SpacingTokens.medium)
     }

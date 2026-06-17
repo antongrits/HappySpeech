@@ -152,7 +152,16 @@ struct ReadAloudStoryView: View {
 
     private func readingSection(_ start: ReadAloudStoryModels.Start.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            progressBar
+            // Эталон kid-story-narrative: заголовок класса — название истории
+            // как бейдж + подзаголовок прогресса + прогресс-полоса.
+            RecordLessonHeader(
+                sound: start.title,
+                subtitle: holder.progressLabel,
+                progress: holder.progressFraction,
+                tint: ColorTokens.Brand.lilac
+            )
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp3)
 
             ScrollView {
                 // Step 10 Batch E — Pattern 2: hero обёрнут в
@@ -160,13 +169,6 @@ struct ReadAloudStoryView: View {
                 // полупрозрачным стеклом — «warm paper» feel для чтения.
                 HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                        Text(start.title)
-                            .font(TypographyTokens.title(24))
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.8)
-                            .padding(.bottom, SpacingTokens.sp2)
-
                         ForEach(Array(start.sentences.enumerated()), id: \.offset) { idx, sentence in
                             sentenceLine(sentence, index: idx)
                                 // Step 10 Batch E — Pattern 3: scrollTransition
@@ -183,44 +185,29 @@ struct ReadAloudStoryView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
             }
 
-            VStack(spacing: SpacingTokens.sp2) {
-                Button {
+            // Эталон kid-story-narrative: аудио-строка — маскот-Ляля слева,
+            // текст «Послушать сказку / Голос Ляли», кнопка play справа.
+            RecordLessonListenRow(
+                title: String(localized: "readAloud.listen.title", defaultValue: "Послушать сказку"),
+                subtitle: String(localized: "readAloud.listen.subtitle", defaultValue: "Голос Ляли"),
+                isPlaying: holder.highlightedSentenceIndex != nil,
+                onListen: {
                     Task { await interactor?.playNextSentence() }
-                } label: {
-                    Label {
-                        Text(playButtonLabel(for: start))
-                            .font(TypographyTokens.headline(17))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.8)
-                    } icon: {
-                        Image(systemName: holder.highlightedSentenceIndex == nil
-                              ? "play.circle.fill" : "speaker.wave.2.fill")
-                            // Step 10 Batch E — Pattern 5: speaker pulse
-                            // при подсветке новой фразы.
-                            .hsSymbolEffect(.pulse, value: holder.highlightedSentenceIndex ?? -1)
-                    }
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .frame(maxWidth: .infinity, minHeight: 56)
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
-                            .fill(ColorTokens.Brand.primary)
-                    )
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("readAloud.playButton")
-                .accessibilityHint(Text("readAloud.play.hint"))
+            )
+            .accessibilityIdentifier("readAloud.playButton")
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
-                Button {
-                    Task { await interactor?.skipToQuiz() }
-                } label: {
-                    Text("readAloud.skipToQuiz")
-                        .font(TypographyTokens.body(15).weight(.medium))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .frame(maxWidth: .infinity, minHeight: 44)
-                }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("readAloud.skipButton")
+            Button {
+                Task { await interactor?.skipToQuiz() }
+            } label: {
+                Text("readAloud.skipToQuiz")
+                    .font(TypographyTokens.body(15).weight(.medium))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .frame(maxWidth: .infinity, minHeight: 44)
             }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("readAloud.skipButton")
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.sp5)
         }
@@ -245,52 +232,52 @@ struct ReadAloudStoryView: View {
             .accessibilityLabel(Text(sentence))
     }
 
-    private func playButtonLabel(
-        for start: ReadAloudStoryModels.Start.ViewModel
-    ) -> String {
-        if holder.highlightedSentenceIndex == nil {
-            return String(localized: "readAloud.playFromStart")
-        }
-        return String(localized: "readAloud.playNext")
-    }
-
-    // MARK: - Progress
-
-    private var progressBar: some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Text(holder.progressLabel)
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.surfaceAlt)
-                    Capsule()
-                        .fill(ColorTokens.Brand.primary)
-                        .frame(width: max(0, geo.size.width * holder.progressFraction))
-                }
-            }
-            .frame(height: 8)
-            .accessibilityHidden(true)
-        }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp3)
-    }
-
     // MARK: - Quiz
 
     private func quizSection(
         _ quiz: ReadAloudStoryModels.StartQuiz.ViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            progressBar
+            // Эталон kid-story-narrative: прогресс-шапка квиза.
+            RecordLessonHeader(
+                sound: "",
+                subtitle: holder.progressLabel,
+                progress: holder.progressFraction,
+                tint: ColorTokens.Brand.lilac
+            )
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp3)
+
             Spacer()
-            Text(quiz.prompt)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .padding(.horizontal, SpacingTokens.sp4)
-                .accessibilityLabel(Text(quiz.accessibilityLabel))
+
+            // Эталон kid-story-narrative: вопрос в тёплой карточке
+            // с butter-фоном и «?» акцентом — как "Что было дальше?".
+            HStack(alignment: .top, spacing: SpacingTokens.sp2) {
+                Text("?")
+                    .font(TypographyTokens.title(28).weight(.bold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                Text(quiz.prompt)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(ColorTokens.Brand.butter.opacity(0.35))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.butter, lineWidth: 1.5)
+            )
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text(quiz.accessibilityLabel))
 
             if let feedback = holder.lastFeedback,
                let wasCorrect = holder.lastWasCorrect {

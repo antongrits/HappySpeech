@@ -157,36 +157,62 @@ struct RepeatAfterModelView: View {
     @ViewBuilder
     private func wordCard(highlightActive: Bool) -> some View {
         if let word = display.currentWord {
-            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
-                VStack(spacing: SpacingTokens.medium) {
-                    HSContentSymbol(word.emoji, size: 96)
+            if highlightActive {
+                // Фаза modelPlaying: LetterHighlightView анимирует побуквенную
+                // подсветку — нужен кастомный слой поверх glass-card.
+                HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+                    VStack(spacing: SpacingTokens.medium) {
+                        HSContentSymbol(word.emoji, size: 96)
+                            .accessibilityHidden(true)
 
-                    LetterHighlightView(
-                        word: word.word,
-                        highlightedIndex: highlightActive ? highlightedLetterIndex : -1
-                    )
+                        LetterHighlightView(
+                            word: word.word,
+                            highlightedIndex: highlightedLetterIndex
+                        )
 
-                    Text(display.syllabification)
-                        .font(TypographyTokens.body(16))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
+                        Text(display.syllabification)
+                            .font(TypographyTokens.body(16))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                    }
+                    .frame(maxWidth: .infinity)
                 }
-                .frame(maxWidth: .infinity)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(word.word)
+                .accessibilityHint(display.syllabification)
+            } else {
+                // Эталон kid-game-record: RecordLessonWordCard — единый
+                // scaffold с HSContentSymbol + крупное слово + слоги-бейджи.
+                RecordLessonWordCard(
+                    symbol: word.emoji,
+                    word: word.word,
+                    syllables: display.syllabification.components(separatedBy: " · ")
+                        .flatMap { $0.components(separatedBy: "·") }
+                        .map { $0.trimmingCharacters(in: .whitespaces) }
+                        .filter { !$0.isEmpty }
+                )
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(word.word)
-            .accessibilityHint(display.syllabification)
         }
     }
 
     private var wordPreviewBottom: some View {
         VStack(spacing: SpacingTokens.small) {
-            // «Послушай» — плоская строка-виджет по эталону repeat_ref.png:
-            // play-кнопка в цветном круге + заголовок/подзаголовок + waveform
-            // справа. НЕ полноширинный HSButton.secondary.
-            listenRow
+            // Эталон kid-game-record: RecordLessonListenRow — маскот-Ляля +
+            // текст «Послушай Лялю / Как звучит слово целиком» + круглая
+            // коралловая play-кнопка справа.
+            RecordLessonListenRow(
+                isPlaying: display.phase == .modelPlaying,
+                isDisabled: display.replayLimitReached,
+                onListen: {
+                    guard !display.replayLimitReached else { return }
+                    container.soundService.playUISound(.tap)
+                    interactor.replayModel(.init())
+                    triggerModelPlayback()
+                }
+            )
 
             // «Повтори за Лялей!» — главная CTA-кнопка записи.
             HSButton(
@@ -221,90 +247,6 @@ struct RepeatAfterModelView: View {
             hintPanel
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-    }
-
-    // MARK: - Listen row widget
-    //
-    // Эталон repeat_ref.png: горизонтальная строка-карточка с play-кнопкой
-    // (иконка speaker в коралловом круге), текстом «Послушай / Как говорит Ляля»
-    // и мини-waveform справа. При достижении лимита воспроизведений — fade + блок.
-
-    private var listenRow: some View {
-        let isDisabled = display.replayLimitReached
-        return Button {
-            guard !isDisabled else { return }
-            container.soundService.playUISound(.tap)
-            interactor.replayModel(.init())
-            triggerModelPlayback()
-        } label: {
-            HStack(spacing: SpacingTokens.regular) {
-                // Иконка play в цветном круге
-                ZStack {
-                    Circle()
-                        .fill(isDisabled
-                              ? ColorTokens.Kid.line.opacity(0.20)
-                              : ColorTokens.Brand.primary.opacity(0.14))
-                        .frame(width: 48, height: 48)
-                    Image(systemName: isDisabled ? "speaker.slash.fill" : "play.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(isDisabled ? ColorTokens.Kid.inkMuted : ColorTokens.Brand.primary)
-                }
-                .accessibilityHidden(true)
-
-                // Текст
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(isDisabled
-                         ? String(localized: "repeat.replay.limit_reached")
-                         : String(localized: "repeat.button.listen"))
-                        .font(TypographyTokens.headline(15))
-                        .foregroundStyle(isDisabled ? ColorTokens.Kid.inkMuted : ColorTokens.Kid.ink)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "repeat.listen.subtitle", defaultValue: "Как говорит Ляля"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                // Мини-waveform декор
-                HStack(spacing: 3) {
-                    ForEach([0.45, 0.80, 1.0, 0.65, 0.30] as [Double], id: \.self) { h in
-                        Capsule()
-                            .fill(isDisabled
-                                  ? ColorTokens.Kid.line.opacity(0.40)
-                                  : ColorTokens.Brand.primary.opacity(0.50))
-                            .frame(width: 3, height: 20 * h)
-                    }
-                }
-                .frame(width: 28)
-                .accessibilityHidden(true)
-            }
-            .padding(.horizontal, SpacingTokens.medium)
-            .padding(.vertical, SpacingTokens.small)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                            .strokeBorder(
-                                isDisabled
-                                    ? ColorTokens.Kid.line.opacity(0.3)
-                                    : ColorTokens.Brand.primary.opacity(0.18),
-                                lineWidth: 1.5
-                            )
-                    )
-            )
-            .opacity(isDisabled ? 0.55 : 1.0)
-        }
-        .buttonStyle(.plain)
-        .disabled(isDisabled)
-        .accessibilityLabel(isDisabled
-                            ? String(localized: "repeat.replay.limit_reached")
-                            : String(localized: "repeat.button.listen"))
-        .accessibilityHint(isDisabled ? "" : String(localized: "repeat.button.listen.hint"))
-        .accessibilityAddTraits(.isButton)
     }
 
     @ViewBuilder

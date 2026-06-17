@@ -31,39 +31,60 @@ struct BreathingARView: View {
     // MARK: - Camera overlay (AR-supported)
 
     private var cameraOverlay: some View {
-        VStack {
-            ARGameHUD(
-                title: "ar.breathing.title",
-                scoreText: display.totalText,
+        VStack(spacing: SpacingTokens.small) {
+            // Top pill — matches ARTaskPill pattern used by all AR siblings.
+            ARTaskPill(
+                iconSystemName: "wind",
+                title: String(localized: "ar.breathing.title"),
+                subtitle: String(localized: "ar.breathing.hud.subtitle"),
+                scoreText: display.totalText.isEmpty ? nil : display.totalText,
                 onClose: { dismiss() }
             )
+
             Spacer()
-            Image(systemName: display.isBlowing ? "wind" : "wind.snow")
-                .font(TypographyTokens.kidDisplay(64))
-                .foregroundStyle(ColorTokens.Brand.primaryHi)
-                .scaleEffect(1 + CGFloat(display.strength) * 0.2)
-                .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: display.strength)
-            Text(display.hint)
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.medium)
-                .padding(.vertical, SpacingTokens.small)
-                .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
-                .padding(.horizontal, SpacingTokens.screenEdge)
-            Spacer()
-            GeometryReader { proxy in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Overlay.highlight)
-                    Capsule().fill(ColorTokens.Brand.primary)
-                        .frame(width: proxy.size.width * CGFloat(display.strength))
-                }
+
+            // Mascot guide — bottom-left anchored over camera feed.
+            HStack {
+                ARMascotGuide(
+                    state: display.isBlowing ? .encouraging : .explaining,
+                    message: display.hint.isEmpty
+                        ? String(localized: "ar.breathing.hud.subtitle")
+                        : display.hint,
+                    detail: nil
+                )
+                Spacer(minLength: 0)
             }
-            .frame(height: 10)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.xLarge)
+            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.bottom, SpacingTokens.small)
+
+            // Bottom control panel — strength bar + blow indicator.
+            ARControlPanel(
+                hintText: display.isBlowing
+                    ? String(localized: "ar.breathing.hint.blowing")
+                    : String(localized: "ar.breathing.hint.inhale"),
+                isSuccess: display.strength >= 0.95,
+                progress: display.strength,
+                centerAction: nil,
+                centerAccessibilityLabel: String(localized: "ar.breathing.title"),
+                leading: {
+                    Image(systemName: display.isBlowing ? "wind" : "wind.snow")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(
+                            display.isBlowing
+                                ? ColorTokens.Brand.primary
+                                : ColorTokens.Kid.inkSoft
+                        )
+                        .frame(width: 56, height: 56)
+                        .background(.ultraThinMaterial, in: Circle())
+                        .overlay(Circle().strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1))
+                        .scaleEffect(1 + CGFloat(display.strength) * 0.15)
+                        .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: display.strength)
+                        .accessibilityHidden(true)
+                },
+                trailing: {
+                    Color.clear.frame(width: 56, height: 56)
+                }
+            )
         }
     }
 
