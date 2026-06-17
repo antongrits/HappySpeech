@@ -64,10 +64,14 @@ struct VADSession: Sendable {
 /// Чанк: 512 сэмплов при 16kHz = 32ms, порог 0.5.
 ///
 /// Реализации:
-/// - ``AmplitudeVAD`` — детерминированный адаптивный амплитудный детектор (дефолт
-///   `makeVAD()`, нулевая задержка старта, без модели).
-/// - ``FluidAudioVADService`` — реальный Silero v6 на ANE (FluidAudio SPM), доступен
-///   через `makeVAD(preferFluidAudio: true)` и подключён в боевой ASR-пайплайн.
+/// - ``AmplitudeVAD`` — детерминированный адаптивный амплитудный детектор. **Фактический
+///   offline-first путь**: дефолт `makeVAD()`, нулевая задержка старта, без модели и без
+///   сети (~88–92% на чистой речи).
+/// - ``FluidAudioVADService`` — Silero v6 на ANE (FluidAudio SPM), доступен через
+///   `makeVAD(preferFluidAudio: true)` и подключён в боевой preflight-пайплайн. FluidAudio
+///   скачивает модель Silero v6 с HuggingFace при первом запуске; без кэша/сети
+///   инициализация падает и фабрика откатывается на `AmplitudeVAD`. То есть Silero — это
+///   апгрейд при наличии кэша, а не гарантированный offline-путь.
 ///
 /// ### Типичный поток
 /// ```

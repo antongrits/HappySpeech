@@ -55,6 +55,41 @@ final class ASRServiceTests: XCTestCase {
         let sut = makeSUT()
         await XCTAssertNoThrowAsync { try await sut.loadModel() }
     }
+
+    // MARK: - LiveASRService offline-first contract
+
+    /// Без bundled-модели в тестовом окружении (нет `Resources/Models/Whisper/` в
+    /// тест-bundle) `loadModel` обязан бросить `asrModelNotLoaded` — а НЕ пытаться
+    /// скачивать whisper-tiny с HuggingFace. Любой сетевой/HF error означал бы
+    /// нарушение offline-first.
+    func test_liveASR_loadModel_failsWithModelNotLoaded_neverNetwork() async {
+        let sut = LiveASRService()
+        do {
+            try await sut.loadModel(tier: .kidOnDevice)
+            // Если модель вдруг доступна (на устройстве с bundle) — это валидно.
+            XCTAssertTrue(sut.isReady)
+        } catch let error as AppError {
+            XCTAssertEqual(error, .asrModelNotLoaded)
+            XCTAssertFalse(sut.isReady)
+        } catch {
+            XCTFail("Ожидался AppError.asrModelNotLoaded (offline), получено: \(error)")
+        }
+    }
+
+    /// `transcribe` на незагруженном `LiveASRService` выполняет ленивую загрузку
+    /// bundled-модели; при её отсутствии — `asrModelNotLoaded`, без сетевых попыток.
+    func test_liveASR_transcribe_lazyLoads_throwsModelNotLoadedOffline() async {
+        let sut = LiveASRService()
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("silence.wav")
+        do {
+            _ = try await sut.transcribe(url: url)
+            XCTAssertTrue(sut.isReady)
+        } catch let error as AppError {
+            XCTAssertEqual(error, .asrModelNotLoaded)
+        } catch {
+            XCTFail("Ожидался AppError.asrModelNotLoaded (offline lazy-load), получено: \(error)")
+        }
+    }
 }
 
 private func XCTAssertNoThrowAsync(

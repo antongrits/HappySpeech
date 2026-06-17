@@ -128,8 +128,10 @@ public final class LiveRewardsRepository: RewardsRepository {
                 id: def.key,
                 key: def.key,
                 emoji: def.emoji,
-                title: String(localized: String.LocalizationValue("rewards.achievement.\(def.key).title")),
-                hint: String(localized: String.LocalizationValue("rewards.achievement.\(def.key).hint")),
+                // def.title / def.hint содержат готовые локализованные строки
+                // с Russian defaultValue — сырой ключ никогда не показывается.
+                title: def.title,
+                hint: def.hint,
                 medal: def.medal,
                 requiredProgress: def.required,
                 currentProgress: min(current, def.required),

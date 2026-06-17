@@ -179,7 +179,10 @@ struct ArticulationGymView: View {
                     .padding(.trailing, SpacingTokens.sp4)
             }
         }
-        .padding(.top, SpacingTokens.sp4)
+        // sp6 (~24pt) instead of sp4 (~16pt): дополнительный зазор между
+        // inline nav-bar и первым элементом (пикер групп), чтобы пикер
+        // не прижимался к строке заголовка / статус-бару.
+        .padding(.top, SpacingTokens.sp6)
     }
 
     // MARK: - Acoustic Mirror entry

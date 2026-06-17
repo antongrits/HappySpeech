@@ -49,8 +49,10 @@ print(result.displayScore) // 0–100
 
 ## ASR — WhisperKit
 
-WhisperKit (whisper-large-v3-turbo — primary, whisper-tiny — fallback) транскрибирует
-русскую речь ребёнка. Лицензия MIT. Заменил GigaAM (ADR-001-REV1 от 2026-04-22,
+WhisperKit транскрибирует русскую речь ребёнка из **bundled-моделей** (offline, без
+сетевой загрузки): whisper-base (~140 MB, Tier A/B — детский и родительский контур) и
+whisper-small (~460 MB, Tier C — специалист). Модели грузятся по локальному пути через
+`WhisperKitConfig.modelFolder`. Лицензия MIT. Заменил GigaAM (ADR-001-REV1 от 2026-04-22,
 причина: GigaAM имеет некоммерческую лицензию).
 
 ## LLM Tier Routing

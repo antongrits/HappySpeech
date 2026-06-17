@@ -420,16 +420,16 @@ struct SpeechVisualizationView: View {
                     Image(systemName: "play.fill")
                         .font(TypographyTokens.caption(13))
                     Text(String(localized: "karaoke.cta.listen",
-                                defaultValue: "Послушай образец"))
+                                defaultValue: "Слушать"))
                         .font(TypographyTokens.caption(13).weight(.heavy))
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                        .multilineTextAlignment(.center)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .padding(.vertical, SpacingTokens.sp3)
                 .padding(.horizontal, SpacingTokens.sp3)
-                .frame(maxWidth: 96)
+                .frame(maxWidth: 110)
                 .background(
                     RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                         .fill(ColorTokens.Kid.surface)

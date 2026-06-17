@@ -262,21 +262,29 @@ struct GrammarGameView: View {
 
     @ViewBuilder
     private var contentArea: some View {
-        ScrollView(showsIndicators: false) {
-            switch roundExtraData {
-            case .dative(let characters, let targetIndex):
-                dativeContentView(characters: characters, targetIndex: targetIndex)
-                    .padding(.top, contentTopInset)
-            case .genitive(let containers, let correctIndex):
-                genitiveContentView(containers: containers, correctIndex: correctIndex)
-                    .padding(.top, contentTopInset)
-            case .instrumental(let partyMode):
-                instrumentalContentView(partyMode: partyMode)
-                    .padding(.top, contentTopInset)
-            case .none:
-                pluralContentView
-                    .padding(.top, contentTopInset)
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                Group {
+                    switch roundExtraData {
+                    case .dative(let characters, let targetIndex):
+                        dativeContentView(characters: characters, targetIndex: targetIndex)
+                            .padding(.top, contentTopInset)
+                    case .genitive(let containers, let correctIndex):
+                        genitiveContentView(containers: containers, correctIndex: correctIndex)
+                            .padding(.top, contentTopInset)
+                    case .instrumental(let partyMode):
+                        instrumentalContentView(partyMode: partyMode)
+                            .padding(.top, contentTopInset)
+                    case .none:
+                        pluralContentView
+                            .padding(.top, contentTopInset)
+                    }
+                }
+                // Растягиваем контент минимум на полную высоту прокручиваемой области,
+                // чтобы не оставалось большого пустого пространства снизу.
+                .frame(minHeight: geo.size.height, alignment: .top)
             }
+            .scrollBounceBehavior(.basedOnSize)
         }
     }
 

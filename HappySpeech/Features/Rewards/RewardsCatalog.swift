@@ -21,74 +21,153 @@ enum RewardsCatalog {
         let emoji: String
         let medal: RewardsAchievement.Medal
         let required: Int
+        /// Готовый русский заголовок — отображается ВСЕГДА, даже если xcstrings-ключ отсутствует.
+        let title: String
+        /// Готовая русская подсказка/описание.
+        let hint: String
 
         init(
             _ key: String,
             _ emoji: String,
             _ medal: RewardsAchievement.Medal,
-            _ required: Int
+            _ required: Int,
+            _ title: String,
+            _ hint: String
         ) {
             self.key = key
             self.emoji = emoji
             self.medal = medal
             self.required = required
+            self.title = title
+            self.hint = hint
         }
     }
 
     /// 32 достижения. Прогресс (`currentProgress`) НЕ хранится здесь —
     /// он считается из реальных метрик ребёнка в `RewardsMetrics`.
+    ///
+    /// Поля `title` и `hint` содержат готовые русские строки — они НЕ строятся
+    /// динамически из ключей локализации, поэтому карточки никогда не покажут
+    /// сырой ключ вида `rewards.achievement.first_session.title`.
     static let achievementDefinitions: [AchievementDefinition] = [
         // Первые шаги (Bronze)
-        .init("first_session",       "party.popper.fill", .bronze,  1),
-        .init("first_perfect",       "reward_gold_star",  .bronze,  1),
-        .init("five_sessions",       "textformat.123",    .bronze,  5),
-        .init("ten_words",           "square.and.pencil", .bronze, 10),
-        .init("first_sticker",       "tag.fill",          .bronze,  1),
+        .init("first_session",       "party.popper.fill", .bronze,  1,
+              String(localized: "rewards.achievement.first_session.title",       defaultValue: "Первый урок"),
+              String(localized: "rewards.achievement.first_session.hint",        defaultValue: "Проведи своё первое занятие")),
+        .init("first_perfect",       "reward_gold_star",  .bronze,  1,
+              String(localized: "rewards.achievement.first_perfect.title",       defaultValue: "Отличный результат"),
+              String(localized: "rewards.achievement.first_perfect.hint",        defaultValue: "Получи 100% за урок")),
+        .init("five_sessions",       "textformat.123",    .bronze,  5,
+              String(localized: "rewards.achievement.five_sessions.title",       defaultValue: "Пять занятий"),
+              String(localized: "rewards.achievement.five_sessions.hint",        defaultValue: "Проведи 5 занятий")),
+        .init("ten_words",           "square.and.pencil", .bronze, 10,
+              String(localized: "rewards.achievement.ten_words.title",           defaultValue: "Десять слов"),
+              String(localized: "rewards.achievement.ten_words.hint",            defaultValue: "Выучи 10 новых слов")),
+        .init("first_sticker",       "tag.fill",          .bronze,  1,
+              String(localized: "rewards.achievement.first_sticker.title",       defaultValue: "Первый стикер"),
+              String(localized: "rewards.achievement.first_sticker.hint",        defaultValue: "Разблокируй свой первый стикер")),
         // Звуки (Bronze / Silver)
-        .init("sound_s_mastered",    "ant.fill",          .silver, 20),
-        .init("sound_r_mastered",    "music.note",        .silver, 20),
-        .init("sound_sh_mastered",   "water.waves",       .silver, 20),
-        .init("sound_l_mastered",    "leaf.fill",         .silver, 20),
-        .init("sound_k_mastered",    "word_frog",         .bronze, 20),
+        .init("sound_s_mastered",    "ant.fill",          .silver, 20,
+              String(localized: "rewards.achievement.sound_s_mastered.title",    defaultValue: "Звук «С» освоен"),
+              String(localized: "rewards.achievement.sound_s_mastered.hint",     defaultValue: "Потренируй звук С 20 раз")),
+        .init("sound_r_mastered",    "music.note",        .silver, 20,
+              String(localized: "rewards.achievement.sound_r_mastered.title",    defaultValue: "Звук «Р» освоен"),
+              String(localized: "rewards.achievement.sound_r_mastered.hint",     defaultValue: "Потренируй звук Р 20 раз")),
+        .init("sound_sh_mastered",   "water.waves",       .silver, 20,
+              String(localized: "rewards.achievement.sound_sh_mastered.title",   defaultValue: "Звук «Ш» освоен"),
+              String(localized: "rewards.achievement.sound_sh_mastered.hint",    defaultValue: "Потренируй звук Ш 20 раз")),
+        .init("sound_l_mastered",    "leaf.fill",         .silver, 20,
+              String(localized: "rewards.achievement.sound_l_mastered.title",    defaultValue: "Звук «Л» освоен"),
+              String(localized: "rewards.achievement.sound_l_mastered.hint",     defaultValue: "Потренируй звук Л 20 раз")),
+        .init("sound_k_mastered",    "word_frog",         .bronze, 20,
+              String(localized: "rewards.achievement.sound_k_mastered.title",    defaultValue: "Звук «К» освоен"),
+              String(localized: "rewards.achievement.sound_k_mastered.hint",     defaultValue: "Потренируй звук К 20 раз")),
         // Серии (Silver)
-        .init("streak_3",            "flame.fill",        .bronze,  3),
-        .init("streak_7",            "sparkles",          .silver,  7),
-        .init("streak_14",           "sparkle",           .silver, 14),
-        .init("streak_30",           "trophy.fill",       .gold,   30),
+        .init("streak_3",            "flame.fill",        .bronze,  3,
+              String(localized: "rewards.achievement.streak_3.title",            defaultValue: "Серия 3 дня"),
+              String(localized: "rewards.achievement.streak_3.hint",             defaultValue: "Занимайся 3 дня подряд")),
+        .init("streak_7",            "sparkles",          .silver,  7,
+              String(localized: "rewards.achievement.streak_7.title",            defaultValue: "Серия неделя"),
+              String(localized: "rewards.achievement.streak_7.hint",             defaultValue: "Занимайся 7 дней подряд")),
+        .init("streak_14",           "sparkle",           .silver, 14,
+              String(localized: "rewards.achievement.streak_14.title",           defaultValue: "Серия 2 недели"),
+              String(localized: "rewards.achievement.streak_14.hint",            defaultValue: "Занимайся 14 дней подряд")),
+        .init("streak_30",           "trophy.fill",       .gold,   30,
+              String(localized: "rewards.achievement.streak_30.title",           defaultValue: "Серия месяц"),
+              String(localized: "rewards.achievement.streak_30.hint",            defaultValue: "Занимайся 30 дней подряд")),
         // Сессии (Silver / Gold)
-        .init("sessions_20",         "books.vertical.fill", .silver, 20),
-        .init("sessions_50",         "graduationcap.fill",  .gold,   50),
-        .init("sessions_100",        "crown.fill",        .gold,  100),
-        .init("minutes_60",          "timer",             .silver, 60),
-        .init("minutes_300",         "alarm.fill",        .gold,  300),
+        .init("sessions_20",         "books.vertical.fill", .silver, 20,
+              String(localized: "rewards.achievement.sessions_20.title",         defaultValue: "20 занятий"),
+              String(localized: "rewards.achievement.sessions_20.hint",          defaultValue: "Проведи 20 занятий")),
+        .init("sessions_50",         "graduationcap.fill",  .gold,   50,
+              String(localized: "rewards.achievement.sessions_50.title",         defaultValue: "50 занятий"),
+              String(localized: "rewards.achievement.sessions_50.hint",          defaultValue: "Проведи 50 занятий")),
+        .init("sessions_100",        "crown.fill",        .gold,  100,
+              String(localized: "rewards.achievement.sessions_100.title",        defaultValue: "100 занятий"),
+              String(localized: "rewards.achievement.sessions_100.hint",         defaultValue: "Проведи 100 занятий")),
+        .init("minutes_60",          "timer",             .silver, 60,
+              String(localized: "rewards.achievement.minutes_60.title",          defaultValue: "Час практики"),
+              String(localized: "rewards.achievement.minutes_60.hint",           defaultValue: "Набери 60 минут занятий")),
+        .init("minutes_300",         "alarm.fill",        .gold,  300,
+              String(localized: "rewards.achievement.minutes_300.title",         defaultValue: "5 часов практики"),
+              String(localized: "rewards.achievement.minutes_300.hint",          defaultValue: "Набери 300 минут занятий")),
         // Коллекции (Silver / Gold)
-        .init("collection_animals",  "pawprint.fill",     .silver, 12),
-        .init("collection_space",    "reward_rocket",     .silver, 12),
-        .init("collection_forest",   "word_forest",       .silver, 12),
-        .init("collection_ocean",    "water.waves",       .silver, 12),
-        .init("collection_halloween", "seasonal_halloween_full_moon", .gold, 12),
-        .init("collection_newyear",  "sparkles",          .gold,   12),
+        .init("collection_animals",  "pawprint.fill",     .silver, 12,
+              String(localized: "rewards.achievement.collection_animals.title",  defaultValue: "Коллекция животные"),
+              String(localized: "rewards.achievement.collection_animals.hint",   defaultValue: "Собери 12 стикеров животных")),
+        .init("collection_space",    "reward_rocket",     .silver, 12,
+              String(localized: "rewards.achievement.collection_space.title",    defaultValue: "Коллекция космос"),
+              String(localized: "rewards.achievement.collection_space.hint",     defaultValue: "Собери 12 космических стикеров")),
+        .init("collection_forest",   "word_forest",       .silver, 12,
+              String(localized: "rewards.achievement.collection_forest.title",   defaultValue: "Коллекция лес"),
+              String(localized: "rewards.achievement.collection_forest.hint",    defaultValue: "Собери 12 лесных стикеров")),
+        .init("collection_ocean",    "water.waves",       .silver, 12,
+              String(localized: "rewards.achievement.collection_ocean.title",    defaultValue: "Коллекция океан"),
+              String(localized: "rewards.achievement.collection_ocean.hint",     defaultValue: "Собери 12 океанских стикеров")),
+        .init("collection_halloween", "seasonal_halloween_full_moon", .gold, 12,
+              String(localized: "rewards.achievement.collection_halloween.title", defaultValue: "Коллекция Хэллоуин"),
+              String(localized: "rewards.achievement.collection_halloween.hint",  defaultValue: "Собери 12 хэллоуинских стикеров")),
+        .init("collection_newyear",  "sparkles",          .gold,   12,
+              String(localized: "rewards.achievement.collection_newyear.title",  defaultValue: "Коллекция Новый год"),
+              String(localized: "rewards.achievement.collection_newyear.hint",   defaultValue: "Собери 12 новогодних стикеров")),
         // Качество (Gold)
-        .init("perfect_10_row",      "reward_diamond",    .gold,   10),
-        .init("accuracy_90",         "target",            .gold,  100),
-        .init("all_sounds",          "music.note",        .gold,    4),
+        .init("perfect_10_row",      "reward_diamond",    .gold,   10,
+              String(localized: "rewards.achievement.perfect_10_row.title",      defaultValue: "10 идеальных ответов"),
+              String(localized: "rewards.achievement.perfect_10_row.hint",       defaultValue: "Дай 10 правильных ответов подряд")),
+        .init("accuracy_90",         "target",            .gold,  100,
+              String(localized: "rewards.achievement.accuracy_90.title",         defaultValue: "Точность 90%"),
+              String(localized: "rewards.achievement.accuracy_90.hint",          defaultValue: "Достигни точности 90% за 100 упражнений")),
+        .init("all_sounds",          "music.note",        .gold,    4,
+              String(localized: "rewards.achievement.all_sounds.title",          defaultValue: "Все звуки"),
+              String(localized: "rewards.achievement.all_sounds.hint",           defaultValue: "Освой 4 группы звуков")),
         // Редкие находки (Gold)
-        .init("rare_sticker",        "sparkles",          .gold,    1),
-        .init("epic_sticker",        "sparkles",          .gold,    1),
-        .init("legendary_sticker",   "reward_rainbow",    .gold,    1),
-        .init("all_collections",     "medal.fill",        .gold,    6)
+        .init("rare_sticker",        "sparkles",          .gold,    1,
+              String(localized: "rewards.achievement.rare_sticker.title",        defaultValue: "Редкий стикер"),
+              String(localized: "rewards.achievement.rare_sticker.hint",         defaultValue: "Разблокируй редкий стикер")),
+        .init("epic_sticker",        "sparkles",          .gold,    1,
+              String(localized: "rewards.achievement.epic_sticker.title",        defaultValue: "Эпический стикер"),
+              String(localized: "rewards.achievement.epic_sticker.hint",         defaultValue: "Разблокируй эпический стикер")),
+        .init("legendary_sticker",   "reward_rainbow",    .gold,    1,
+              String(localized: "rewards.achievement.legendary_sticker.title",   defaultValue: "Легендарный стикер"),
+              String(localized: "rewards.achievement.legendary_sticker.hint",    defaultValue: "Разблокируй легендарный стикер")),
+        .init("all_collections",     "medal.fill",        .gold,    6,
+              String(localized: "rewards.achievement.all_collections.title",     defaultValue: "Все коллекции"),
+              String(localized: "rewards.achievement.all_collections.hint",      defaultValue: "Собери все 6 коллекций стикеров"))
     ]
 
     /// Каталог достижений с нулевым прогрессом и заблокированным состоянием —
     /// используется для пустого альбома (нет ребёнка / нет данных).
+    ///
+    /// Используем `def.title` / `def.hint` напрямую — они уже содержат
+    /// готовые русские строки с Russian fallback и НИКОГДА не покажут сырой ключ.
     static func lockedAchievements() -> [RewardsAchievement] {
         achievementDefinitions.map { def in
             RewardsAchievement(
                 id: def.key,
                 key: def.key,
                 emoji: def.emoji,
-                title: String(localized: String.LocalizationValue("rewards.achievement.\(def.key).title")),
-                hint: String(localized: String.LocalizationValue("rewards.achievement.\(def.key).hint")),
+                title: def.title,
+                hint: def.hint,
                 medal: def.medal,
                 requiredProgress: def.required,
                 currentProgress: 0,

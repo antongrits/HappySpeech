@@ -12,11 +12,16 @@ import OSLog
 ///
 /// ## Что прогревается
 /// - ``PronunciationScorerService`` — `loadModel()` (Conv1D, 0.18 MB на группу звуков).
-/// - ``ASRService`` — `loadModel(tier: .kidOnDevice)` (whisper-tiny, безопасный bundle path).
-/// - VAD — фабрика `makeVAD(preferFluidAudio:)` пробует поднять реальный Silero v6
-///   на ANE через FluidAudio (`FluidAudioVADService`); при недоступности модели мягко
-///   падает в `AmplitudeVAD`. Прогрев инициализирует CoreML runtime и (при первом старте
-///   с сетью) кэширует модель Silero v6 локально для последующей offline-работы.
+/// - ``ASRService`` — `loadModel(tier: .kidOnDevice)` грузит **bundled whisper-base**
+///   из `Resources/Models/Whisper/whisper-base/` по локальному пути (полностью offline,
+///   без сетевой загрузки с HuggingFace).
+/// - VAD — фабрика `makeVAD(preferFluidAudio:)` пробует поднять Silero v6 на ANE через
+///   FluidAudio (`FluidAudioVADService`). **Важно:** FluidAudio скачивает CoreML-модель
+///   Silero v6 с HuggingFace при первом запуске (offline-старт без кэша → инициализация
+///   падает), поэтому фабрика мягко откатывается на детерминированный `AmplitudeVAD`
+///   (адаптивный амплитудный детектор, ~88–92% на чистой речи, без модели и без сети).
+///   `AmplitudeVAD` — фактический offline-first путь VAD; Silero v6 — апгрейд при наличии
+///   кэша/сети. Прогрев инициализирует CoreML runtime.
 ///
 /// Все три задачи выполняются параллельно через `async let`. Ошибки логируются
 /// и проглатываются — warm-up не блокирует онбординг.
@@ -100,8 +105,9 @@ public actor LiveMLModelWarmupService: MLModelWarmupServiceProtocol {
 
     private func warmASR() async {
         do {
-            // Kid tier (whisper-tiny) — самый лёгкий путь для онбординга.
-            // parentQuality и specialistQuality прогреваются on-demand в их экранах.
+            // Kid tier грузит bundled whisper-base (offline, лёгкая on-device модель) —
+            // самый лёгкий путь для онбординга. specialistQuality (whisper-small)
+            // прогревается on-demand в экране специалиста.
             try await asr.loadModel(tier: .kidOnDevice)
             HSLogger.ml.info("MLModelWarmupService: ASR (kid tier) warm")
         } catch {
@@ -112,10 +118,11 @@ public actor LiveMLModelWarmupService: MLModelWarmupServiceProtocol {
     }
 
     private func warmVAD() async {
-        // Пробуем поднять реальный Silero v6 (FluidAudio, ANE). При недоступности модели
-        // фабрика сама откатится на AmplitudeVAD — warm-up не падает. Возвращаемый instance
-        // отбрасываем; цель warm-up — инициализировать CoreML runtime и (при первом старте
-        // с сетью) скэшировать модель локально для offline-работы.
+        // Пробуем поднять Silero v6 (FluidAudio, ANE). FluidAudio скачивает модель с
+        // HuggingFace при первом запуске; без кэша/сети инициализация падает и фабрика
+        // мягко откатывается на детерминированный AmplitudeVAD (offline-first путь) —
+        // warm-up не падает. Возвращаемый instance отбрасываем; цель warm-up —
+        // инициализировать CoreML runtime.
         let vad = await makeVAD(preferFluidAudio: true)
         HSLogger.ml.info("MLModelWarmupService: VAD warm (\(String(describing: type(of: vad))))")
     }

@@ -116,7 +116,8 @@ public extension WhisperAdaptiveSelector {
     ///
     /// - `.base`  → `ASRTier.parentQuality` (bundled whisper-base).
     /// - `.small` → `ASRTier.specialistQuality` (bundled whisper-small).
-    /// - `.tiny`  → `ASRTier.kidOnDevice` (whisper-tiny, on-demand).
+    /// - `.tiny`  → `ASRTier.kidOnDevice` (фактически грузит bundled whisper-base,
+    ///   offline — отдельной tiny-модели в bundle нет, сетевая загрузка запрещена).
     static func asrTier(for pack: WhisperKitModelPack) -> ASRTier {
         switch pack {
         case .tiny:  return .kidOnDevice

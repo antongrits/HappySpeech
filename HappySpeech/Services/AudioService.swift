@@ -20,16 +20,17 @@ public protocol AudioService: Sendable {
 // MARK: - ASRTier
 
 /// Уровни качества ASR — определены здесь (Services-слой) для использования
-/// в протоколе и реализации.
-/// Tier A — быстрый on-demand (whisper-tiny).
-/// Tier B — качественный bundled (whisper-base).
-/// Tier C — максимальный bundled (whisper-small), только для специалиста.
+/// в протоколе и реализации. Все модели — bundled, грузятся offline по локальному
+/// пути (без сетевой загрузки с HuggingFace).
+/// Tier A — лёгкий on-device (bundled whisper-base).
+/// Tier B — качественный (bundled whisper-base).
+/// Tier C — максимальный (bundled whisper-small), только для специалиста.
 public enum ASRTier: String, Sendable, CaseIterable {
-    /// Tier A: whisper-tiny — быстрый, загружается on-demand (~150 MB).
+    /// Tier A: bundled whisper-base — лёгкая on-device модель (~140 MB), offline.
     case kidOnDevice
-    /// Tier B: whisper-base bundled в bundle приложения (~140 MB).
+    /// Tier B: bundled whisper-base (~140 MB), offline.
     case parentQuality
-    /// Tier C: whisper-small bundled в bundle приложения (~460 MB).
+    /// Tier C: bundled whisper-small (~460 MB), offline, только для специалиста.
     case specialistQuality
 
     public var displayName: String {
@@ -87,8 +88,8 @@ public extension ASRService {
     /// - Параметры:
     ///   - age: возраст ребёнка (полные годы).
     /// - Замечание: вызывается ТОЛЬКО из parent/specialist контекста. Детский
-    ///   контур всегда использует ``ASRTier/kidOnDevice`` (whisper-tiny) для
-    ///   COPPA-совместимости — см. ``MLModelWarmupService``.
+    ///   контур всегда использует ``ASRTier/kidOnDevice`` (bundled whisper-base,
+    ///   offline) для COPPA-совместимости — см. ``MLModelWarmupService``.
     func loadModelAdaptive(age: Int) async throws {
         let deviceTier = WhisperAdaptiveSelector.currentDeviceTier()
         let pack = WhisperAdaptiveSelector.selectAndLog(age: age, deviceTier: deviceTier)

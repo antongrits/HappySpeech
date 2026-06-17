@@ -75,6 +75,10 @@ struct ChildHomeView: View {
         ZStack {
             kidBackground
 
+            if viewModel.isLoading {
+                childHomeSkeletonView
+            }
+
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp5) {
                     heroSection
@@ -187,6 +191,12 @@ struct ChildHomeView: View {
             .hsMascotRefresh {
                 await interactor?.refreshData(childId: childId)
             }
+            // Скрываем пустой контент во время cold-start загрузки:
+            // скелетон (childHomeSkeletonView) накладывается поверх, пока
+            // isLoading == true, и реальный контент не мелькает через него.
+            .opacity(viewModel.isLoading ? 0 : 1)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3),
+                       value: viewModel.isLoading)
 
             parentButton
                 .spotlightAnchor(key: "parent_dashboard")
@@ -218,7 +228,6 @@ struct ChildHomeView: View {
             await interactor?.fetchChildData(.init(childId: childId))
         }
         .environment(\.circuitContext, .kid)
-        .loadingOverlay(viewModel.isLoading)
         .alert(
             String(localized: "child.home.sos.alert_title"),
             isPresented: $showSOSAlert
@@ -252,6 +261,43 @@ struct ChildHomeView: View {
                 .environment(container)
                 .presentationDetents([.large])
         }
+    }
+
+    // MARK: - Skeleton (cold-launch placeholder)
+    //
+    // Показывается вместо пустого экрана в первые 3-4 секунды холодного запуска
+    // (пока Realm + Firebase инициализируются). Заменяет блокирующий dimmed
+    // ProgressView из `.loadingOverlay(viewModel.isLoading)`.
+    // HSSkeletonCard + shimmer — стандарт DesignSystem (Block O).
+
+    private var childHomeSkeletonView: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.sp4) {
+                // Hero placeholder
+                HSSkeletonCard()
+                    .frame(height: 80)
+
+                // Mission card placeholder
+                HSSkeletonCard()
+                    .frame(height: 100)
+
+                // Quick play strip placeholder
+                HSSkeletonCard()
+                    .frame(height: 80)
+
+                // Три строки контента
+                HSSkeletonCard()
+                HSSkeletonCard()
+                HSSkeletonCard()
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp5)
+        }
+        .hsShimmer(active: true)
+        .accessibilityLabel(String(localized: "general.loading", defaultValue: "Загрузка…"))
+        .accessibilityHidden(true)
+        .allowsHitTesting(false)
+        .transition(.opacity)
     }
 
     // MARK: - Wiring (Clean Swift bootstrap)

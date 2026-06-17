@@ -6,14 +6,22 @@ import WhisperKit
 
 /// WhisperKit-based ASR service.
 ///
-/// Fallback chain:
-///   1. Bundled whisper-small (Resources/Models/Whisper/whisper-small) — Tier C (specialist)
-///   2. Bundled whisper-base (Resources/Models/Whisper/whisper-base) — Tier B (parent)
-///   3. Downloaded whisper-tiny — Tier A (kid)
-///   4. Throws AppError.asrModelNotLoaded
+/// **Полностью offline-first.** Все модели загружаются из bundle приложения
+/// (`Resources/Models/Whisper/`) по локальному пути через `WhisperKitConfig.modelFolder`
+/// — никаких сетевых загрузок с HuggingFace. В bundle присутствуют:
+///   - `whisper-base` (~140 MB) — лёгкая on-device модель;
+///   - `whisper-small` (~460 MB) — максимальное качество для специалиста.
+///
+/// Tier → bundled-модель:
+///   - `.kidOnDevice`       → whisper-base (offline), fallback → whisper-small
+///   - `.parentQuality`     → whisper-base (offline), fallback → whisper-small
+///   - `.specialistQuality` → whisper-small (offline), fallback → whisper-base
+///
+/// Если ни одна bundled-модель недоступна — бросается `AppError.asrModelNotLoaded`
+/// (сеть НЕ задействуется ни на одном пути).
 ///
 /// `loadModel(tier:)` пытается загрузить указанный tier, автоматически
-/// откатываясь к следующему доступному при ошибке.
+/// откатываясь к другой bundled-модели при ошибке.
 public final class LiveASRService: ASRService, @unchecked Sendable {
 
     // MARK: - State
@@ -129,37 +137,44 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         }
     }
 
-    /// Реальная загрузка с fallback-цепочкой. Вызывается строго внутри одной
-    /// дедуплицированной `loadTask`, поэтому рекурсивный fallback (parentQuality →
-    /// kidOnDevice) безопасен и не пытается взять `loadLock` повторно.
+    /// Реальная загрузка bundled-модели с fallback на другую bundled-модель.
+    /// Вызывается строго внутри одной дедуплицированной `loadTask`, поэтому не
+    /// пытается взять `loadLock` повторно. Сеть не задействуется ни на одной ветке.
     private func performLoad(tier: ASRTier) async throws {
         HSLogger.asr.info("ASRService: loading tier=\(tier.rawValue)")
 
         switch tier {
         case .specialistQuality:
+            // Tier C: максимальное качество — whisper-small, fallback на base.
             if await tryLoadBundledSmall() {
                 _activeTier = .specialistQuality
                 return
             }
-            HSLogger.asr.warning("ASRService: bundled whisper-small unavailable, falling back to parentQuality")
-            try await performLoad(tier: .parentQuality)
-
-        case .parentQuality:
+            HSLogger.asr.warning("ASRService: bundled whisper-small unavailable, falling back to bundled whisper-base")
             if await tryLoadBundledBase() {
                 _activeTier = .parentQuality
                 return
             }
-            HSLogger.asr.warning("ASRService: bundled whisper-base unavailable, falling back to tiny")
-            try await loadTiny()
-            _activeTier = .kidOnDevice
+            throw AppError.asrModelNotLoaded
 
-        case .kidOnDevice:
-            try await loadTiny()
-            _activeTier = .kidOnDevice
+        case .parentQuality, .kidOnDevice:
+            // Tier A/B: лёгкая on-device модель whisper-base (offline), fallback на small.
+            // whisper-tiny НЕ используется — его нет в bundle, а сетевая загрузка с
+            // HuggingFace нарушила бы offline-first.
+            if await tryLoadBundledBase() {
+                _activeTier = tier
+                return
+            }
+            HSLogger.asr.warning("ASRService: bundled whisper-base unavailable, falling back to bundled whisper-small")
+            if await tryLoadBundledSmall() {
+                _activeTier = .specialistQuality
+                return
+            }
+            throw AppError.asrModelNotLoaded
         }
     }
 
-    /// Устаревший вход (обратная совместимость) — загружает Tier A (tiny).
+    /// Устаревший вход (обратная совместимость) — загружает on-device whisper-base.
     public func loadModel() async throws {
         try await loadModel(tier: .parentQuality)
     }
@@ -184,6 +199,13 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     ///    `logProbThreshold`, `noSpeechThreshold`, чтобы короткие/искажённые
     ///    детские произнесения не отбрасывались как «не речь».
     public func transcribe(url: URL, expectedWord: String?, childAge: Int?) async throws -> ASRResult {
+        // Ленивая загрузка: если модель ещё не готова (warm-up не отработал или был
+        // пропущен), грузим bundled-модель текущего tier перед транскрипцией вместо
+        // отказа. `loadModel(tier:)` дедуплицирован (loadLock/loadTask) — конкурентные
+        // вызовы из разных экранов ждут одну загрузку, второй WhisperKit не создаётся.
+        if !_isReady {
+            try await loadModel(tier: _activeTier)
+        }
         guard let whisper, _isReady else {
             throw AppError.asrModelNotLoaded
         }
@@ -296,13 +318,5 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
             HSLogger.asr.error("ASRService: bundled whisper-base load failed: \(error.localizedDescription)")
             return false
         }
-    }
-
-    private func loadTiny() async throws {
-        HSLogger.asr.info("ASRService: loading whisper-tiny (on-demand)")
-        let kit = try await WhisperKit(model: "openai/whisper-tiny", verbose: false)
-        whisper = kit
-        _isReady = true
-        HSLogger.asr.info("ASRService: whisper-tiny ready — Tier A")
     }
 }

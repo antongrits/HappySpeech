@@ -209,8 +209,8 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
 
     public func warmUp(tier: EnsembleASRDetailTier) async {
         if tier == .b {
-            // Tier B — родительский/специалистский контур: прогреваем модель
-            // полной точности (.parentQuality), а не kid-tier whisper-tiny.
+            // Tier B — родительский/специалистский контур: прогреваем bundled
+            // whisper-base (.parentQuality), offline-загрузка из bundle.
             try? await whisperASR.loadModel(tier: .parentQuality)
         }
         logger.debug("EnsembleASR: warmUp завершён, tier=\(tier.rawValue)")
