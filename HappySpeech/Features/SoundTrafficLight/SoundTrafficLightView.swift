@@ -331,7 +331,7 @@ struct SoundTrafficLightView: View {
                 }
                 garageButton(
                     label: startVM.garageBLabel,
-                    tint: ColorTokens.Brand.lilac,
+                    tint: ColorTokens.Brand.rose,
                     symbol: "tray.full.fill"
                 ) {
                     Task { await sort(pickedGarageA: false) }
@@ -371,7 +371,7 @@ struct SoundTrafficLightView: View {
             // Легенда: какой звук какой краской подсвечен.
             HStack(spacing: SpacingTokens.sp4) {
                 legendChip(label: startVM.garageALabel, color: ColorTokens.Brand.primary)
-                legendChip(label: startVM.garageBLabel, color: ColorTokens.Brand.lilac)
+                legendChip(label: startVM.garageBLabel, color: ColorTokens.Brand.rose)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
 
@@ -391,7 +391,7 @@ struct SoundTrafficLightView: View {
                     }
                     garageButton(
                         label: startVM.garageBLabel,
-                        tint: ColorTokens.Brand.lilac,
+                        tint: ColorTokens.Brand.rose,
                         symbol: "speaker.wave.2.fill"
                     ) {
                         Task { await choosePhrase(side: .soundB) }
@@ -487,7 +487,7 @@ struct SoundTrafficLightView: View {
                     )
                     counterRow(
                         label: startVM.garageBLabel,
-                        color: ColorTokens.Brand.lilac,
+                        color: ColorTokens.Brand.rose,
                         value: $countB,
                         maxValue: text.maxCount
                     )
@@ -739,7 +739,7 @@ private struct PhraseTokensFlow: View {
             // Слово-носитель обоих звуков — двухцветная заливка.
             Capsule().fill(
                 LinearGradient(
-                    colors: [ColorTokens.Brand.primary, ColorTokens.Brand.lilac],
+                    colors: [ColorTokens.Brand.primary, ColorTokens.Brand.rose],
                     startPoint: .leading,
                     endPoint: .trailing
                 )
@@ -747,7 +747,7 @@ private struct PhraseTokensFlow: View {
         } else if token.containsA {
             Capsule().fill(ColorTokens.Brand.primary)
         } else if token.containsB {
-            Capsule().fill(ColorTokens.Brand.lilac)
+            Capsule().fill(ColorTokens.Brand.rose)
         } else {
             Capsule().fill(Color.clear)
         }
@@ -899,7 +899,7 @@ struct SoundTrafficLightLevelPreview: View {
                     .foregroundStyle(ColorTokens.Kid.ink)
                 HStack(spacing: SpacingTokens.sp3) {
                     garageChip(viewModel.garageALabel, ColorTokens.Brand.primary)
-                    garageChip(viewModel.garageBLabel, ColorTokens.Brand.lilac)
+                    garageChip(viewModel.garageBLabel, ColorTokens.Brand.rose)
                 }
             }
         case .phrase:
@@ -910,7 +910,7 @@ struct SoundTrafficLightLevelPreview: View {
                     .multilineTextAlignment(.center)
                 HStack(spacing: SpacingTokens.sp3) {
                     garageChip(viewModel.garageALabel, ColorTokens.Brand.primary)
-                    garageChip(viewModel.garageBLabel, ColorTokens.Brand.lilac)
+                    garageChip(viewModel.garageBLabel, ColorTokens.Brand.rose)
                 }
             }
         case .text:

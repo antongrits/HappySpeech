@@ -154,27 +154,152 @@ struct BedtimeModeView: View {
         _ startVM: BedtimeModeModels.Start.ViewModel
     ) -> some View {
         HSLiquidGlassCard(style: .elevated) {
-            VStack(spacing: SpacingTokens.sp4) {
-                Image(systemName: "moon.stars.fill")
-                    .font(.system(size: 64))
-                    .foregroundStyle(Color.white.opacity(0.85))
-                    .hsSymbolEffect(.variableColor, value: holder.currentStage)
-                    .accessibilityHidden(true)
-                Text(startVM.introMessage)
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(Color.white)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.8)
+            VStack(spacing: SpacingTokens.sp5) {
+                introHero
+
+                VStack(spacing: SpacingTokens.sp3) {
+                    Text("bedtime.intro.kicker")
+                        .font(TypographyTokens.caption(12).weight(.bold))
+                        .tracking(1.4)
+                        .foregroundStyle(Color.white.opacity(0.55))
+                    Text(startVM.introMessage)
+                        .font(TypographyTokens.title(24))
+                        .foregroundStyle(Color.white)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.8)
+                }
+
+                introStepsPreview
+
                 Text(startVM.storiesCountLabel)
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(Color.white.opacity(0.7))
+
                 primaryButton(title: String(localized: "bedtime.intro.cta")) {
                     Task { await advance() }
                 }
             }
+            .padding(.vertical, SpacingTokens.sp3)
             .frame(maxWidth: .infinity)
         }
+    }
+
+    /// Декоративный «ночной» hero — крупная луна с мягкими мерцающими звёздами.
+    /// Заполняет верх intro-карточки, чтобы экран входа в режим сна не выглядел
+    /// полупустым «парящим» баннером на высоких устройствах.
+    private var introHero: some View {
+        ZStack {
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            Color.white.opacity(0.22),
+                            Color.white.opacity(0.04)
+                        ],
+                        center: .center,
+                        startRadius: 4,
+                        endRadius: 92
+                    )
+                )
+                .frame(width: 172, height: 172)
+                .accessibilityHidden(true)
+
+            ForEach(introStarLayout, id: \.id) { star in
+                Image(systemName: "sparkle")
+                    .font(.system(size: star.size))
+                    .foregroundStyle(Color.white.opacity(star.opacity))
+                    .offset(x: star.x, y: star.y)
+                    .hsSymbolEffect(.variableColor, value: holder.currentStage)
+                    .accessibilityHidden(true)
+            }
+
+            Image(systemName: "moon.stars.fill")
+                .font(.system(size: 72))
+                .foregroundStyle(Color.white.opacity(0.92))
+                .hsSymbolEffect(.variableColor, value: holder.currentStage)
+                .accessibilityHidden(true)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 176)
+    }
+
+    private struct IntroStar: Identifiable {
+        let id: Int
+        let x: CGFloat
+        let y: CGFloat
+        let size: CGFloat
+        let opacity: Double
+    }
+
+    private var introStarLayout: [IntroStar] {
+        [
+            IntroStar(id: 0, x: -78, y: -54, size: 14, opacity: 0.7),
+            IntroStar(id: 1, x: 84, y: -40, size: 11, opacity: 0.55),
+            IntroStar(id: 2, x: 70, y: 56, size: 16, opacity: 0.6),
+            IntroStar(id: 3, x: -88, y: 44, size: 10, opacity: 0.45),
+            IntroStar(id: 4, x: -36, y: -82, size: 9, opacity: 0.5)
+        ]
+    }
+
+    /// Превью двух шагов вечернего ритуала (дыхание → сказка) — даёт ребёнку
+    /// понять, что будет дальше, и наполняет intro-карточку осмысленным
+    /// содержанием вместо пустоты.
+    private var introStepsPreview: some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            introStepRow(
+                icon: "wind",
+                title: String(localized: "bedtime.intro.step.breathing"),
+                subtitle: String(localized: "bedtime.intro.step.breathing.sub")
+            )
+            introStepRow(
+                icon: "book.closed.fill",
+                title: String(localized: "bedtime.intro.step.story"),
+                subtitle: String(localized: "bedtime.intro.step.story.sub")
+            )
+        }
+    }
+
+    private func introStepRow(icon: String, title: String, subtitle: String) -> some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: icon)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(Color.white.opacity(0.92))
+                .frame(width: 44, height: 44)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color.white.opacity(0.12))
+                )
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(Color.white)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(subtitle)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(Color.white.opacity(0.7))
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, SpacingTokens.sp3)
+        .padding(.vertical, SpacingTokens.sp2)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color.white.opacity(0.06))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .strokeBorder(Color.white.opacity(0.10), lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("\(title). \(subtitle)"))
     }
 
     // MARK: - Breathing

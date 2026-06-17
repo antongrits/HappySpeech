@@ -86,11 +86,13 @@ struct AchievementCardView: View {
         RoundedRectangle(cornerRadius: RadiusTokens.card)
             .fill(item.isUnlocked
                 ? rarityColor.opacity(0.07)
-                : Color(.systemFill).opacity(0.4))
+                : ColorTokens.Kid.surface)
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .strokeBorder(
-                        item.isUnlocked ? rarityColor.opacity(0.25) : Color.clear,
+                        item.isUnlocked
+                            ? rarityColor.opacity(0.25)
+                            : ColorTokens.Kid.line,
                         lineWidth: 1
                     )
             )

@@ -189,7 +189,9 @@ struct PronunciationLeaderboardView: View {
                     listHeader
                 }
                 listSection
+                    .zIndex(1)
                 encouragingFooter
+                    .zIndex(0)
             }
 
         case .error(let message):

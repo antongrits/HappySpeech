@@ -9433,6 +9433,61 @@
         }
       }
     },
+    "bedtime.intro.kicker": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ВРЕМЯ КО СНУ"
+          }
+        }
+      }
+    },
+    "bedtime.intro.step.breathing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойное дыхание"
+          }
+        }
+      }
+    },
+    "bedtime.intro.step.breathing.sub": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Несколько медленных вдохов вместе с Лялей"
+          }
+        }
+      }
+    },
+    "bedtime.intro.step.story": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добрая сказка"
+          }
+        }
+      }
+    },
+    "bedtime.intro.step.story.sub": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушаем тихую историю на ночь"
+          }
+        }
+      }
+    },
     "bedtime.library.count": {
       "extractionState": "manual",
       "localizations": {

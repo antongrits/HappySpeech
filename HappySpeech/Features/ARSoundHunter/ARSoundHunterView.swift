@@ -72,6 +72,12 @@ struct ARSoundHunterView: View {
                 photoCardsGrid
                 if let feedback = display.distractorFeedback {
                     distractorFeedbackBanner(feedback)
+                } else {
+                    // Гид-подсказка под сеткой: наполняет нижнюю часть экрана
+                    // осмысленным содержанием (в фоллбэк-режиме фото-карточек
+                    // их всего 4 → без подсказки низ оставался пустым) и явно
+                    // направляет ребёнка нажать карточку, чтобы назвать предмет.
+                    huntGuideHint
                 }
             }
             if display.phase == .prompting || display.phase == .recording {
@@ -209,6 +215,29 @@ struct ARSoundHunterView: View {
         .frame(maxWidth: .infinity)
         .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
         .accessibilityElement(children: .combine)
+    }
+
+    /// Гид-подсказка под сеткой фото-карточек (фоллбэк-режим). Маскот Ляля
+    /// + дружелюбная инструкция «Выбери предмет, чтобы назвать его» —
+    /// наполняет нижнюю зону экрана и помогает ребёнку понять, что делать.
+    private var huntGuideHint: some View {
+        HStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: reduceMotion ? .idle : .pointing, size: 52)
+                .accessibilityHidden(true)
+            Text("arSoundHunter.card.hint")
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.small)
+        .frame(maxWidth: .infinity)
+        .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("arSoundHunter.card.hint"))
     }
 
     // MARK: - Name-it panel (record voice)
