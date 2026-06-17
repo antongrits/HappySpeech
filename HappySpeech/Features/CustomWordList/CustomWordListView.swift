@@ -113,7 +113,7 @@ struct CustomWordListView: View {
                 }
             }
             .navigationTitle(Text("customWordList.screen.title"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -225,7 +225,7 @@ struct CustomWordListView: View {
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
             }
         }
-        .padding(.vertical, SpacingTokens.sp1)
+        .padding(.vertical, SpacingTokens.sp2)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(row.accessibilityLabel))
     }
@@ -233,7 +233,7 @@ struct CustomWordListView: View {
     // MARK: - Empty
 
     private var emptyState: some View {
-        HSLiquidGlassCard(style: .elevated) {
+        HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "list.bullet.rectangle.fill")
                     .font(.system(size: 48))
@@ -243,6 +243,9 @@ struct CustomWordListView: View {
                 Text("customWordList.empty.title")
                     .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Spec.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                 Text("customWordList.empty.message")
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
@@ -252,15 +255,19 @@ struct CustomWordListView: View {
                     editingDraft = WordListDraft()
                 } label: {
                     Label(String(localized: "customWordList.new"), systemImage: "plus.circle.fill")
+                        .font(TypographyTokens.headline(15))
                         .padding(.horizontal, SpacingTokens.sp4)
                         .padding(.vertical, SpacingTokens.sp2)
                         .background(
                             Capsule().fill(ColorTokens.Spec.accent.opacity(0.18))
                         )
                         .foregroundStyle(ColorTokens.Spec.accent)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
                 .accessibilityIdentifier("customWordList.empty.newButton")
             }
+            .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }

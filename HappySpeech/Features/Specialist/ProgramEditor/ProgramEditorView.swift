@@ -140,48 +140,44 @@ struct ProgramEditorView: View {
     // MARK: - Subviews
 
     private var summary: some View {
-        HStack(spacing: SpacingTokens.small) {
-            LyalyaMascotView(state: isValid ? .happy : .thinking, size: 48)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "program.editor.duration"))
-                    .font(TypographyTokens.caption(12))
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            // Steps count + duration badge — mirrors reference "Шаги занятия · N шагов · M мин"
+            HStack(alignment: .center, spacing: SpacingTokens.sp2) {
+                Text(String(localized: "program.editor.steps.header"))
+                    .font(TypographyTokens.caption(12).weight(.semibold))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .textCase(.uppercase)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
-                HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp2) {
-                    Text("\(totalMinutes) " + String(localized: "program.editor.minutes"))
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(isValid ? ColorTokens.Spec.ink : ColorTokens.Semantic.error)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                Spacer(minLength: SpacingTokens.tiny)
+                // Steps · minutes pill — right-aligned, coral accent
+                HStack(spacing: SpacingTokens.sp1) {
                     Text(String(
                         format: String(localized: "program.editor.stepsCount %lld"),
                         blocks.count
                     ))
-                        .font(TypographyTokens.caption(12).weight(.semibold))
-                        .foregroundStyle(ColorTokens.Spec.accent)
-                        .padding(.horizontal, SpacingTokens.sp2)
-                        .padding(.vertical, 3)
-                        .background(
-                            Capsule().fill(ColorTokens.Spec.accent.opacity(0.14))
-                        )
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                    Text("·")
+                    Text("\(totalMinutes) " + String(localized: "program.editor.min"))
                 }
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Spec.accent)
+                .padding(.horizontal, SpacingTokens.sp3)
+                .padding(.vertical, SpacingTokens.sp1)
+                .background(Capsule().fill(ColorTokens.Spec.accent.opacity(0.12)))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
             }
-            Spacer(minLength: SpacingTokens.tiny)
+            // Validation hint — only when invalid
             if !isValid {
                 Text(String(localized: "program.editor.invalid"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Semantic.error)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
-                    .multilineTextAlignment(.trailing)
             }
         }
-        .padding(SpacingTokens.medium)
+        .padding(.horizontal, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.small)
     }
 
     /// Block list is always in `.active` edit mode so drag handles are visible
@@ -509,7 +505,7 @@ private struct ProgramBlockRow: View {
                     Capsule().fill(ColorTokens.Spec.accent.opacity(0.12))
                 )
         }
-        .padding(.vertical, SpacingTokens.sp1)
+        .padding(.vertical, SpacingTokens.sp3)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityDescription)
     }

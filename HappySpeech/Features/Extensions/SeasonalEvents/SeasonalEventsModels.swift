@@ -62,4 +62,37 @@ enum SeasonalEvent: String, CaseIterable, Sendable {
         case .easter:    return ColorTokens.Brand.mint
         }
     }
+
+    /// Максимальный день активного месяца, когда событие заканчивается.
+    var endDayOfMonth: Int {
+        switch self {
+        case .halloween: return 2  // 2 ноября
+        case .newYear:   return 20 // 20 января
+        case .easter:    return 30 // конец апреля
+        }
+    }
+
+    /// Конечная дата события (последний день в activeMonths.last).
+    func endDate(relativeTo date: Date = Date()) -> Date? {
+        let cal = Calendar.current
+        let year = cal.component(.year, from: date)
+        let endMonth = activeMonths.last ?? activeMonths[0]
+        var comps = DateComponents()
+        comps.year = year
+        comps.month = endMonth
+        comps.day = endDayOfMonth
+        comps.hour = 23
+        comps.minute = 59
+        return cal.date(from: comps)
+    }
+
+    /// Количество оставшихся дней до конца события (0 если последний день).
+    func daysRemaining(from date: Date = Date()) -> Int {
+        guard let end = endDate(relativeTo: date) else { return 0 }
+        let diff = Calendar.current.dateComponents([.day], from: date, to: end)
+        return max(0, diff.day ?? 0)
+    }
+
+    /// Цель по звёздным очкам события.
+    var starGoal: Int { 10 }
 }

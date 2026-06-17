@@ -12,17 +12,17 @@ import SwiftUI
 /// Верхняя session-bar над контентом занятия — перенос эталона
 /// `session-shell.html` (.sessionbar):
 ///
-///   [✕ выход] · [сегментированный прогресс + «шаг N из M»] · [⏱ mm:ss] · [⏸ пауза]
+///   [✕ выход] · [сегментированный прогресс + «шаг N из M»] · [⏱ mm:ss]
 ///
 /// Обёрнуто в `HSLiquidGlassCard(.primary)` (glass-подложка эталона). Прогресс —
 /// сегментированный (по одному сегменту на шаг, активный пульсирует), а не
 /// плоский linear, как в дизайне. Таймер использует `TimelineView` и считает
 /// живое время от `state.sessionStartReference`. Сердечки усталости вынесены из
 /// bar'а в отдельный fatigue-chip под ней (см. `SessionFatigueChip`).
+/// Кнопка паузы перенесена в `SessionFooterBar` (см. ниже) по эталону дизайна.
 struct SessionHUDView: View {
     let state: SessionShellState
     let onExitTap: () -> Void
-    let onPauseTap: () -> Void
 
     private var stepIndex: Int { min(state.currentIndex, max(state.totalSteps - 1, 0)) }
     private var totalSteps: Int { max(state.totalSteps, 1) }
@@ -34,7 +34,6 @@ struct SessionHUDView: View {
                 progressBlock
                     .frame(maxWidth: .infinity)
                 timerBlock
-                pauseButton
             }
         }
         .accessibilityElement(children: .contain)
@@ -47,10 +46,11 @@ struct SessionHUDView: View {
             Image(systemName: "xmark")
                 .font(TypographyTokens.body(16).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .frame(width: 40, height: 40)
+                .frame(width: 46, height: 46)
                 .background(ColorTokens.Kid.surface, in: Circle())
                 .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
                 .contentShape(Circle())
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 2)
                 .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
@@ -63,12 +63,12 @@ struct SessionHUDView: View {
 
     private var progressBlock: some View {
         VStack(spacing: SpacingTokens.tiny) {
-            HStack(spacing: 4) {
+            HStack(spacing: 6) {
                 ForEach(0..<totalSteps, id: \.self) { idx in
                     Capsule(style: .continuous)
                         .fill(segmentColor(idx))
                         .frame(height: 7)
-                        .overlay(activeRing(idx))
+                        .overlay(activeGlow(idx))
                 }
             }
             Text(String(
@@ -94,12 +94,12 @@ struct SessionHUDView: View {
     }
 
     @ViewBuilder
-    private func activeRing(_ idx: Int) -> some View {
+    private func activeGlow(_ idx: Int) -> some View {
         if idx == stepIndex {
-            // Статичное кольцо-акцент вокруг текущего сегмента (эталон .segs .now).
-            // Без анимации — стандинг-ордер: фон/HUD не «дышит».
+            // Glow-ring вокруг активного сегмента (эталон .segs .now pulseSeg).
+            // Статичная версия без анимации-«дыхания» (стандинг-ордер: фон не движется).
             Capsule(style: .continuous)
-                .strokeBorder(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 3)
+                .strokeBorder(ColorTokens.Brand.primary.opacity(0.32), lineWidth: 3)
         }
     }
 
@@ -108,16 +108,16 @@ struct SessionHUDView: View {
     private var timerBlock: some View {
         TimelineView(.periodic(from: state.sessionStartReference, by: 1.0)) { context in
             let elapsed = max(0, context.date.timeIntervalSince(state.sessionStartReference))
-            HStack(spacing: 4) {
+            HStack(spacing: 5) {
                 Image(systemName: "clock")
-                    .font(TypographyTokens.caption(12).weight(.semibold))
+                    .font(TypographyTokens.caption(14).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .accessibilityHidden(true)
                 Text(Self.formatElapsed(elapsed))
-                    .font(TypographyTokens.caption(13).weight(.bold).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .font(TypographyTokens.caption(14).weight(.heavy).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
-            .frame(minWidth: 56, alignment: .trailing)
+            .frame(minWidth: 52, alignment: .trailing)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(String(
                 localized: "session.hud.timer.a11y \(Int(elapsed / 60)) \(Int(elapsed) % 60)"
@@ -127,20 +127,56 @@ struct SessionHUDView: View {
 
     private static func formatElapsed(_ seconds: TimeInterval) -> String {
         let total = Int(seconds.rounded())
-        return String(format: "%02d:%02d", total / 60, total % 60)
+        return String(format: "%d:%02d", total / 60, total % 60)
     }
+}
 
-    // MARK: Pause
+// MARK: - SessionFooterBar
+
+/// Нижняя полоса занятия — перенос эталона `session-shell.html` (.footer):
+///
+///   [⏸ пауза 60×60] · [Дальше / CTA flex]
+///
+/// Кнопка «Дальше» появляется только когда есть активность (`showNextCTA == true`).
+/// Пауза-кнопка — скруглённый квадрат (radius md), тёплая подложка, коралловый цвет.
+struct SessionFooterBar: View {
+    let onPauseTap: () -> Void
+
+    var body: some View {
+        HStack(spacing: SpacingTokens.small) {
+            pauseButton
+            // Растяжимый плейсхолдер — место для CTA «Дальше»,
+            // которую выставляет сама игра поверх через safeAreaInset.
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.vertical, SpacingTokens.small)
+        .background(
+            LinearGradient(
+                colors: [ColorTokens.Kid.bg.opacity(0), ColorTokens.Kid.bg],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea(edges: .bottom)
+        )
+    }
 
     private var pauseButton: some View {
         Button(action: onPauseTap) {
             Image(systemName: "pause.fill")
-                .font(TypographyTokens.body(16).weight(.bold))
+                .font(.system(size: 22, weight: .bold))
                 .foregroundStyle(ColorTokens.Brand.primary)
-                .frame(width: 40, height: 40)
-                .background(ColorTokens.Kid.surface, in: Circle())
-                .overlay(Circle().strokeBorder(ColorTokens.Brand.primary.opacity(0.45), lineWidth: 1.5))
-                .contentShape(Circle())
+                .frame(width: 60, height: 60)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .strokeBorder(ColorTokens.Brand.primary, lineWidth: 1.5)
+                )
+                .shadow(color: ColorTokens.Brand.primary.opacity(0.16), radius: 10, y: 4)
+                .contentShape(Rectangle())
                 .accessibilityHidden(true)
         }
         .buttonStyle(.plain)

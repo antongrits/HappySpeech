@@ -14,8 +14,12 @@ final class SeasonalEventsManager: ObservableObject {
     static let shared = SeasonalEventsManager()
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SeasonalEvents")
+    private static let starProgressKeyPrefix = "seasonal.starProgress."
 
     @Published private(set) var activeEvent: SeasonalEvent?
+    /// Количество набранных «сезонных звёзд» для текущего активного события.
+    /// Хранится в UserDefaults по ключу `seasonal.starProgress.<event.rawValue>`.
+    @Published private(set) var starProgress: Int = 0
 
     // MARK: - Init
 
@@ -43,7 +47,9 @@ final class SeasonalEventsManager: ObservableObject {
         activeEvent = found
         if let found {
             Self.logger.info("Seasonal event active: \(found.rawValue, privacy: .public), month=\(month)")
+            starProgress = Self.loadStarProgress(for: found)
         } else {
+            starProgress = 0
             Self.logger.debug("No seasonal event for month=\(month)")
         }
     }
@@ -54,9 +60,28 @@ final class SeasonalEventsManager: ObservableObject {
         activeEvent = event
         if let event {
             Self.logger.info("Seasonal event overridden by parent: \(event.rawValue, privacy: .public)")
+            starProgress = Self.loadStarProgress(for: event)
         } else {
             Self.logger.info("Seasonal override cleared — reverting to calendar")
+            starProgress = 0
             updateActiveEvent()
         }
+    }
+
+    /// Добавляет `count` звёзд к текущему событию (вызывается после завершения тематического занятия).
+    func awardStars(_ count: Int = 1) {
+        guard let event = activeEvent else { return }
+        let key = Self.starProgressKeyPrefix + event.rawValue
+        let current = UserDefaults.standard.integer(forKey: key)
+        let updated = min(current + count, event.starGoal)
+        UserDefaults.standard.set(updated, forKey: key)
+        starProgress = updated
+        Self.logger.info("Seasonal star awarded: event=\(event.rawValue) progress=\(updated)/\(event.starGoal)")
+    }
+
+    // MARK: - Private
+
+    private static func loadStarProgress(for event: SeasonalEvent) -> Int {
+        UserDefaults.standard.integer(forKey: starProgressKeyPrefix + event.rawValue)
     }
 }

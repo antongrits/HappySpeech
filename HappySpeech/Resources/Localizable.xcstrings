@@ -55457,6 +55457,50 @@
         }
       }
     },
+    "seasonal.banner.stars_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сезонные звёзды"
+          }
+        }
+      }
+    },
+    "seasonal.banner.stars_progress %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звёзды: %lld из %lld"
+          }
+        }
+      }
+    },
+    "seasonal.banner.days_left %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось %lld дн."
+          }
+        }
+      }
+    },
+    "seasonal.banner.last_day": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последний день!"
+          }
+        }
+      }
+    },
     "sentenceBuilder.a11y.add": {
       "localizations": {
         "ru": {
@@ -85942,6 +85986,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
+          }
+        }
+      }
+    },
+    "program.editor.steps.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаги занятия"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session Steps"
           }
         }
       }

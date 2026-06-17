@@ -233,8 +233,7 @@ struct SessionShellBinder: View {
             VStack(spacing: SpacingTokens.small) {
                 SessionHUDView(
                     state: state,
-                    onExitTap: handleExitTap,
-                    onPauseTap: handlePauseTap
+                    onExitTap: handleExitTap
                 )
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
@@ -253,8 +252,12 @@ struct SessionShellBinder: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .accessibilityElement(children: .contain)
                     .accessibilityIdentifier("gameContentArea")
+
+                // Эталон session-shell.html (.footer): ⏸ pause + CTA «Дальше».
+                // Pause-кнопка вынесена из HUD в нижний бар по дизайн-спеке.
+                SessionFooterBar(onPauseTap: handlePauseTap)
             }
-            .padding(.vertical, SpacingTokens.large)
+            .padding(.top, SpacingTokens.large)
 
             if state.feedbackState != .none {
                 FeedbackOverlayView(

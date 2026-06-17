@@ -149,7 +149,7 @@ struct MemoryView: View {
 
     private var header: some View {
         VStack(spacing: SpacingTokens.small) {
-            HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.small) {
+            HStack(alignment: .center, spacing: SpacingTokens.small) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(display.greeting.isEmpty
                          ? String(localized: "Найди пару")
@@ -168,6 +168,7 @@ struct MemoryView: View {
                 if display.streakCount >= 3 {
                     streakBadge
                 }
+                soundChip
             }
 
             statStrip
@@ -190,30 +191,49 @@ struct MemoryView: View {
         .frame(maxWidth: .infinity)
     }
 
-    // MARK: Stat chips (real model fields only)
+    // MARK: Sound chip (top-right badge showing target sound group)
+
+    private var soundChip: some View {
+        Text(soundGroupLabel)
+            .font(TypographyTokens.caption(12.5).weight(.heavy))
+            .foregroundStyle(ColorTokens.Brand.lilac)
+            .padding(.vertical, SpacingTokens.sp2)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(ColorTokens.Brand.lilac.opacity(0.14))
+            )
+            .overlay(
+                Capsule(style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.lilac.opacity(0.28), lineWidth: 1)
+            )
+            .accessibilityHidden(true)
+    }
+
+    // MARK: Stat chips — pairs (primary) · timer (butter) · hints (lilac)
 
     private var statStrip: some View {
         HStack(spacing: SpacingTokens.tiny) {
             statChip(
-                dot: ColorTokens.Feedback.correct,
+                dot: ColorTokens.Brand.primary,
                 value: "\(display.matchedPairs) / \(display.totalPairs)",
-                label: String(localized: "найдено пар")
+                label: String(localized: "memory.chip.pairs", defaultValue: "найдено пар")
             )
             statChip(
                 dot: ColorTokens.Brand.butter,
-                value: "\(display.hintsRemaining)",
-                label: String(localized: "подсказки")
+                value: display.timerLabel,
+                label: String(localized: "memory.chip.time", defaultValue: "время")
             )
             statChip(
                 dot: ColorTokens.Brand.lilac,
-                value: difficultyShort,
-                label: String(localized: "уровень")
+                value: "\(display.hintsRemaining)",
+                label: String(localized: "memory.chip.hints", defaultValue: "подсказки")
             )
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(String(
-            localized: "Найдено пар: \(display.matchedPairs) из \(display.totalPairs). Подсказок: \(display.hintsRemaining). \(display.difficultyLabel)"
-        ))
+        .accessibilityLabel(
+            "Найдено пар: \(display.matchedPairs) из \(display.totalPairs). Время: \(display.timerLabel). Подсказок: \(display.hintsRemaining)"
+        )
     }
 
     private func statChip(dot: Color, value: String, label: String) -> some View {
@@ -439,18 +459,19 @@ struct MemoryView: View {
 
     private var bottomBar: some View {
         VStack(spacing: SpacingTokens.small) {
+            // Design: Заново button full-width + floating hint button
+            replayButton
             HStack(spacing: SpacingTokens.small) {
                 hintButton
-                Spacer(minLength: SpacingTokens.tiny)
-                replayButton
+                Spacer(minLength: 0)
+                Text(String(localized: "Кнопка «Дальше» появится после победы"))
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .multilineTextAlignment(.trailing)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: 160)
             }
-            Text(String(localized: "Кнопка «Дальше» появится после победы"))
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.85)
-                .frame(maxWidth: .infinity)
         }
     }
 
@@ -470,21 +491,22 @@ struct MemoryView: View {
                     .font(TypographyTokens.caption(14).weight(.bold))
                     .accessibilityHidden(true)
                 Text(String(localized: "Заново"))
-                    .font(TypographyTokens.caption(15).weight(.bold))
+                    .font(TypographyTokens.caption(15).weight(.heavy))
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
-            .padding(.horizontal, SpacingTokens.regular)
-            .padding(.vertical, 9)
+            .frame(maxWidth: .infinity)
+            .frame(height: 54)
             .background(
-                Capsule(style: .continuous)
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
             )
             .overlay(
-                Capsule(style: .continuous)
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                     .strokeBorder(ColorTokens.Brand.primary, lineWidth: 1.5)
             )
             .foregroundStyle(ColorTokens.Brand.primary)
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 2)
         }
         .buttonStyle(.plain)
         .disabled(display.phase != .playing)
@@ -694,11 +716,15 @@ struct MemoryView: View {
         return String(localized: "Найди пару!")
     }
 
-    /// Сжатый ярлык уровня для stat-чипа (исходный `difficultyLabel`
-    /// может быть длинным, чип узкий на SE).
-    private var difficultyShort: String {
-        let label = display.difficultyLabel
-        return label.isEmpty ? String(localized: "—") : label
+    /// Локализованный ярлык группы звуков для sound-chip в заголовке.
+    private var soundGroupLabel: String {
+        switch soundGroup {
+        case "whistling": return String(localized: "memory.sound.whistling", defaultValue: "Свист.")
+        case "hissing":   return String(localized: "memory.sound.hissing",   defaultValue: "Шипящ.")
+        case "sonorant":  return String(localized: "memory.sound.sonorant",  defaultValue: "Р/Л")
+        case "velar":     return String(localized: "memory.sound.velar",     defaultValue: "К/Г/Х")
+        default:          return String(localized: "memory.sound.any",       defaultValue: "Звук")
+        }
     }
 
     // MARK: - Group key inference

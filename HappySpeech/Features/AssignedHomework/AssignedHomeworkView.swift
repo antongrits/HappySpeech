@@ -274,22 +274,16 @@ struct AssignedHomeworkView: View {
                 .accessibilityElement(children: .combine)
             }
 
-            Button {
+            HSButton(
+                String(localized: "assignedHomework.create.button"),
+                style: .primary,
+                size: .large,
+                icon: "plus.circle.fill"
+            ) {
                 Task { await createAssignment() }
-            } label: {
-                Text("assignedHomework.create.button")
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .frame(maxWidth: .infinity, minHeight: 48)
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
-                            .fill(canCreate
-                                ? ColorTokens.Spec.accent
-                                : ColorTokens.Spec.line)
-                    )
             }
-            .buttonStyle(.plain)
             .disabled(!canCreate)
+            .opacity(canCreate ? 1 : 0.5)
             .accessibilityHint(Text("assignedHomework.create.hint"))
             }
         }
@@ -367,36 +361,48 @@ struct AssignedHomeworkView: View {
     private func assignmentRow(
         _ row: AssignedHomeworkModels.Load.AssignmentRowViewModel
     ) -> some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: row.isComplete
-                ? "checkmark.seal.fill"
-                : "tray.full.fill")
-                .font(.title3)
-                .foregroundStyle(row.isComplete
-                    ? ColorTokens.Semantic.success
-                    : ColorTokens.Spec.accent)
-                .hsSymbolEffect(.bounce, value: row.isComplete)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(row.childName)
-                    .font(TypographyTokens.headline(15))
-                    .foregroundStyle(ColorTokens.Spec.ink)
-                Text(row.exerciseCountLabel + " · " + row.dueLabel)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                Text(row.statusLabel)
-                    .font(TypographyTokens.caption(12).weight(.medium))
-                    .foregroundStyle(row.isComplete
-                        ? ColorTokens.Semantic.success
-                        : ColorTokens.Spec.accent)
+        HSCard(style: .flat, padding: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.sp3) {
+                // Status icon tile — coral when pending, success-green when complete
+                ZStack {
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                        .fill((row.isComplete
+                            ? ColorTokens.Semantic.success
+                            : ColorTokens.Spec.accent).opacity(0.12))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: row.isComplete
+                        ? "checkmark.seal.fill"
+                        : "tray.full.fill")
+                        .font(.system(size: 18))
+                        .foregroundStyle(row.isComplete
+                            ? ColorTokens.Semantic.success
+                            : ColorTokens.Spec.accent)
+                        .hsSymbolEffect(.bounce, value: row.isComplete)
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(row.childName)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(row.exerciseCountLabel + " · " + row.dueLabel)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(row.statusLabel)
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(row.isComplete
+                            ? ColorTokens.Semantic.success
+                            : ColorTokens.Spec.accent)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Spec.panel)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(row.accessibilityLabel + ". " + row.statusLabel))
         .contextMenu {

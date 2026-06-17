@@ -98,31 +98,39 @@ struct SpecialistCaseNotesView: View {
     }
 
     private func hero(state: SpecialistCaseNotesModels.ViewState) -> some View {
-        HSLiquidGlassCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(String(localized: "specialistNotes.hero.title"))
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Spec.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(String(localized: "specialistNotes.hero.subtitle"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    .lineLimit(3)
-                    .minimumScaleFactor(0.85)
-                HStack(spacing: SpacingTokens.tiny) {
-                    Image(systemName: "note.text")
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Spec.accent)
-                        .hsSymbolEffect(.bounce, value: state.notes.count)
-                    Text(String(
-                        format: String(localized: "specialistNotes.total %lld"),
-                        state.notes.count
-                    ))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Spec.accent)
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(String(localized: "specialistNotes.hero.title"))
+                            .font(TypographyTokens.headline(18))
+                            .foregroundStyle(ColorTokens.Spec.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "specialistNotes.hero.subtitle"))
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer(minLength: SpacingTokens.tiny)
+                    // Note count badge — coral pill, top-right
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Image(systemName: "note.text")
+                            .font(.system(size: 11))
+                            .hsSymbolEffect(.bounce, value: state.notes.count)
+                            .accessibilityHidden(true)
+                        Text(String(
+                            format: String(localized: "specialistNotes.total %lld"),
+                            state.notes.count
+                        ))
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                    }
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .padding(.horizontal, SpacingTokens.sp3)
+                    .padding(.vertical, SpacingTokens.sp1)
+                    .background(Capsule().fill(ColorTokens.Spec.accent.opacity(0.12)))
                 }
-                .padding(.top, 2)
             }
         }
     }
@@ -199,19 +207,17 @@ struct SpecialistCaseNotesView: View {
     private func addNoteSheet(interactor: SpecialistCaseNotesInteractor) -> some View {
         NavigationStack {
             VStack(spacing: SpacingTokens.sp3) {
-                TextEditor(text: Binding(
-                    get: { interactor.state.draftBody },
-                    set: { interactor.state.draftBody = $0 }
-                ))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Spec.ink)
-                .scrollContentBackground(.hidden)
-                .padding(SpacingTokens.sp2)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(ColorTokens.Spec.surface)
-                )
-                .frame(minHeight: 220)
+                HSCard(style: .flat, padding: 0) {
+                    TextEditor(text: Binding(
+                        get: { interactor.state.draftBody },
+                        set: { interactor.state.draftBody = $0 }
+                    ))
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Spec.ink)
+                    .scrollContentBackground(.hidden)
+                    .padding(SpacingTokens.sp3)
+                    .frame(minHeight: 220)
+                }
                 Spacer()
                 HSButton(
                     String(localized: "specialistNotes.save.button"),
