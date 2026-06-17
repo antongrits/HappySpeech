@@ -22432,7 +22432,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Семья"
+            "value": "Наша семья"
           }
         }
       }
@@ -43930,13 +43930,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пофонемный отчёт"
+            "value": "Отчёт по звукам"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Phoneme report"
+            "value": "Sound report"
           }
         }
       }

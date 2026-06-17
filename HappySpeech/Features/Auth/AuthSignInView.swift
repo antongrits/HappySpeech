@@ -266,6 +266,21 @@ struct AuthSignInView: View {
                     .accessibilityLabel(String(localized: "accessibility.password_field"))
                     .accessibilityHint(String(localized: "accessibility.password_field.hint"))
                 }
+
+                // "Забыли пароль?" placed inside form card, right-aligned — matches reference.
+                HStack {
+                    Spacer()
+                    Button {
+                        coordinator.navigate(to: .forgotPassword)
+                    } label: {
+                        Text(String(localized: "auth.forgot.password"))
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                    .accessibilityLabel(String(localized: "accessibility.forgot_password"))
+                }
             }
         }
     }
@@ -289,7 +304,8 @@ struct AuthSignInView: View {
 
     private var authButtonsSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSButton(String(localized: "auth.signIn"), style: .primary, icon: "arrow.right") {
+            // Primary CTA — plain text, no trailing icon (matches reference).
+            HSButton(String(localized: "auth.signIn"), style: .primary) {
                 signIn()
             }
             .disabled(email.isEmpty || password.isEmpty)
@@ -307,26 +323,39 @@ struct AuthSignInView: View {
             .padding(.vertical, SpacingTokens.sp1)
             .accessibilityHidden(true)
 
-            HSButton(String(localized: "auth.google.cta"), style: .secondary, icon: "globe") {
-                signInWithGoogle()
-            }
-            .accessibilityLabel(String(localized: "accessibility.google_sign_in"))
+            // Secondary sign-in — pill в стиле эталона; метка честно отражает
+            // реальное действие (Google), Apple Sign-In в приложении не реализован.
+            googlePillSignInButton
         }
+    }
+
+    // Pill-кнопка в стиле эталона. Метка/иконка соответствуют РЕАЛЬНОМУ действию —
+    // вторичный вход через Google (GoogleSignInWorker). Apple Sign-In не подключён.
+    private var googlePillSignInButton: some View {
+        Button(action: signInWithGoogle) {
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "globe")
+                    .font(TypographyTokens.body(17).weight(.medium))
+                Text(String(localized: "auth.google.cta", defaultValue: "Войти через Google"))
+                    .font(TypographyTokens.body(16).weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .foregroundStyle(Color.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: 52)
+            .background(
+                Capsule()
+                    .fill(ColorTokens.Parent.ink)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(localized: "accessibility.google_sign_in"))
     }
 
     private var footerLinks: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            Button {
-                coordinator.navigate(to: .forgotPassword)
-            } label: {
-                Text(String(localized: "auth.forgot.password"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-            .accessibilityLabel(String(localized: "accessibility.forgot_password"))
-
+            // "Нет аккаунта? Создать аккаунт" — matches reference bottom link.
             Button {
                 coordinator.navigate(to: .signUp)
             } label: {

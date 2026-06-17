@@ -82,6 +82,10 @@ struct PhonemeReportView: View {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
                         header(vm)
+                        if !vm.accuracyTimeline.isEmpty {
+                            accuracyTimelineSection(vm)
+                            summaryMetricsRow(vm)
+                        }
                         legend
                         ForEach(vm.groups) { group in
                             groupSection(group)
@@ -138,6 +142,153 @@ struct PhonemeReportView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    // MARK: - Accuracy Timeline (ДИНАМИКА ТОЧНОСТИ)
+
+    /// Линейный чарт динамики точности по всем сессиям — аналог «ДИНАМИКА
+    /// ТОЧНОСТИ» из дизайн-референса. Каждая точка = одна сессия.
+    private func accuracyTimelineSection(
+        _ vm: PhonemeReportModels.Load.ViewModel
+    ) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            Text(String(localized: "phonemeReport.timeline.title",
+                        defaultValue: "Динамика точности"))
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Spec.ink)
+                .textCase(.uppercase)
+                .tracking(0.5)
+                .accessibilityAddTraits(.isHeader)
+
+            HSCard(style: .elevated) {
+                Chart(vm.accuracyTimeline) { point in
+                    LineMark(
+                        x: .value(String(localized: "phonemeReport.chart.date",
+                                         defaultValue: "Дата"),
+                                  point.date),
+                        y: .value(String(localized: "phonemeReport.chart.accuracy",
+                                         defaultValue: "Точность"),
+                                  point.accuracy)
+                    )
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .interpolationMethod(.catmullRom)
+
+                    AreaMark(
+                        x: .value(String(localized: "phonemeReport.chart.date",
+                                         defaultValue: "Дата"),
+                                  point.date),
+                        y: .value(String(localized: "phonemeReport.chart.accuracy",
+                                         defaultValue: "Точность"),
+                                  point.accuracy)
+                    )
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [ColorTokens.Spec.accent.opacity(0.25),
+                                     ColorTokens.Spec.accent.opacity(0.02)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .interpolationMethod(.catmullRom)
+
+                    PointMark(
+                        x: .value(String(localized: "phonemeReport.chart.date",
+                                         defaultValue: "Дата"),
+                                  point.date),
+                        y: .value(String(localized: "phonemeReport.chart.accuracy",
+                                         defaultValue: "Точность"),
+                                  point.accuracy)
+                    )
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .symbolSize(30)
+                }
+                .chartYScale(domain: 0...1)
+                .chartYAxis {
+                    AxisMarks(position: .leading, values: [0.0, 0.5, 1.0]) { value in
+                        AxisGridLine()
+                            .foregroundStyle(ColorTokens.Spec.grid.opacity(0.4))
+                        AxisValueLabel {
+                            if let pct = value.as(Double.self) {
+                                Text("\(Int(pct * 100))%")
+                                    .font(TypographyTokens.caption(10))
+                                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            }
+                        }
+                    }
+                }
+                .chartXAxis {
+                    AxisMarks(values: .automatic(desiredCount: 4)) { _ in
+                        AxisGridLine()
+                            .foregroundStyle(ColorTokens.Spec.grid.opacity(0.3))
+                        AxisValueLabel(format: .dateTime.day().month(.abbreviated))
+                            .font(TypographyTokens.caption(10))
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    }
+                }
+                .frame(height: 160)
+                .accessibilityLabel(
+                    String(localized: "phonemeReport.timeline.a11y",
+                           defaultValue: "График динамики точности")
+                )
+            }
+        }
+    }
+
+    // MARK: - Summary metrics row (X% · Y попыток · Z сессий)
+
+    private func summaryMetricsRow(
+        _ vm: PhonemeReportModels.Load.ViewModel
+    ) -> some View {
+        HSCard(style: .flat) {
+            HStack(spacing: 0) {
+                summaryMetric(
+                    value: vm.avgAccuracyText,
+                    label: String(localized: "phonemeReport.metric.accuracy",
+                                  defaultValue: "Точность"),
+                    tint: ColorTokens.Brand.gold
+                )
+                metricsDivider
+                summaryMetric(
+                    value: vm.totalAttemptsText,
+                    label: String(localized: "phonemeReport.metric.attempts",
+                                  defaultValue: "Попыток"),
+                    tint: ColorTokens.Spec.accent
+                )
+                metricsDivider
+                summaryMetric(
+                    value: vm.totalSessionsText,
+                    label: String(localized: "phonemeReport.metric.sessions",
+                                  defaultValue: "Сессий"),
+                    tint: ColorTokens.Brand.lilac
+                )
+            }
+            .frame(maxWidth: .infinity)
+        }
+    }
+
+    private func summaryMetric(value: String, label: String, tint: Color) -> some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            Text(value)
+                .font(TypographyTokens.headline(22).monospacedDigit())
+                .foregroundStyle(tint)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(label)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label): \(value)")
+    }
+
+    private var metricsDivider: some View {
+        RoundedRectangle(cornerRadius: 1)
+            .fill(ColorTokens.Spec.line)
+            .frame(width: 1, height: 40)
+            .accessibilityHidden(true)
     }
 
     // MARK: - Legend (warm tones)

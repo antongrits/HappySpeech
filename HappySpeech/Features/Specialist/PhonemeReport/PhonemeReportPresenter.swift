@@ -67,6 +67,12 @@ final class PhonemeReportPresenter: PhonemeReportPresentationLogic {
             )
         }
 
+        let timeline = Self.makeTimeline(sessions: response.sessions)
+        let (attemptsText, sessionsText, avgText) = Self.makeSummaryMetrics(
+            sessions: response.sessions,
+            rows: rows
+        )
+
         display?.displayLoad(.init(
             titleText: title,
             childNameText: childName,
@@ -75,7 +81,11 @@ final class PhonemeReportPresenter: PhonemeReportPresentationLogic {
             coverageText: coverage,
             isEmpty: isEmpty,
             errorText: nil,
-            passport: passport
+            passport: passport,
+            accuracyTimeline: timeline,
+            totalAttemptsText: attemptsText,
+            totalSessionsText: sessionsText,
+            avgAccuracyText: avgText
         ))
     }
 
@@ -181,6 +191,41 @@ final class PhonemeReportPresenter: PhonemeReportPresentationLogic {
         return String(
             format: String(localized: "phonemeReport.summary %lld %lld"),
             practiced, totalSessions
+        )
+    }
+
+    // MARK: - Accuracy timeline
+
+    /// Агрегированный timeline: каждая сессия — одна точка (дата, successRate).
+    /// Сортированы по дате для корректной отрисовки линейного чарта.
+    private static func makeTimeline(sessions: [SessionDTO]) -> [HistoryPoint] {
+        sessions
+            .sorted { $0.date < $1.date }
+            .map { HistoryPoint(date: $0.date, accuracy: $0.successRate) }
+    }
+
+    // MARK: - Summary metrics
+
+    private static func makeSummaryMetrics(
+        sessions: [SessionDTO],
+        rows: [PhonemeReportRow]
+    ) -> (attemptsText: String, sessionsText: String, avgText: String) {
+        let totalAttempts = rows.map(\.attempts).reduce(0, +)
+        let totalSessions = sessions.count
+
+        let accuracies = rows.compactMap(\.accuracy)
+        let avgAccuracy: String
+        if accuracies.isEmpty {
+            avgAccuracy = "—"
+        } else {
+            let avg = Int((accuracies.reduce(0, +) / Double(accuracies.count) * 100).rounded())
+            avgAccuracy = "\(avg) %"
+        }
+
+        return (
+            "\(totalAttempts)",
+            "\(totalSessions)",
+            avgAccuracy
         )
     }
 

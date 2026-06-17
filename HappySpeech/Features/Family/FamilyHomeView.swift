@@ -464,13 +464,29 @@ struct FamilyHomeView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            Button {
-                coordinator.navigate(to: .settings)
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .foregroundStyle(ColorTokens.Parent.accent)
+            HStack(spacing: SpacingTokens.sp2) {
+                Button {
+                    coordinator.navigate(to: .settings)
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                }
+                .accessibilityLabel(String(localized: "settings.title"))
+
+                Button {
+                    coordinator.navigate(to: .onboarding)
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.primary)
+                            .frame(width: 32, height: 32)
+                        Image(systemName: "plus")
+                            .font(.system(size: 15, weight: .bold))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    }
+                }
+                .accessibilityLabel(String(localized: "family.home.add_child"))
             }
-            .accessibilityLabel(String(localized: "settings.title"))
         }
     }
 

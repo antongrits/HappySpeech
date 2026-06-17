@@ -69,6 +69,21 @@ enum PhonemeReportModels {
             /// (ошибка паспорта не валит весь экран — секция просто скрывается).
             let passport: PhonemePassportViewModel?
 
+            // MARK: - Accuracy timeline (ДИНАМИКА ТОЧНОСТИ)
+
+            /// Агрегированный timeline точности по всем сессиям (ось X — дата,
+            /// ось Y — successRate сессии). Пустой, если сессий нет.
+            let accuracyTimeline: [HistoryPoint]
+
+            // MARK: - Summary metrics row
+
+            /// Суммарное число попыток по всем звукам.
+            let totalAttemptsText: String
+            /// Число сессий ребёнка за период.
+            let totalSessionsText: String
+            /// Средняя точность по всем звукам: «68 %» или «—».
+            let avgAccuracyText: String
+
             init(
                 titleText: String,
                 childNameText: String,
@@ -77,7 +92,11 @@ enum PhonemeReportModels {
                 coverageText: String,
                 isEmpty: Bool,
                 errorText: String?,
-                passport: PhonemePassportViewModel? = nil
+                passport: PhonemePassportViewModel? = nil,
+                accuracyTimeline: [HistoryPoint] = [],
+                totalAttemptsText: String = "",
+                totalSessionsText: String = "",
+                avgAccuracyText: String = ""
             ) {
                 self.titleText = titleText
                 self.childNameText = childNameText
@@ -87,6 +106,10 @@ enum PhonemeReportModels {
                 self.isEmpty = isEmpty
                 self.errorText = errorText
                 self.passport = passport
+                self.accuracyTimeline = accuracyTimeline
+                self.totalAttemptsText = totalAttemptsText
+                self.totalSessionsText = totalSessionsText
+                self.avgAccuracyText = avgAccuracyText
             }
         }
     }

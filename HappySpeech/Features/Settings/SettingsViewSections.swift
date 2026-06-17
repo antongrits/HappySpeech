@@ -36,44 +36,68 @@ private struct SettingsIconLabel: View {
 extension SettingsView {
 
     // MARK: Header
+    //
+    // Compact tip card — matches reference design: small mascot icon on left,
+    // bold title + subtitle on right. No large hero mascot (120pt) in header.
+    // The card uses the Parent.surface background with a subtle coral-star accent
+    // on the title, identical to the reference "Время вышло на сегодня ⭐" layout.
 
     var settingsHeaderSection: some View {
         Section {
-            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
-                HStack(spacing: SpacingTokens.regular) {
-                    // Fix #11 — Ляля в Settings приведена к каноническому
-                    // состоянию AR-зоны: `.waving` (приветствует входящего родителя),
-                    // размер увеличен 96 → 120 для весомости hero-блока. Все
-                    // settings-экраны теперь визуально опознают одного маскота.
-                    LyalyaHeroView(state: .waving, size: 120)
-                        .accessibilityHidden(true)
-                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                        Text(String(localized: "settings.header.greeting"))
-                            .font(TypographyTokens.headline(17))
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(nil)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.85)
-                        Text(String(localized: "settings.header.subtitle"))
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .lineLimit(nil)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.85)
-                    }.frame(maxWidth: .infinity, alignment: .leading)
+            HStack(alignment: .center, spacing: SpacingTokens.regular) {
+                // Small mascot avatar circle — 56pt, matches reference icon size.
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primaryLo)
+                        .frame(width: 56, height: 56)
+                    LyalyaMascotView(state: .waving, size: 44)
+                        .allowsHitTesting(false)
                 }
+                .accessibilityHidden(true)
+                .frame(width: 56, height: 56)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    HStack(spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.header.greeting"))
+                            .font(TypographyTokens.headline(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.85)
+                        // Gold star accent — matches reference "⭐" after title.
+                        Image(systemName: "star.fill")
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .accessibilityHidden(true)
+                    }
+                    Text(String(localized: "settings.header.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(.vertical, SpacingTokens.small)
+            .padding(.horizontal, SpacingTokens.regular)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Parent.surface)
+            )
             .listRowBackground(Color.clear)
-            // Симметричный горизонтальный inset = системный inset-grouped (20pt),
-            // чтобы карточка-приветствие шла по тем же полям, что и сгруппированные
-            // секции ниже (слева = справа, без overflow на SE).
             .listRowInsets(EdgeInsets(
-                top: SpacingTokens.tiny,
+                top: SpacingTokens.small,
                 leading: SpacingTokens.medium,
                 bottom: SpacingTokens.small,
                 trailing: SpacingTokens.medium
             ))
             .listRowSeparator(.hidden)
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(
+                String(localized: "settings.header.greeting") + ". " +
+                String(localized: "settings.header.subtitle")
+            )
         }
         .listSectionSeparator(.hidden, edges: .bottom)
     }
