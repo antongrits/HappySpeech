@@ -137,7 +137,7 @@ struct SessionHistoryView: View {
                     onCSV: { interactor?.exportCSV(.init(childId: childId ?? "child")) },
                     onJSON: { interactor?.exportJSON(.init(childId: childId ?? "child")) }
                 )
-                .presentationDetents([.height(280)])
+                .presentationDetents([.height(340), .large])
             }
             .navigationDestination(for: SessionDetailRoute.self) { route in
                 SessionHistoryDetailView(detail: route.detail)

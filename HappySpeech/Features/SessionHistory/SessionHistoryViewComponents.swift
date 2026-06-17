@@ -439,38 +439,40 @@ struct DateFieldButton: View {
         .buttonStyle(.plain)
         .accessibilityLabel("\(title). \(date.map(formatted) ?? String(localized: "sessionHistory.filter.notSet"))")
         .sheet(isPresented: $showPicker) {
-            VStack {
-                DatePicker(
-                    title,
-                    selection: $pickerDate,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.graphical)
-                .padding()
-                .accessibilityHint(String(localized: "sessionHistory.filter.datePicker.hint"))
+            ScrollView {
+                VStack {
+                    DatePicker(
+                        title,
+                        selection: $pickerDate,
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(.graphical)
+                    .padding()
+                    .accessibilityHint(String(localized: "sessionHistory.filter.datePicker.hint"))
 
-                HStack(spacing: SpacingTokens.regular) {
-                    HSButton(
-                        String(localized: "sessionHistory.filter.notSet"),
-                        style: .ghost,
-                        size: .medium
-                    ) {
-                        onPick(nil)
-                        showPicker = false
+                    HStack(spacing: SpacingTokens.regular) {
+                        HSButton(
+                            String(localized: "sessionHistory.filter.notSet"),
+                            style: .ghost,
+                            size: .medium
+                        ) {
+                            onPick(nil)
+                            showPicker = false
+                        }
+                        HSButton(
+                            String(localized: "sessionHistory.filter.confirm"),
+                            style: .primary,
+                            size: .medium
+                        ) {
+                            onPick(pickerDate)
+                            showPicker = false
+                        }
                     }
-                    HSButton(
-                        String(localized: "sessionHistory.filter.confirm"),
-                        style: .primary,
-                        size: .medium
-                    ) {
-                        onPick(pickerDate)
-                        showPicker = false
-                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.bottom, SpacingTokens.large)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.large)
             }
-            .presentationDetents([.medium])
+            .presentationDetents([.large])
         }
     }
 

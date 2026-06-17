@@ -264,7 +264,7 @@ struct HomeTasksView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .accessibilityLabel(isToday
-                    ? String(localized: "homeTasks.weekstrip.today") + " \(day)"
+                    ? String(localized: "homeTasks.weekstrip.today", defaultValue: "Сегодня") + " \(day)"
                     : "\(abbr) \(day)")
             }
         }

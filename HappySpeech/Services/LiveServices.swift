@@ -399,6 +399,15 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
         PackDescriptor(id: "sound_c_v1",  fileName: "sound_c_pack",  soundTarget: "Ц", templateType: .listenAndChoose),
         PackDescriptor(id: "sound_kh_v1", fileName: "sound_kh_pack", soundTarget: "Х", templateType: .listenAndChoose),
         PackDescriptor(id: "sound_y_v1",  fileName: "sound_y_pack",  soundTarget: "Й", templateType: .listenAndChoose),
+        // Звуковые паки Ч/Г/Щ/З/Ж — реальный контент (~1774 слова суммарно). Загружаются
+        // в уроке через `SoundRomanizer` (sound_ch/g/shch/z/zh), но раньше отсутствовали в
+        // `bundledPacks()` / `allPacks()` — регистрируем явно, чтобы они попадали в Spotlight
+        // и каталог контента для родителя/специалиста.
+        PackDescriptor(id: "sound_ch_v1",   fileName: "sound_ch_pack",   soundTarget: "Ч", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_g_v1",    fileName: "sound_g_pack",    soundTarget: "Г", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_shch_v1", fileName: "sound_shch_pack", soundTarget: "Щ", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_z_v1",    fileName: "sound_z_pack",    soundTarget: "З", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_zh_v1",   fileName: "sound_zh_pack",   soundTarget: "Ж", templateType: .listenAndChoose),
         // Паки-сироты с реальным контентом, чьи id не кодируют один звук-букву и потому
         // не резолвились legacy-путём `sound_<letter>_pack`. Регистрируем явно.
         PackDescriptor(id: "sound_diffrl_v1",               fileName: "sound_diff_rl_pack",          soundTarget: "Р/Л",         templateType: .minimalPairs),

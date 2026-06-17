@@ -620,34 +620,37 @@ struct GrammarGameView: View {
     // MARK: - Exit Confirmation Sheet
 
     private func exitConfirmationSheet(_ vm: GrammarGameModels.ExitConfirmation.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.xLarge) {
-            Text(vm.title)
-                .font(TypographyTokens.headline(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+        ScrollView {
+            VStack(spacing: SpacingTokens.xLarge) {
+                Text(vm.title)
+                    .font(TypographyTokens.headline(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
 
-            Text(vm.body)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(vm.body)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
 
-            HStack(spacing: SpacingTokens.regular) {
-                HSButton(vm.confirmLabel, style: .secondary) {
-                    exitViewModel = nil
-                    router.dismissGame()
+                HStack(spacing: SpacingTokens.regular) {
+                    HSButton(vm.confirmLabel, style: .secondary) {
+                        exitViewModel = nil
+                        router.dismissGame()
+                    }
+                    HSButton(vm.cancelLabel, style: .primary) {
+                        exitViewModel = nil
+                    }
                 }
-                HSButton(vm.cancelLabel, style: .primary) {
-                    exitViewModel = nil
-                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(SpacingTokens.xLarge)
         }
-        .padding(SpacingTokens.xLarge)
-        .presentationDetents([.height(260)])
+        .scrollBounceBehavior(.basedOnSize)
+        .presentationDetents([.medium, .large])
         .presentationCornerRadius(RadiusTokens.xl)
     }
 

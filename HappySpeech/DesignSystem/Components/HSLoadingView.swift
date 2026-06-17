@@ -6,6 +6,7 @@ public struct HSLoadingView: View {
     let message: String
     let lottie: HSLottieAsset
     @State private var rotation: Double = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(message: String = "Загрузка...", lottie: HSLottieAsset = .loaderInitializing) {
         self.message = message
@@ -29,7 +30,10 @@ public struct HSLoadingView: View {
                 .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear { rotation = 360 }
+        .onAppear {
+            guard !reduceMotion else { return }
+            rotation = 360
+        }
     }
 
     private var fallbackSpinner: some View {
@@ -37,12 +41,19 @@ public struct HSLoadingView: View {
             Circle()
                 .stroke(ColorTokens.Brand.primary.opacity(0.2), lineWidth: 4)
                 .frame(width: 56, height: 56)
-            Circle()
-                .trim(from: 0, to: 0.7)
-                .stroke(ColorTokens.Brand.primary, style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                .frame(width: 56, height: 56)
-                .rotationEffect(.degrees(rotation))
-                .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: rotation)
+            if reduceMotion {
+                Circle()
+                    .trim(from: 0, to: 0.7)
+                    .stroke(ColorTokens.Brand.primary, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .frame(width: 56, height: 56)
+            } else {
+                Circle()
+                    .trim(from: 0, to: 0.7)
+                    .stroke(ColorTokens.Brand.primary, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .frame(width: 56, height: 56)
+                    .rotationEffect(.degrees(rotation))
+                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: rotation)
+            }
         }
     }
 }

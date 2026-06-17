@@ -474,6 +474,7 @@ struct KidGameTickBadge: View {
                 .font(TypographyTokens.labelRounded(12.5, weight: .bold))
                 .foregroundStyle(ColorTokens.Brand.mint)
                 .lineLimit(1)
+                .minimumScaleFactor(0.8)
         }
         .padding(.leading, SpacingTokens.tiny)
         .padding(.trailing, SpacingTokens.small)

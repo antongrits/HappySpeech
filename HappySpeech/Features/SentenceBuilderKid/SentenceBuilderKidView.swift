@@ -215,7 +215,7 @@ struct SentenceBuilderKidView: View {
                     isAssembled ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink
                 )
                 .lineLimit(1)
-                .fixedSize()
+                .minimumScaleFactor(0.7)
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp2)
                 .background(
