@@ -75,4 +75,28 @@ final class CloudFunctionsServiceTests: XCTestCase {
             XCTFail("Неверный тип ошибки: \(error)")
         }
     }
+
+    // MARK: - deleteUserData (COPPA / GDPR cascade)
+
+    func test_deleteUserData_recordsRequestedUserId() async throws {
+        let sut = makeSUT()
+        try await sut.deleteUserData(userId: "uid-42")
+        XCTAssertEqual(sut.deletedUserIds, ["uid-42"], "Каскад должен зафиксировать удаляемый uid")
+    }
+
+    func test_deleteUserData_whenShouldThrow_propagatesError() async {
+        let sut = makeSUT()
+        sut.shouldThrowError = true
+        do {
+            try await sut.deleteUserData(userId: "uid-42")
+            XCTFail("Должна быть выброшена ошибка каскада")
+        } catch let error as CloudFunctionsError {
+            if case .serverError = error { } else {
+                XCTFail("Ожидалась serverError, получено \(error)")
+            }
+        } catch {
+            XCTFail("Неверный тип ошибки: \(error)")
+        }
+        XCTAssertTrue(sut.deletedUserIds.isEmpty, "При ошибке uid не должен записываться")
+    }
 }

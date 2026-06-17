@@ -535,7 +535,7 @@ struct SiblingLobbyView: View {
             peerDisplayName: peerID.displayName,
             localDisplayName: localDisplayName
         )
-        Self.logger.debug("SiblingLobby bootstrapped peer=\(peerID.displayName, privacy: .public)")
+        Self.logger.debug("SiblingLobby bootstrapped peer=\(peerID.displayName, privacy: .private)")
     }
 }
 

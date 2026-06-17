@@ -115,7 +115,7 @@ struct SiblingMultiplayerView: View {
     // MARK: - Navigation logic
 
     private func handlePeerConnected(displayName: String) {
-        Self.logger.info("routing to lobby peerDisplayName=\(displayName, privacy: .public)")
+        Self.logger.info("routing to lobby peerDisplayName=\(displayName, privacy: .private)")
         navigationPath.append(.lobby(peerDisplayName: displayName))
     }
 

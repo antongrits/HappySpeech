@@ -432,7 +432,7 @@ struct SiblingGameView: View {
         display.localDisplayName = localDisplayName
         display.peerDisplayName = peerID.displayName
         createdInteractor.startRound(index: 1)
-        Self.logger.debug("SiblingGame bootstrapped peer=\(peerID.displayName, privacy: .public)")
+        Self.logger.debug("SiblingGame bootstrapped peer=\(peerID.displayName, privacy: .private)")
     }
 }
 

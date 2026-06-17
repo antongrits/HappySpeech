@@ -93,7 +93,7 @@ final class SiblingMPCWorker: NSObject {
         brw.startBrowsingForPeers()
         self.browser = brw
 
-        logger.info("MPC started displayName=\(self.myPeerID.displayName, privacy: .public)")
+        logger.info("MPC started displayName=\(self.myPeerID.displayName, privacy: .private)")
     }
 
     func stop() {
@@ -111,11 +111,11 @@ final class SiblingMPCWorker: NSObject {
 
     func invite(displayName: String) {
         guard let session, let browser, let peerID = peerRegistry[displayName] else {
-            logger.warning("invite: no peerID for displayName=\(displayName, privacy: .public)")
+            logger.warning("invite: no peerID for displayName=\(displayName, privacy: .private)")
             return
         }
         browser.invitePeer(peerID, to: session, withContext: nil, timeout: 30)
-        logger.info("invite sent to \(displayName, privacy: .public)")
+        logger.info("invite sent to \(displayName, privacy: .private)")
     }
 
     // MARK: - Send
@@ -154,14 +154,14 @@ extension SiblingMPCWorker: MCSessionDelegate {
             guard let self else { return }
             switch state {
             case .connected:
-                self.logger.info("MPC peer connected: \(name, privacy: .public)")
+                self.logger.info("MPC peer connected: \(name, privacy: .private)")
                 self.delegate?.mpcWorkerDidConnect(displayName: name)
             case .notConnected:
-                self.logger.info("MPC peer disconnected: \(name, privacy: .public)")
+                self.logger.info("MPC peer disconnected: \(name, privacy: .private)")
                 self.peerRegistry.removeValue(forKey: name)
                 self.delegate?.mpcWorkerDidDisconnect(displayName: name)
             case .connecting:
-                self.logger.debug("MPC peer connecting: \(name, privacy: .public)")
+                self.logger.debug("MPC peer connecting: \(name, privacy: .private)")
             @unknown default:
                 break
             }
@@ -231,7 +231,7 @@ extension SiblingMPCWorker: MCNearbyServiceBrowserDelegate {
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.peerRegistry[name] = box.value
-            self.logger.debug("MPC found peer: \(name, privacy: .public)")
+            self.logger.debug("MPC found peer: \(name, privacy: .private)")
             self.delegate?.mpcWorkerDidDiscoverPeer(displayName: name)
         }
     }
@@ -241,7 +241,7 @@ extension SiblingMPCWorker: MCNearbyServiceBrowserDelegate {
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.peerRegistry.removeValue(forKey: name)
-            self.logger.debug("MPC lost peer: \(name, privacy: .public)")
+            self.logger.debug("MPC lost peer: \(name, privacy: .private)")
             self.delegate?.mpcWorkerDidLosePeer(displayName: name)
         }
     }

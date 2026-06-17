@@ -123,7 +123,7 @@ final class TongueTwistersInteractor: TongueTwistersBusinessLogic {
         rhymeSolved = false
         phraseWasClean = false
         isFinished = false
-        logger.info("start child=\(self.childId, privacy: .public) phrases=\(self.phrases.count, privacy: .public)")
+        logger.info("start child=\(self.childId, privacy: .private) phrases=\(self.phrases.count, privacy: .public)")
         presenter?.presentStart(.init(phrases: phrases))
         if let first = currentPhrase {
             presenter?.presentLoadPhrase(.init(phrase: first, phraseIndex: 0, totalPhrases: phrases.count))

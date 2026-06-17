@@ -118,7 +118,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.childAvatar = avatar
             defaults.set(avatar, forKey: SettingsKey.childAvatar)
         }
-        logger.info("profile updated name=\(self.settings.childName, privacy: .private) age=\(self.settings.childAge, privacy: .public)")
+        logger.info("profile updated name=\(self.settings.childName, privacy: .private) age=\(self.settings.childAge, privacy: .private)")
         presenter?.presentUpdateProfile(.init(settings: settings))
     }
 

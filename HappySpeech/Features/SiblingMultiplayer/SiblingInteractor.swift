@@ -102,7 +102,7 @@ extension SiblingDiscoveryInteractor: SiblingMPCWorkerDelegate {
     }
 
     func mpcWorkerDidConnect(displayName: String) {
-        logger.info("connected to \(displayName, privacy: .public)")
+        logger.info("connected to \(displayName, privacy: .private)")
         if let peerID = mpcWorker.peerID(for: displayName) {
             router?.routeToLobby(peerID: peerID)
         }
@@ -273,7 +273,7 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
         currentRound = 1
         ourTotalPoints = 0
         peerTotalPoints = 0
-        logger.info("game loaded peerDisplayName=\(peerDisplayName, privacy: .public)")
+        logger.info("game loaded peerDisplayName=\(peerDisplayName, privacy: .private)")
         presenter?.presentGameLoaded(.init(
             words: words,
             peerDisplayName: peerDisplayName,

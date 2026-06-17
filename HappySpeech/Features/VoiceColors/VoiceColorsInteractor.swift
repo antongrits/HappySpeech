@@ -144,7 +144,7 @@ final class VoiceColorsInteractor: VoiceColorsBusinessLogic {
             await complete()
             return
         }
-        logger.info("start child=\(self.childId, privacy: .public) modes=\(self.modeOrder.count, privacy: .public)")
+        logger.info("start child=\(self.childId, privacy: .private) modes=\(self.modeOrder.count, privacy: .public)")
         presentCurrentTask()
     }
 

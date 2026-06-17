@@ -11,9 +11,28 @@ import UIKit
 /// the pattern used by `LiveAudioService`. All Firebase SDK calls are internally thread-safe.
 public final class LiveAuthService: AuthService, @unchecked Sendable {
 
+    // MARK: - Account-deletion collaborators
+
+    /// Облачный каскад удаления (Cloud Function `deleteUserData`): чистит Firestore,
+    /// Storage и сам Firebase Auth-аккаунт. Вызывается ДО локальной очистки и signOut,
+    /// пока пользователь ещё аутентифицирован. `nil` в тестах/preview без сети.
+    private let cloudDataDeleter: (@Sendable (_ userId: String) async throws -> Void)?
+
+    /// Полная очистка локального Realm. Вызывается после успешного облачного каскада,
+    /// чтобы данные ребёнка не осиротели на устройстве. `nil` — пропускается.
+    private let localDataWiper: (@Sendable () async throws -> Void)?
+
     // MARK: - Init
 
-    public init() {
+    /// - Parameters:
+    ///   - cloudDataDeleter: Облачный каскад (`CloudFunctionsServiceProtocol.deleteUserData`).
+    ///   - localDataWiper: Полная очистка локального Realm (`RealmActor.deleteAllData`).
+    public init(
+        cloudDataDeleter: (@Sendable (_ userId: String) async throws -> Void)? = nil,
+        localDataWiper: (@Sendable () async throws -> Void)? = nil
+    ) {
+        self.cloudDataDeleter = cloudDataDeleter
+        self.localDataWiper = localDataWiper
         Self.configureGoogleSignIn()
     }
 
@@ -210,21 +229,55 @@ public final class LiveAuthService: AuthService, @unchecked Sendable {
         }
     }
 
+    /// Удаляет аккаунт целиком (COPPA / GDPR right-to-erasure).
+    ///
+    /// Порядок критичен и выполняется, пока пользователь ещё аутентифицирован:
+    ///   1. Облачный каскад `deleteUserData` — Firestore + Storage + Firebase Auth-аккаунт.
+    ///      Должен пройти первым: после удаления Auth облако уже не очистить.
+    ///   2. Полная очистка локального Realm — чтобы данные ребёнка не осиротели на устройстве.
+    ///   3. Локальный `signOut` — очистка сессии Firebase Auth и GoogleSignIn.
+    ///
+    /// Если каскад упал — прерываемся с ошибкой, НЕ удаляя ничего молча: пользователь
+    /// останется в аккаунте и сможет повторить (целостность важнее «частичного» удаления).
+    ///
+    /// Когда облачный каскад не сконфигурирован (legacy / preview без сети), падаем
+    /// на прямой `user.delete()` Firebase Auth, чтобы аккаунт всё же был удалён.
     public func deleteAccount() async throws {
-        guard Auth.auth().currentUser != nil else {
+        guard let userId = Auth.auth().currentUser?.uid else {
             throw AppError.authUserNotFound
         }
+
         do {
-            // Текущий пользователь резолвится внутри операции, чтобы несендабельный
-            // FirebaseAuth.User не захватывался @Sendable-замыслом task group.
-            try await Self.withAuthTimeout {
-                guard let user = Auth.auth().currentUser else {
-                    throw AppError.authUserNotFound
+            if let cloudDataDeleter {
+                // (1) Облачный каскад — пока ещё аутентифицированы. Каскад удаляет
+                // и сам Auth-аккаунт, поэтому отдельный user.delete() далее не нужен.
+                try await cloudDataDeleter(userId)
+
+                // (2) Локальная очистка Realm.
+                if let localDataWiper {
+                    try await localDataWiper()
                 }
-                try await user.delete()
+
+                // (3) Сброс локальной (уже устаревшей) сессии.
+                GIDSignIn.sharedInstance.signOut()
+                try? Auth.auth().signOut()
+                HSLogger.auth.info("Account deleted (cloud cascade + local wipe + signOut)")
+            } else {
+                // Fallback без облачного каскада: удаляем только Auth-аккаунт.
+                // Текущий пользователь резолвится внутри операции, чтобы несендабельный
+                // FirebaseAuth.User не захватывался @Sendable-замыслом task group.
+                try await Self.withAuthTimeout {
+                    guard let user = Auth.auth().currentUser else {
+                        throw AppError.authUserNotFound
+                    }
+                    try await user.delete()
+                }
+                if let localDataWiper {
+                    try await localDataWiper()
+                }
+                GIDSignIn.sharedInstance.signOut()
+                HSLogger.auth.info("Account deleted (Auth-only fallback + local wipe)")
             }
-            GIDSignIn.sharedInstance.signOut()
-            HSLogger.auth.info("Account deleted")
         } catch {
             throw Self.mapFirebaseError(error, fallback: .authSignInFailed(error.localizedDescription))
         }

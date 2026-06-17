@@ -91,7 +91,7 @@ final class SyllableRaceInteractor: SyllableRaceBusinessLogic {
         didPersistSession = false
         childAge = await resolveChildAge()
 
-        logger.info("SyllableRace start: age=\(self.childAge) seq=\(self.sequences.count)")
+        logger.info("SyllableRace start: age=\(self.childAge, privacy: .private) seq=\(self.sequences.count, privacy: .public)")
         presentCurrentRound()
     }
 

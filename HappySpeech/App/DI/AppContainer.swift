@@ -1188,12 +1188,26 @@ public extension AppContainer {
         // ребёнка по звуку (тот же стор, что пишет `SessionShellInteractor`).
         let sharedStageProgressStore: any StageProgressStoring = UserDefaultsStageProgressStore()
 
+        // Account-deletion collaborators для LiveAuthService (COPPA / GDPR erasure):
+        // облачный каскад `deleteUserData` + полная очистка локального Realm.
+        // Каскад вызывается первым (пока аутентифицированы), затем локальная очистка.
+        let cloudFunctions = LiveCloudFunctionsService()
+        let cloudDataDeleter: @Sendable (String) async throws -> Void = { userId in
+            try await cloudFunctions.deleteUserData(userId: userId)
+        }
+        let localDataWiper: @Sendable () async throws -> Void = {
+            try await realmActor.deleteAllData()
+        }
+
         let container = AppContainer(
             realmActor: realmActor,
             childRepository: childRepo,
             sessionRepository: sessionRepo,
             themeManager: theme,
-            authService: LiveAuthService(),
+            authService: LiveAuthService(
+                cloudDataDeleter: cloudDataDeleter,
+                localDataWiper: localDataWiper
+            ),
             audioServiceFactory: { LiveAudioService() },
             asrServiceFactory: {
                 let asr = LiveASRService()
@@ -1257,6 +1271,10 @@ public extension AppContainer {
         // F1-016: тот же планировщик повторов, что получил AdaptivePlanner —
         // шаблоны упражнений пишут в него, планировщик читает due-повторы.
         container.reviewSchedulerStorage = sharedReviewScheduler
+        // Переиспользуем уже созданный LiveCloudFunctionsService (он же питает
+        // каскад удаления аккаунта) как ленивый cloudFunctionsService контейнера —
+        // одна инстанция на весь Block AA.
+        container.overrideBlockAAServices(cloudFunctions: cloudFunctions)
         return container
     }
 

@@ -527,7 +527,7 @@ struct VoiceStrongmanView: View {
         self.interactor = interactor
         self.router = router
 
-        logger.info("bootstrap child=\(childId, privacy: .public) age=\(age, privacy: .public)")
+        logger.info("bootstrap child=\(childId, privacy: .private) age=\(age, privacy: .private)")
         await interactor.start(.init(childId: childId))
     }
 

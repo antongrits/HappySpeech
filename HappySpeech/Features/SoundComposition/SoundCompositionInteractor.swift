@@ -110,7 +110,7 @@ final class SoundCompositionInteractor: SoundCompositionBusinessLogic {
         cleanWordCount = 0
         completedWordCount = 0
         isFinished = false
-        logger.info("start child=\(self.childId, privacy: .public) words=\(self.words.count, privacy: .public)")
+        logger.info("start child=\(self.childId, privacy: .private) words=\(self.words.count, privacy: .public)")
         presenter?.presentStart(SoundCompositionModels.Start.Response(words: words))
     }
 

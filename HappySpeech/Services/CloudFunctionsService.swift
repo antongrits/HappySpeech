@@ -62,6 +62,22 @@ public protocol CloudFunctionsServiceProtocol: AnyObject, Sendable {
         role: ParentRole,
         durationHours: Int
     ) async throws -> FamilyInviteToken
+
+    /// GDPR / COPPA hard-delete всех облачных данных пользователя (каскад).
+    ///
+    /// Вызывает задеплоенную Cloud Function `deleteUserData` (`europe-west3`),
+    /// которая рекурсивно удаляет `/users/{uid}` и `/specialists/{uid}` в Firestore,
+    /// все объекты Storage под `users/{uid}/`, `exports/{uid}/`, `uploads/users/{uid}/`,
+    /// **а также сам Firebase Auth-аккаунт**. Поэтому на клиенте после успешного
+    /// вызова отдельный `user.delete()` уже не нужен (аккаунт удалён сервером) —
+    /// достаточно локального `signOut`.
+    ///
+    /// Порядок критичен: каскад **обязан** отрабатывать, пока клиент ещё
+    /// аутентифицирован (функция требует `request.auth.uid == userId`).
+    ///
+    /// - Parameter userId: Идентификатор пользователя (должен совпадать с auth uid).
+    /// - Throws: `CloudFunctionsError` — при ошибке App Check, сети или сервера.
+    func deleteUserData(userId: String) async throws
 }
 
 // MARK: - Errors
@@ -131,6 +147,28 @@ public final class LiveCloudFunctionsService: CloudFunctionsServiceProtocol, @un
         }
     }
 
+    public func deleteUserData(userId: String) async throws {
+        guard !userId.isEmpty else {
+            throw CloudFunctionsError.invalidResponse("userId не может быть пустым")
+        }
+
+        let callable = functions.httpsCallable("deleteUserData")
+        // Серверный контракт требует confirm == "DELETE" (defence-in-depth от
+        // случайного вызова) — см. functions/src/index.ts.
+        let payload: [String: Any] = [
+            "userId": userId,
+            "confirm": "DELETE"
+        ]
+
+        do {
+            _ = try await callable.call(payload)
+            logger.info("deleteUserData cascade completed for uid")
+        } catch {
+            logger.error("deleteUserData error: \(error.localizedDescription)")
+            throw mapError(error)
+        }
+    }
+
     // MARK: - Private Helpers
 
     private func parseInviteToken(_ data: Any) throws -> FamilyInviteToken {
@@ -196,6 +234,9 @@ public final class MockCloudFunctionsService: CloudFunctionsServiceProtocol, @un
 
     public var shouldThrowError: Bool = false
 
+    /// Записывает каждый вызов `deleteUserData` для верификации в тестах.
+    public private(set) var deletedUserIds: [String] = []
+
     public init() {}
 
     public func createFamilyInviteToken(
@@ -205,5 +246,10 @@ public final class MockCloudFunctionsService: CloudFunctionsServiceProtocol, @un
     ) async throws -> FamilyInviteToken {
         if shouldThrowError { throw CloudFunctionsError.serverError("Mock error") }
         return stubbedInviteToken
+    }
+
+    public func deleteUserData(userId: String) async throws {
+        if shouldThrowError { throw CloudFunctionsError.serverError("Mock error") }
+        deletedUserIds.append(userId)
     }
 }

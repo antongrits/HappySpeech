@@ -37,10 +37,6 @@ interface ParentDoc {
   weeklyParentSummaryEnabled?: boolean;
 }
 
-interface ChildDoc {
-  name?: string;
-}
-
 interface SessionDoc {
   durationSeconds?: number;
 }
@@ -88,18 +84,18 @@ async function getWeekStats(
   };
 }
 
-/** Formats a human-readable summary string in Russian. */
+/**
+ * Formats a human-readable summary string in Russian.
+ * Child name is intentionally excluded: push payloads transit APNs/FCM
+ * unencrypted and appear on the lock screen — child PII must not leave the device.
+ * The app can substitute the name locally when handling the notification.
+ */
 function formatSummaryBody(
-  childName: string,
   sessionCount: number,
   totalMinutes: number,
 ): string {
-  const safeName = typeof childName === "string" && childName.trim().length > 0 ?
-    childName.trim() :
-    "ребёнок";
-
   if (sessionCount === 0) {
-    return `${safeName} на этой неделе ещё не занимался. Самое время начать!`;
+    return "На этой неделе занятий ещё не было. Самое время начать!";
   }
 
   const sessionsText = sessionCount === 1 ?
@@ -114,21 +110,23 @@ function formatSummaryBody(
       "1 минуту" :
       `${totalMinutes} минут`;
 
-  return `${safeName} занимался ${sessionsText} (${minutesText}) за эту неделю. Отличный результат!`;
+  return `Завершено ${sessionsText} (${minutesText}) за эту неделю. Отличный результат!`;
 }
 
 /**
  * Sends a weekly summary FCM push notification.
  * Fails silently — one bad token does not abort the batch.
+ *
+ * Privacy: child's name is NOT included in notification.title/body —
+ * push payloads transit APNs/FCM unencrypted and appear on the lock screen.
  */
 async function sendSummaryPush(
   messaging: Messaging,
   fcmToken: string,
-  childName: string,
   sessionCount: number,
   totalMinutes: number,
 ): Promise<boolean> {
-  const body = formatSummaryBody(childName, sessionCount, totalMinutes);
+  const body = formatSummaryBody(sessionCount, totalMinutes);
 
   const message = {
     token: fcmToken,
@@ -215,8 +213,8 @@ export async function runWeeklySummary(adminSdk: typeof admin): Promise<void> {
       }
 
       // Find active child.
+      // Child name is intentionally not fetched: push body must not contain PII.
       let childId: string | null = parentData.activeChildId ?? null;
-      let childName = "ребёнок";
 
       if (!childId) {
         const childrenSnap = await db
@@ -227,19 +225,7 @@ export async function runWeeklySummary(adminSdk: typeof admin): Promise<void> {
           .get();
 
         if (childrenSnap.empty) continue;
-        const firstChild = childrenSnap.docs[0];
-        childId = firstChild.id;
-        childName = ((firstChild.data() as ChildDoc | undefined)?.name) ?? childName;
-      } else {
-        const childDoc = await db
-          .collection("users")
-          .doc(userId)
-          .collection("children")
-          .doc(childId)
-          .get();
-        if (childDoc.exists) {
-          childName = ((childDoc.data() as ChildDoc | undefined)?.name) ?? childName;
-        }
+        childId = childrenSnap.docs[0].id;
       }
 
       const { sessionCount, totalMinutes } = await getWeekStats(
@@ -247,7 +233,7 @@ export async function runWeeklySummary(adminSdk: typeof admin): Promise<void> {
       );
 
       const sent = await sendSummaryPush(
-        messaging, fcmToken, childName, sessionCount, totalMinutes,
+        messaging, fcmToken, sessionCount, totalMinutes,
       );
       if (sent) summariesSent += 1;
     }

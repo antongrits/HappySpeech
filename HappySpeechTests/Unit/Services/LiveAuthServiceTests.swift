@@ -1,5 +1,25 @@
 @testable import HappySpeech
+import Foundation
 import XCTest
+
+// MARK: - Deletion flag recorder
+
+/// Потокобезопасный рекордер срабатывания каскада/очистки для проверки порядка
+/// в `deleteAccount`. `@Sendable`-замыслы LiveAuthService требуют Sendable-захват.
+private final class DeletionFlagRecorder: @unchecked Sendable {
+    private let lock = NSLock()
+    private var _cascadeFired = false
+    private var _wipeFired = false
+
+    var cascadeFired: Bool {
+        get { lock.lock(); defer { lock.unlock() }; return _cascadeFired }
+        set { lock.lock(); _cascadeFired = newValue; lock.unlock() }
+    }
+    var wipeFired: Bool {
+        get { lock.lock(); defer { lock.unlock() }; return _wipeFired }
+        set { lock.lock(); _wipeFired = newValue; lock.unlock() }
+    }
+}
 
 // MARK: - LiveAuthServiceTests
 //
@@ -57,6 +77,29 @@ final class LiveAuthServiceTests: XCTestCase {
         // signOut при отсутствии пользователя — Auth.auth().signOut() безопасен,
         // GIDSignIn.signOut() — локальный no-op. Не должен бросать.
         XCTAssertNoThrow(try sut.signOut())
+    }
+
+    // MARK: - deleteAccount cascade (COPPA / GDPR erasure)
+
+    func test_deleteAccount_withoutCurrentUser_throwsAndSkipsCascade() async {
+        // Без аутентифицированного пользователя удаление невозможно — и НИ облачный
+        // каскад, НИ локальная очистка не должны запускаться (защита от
+        // преждевременного стирания данных).
+        let recorder = DeletionFlagRecorder()
+        let sut = LiveAuthService(
+            cloudDataDeleter: { _ in recorder.cascadeFired = true },
+            localDataWiper: { recorder.wipeFired = true }
+        )
+
+        do {
+            try await sut.deleteAccount()
+            XCTFail("Без пользователя deleteAccount должен бросать authUserNotFound")
+        } catch {
+            // Ожидаемая ошибка отсутствия пользователя.
+        }
+
+        XCTAssertFalse(recorder.cascadeFired, "Облачный каскад НЕ должен запускаться без пользователя")
+        XCTAssertFalse(recorder.wipeFired, "Локальная очистка НЕ должна запускаться без пользователя")
     }
 
     // MARK: - AuthUser value type (что строит LiveAuthService.mapUser)

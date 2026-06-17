@@ -86,7 +86,7 @@ final class RewardsInteractor: RewardsBusinessLogic {
     // MARK: - BusinessLogic: LoadRewards
 
     func loadRewards(_ request: RewardsModels.LoadRewards.Request) {
-        logger.info("loadRewards childId=\(request.childId, privacy: .public) force=\(request.forceReload, privacy: .public)")
+        logger.info("loadRewards childId=\(request.childId, privacy: .private) force=\(request.forceReload, privacy: .public)")
         currentChildId = request.childId
 
         if request.forceReload {
@@ -230,7 +230,7 @@ final class RewardsInteractor: RewardsBusinessLogic {
     // MARK: - BusinessLogic: PrepareShare
 
     func prepareShare(_ request: RewardsModels.PrepareShare.Request) {
-        logger.info("prepareShare childId=\(request.childId, privacy: .public)")
+        logger.info("prepareShare childId=\(request.childId, privacy: .private)")
         let unlocked = allStickers.filter(\.isUnlocked)
         let top = unlocked
             .sorted { $0.rarity > $1.rarity }

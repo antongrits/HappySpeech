@@ -26,10 +26,6 @@ interface ParentDoc {
   activeChildId?: string;
 }
 
-interface ChildDoc {
-  name?: string;
-}
-
 /** Checks whether the given child had at least one session today (UTC). */
 async function hadSessionToday(
   db: Firestore,
@@ -61,21 +57,20 @@ async function hadSessionToday(
  * Sends a single FCM push notification to the parent's device.
  * Fails silently (logs error, does not throw) so one bad token
  * does not abort the entire batch.
+ *
+ * Privacy: child's name is NOT included in notification.title/body —
+ * push payloads transit APNs/FCM unencrypted and appear on the lock screen.
+ * The app substitutes the name locally on the device using the data payload.
  */
 async function sendReminderPush(
   messaging: Messaging,
   fcmToken: string,
-  childName: string,
 ): Promise<boolean> {
-  const safeName = typeof childName === "string" && childName.trim().length > 0 ?
-    childName.trim() :
-    "ребёнок";
-
   const message = {
     token: fcmToken,
     notification: {
       title: "Время для занятия!",
-      body: `${safeName} ещё не занимался сегодня. Давайте сделаем урок вместе?`,
+      body: "Сегодня ещё не было занятия. Давайте сделаем урок вместе?",
     },
     apns: {
       payload: {
@@ -148,8 +143,8 @@ export async function runDailyReminder(adminSdk: typeof admin): Promise<void> {
       }
 
       // Determine the active child — use activeChildId if set, else first child.
+      // Child name is intentionally not fetched: push body must not contain PII.
       let childId: string | null = parentData.activeChildId ?? null;
-      let childName = "ребёнок";
 
       if (!childId) {
         const childrenSnap = await db
@@ -160,19 +155,7 @@ export async function runDailyReminder(adminSdk: typeof admin): Promise<void> {
           .get();
 
         if (childrenSnap.empty) continue;
-        const firstChild = childrenSnap.docs[0];
-        childId = firstChild.id;
-        childName = (firstChild.data() as ChildDoc).name ?? childName;
-      } else {
-        const childDoc = await db
-          .collection("users")
-          .doc(userId)
-          .collection("children")
-          .doc(childId)
-          .get();
-        if (childDoc.exists) {
-          childName = ((childDoc.data() as ChildDoc | undefined)?.name) ?? childName;
-        }
+        childId = childrenSnap.docs[0].id;
       }
 
       const alreadyPlayed = await hadSessionToday(db, userId, childId);
@@ -181,7 +164,7 @@ export async function runDailyReminder(adminSdk: typeof admin): Promise<void> {
         continue;
       }
 
-      const sent = await sendReminderPush(messaging, fcmToken, childName);
+      const sent = await sendReminderPush(messaging, fcmToken);
       if (sent) remindersSent += 1;
     }
   }

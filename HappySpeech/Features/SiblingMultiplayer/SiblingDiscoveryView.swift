@@ -379,7 +379,7 @@ struct SiblingDiscoveryView: View {
         self.interactor = createdInteractor
         self.router = createdRouter
         createdInteractor.startDiscovery()
-        Self.logger.debug("SiblingDiscovery bootstrapped childId=\(childId, privacy: .public)")
+        Self.logger.debug("SiblingDiscovery bootstrapped childId=\(childId, privacy: .private)")
     }
 }
 

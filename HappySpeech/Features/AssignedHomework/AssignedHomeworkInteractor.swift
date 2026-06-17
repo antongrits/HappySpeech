@@ -150,7 +150,7 @@ final class AssignedHomeworkInteractor: AssignedHomeworkBusinessLogic, AssignedH
         )
         let response = AssignedHomeworkModels.FamilyLoad.Response(assignments: remote)
         Self.logger.debug(
-            "FamilyLoad: \(remote.count) assignments for child \(request.childId, privacy: .public)"
+            "FamilyLoad: \(remote.count) assignments for child \(request.childId, privacy: .private)"
         )
         await presenter?.presentFamilyLoad(response: response)
     }

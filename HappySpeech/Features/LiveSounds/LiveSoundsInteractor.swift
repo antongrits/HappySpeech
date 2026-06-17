@@ -124,7 +124,7 @@ final class LiveSoundsInteractor: LiveSoundsBusinessLogic {
         benchActiveSlot = 0
         benchUsedIndices = []
         isFinished = false
-        logger.info("start child=\(self.childId, privacy: .public) rounds=\(self.rounds.count, privacy: .public)")
+        logger.info("start child=\(self.childId, privacy: .private) rounds=\(self.rounds.count, privacy: .public)")
         presenter?.presentStart(LiveSoundsModels.Start.Response(rounds: rounds))
         // Автопроигрывание первого слова по звукам — ребёнок сразу слышит синтез.
         playSoundsSequence()

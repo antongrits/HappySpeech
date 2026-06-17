@@ -123,6 +123,23 @@ public actor RealmActor {
         }
     }
 
+    /// Полностью стирает локальную БД — все объекты всех типов.
+    ///
+    /// Используется при удалении аккаунта (COPPA / GDPR right-to-erasure): после
+    /// облачного каскада нельзя оставлять осиротевшие данные ребёнка на устройстве.
+    /// Если Realm ещё не открыт — открывает его, чтобы очистка состоялась даже при
+    /// холодном пути удаления.
+    public func deleteAllData() async throws {
+        if realm == nil {
+            try await open()
+        }
+        guard let realm else { throw AppError.realmWriteFailed("Realm not opened") }
+        try realm.write {
+            realm.deleteAll()
+        }
+        HSLogger.realm.info("Realm fully wiped (deleteAllData)")
+    }
+
     // MARK: - Async Realm helpers (for SyncService)
     // Uses async Realm(actor:) — results are mapped to Sendable inside actor
 

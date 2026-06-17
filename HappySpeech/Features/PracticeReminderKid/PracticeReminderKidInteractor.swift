@@ -74,7 +74,7 @@ final class PracticeReminderKidInteractor {
 
     func snooze() {
         state.isDismissed = true
-        Self.logger.info("snoozed reminder for \(self.childId, privacy: .public)")
+        Self.logger.info("snoozed reminder for \(self.childId, privacy: .private)")
     }
 
     // MARK: - Aggregation
