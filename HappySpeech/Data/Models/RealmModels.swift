@@ -665,6 +665,102 @@ public struct PhonemeObservationDTO: Sendable, Identifiable, Equatable {
     }
 }
 
+// MARK: - CarryoverLogObject («Звуковой охотник дня»)
+
+/// Дневной лог переноса звука в спонтанную речь («Звуковой охотник дня», v20).
+///
+/// Одна запись = одна дата × звук × ребёнок. Хранит «пойманные» в быту слова
+/// (детский контур) и родительское подтверждение переноса (3 градации) с
+/// опциональной голосовой заметкой. Сигнал переноса питает
+/// `AdaptivePlannerService` (через `CorrectionStage`): чистая свободная речь →
+/// звук двигается к завершению; иначе возвращаются упражнения автоматизации.
+///
+/// COPPA: childId без PII; пойманные слова — обычная лексика (не PII); голосовая
+/// заметка — локальный .m4a в Documents, путь относительный. Без распознавания
+/// окружения и без аудио ребёнка.
+final class CarryoverLogObject: Object, @unchecked Sendable {
+    /// Стабильный primary key вида `<childId>:<sound>:<yyyy-MM-dd>` — гарантирует
+    /// одну запись на день/звук/ребёнка (idempotent upsert «поймал слово»).
+    @Persisted(primaryKey: true) var id: String = ""
+    @Persisted(indexed: true) var childId: String = ""
+    /// Целевой звук дня (кириллица, например «Р»).
+    @Persisted var sound: String = ""
+    /// Локальный день записи (нормализован к началу дня).
+    @Persisted var day: Date = Date()
+    /// «Пойманные» в быту слова (детский контур).
+    @Persisted var caughtWords: List<String>
+    /// Цель сачка (число слотов-звёзд для полного сачка).
+    @Persisted var netGoal: Int = 5
+    /// Какие задания-охоты отмечены выполненными (id миссии из пака).
+    @Persisted var completedTaskIds: List<String>
+    /// Родительский чек-ин переноса: "" (не отмечено) | "clean" | "sometimes" | "notyet".
+    @Persisted var parentCheckIn: String = ""
+    /// Относительный путь к голосовой заметке родителя (.m4a в Documents), если есть.
+    @Persisted var parentVoiceNotePath: String?
+    /// Длительность голосовой заметки в секундах (0, если заметки нет).
+    @Persisted var parentVoiceNoteDurationSec: Double = 0
+    @Persisted var createdAt: Date = Date()
+    @Persisted var updatedAt: Date = Date()
+}
+
+// MARK: - CarryoverLogDTO (Sendable DTO)
+
+/// Realm-независимый снимок дневного лога переноса. Создаётся из
+/// `CarryoverLogObject` внутри `RealmActor` и безопасно пересекает границу актора.
+public struct CarryoverLogDTO: Sendable, Identifiable, Equatable {
+    public let id: String
+    public let childId: String
+    public let sound: String
+    public let day: Date
+    public var caughtWords: [String]
+    public let netGoal: Int
+    public var completedTaskIds: [String]
+    /// "" | "clean" | "sometimes" | "notyet".
+    public var parentCheckIn: String
+    public var parentVoiceNotePath: String?
+    public var parentVoiceNoteDurationSec: Double
+    public let createdAt: Date
+    public let updatedAt: Date
+
+    public init(
+        id: String,
+        childId: String,
+        sound: String,
+        day: Date,
+        caughtWords: [String] = [],
+        netGoal: Int = 5,
+        completedTaskIds: [String] = [],
+        parentCheckIn: String = "",
+        parentVoiceNotePath: String? = nil,
+        parentVoiceNoteDurationSec: Double = 0,
+        createdAt: Date = Date(),
+        updatedAt: Date = Date()
+    ) {
+        self.id = id
+        self.childId = childId
+        self.sound = sound
+        self.day = day
+        self.caughtWords = caughtWords
+        self.netGoal = netGoal
+        self.completedTaskIds = completedTaskIds
+        self.parentCheckIn = parentCheckIn
+        self.parentVoiceNotePath = parentVoiceNotePath
+        self.parentVoiceNoteDurationSec = parentVoiceNoteDurationSec
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+    }
+
+    /// Канонический primary key для дня/звука/ребёнка.
+    public static func makeId(childId: String, sound: String, day: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyy-MM-dd"
+        return "\(childId):\(sound):\(formatter.string(from: day))"
+    }
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
@@ -683,8 +779,14 @@ public struct PhonemeObservationDTO: Sendable, Identifiable, Equatable {
 ///      инстанцировались/читались/писались (0 ссылок в коде, таблицы всегда пустые).
 ///      Realm удаляет неиспользуемые таблицы при отсутствии класса — ручной миграции
 ///      не требуется, потери данных нет.
+/// v19: CustomizationObject.hairColor / .eyeColor / .skinTone / .accessories —
+///      персистентность выбора внешности героя. Аддитивная миграция.
+/// v20: CarryoverLogObject («Звуковой охотник дня») — дневной лог переноса звука
+///      в спонтанную речь (пойманные слова + родительский чек-ин 3 градации +
+///      опц. голосовая заметка). Новый объект — Realm создаёт схему автоматически,
+///      дефолты заданы в модели. Аддитивная миграция.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 19
+    static let current: UInt64 = 20
 }
 
 // MARK: - RealmConfig

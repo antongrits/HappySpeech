@@ -366,6 +366,29 @@ enum AppRoute: Hashable {
     /// смысловых звеньев, плеер «мультика» + радар полноты завязка→действие→
     /// развязка. On-device, без сети. «Показать маме» — через parental gate.
     case storyPictures(childId: String)
+
+    // MARK: - Чистоговорки-конструктор (kid, автоматизация звука во фразе с ритмом)
+
+    /// «Чистоговорки-конструктор» (kid): автоматизация целевого звука во фразе
+    /// (В. В. Коноваленко / С. В. Коноваленко). Слоговая разминка с ритм-долями +
+    /// строка с пропуском-рифмой (выбор картинки), повтор вслух с записью
+    /// (AudioService) и мягкой ASR-проверкой целевого звука (ASRService), затем
+    /// наращивание строки слог→фраза «вагончиками». Метроном переиспользует
+    /// движок StutteringModule — мягкий, замедляемый, ОТКЛЮЧАЕМЫЙ (для
+    /// заикающихся — без таймера). On-device, без сети.
+    case tongueTwisters(childId: String)
+
+    // MARK: - Звуковой охотник дня (kid + parent, перенос звука в спонтанную речь)
+
+    /// «Звуковой охотник дня» (kid + parent): перенос поставленного звука из
+    /// упражнений в спонтанную бытовую речь — завершающий этап коррекции
+    /// (Фомичёва / Коноваленко / Жукова). Kid: «миссия дня» со звуком, 2
+    /// задания-охоты, «сачок» из 5 слотов-звёзд, копилка пойманных слов и серия
+    /// дней охоты. Parent: 3-градационный чек-ин переноса в свободную речь +
+    /// голосовая заметка; сигнал питает `AdaptivePlannerService` через
+    /// `CorrectionStage`. Утренняя миссия — локальный пуш `NotificationService`.
+    /// On-device, без сети. `isParent` выбирает контур.
+    case soundHunterDay(childId: String, isParent: Bool = false)
 }
 
 enum PermissionType: Hashable {
@@ -1373,6 +1396,21 @@ struct AppCoordinatorView: View {
         case .storyPictures(let childId):
             StoryPicturesView(childId: childId.isEmpty ? container.currentChildId : childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - Чистоговорки-конструктор (автоматизация звука во фразе с ритмом)
+
+        case .tongueTwisters(let childId):
+            TongueTwistersView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - Звуковой охотник дня (перенос звука в спонтанную речь)
+
+        case .soundHunterDay(let childId, let isParent):
+            SoundHunterDayView(
+                childId: childId.isEmpty ? container.currentChildId : childId,
+                circuit: isParent ? .parent : .kid
+            )
+            .environment(\.circuitContext, isParent ? .parent : .kid)
         }
     }
 
@@ -1970,6 +2008,16 @@ extension AppCoordinatorView {
         // MARK: Рассказ по серии картинок (связная речь)
         case "storyPictures", "storypictures", "pictureSeries", "narrativeSeries":
             return .storyPictures(childId: previewChild)
+
+        // MARK: Чистоговорки-конструктор (автоматизация звука во фразе с ритмом)
+        case "tongueTwisters", "tonguetwisters", "chistogovorki", "phraseRhythm":
+            return .tongueTwisters(childId: previewChild)
+
+        // MARK: Звуковой охотник дня (перенос звука в спонтанную речь)
+        case "soundHunterDay", "soundhunterday", "carryover", "dailyHunter":
+            return .soundHunterDay(childId: previewChild, isParent: false)
+        case "soundHunterParent", "carryoverParent", "transferCheckIn":
+            return .soundHunterDay(childId: previewChild, isParent: true)
 
         default:
             return .auth

@@ -1,6 +1,74 @@
 {
   "sourceLanguage": "ru",
   "strings": {
+    "tongueTwisters.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tongue Twisters"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорки"
+          }
+        }
+      }
+    },
+    "tongueTwisters.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rhythmic tongue twisters"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорки с ритмом"
+          }
+        }
+      }
+    },
+    "soundHunterDay.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sound Hunter"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой охотник"
+          }
+        }
+      }
+    },
+    "soundHunterDay.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catch the sound in real life"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лови звук в жизни"
+          }
+        }
+      }
+    },
     "voiceColors.entry.title": {
       "extractionState": "manual",
       "localizations": {

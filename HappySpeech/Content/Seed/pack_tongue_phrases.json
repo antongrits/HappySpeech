@@ -1,0 +1,120 @@
+{
+  "id": "pack_tongue_phrases_v1",
+  "soundTarget": "автоматизация-фраза",
+  "group": "автоматизация",
+  "version": 1,
+  "description": "v32 expansion 2.11 «Чистоговорки-конструктор». Корпус чистоговорок для автоматизации звука во фразе (В. В. Коноваленко, С. В. Коноваленко «Автоматизация звуков у детей»). Каждая чистоговорка: слоговая разминка с ритм-долями, строка с пропуском-рифмой (3 варианта-ответа, один рифмующийся), целевой звук размечен по позициям, ступени наращивания слог→ряд→короткая фраза→полная для экрана «Поезд из слов». Картинки-ответы — только верифицированные word_* ассеты. Метроном опционален и замедляем (для заикающихся — без таймера).",
+  "phrasesPerSession": 5,
+  "phrases": [
+    {
+      "id": "tt-s-osa",
+      "targetSound": "С",
+      "group": "свистящие",
+      "minAge": 5,
+      "warmupSyllable": "Са",
+      "warmupBeats": 3,
+      "linePrefix": "Са-са-са —",
+      "lineSuffix": "вот летит",
+      "answerWord": "оса",
+      "answerAsset": "word_wasp",
+      "distractors": [
+        { "word": "лиса", "asset": "word_fox" },
+        { "word": "коса", "asset": "word_kosa" }
+      ],
+      "wagons": [
+        { "text": "Са", "isSyllable": true },
+        { "text": "Са-са-са", "isSyllable": true },
+        { "text": "вот летит оса", "isSyllable": false },
+        { "text": "Са-са-са — вот летит оса", "isSyllable": false }
+      ]
+    },
+    {
+      "id": "tt-z-koza",
+      "targetSound": "З",
+      "group": "свистящие",
+      "minAge": 5,
+      "warmupSyllable": "За",
+      "warmupBeats": 3,
+      "linePrefix": "За-за-за —",
+      "lineSuffix": "вот идёт",
+      "answerWord": "коза",
+      "answerAsset": "word_koza",
+      "distractors": [
+        { "word": "ваза", "asset": "word_vaza" },
+        { "word": "гроза", "asset": "word_groza" }
+      ],
+      "wagons": [
+        { "text": "За", "isSyllable": true },
+        { "text": "За-за-за", "isSyllable": true },
+        { "text": "вот идёт коза", "isSyllable": false },
+        { "text": "За-за-за — вот идёт коза", "isSyllable": false }
+      ]
+    },
+    {
+      "id": "tt-sh-podushka",
+      "targetSound": "Ш",
+      "group": "шипящие",
+      "minAge": 6,
+      "warmupSyllable": "Ша",
+      "warmupBeats": 3,
+      "linePrefix": "Ша-ша-ша —",
+      "lineSuffix": "мягкая",
+      "answerWord": "подушка",
+      "answerAsset": "word_podushka",
+      "distractors": [
+        { "word": "лягушка", "asset": "word_lyagushka" },
+        { "word": "пушка", "asset": "word_pushka" }
+      ],
+      "wagons": [
+        { "text": "Ша", "isSyllable": true },
+        { "text": "Ша-ша-ша", "isSyllable": true },
+        { "text": "мягкая подушка", "isSyllable": false },
+        { "text": "Ша-ша-ша — мягкая подушка", "isSyllable": false }
+      ]
+    },
+    {
+      "id": "tt-r-gora",
+      "targetSound": "Р",
+      "group": "соноры",
+      "minAge": 6,
+      "warmupSyllable": "Ра",
+      "warmupBeats": 3,
+      "linePrefix": "Ра-ра-ра —",
+      "lineSuffix": "высокая",
+      "answerWord": "гора",
+      "answerAsset": "word_gora",
+      "distractors": [
+        { "word": "комар", "asset": "word_komar" },
+        { "word": "топор", "asset": "word_topor" }
+      ],
+      "wagons": [
+        { "text": "Ра", "isSyllable": true },
+        { "text": "Ра-ра-ра", "isSyllable": true },
+        { "text": "высокая гора", "isSyllable": false },
+        { "text": "Ра-ра-ра — высокая гора", "isSyllable": false }
+      ]
+    },
+    {
+      "id": "tt-l-pila",
+      "targetSound": "Л",
+      "group": "соноры",
+      "minAge": 5,
+      "warmupSyllable": "Ла",
+      "warmupBeats": 3,
+      "linePrefix": "Ла-ла-ла —",
+      "lineSuffix": "острая",
+      "answerWord": "пила",
+      "answerAsset": "word_pila",
+      "distractors": [
+        { "word": "юла", "asset": "word_yula" },
+        { "word": "метла", "asset": "word_metla" }
+      ],
+      "wagons": [
+        { "text": "Ла", "isSyllable": true },
+        { "text": "Ла-ла-ла", "isSyllable": true },
+        { "text": "острая пила", "isSyllable": false },
+        { "text": "Ла-ла-ла — острая пила", "isSyllable": false }
+      ]
+    }
+  ]
+}

@@ -74,6 +74,23 @@ public final class AppContainer {
         _phonemeProfileService = nil
     }
 
+    // «Звуковой охотник дня» (v20): CarryoverLog repository — lazy, DTO-only
+    // через RealmActor. Хранит дневной лог переноса звука в спонтанную речь
+    // (пойманные слова + родительский чек-ин 3 градации + опц. голосовая заметка).
+    private var _carryoverLogRepository: (any CarryoverLogRepository)?
+    public var carryoverLogRepository: any CarryoverLogRepository {
+        if let existing = _carryoverLogRepository { return existing }
+        let new = LiveCarryoverLogRepository(realmActor: realmActor)
+        _carryoverLogRepository = new
+        return new
+    }
+
+    /// Подмена ``carryoverLogRepository`` для preview / тестов. Должна вызываться
+    /// до первого обращения к репозиторию.
+    public func overrideCarryoverLogRepository(_ repository: any CarryoverLogRepository) {
+        _carryoverLogRepository = repository
+    }
+
     // v17 «Фонемный паспорт»: PhonemeProfileService — lazy actor. Агрегирует
     // GOP-наблюдения в матрицу «фонема × позиция» и оценивает динамику освоения
     // (EWMA + Theil-Sen). Оценка динамики, не диагноз (project guide §11).

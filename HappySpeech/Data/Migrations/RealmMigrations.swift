@@ -116,6 +116,14 @@ enum RealmMigrations {
             // подставит дефолты из модели (golden / blue / light / "") для
             // существующих записей — enumerateObjects не требуется.
         }
+        if oldSchemaVersion < 20 {
+            // v20: CarryoverLogObject («Звуковой охотник дня») — дневной лог
+            // переноса звука в спонтанную речь (childId/sound/day/caughtWords/
+            // netGoal/completedTaskIds/parentCheckIn/parentVoiceNotePath?/
+            // parentVoiceNoteDurationSec). Новый объект — Realm создаёт схему
+            // автоматически, дефолты заданы в модели. Никаких enumerateObjects
+            // не требуется — нужно только зафиксировать версию.
+        }
     }
 }
 

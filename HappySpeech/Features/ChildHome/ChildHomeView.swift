@@ -1420,6 +1420,30 @@ extension ChildHomeView {
         ) {
             router?.routeToStoryPictures(childId: childId)
         }
+
+        // v32 expansion 2.11 — Tongue Twisters «Чистоговорки-конструктор»
+        // (автоматизация звука во фразе с ритмом: разминка → рифма → запись/ASR →
+        // наращивание строки «вагончиками»; метроном опционален и замедляем).
+        ChildHomeV25EntryCard(
+            title: String(localized: "tongueTwisters.entry.title", defaultValue: "Чистоговорки"),
+            hint: String(localized: "tongueTwisters.entry.hint", defaultValue: "Скороговорки с ритмом"),
+            iconName: "metronome",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToTongueTwisters(childId: childId)
+        }
+
+        // v32 expansion 2.5 — Sound Hunter Day «Звуковой охотник дня»
+        // (перенос звука в спонтанную бытовую речь: дневная миссия → «поймал
+        // слово» → копилка дня → родительское подтверждение переноса).
+        ChildHomeV25EntryCard(
+            title: String(localized: "soundHunterDay.entry.title", defaultValue: "Звуковой охотник"),
+            hint: String(localized: "soundHunterDay.entry.hint", defaultValue: "Лови звук в жизни"),
+            iconName: "target",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToSoundHunterDay(childId: childId)
+        }
     }
 }
 

@@ -51,6 +51,10 @@ protocol ChildHomeRoutingLogic {
     func routeToListenYourself(childId: String)
     // v32 expansion 2.6 — рассказ по серии картинок (связная речь)
     func routeToStoryPictures(childId: String)
+    // v32 expansion 2.11 — чистоговорки-конструктор (звук во фразе с ритмом)
+    func routeToTongueTwisters(childId: String)
+    // v32 expansion 2.5 — звуковой охотник дня (перенос звука в быт)
+    func routeToSoundHunterDay(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -323,5 +327,17 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// сюжетной серии: упорядочивание → рассказ → радар полноты).
     func routeToStoryPictures(childId: String) {
         coordinator?.navigate(to: .storyPictures(childId: childId))
+    }
+
+    /// v32 expansion 2.11 — «Чистоговорки-конструктор» (автоматизация звука во
+    /// фразе с ритмом: разминка → рифма → запись/ASR → наращивание «вагончиками»).
+    func routeToTongueTwisters(childId: String) {
+        coordinator?.navigate(to: .tongueTwisters(childId: childId))
+    }
+
+    /// v32 expansion 2.5 — «Звуковой охотник дня» (перенос звука в спонтанную
+    /// бытовую речь: дневная миссия → «поймал слово» → копилка дня → родит. подтверждение).
+    func routeToSoundHunterDay(childId: String) {
+        coordinator?.navigate(to: .soundHunterDay(childId: childId))
     }
 }
