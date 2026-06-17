@@ -608,9 +608,7 @@ struct ProgressDashboardView: View {
                 .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    // Имя + возраст (из ThemeManager через childName — читаем
-                    // из container; «6 лет» пока приходит из активного профиля).
-                    Text(container.themeManager.selectedTheme.displayName)
+                    Text(display.childName)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
@@ -793,7 +791,7 @@ struct ProgressDashboardView: View {
         let streak = display.summaryCards.first(where: { $0.kind == .streak })
             .flatMap { Int($0.value) } ?? 0
         interactor?.loadInsights(.init(
-            childName: container.themeManager.selectedTheme.displayName,
+            childName: display.childName,
             sounds: sounds,
             streakDays: streak
         ))
@@ -822,7 +820,7 @@ struct ProgressDashboardView: View {
             )
         }
         interactor?.requestLLMSummary(.init(
-            childName: container.themeManager.selectedTheme.displayName,
+            childName: display.childName,
             summary: summaryDomain,
             topSound: topSound
         ))

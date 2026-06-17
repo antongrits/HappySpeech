@@ -69,47 +69,30 @@ struct SyllableConstructorView: View {
     )
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
-                // конструктивный вайб). softLight overlay для глубины фона.
-                HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            // kidWarm mesh (тёплый конструктивный вайб). softLight для глубины фона.
+            HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
 
-                if let startVM = holder.startVM {
-                    contentSection(startVM: startVM)
-                } else {
-                    loadingSection
-                }
+            if let startVM = holder.startVM {
+                contentSection(startVM: startVM)
+            } else {
+                loadingSection
             }
-            .navigationTitle(Text("syllable.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("syllable.close.a11y"))
-                }
-            }
-            .task {
-                await setupAndStart()
-            }
-            .onDisappear {
-                // Уход с экрана = конец сессии: фиксируем результат в планировщике
-                // и персистентности (история, прогресс, due-повторы FSRS).
-                Task { @MainActor [interactor] in
-                    await interactor?.finish()
-                }
+        }
+        .task {
+            await setupAndStart()
+        }
+        .onDisappear {
+            // Уход с экрана = конец сессии: фиксируем результат в планировщике
+            // и персистентности (история, прогресс, due-повторы FSRS).
+            Task { @MainActor [interactor] in
+                await interactor?.finish()
             }
         }
         .environment(\.circuitContext, .kid)
@@ -130,6 +113,8 @@ struct SyllableConstructorView: View {
         GeometryReader { geo in
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp3) {
+                    // Drag-класс: заголовок с X-кнопкой (без системного nav bar).
+                    dragClassHeader(startVM)
                     tierChipsRow(startVM)
                     progressRow(startVM)
                     wordHeader(startVM)
@@ -149,6 +134,40 @@ struct SyllableConstructorView: View {
             .scrollBounceBehavior(.basedOnSize)
             .safeAreaPadding(.bottom, SpacingTokens.sp2)
         }
+    }
+
+    /// Верхняя строка заголовка drag-класса: название экрана + кнопка выхода.
+    /// Без системного NavigationStack / NavigationBar — как в эталоне.
+    private func dragClassHeader(
+        _ startVM: SyllableConstructorModels.Start.ViewModel
+    ) -> some View {
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "syllable.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                if !startVM.progressLabel.isEmpty {
+                    Text(startVM.progressLabel)
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+            }
+            Spacer(minLength: SpacingTokens.sp2)
+            Button {
+                exitGame()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text("syllable.close.a11y"))
+        }
+        .padding(.top, SpacingTokens.sp2)
     }
 
     private func tierChipsRow(

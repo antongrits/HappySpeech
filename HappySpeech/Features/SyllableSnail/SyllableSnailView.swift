@@ -145,52 +145,36 @@ struct SyllableSnailView: View {
     )
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // kidWarm mesh (тёплый игровой вайб). Reduced Motion: убираем
-                // анимированный/блендовый фон для детерминизма снимков.
-                if !reduceMotion {
-                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                        .ignoresSafeArea()
-                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                        .blendMode(.softLight)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            // kidWarm mesh (тёплый игровой вайб). Reduced Motion: убираем
+            // анимированный/блендовый фон для детерминизма снимков.
+            if !reduceMotion {
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
 
-                if holder.isFinished, let summary = holder.summary {
-                    summarySection(summary)
-                } else if let round = holder.currentRound {
-                    gameSection(round: round)
-                } else {
-                    loadingSection
-                }
+            if holder.isFinished, let summary = holder.summary {
+                summarySection(summary)
+            } else if let round = holder.currentRound {
+                gameSection(round: round)
+            } else {
+                loadingSection
+            }
 
-                if holder.showCelebration {
-                    HSConfettiView(preset: .celebration, isActive: $holder.showCelebration)
-                        .ignoresSafeArea()
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+            if holder.showCelebration {
+                HSConfettiView(preset: .celebration, isActive: $holder.showCelebration)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
-            .navigationTitle(Text("syllableSnail.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("syllableSnail.close.a11y"))
-                }
-            }
-            .task {
-                await setupAndStart()
-            }
+        }
+        .task {
+            await setupAndStart()
         }
         .environment(\.circuitContext, .kid)
     }
@@ -246,14 +230,35 @@ struct SyllableSnailView: View {
         _ round: SyllableSnailModels.Start.RoundViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            HStack {
-                Text(holder.startVM?.modeLabel ?? "")
-                    .font(TypographyTokens.caption(12).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+            // Drag-класс: заголовок с кнопкой выхода (без системного nav bar).
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "syllableSnail.title"))
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(holder.startVM?.modeLabel ?? "")
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
                 Spacer()
-                Text(round.progressLabel)
-                    .font(TypographyTokens.caption(12).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                HStack(spacing: SpacingTokens.sp2) {
+                    Text(round.progressLabel)
+                        .font(TypographyTokens.caption(12).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    Button {
+                        exitGame()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text("syllableSnail.close.a11y"))
+                }
             }
             GeometryReader { geo in
                 ZStack(alignment: .leading) {

@@ -54,6 +54,7 @@ enum ProgressDashboardModels {
         }
 
         struct Response: Sendable {
+            let childName: String
             let summary: DashboardSummary
             let dailyAccuracy: [DailyAccuracy]
             let weeklyAccuracy: [WeeklyAccuracy]
@@ -63,6 +64,7 @@ enum ProgressDashboardModels {
         }
 
         struct ViewModel: Sendable {
+            let childName: String
             let summaryCards: [SummaryCardViewModel]
             let dailyChart: [DailyChartPoint]
             let weeklyChart: [WeeklyChartPoint]

@@ -14,41 +14,26 @@ struct SentenceBuilderKidView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (sentence-building).
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
-                    .ignoresSafeArea()
-                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
-                    .blendMode(.softLight)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
-                content
-            }
-            .navigationTitle(Text(String(localized: "sentenceBuilder.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
-                }
-            }
-            .task {
-                if interactor == nil {
-                    let new = SentenceBuilderKidInteractor(
-                        childId: childId,
-                        childRepository: container.childRepository,
-                        adaptivePlanner: container.adaptivePlannerService
-                    )
-                    interactor = new
-                    await new.load()
-                }
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            // Step 10 Batch G — Pattern 1: kidWarm mesh палитра (drag-класс).
+            HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            content
+        }
+        .task {
+            if interactor == nil {
+                let new = SentenceBuilderKidInteractor(
+                    childId: childId,
+                    childRepository: container.childRepository,
+                    adaptivePlanner: container.adaptivePlannerService
+                )
+                interactor = new
+                await new.load()
             }
         }
         .environment(\.circuitContext, .kid)
@@ -59,6 +44,24 @@ struct SentenceBuilderKidView: View {
         if let interactor, interactor.state.isLoaded {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp4) {
+                    // Drag-класс: заголовок с X-кнопкой (без системного nav bar).
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(String(localized: "sentenceBuilder.nav.title"))
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Spacer()
+                        Button {
+                            exitGame()
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text(String(localized: "action.close")))
+                    }
                     progressHeader(state: interactor.state)
                     hero
                     assembledZone(interactor: interactor)

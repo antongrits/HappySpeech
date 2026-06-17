@@ -66,6 +66,30 @@ final class ProgressDashboardInteractorTests: XCTestCase {
         }
     }
 
+    // MARK: - Stub ChildRepository
+
+    private final class StubChildRepository: ChildRepository, @unchecked Sendable {
+        let stubbedName: String
+        init(name: String = "Маша") { self.stubbedName = name }
+
+        private func makeDTO(id: String) -> ChildProfileDTO {
+            ChildProfileDTO(id: id, name: stubbedName, age: 6, targetSounds: [], parentId: "parent-1")
+        }
+
+        func fetchAll() async throws -> [ChildProfileDTO] { [makeDTO(id: "child-1")] }
+        func fetch(id: String) async throws -> ChildProfileDTO { makeDTO(id: id) }
+        func save(_ child: ChildProfileDTO) async throws {}
+        func delete(id: String) async throws {}
+        func updateProgress(childId: String, sound: String, rate: Double) async throws {}
+        func updateStreak(childId: String, streak: Int) async throws {}
+        func updateSessionAggregates(
+            childId: String,
+            lastSessionAt: Date,
+            addedMinutes: Int,
+            streak: Int
+        ) async throws {}
+    }
+
     // MARK: - Fixtures
 
     private func nonEmptyAggregate() -> DashboardAggregate {
@@ -86,8 +110,15 @@ final class ProgressDashboardInteractorTests: XCTestCase {
         )
     }
 
-    private func makeSUT(aggregate: DashboardAggregate) -> (ProgressDashboardInteractor, SpyPresenter) {
-        let sut = ProgressDashboardInteractor(worker: StubWorker(aggregate: aggregate), llmDecisionService: nil)
+    private func makeSUT(
+        aggregate: DashboardAggregate,
+        childName: String = "Маша"
+    ) -> (ProgressDashboardInteractor, SpyPresenter) {
+        let sut = ProgressDashboardInteractor(
+            worker: StubWorker(aggregate: aggregate),
+            llmDecisionService: nil,
+            childRepository: StubChildRepository(name: childName)
+        )
         let spy = SpyPresenter()
         sut.presenter = spy
         return (sut, spy)
@@ -181,6 +212,32 @@ final class ProgressDashboardInteractorTests: XCTestCase {
         sut.loadSoundDetail(.init(sound: "ЗЗЗ_НЕСУЩЕСТВУЮЩИЙ"))
         XCTAssertFalse(spy.loadSoundDetailCalled)
         XCTAssertTrue(spy.failureCalled)
+    }
+
+    // MARK: - 9a. loadDashboard с реальным ChildRepository → childName из профиля
+
+    func test_loadDashboard_realChildRepo_propagatesChildName() async {
+        let (sut, spy) = makeSUT(aggregate: nonEmptyAggregate(), childName: "Маша")
+        await awaitLoad(sut, spy, period: .week, childId: "child-1")
+        XCTAssertEqual(spy.lastLoadDashboardResponse?.childName, "Маша")
+    }
+
+    // MARK: - 9b. loadDashboard без ChildRepository → fallback-имя, не крашит
+
+    func test_loadDashboard_noChildRepo_usesFallbackName() async {
+        let sut = ProgressDashboardInteractor(
+            worker: StubWorker(aggregate: nonEmptyAggregate()),
+            llmDecisionService: nil,
+            childRepository: nil
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        let exp = expectation(description: "load")
+        spy.onLoadDashboard = { exp.fulfill() }
+        sut.loadDashboard(.init(childId: "child-1", forceReload: true, period: .week))
+        await fulfillment(of: [exp], timeout: 2.0)
+        // Без репозитория имя — нейтральная строка (не пустая, не тема оформления).
+        XCTAssertFalse(spy.lastLoadDashboardResponse?.childName.isEmpty ?? true)
     }
 
     // MARK: - 9. requestLLMSummary без сервиса → isFallback = true

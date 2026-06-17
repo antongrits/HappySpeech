@@ -21,6 +21,7 @@ protocol ProgressDashboardDisplayLogic: AnyObject {
 @MainActor
 final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
 
+    var childName: String = String(localized: "progressDashboard.child.fallbackName", defaultValue: "Ребёнок")
     var summaryCards: [SummaryCardViewModel] = []
     var dailyChart: [DailyChartPoint] = []
     var weeklyChart: [WeeklyChartPoint] = []
@@ -50,6 +51,7 @@ final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
     // MARK: - DisplayLogic
 
     func displayLoadDashboard(_ viewModel: ProgressDashboardModels.LoadDashboard.ViewModel) {
+        childName = viewModel.childName
         summaryCards = viewModel.summaryCards
         dailyChart = viewModel.dailyChart
         weeklyChart = viewModel.weeklyChart

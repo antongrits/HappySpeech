@@ -47,6 +47,8 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
     private var recommendations: [String] = []
     private var currentPeriod: ProgressDashboardModels.TimePeriod = .week
     private var lastChildId: String = "child-default"
+    /// Реальное имя ребёнка, резолвится один раз при loadDashboard.
+    private var lastChildName: String = String(localized: "progressDashboard.child.fallbackName", defaultValue: "Ребёнок")
     /// Реальный возраст ребёнка (из профиля), для входа LLM. nil до загрузки.
     private var lastChildAge: Int?
 
@@ -74,9 +76,18 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
 
         Task { @MainActor [weak self] in
             guard let self else { return }
-            // Реальный возраст ребёнка из профиля — для корректного входа LLM.
+            // Реальные данные ребёнка из профиля — имя и возраст для карточки и LLM.
             if let childRepository = self.childRepository {
-                self.lastChildAge = try? await childRepository.fetch(id: request.childId).age
+                if let child = try? await childRepository.fetch(id: request.childId) {
+                    self.lastChildName = child.name
+                    self.lastChildAge = child.age
+                } else {
+                    // Graceful fallback: имя не найдено — оставляем нейтральную строку.
+                    self.lastChildName = String(
+                        localized: "progressDashboard.child.fallbackName",
+                        defaultValue: "Ребёнок"
+                    )
+                }
             }
             let aggregate = await worker?.aggregate(childId: request.childId, period: request.period)
                 ?? .empty
@@ -94,6 +105,7 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
         recommendations = Self.makeRecommendations(from: aggregate.sounds)
 
         let response = ProgressDashboardModels.LoadDashboard.Response(
+            childName: lastChildName,
             summary: summary,
             dailyAccuracy: dailyAccuracy,
             weeklyAccuracy: weeklyAccuracy,

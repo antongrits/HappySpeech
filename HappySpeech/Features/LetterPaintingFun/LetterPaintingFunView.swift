@@ -120,7 +120,7 @@ struct LetterPaintingFunView: View {
                             .font(TypographyTokens.headline(18).weight(.semibold))
                             .foregroundStyle(
                                 interactor.state.currentLetter == letter
-                                    ? Color.white
+                                    ? ColorTokens.Overlay.onAccent
                                     : ColorTokens.Kid.ink
                             )
                             .frame(width: 44, height: 44)

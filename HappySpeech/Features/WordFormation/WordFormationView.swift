@@ -108,52 +108,36 @@ struct WordFormationView: View {
     )
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                // Тёплый mesh; ненавязчиво. Reduced Motion: убираем
-                // анимированный фон (accessibility + детерминизм снимков).
-                if !reduceMotion {
-                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
-                        .ignoresSafeArea()
-                        .opacity(colorScheme == .dark ? 0.18 : 0.28)
-                        .blendMode(.softLight)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            // Тёплый mesh; ненавязчиво. Reduced Motion: убираем
+            // анимированный фон (accessibility + детерминизм снимков).
+            if !reduceMotion {
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
 
-                if holder.isFinished, let summary = holder.summary {
-                    summarySection(summary)
-                } else if let round = holder.currentRound {
-                    gameSection(round: round)
-                } else {
-                    loadingSection
-                }
+            if holder.isFinished, let summary = holder.summary {
+                summarySection(summary)
+            } else if let round = holder.currentRound {
+                gameSection(round: round)
+            } else {
+                loadingSection
+            }
 
-                if holder.showCelebration {
-                    HSConfettiView(preset: .celebration, isActive: $holder.showCelebration)
-                        .ignoresSafeArea()
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+            if holder.showCelebration {
+                HSConfettiView(preset: .celebration, isActive: $holder.showCelebration)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
-            .navigationTitle(Text("wordFormation.title"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitGame()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title3)
-                            .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    }
-                    .accessibilityLabel(Text("wordFormation.close.a11y"))
-                }
-            }
-            .task {
-                await setupAndStart()
-            }
+        }
+        .task {
+            await setupAndStart()
         }
         .environment(\.circuitContext, .kid)
     }
@@ -215,23 +199,43 @@ struct WordFormationView: View {
     ) -> some View {
         let total = max(holder.startVM?.totalRounds ?? 1, 1)
         let current = min(max(Int((round.progressFraction * Double(total)).rounded(.up)), 1), total)
-        return HStack(spacing: SpacingTokens.small) {
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(ColorTokens.Kid.line)
-                    Capsule()
-                        .fill(
-                            LinearGradient(
-                                colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
-                                startPoint: .leading, endPoint: .trailing
-                            )
-                        )
-                        .frame(width: max(0, geo.size.width * round.progressFraction))
+        return VStack(spacing: SpacingTokens.sp2) {
+            // Drag-класс: заголовок с кнопкой выхода (без системного nav bar).
+            HStack(alignment: .firstTextBaseline) {
+                Text(String(localized: "wordFormation.title"))
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                Spacer()
+                Button {
+                    exitGame()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("wordFormation.close.a11y"))
             }
-            .frame(height: 12)
-            .accessibilityHidden(true)
-            KidStepChip(current: max(current, 1), total: total)
+            HStack(spacing: SpacingTokens.small) {
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(ColorTokens.Kid.line)
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                    startPoint: .leading, endPoint: .trailing
+                                )
+                            )
+                            .frame(width: max(0, geo.size.width * round.progressFraction))
+                    }
+                }
+                .frame(height: 12)
+                .accessibilityHidden(true)
+                KidStepChip(current: max(current, 1), total: total)
+            }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.sp4)

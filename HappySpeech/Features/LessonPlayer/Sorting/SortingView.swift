@@ -153,14 +153,6 @@ struct SortingView: View {
                 // D-10 v27 — убран дублирующий внутриигровой таймер:
                 // время сессии уже показывает шапка SessionShell.
             }
-            Text(display.greeting.isEmpty
-                 ? String(localized: "sorting.greeting.default")
-                 : display.greeting)
-                .font(TypographyTokens.kidTitle(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .minimumScaleFactor(0.7)
             HStack(spacing: SpacingTokens.small) {
                 HSProgressBar(value: progressValue, tint: ColorTokens.Brand.primary)
                     .frame(height: 12)
@@ -169,6 +161,14 @@ struct SortingView: View {
                     total: display.words.count
                 )
             }
+            // Drag-класс эталон: реплика Ляли вместо голого заголовка.
+            HSSpeechBubble(
+                display.greeting.isEmpty
+                    ? String(localized: "sorting.greeting.default")
+                    : display.greeting,
+                direction: .left,
+                style: .question
+            )
             if display.currentStreak >= 2 {
                 streakBadge
                     .frame(maxWidth: .infinity, alignment: .trailing)

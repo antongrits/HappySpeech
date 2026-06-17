@@ -124,8 +124,9 @@ struct KidGameCanvasScaffold<Canvas: View, Toolbar: View>: View {
                         Text(subtitle)
                             .font(TypographyTokens.caption(12.5))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.80)
+                            .multilineTextAlignment(.center)
                     }
                 }
                 .frame(maxWidth: .infinity)

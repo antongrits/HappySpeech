@@ -75,11 +75,13 @@ final class ProgressDashboardPresenterTests: XCTestCase {
     }
 
     private func dashboardResponse(
+        childName: String = "Маша",
         sounds: [SoundProgress],
         recommendations: [String] = [],
         period: ProgressDashboardModels.TimePeriod = .week
     ) -> ProgressDashboardModels.LoadDashboard.Response {
         ProgressDashboardModels.LoadDashboard.Response(
+            childName: childName,
             summary: summary(),
             dailyAccuracy: [DailyAccuracy(day: "Пн", accuracy: 0.6),
                             DailyAccuracy(day: "Вт", accuracy: 0.7)],
@@ -88,6 +90,14 @@ final class ProgressDashboardPresenterTests: XCTestCase {
             recommendations: recommendations,
             period: period
         )
+    }
+
+    // MARK: - ChildName passthrough
+
+    func test_loadDashboard_childNamePassedToViewModel() {
+        let (sut, spy) = makeSUT()
+        sut.presentLoadDashboard(dashboardResponse(childName: "Артём", sounds: [sound("С", 0.7)]))
+        XCTAssertEqual(spy.dashboardVM?.childName, "Артём")
     }
 
     // MARK: - Summary cards
@@ -102,6 +112,7 @@ final class ProgressDashboardPresenterTests: XCTestCase {
         let (sut, spy) = makeSUT()
         var resp = dashboardResponse(sounds: [sound("С", 0.7)])
         resp = ProgressDashboardModels.LoadDashboard.Response(
+            childName: resp.childName,
             summary: summary(accuracy: 0.83),
             dailyAccuracy: resp.dailyAccuracy,
             weeklyAccuracy: resp.weeklyAccuracy,

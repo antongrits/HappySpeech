@@ -240,14 +240,14 @@ struct DragAndMatchView: View {
                     .frame(height: 12)
                 KidStepChip(current: display.placedWords.count, total: display.words.count)
             }
-            Text(display.greeting.isEmpty
-                 ? String(localized: "Разложи слова по корзинам")
-                 : display.greeting)
-                .font(TypographyTokens.kidTitle(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.8)
+            // Drag-класс эталон: реплика Ляли вместо голого заголовка.
+            HSSpeechBubble(
+                display.greeting.isEmpty
+                    ? String(localized: "Разложи слова по корзинам")
+                    : display.greeting,
+                direction: .left,
+                style: .question
+            )
             if let pairLabel = display.confusedPairLabel {
                 Text(pairLabel)
                     .font(TypographyTokens.caption(13))

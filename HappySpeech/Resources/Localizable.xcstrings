@@ -46063,6 +46063,17 @@
         }
       }
     },
+    "progressDashboard.child.fallbackName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок"
+          }
+        }
+      }
+    },
     "progressDashboard.empty.title": {
       "extractionState": "manual",
       "localizations": {

@@ -174,15 +174,16 @@ struct MusicalSoundDrumsView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
-            VStack(spacing: 8) {
-                Image(systemName: drum.icon)
-                    .font(.system(size: 44, weight: .bold))
-                    .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary)
+            VStack(spacing: SpacingTokens.sp2) {
+                drumCircleIcon(drum: drum, isActive: isActive)
                 Text(drum.label)
-                    .font(TypographyTokens.caption(12))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity, minHeight: 120)
+            .padding(.vertical, SpacingTokens.sp2)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                     .fill(isActive ? ColorTokens.Brand.primary : ColorTokens.Kid.surfaceAlt)
@@ -200,6 +201,46 @@ struct MusicalSoundDrumsView: View {
             drum.label
         )))
         .accessibilityAddTraits(.isButton)
+    }
+
+    /// Визуальная иконка барабана: концентрические круги разного масштаба
+    /// для трёх уровней громкости — как в эталоне класса kid-game-canvas.
+    private func drumCircleIcon(
+        drum: MusicalSoundDrumsModels.DrumId,
+        isActive: Bool
+    ) -> some View {
+        let tint: Color = isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary
+        let outerSize: CGFloat
+        let innerSize: CGFloat
+        let showRing: Bool
+        switch drum {
+        case .high:
+            outerSize = 44
+            innerSize = 44
+            showRing = false
+        case .mid:
+            outerSize = 44
+            innerSize = 24
+            showRing = true
+        case .low:
+            outerSize = 44
+            innerSize = 12
+            showRing = true
+        }
+        return ZStack {
+            // Кольцо — для средней и тихой громкости.
+            if showRing {
+                Circle()
+                    .strokeBorder(tint, lineWidth: 3)
+                    .frame(width: outerSize, height: outerSize)
+            }
+            // Заполненный внутренний кружок.
+            Circle()
+                .fill(tint)
+                .frame(width: innerSize, height: innerSize)
+        }
+        .frame(width: outerSize, height: outerSize)
+        .accessibilityHidden(true)
     }
 }
 

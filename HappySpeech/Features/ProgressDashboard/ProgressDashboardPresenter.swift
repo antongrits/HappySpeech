@@ -49,6 +49,7 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
 
         let isEmpty = response.sounds.isEmpty
         let viewModel = ProgressDashboardModels.LoadDashboard.ViewModel(
+            childName: response.childName,
             summaryCards: summaryCards,
             dailyChart: dailyChart,
             weeklyChart: weeklyChart,
