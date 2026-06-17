@@ -22,6 +22,8 @@ final class WordOfTheDayInteractor {
     let childId: String
     var card: WordOfTheDayModels.Card
     var phase: WordOfTheDayModels.RecordingPhase = .idle
+    /// true в промежутке воспроизведения модели Ляли
+    var isPlayingModel: Bool = false
 
     private let audioService: (any AudioService)?
     private let scorer: (any PronunciationScorerService)?
@@ -47,6 +49,19 @@ final class WordOfTheDayInteractor {
         self.audioService = audioService
         self.scorer = scorer
         self.adaptivePlanner = adaptivePlanner
+    }
+
+    /// Озвучивает слово дня голосом Ляли — реальная запись слова из phrase-mapping
+    /// (через LessonVoiceWorker), а не canned-фраза. `isPlayingModel` сбрасывается
+    /// по фактическому завершению воспроизведения (speak ждёт конца).
+    func playModelAudio() {
+        guard !isPlayingModel else { return }
+        isPlayingModel = true
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(self.card.word, lessonType: "word_of_the_day")
+            self.isPlayingModel = false
+        }
     }
 
     func startRecording() {

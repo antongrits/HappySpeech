@@ -149,6 +149,7 @@ struct HomeTasksView: View {
                 if !display.isEmpty {
                     summaryPill
                 }
+                weekStripView
                 filterChipsBar
                 if display.isEmpty {
                     emptyStateView
@@ -161,46 +162,35 @@ struct HomeTasksView: View {
 
     // MARK: - Summary pill
 
-    /// Сводная «таблетка» под заголовком — кольцо прогресса + счётчики на
-    /// сегодня и выполнено. Все значения — реальные из `display` (Interactor),
-    /// без фабрикации. Соответствует эталону «Задания на дом».
+    /// Сводная «таблетка» под заголовком — точно по эталону:
+    /// коралловый кружок-счётчик слева + "N на сегодня" + разделитель + "✓ N выполнено".
     private var summaryPill: some View {
-        let total = display.totalCount
+        let todayCount = display.activeCount
         let done = display.completedCount
-        let fraction = total > 0 ? Double(done) / Double(total) : 0
 
         return HStack(spacing: SpacingTokens.small) {
-            ZStack {
-                Circle()
-                    .stroke(ColorTokens.Brand.primaryLo, lineWidth: 4)
-                Circle()
-                    .trim(from: 0, to: fraction)
-                    .stroke(
-                        ColorTokens.Brand.primary,
-                        style: StrokeStyle(lineWidth: 4, lineCap: .round)
-                    )
-                    .rotationEffect(.degrees(-90))
-                Text("\(done)/\(total)")
-                    .font(TypographyTokens.mono(9).weight(.bold))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .minimumScaleFactor(0.6)
-            }
-            .frame(width: 30, height: 30)
-            .accessibilityHidden(true)
+            // Coral circle with today count
+            Text("\(todayCount)")
+                .font(TypographyTokens.mono(13).weight(.bold))
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .frame(width: 32, height: 32)
+                .background(Circle().fill(ColorTokens.Brand.primary))
+                .accessibilityHidden(true)
 
             Text(String(
                 format: String(localized: "homeTasks.summary.total"),
                 display.activeCount + display.completedCount
             ))
-            .font(TypographyTokens.headline(14))
+            .font(TypographyTokens.body(14))
             .foregroundStyle(ColorTokens.Parent.ink)
             .fixedSize(horizontal: false, vertical: true)
             .minimumScaleFactor(0.85)
+            .lineLimit(1)
 
             if done > 0 {
-                Circle()
-                    .fill(ColorTokens.Parent.inkSoft)
-                    .frame(width: 4, height: 4)
+                Text("·")
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
                     .accessibilityHidden(true)
                 HStack(spacing: SpacingTokens.micro) {
                     Image(systemName: "checkmark")
@@ -209,9 +199,10 @@ struct HomeTasksView: View {
                         format: String(localized: "homeTasks.summary.done"),
                         done
                     ))
-                    .font(TypographyTokens.body(13).weight(.semibold))
+                    .font(TypographyTokens.body(13).weight(.medium))
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
+                    .lineLimit(1)
                 }
                 .foregroundStyle(ColorTokens.Semantic.success)
             }
@@ -220,10 +211,11 @@ struct HomeTasksView: View {
         .padding(.horizontal, SpacingTokens.regular)
         .padding(.vertical, SpacingTokens.small)
         .background(
-            Capsule().fill(ColorTokens.Parent.surface)
+            RoundedRectangle(cornerRadius: RadiusTokens.sm).fill(ColorTokens.Parent.surface)
         )
         .overlay(
-            Capsule().strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+            RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
         )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.regular)
@@ -233,6 +225,55 @@ struct HomeTasksView: View {
             display.activeCount + display.completedCount,
             done
         ))
+    }
+
+    // MARK: - Week strip
+
+    /// Горизонтальный дневной пикер — 7 дней текущей недели.
+    /// Активный день подсвечен коралловым. Соответствует эталону.
+    private var weekStripView: some View {
+        let weekdaySymbols = Calendar.current.shortStandaloneWeekdaySymbols
+        // Build 7 days: Mon..Sun of current week
+        let startOfWeek: Date = {
+            var comps = Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
+            comps.weekday = 2 // Monday
+            return Calendar.current.date(from: comps) ?? Date()
+        }()
+        let days: [(Int, String, Bool)] = (0..<7).compactMap { offset in
+            guard let date = Calendar.current.date(byAdding: .day, value: offset, to: startOfWeek) else { return nil }
+            let dayNum = Calendar.current.component(.day, from: date)
+            let abbr = String(weekdaySymbols[offset].prefix(2)).uppercased()
+            let isToday = Calendar.current.isDateInToday(date)
+            return (dayNum, abbr, isToday)
+        }
+
+        return HStack(spacing: 0) {
+            ForEach(Array(days.enumerated()), id: \.offset) { _, entry in
+                let (day, abbr, isToday) = entry
+                VStack(spacing: SpacingTokens.micro) {
+                    Text(abbr)
+                        .font(TypographyTokens.caption(10).weight(.medium))
+                        .foregroundStyle(isToday ? ColorTokens.Brand.primary : ColorTokens.Parent.inkMuted)
+                    Text("\(day)")
+                        .font(TypographyTokens.body(15).weight(isToday ? .bold : .regular))
+                        .foregroundStyle(isToday ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink)
+                        .frame(width: 32, height: 32)
+                        .background(
+                            Circle().fill(isToday ? ColorTokens.Brand.primary : Color.clear)
+                        )
+                }
+                .frame(maxWidth: .infinity)
+                .accessibilityLabel(isToday
+                    ? String(localized: "homeTasks.weekstrip.today") + " \(day)"
+                    : "\(abbr) \(day)")
+            }
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.vertical, SpacingTokens.small)
+        .background(ColorTokens.Parent.surface)
+        .overlay(alignment: .bottom) {
+            Divider().opacity(0.5)
+        }
     }
 
     // MARK: - Toolbar
@@ -319,6 +360,14 @@ struct HomeTasksView: View {
                     .accessibilityHidden(true)
                 }
                 Spacer(minLength: 0)
+                // Count of tasks in this section — matches reference right-aligned count
+                Text(String(
+                    format: String(localized: "homeTasks.section.countFormat", defaultValue: "%lld задания"),
+                    section.rows.count
+                ))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .accessibilityHidden(true)
             }
             .padding(.horizontal, SpacingTokens.tiny)
             .accessibilityAddTraits(.isHeader)
@@ -509,182 +558,127 @@ private struct HomeTaskCard: View {
     let onStart: () -> Void
 
     var body: some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
-            VStack(alignment: .leading, spacing: SpacingTokens.regular) {
-                topRow
-                titleAndDescription
-                metaRow
-                startButton
+        // Reference: single row card — icon circle left, title+meta centre, status/CTA right.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
+            HStack(alignment: .center, spacing: SpacingTokens.regular) {
+                exerciseIcon
+                centerContent
+                trailingAction
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .contentShape(Rectangle())
         .onTapGesture { onOpen() }
-        .opacity(row.isCompleted ? 0.75 : 1.0)
-        .overlay(alignment: .topTrailing) {
-            if row.isStarted, !row.isCompleted {
-                inProgressIndicator
-                    .padding(SpacingTokens.tiny)
-                    .accessibilityHidden(true)
-            }
-        }
+        .opacity(row.isCompleted ? 0.72 : 1.0)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(row.accessibilityLabel)
         .accessibilityHint(row.accessibilityHint)
     }
 
-    // MARK: Top row (checkbox + badges)
+    // MARK: Left icon (exercise type in coral circle)
 
-    private var topRow: some View {
-        HStack(alignment: .top, spacing: SpacingTokens.regular) {
-            checkboxButton
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                HStack(spacing: SpacingTokens.tiny) {
-                    HSBadge(row.soundBadgeText, style: .filled(ColorTokens.Brand.primary))
-                    HSBadge(row.priorityBadgeText, style: priorityBadgeStyle)
-                    Spacer(minLength: 0)
-                }
-                if !row.subtitle.isEmpty {
-                    Text(row.subtitle)
-                        .font(TypographyTokens.caption())
-                        .foregroundStyle(ColorTokens.Parent.inkSoft)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .minimumScaleFactor(0.85)
-                }
-            }
+    private var exerciseIcon: some View {
+        Image(systemName: exerciseSymbol)
+            .font(.system(size: 18, weight: .semibold))
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .frame(width: 44, height: 44)
+            .background(Circle().fill(ColorTokens.Brand.primary))
+            .accessibilityHidden(true)
+    }
+
+    private var exerciseSymbol: String {
+        switch row.exerciseType {
+        case "breathing":              return "wind"
+        case "articulation-imitation": return "mouth.fill"
+        case "bingo":                  return "checkmark.square.fill"
+        case "listen-and-choose":      return "ear.fill"
+        case "sorting":                return "arrow.up.arrow.down.square.fill"
+        case "story-completion":       return "book.fill"
+        case "repeat-after-model":     return "mic.fill"
+        case "minimal-pairs":          return "equal.square.fill"
+        default:                       return "gamecontroller.fill"
         }
     }
 
-    private var checkboxButton: some View {
-        Button(action: onToggle) {
-            ZStack {
-                Circle()
-                    .fill(row.isCompleted ? ColorTokens.Semantic.success : Color.clear)
-                    .frame(width: 28, height: 28)
-                Circle()
-                    .strokeBorder(
-                        row.isCompleted
-                            ? ColorTokens.Semantic.success
-                            : ColorTokens.Parent.line,
-                        lineWidth: 2
-                    )
-                    .frame(width: 28, height: 28)
-                if row.isCompleted {
-                    Image(systemName: "checkmark")
-                        .font(TypographyTokens.caption(14))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .hsSymbolEffect(.bounce, value: row.isCompleted)
-                }
-            }
-            .frame(width: 44, height: 44, alignment: .topLeading)
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(row.isCompleted
-                            ? String(localized: "homeTasks.a11y.checkboxOn")
-                            : String(localized: "homeTasks.a11y.checkboxOff"))
-        .accessibilityHint(row.isCompleted
-                           ? String(localized: "homeTasks.a11y.hintReopen")
-                           : String(localized: "homeTasks.a11y.hintComplete"))
-        .accessibilityAddTraits(.isButton)
-    }
+    // MARK: Centre content (title + meta)
 
-    private var priorityBadgeStyle: HSBadge.BadgeStyle {
-        switch row.priority {
-        case .high:   return .outlined(ColorTokens.Semantic.error)
-        case .medium: return .outlined(ColorTokens.Semantic.warning)
-        case .low:    return .neutral
-        }
-    }
-
-    // MARK: Title + description
-
-    private var titleAndDescription: some View {
+    private var centerContent: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
             Text(row.title)
-                .font(TypographyTokens.headline())
+                .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .strikethrough(row.isCompleted, color: ColorTokens.Parent.inkSoft)
                 .fixedSize(horizontal: false, vertical: true)
-                .minimumScaleFactor(0.9)
-
-            Text(row.description)
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(3)
                 .minimumScaleFactor(0.85)
-                .lineSpacing(3)
-        }
-    }
+                .lineLimit(2)
 
-    // MARK: Meta (due date)
-
-    @ViewBuilder
-    private var metaRow: some View {
-        if let due = row.dueDateText {
             HStack(spacing: SpacingTokens.micro) {
-                Image(systemName: row.isOverdue ? "exclamationmark.circle.fill" : "calendar")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(row.isOverdue
-                                     ? ColorTokens.Semantic.error
-                                     : ColorTokens.Parent.inkSoft)
-                    .hsSymbolEffect(.pulse, value: row.isOverdue)
-                Text(due)
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(row.isOverdue
-                                     ? ColorTokens.Semantic.error
-                                     : ColorTokens.Parent.inkSoft)
+                if !row.subtitle.isEmpty {
+                    Text(row.subtitle)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                }
+                if let due = row.dueDateText {
+                    if !row.subtitle.isEmpty {
+                        Text("·")
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
+                            .accessibilityHidden(true)
+                    }
+                    Image(systemName: row.isOverdue ? "exclamationmark.circle.fill" : "calendar")
+                        .font(TypographyTokens.caption(10))
+                        .foregroundStyle(row.isOverdue ? ColorTokens.Semantic.error : ColorTokens.Parent.inkSoft)
+                        .accessibilityHidden(true)
+                    Text(due)
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(row.isOverdue ? ColorTokens.Semantic.error : ColorTokens.Parent.inkSoft)
+                        .lineLimit(1)
+                }
             }
-            .accessibilityLabel(due)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: Start button
+    // MARK: Trailing — status badge or start CTA
 
     @ViewBuilder
-    private var startButton: some View {
-        if !row.isCompleted {
-            HSButton(
-                row.startButtonTitle,
-                style: .primary,
-                size: .medium,
-                icon: "play.fill"
-            ) {
-                onStart()
+    private var trailingAction: some View {
+        if row.isCompleted {
+            // "Выполнено" badge — green pill (reference)
+            HStack(spacing: SpacingTokens.micro) {
+                Image(systemName: "checkmark")
+                    .font(TypographyTokens.caption(10).weight(.bold))
+                Text(row.startButtonTitle)
+                    .font(TypographyTokens.caption(11).weight(.semibold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
             }
-            .frame(maxWidth: .infinity)
+            .foregroundStyle(ColorTokens.Semantic.success)
+            .padding(.horizontal, SpacingTokens.small)
+            .padding(.vertical, SpacingTokens.micro)
+            .background(
+                Capsule().fill(ColorTokens.Semantic.success.opacity(0.12))
+            )
+        } else {
+            Button(action: onStart) {
+                Text(row.startButtonTitle)
+                    .font(TypographyTokens.body(13).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.small)
+                    .padding(.vertical, SpacingTokens.tiny)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.xs)
+                            .fill(ColorTokens.Brand.primary.opacity(0.10))
+                    )
+            }
+            .buttonStyle(.plain)
             .accessibilityLabel(row.startButtonTitle)
             .accessibilityHint(String(localized: "homeTasks.a11y.startHint"))
-        } else {
-            HSButton(
-                row.startButtonTitle,
-                style: .secondary,
-                size: .medium,
-                icon: "arrow.clockwise"
-            ) {
-                onStart()
-            }
-            .frame(maxWidth: .infinity)
-            .accessibilityLabel(row.startButtonTitle)
-            .accessibilityHint(String(localized: "homeTasks.a11y.repeatHint"))
         }
-    }
-
-    // MARK: In-progress indicator
-
-    private var inProgressIndicator: some View {
-        HStack(spacing: SpacingTokens.micro) {
-            Circle()
-                .fill(ColorTokens.Brand.gold)
-                .frame(width: 6, height: 6)
-            Text(String(localized: "homeTasks.indicator.inProgress"))
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Brand.gold)
-        }
-        .padding(.horizontal, SpacingTokens.tiny)
-        .padding(.vertical, 2)
-        .background(
-            Capsule().fill(ColorTokens.Brand.gold.opacity(0.15))
-        )
     }
 }
 

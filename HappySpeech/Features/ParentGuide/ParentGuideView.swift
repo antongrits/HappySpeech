@@ -100,18 +100,23 @@ struct ParentGuideView: View {
                                 tipOfDaySection(tip)
                                     .hsScrollEffect(.scaleFade)
                             }
+                            // "О чём поговорить сегодня" — conversation starter quote
+                            if let tip = viewModel.tipOfDay {
+                                conversationSection(tip)
+                            }
                             topicsSection(viewModel.topics)
                         } else {
                             loadingSection
                         }
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.vertical, SpacingTokens.sp4)
+                    .padding(.bottom, SpacingTokens.sp6)
                 }
                 .scrollBounceBehavior(.basedOnSize)
             }
             .navigationTitle(Text("parentGuide.screen.title"))
-            .navigationBarTitleDisplayMode(.inline)
+            // Reference: large nav title, not inline
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -137,63 +142,72 @@ struct ParentGuideView: View {
     }
 
     // MARK: - Hero
+    // Reference: "ДЛЯ РОДИТЕЛЕЙ" overline in coral caps, then subtitle below large nav title.
+    // The nav title already shows the main title — here we show overline + subtitle as a
+    // plain inline block (no card), matching the reference open design.
 
     private func heroSection(_ viewModel: ParentGuideModels.Load.ViewModel) -> some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                Text(viewModel.headerTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.85)
-                Text(viewModel.headerSubtitle)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer()
-            Image(systemName: "graduationcap.fill")
-                .font(.system(size: 34))
-                .foregroundStyle(ColorTokens.Brand.lilac)
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            // Overline: "ДЛЯ РОДИТЕЛЕЙ" in coral small caps — matches reference
+            Text(String(localized: "parentGuide.screen.overline", defaultValue: "ДЛЯ РОДИТЕЛЕЙ"))
+                .font(TypographyTokens.caption(11).weight(.semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .tracking(0.8)
                 .accessibilityHidden(true)
+
+            Text(viewModel.headerSubtitle)
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(SpacingTokens.sp4)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
+        .padding(.top, SpacingTokens.sp2)
         .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
     }
 
     // MARK: - Tip of day
+    // Reference: card with coral left accent border (4pt), "Совет недели" overline,
+    // bold title, body summary, footer "Читать →" right + "N мин" left.
 
     private func tipOfDaySection(
         _ tip: ParentGuideModels.Load.LessonViewModel
     ) -> some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+        HStack(spacing: 0) {
+            // Coral left accent border — key visual from reference
+            Rectangle()
+                .fill(ColorTokens.Brand.primary)
+                .frame(width: 4)
+                .clipShape(
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: RadiusTokens.sm,
+                        bottomLeadingRadius: RadiusTokens.sm
+                    )
+                )
+                .accessibilityHidden(true)
+
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                HStack(spacing: SpacingTokens.sp2) {
+                // "Совет недели" overline
+                HStack(spacing: SpacingTokens.sp1) {
                     Image(systemName: "sparkles")
-                        .font(.body)
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundStyle(ColorTokens.Brand.butter)
                         .accessibilityHidden(true)
                     Text("parentGuide.tipOfDay.label")
-                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .font(TypographyTokens.caption(11).weight(.bold))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .textCase(.uppercase)
+                        .tracking(0.5)
                 }
 
                 Text(tip.title)
-                    .font(TypographyTokens.headline(17))
+                    .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
 
                 Text(tip.summary)
-                    .font(TypographyTokens.body(14))
+                    .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(3)
                     .fixedSize(horizontal: false, vertical: true)
@@ -208,7 +222,17 @@ struct ParentGuideView: View {
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
             }
+            .padding(SpacingTokens.sp4)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+        )
         .contentShape(Rectangle())
         .onTapGesture { openLesson(tip) }
         .accessibilityElement(children: .combine)
@@ -218,15 +242,87 @@ struct ParentGuideView: View {
         .accessibilityAddTraits(.isButton)
     }
 
+    // MARK: - Conversation section
+    // Reference: "О чём поговорить сегодня" section with decorative large quote marks
+    // and a bold open-ended question prompt from the tip summary.
+
+    private func conversationSection(
+        _ tip: ParentGuideModels.Load.LessonViewModel
+    ) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            // Section header with coral chevron on right — matches reference
+            HStack {
+                Text(String(localized: "parentGuide.conversation.sectionTitle", defaultValue: "О чём поговорить сегодня"))
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+            }
+
+            // Quote card — decorative «» + bold question text
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HStack(alignment: .top, spacing: SpacingTokens.sp2) {
+                    Text("«")
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundStyle(ColorTokens.Brand.primary.opacity(0.4))
+                        .accessibilityHidden(true)
+                        .offset(y: -4)
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                        // Use tip summary as the conversation starter question
+                        Text(tip.summary)
+                            .font(TypographyTokens.body(16).weight(.medium))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(String(
+                            localized: "parentGuide.conversation.hint",
+                            defaultValue: "Открытые вопросы помогают ребёнку отвечать развёрнуто, а не одним словом."
+                        ))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                    .fill(ColorTokens.Parent.surface)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm)
+                    .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+            )
+        }
+    }
+
     // MARK: - Topics
+    // Reference: "Полезные темы" header + "Все темы ›" link on right.
+    // Topic rows: coral icon circle, title, count badge, chevron.
 
     private func topicsSection(
         _ topics: [ParentGuideModels.Load.TopicViewModel]
     ) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text("parentGuide.topics.sectionTitle")
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Parent.ink)
+            // Section header with "Все темы" trailing link — matches reference
+            HStack {
+                Text("parentGuide.topics.sectionTitle")
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Spacer()
+                Text(String(localized: "parentGuide.topics.all", defaultValue: "Все темы"))
+                    .font(TypographyTokens.body(13).weight(.medium))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+            }
 
             ForEach(Array(topics.enumerated()), id: \.element.id) { index, topic in
                 topicCard(topic)
@@ -249,11 +345,12 @@ struct ParentGuideView: View {
                 toggleTopic(topic.id)
             } label: {
                 HStack(spacing: SpacingTokens.sp3) {
+                    // Icon circle — coral brand color matching reference
                     Image(systemName: topic.symbolName)
-                        .font(.body)
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .frame(width: 32, height: 32)
-                        .background(Circle().fill(ColorTokens.Brand.primary.opacity(0.12)))
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(ColorTokens.Brand.primary.opacity(0.85)))
                         .accessibilityHidden(true)
 
                     Text(topic.title)
@@ -261,15 +358,16 @@ struct ParentGuideView: View {
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Spacer()
-
+                    // Count badge to the left of chevron — matches reference ordering
                     Text("\(topic.lessons.count)")
-                        .font(TypographyTokens.caption(11).monospacedDigit())
+                        .font(TypographyTokens.body(14).monospacedDigit())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
 
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                        .font(.body)
+                        .font(.system(size: 13, weight: .semibold))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .accessibilityHidden(true)
                 }

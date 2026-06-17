@@ -102,10 +102,10 @@ struct DailyStreakView: View {
                 .padding(.vertical, SpacingTokens.sp4)
             }
             .background(
-                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра.
+                // kid-progress: статичный тёплый kidWarm mesh (анимация только при !reduceMotion).
                 ZStack {
                     ColorTokens.Kid.bg
-                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
                         .opacity(colorScheme == .dark ? 0.28 : 0.50)
                         .accessibilityHidden(true)
                         .allowsHitTesting(false)

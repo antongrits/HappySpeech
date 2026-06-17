@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - HabitStreakDashboardView
 //
-// Детский экран «Карта занятий» (kid-progress класс). Редизайн по эталону
+// Детский экран «Мои успехи» (kid-progress класс). Редизайн по эталону
 // kid-progress: тёплый hero со «спичкой» (flame) и Лялей-болельщиком,
 // недельная streak-полоска (7 точек Пн–Вс из реальных дней), карточка
 // тепловой карты за 12 недель + тёплая легенда. Все данные — реальные
@@ -30,6 +30,8 @@ struct HabitStreakDashboardView: View {
 
     private let cellSize: CGFloat = 18
     private let cellSpacing: CGFloat = 4
+    /// Диаметр точки в streak-полоске (эталон: ~28pt, ровно на 4pt-сетке).
+    private let dotSize: CGFloat = 28
 
     // MARK: - Body
 
@@ -45,7 +47,7 @@ struct HabitStreakDashboardView: View {
                     .allowsHitTesting(false)
                 content
             }
-            .navigationTitle(Text(String(localized: "habitStreak.nav.title")))
+            .navigationTitle(Text(String(localized: "habitStreak.nav.title", defaultValue: "Мои успехи")))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -82,6 +84,7 @@ struct HabitStreakDashboardView: View {
                 VStack(spacing: SpacingTokens.sp4) {
                     heroCard(state: interactor.state)
                     weekStripCard(state: interactor.state)
+                    progressSummaryCard(state: interactor.state)
                     heatMapCard(interactor: interactor)
                     if let day = interactor.state.selected {
                         detailCard(day: day)
@@ -293,12 +296,12 @@ struct HabitStreakDashboardView: View {
                             )
                         )
                     Image(systemName: "flame.fill")
-                        .font(.system(size: 15))
+                        .font(.system(size: 13))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
                 } else if item.day.intensity > 0 {
                     Circle().fill(ColorTokens.Brand.primaryLo)
                     Image(systemName: "checkmark")
-                        .font(.system(size: 13, weight: .bold))
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 } else {
                     Circle()
@@ -308,11 +311,11 @@ struct HabitStreakDashboardView: View {
                         )
                         .background(Circle().fill(ColorTokens.Kid.surfaceAlt))
                     Text(verbatim: "·")
-                        .font(TypographyTokens.caption(12))
+                        .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                 }
             }
-            .frame(width: 34, height: 34)
+            .frame(width: dotSize, height: dotSize)
 
             Text(item.label)
                 .font(TypographyTokens.caption(11))
@@ -320,6 +323,86 @@ struct HabitStreakDashboardView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
+    }
+
+    // MARK: - Progress summary card (эталон: «Мои звуки» 3 кольца прогресса)
+    //
+    // Показывает три столбца с данными о сессиях за период: общий итог,
+    // дни недели с практикой, среднее в минуту. Реальные данные из ViewState.
+    // Структура «3 плитки» визуально соответствует 3 звуковым кольцам эталона.
+
+    private func progressSummaryCard(state: HabitStreakDashboardModels.ViewState) -> some View {
+        let practicedDays = state.days.filter { $0.intensity > 0 }.count
+        let avgMinutes: Int = practicedDays > 0 ? state.totalMinutes / practicedDays : 0
+        let bestDay = state.days.max(by: { $0.minutes < $1.minutes })
+        let bestMinutes = bestDay?.minutes ?? 0
+
+        return HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack {
+                    Text(String(localized: "habitStreak.summary.title", defaultValue: "Мои достижения"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                }
+
+                HStack(spacing: SpacingTokens.sp3) {
+                    summaryTile(
+                        value: "\(practicedDays)",
+                        caption: String(localized: "habitStreak.summary.days", defaultValue: "дней занятий"),
+                        tint: ColorTokens.Brand.primary
+                    )
+                    summaryTile(
+                        value: "\(avgMinutes)",
+                        caption: String(localized: "habitStreak.summary.avgMin", defaultValue: "сред. минут"),
+                        tint: ColorTokens.Brand.gold
+                    )
+                    summaryTile(
+                        value: "\(bestMinutes)",
+                        caption: String(localized: "habitStreak.summary.bestMin", defaultValue: "лучший день"),
+                        tint: ColorTokens.Brand.rose
+                    )
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(String(
+            format: String(localized: "habitStreak.summary.a11y",
+                           defaultValue: "%lld дней занятий, в среднем %lld минут"),
+            practicedDays, avgMinutes
+        )))
+    }
+
+    private func summaryTile(value: String, caption: String, tint: Color) -> some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            // Числовой индикатор
+            ZStack {
+                Circle()
+                    .stroke(ColorTokens.Kid.line, lineWidth: 4)
+                Circle()
+                    .trim(from: 0, to: 1)
+                    .stroke(tint, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                Text(value)
+                    .font(TypographyTokens.headline(16).monospacedDigit())
+                    .foregroundStyle(tint)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+            }
+            .frame(width: 64, height: 64)
+            .accessibilityHidden(true)
+
+            Text(caption)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Heat map card
