@@ -81,7 +81,8 @@ struct ParentWeeklyActivityCard: View {
                 barColumn(day: day, isToday: index == todayIndex)
             }
         }
-        .frame(height: 132)
+        // Эталон parenthome_ref.png: график крупный, занимает заметную часть карточки.
+        .frame(height: 160)
         .accessibilityHidden(true)
     }
 

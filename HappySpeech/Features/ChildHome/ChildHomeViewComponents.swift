@@ -84,7 +84,12 @@ struct ChildHomeReactiveMascot: View {
     }
 }
 
-// MARK: - MascotBubble (BUG-009: добавлен аватар Ляли слева от bubble)
+// MARK: - MascotBubble
+//
+// Эталон childhome_ref.png: пузырь-речь с хвостом-стрелкой слева →
+// к маскоту, текст + подпись «— Ляля» мелким цветом снизу.
+// Layout: mini-аватар внизу слева (якорь для хвоста), карточка с хвостом
+// и текстом, подпись «— Ляля» ниже основного текста.
 
 struct ChildHomeMascotBubble: View {
 
@@ -92,28 +97,69 @@ struct ChildHomeMascotBubble: View {
 
     var body: some View {
         HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            // Мини-аватар Ляли — источник хвоста пузыря.
             LyalyaMascotView(state: .explaining, size: 40)
                 .accessibilityHidden(true)
 
-            HStack(spacing: 0) {
-                Text(text)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.sp4)
-                    .padding(.vertical, SpacingTokens.sp3)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .kidTileShadow()
-            )
+            bubbleCard
         }
         .padding(.horizontal, SpacingTokens.sp6)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(text)
+        .accessibilityLabel(text + ". " + String(localized: "child.home.mascot.name",
+                                                  defaultValue: "Ляля"))
+    }
+
+    // Карточка пузыря с хвостом-треугольником слева и подписью.
+    private var bubbleCard: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ZStack(alignment: .bottomLeading) {
+                // Пузырь
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(text)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+
+                    // Подпись «— Ляля» (эталон childhome_ref.png)
+                    Text(String(localized: "child.home.mascot.signature",
+                                defaultValue: "— Ляля"))
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary.opacity(0.75))
+                        .lineLimit(1)
+                }
+                .padding(.horizontal, SpacingTokens.sp4)
+                .padding(.vertical, SpacingTokens.sp3)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .kidTileShadow()
+                )
+
+                // Хвост-треугольник, указывающий влево-вниз к маскоту.
+                BubbleTail()
+                    .fill(ColorTokens.Kid.surface)
+                    .frame(width: 12, height: 10)
+                    .offset(x: -8, y: 0)
+                    .accessibilityHidden(true)
+            }
+        }
+    }
+}
+
+// MARK: - BubbleTail
+
+/// Хвост речевого пузыря — треугольник, указывающий влево-вниз к маскоту.
+private struct BubbleTail: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        // Точки: правый-нижний → правый-верхний → левый-нижний (хвост влево).
+        path.move(to: CGPoint(x: rect.maxX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
+        path.closeSubpath()
+        return path
     }
 }
 

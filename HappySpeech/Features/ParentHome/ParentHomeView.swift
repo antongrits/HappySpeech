@@ -403,8 +403,11 @@ private struct ParentDashboardTab: View {
                 .padding(.bottom, SpacingTokens.sp16 + SpacingTokens.sp10)
             }
             .background(dashboardBackground)
-            .navigationTitle(String(localized: "Прогресс"))
-            .navigationBarTitleDisplayMode(.large)
+            // Эталон parenthome_ref.png: нет отдельного H1 «Прогресс» над экраном —
+            // приветствие и «Обзор за неделю» отображаются в ParentHeaderSection внутри ScrollView.
+            // Убираем navigationTitle чтобы не дублировать заголовок.
+            .navigationTitle("")
+            .navigationBarTitleDisplayMode(.inline)
             // Block R.2 v18 — LogopedistChat sheet.
             .sheet(isPresented: $showLogopedistChatSheet) {
                 let parentId = coordinator.authUser?.uid ?? "parent-default"

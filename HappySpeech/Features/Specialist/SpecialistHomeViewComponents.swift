@@ -61,28 +61,52 @@ struct SpecChildListView: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    List {
-                        Section {
-                            ForEach(Array(filteredChildren.enumerated()), id: \.element.id) { index, child in
-                                ZStack {
-                                    NavigationLink(value: child.id) {
-                                        EmptyView()
-                                    }
-                                    .opacity(0)
-                                    SpecChildRow(child: child)
-                                }
-                                .listRowBackground(ColorTokens.Spec.surface)
-                                .accessibilityIdentifier("specialistStudentRow_\(index)")
+                    // Эталон specialist-home: карточки подопечных — не системный
+                    // UITableView-List, а ScrollView с VStack карточек на Spec.bg.
+                    // Белая карточка + тень на нейтральном фоне = аналитический
+                    // специалистский стиль (паттерн из open-design specialist-home.html).
+                    ScrollView {
+                        VStack(spacing: 0) {
+                            // Заголовок секции
+                            HStack {
+                                Text(String(
+                                    format: String(localized: "spec.children.listHeader"),
+                                    filteredChildren.count
+                                ))
+                                .font(TypographyTokens.caption(12).weight(.semibold))
+                                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                                .textCase(.uppercase)
+                                Spacer()
                             }
-                        } header: {
-                            Text(String(
-                                format: String(localized: "spec.children.listHeader"),
-                                filteredChildren.count
-                            ))
-                            .font(TypographyTokens.caption(12).weight(.semibold))
-                            .foregroundStyle(ColorTokens.Spec.inkMuted)
-                            .textCase(.uppercase)
-                        } footer: {
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                            .padding(.top, SpacingTokens.regular)
+                            .padding(.bottom, SpacingTokens.small)
+
+                            // Единая карточка-контейнер с разделителями (как в эталоне)
+                            VStack(spacing: 0) {
+                                ForEach(Array(filteredChildren.enumerated()), id: \.element.id) { index, child in
+                                    NavigationLink(value: child.id) {
+                                        VStack(spacing: 0) {
+                                            SpecChildRow(child: child)
+                                                .padding(.horizontal, SpacingTokens.regular)
+                                            if index < filteredChildren.count - 1 {
+                                                Divider()
+                                                    .padding(.leading, 76)
+                                            }
+                                        }
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityIdentifier("specialistStudentRow_\(index)")
+                                }
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                                    .fill(ColorTokens.Spec.surface)
+                                    .shadow(color: ColorTokens.Overlay.shadow, radius: 8, x: 0, y: 2)
+                            )
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+
+                            // Подсказка внизу
                             HStack(alignment: .top, spacing: SpacingTokens.sp2) {
                                 Image(systemName: "lightbulb.fill")
                                     .font(TypographyTokens.caption(12))
@@ -92,13 +116,15 @@ struct SpecChildListView: View {
                                     .font(TypographyTokens.caption(12))
                                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                                     .fixedSize(horizontal: false, vertical: true)
+                                    .lineLimit(nil)
                             }
-                            .padding(.top, SpacingTokens.sp2)
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                            .padding(.top, SpacingTokens.regular)
                             .accessibilityElement(children: .combine)
+
+                            Spacer(minLength: SpacingTokens.xLarge)
                         }
                     }
-                    .listStyle(.insetGrouped)
-                    .scrollContentBackground(.hidden)
                     .accessibilityIdentifier("specialistStudentList")
                 }
             }
@@ -301,14 +327,11 @@ struct SpecChildRow: View {
         .accessibilityAddTraits(.isButton)
     }
 
-    /// Цвет процент-пилюли по уровню прогресса (мелкий семантический акцент,
-    /// не крупная заливка): низкий — rose, средний — warning, высокий — gold.
+    /// Цвет процент-пилюли: тёплый amber/gold по эталону specialist-home.
+    /// Семантическое разделение rose/warning/gold — только для
+    /// специализированных аналитических экранов, не для списка подопечных.
     private var progressPillColor: Color {
-        switch overallProgressPercent {
-        case ..<50: return ColorTokens.Brand.rose
-        case ..<80: return ColorTokens.Semantic.warning
-        default: return ColorTokens.Brand.gold
-        }
+        overallProgressPercent >= 70 ? ColorTokens.Brand.gold : ColorTokens.Brand.primary
     }
 
     /// Локализованная подпись возраста или `nil`, если возраст неизвестен.
@@ -330,6 +353,11 @@ struct SpecChildRow: View {
 }
 
 // MARK: - SpecProgressBar
+//
+// Эталон specialist-home: единый тёплый коралловый трек прогресса
+// (Brand.primary). Цвет не меняется по значению — это прогресс, не оценка.
+// Семантические цвета (rose/warning/gold) остаются только у процент-пилюли
+// справа (маленький акцент), не у горизонтального трека.
 
 struct SpecProgressBar: View {
     let percent: Int
@@ -339,22 +367,14 @@ struct SpecProgressBar: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(ColorTokens.Spec.accent.opacity(0.15))
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(progressColor)
+                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                    .fill(ColorTokens.Brand.primaryLo.opacity(0.28))
+                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                    .fill(ColorTokens.Brand.primary)
                     .frame(width: geo.size.width * fraction)
             }
         }
         .accessibilityLabel(String(format: String(localized: "spec.progress.a11y"), percent))
-    }
-
-    private var progressColor: Color {
-        switch percent {
-        case ..<50: return ColorTokens.Brand.rose
-        case ..<80: return ColorTokens.Semantic.warning
-        default: return ColorTokens.Brand.gold
-        }
     }
 }
 

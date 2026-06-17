@@ -109,7 +109,7 @@ struct SessionCompleteView: View {
                 // высоте экран: hero (маскот + награда + звёзды) → одна карточка
                 // «Итоги занятия» с 2×2 чипами → опциональные reveal-карточки
                 // (достижение / наклейка / серия) → CTA в нижней safe-area-вставке.
-                VStack(spacing: SpacingTokens.large) {
+                VStack(spacing: SpacingTokens.medium) {
                     celebrationPhase
                     starsPhase
                     summaryCard
@@ -118,8 +118,8 @@ struct SessionCompleteView: View {
                     streakPhase
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.large)
-                .padding(.bottom, SpacingTokens.large)
+                .padding(.top, SpacingTokens.regular)
+                .padding(.bottom, SpacingTokens.regular)
                 .frame(maxWidth: .infinity)
             }
             .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -245,7 +245,7 @@ struct SessionCompleteView: View {
     @ViewBuilder
     private var celebrationPhase: some View {
         let visible = display.isPhaseVisible(.celebration)
-        VStack(spacing: SpacingTokens.small) {
+        VStack(spacing: SpacingTokens.tiny) {
             // Эталон session-complete.html (.hero): маскот в круглой золотой
             // медали-виньетке + награда «+N» в правом-верхнем углу.
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
@@ -292,14 +292,14 @@ struct SessionCompleteView: View {
                 .accessibilityHidden(true)
 
             Text(display.mascotTagline)
-                .font(TypographyTokens.title(28))
+                .font(TypographyTokens.title(30).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .fixedSize(horizontal: false, vertical: true)
                 .opacity(visible ? 1 : 0)
-                .padding(.horizontal, SpacingTokens.large)
+                .padding(.horizontal, SpacingTokens.regular)
 
             Text(String(localized: "sessionComplete.hero.subtitle"))
                 .font(TypographyTokens.body(15))
@@ -406,28 +406,31 @@ struct SessionCompleteView: View {
     }
 
     private func summaryChip(icon: String, tint: Color, value: String, label: String) -> some View {
+        // Эталон session-complete.html (.stat-chip): иконка в цветном
+        // квадратике, жирное значение, серая подпись, нейтральный светлый фон.
         HStack(spacing: SpacingTokens.small) {
             Image(systemName: icon)
-                .font(TypographyTokens.body(16).weight(.semibold))
+                .font(TypographyTokens.body(15).weight(.semibold))
                 .foregroundStyle(tint)
-                .frame(width: 34, height: 34)
-                .background(tint.opacity(0.16), in: RoundedRectangle(cornerRadius: 11, style: .continuous))
+                .frame(width: 32, height: 32)
+                .background(tint.opacity(0.14), in: RoundedRectangle(cornerRadius: 10, style: .continuous))
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 1) {
                 Text(value)
-                    .font(TypographyTokens.headline(17).weight(.heavy))
+                    .font(TypographyTokens.headline(16).weight(.heavy))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 Text(label)
-                    .font(TypographyTokens.caption(12))
+                    .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
             }
             Spacer(minLength: 0)
         }
-        .padding(SpacingTokens.small)
+        .padding(.horizontal, SpacingTokens.small)
+        .padding(.vertical, SpacingTokens.small)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(ColorTokens.Kid.surfaceAlt, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
         .accessibilityElement(children: .combine)
@@ -496,23 +499,24 @@ struct SessionCompleteView: View {
     }
 
     // MARK: - Stage 3: Stars
+    //
+    // Эталон session-complete.html: 3 звезды — средний размер (~36pt), плотный
+    // ряд под заголовком. Крупный 44pt-шрифт сдвигал карточку итогов вниз и
+    // нарушал визуальную иерархию (маскот→заголовок→★★★→карточка).
 
     @ViewBuilder
     private var starsPhase: some View {
         let visible = display.isPhaseVisible(.stars)
-        // Fix #11g — добавляем явный caption «Звёзд: N из M» под рядом
-        // звёзд: kids в скриншот-туре не видят прогресса «3 заполненные vs
-        // пустые», а родитель/специалист тоже хочет численную оценку.
         VStack(spacing: SpacingTokens.sp2) {
             HStack(spacing: SpacingTokens.medium) {
                 ForEach(0..<display.starsTotal, id: \.self) { index in
                     let earned = index < display.starsEarned
                     Image(systemName: earned ? "star.fill" : "star")
-                        .font(TypographyTokens.display(44).weight(.semibold))
+                        .font(TypographyTokens.display(36).weight(.bold))
                         .foregroundStyle(earned ? ColorTokens.Brand.gold : ColorTokens.Kid.line)
                         .scaleEffect(visible ? 1 : 0.2)
                         .opacity(visible ? 1 : 0)
-                        .shadow(color: earned ? ColorTokens.Brand.gold.opacity(0.5) : .clear, radius: 8, x: 0, y: 2)
+                        .shadow(color: earned ? ColorTokens.Brand.gold.opacity(0.45) : .clear, radius: 6, x: 0, y: 2)
                         .animation(
                             reduceMotion ? nil : MotionTokens.bounce.delay(Double(index) * 0.18),
                             value: visible

@@ -136,29 +136,35 @@ struct WorldMapView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
+        // Эталон kid-map.html: тёплый кремово-персиковый фон без синих/зелёных
+        // холодных тонов. Kid.bg (cream) + мягкий коралловый radial сверху +
+        // butter radial снизу = ощущение тёплого летнего острова.
         ZStack {
-            // F.tier1 v21: lilac accent в gradient мягче в dark, чтобы карта не «фонила» фиолетом.
-            LinearGradient(
+            ColorTokens.Kid.bg
+                .ignoresSafeArea()
+            RadialGradient(
                 colors: [
-                    ColorTokens.Kid.bg,
-                    ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
-                    ColorTokens.Kid.bg
+                    ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.18 : 0.30),
+                    Color.clear
                 ],
-                startPoint: .top,
-                endPoint: .bottom
+                center: .top,
+                startRadius: 0,
+                endRadius: 380
             )
             .ignoresSafeArea()
-
-            // D-29 v27 — карта звуков «дышит» цветом как и ChildHome: мягкий
-            // прохладный mesh-слой поверх плоского градиента (softLight, низкая
-            // opacity). iOS 18+ — MeshGradient, iOS 17 — radial fallback.
-            HSMeshGradientBackground(palette: .kidCool, animated: true)
-                .ignoresSafeArea()
-                .opacity(colorScheme == .dark ? 0.16 : 0.28)
-                .blendMode(.softLight)
-                .accessibilityHidden(true)
-                .allowsHitTesting(false)
+            RadialGradient(
+                colors: [
+                    ColorTokens.Brand.butter.opacity(colorScheme == .dark ? 0.12 : 0.22),
+                    Color.clear
+                ],
+                center: UnitPoint(x: 0.5, y: 0.9),
+                startRadius: 0,
+                endRadius: 300
+            )
+            .ignoresSafeArea()
         }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     // MARK: - Header derived values

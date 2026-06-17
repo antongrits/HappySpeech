@@ -12091,6 +12091,40 @@
         }
       }
     },
+    "child.home.mascot.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyalya"
+          }
+        }
+      }
+    },
+    "child.home.mascot.signature": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— Ляля"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "— Lyalya"
+          }
+        }
+      }
+    },
     "child.home.mascot.phrase": {
       "extractionState": "manual",
       "localizations": {
@@ -40233,13 +40267,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Минут всего"
+            "value": "Практика недели"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Total minutes"
+            "value": "Week practice"
           }
         }
       }
@@ -40420,7 +40454,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Активность за неделю"
+            "value": "Активность недели"
           }
         },
         "en": {
