@@ -86006,6 +86006,40 @@
           }
         }
       }
+    },
+    "karaoke.viz.idle.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми микрофон — увидишь свой голос"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tap the mic — see your voice"
+          }
+        }
+      }
+    },
+    "karaoke.viz.idle.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала послушай образец, потом повтори сам"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First listen to the sample, then try yourself"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

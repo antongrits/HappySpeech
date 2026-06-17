@@ -213,7 +213,7 @@ struct WeekGoalCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.small) {
+            HStack(alignment: .center, spacing: SpacingTokens.small) {
                 ZStack {
                     Circle()
                         .fill(ColorTokens.Brand.primary.opacity(0.12))
@@ -222,12 +222,15 @@ struct WeekGoalCard: View {
                         .font(TypographyTokens.caption())
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
+                .fixedSize()
                 VStack(alignment: .leading, spacing: 2) {
                     Text(card.childName)
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .minimumScaleFactor(0.85)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .layoutPriority(1)
                     if card.streakDays > 0 {
                         HStack(spacing: 2) {
                             Image(systemName: "flame.fill")

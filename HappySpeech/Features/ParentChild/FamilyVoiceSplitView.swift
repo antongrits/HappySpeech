@@ -99,6 +99,7 @@ struct FamilyVoiceSplitView: View {
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sectionGap)
+            .padding(.bottom, SpacingTokens.sp3)
         }
         .frame(height: proxy.size.height * ratio)
     }
@@ -320,7 +321,9 @@ struct FamilyVoiceSplitView: View {
             } label: {
                 Text(String(localized: "parent_child.split.cta.reset"))
                     .font(TypographyTokens.body(15))
-                    .frame(minWidth: 80, minHeight: 44)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.bordered)
 
@@ -330,7 +333,9 @@ struct FamilyVoiceSplitView: View {
             } label: {
                 Text(String(localized: "parent_child.split.cta.skip"))
                     .font(TypographyTokens.body(15))
-                    .frame(minWidth: 80, minHeight: 44)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.bordered)
 
@@ -340,7 +345,9 @@ struct FamilyVoiceSplitView: View {
             } label: {
                 Text(String(localized: "parent_child.split.cta.next_word"))
                     .font(TypographyTokens.body(15).weight(.semibold))
-                    .frame(minWidth: 100, minHeight: 44)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .frame(maxWidth: .infinity, minHeight: 44)
             }
             .buttonStyle(.borderedProminent)
             .tint(ColorTokens.Brand.primary)

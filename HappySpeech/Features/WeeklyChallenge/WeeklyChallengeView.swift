@@ -228,7 +228,7 @@ struct WeeklyChallengeView: View {
     // MARK: - Week grid
 
     private let weekColumns: [GridItem] = Array(
-        repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2),
+        repeating: GridItem(.flexible(), spacing: SpacingTokens.sp1),
         count: 7
     )
 
@@ -240,7 +240,7 @@ struct WeeklyChallengeView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .padding(.leading, SpacingTokens.sp1)
 
-            LazyVGrid(columns: weekColumns, spacing: SpacingTokens.sp2) {
+            LazyVGrid(columns: weekColumns, spacing: SpacingTokens.sp1) {
                 ForEach(Array(viewModel.dayCells.enumerated()), id: \.element.id) { index, cell in
                     dayCell(cell)
                         .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
@@ -270,11 +270,14 @@ struct WeeklyChallengeView: View {
         } label: {
             VStack(spacing: 4) {
                 Text(cell.dayLabel)
-                    .font(TypographyTokens.caption(11).weight(.medium))
+                    .font(TypographyTokens.caption(10).weight(.medium))
                     .foregroundStyle(dayLabelColor(for: cell.progress))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.75)
+                    .frame(maxWidth: .infinity)
 
                 Image(systemName: cell.symbolName)
-                    .font(.title3)
+                    .font(.body)
                     .foregroundStyle(daySymbolColor(for: cell.progress))
                     .hsSymbolEffect(.bounce, value: cell.progress == .completed)
             }

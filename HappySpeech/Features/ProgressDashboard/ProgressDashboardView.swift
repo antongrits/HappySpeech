@@ -285,7 +285,6 @@ struct ProgressDashboardView: View {
                                 .opacity(phase.isIdentity ? 1 : 0)
                                 .scaleEffect(phase.isIdentity ? 1 : 0.94)
                         }
-                        .hsParallaxTile(factor: 0.18)
                         .zIndex(Double(display.summaryCards.count - index))
                 }
             }
@@ -555,7 +554,6 @@ struct ProgressDashboardView: View {
                             .opacity(phase.isIdentity ? 1 : 0)
                             .scaleEffect(phase.isIdentity ? 1 : 0.92)
                     }
-                    .hsParallaxTile(factor: 0.20)
                     .zIndex(Double(display.soundCells.count - index))
                 }
             }

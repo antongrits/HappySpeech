@@ -284,17 +284,20 @@ struct DialectAdaptationView: View {
                         .fixedSize(horizontal: false, vertical: true)
 
                     if !row.markers.isEmpty {
-                        HStack(spacing: SpacingTokens.sp1) {
-                            ForEach(row.markers.prefix(3), id: \.self) { marker in
-                                Text(marker)
-                                    .font(.caption2)
-                                    .foregroundStyle(ColorTokens.Parent.accent)
-                                    .padding(.horizontal, SpacingTokens.tiny)
-                                    .padding(.vertical, 3)
-                                    .background(
-                                        Capsule()
-                                            .fill(ColorTokens.Parent.accent.opacity(0.1))
-                                    )
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: SpacingTokens.sp1) {
+                                ForEach(row.markers.prefix(3), id: \.self) { marker in
+                                    Text(marker)
+                                        .font(.caption2)
+                                        .lineLimit(1)
+                                        .foregroundStyle(ColorTokens.Parent.accent)
+                                        .padding(.horizontal, SpacingTokens.tiny)
+                                        .padding(.vertical, 3)
+                                        .background(
+                                            Capsule()
+                                                .fill(ColorTokens.Parent.accent.opacity(0.1))
+                                        )
+                                }
                             }
                         }
                         .padding(.top, 2)

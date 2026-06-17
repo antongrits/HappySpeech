@@ -364,23 +364,32 @@ struct CulturalContentView: View {
                             .minimumScaleFactor(0.85)
                     }
 
-                    HStack(spacing: SpacingTokens.sp2) {
-                        Label(item.categoryTitle, systemImage: "tag")
-                            .font(.caption2)
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .labelStyle(.titleAndIcon)
-
-                        if !item.durationLabel.isEmpty {
-                            Label(item.durationLabel, systemImage: "clock")
+                    // Мета-строка: категория + время + звуки.
+                    // ScrollView по горизонтали предотвращает overflow на SE 375pt.
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: SpacingTokens.sp2) {
+                            Label(item.categoryTitle, systemImage: "tag")
                                 .font(.caption2)
-                                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                .foregroundStyle(ColorTokens.Brand.primary)
                                 .labelStyle(.titleAndIcon)
-                        }
+                                .lineLimit(1)
 
-                        Label(item.targetSoundsText, systemImage: "waveform")
-                            .font(.caption2)
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .labelStyle(.titleAndIcon)
+                            if !item.durationLabel.isEmpty {
+                                Label(item.durationLabel, systemImage: "clock")
+                                    .font(.caption2)
+                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                    .labelStyle(.titleAndIcon)
+                                    .lineLimit(1)
+                            }
+
+                            if !item.targetSoundsText.isEmpty {
+                                Label(item.targetSoundsText, systemImage: "waveform")
+                                    .font(.caption2)
+                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                    .labelStyle(.titleAndIcon)
+                                    .lineLimit(1)
+                            }
+                        }
                     }
                     .padding(.top, 2)
                 }

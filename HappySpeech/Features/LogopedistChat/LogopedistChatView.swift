@@ -544,6 +544,7 @@ struct LogopedistChatView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.horizontal, SpacingTokens.sp3)
                     .padding(.vertical, SpacingTokens.sp2)
+                    .frame(maxWidth: UIScreen.main.bounds.width * 0.72, alignment: message.isFromParent ? .trailing : .leading)
                     .background(
                         bubbleShape(isFromParent: message.isFromParent)
                             .fill(

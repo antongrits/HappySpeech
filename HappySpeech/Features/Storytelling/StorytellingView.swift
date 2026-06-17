@@ -159,8 +159,6 @@ struct StorytellingView: View {
                                     .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                                     .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
                             }
-                            // Step 10 Batch E — Pattern 4: parallax drift.
-                            .hsParallaxTile(factor: 0.25)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)

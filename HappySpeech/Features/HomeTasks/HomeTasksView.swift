@@ -23,6 +23,10 @@ struct HomeTasksView: View {
     @State private var presenter: HomeTasksPresenter?
     @State private var router: HomeTasksRouter?
     @State private var bootstrapped = false
+    /// Гейт показа алерта о просроченных: становится `true` спустя короткую
+    /// задержку после загрузки списка, чтобы prompt не перекрывал контент
+    /// сразу при открытии (сначала виден список — потом мягкое напоминание).
+    @State private var overduePromptReady = false
 
     // MARK: - Optional callbacks (для встраивания в Coordinator-flow)
 
@@ -98,6 +102,30 @@ struct HomeTasksView: View {
         }
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
+        // Задержка показа алерта о просроченных: список рендерится первым,
+        // напоминание всплывает спустя ~1.5с — не перекрывая контент сразу.
+        .onChange(of: display.pendingOverduePrompt) { _, pending in
+            scheduleOverduePromptGate(pending: pending)
+        }
+        .onChange(of: display.isLoading) { _, loading in
+            if !loading { scheduleOverduePromptGate(pending: display.pendingOverduePrompt) }
+        }
+    }
+
+    /// Открывает гейт показа overdue-алерта спустя короткую задержку, чтобы
+    /// список заданий успел отобразиться до появления напоминания.
+    private func scheduleOverduePromptGate(pending: Bool) {
+        guard pending, !display.isLoading else {
+            overduePromptReady = false
+            return
+        }
+        guard !overduePromptReady else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(1.5))
+            if display.pendingOverduePrompt && !display.isLoading {
+                overduePromptReady = true
+            }
+        }
     }
 
     /// Двусторонний binding для `.alert` — гасит prompt через
@@ -106,7 +134,12 @@ struct HomeTasksView: View {
     /// чтобы не перекрывать список на холодном запуске.
     private var overduePromptBinding: Binding<Bool> {
         Binding(
-            get: { display.pendingOverduePrompt && display.overdueCount > 0 && !display.isLoading },
+            get: {
+                display.pendingOverduePrompt
+                    && display.overdueCount > 0
+                    && !display.isLoading
+                    && overduePromptReady
+            },
             set: { newValue in
                 if !newValue {
                     display.dismissOverduePrompt()

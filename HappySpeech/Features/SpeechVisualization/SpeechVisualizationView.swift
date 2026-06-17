@@ -62,6 +62,11 @@ struct SpeechVisualizationView: View {
     @State private var presenter: SpeechVisualizationPresenter?
     @State private var practiceStartTime: Date?
     @State private var isRecordingPractice = false
+    /// Живой спектрограф (тёмный data-viz холст + захват микрофона) показываем
+    /// ТОЛЬКО после действия пользователя (Слушать / запись). До этого экран
+    /// не должен перекрываться большим тёмным панно — внутри карточки виден
+    /// дружелюбный читаемый плейсхолдер на тёплом фоне.
+    @State private var hasStartedViz = false
 
     @Environment(AppContainer.self) private var container
     @Environment(\.exitToParentHome) private var exitToParentHome
@@ -268,21 +273,27 @@ struct SpeechVisualizationView: View {
                 // viz-head: title/blip + heat legend
                 vizCardHeader
 
-                // Spectrogram (fills remaining space, no fixed height)
-                SpectrogramVisualizerView(referenceSpectrogram: nil, style: .warm)
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: RadiusTokens.concentric(
-                                outer: RadiusTokens.lg,
-                                inset: SpacingTokens.sp3
-                            ),
-                            style: .continuous
+                if hasStartedViz {
+                    // Spectrogram (fills remaining space, no fixed height) —
+                    // показывается только после действия пользователя.
+                    SpectrogramVisualizerView(referenceSpectrogram: nil, style: .warm)
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: RadiusTokens.concentric(
+                                    outer: RadiusTokens.lg,
+                                    inset: SpacingTokens.sp3
+                                ),
+                                style: .continuous
+                            )
                         )
-                    )
-                    .padding(.horizontal, SpacingTokens.sp3)
-                    .padding(.bottom, SpacingTokens.sp3)
-                    .frame(maxHeight: .infinity)
-                    .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+                        .padding(.horizontal, SpacingTokens.sp3)
+                        .padding(.bottom, SpacingTokens.sp3)
+                        .frame(maxHeight: .infinity)
+                        .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
+                        .transition(.opacity)
+                } else {
+                    vizIdlePlaceholder
+                }
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
@@ -333,6 +344,42 @@ struct SpeechVisualizationView: View {
         .padding(.bottom, SpacingTokens.sp2)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("karaoke.heat.a11y"))
+    }
+
+    // open-design idle state: до записи показываем читаемое приглашение
+    // (тёплый светлый текст с высоким контрастом на тёмном data-viz холсте),
+    // вместо пустого/нечитаемого тёмного панно при входе на экран.
+    private var vizIdlePlaceholder: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: "waveform")
+                .font(.system(size: 40, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.butter)
+                .hsSymbolEffect(.variableColor, value: holder.modeVM?.mode)
+                .accessibilityHidden(true)
+            Text(String(localized: "karaoke.viz.idle.title",
+                        defaultValue: "Нажми микрофон — увидишь свой голос"))
+                .font(TypographyTokens.body(15).weight(.semibold))
+                .foregroundStyle(Color(red: 1.0, green: 0.95, blue: 0.90))
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, SpacingTokens.sp4)
+            Text(String(localized: "karaoke.viz.idle.subtitle",
+                        defaultValue: "Сначала послушай образец, потом повтори сам"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, SpacingTokens.sp5)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, SpacingTokens.sp3)
+        .padding(.bottom, SpacingTokens.sp3)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("karaoke.viz.idle.title"))
     }
 
     private var heatLegendInline: some View {
@@ -537,6 +584,16 @@ struct SpeechVisualizationView: View {
 
     // MARK: - Actions
 
+    /// Раскрывает живой спектрограф по действию пользователя (один раз).
+    private func revealViz() {
+        guard !hasStartedViz else { return }
+        if reduceMotion {
+            hasStartedViz = true
+        } else {
+            withAnimation(.easeInOut(duration: 0.25)) { hasStartedViz = true }
+        }
+    }
+
     private func tapPrimary() async {
         guard let modeVM = holder.modeVM else { return }
         switch modeVM.mode {
@@ -549,6 +606,7 @@ struct SpeechVisualizationView: View {
 
     private func playListen() async {
         guard let viewModel = holder.loadVM else { return }
+        revealViz()
         // Анимируем последовательную подсветку слогов с длительностью каждого.
         for syllable in viewModel.syllables {
             holder.activeSyllableID = syllable.id
@@ -560,6 +618,7 @@ struct SpeechVisualizationView: View {
     private func togglePractice() async {
         if practiceStartTime == nil {
             practiceStartTime = Date()
+            revealViz()
             holder.isPlaying = true
             // Старт реальной записи речи ребёнка (для акустической оценки).
             await startPracticeRecording()

@@ -108,7 +108,8 @@ public struct SpectrogramCanvasView: View {
                 : String(localized: "spectrogram.empty.reference", defaultValue: "Нет эталона")
             )
             .font(.caption)
-            .foregroundStyle(.secondary)
+            // Светлый тёплый текст для читаемости на тёмном data-viz холсте.
+            .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
         }
     }
 

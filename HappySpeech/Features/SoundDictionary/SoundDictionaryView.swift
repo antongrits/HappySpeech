@@ -106,8 +106,10 @@ struct SoundDictionaryView: View {
                         }
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.vertical, SpacingTokens.sp4)
+                    .padding(.top, SpacingTokens.sp4)
+                    .padding(.bottom, SpacingTokens.sp10)
                 }
+                .scrollIndicators(.visible)
             }
             .navigationTitle(Text("soundDictionary.screen.title"))
             .navigationBarTitleDisplayMode(.large)
@@ -226,9 +228,6 @@ struct SoundDictionaryView: View {
             LazyVGrid(columns: gridColumns, spacing: SpacingTokens.sp2) {
                 ForEach(section.cells) { cell in
                     phonemeCell(cell)
-                        // Step 10 Batch E — Pattern 4: parallax drift на
-                        // phoneme dictionary cells.
-                        .hsParallaxTile(factor: 0.25)
                 }
             }
         }

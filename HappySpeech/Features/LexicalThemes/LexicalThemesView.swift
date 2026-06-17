@@ -218,8 +218,6 @@ struct LexicalThemesView: View {
                             .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                             .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
                     }
-                    // Step 10 Batch G — Pattern 4: parallax drift на theme cards.
-                    .hsParallaxTile(factor: 0.25)
             }
         }
     }

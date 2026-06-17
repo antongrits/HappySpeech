@@ -64,8 +64,11 @@ struct RewardShopView: View {
         category: "RewardShop.View"
     )
 
+    // On SE 375pt (343pt usable after 16pt edge padding × 2):
+    // minimum 140 → max 2 columns = (343 - 12) / 2 = 165pt each (fits labels well).
+    // On larger devices minimum 140 still fits 3 columns at 411pt+.
     private let gridColumns = [
-        GridItem(.adaptive(minimum: 110, maximum: 160), spacing: SpacingTokens.sp3)
+        GridItem(.adaptive(minimum: 140, maximum: 180), spacing: SpacingTokens.sp3)
     ]
 
     var body: some View {
@@ -233,10 +236,10 @@ struct RewardShopView: View {
                 Text(sticker.name)
                     .font(TypographyTokens.caption(12).weight(.medium))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.7)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
                 priceChip(sticker)
             }
             .padding(SpacingTokens.sp2)

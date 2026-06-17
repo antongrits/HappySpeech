@@ -172,7 +172,7 @@ public struct SpectrogramVisualizerView: View {
 
             Text(String(localized: "spectrogram.compare", defaultValue: "Сравни звуки"))
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
                 .padding(.horizontal, SpacingTokens.tiny)
 
             Rectangle()
@@ -189,9 +189,11 @@ public struct SpectrogramVisualizerView: View {
                 .font(.caption)
                 .foregroundStyle(isLive ? ColorTokens.Brand.primaryHi : ColorTokens.Brand.primary)
 
+            // Тёмный data-viz холст требует светлого тёплого текста (системный
+            // `.primary` на нём становится почти-чёрным и нечитаемым).
             Text(title)
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(.primary)
+                .foregroundStyle(Color(red: 1.0, green: 0.95, blue: 0.90))
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(title)

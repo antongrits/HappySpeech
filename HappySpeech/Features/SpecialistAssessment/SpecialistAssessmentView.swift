@@ -110,8 +110,11 @@ struct SpecialistAssessmentView: View {
         VStack(spacing: SpacingTokens.sp4) {
             progressBar(currentIndex: holder.currentIndex, total: total)
 
-            Spacer(minLength: 0)
-
+            // Карточка вопроса крепится у верхней трети (не центрируется
+            // двумя равными Spacer'ами — это создавало большую пустую зону
+            // сверху между прогресс-баром и вопросом). Маленький фикс-отступ
+            // под прогресс-баром, затем карточка, затем гибкий Spacer толкает
+            // варианты ответа к низу — высота заполнена сбалансированно.
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                     Text(question.progressLabel)
@@ -127,8 +130,9 @@ struct SpecialistAssessmentView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp6)
 
-            Spacer(minLength: 0)
+            Spacer(minLength: SpacingTokens.sp4)
 
             VStack(spacing: SpacingTokens.sp3) {
                 switch question.type {
