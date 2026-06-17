@@ -6,6 +6,10 @@ import SwiftUI
 // Карточки нарядов, скинов и голоса — в `CustomizationViewCards.swift`.
 
 // MARK: - CustomizationTabButton
+//
+// Pill-style tab button that matches the open-design reference:
+// text-only label inside a filled coral capsule when selected,
+// plain muted text when unselected. No icon to keep tabs compact.
 
 struct CustomizationTabButton: View {
 
@@ -17,28 +21,35 @@ struct CustomizationTabButton: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: SpacingTokens.sp1) {
-                Image(systemName: tab.iconName)
-                    .font(TypographyTokens.headline(18))
-                Text(tab.localizedName)
-                    .font(TypographyTokens.caption(11))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
-            .foregroundStyle(
-                isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.inkMuted
-            )
-            .frame(minWidth: 64, minHeight: 56)
-            .padding(.horizontal, SpacingTokens.small)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                    .fill(
-                        isSelected
-                            ? ColorTokens.Brand.primary.opacity(0.12)
-                            : Color.clear
-                    )
-            )
-            .animation(reduceMotion ? nil : MotionTokens.outQuick, value: isSelected)
+            Text(tab.localizedName)
+                .font(TypographyTokens.body(15).weight(.bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .foregroundStyle(
+                    isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.inkMuted
+                )
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.vertical, 10)
+                .background {
+                    if isSelected {
+                        Capsule(style: .continuous)
+                            .fill(
+                                LinearGradient(
+                                    colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(
+                                color: ColorTokens.Brand.primary.opacity(0.45),
+                                radius: 9, x: 0, y: 5
+                            )
+                    } else {
+                        Capsule(style: .continuous)
+                            .fill(Color.clear)
+                    }
+                }
+                .animation(reduceMotion ? nil : MotionTokens.outQuick, value: isSelected)
         }
         .accessibilityLabel(tab.localizedName)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])

@@ -17067,7 +17067,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Наряд Ляли"
+            "value": "Образ Ляли"
           }
         }
       }
@@ -60779,6 +60779,72 @@
         }
       }
     },
+    "sibling.lobby.connecting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "подключается…"
+          }
+        }
+      }
+    },
+    "sibling.lobby.preview_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 звёзд"
+          }
+        }
+      }
+    },
+    "sibling.lobby.preview_cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "скажите слово"
+          }
+        }
+      }
+    },
+    "sibling.lobby.preview_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Так выглядит игра вместе"
+          }
+        }
+      }
+    },
+    "sibling.lobby.preview_word_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ШАР"
+          }
+        }
+      }
+    },
+    "sibling.lobby.room_name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комната «Солнышко»"
+          }
+        }
+      }
+    },
     "sibling.lobby.safe_note": {
       "extractionState": "manual",
       "localizations": {
@@ -60786,6 +60852,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Без чата и ссылок — играем безопасно"
+          }
+        }
+      }
+    },
+    "sibling.lobby.shareplay_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "рядом"
+          }
+        }
+      }
+    },
+    "sibling.lobby.waiting_slot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ждём игрока…"
           }
         }
       }

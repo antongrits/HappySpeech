@@ -3,9 +3,9 @@ import SwiftUI
 // MARK: - SpecialistResourcesLibraryView
 //
 // Справочная библиотека методических материалов специалиста.
-// Дизайн-паттерн «Библиотека / Энциклопедия»: статичная нейтрально-холодная
-// канва Specialist + коралловый акцент, поиск, фильтр-чипы по типу, список
-// карточек-материалов с тип-чипом и шевроном, ридер с реальным текстом.
+// Дизайн-паттерн «Библиотека / Энциклопедия»: большой заголовок h1 +
+// счётчик, поиск, фильтр-чипы, стекированный список карточек с иконкой/чипом/шевроном,
+// ридер с реальным текстом.
 //
 // Accessibility:
 //   • VoiceOver: каждая карточка — combined label + hint «открыть»
@@ -25,23 +25,24 @@ struct SpecialistResourcesLibraryView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack(alignment: .topTrailing) {
                 ColorTokens.Spec.bg.ignoresSafeArea()
                 content
-            }
-            .navigationTitle(Text(String(localized: "resourcesLibrary.nav.title")))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        exitToSpecialistHome()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    }
-                    .accessibilityLabel(Text(String(localized: "action.close")))
+                // Close button floated top-right matching reference design
+                Button {
+                    exitToSpecialistHome()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Circle())
                 }
+                .padding(.top, SpacingTokens.sp4)
+                .padding(.trailing, SpacingTokens.screenEdge)
+                .accessibilityLabel(Text(String(localized: "action.close")))
             }
+            .navigationBarHidden(true)
             .task {
                 if interactor == nil {
                     interactor = SpecialistResourcesLibraryInteractor(specialistId: specialistId)
@@ -73,13 +74,14 @@ struct SpecialistResourcesLibraryView: View {
         if let interactor {
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                    // Space for floating close button
+                    Color.clear.frame(height: SpacingTokens.sp10)
                     header(state: interactor.state)
                     searchField
                     filterStrip(interactor: interactor)
                     list(interactor: interactor)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.top, SpacingTokens.sp3)
                 .padding(.bottom, SpacingTokens.sp8)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -91,22 +93,30 @@ struct SpecialistResourcesLibraryView: View {
     }
 
     // MARK: - Header
+    // Matches reference: large bold h1 title + subtitle "N материалов · обновлено сегодня"
 
     private func header(state: SpecialistResourcesLibraryModels.ViewState) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(String(localized: "resourcesLibrary.hero.title"))
-                .font(TypographyTokens.title(26))
+                .font(TypographyTokens.display(30))
                 .foregroundStyle(ColorTokens.Spec.ink)
-                .lineLimit(2)
+                .lineLimit(nil)
                 .minimumScaleFactor(0.85)
-            Text(String(
-                format: String(localized: "resourcesLibrary.total %lld %lld"),
-                state.resources.count, state.readCount
-            ))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Spec.inkMuted)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 0) {
+                Text(
+                    String(
+                        format: String(localized: "resourcesLibrary.total %lld", defaultValue: "%lld материалов"),
+                        state.resources.count
+                    )
+                )
+                Text(" · ")
+                Text(String(localized: "resourcesLibrary.updated_today", defaultValue: "обновлено сегодня"))
+            }
+            .font(TypographyTokens.body(14))
+            .foregroundStyle(ColorTokens.Spec.inkMuted)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
@@ -226,14 +236,26 @@ struct SpecialistResourcesLibraryView: View {
                 emptyState
             } else {
                 sectionLabel
-                VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(items) { resource in
-                        row(resource, interactor: interactor)
-                            .hsParallaxTile(factor: reduceMotion ? 0 : 0.3)
-                            .transition(.asymmetric(
-                                insertion: .scale(scale: 0.92).combined(with: .opacity),
-                                removal: .opacity
-                            ))
+                // Stacked card deck: top item sits on a visible "stack" of ghost cards
+                // behind it (matching reference design with layered depth effect).
+                if let featured = items.first {
+                    featuredStack(featured, interactor: interactor)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.94).combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                }
+                // Remaining rows
+                if items.count > 1 {
+                    VStack(spacing: SpacingTokens.sp2) {
+                        ForEach(items.dropFirst()) { resource in
+                            row(resource, interactor: interactor)
+                                .hsParallaxTile(factor: reduceMotion ? 0 : 0.25)
+                                .transition(.asymmetric(
+                                    insertion: .scale(scale: 0.92).combined(with: .opacity),
+                                    removal: .opacity
+                                ))
+                        }
                     }
                 }
             }
@@ -250,6 +272,42 @@ struct SpecialistResourcesLibraryView: View {
             .foregroundStyle(ColorTokens.Spec.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityAddTraits(.isHeader)
+    }
+
+    /// Стекированный «дек карточек» для первого/рекомендуемого ресурса.
+    /// За верхней карточкой видны 3 призрачные карточки, смещённые вниз
+    /// и сужающиеся — точный эффект «стопки книг» из эталона.
+    private func featuredStack(
+        _ resource: SpecialistResourcesLibraryModels.Resource,
+        interactor: SpecialistResourcesLibraryInteractor
+    ) -> some View {
+        let ghostCount = 3
+        return ZStack(alignment: .top) {
+            // Ghost cards peek below — rendered bottom-most first so closest
+            // ghost sits on top of the deeper ones (idx=3 deepest, idx=1 nearest).
+            ForEach((1...ghostCount).reversed(), id: \.self) { idx in
+                let frac = CGFloat(idx) / CGFloat(ghostCount + 1)
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Spec.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(ColorTokens.Spec.line, lineWidth: 1)
+                    )
+                    .frame(maxWidth: .infinity, minHeight: 88)
+                    // Narrow each ghost card — widest at the back, narrowest at front
+                    .padding(.horizontal, CGFloat(ghostCount - idx + 1) * 5)
+                    // Shift down — deepest card furthest below
+                    .offset(y: CGFloat(idx) * 6)
+                    .opacity(1.0 - frac * 0.6)
+            }
+
+            // Top (real) card — full interactable row, sits at top of ZStack
+            row(resource, interactor: interactor)
+                .hsParallaxTile(factor: reduceMotion ? 0 : 0.3)
+        }
+        // Extra bottom padding so the lowest ghost card peeks out without clipping
+        .padding(.bottom, CGFloat(ghostCount) * 6)
+        .clipped(antialiased: true)
     }
 
     private var emptyState: some View {

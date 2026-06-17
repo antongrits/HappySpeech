@@ -36,11 +36,13 @@ struct SiblingLobbyView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp5) {
-                    nearbyChip
+                    roomNameChip
 
                     mascotCheer
 
                     playersSection
+
+                    gamePreviewSection
 
                     countdownLabel
                 }
@@ -53,21 +55,50 @@ struct SiblingLobbyView: View {
         }
         .navigationTitle(String(localized: "sibling.lobby.nav_title"))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                sharePlayBadge
+            }
+        }
         .onAppear { bootstrap() }
     }
 
-    // MARK: - Nearby chip
+    // MARK: - SharePlay badge (toolbar)
 
-    private var nearbyChip: some View {
+    /// Небольшой бейдж «SharePlay · рядом» в правом углу навигации —
+    /// точно как в эталоне: иконка + текст на светлой Capsule.
+    private var sharePlayBadge: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Image(systemName: "shareplay")
+                .font(.system(size: 11, weight: .semibold))
+                .accessibilityHidden(true)
+            Text(String(localized: "sibling.lobby.shareplay_badge", defaultValue: "рядом"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .lineLimit(1)
+        }
+        .foregroundStyle(ColorTokens.Brand.lilac)
+        .padding(.horizontal, SpacingTokens.sp3)
+        .padding(.vertical, SpacingTokens.sp1)
+        .background(Capsule().fill(ColorTokens.Brand.lilac.opacity(0.14)))
+        .accessibilityHidden(true)
+    }
+
+    // MARK: - Room name chip
+
+    /// Чип с именем комнаты — первый элемент экрана лобби, точно как в эталоне:
+    /// «Комната «Солнышко»» с индикатором-пульсом и счётчиком готовых.
+    private var roomNameChip: some View {
         HStack(spacing: SpacingTokens.sp2) {
             Circle()
                 .fill(viewModel.bothReady ? ColorTokens.Brand.mint : ColorTokens.Brand.butter)
                 .frame(width: 9, height: 9)
                 .accessibilityHidden(true)
 
-            Text(String(localized: "sibling.lobby.chip_count"))
+            Text(String(localized: "sibling.lobby.room_name", defaultValue: "Комната «Солнышко»"))
                 .font(TypographyTokens.headline(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
 
             Spacer(minLength: 0)
 
@@ -125,6 +156,8 @@ struct SiblingLobbyView: View {
 
     // MARK: - Players
 
+    /// Секция игроков: вертикальный список строк (горизонтальная сетка 2×N не
+    /// вмещает 3+ игроков и обрезает имена — вертикаль точнее эталону).
     private var playersSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack {
@@ -138,25 +171,116 @@ struct SiblingLobbyView: View {
                 readyCountPill
             }
 
-            LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: SpacingTokens.sp3),
-                    GridItem(.flexible(), spacing: SpacingTokens.sp3)
-                ],
-                spacing: SpacingTokens.sp3
-            ) {
-                playerCard(
+            VStack(spacing: SpacingTokens.sp2) {
+                // Local player (host)
+                playerRow(
                     name: viewModel.localDisplayName.isEmpty ? localDisplayName : viewModel.localDisplayName,
                     isReady: viewModel.localReady,
-                    isHost: true
+                    isHost: true,
+                    isWaiting: false
                 )
-                playerCard(
+                // Remote peer
+                playerRow(
                     name: viewModel.peerDisplayName.isEmpty ? peerID.displayName : viewModel.peerDisplayName,
                     isReady: viewModel.peerReady,
-                    isHost: false
+                    isHost: false,
+                    isWaiting: false
+                )
+                // Awaiting slot — matches reference's «Ждём игрока…» third slot
+                playerRow(
+                    name: String(localized: "sibling.lobby.waiting_slot", defaultValue: "Ждём игрока…"),
+                    isReady: false,
+                    isHost: false,
+                    isWaiting: true
                 )
             }
         }
+    }
+
+    /// Горизонтальная строка игрока в лобби — аватар + имя + статус + статус-иконка.
+    /// Заменяет старую сетку 2×N на вертикальный список строк (точнее эталону
+    /// с тремя слотами, включая «Ждём игрока…»).
+    private func playerRow(
+        name: String,
+        isReady: Bool,
+        isHost: Bool,
+        isWaiting: Bool
+    ) -> some View {
+        let statusColor: Color = isWaiting
+            ? ColorTokens.Kid.inkSoft
+            : (isReady ? ColorTokens.Brand.mint : ColorTokens.Kid.inkSoft)
+        let statusText: String = isWaiting
+            ? String(localized: "sibling.lobby.waiting")
+            : (isReady
+                ? String(localized: "sibling.lobby.ready")
+                : String(localized: "sibling.lobby.connecting", defaultValue: "подключается…"))
+
+        return HSCard(padding: SpacingTokens.sp3) {
+            HStack(spacing: SpacingTokens.sp3) {
+                if isWaiting {
+                    // Ghost avatar circle for empty slot
+                    Circle()
+                        .fill(ColorTokens.Kid.bgSoft)
+                        .overlay(
+                            Circle().strokeBorder(
+                                ColorTokens.Kid.line,
+                                style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])
+                            )
+                        )
+                        .frame(width: 46, height: 46)
+                        .accessibilityHidden(true)
+                } else {
+                    avatarCircle(name: name, size: 46)
+                }
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(name)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(
+                            isWaiting ? ColorTokens.Kid.inkSoft : ColorTokens.Kid.ink
+                        )
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.8)
+                        .italic(isWaiting)
+
+                    HStack(spacing: SpacingTokens.micro) {
+                        if !isWaiting {
+                            if isReady {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(TypographyTokens.caption(11))
+                                    .accessibilityHidden(true)
+                            } else {
+                                ProgressView()
+                                    .controlSize(.mini)
+                                    .accessibilityHidden(true)
+                            }
+                        }
+                        Text(statusText)
+                            .font(TypographyTokens.caption(11))
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .foregroundStyle(statusColor)
+                }
+
+                Spacer(minLength: 0)
+
+                if isHost {
+                    hostBadge
+                }
+            }
+            .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
+        }
+        .scaleEffect(isReady && !reduceMotion ? 1.0 : 0.99)
+        .animation(reduceMotion ? nil : MotionTokens.spring, value: isReady)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            isWaiting
+                ? String(localized: "sibling.lobby.waiting_slot", defaultValue: "Ждём игрока…")
+                : (isHost
+                    ? "\(name), \(String(localized: "sibling.a11y.host")), \(statusText)"
+                    : "\(name), \(statusText)")
+        )
     }
 
     private var readyCountPill: some View {
@@ -180,58 +304,120 @@ struct SiblingLobbyView: View {
         .accessibilityLabel(String(format: String(localized: "sibling.lobby.ready_count"), readyCount, 2))
     }
 
-    private func playerCard(name: String, isReady: Bool, isHost: Bool) -> some View {
-        let statusColor = isReady ? ColorTokens.Brand.mint : ColorTokens.Kid.inkSoft
-        let statusText = isReady
-            ? String(localized: "sibling.lobby.ready")
-            : String(localized: "sibling.lobby.waiting")
+    // MARK: - Game preview section
 
-        return HSCard(padding: SpacingTokens.sp3) {
-            HStack(spacing: SpacingTokens.sp3) {
-                avatarCircle(name: name, size: 46)
+    /// Секция «Так выглядит игра вместе» — превью-карточка из эталона лобби.
+    /// Показывает упрощённый макет: два игрока с очками и «слово»-плашка посередине.
+    private var gamePreviewSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            HStack {
+                Text(
+                    String(
+                        localized: "sibling.lobby.preview_title",
+                        defaultValue: "Так выглядит игра вместе"
+                    )
+                )
+                .font(TypographyTokens.headline(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
 
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(name)
-                        .font(TypographyTokens.headline(15))
+                Spacer()
+
+                Text(String(localized: "sibling.lobby.preview_badge", defaultValue: "5 звёзд"))
+                    .font(TypographyTokens.caption(11).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .padding(.horizontal, SpacingTokens.sp2)
+                    .padding(.vertical, 3)
+                    .background(Capsule().fill(ColorTokens.Brand.gold.opacity(0.15)))
+                    .accessibilityHidden(true)
+            }
+            .accessibilityAddTraits(.isHeader)
+
+            // Mini preview card with two players and a word tile
+            HSCard(padding: SpacingTokens.sp4) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    // Left player
+                    playerScorePreview(
+                        name: viewModel.localDisplayName.isEmpty
+                            ? localDisplayName
+                            : viewModel.localDisplayName,
+                        score: 120
+                    )
+
+                    Spacer(minLength: 0)
+
+                    // Centre word chip
+                    VStack(spacing: SpacingTokens.sp1) {
+                        Text(
+                            String(
+                                localized: "sibling.lobby.preview_word_label",
+                                defaultValue: "ШАР"
+                            )
+                        )
+                        .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Kid.ink)
-                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .frame(width: 80, height: 44)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                                .fill(ColorTokens.Brand.butter.opacity(0.35))
+                        )
+
+                        Text(
+                            String(
+                                localized: "sibling.lobby.preview_cta",
+                                defaultValue: "скажите слово"
+                            )
+                        )
+                        .font(TypographyTokens.caption(10))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .lineLimit(1)
                         .minimumScaleFactor(0.8)
-
-                    HStack(spacing: SpacingTokens.micro) {
-                        if isReady {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(TypographyTokens.caption(11))
-                        } else {
-                            ProgressView()
-                                .controlSize(.mini)
-                                .accessibilityHidden(true)
-                        }
-                        Text(statusText)
-                            .font(TypographyTokens.caption(11))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .minimumScaleFactor(0.8)
                     }
-                    .foregroundStyle(statusColor)
-                }
 
-                Spacer(minLength: 0)
+                    Spacer(minLength: 0)
+
+                    // Right player
+                    playerScorePreview(
+                        name: viewModel.peerDisplayName.isEmpty
+                            ? peerID.displayName
+                            : viewModel.peerDisplayName,
+                        score: 90
+                    )
+                }
             }
-            .frame(maxWidth: .infinity, minHeight: 76, alignment: .leading)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(
+                String(
+                    localized: "sibling.lobby.preview_title",
+                    defaultValue: "Так выглядит игра вместе"
+                )
+            )
         }
-        .overlay(alignment: .topTrailing) {
-            if isHost {
-                hostBadge
-                    .offset(x: -SpacingTokens.sp2, y: -SpacingTokens.micro)
+    }
+
+    /// Мини-блок счёта игрока для превью-карточки игры.
+    private func playerScorePreview(name: String, score: Int) -> some View {
+        VStack(spacing: SpacingTokens.sp1) {
+            avatarCircle(name: name, size: 36)
+            Text(name)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .frame(maxWidth: 70, alignment: .center)
+            HStack(spacing: 2) {
+                Image(systemName: "star.fill")
+                    .font(.system(size: 9))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .accessibilityHidden(true)
+                Text("\(score)")
+                    .font(TypographyTokens.mono(12).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
             }
         }
-        .scaleEffect(isReady && !reduceMotion ? 1.0 : 0.99)
-        .animation(reduceMotion ? nil : MotionTokens.spring, value: isReady)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            isHost
-                ? "\(name), \(String(localized: "sibling.a11y.host")), \(statusText)"
-                : "\(name), \(statusText)"
-        )
     }
 
     private var hostBadge: some View {

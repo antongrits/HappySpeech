@@ -21,60 +21,114 @@ struct OutfitCard: View {
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: SpacingTokens.tiny) {
+            VStack(spacing: 8) {
+                // Illustration container with badge overlays.
                 ZStack(alignment: .topTrailing) {
-                    outfitIllustration
-                        .frame(width: cardWidth * 0.7, height: cardHeight * 0.6)
-                        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous))
+                    ZStack(alignment: .bottomLeading) {
+                        outfitIllustration
+                            .frame(height: 64)
+                            .frame(maxWidth: .infinity)
+                            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous))
+                            .overlay(
+                                // Dimming layer for locked state
+                                Group {
+                                    if case .locked = item.unlockStatus {
+                                        RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                                            .fill(Color.black.opacity(0.08))
+                                    }
+                                }
+                            )
 
+                        // Star-cost pill (bottom-left of illustration)
+                        if item.starCost > 0, case .locked = item.unlockStatus {
+                            HStack(spacing: 3) {
+                                Image(systemName: "star.fill")
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundStyle(Color(red: 0.42, green: 0.31, blue: 0.0))
+                                Text("\(item.starCost)")
+                                    .font(TypographyTokens.caption(10).weight(.bold))
+                                    .foregroundStyle(Color(red: 0.42, green: 0.31, blue: 0.0))
+                            }
+                            .padding(.horizontal, 7)
+                            .padding(.vertical, 3)
+                            .background(
+                                Capsule(style: .continuous)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [ColorTokens.Brand.butter, Color(red: 1.0, green: 0.78, blue: 0.25)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .shadow(color: ColorTokens.Brand.gold.opacity(0.5), radius: 4, x: 0, y: 2)
+                            )
+                            .padding(6)
+                        }
+                    }
+
+                    // Lock icon (top-right)
                     if case .locked = item.unlockStatus {
                         Image(systemName: "lock.fill")
-                            .font(TypographyTokens.body(16))
+                            .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                            .background(Circle().fill(ColorTokens.Kid.surface).padding(-4))
-                            .padding(SpacingTokens.sp1)
+                            .padding(6)
+                            .background(
+                                Circle()
+                                    .fill(ColorTokens.Kid.surface.opacity(0.9))
+                                    .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
+                            )
+                            .padding(6)
                     } else if item.isSelected {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(TypographyTokens.headline(20))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .background(Circle().fill(ColorTokens.Kid.surface).padding(-2))
-                            .padding(SpacingTokens.sp1)
+                        // Mint green checkmark badge — design reference exact match.
+                        ZStack {
+                            Circle()
+                                .fill(ColorTokens.Brand.mint)
+                                .frame(width: 24, height: 24)
+                                .shadow(color: ColorTokens.Brand.mint.opacity(0.5), radius: 3, x: 0, y: 2)
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 12, weight: .bold))
+                                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        }
+                        .overlay(
+                            Circle()
+                                .strokeBorder(ColorTokens.Kid.surface, lineWidth: 2.5)
+                        )
+                        .offset(x: 7, y: -7)
                     }
                 }
 
                 Text(item.localizedName)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .font(TypographyTokens.caption(13).weight(.bold))
+                    .foregroundStyle(
+                        item.unlockStatus.isAccessible
+                            ? ColorTokens.Kid.ink
+                            : ColorTokens.Kid.inkSoft
+                    )
                     .lineLimit(1)
-                    .minimumScaleFactor(0.65)
-                    .padding(.horizontal, SpacingTokens.tiny)
-
-                if item.starCost > 0 {
-                    HStack(spacing: 2) {
-                        Image(systemName: "star.fill")
-                            .font(TypographyTokens.caption(9))
-                            .foregroundStyle(ColorTokens.Brand.gold)
-                        Text("\(item.starCost)")
-                            .font(TypographyTokens.caption(10))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    }
-                }
+                    .minimumScaleFactor(0.7)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
-            .frame(width: cardWidth, height: cardHeight)
+            .padding(9)
+            .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(item.isSelected
-                        ? ColorTokens.Brand.primary.opacity(0.12)
+                        ? ColorTokens.Brand.primary.opacity(0.10)
                         : ColorTokens.Kid.surface)
                     .overlay(
                         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                             .strokeBorder(
-                                item.isSelected ? ColorTokens.Brand.primary : Color.clear,
-                                lineWidth: 2
+                                item.isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
+                                lineWidth: item.isSelected ? 2 : 1
                             )
                     )
+                    .shadow(
+                        color: item.isSelected
+                            ? ColorTokens.Brand.primary.opacity(0.18)
+                            : ColorTokens.Kid.ink.opacity(0.06),
+                        radius: 6, x: 0, y: 3
+                    )
             )
-            .opacity(item.unlockStatus.isAccessible ? 1.0 : 0.55)
             .scaleEffect(isPressed && !reduceMotion ? 0.95 : 1.0)
             .animation(reduceMotion ? nil : MotionTokens.outQuick, value: isPressed)
         }
@@ -165,11 +219,17 @@ struct SkinCard: View {
                     .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous))
 
                 if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .font(TypographyTokens.headline(22))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                        .background(Circle().fill(ColorTokens.Kid.surface).padding(-2))
-                        .padding(SpacingTokens.sp1)
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.mint)
+                            .frame(width: 24, height: 24)
+                            .shadow(color: ColorTokens.Brand.mint.opacity(0.5), radius: 3, x: 0, y: 2)
+                        Image(systemName: "checkmark")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    }
+                    .overlay(Circle().strokeBorder(ColorTokens.Kid.surface, lineWidth: 2.5))
+                    .offset(x: SpacingTokens.sp1, y: -SpacingTokens.sp1)
                 }
             }
 

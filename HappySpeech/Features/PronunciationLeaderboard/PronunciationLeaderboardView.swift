@@ -33,12 +33,8 @@ struct PronunciationLeaderboardView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Parent.bg.ignoresSafeArea()
-            HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
-                .ignoresSafeArea()
-                .blendMode(.softLight)
-                .accessibilityHidden(true)
-                .allowsHitTesting(false)
+            // Warm cream Kid canvas — matching the design reference for both leaderboard screens.
+            ColorTokens.Kid.bg.ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
@@ -51,7 +47,7 @@ struct PronunciationLeaderboardView: View {
             }
         }
         .navigationTitle(String(localized: "leaderboard.nav_title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .task { await bootstrap() }
         .environment(\.circuitContext, .parent)
     }
@@ -64,7 +60,7 @@ struct PronunciationLeaderboardView: View {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     Text(String(localized: "leaderboard.header.title"))
                         .font(TypographyTokens.headline(20))
-                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                         .accessibilityAddTraits(.isHeader)
@@ -73,7 +69,7 @@ struct PronunciationLeaderboardView: View {
                          ? String(localized: "leaderboard.header.subtitle")
                          : viewModel.totalChildrenText)
                         .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
                 }
@@ -91,25 +87,81 @@ struct PronunciationLeaderboardView: View {
     }
 
     // MARK: - Scope picker
+    //
+    // Design ref: a single coral-filled pill showing the active period,
+    // with a small dot indicator — centred below the nav title.
+    // Tap cycles through all periods.
 
     private var scopePicker: some View {
-        Picker(String(localized: "leaderboard.scope_label"), selection: Binding(
-            get: { viewModel.scope },
-            set: { newValue in
-                viewModel.scope = newValue
-                Task {
-                    await interactor?.selectScope(
-                        PronunciationLeaderboard.SelectScopeRequest(scope: newValue)
-                    )
+        HStack(spacing: 0) {
+            Spacer()
+            HStack(spacing: SpacingTokens.sp2) {
+                ForEach(PronunciationLeaderboard.Scope.allCases, id: \.self) { scope in
+                    let isActive = viewModel.scope == scope
+                    Button {
+                        guard viewModel.scope != scope else { return }
+                        viewModel.scope = scope
+                        Task {
+                            await interactor?.selectScope(
+                                PronunciationLeaderboard.SelectScopeRequest(scope: scope)
+                            )
+                        }
+                    } label: {
+                        HStack(spacing: 6) {
+                            if isActive {
+                                Circle()
+                                    .fill(ColorTokens.Brand.primaryLo)
+                                    .frame(width: 7, height: 7)
+                                    .accessibilityHidden(true)
+                            }
+                            Text(scope.localizedTitle)
+                                .font(TypographyTokens.body(14).weight(.bold))
+                                .foregroundStyle(
+                                    isActive
+                                        ? ColorTokens.Overlay.onAccent
+                                        : ColorTokens.Kid.inkMuted
+                                )
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background {
+                            if isActive {
+                                Capsule(style: .continuous)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [
+                                                ColorTokens.Brand.primaryHi,
+                                                ColorTokens.Brand.primary
+                                            ],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .shadow(
+                                        color: ColorTokens.Brand.primary.opacity(0.4),
+                                        radius: 8, x: 0, y: 4
+                                    )
+                            }
+                        }
+                        .animation(reduceMotion ? nil : MotionTokens.outQuick, value: isActive)
+                    }
+                    .accessibilityLabel(scope.localizedTitle)
+                    .accessibilityAddTraits(isActive ? [.isSelected] : [])
                 }
             }
-        )) {
-            ForEach(PronunciationLeaderboard.Scope.allCases, id: \.self) { scope in
-                Text(scope.localizedTitle).tag(scope)
-            }
+            .padding(4)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .overlay(
+                        Capsule(style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+            )
+            Spacer()
         }
-        .pickerStyle(.segmented)
         .accessibilityLabel(String(localized: "leaderboard.scope_label"))
+        .accessibilityElement(children: .contain)
     }
 
     // MARK: - Content
@@ -209,17 +261,17 @@ struct PronunciationLeaderboardView: View {
                     )
                     .frame(width: avatarSize, height: avatarSize)
                 Circle()
-                    .fill(ColorTokens.Parent.surface)
+                    .fill(ColorTokens.Kid.surface)
                     .frame(width: avatarSize - 7, height: avatarSize - 7)
                 Text(String(row.childName.prefix(1)))
                     .font(.system(size: avatarSize * 0.42, weight: .bold, design: .rounded))
-                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .foregroundStyle(ColorTokens.Kid.ink)
             }
             .accessibilityHidden(true)
 
             Text(row.childName)
                 .font(TypographyTokens.headline(14))
-                .foregroundStyle(ColorTokens.Parent.ink)
+                .foregroundStyle(ColorTokens.Kid.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.8)
                 .padding(.top, 2)
@@ -231,7 +283,7 @@ struct PronunciationLeaderboardView: View {
                     .accessibilityHidden(true)
                 Text(row.accuracyText)
                     .font(TypographyTokens.caption(13).weight(.bold))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
             }
@@ -274,10 +326,10 @@ struct PronunciationLeaderboardView: View {
         HStack(spacing: SpacingTokens.sp2) {
             Text("leaderboard.list.header")
                 .font(TypographyTokens.caption(13).weight(.bold))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .textCase(.uppercase)
             Rectangle()
-                .fill(ColorTokens.Parent.line)
+                .fill(ColorTokens.Kid.line)
                 .frame(height: 1)
         }
         .padding(.top, SpacingTokens.sp1)
@@ -300,12 +352,12 @@ struct PronunciationLeaderboardView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("leaderboard.champions.footer.title")
                     .font(TypographyTokens.headline(15))
-                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
                 Text("leaderboard.champions.footer.subtitle")
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .fixedSize(horizontal: false, vertical: true)
                     .minimumScaleFactor(0.85)
             }
@@ -319,7 +371,7 @@ struct PronunciationLeaderboardView: View {
                     LinearGradient(
                         colors: [
                             ColorTokens.Brand.butter.opacity(0.18),
-                            ColorTokens.Parent.surface
+                            ColorTokens.Kid.surface
                         ],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
@@ -328,7 +380,7 @@ struct PronunciationLeaderboardView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
+                .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
         )
         .padding(.top, SpacingTokens.sp1)
         .accessibilityElement(children: .combine)
@@ -405,7 +457,7 @@ private struct LeaderboardRowView: View {
         switch row.trendColorToken {
         case "success": return ColorTokens.Semantic.success
         case "warning": return ColorTokens.Semantic.warning
-        default:        return ColorTokens.Parent.inkMuted
+        default:        return ColorTokens.Kid.inkMuted
         }
     }
 
@@ -417,7 +469,7 @@ private struct LeaderboardRowView: View {
                     Circle()
                         .fill(row.isYou
                               ? ColorTokens.Brand.primary.opacity(0.18)
-                              : ColorTokens.Parent.surface)
+                              : ColorTokens.Kid.surface)
                         .frame(width: 36, height: 36)
                     if let medal = row.medalSymbol {
                         Image(systemName: medal)
@@ -428,7 +480,7 @@ private struct LeaderboardRowView: View {
                             .font(TypographyTokens.labelRounded(17, weight: .bold))
                             .foregroundStyle(row.isYou
                                              ? ColorTokens.Brand.primary
-                                             : ColorTokens.Parent.inkMuted)
+                                             : ColorTokens.Kid.inkMuted)
                     }
                 }
 
@@ -437,17 +489,17 @@ private struct LeaderboardRowView: View {
                     Circle()
                         .fill(row.isYou
                               ? ColorTokens.Brand.primaryLo
-                              : ColorTokens.Parent.surface)
+                              : ColorTokens.Kid.surface)
                         .frame(width: 42, height: 42)
                         .overlay(
                             Circle().strokeBorder(
-                                row.isYou ? ColorTokens.Brand.primaryLo : ColorTokens.Parent.line,
+                                row.isYou ? ColorTokens.Brand.primaryLo : ColorTokens.Kid.line,
                                 lineWidth: 1.5
                             )
                         )
                     Text(String(row.childName.prefix(1)))
                         .font(TypographyTokens.labelRounded(18, weight: .bold))
-                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .foregroundStyle(ColorTokens.Kid.ink)
                 }
                 .accessibilityHidden(true)
 
@@ -455,7 +507,7 @@ private struct LeaderboardRowView: View {
                     HStack(spacing: SpacingTokens.sp1) {
                         Text(row.childName)
                             .font(TypographyTokens.headline(15))
-                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .foregroundStyle(ColorTokens.Kid.ink)
                             .fixedSize(horizontal: false, vertical: true)
                             .minimumScaleFactor(0.85)
                         if row.isYou {
@@ -470,7 +522,7 @@ private struct LeaderboardRowView: View {
                     }
                     Text(row.sessionsCountText)
                         .font(TypographyTokens.caption(11))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                 }
@@ -480,7 +532,7 @@ private struct LeaderboardRowView: View {
                 VStack(alignment: .trailing, spacing: 2) {
                     Text(row.accuracyText)
                         .font(TypographyTokens.headline(18))
-                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .monospacedDigit()
                         .fixedSize()
                     HStack(spacing: 2) {
@@ -502,12 +554,12 @@ private struct LeaderboardRowView: View {
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .fill(row.isYou
                           ? ColorTokens.Brand.primary.opacity(0.12)
-                          : ColorTokens.Parent.surface)
+                          : ColorTokens.Kid.surface)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .strokeBorder(
-                        row.isYou ? ColorTokens.Brand.primary : ColorTokens.Parent.line,
+                        row.isYou ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
                         lineWidth: row.isYou ? 1.5 : 1
                     )
             )

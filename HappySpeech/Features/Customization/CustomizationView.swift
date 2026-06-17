@@ -133,62 +133,145 @@ struct CustomizationView: View {
     }
 
     // MARK: - Header: Ляля preview
+    //
+    // Design ref: warm radial gradient card, name-tag pill (top-left),
+    // shuffle-random button (top-right), Lyalya centered with glow shadow.
 
     private var mascotHeader: some View {
         let (gradFrom, gradTo) = viewModel.selectedColor.gradientColors
-        return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
-            ZStack {
-                // Слой 1: реальный фон сцены (bg_<id>) за героем + цветовая
-                // тонировка-градиент сверху. Фон меняется при выборе вкладки «Фон».
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [gradFrom, gradTo],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
+        return VStack(spacing: 0) {
+                // Name tag + shuffle row
+                HStack {
+                    // Name tag pill (top-left)
+                    HStack(spacing: 5) {
+                        Circle()
+                            .fill(ColorTokens.Brand.rose)
+                            .frame(width: 8, height: 8)
+                            .accessibilityHidden(true)
+                        Text(String(localized: "customization.preview.name", defaultValue: "Ляля"))
+                            .font(TypographyTokens.caption(13).weight(.bold))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule(style: .continuous)
+                            .fill(ColorTokens.Kid.surface)
+                            .overlay(
+                                Capsule(style: .continuous)
+                                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                            )
+                            .shadow(color: ColorTokens.Kid.ink.opacity(0.06), radius: 4, x: 0, y: 2)
                     )
-                    .frame(width: 240, height: 240)
-                    .overlay(
+
+                    Spacer()
+
+                    // Shuffle (random outfit) button (top-right)
+                    Button {
+                        let allOutfits = LyalyaOutfit.allCases
+                        if let random = allOutfits.filter({ $0 != viewModel.selectedOutfit }).randomElement() {
+                            interactor?.selectOutfit(.init(outfit: random))
+                        }
+                    } label: {
+                        Image(systemName: "shuffle")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .frame(width: 36, height: 36)
+                            .background(
+                                Circle()
+                                    .fill(ColorTokens.Kid.surface)
+                                    .overlay(Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: 1))
+                                    .shadow(color: ColorTokens.Kid.ink.opacity(0.06), radius: 4, x: 0, y: 2)
+                            )
+                    }
+                    .accessibilityLabel(
+                        String(localized: "customization.a11y.shuffle", defaultValue: "Случайный наряд")
+                    )
+                }
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.top, SpacingTokens.regular)
+
+                // Mascot with ground glow
+                ZStack(alignment: .bottom) {
+                    // Ground glow
+                    Ellipse()
+                        .fill(
+                            RadialGradient(
+                                colors: [ColorTokens.Brand.primary.opacity(0.22), .clear],
+                                center: .center,
+                                startRadius: 2,
+                                endRadius: 80
+                            )
+                        )
+                        .frame(width: 160, height: 32)
+                        .blur(radius: 2)
+                        .padding(.bottom, -8)
+                        .accessibilityHidden(true)
+
+                    // Background scene layer (visible when background tab is active)
+                    if selectedTab == .background {
                         Image(viewModel.selectedBackground.illustrationName)
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 240, height: 240)
-                            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+                            .frame(width: mascotPreviewSize, height: mascotPreviewSize)
+                            .clipShape(Circle())
+                            .opacity(0.35)
                             .id(viewModel.selectedBackground.rawValue)
-                            .transition(reduceMotion ? .opacity : .opacity)
+                            .transition(.opacity)
+                            .animation(reduceMotion ? nil : .easeInOut(duration: 0.3),
+                                       value: viewModel.selectedBackground)
                             .accessibilityHidden(true)
-                    )
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
-                               value: viewModel.selectedColor)
-                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.3),
-                               value: viewModel.selectedBackground)
-
-                // Слой 2: герой. При выбранном наряде ≠ повседневный показываем
-                // статичный lyalya_outfit_<id> (видимая смена одежды); иначе —
-                // живой анимированный канон.
-                Group {
-                    if viewModel.selectedOutfit != .everyday {
-                        Image(viewModel.selectedOutfit.illustrationName)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: mascotSize, height: mascotSize)
-                            .id("outfit-\(viewModel.selectedOutfit.rawValue)")
-                    } else {
-                        LyalyaMascotView(state: lyalyaState, size: mascotSize)
-                            .id("skin-\(viewModel.selectedSkin.rawValue)")
                     }
+
+                    Group {
+                        if viewModel.selectedOutfit != .everyday {
+                            Image(viewModel.selectedOutfit.illustrationName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: mascotSize, height: mascotSize)
+                                .id("outfit-\(viewModel.selectedOutfit.rawValue)")
+                        } else {
+                            LyalyaMascotView(state: lyalyaState, size: mascotSize)
+                                .id("skin-\(viewModel.selectedSkin.rawValue)")
+                        }
+                    }
+                    .transition(reduceMotion
+                        ? .opacity
+                        : .scale(scale: 0.88).combined(with: .opacity))
+                    .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
+                               value: viewModel.selectedSkin)
+                    .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
+                               value: viewModel.selectedOutfit)
                 }
-                .transition(reduceMotion
-                    ? .opacity
-                    : .scale(scale: 0.85).combined(with: .opacity))
-                .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
-                           value: viewModel.selectedSkin)
-                .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
-                           value: viewModel.selectedOutfit)
-            }
+                .frame(height: mascotPreviewSize)
+                .padding(.bottom, SpacingTokens.regular)
         }
         .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.xl, style: .continuous)
+                .fill(
+                    RadialGradient(
+                        colors: [
+                            Color.white.opacity(0.85),
+                            gradFrom.opacity(0.6),
+                            gradTo.opacity(0.9)
+                        ],
+                        center: .top,
+                        startRadius: 0,
+                        endRadius: 280
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.xl, style: .continuous)
+                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                )
+                .shadow(
+                    color: ColorTokens.Brand.primary.opacity(0.22),
+                    radius: 20, x: 0, y: 10
+                )
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.3),
+                           value: viewModel.selectedColor)
+        )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.medium)
         .padding(.bottom, SpacingTokens.small)
@@ -262,21 +345,30 @@ struct CustomizationView: View {
     }
 
     // MARK: - Outfit tab
+    //
+    // Design ref: 3-column LazyVGrid of outfit cards (not horizontal scroll).
+    // Section label shows title + count on the same line.
 
     private var outfitTab: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            sectionTitle(String(localized: "customization.section.outfits"))
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: SpacingTokens.small) {
-                    ForEach(viewModel.outfitItems) { item in
-                        OutfitCard(item: item) {
-                            interactor?.selectOutfit(.init(outfit: item.outfit))
-                        }
+        let columns = [
+            GridItem(.flexible(), spacing: SpacingTokens.small),
+            GridItem(.flexible(), spacing: SpacingTokens.small),
+            GridItem(.flexible(), spacing: SpacingTokens.small)
+        ]
+        return VStack(alignment: .leading, spacing: 0) {
+            sectionTitleWithCount(
+                String(localized: "customization.section.outfits",
+                       defaultValue: "Выбери наряд"),
+                count: viewModel.outfitItems.count
+            )
+            LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
+                ForEach(viewModel.outfitItems) { item in
+                    OutfitCard(item: item) {
+                        interactor?.selectOutfit(.init(outfit: item.outfit))
                     }
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
             }
-            .frame(height: isCompactWidth ? 160 : 180)
+            .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.regular)
 
             sectionTitle(String(localized: "customization.section.skins"))
@@ -496,11 +588,11 @@ struct CustomizationView: View {
         .accessibilityHint(String(localized: "customization.a11y.reset_hint"))
     }
 
-    // MARK: - Section title helper
+    // MARK: - Section title helpers
 
     private func sectionTitle(_ title: String) -> some View {
         Text(title)
-            .font(TypographyTokens.headline(18))
+            .font(TypographyTokens.headline(17).weight(.bold))
             .foregroundStyle(ColorTokens.Kid.ink)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -508,11 +600,30 @@ struct CustomizationView: View {
             .padding(.bottom, SpacingTokens.tiny)
     }
 
+    /// Section title with a count badge on the right, matching the design reference.
+    private func sectionTitleWithCount(_ title: String, count: Int) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: SpacingTokens.sp1) {
+            Text(title)
+                .font(TypographyTokens.headline(17).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+
+            Spacer()
+
+            Text("\(count) \(String(localized: "customization.section.variants", defaultValue: "вариантов"))")
+                .font(TypographyTokens.caption(13).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, SpacingTokens.regular)
+        .padding(.bottom, SpacingTokens.tiny)
+    }
+
     // MARK: - Responsive sizing
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     private var isCompactWidth: Bool { horizontalSizeClass == .compact }
-    private var mascotSize: CGFloat { isCompactWidth ? 160 : 200 }
+    private var mascotSize: CGFloat { isCompactWidth ? 176 : 220 }
+    private var mascotPreviewSize: CGFloat { isCompactWidth ? 220 : 260 }
     private var skinScrollHeight: CGFloat { isCompactWidth ? 156 : 180 }
 
     // MARK: - Animation helpers

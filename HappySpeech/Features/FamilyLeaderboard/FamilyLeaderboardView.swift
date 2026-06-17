@@ -84,15 +84,8 @@ struct FamilyLeaderboardView: View {
                 .padding(.vertical, SpacingTokens.sp4)
             }
             .scrollBounceBehavior(.basedOnSize)
-            .background(
-                ZStack {
-                    ColorTokens.Kid.bg
-                    HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
-                        .blendMode(.softLight)
-                        .accessibilityHidden(true)
-                }
-                .ignoresSafeArea()
-            )
+            // Warm cream Kid canvas — matching the design reference.
+            .background(ColorTokens.Kid.bg.ignoresSafeArea())
             .navigationTitle(Text("leaderboard.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -164,18 +157,76 @@ struct FamilyLeaderboardView: View {
     }
 
     // MARK: - Period chip
+    //
+    // Design ref: centred coral-gradient pill for active period,
+    // surrounded by a muted pill track. Matches PronunciationLeaderboard picker.
 
     private func periodChip(viewModel: FamilyLeaderboardModels.Load.ViewModel) -> some View {
-        Picker(String(localized: "leaderboard.period.picker.title"), selection: $holder.period) {
-            ForEach(LeaderboardPeriod.allCases, id: \.self) { period in
-                Text(period.localizedTitle).tag(period)
+        HStack(spacing: 0) {
+            Spacer()
+            HStack(spacing: SpacingTokens.sp1) {
+                ForEach(LeaderboardPeriod.allCases, id: \.self) { period in
+                    let isActive = holder.period == period
+                    Button {
+                        guard holder.period != period else { return }
+                        holder.period = period
+                        Task { await interactor?.changePeriod(request: .init(period: period)) }
+                    } label: {
+                        HStack(spacing: 6) {
+                            if isActive {
+                                Circle()
+                                    .fill(ColorTokens.Brand.primaryLo)
+                                    .frame(width: 7, height: 7)
+                                    .accessibilityHidden(true)
+                            }
+                            Text(period.localizedTitle)
+                                .font(TypographyTokens.body(14).weight(.bold))
+                                .foregroundStyle(
+                                    isActive
+                                        ? ColorTokens.Overlay.onAccent
+                                        : ColorTokens.Kid.inkMuted
+                                )
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background {
+                            if isActive {
+                                Capsule(style: .continuous)
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [
+                                                ColorTokens.Brand.primaryHi,
+                                                ColorTokens.Brand.primary
+                                            ],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .shadow(
+                                        color: ColorTokens.Brand.primary.opacity(0.4),
+                                        radius: 8, x: 0, y: 4
+                                    )
+                            }
+                        }
+                        .animation(reduceMotion ? nil : MotionTokens.outQuick, value: isActive)
+                    }
+                    .accessibilityLabel(period.localizedTitle)
+                    .accessibilityAddTraits(isActive ? [.isSelected] : [])
+                }
             }
+            .padding(4)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .overlay(
+                        Capsule(style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+            )
+            Spacer()
         }
-        .pickerStyle(.segmented)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel(Text("leaderboard.period.picker.title"))
-        .onChange(of: holder.period) { _, newValue in
-            Task { await interactor?.changePeriod(request: .init(period: newValue)) }
-        }
     }
 
     // MARK: - Podium (top-3)
