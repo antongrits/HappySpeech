@@ -481,51 +481,210 @@ struct GoalChipRow: View {
 }
 
 // MARK: - Step 6: Sounds
+//
+// Эталон onboarding-step_ref.png — шаг «С какого звука начнём?»:
+// 2×2 сетка крупных карточек групп звуков (свистящие/шипящие/соноры/заднеязычные).
+// Каждая карточка: цветной бейдж с буквами + название группы + строка примеров
+// + галочка при выборе. При выборе группы togглируются ВСЕ звуки группы (групповой выбор).
+// Индивидуальный выбор отдельных букв сохранён через `OnboardingProfile.availableSounds`
+// ниже для тех, кто хочет точнее — но основной UX — групповой.
 
 struct OnboardingSoundsStep: View {
     let selectedSounds: Set<String>
     let onToggle: (String) -> Void
 
-    // Фиксированная сетка 4 колонки: 12 звуков → 3 ряда, влезают на SE без
-    // скролла. Равномерные симметричные отступы (flexible колонки).
-    private let columns = Array(
-        repeating: GridItem(.flexible(), spacing: SpacingTokens.small),
-        count: 4
-    )
+    // Группы звуков по методике (эталон: 4 карточки в сетке 2×2)
+    private static let soundGroups: [SoundGroupCard] = [
+        .init(
+            id: "whistling",
+            letters: "С З Ц",
+            badge: "СЗЦ",
+            name: String(localized: "onboarding.sounds.group.whistling", defaultValue: "Свистящие"),
+            examples: String(localized: "onboarding.sounds.group.whistling.ex", defaultValue: "са-са · зи-зи · цапля"),
+            color: ColorTokens.Brand.primary,
+            soundIds: ["С", "Сь", "З", "Зь", "Ц"]
+        ),
+        .init(
+            id: "hissing",
+            letters: "Ш Ж",
+            badge: "ШЖ",
+            name: String(localized: "onboarding.sounds.group.hissing", defaultValue: "Шипящие"),
+            examples: String(localized: "onboarding.sounds.group.hissing.ex", defaultValue: "ши-ши · жук · чайка"),
+            color: ColorTokens.Brand.rose,
+            soundIds: ["Ш", "Ж", "Ч", "Щ"]
+        ),
+        .init(
+            id: "sonorant",
+            letters: "Р Л",
+            badge: "РЛ",
+            name: String(localized: "onboarding.sounds.group.sonorant", defaultValue: "Соноры"),
+            examples: String(localized: "onboarding.sounds.group.sonorant.ex", defaultValue: "рыба · лиса · река"),
+            color: ColorTokens.Brand.lilac,
+            soundIds: ["Р", "Рь", "Л", "Ль"]
+        ),
+        .init(
+            id: "velar",
+            letters: "К Г Х",
+            badge: "КГХ",
+            name: String(localized: "onboarding.sounds.group.velar", defaultValue: "Заднеязычные"),
+            examples: String(localized: "onboarding.sounds.group.velar.ex", defaultValue: "кот · гусь · хомяк"),
+            color: ColorTokens.Brand.gold,
+            soundIds: ["К", "Г", "Х"]
+        )
+    ]
 
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            OnboardingStepHeader(
-                mascotState: .explaining,
-                title: String(localized: "onboarding.sounds.title"),
-                subtitle: String(localized: "onboarding.sounds.subtitle"),
-                mascotSize: 92
-            )
-            .padding(.top, SpacingTokens.small)
-
-            LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
-                ForEach(OnboardingProfile.availableSounds, id: \.id) { sound in
-                    SoundChip(
-                        label: sound.label,
-                        isSelected: selectedSounds.contains(sound.id),
-                        onTap: { onToggle(sound.id) }
-                    )
-                }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Text(String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .accessibilityLabel(
-                    String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count)
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                OnboardingStepHeader(
+                    mascotState: .explaining,
+                    title: String(localized: "onboarding.sounds.title"),
+                    subtitle: String(localized: "onboarding.sounds.subtitle"),
+                    mascotSize: 88
                 )
+                .padding(.top, SpacingTokens.small)
 
-            Spacer(minLength: 0)
+                // 2×2 grid matching the reference
+                LazyVGrid(
+                    columns: [
+                        GridItem(.flexible(), spacing: SpacingTokens.small),
+                        GridItem(.flexible(), spacing: SpacingTokens.small)
+                    ],
+                    spacing: SpacingTokens.small
+                ) {
+                    ForEach(Self.soundGroups) { group in
+                        SoundGroupCardView(
+                            group: group,
+                            isSelected: isGroupSelected(group),
+                            onTap: { toggleGroup(group) }
+                        )
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Text(String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .accessibilityLabel(
+                        String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count)
+                    )
+
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.bottom, SpacingTokens.small)
         }
-        .frame(maxWidth: .infinity)
+        .scrollBounceBehavior(.basedOnSize)
+    }
+
+    private func isGroupSelected(_ group: SoundGroupCard) -> Bool {
+        group.soundIds.contains(where: { selectedSounds.contains($0) })
+    }
+
+    private func toggleGroup(_ group: SoundGroupCard) {
+        // Toggle all sounds in the group: if any selected → deselect all; else select all
+        if isGroupSelected(group) {
+            group.soundIds.forEach { onToggle($0) }
+        } else {
+            group.soundIds.filter { !selectedSounds.contains($0) }.forEach { onToggle($0) }
+        }
     }
 }
+
+// MARK: - SoundGroupCard model
+
+struct SoundGroupCard: Identifiable {
+    let id: String
+    let letters: String
+    let badge: String
+    let name: String
+    let examples: String
+    let color: Color
+    let soundIds: [String]
+}
+
+// MARK: - SoundGroupCardView
+//
+// Крупная карточка группы звуков по эталону onboarding-step_ref.png:
+// цветной бейдж-круг с буквами (слева) + название группы + примеры слов
+// + галочка при выборе (правый угол). При выборе карточка получает
+// tinted-подсветку и border акцентного цвета.
+
+struct SoundGroupCardView: View {
+    let group: SoundGroupCard
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack(alignment: .top) {
+                    // Цветной бейдж с буквами группы
+                    ZStack {
+                        RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                            .fill(group.color.opacity(isSelected ? 0.22 : 0.12))
+                            .frame(width: 46, height: 46)
+                        Text(group.badge)
+                            .font(TypographyTokens.headline(13).weight(.bold))
+                            .foregroundStyle(group.color)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                    }
+                    .accessibilityHidden(true)
+
+                    Spacer(minLength: 0)
+
+                    // Галочка при выборе
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(group.color)
+                            .transition(.scale.combined(with: .opacity))
+                            .accessibilityHidden(true)
+                    }
+                }
+
+                Text(group.name)
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+
+                Text(group.examples)
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+            }
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .padding(SpacingTokens.medium)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(isSelected ? group.color.opacity(0.10) : ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                            .strokeBorder(
+                                isSelected ? group.color : ColorTokens.Kid.line.opacity(0.5),
+                                lineWidth: isSelected ? 2 : 1
+                            )
+                    )
+            )
+            .scaleEffect(isSelected ? 1.02 : 1.0)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(group.name). \(group.examples)")
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+// MARK: - SoundChip (legacy, kept for backward compat with individual sound toggle)
 
 struct SoundChip: View {
     let label: String

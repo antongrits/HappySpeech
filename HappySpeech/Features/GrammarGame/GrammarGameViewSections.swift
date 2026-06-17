@@ -10,6 +10,12 @@ extension GrammarGameView {
         modeTitle = viewModel.modeTitle
         difficultyLabel = viewModel.difficultyLabel
         totalRounds = viewModel.totalRounds
+        // Тёплая палитра: easy=butter, medium=gold, hard=primary(coral)
+        difficultyColor = switch viewModel.difficulty {
+        case .easy:   ColorTokens.Brand.butter
+        case .medium: ColorTokens.Brand.gold
+        case .hard:   ColorTokens.Brand.primary
+        }
         isLoading = false
     }
 

@@ -119,9 +119,13 @@ struct RewardsView: View {
 
                 VStack(spacing: 0) {
                     headerSection
+                    walletHeroRow
                     leaderboardBanner
                     tabFilterSection
                     contentSection
+                    if !display.achievementRows.isEmpty {
+                        achievementsSection
+                    }
                 }
 
                 if let toast = display.toastMessage {
@@ -253,6 +257,60 @@ struct RewardsView: View {
         case 0.50...:    return .celebrating
         case 0.10..<0.50: return .happy
         default:          return .waving
+        }
+    }
+
+    // MARK: - Wallet Hero Row
+    //
+    // Коралловая строка «У тебя N монеток» под шапкой — эталон kid-rewards.
+    // Показывает доступный баланс крупным числом + мотиватор (сколько до следующей
+    // награды). Скрывается когда кошелёк ещё пуст (0 заработано).
+
+    @ViewBuilder
+    private var walletHeroRow: some View {
+        if display.walletViewModel.totalEarned > 0 {
+            HSCard(style: .flat) {
+                HStack(spacing: SpacingTokens.medium) {
+                    // Монетки — крупное число
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.gold.opacity(0.18))
+                            .frame(width: 48, height: 48)
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 22, weight: .bold))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .hsSymbolEffect(.bounce, value: display.walletViewModel.available)
+                    }
+                    .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        // «У тебя 48 монеток»
+                        (Text(String(localized: "rewards.wallet.hero.prefix", defaultValue: "У тебя "))
+                         + Text("\(display.walletViewModel.available)")
+                            .fontWeight(.bold)
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                         + Text(String(localized: "rewards.wallet.hero.suffix", defaultValue: " монеток")))
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+
+                        Text(display.headerSubtitle)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .padding(SpacingTokens.regular)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.small)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(display.walletViewModel.accessibilityLabel)
         }
     }
 
@@ -453,6 +511,126 @@ struct RewardsView: View {
             .padding(.vertical, SpacingTokens.small)
             .padding(.bottom, SpacingTokens.xLarge)
         }
+    }
+
+    // MARK: - Achievements Section
+    //
+    // Эталон kid-rewards: секция «Достижения» — горизонтальный скролл карточек
+    // после сетки стикеров. Каждая карточка: эмодзи, заголовок, прогресс-звёзды.
+    // Разблокированные — тёплый gold/butter, заблокированные — серые.
+
+    private var achievementsSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            // Заголовок секции + счётчик
+            achievementsSectionHeader
+
+            // Горизонтальный скролл карточек
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.medium) {
+                    ForEach(Array(display.achievementRows.prefix(12).enumerated()), id: \.element.id) { index, row in
+                        achievementCard(row, index: index)
+                    }
+                }
+                .padding(.vertical, SpacingTokens.tiny)
+            }
+            .contentMargins(.horizontal, SpacingTokens.screenEdge, for: .scrollContent)
+            .padding(.bottom, SpacingTokens.xLarge)
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    private var achievementsSectionHeader: some View {
+        let unlocked = display.achievementRows.filter(\.isUnlocked).count
+        let total = display.achievementRows.count
+        return HStack {
+            Text(String(localized: "rewards.achievements.title", defaultValue: "Достижения"))
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .accessibilityAddTraits(.isHeader)
+            Spacer()
+            Text("\(unlocked) из \(total)")
+                .font(TypographyTokens.caption(13).monospacedDigit())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, SpacingTokens.medium)
+    }
+
+    private func achievementCard(_ row: AchievementRowViewModel, index: Int) -> some View {
+        Button {
+            interactor?.openAchievement(.init(key: row.key))
+        } label: {
+            VStack(spacing: SpacingTokens.small) {
+                // Эмодзи / иконка достижения
+                ZStack {
+                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                        .fill(row.isUnlocked
+                              ? ColorTokens.Brand.butter.opacity(0.30)
+                              : ColorTokens.Kid.surfaceAlt)
+                        .frame(width: 68, height: 68)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                                .strokeBorder(
+                                    row.isUnlocked
+                                        ? ColorTokens.Brand.gold.opacity(0.65)
+                                        : Color.clear,
+                                    lineWidth: 2
+                                )
+                        )
+                    HSContentSymbol(row.emoji, size: 34, tint: row.isUnlocked
+                                    ? ColorTokens.Brand.gold : ColorTokens.Kid.inkSoft)
+                        .grayscale(row.isUnlocked ? 0 : 0.7)
+                        .accessibilityHidden(true)
+                }
+
+                // Название
+                Text(row.title)
+                    .font(TypographyTokens.caption(11).weight(.medium))
+                    .foregroundStyle(row.isUnlocked ? ColorTokens.Kid.ink : ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                // Прогресс-звёзды (3 звезды — заполнено по прогрессу)
+                achievementStars(progress: row.progress)
+            }
+            .frame(width: 100)
+            .padding(.vertical, SpacingTokens.regular)
+            .padding(.horizontal, SpacingTokens.small)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1.5)
+                    )
+            )
+            .kidTileShadow()
+        }
+        .buttonStyle(.plain)
+        .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
+            content
+                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(row.accessibilityLabel)
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private func achievementStars(progress: Double) -> some View {
+        HStack(spacing: 3) {
+            ForEach(0..<3, id: \.self) { i in
+                let threshold = Double(i + 1) / 3.0
+                Image(systemName: progress >= threshold ? "star.fill" : "star")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(progress >= threshold
+                                     ? ColorTokens.Brand.gold
+                                     : ColorTokens.Kid.inkSoft)
+            }
+        }
+        .accessibilityHidden(true)
     }
 
     // MARK: - Bootstrap

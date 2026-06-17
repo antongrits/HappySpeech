@@ -27,7 +27,8 @@ final class GrammarGamePresenter: GrammarGamePresentationLogic {
         let vm = GrammarGameModels.LoadGame.ViewModel(
             modeTitle: response.mode.localizedTitle,
             difficultyLabel: response.difficulty.localizedLabel,
-            totalRounds: response.totalRounds
+            totalRounds: response.totalRounds,
+            difficulty: response.difficulty
         )
         display?.displayLoadGame(vm)
     }

@@ -99,11 +99,8 @@ struct ProgressDashboardView: View {
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
-                    // E v21: 3D Ляля hero на ProgressDashboard
-                    // (требование «3D героев на каждом экране»).
-                    LyalyaHeroView(state: .thinking, size: 110)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .accessibilityHidden(true)
+                    childProfileHeaderCard
+                        .padding(.horizontal, SpacingTokens.screenEdge)
                         .padding(.top, SpacingTokens.small)
                     periodPickerSection
                     summaryCardsRow
@@ -584,6 +581,149 @@ struct ProgressDashboardView: View {
                 exitToParentHome()
             }
         )
+    }
+
+    // MARK: - Child profile header card
+    //
+    // Эталон parent-dashboard_ref.png: карточка профиля ребёнка со
+    // звуком-маскотом, именем+возрастом, подзаголовком звуков и тремя
+    // метриками-пилюлями (серия / практика / успех) — по строгой иерархии
+    // из open-design HTML.
+
+    private var childProfileHeaderCard: some View {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
+            HStack(alignment: .top, spacing: SpacingTokens.regular) {
+
+                // Аватар Ляли в мягком кремовом круге
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                        .overlay(
+                            Circle()
+                                .strokeBorder(ColorTokens.Brand.primary.opacity(0.20), lineWidth: 1.5)
+                        )
+                        .frame(width: 64, height: 64)
+                    LyalyaHeroView(state: .thinking, size: 56)
+                }
+                .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    // Имя + возраст (из ThemeManager через childName — читаем
+                    // из container; «6 лет» пока приходит из активного профиля).
+                    Text(container.themeManager.selectedTheme.displayName)
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                        .accessibilityAddTraits(.isHeader)
+
+                    // Звуки в работе: берём топ-2 из soundCells,
+                    // чтобы строка не зависела от порядка сортировки по accuracy.
+                    Text(profileSoundsSubtitle)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.85)
+
+                    // Три компактные метрики-пилюли: серия / практика / успех
+                    HStack(spacing: SpacingTokens.tiny) {
+                        ForEach(profileMetrics, id: \.label) { metric in
+                            profileMetricPill(metric)
+                        }
+                    }
+                    .padding(.top, SpacingTokens.micro)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Streak badge (число дней серии) — правый верхний угол
+                if let streak = display.summaryCards.first(where: { $0.kind == .streak }) {
+                    VStack(spacing: 2) {
+                        Text(streak.value)
+                            .font(TypographyTokens.kidDisplay(22))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                        Text(String(localized: "progressDashboard.profile.days", defaultValue: "дней"))
+                            .font(TypographyTokens.caption(10))
+                            .foregroundStyle(ColorTokens.Brand.gold.opacity(0.8))
+                    }
+                    .padding(.horizontal, SpacingTokens.small)
+                    .padding(.vertical, SpacingTokens.tiny)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                            .fill(ColorTokens.Brand.gold.opacity(0.14))
+                    )
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(streak.value) \(String(localized: "progressDashboard.profile.days", defaultValue: "дней")) серии")
+                }
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    /// Подзаголовок карточки профиля — звуки в работе (топ-2 из soundCells).
+    private var profileSoundsSubtitle: String {
+        let sounds = display.soundCells.prefix(2).map(\.sound).joined(separator: " и ")
+        guard !sounds.isEmpty else {
+            return String(localized: "progressDashboard.profile.soundsDefault", defaultValue: "Тренируем звуки")
+        }
+        return String(
+            localized: "progressDashboard.profile.sounds",
+            defaultValue: "Работаем над звуками \(sounds)"
+        )
+    }
+
+    /// Три метрики для пилюль внутри профиль-карточки: серия, практика, успех.
+    private var profileMetrics: [(label: String, value: String, icon: String)] {
+        var result: [(label: String, value: String, icon: String)] = []
+        for card in display.summaryCards {
+            switch card.kind {
+            case .streak:
+                result.append((
+                    label: String(localized: "progressDashboard.profile.metric.streak", defaultValue: "Серия"),
+                    value: card.value,
+                    icon: "flame.fill"
+                ))
+            case .minutes:
+                result.append((
+                    label: String(localized: "progressDashboard.profile.metric.practice", defaultValue: "Практика"),
+                    value: card.value,
+                    icon: "clock.fill"
+                ))
+            case .accuracy:
+                result.append((
+                    label: String(localized: "progressDashboard.profile.metric.accuracy", defaultValue: "Успех"),
+                    value: card.value,
+                    icon: "target"
+                ))
+            case .stars:
+                break
+            }
+        }
+        return Array(result.prefix(3))
+    }
+
+    private func profileMetricPill(_ metric: (label: String, value: String, icon: String)) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: metric.icon)
+                .font(.system(size: 9, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .accessibilityHidden(true)
+            Text(metric.value)
+                .font(TypographyTokens.mono(11))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .padding(.horizontal, SpacingTokens.tiny)
+        .padding(.vertical, 3)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Parent.surface)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(metric.label): \(metric.value)")
     }
 
     // MARK: - Helpers

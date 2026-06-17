@@ -183,21 +183,12 @@ struct RepeatAfterModelView: View {
 
     private var wordPreviewBottom: some View {
         VStack(spacing: SpacingTokens.small) {
-            // Кнопка «Послушать» — replay эталона (до 3 раз).
-            HSButton(
-                display.replayLimitReached
-                    ? String(localized: "repeat.replay.limit_reached")
-                    : String(localized: "repeat.button.listen"),
-                style: .secondary,
-                icon: "speaker.wave.2.fill"
-            ) {
-                container.soundService.playUISound(.tap)
-                interactor.replayModel(.init())
-                triggerModelPlayback()
-            }
-            .disabled(display.replayLimitReached)
-            .accessibilityHint(String(localized: "repeat.button.listen.hint"))
+            // «Послушай» — плоская строка-виджет по эталону repeat_ref.png:
+            // play-кнопка в цветном круге + заголовок/подзаголовок + waveform
+            // справа. НЕ полноширинный HSButton.secondary.
+            listenRow
 
+            // «Повтори за Лялей!» — главная CTA-кнопка записи.
             HSButton(
                 String(localized: "repeat.button.record"),
                 style: .primary,
@@ -230,6 +221,90 @@ struct RepeatAfterModelView: View {
             hintPanel
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    // MARK: - Listen row widget
+    //
+    // Эталон repeat_ref.png: горизонтальная строка-карточка с play-кнопкой
+    // (иконка speaker в коралловом круге), текстом «Послушай / Как говорит Ляля»
+    // и мини-waveform справа. При достижении лимита воспроизведений — fade + блок.
+
+    private var listenRow: some View {
+        let isDisabled = display.replayLimitReached
+        return Button {
+            guard !isDisabled else { return }
+            container.soundService.playUISound(.tap)
+            interactor.replayModel(.init())
+            triggerModelPlayback()
+        } label: {
+            HStack(spacing: SpacingTokens.regular) {
+                // Иконка play в цветном круге
+                ZStack {
+                    Circle()
+                        .fill(isDisabled
+                              ? ColorTokens.Kid.line.opacity(0.20)
+                              : ColorTokens.Brand.primary.opacity(0.14))
+                        .frame(width: 48, height: 48)
+                    Image(systemName: isDisabled ? "speaker.slash.fill" : "play.fill")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(isDisabled ? ColorTokens.Kid.inkMuted : ColorTokens.Brand.primary)
+                }
+                .accessibilityHidden(true)
+
+                // Текст
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(isDisabled
+                         ? String(localized: "repeat.replay.limit_reached")
+                         : String(localized: "repeat.button.listen"))
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(isDisabled ? ColorTokens.Kid.inkMuted : ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "repeat.listen.subtitle", defaultValue: "Как говорит Ляля"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Мини-waveform декор
+                HStack(spacing: 3) {
+                    ForEach([0.45, 0.80, 1.0, 0.65, 0.30] as [Double], id: \.self) { h in
+                        Capsule()
+                            .fill(isDisabled
+                                  ? ColorTokens.Kid.line.opacity(0.40)
+                                  : ColorTokens.Brand.primary.opacity(0.50))
+                            .frame(width: 3, height: 20 * h)
+                    }
+                }
+                .frame(width: 28)
+                .accessibilityHidden(true)
+            }
+            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.vertical, SpacingTokens.small)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                            .strokeBorder(
+                                isDisabled
+                                    ? ColorTokens.Kid.line.opacity(0.3)
+                                    : ColorTokens.Brand.primary.opacity(0.18),
+                                lineWidth: 1.5
+                            )
+                    )
+            )
+            .opacity(isDisabled ? 0.55 : 1.0)
+        }
+        .buttonStyle(.plain)
+        .disabled(isDisabled)
+        .accessibilityLabel(isDisabled
+                            ? String(localized: "repeat.replay.limit_reached")
+                            : String(localized: "repeat.button.listen"))
+        .accessibilityHint(isDisabled ? "" : String(localized: "repeat.button.listen.hint"))
+        .accessibilityAddTraits(.isButton)
     }
 
     @ViewBuilder

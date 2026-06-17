@@ -79,8 +79,8 @@ struct GrammarGameView: View {
     @State var isLoading: Bool = true
     @State var errorMessage: String? = nil
 
-    // Difficulty capsule color
-    @State var difficultyColor: Color = ColorTokens.Semantic.success
+    // Difficulty capsule color — тёплая палитра: easy=butter, medium=gold, hard=coral
+    @State var difficultyColor: Color = ColorTokens.Brand.gold
 
     // SE adaptation
     @Environment(\.horizontalSizeClass) private var sizeClass
@@ -438,23 +438,63 @@ struct GrammarGameView: View {
     }
 
     // MARK: - Action Area
+    //
+    // Панель видима ТОЛЬКО когда есть что показать (feedback text или CTA «Далее»).
+    // Пустой selectedChoiceId == nil → панель схлопывается, нет белого пустого пространства.
 
+    /// true когда есть хотя бы один элемент для отображения в action tray.
+    private var hasActionContent: Bool {
+        guard let selected = selectedChoiceId else { return false }
+        return !feedbackText.isEmpty || selected == correctChoiceId || showHint
+    }
+
+    @ViewBuilder
     private var actionArea: some View {
-        VStack(spacing: SpacingTokens.regular) {
-            if let selected = selectedChoiceId {
-                // Показываем feedback text
+        if hasActionContent, let selected = selectedChoiceId {
+            VStack(spacing: SpacingTokens.regular) {
+                // Feedback text
                 if !feedbackText.isEmpty {
-                    Text(feedbackText)
-                        .font(TypographyTokens.headline(18))
-                        .foregroundStyle(
-                            selected == correctChoiceId
-                                ? ColorTokens.Semantic.success
-                                : ColorTokens.Semantic.error
-                        )
-                        .multilineTextAlignment(.center)
-                        .transition(.opacity)
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: selected == correctChoiceId
+                              ? "checkmark.circle.fill" : "arrow.uturn.left.circle.fill")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                            .frame(width: 30, height: 30)
+                            .background(Circle().fill(
+                                selected == correctChoiceId
+                                    ? ColorTokens.Semantic.success
+                                    : ColorTokens.Semantic.error
+                            ))
+                            .accessibilityHidden(true)
+                        Text(feedbackText)
+                            .font(TypographyTokens.body(14).weight(.medium))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(.horizontal, SpacingTokens.regular)
+                    .padding(.vertical, SpacingTokens.small)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .fill(selected == correctChoiceId
+                                  ? ColorTokens.Semantic.successBg
+                                  : ColorTokens.Semantic.errorBg)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                    .strokeBorder(
+                                        (selected == correctChoiceId
+                                         ? ColorTokens.Semantic.success
+                                         : ColorTokens.Semantic.error).opacity(0.35),
+                                        lineWidth: 1
+                                    )
+                            )
+                    )
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .transition(reduceMotion ? .opacity : .scale(scale: 0.96).combined(with: .opacity))
                 }
-                // Кнопка «Далее» только после правильного ответа
+                // Кнопка «Далее» только после правильного ответа или после подсказки
                 if selected == correctChoiceId || showHint {
                     HSButton(
                         String(localized: "grammar.game.cta.next", bundle: .main),
@@ -465,10 +505,12 @@ struct GrammarGameView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.top, SpacingTokens.small)
+            .padding(.bottom, SpacingTokens.regular)
+            .background(ctaTrayBackground)
+            .transition(.opacity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.bottom, SpacingTokens.xxLarge)
-        .background(ctaTrayBackground)
     }
 
     @ViewBuilder

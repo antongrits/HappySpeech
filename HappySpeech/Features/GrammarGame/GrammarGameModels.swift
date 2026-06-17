@@ -153,6 +153,8 @@ enum GrammarGameModels {
             let modeTitle: String
             let difficultyLabel: String
             let totalRounds: Int
+            /// Уровень сложности — передаём для расчёта цвета чипа в View
+            let difficulty: GrammarDifficulty
         }
     }
 
