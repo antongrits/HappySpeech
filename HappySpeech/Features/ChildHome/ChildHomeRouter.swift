@@ -49,6 +49,8 @@ protocol ChildHomeRoutingLogic {
     func routeToSoundComposition(childId: String)
     func routeToVoicingSoftness(childId: String)
     func routeToListenYourself(childId: String)
+    // v32 expansion 2.6 — рассказ по серии картинок (связная речь)
+    func routeToStoryPictures(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -309,5 +311,17 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// A/B-сравнение с эталоном Ляли).
     func routeToListenYourself(childId: String) {
         coordinator?.navigate(to: .listenYourself(childId: childId))
+    }
+
+    /// v32 expansion 2.4 — «Голосовые краски» (просодика: интонация,
+    /// логическое ударение, эмоциональная окраска голоса).
+    func routeToVoiceColors(childId: String) {
+        coordinator?.navigate(to: .voiceColors(childId: childId))
+    }
+
+    /// v32 expansion 2.6 — «Рассказ по серии картинок» (связная речь по
+    /// сюжетной серии: упорядочивание → рассказ → радар полноты).
+    func routeToStoryPictures(childId: String) {
+        coordinator?.navigate(to: .storyPictures(childId: childId))
     }
 }

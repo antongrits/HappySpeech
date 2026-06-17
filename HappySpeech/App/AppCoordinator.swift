@@ -349,6 +349,23 @@ enum AppRoute: Hashable {
     /// звонкий↔глухой и твёрдый↔мягкий + слова-ловушки. Дифференциация
     /// смешиваемых фонем (по Левиной / Ткаченко). On-device, без сети.
     case voicingSoftness(childId: String)
+
+    // MARK: - Голосовые краски (kid, просодика: интонация/ударение/эмоция)
+
+    /// «Голосовые краски» (kid): три просодических режима — типы интонации
+    /// (вопрос/восклицание/спокойно) с дорожкой мелодии, логическое ударение
+    /// (выделить главное слово голосом, RMS) и эмоциональная окраска голоса
+    /// (весело/грустно/удивлённо, EmotionDetection). On-device, без штрафов.
+    case voiceColors(childId: String)
+
+    // MARK: - Рассказ по серии картинок (kid, связная речь)
+
+    /// «Рассказ по серии картинок» (kid): связная речь по сюжетной серии
+    /// (Глухов / Ткаченко) — drag-упорядочивание перемешанных кадров, запись
+    /// рассказа по каждому кадру (AudioService + ASRService) с отметкой
+    /// смысловых звеньев, плеер «мультика» + радар полноты завязка→действие→
+    /// развязка. On-device, без сети. «Показать маме» — через parental gate.
+    case storyPictures(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1344,6 +1361,18 @@ struct AppCoordinatorView: View {
         case .voicingSoftness(let childId):
             VoicingSoftnessView(childId: childId.isEmpty ? container.currentChildId : childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - Голосовые краски (просодика: интонация/ударение/эмоция)
+
+        case .voiceColors(let childId):
+            VoiceColorsView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - Рассказ по серии картинок (связная речь, серия сюжетов)
+
+        case .storyPictures(let childId):
+            StoryPicturesView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1933,6 +1962,14 @@ extension AppCoordinatorView {
         // MARK: Карта звонкости и мягкости (дифференциация фонем)
         case "voicingSoftness", "voicing", "softness":
             return .voicingSoftness(childId: previewChild)
+
+        // MARK: Голосовые краски (просодика: интонация/ударение/эмоция)
+        case "voiceColors", "voicecolors", "prosodyPlus", "intonation":
+            return .voiceColors(childId: previewChild)
+
+        // MARK: Рассказ по серии картинок (связная речь)
+        case "storyPictures", "storypictures", "pictureSeries", "narrativeSeries":
+            return .storyPictures(childId: previewChild)
 
         default:
             return .auth

@@ -1,6 +1,74 @@
 {
   "sourceLanguage": "ru",
   "strings": {
+    "voiceColors.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice Colors"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голосовые краски"
+          }
+        }
+      }
+    },
+    "voiceColors.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intonation, stress, emotions"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Интонация, ударение, эмоции"
+          }
+        }
+      }
+    },
+    "storyPictures.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Story from pictures"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказ по картинкам"
+          }
+        }
+      }
+    },
+    "storyPictures.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build a story from a series"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Составь историю по серии"
+          }
+        }
+      }
+    },
     "vocabFlip.empty.title": {
       "extractionState": "manual",
       "localizations": {

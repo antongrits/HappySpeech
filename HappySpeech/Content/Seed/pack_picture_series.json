@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "pack": "picture_series",
+  "title": "Рассказ по серии картинок",
+  "method": "Глухов / Ткаченко — обучение рассказыванию по серии сюжетных картин",
+  "series": [
+    {
+      "id": "ps_hedgehog_apple",
+      "title": "Ёжик и яблоко",
+      "minAge": 6,
+      "maxAge": 7,
+      "scene": "hedgehog",
+      "frames": [
+        {
+          "id": "ps_hedgehog_apple_1",
+          "order": 1,
+          "scene": "hedgehogSeesTree",
+          "caption": "Ёжик увидел яблоньку",
+          "links": [
+            { "id": "setup", "role": "setup", "question": "Кто?", "answerHint": "ёжик", "keywords": ["ёжик", "ежик", "ёж", "еж"] },
+            { "id": "setup_obj", "role": "setup", "question": "Что увидел?", "answerHint": "яблоки", "keywords": ["яблок", "яблоня", "яблонь", "дерево"] }
+          ]
+        },
+        {
+          "id": "ps_hedgehog_apple_2",
+          "order": 2,
+          "scene": "hedgehogShakesTree",
+          "caption": "Ёжик трясёт яблоньку",
+          "links": [
+            { "id": "actor", "role": "action", "question": "Кто?", "answerHint": "ёжик", "keywords": ["ёжик", "ежик", "ёж", "еж"] },
+            { "id": "action", "role": "action", "question": "Что делает?", "answerHint": "трясёт", "keywords": ["тряс", "трясёт", "трясет", "качал", "тряхнул"] },
+            { "id": "fell", "role": "action", "question": "Что упало?", "answerHint": "яблоки", "keywords": ["упал", "яблок", "посыпал"] }
+          ]
+        },
+        {
+          "id": "ps_hedgehog_apple_3",
+          "order": 3,
+          "scene": "hedgehogRollsApple",
+          "caption": "Ёжик накалывает яблоко на спинку",
+          "links": [
+            { "id": "actor2", "role": "action", "question": "Кто?", "answerHint": "ёжик", "keywords": ["ёжик", "ежик", "ёж", "еж"] },
+            { "id": "collect", "role": "action", "question": "Что сделал?", "answerHint": "наколол", "keywords": ["накол", "собрал", "катал", "поднял", "взял"] }
+          ]
+        },
+        {
+          "id": "ps_hedgehog_apple_4",
+          "order": 4,
+          "scene": "hedgehogCarriesHome",
+          "caption": "Ёжик принёс яблоки домой",
+          "links": [
+            { "id": "actor3", "role": "resolution", "question": "Кто?", "answerHint": "ёжик", "keywords": ["ёжик", "ежик", "ёж", "еж"] },
+            { "id": "carry", "role": "resolution", "question": "Что сделал?", "answerHint": "принёс", "keywords": ["принёс", "принес", "понёс", "понес", "унёс", "унес"] },
+            { "id": "where", "role": "resolution", "question": "Куда?", "answerHint": "домой", "keywords": ["домой", "дом", "норку", "норка"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ps_kitten_milk",
+      "title": "Котёнок и молоко",
+      "minAge": 5,
+      "maxAge": 6,
+      "scene": "kitten",
+      "frames": [
+        {
+          "id": "ps_kitten_milk_1",
+          "order": 1,
+          "scene": "kittenSeesMilk",
+          "caption": "Котёнок увидел молоко",
+          "imageAsset": "word_moloko",
+          "links": [
+            { "id": "k_actor", "role": "setup", "question": "Кто?", "answerHint": "котёнок", "keywords": ["котёнок", "котенок", "кот", "киса", "кошка"] },
+            { "id": "k_obj", "role": "setup", "question": "Что увидел?", "answerHint": "молоко", "keywords": ["молок", "блюдце", "миску", "миска"] }
+          ]
+        },
+        {
+          "id": "ps_kitten_milk_2",
+          "order": 2,
+          "scene": "kittenDrinks",
+          "caption": "Котёнок пьёт молоко",
+          "links": [
+            { "id": "k_act_actor", "role": "action", "question": "Кто?", "answerHint": "котёнок", "keywords": ["котёнок", "котенок", "кот", "киса", "кошка"] },
+            { "id": "k_action", "role": "action", "question": "Что делает?", "answerHint": "пьёт", "keywords": ["пьёт", "пьет", "пил", "лакал", "лакает"] }
+          ]
+        },
+        {
+          "id": "ps_kitten_milk_3",
+          "order": 3,
+          "scene": "kittenSleeps",
+          "caption": "Котёнок наелся и уснул",
+          "links": [
+            { "id": "k_res_actor", "role": "resolution", "question": "Кто?", "answerHint": "котёнок", "keywords": ["котёнок", "котенок", "кот", "киса", "кошка"] },
+            { "id": "k_res", "role": "resolution", "question": "Что сделал?", "answerHint": "уснул", "keywords": ["уснул", "заснул", "спит", "наелся", "лёг", "лег"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ps_squirrel_nut",
+      "title": "Белочка и орешек",
+      "minAge": 6,
+      "maxAge": 8,
+      "scene": "squirrel",
+      "frames": [
+        {
+          "id": "ps_squirrel_nut_1",
+          "order": 1,
+          "scene": "squirrelFindsNut",
+          "caption": "Белочка нашла орешек",
+          "imageAsset": "word_belka",
+          "links": [
+            { "id": "s_actor", "role": "setup", "question": "Кто?", "answerHint": "белочка", "keywords": ["белк", "белочк"] },
+            { "id": "s_obj", "role": "setup", "question": "Что нашла?", "answerHint": "орешек", "keywords": ["орех", "орешек", "орешк", "шишк"] }
+          ]
+        },
+        {
+          "id": "ps_squirrel_nut_2",
+          "order": 2,
+          "scene": "squirrelClimbs",
+          "caption": "Белочка несёт орешек на дерево",
+          "links": [
+            { "id": "s_act_actor", "role": "action", "question": "Кто?", "answerHint": "белочка", "keywords": ["белк", "белочк"] },
+            { "id": "s_action", "role": "action", "question": "Что делает?", "answerHint": "несёт", "keywords": ["несёт", "несет", "лезет", "забрал", "понесла", "взяла"] }
+          ]
+        },
+        {
+          "id": "ps_squirrel_nut_3",
+          "order": 3,
+          "scene": "squirrelHidesNut",
+          "caption": "Белочка прячет орешек в дупло",
+          "links": [
+            { "id": "s_act2_actor", "role": "action", "question": "Кто?", "answerHint": "белочка", "keywords": ["белк", "белочк"] },
+            { "id": "s_hide", "role": "action", "question": "Что делает?", "answerHint": "прячет", "keywords": ["прячет", "прятал", "спрятал", "положил", "клад"] },
+            { "id": "s_where", "role": "action", "question": "Куда?", "answerHint": "в дупло", "keywords": ["дупл", "дерево", "дереве"] }
+          ]
+        },
+        {
+          "id": "ps_squirrel_nut_4",
+          "order": 4,
+          "scene": "squirrelWinter",
+          "caption": "Зимой белочка достаёт запасы",
+          "links": [
+            { "id": "s_res_actor", "role": "resolution", "question": "Кто?", "answerHint": "белочка", "keywords": ["белк", "белочк"] },
+            { "id": "s_res", "role": "resolution", "question": "Что сделала?", "answerHint": "достала", "keywords": ["доста", "нашла", "ела", "съела", "запас"] },
+            { "id": "s_when", "role": "resolution", "question": "Когда?", "answerHint": "зимой", "keywords": ["зим", "холод", "снег"] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ps_bunny_carrot",
+      "title": "Зайчик и морковка",
+      "minAge": 5,
+      "maxAge": 7,
+      "scene": "bunny",
+      "frames": [
+        {
+          "id": "ps_bunny_carrot_1",
+          "order": 1,
+          "scene": "bunnyDigs",
+          "caption": "Зайчик посадил морковку",
+          "imageAsset": "word_zayats",
+          "links": [
+            { "id": "b_actor", "role": "setup", "question": "Кто?", "answerHint": "зайчик", "keywords": ["зайчик", "зайка", "заяц", "зая"] },
+            { "id": "b_obj", "role": "setup", "question": "Что делает?", "answerHint": "сажает", "keywords": ["сажа", "посадил", "копал", "сеял", "грядк"] }
+          ]
+        },
+        {
+          "id": "ps_bunny_carrot_2",
+          "order": 2,
+          "scene": "bunnyWaters",
+          "caption": "Зайчик поливает грядку",
+          "imageAsset": "word_morkov",
+          "links": [
+            { "id": "b_act_actor", "role": "action", "question": "Кто?", "answerHint": "зайчик", "keywords": ["зайчик", "зайка", "заяц", "зая"] },
+            { "id": "b_action", "role": "action", "question": "Что делает?", "answerHint": "поливает", "keywords": ["полива", "лил", "вода", "водой", "ждал", "растил"] }
+          ]
+        },
+        {
+          "id": "ps_bunny_carrot_3",
+          "order": 3,
+          "scene": "bunnyHarvest",
+          "caption": "Зайчик вытащил большую морковку",
+          "links": [
+            { "id": "b_res_actor", "role": "resolution", "question": "Кто?", "answerHint": "зайчик", "keywords": ["зайчик", "зайка", "заяц", "зая"] },
+            { "id": "b_res", "role": "resolution", "question": "Что сделал?", "answerHint": "вытащил", "keywords": ["вытащил", "выдернул", "собрал", "сорвал", "достал"] },
+            { "id": "b_obj_res", "role": "resolution", "question": "Что?", "answerHint": "морковку", "keywords": ["морков", "урожай"] }
+          ]
+        }
+      ]
+    }
+  ]
+}

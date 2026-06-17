@@ -10,11 +10,38 @@ import SwiftUI
 
 struct ChildHomeV25EntryCard: View {
 
-    let titleKey: String
-    let hintKey: String
+    /// Резолвленный заголовок (из ключа каталога или явной локализованной строки).
+    private let title: Text
+    private let hint: Text
+    /// Текстовая метка для VoiceOver (явная строка либо ключ).
+    private let accessibilityTitle: Text
+    private let accessibilityHint: Text
     let iconName: String
     let accent: Color
     let action: () -> Void
+
+    /// Ключевой инициализатор (строки берутся из String Catalog по ключу).
+    init(titleKey: String, hintKey: String, iconName: String, accent: Color, action: @escaping () -> Void) {
+        self.title = Text(LocalizedStringKey(titleKey))
+        self.hint = Text(LocalizedStringKey(hintKey))
+        self.accessibilityTitle = Text(LocalizedStringKey(titleKey))
+        self.accessibilityHint = Text(LocalizedStringKey(hintKey))
+        self.iconName = iconName
+        self.accent = accent
+        self.action = action
+    }
+
+    /// Явный инициализатор: заголовок/подсказка переданы готовыми
+    /// локализованными строками (для фич без ключей в каталоге).
+    init(title: String, hint: String, iconName: String, accent: Color, action: @escaping () -> Void) {
+        self.title = Text(title)
+        self.hint = Text(hint)
+        self.accessibilityTitle = Text(title)
+        self.accessibilityHint = Text(hint)
+        self.iconName = iconName
+        self.accent = accent
+        self.action = action
+    }
 
     var body: some View {
         Button(action: action) {
@@ -26,7 +53,7 @@ struct ChildHomeV25EntryCard: View {
                     .background(Circle().fill(accent.opacity(0.9)))
                     .accessibilityHidden(true)
 
-                Text(LocalizedStringKey(titleKey))
+                title
                     .font(TypographyTokens.headline(18))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(nil)
@@ -52,7 +79,7 @@ struct ChildHomeV25EntryCard: View {
         }
         .buttonStyle(.plain)
         .tapFeedback()
-        .accessibilityLabel(Text(LocalizedStringKey(titleKey)))
-        .accessibilityHint(Text(LocalizedStringKey(hintKey)))
+        .accessibilityLabel(accessibilityTitle)
+        .accessibilityHint(accessibilityHint)
     }
 }

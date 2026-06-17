@@ -1,0 +1,150 @@
+{
+  "id": "pack_prosody_plus_v1",
+  "soundTarget": "просодика",
+  "group": "интонация-ударение-эмоция",
+  "version": 1,
+  "description": "«Голосовые краски» (expansion 2.4). Три просодических режима для детей 5-8: (1) типы интонации — одну фразу сказать вопросом/восклицанием/спокойно; (2) логическое ударение — выделить голосом нужное слово; (3) эмоциональная окраска голоса — весело/грустно/удивлённо. Методика: Е. Ф. Архипова, Л. В. Лопатина (просодика при стёртой дизартрии), В. И. Селиверстов (выразительность речи при заикании). Без штрафов: цель — почувствовать, что голос может звучать по-разному.",
+  "intonation": [
+    {
+      "id": "into-mama",
+      "text": "Мама пришла",
+      "minAge": 5,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Скажи как вопрос — голосок едет вверх по горке" },
+        { "mode": "exclamation", "mark": "!", "hint": "Скажи с восторгом — голос взлетает и спрыгивает" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи спокойно — голосок ровный, как дорожка" }
+      ]
+    },
+    {
+      "id": "into-snег-poshel",
+      "text": "Снег пошёл",
+      "minAge": 5,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Спроси — правда ли пошёл снег?" },
+        { "mode": "exclamation", "mark": "!", "hint": "Обрадуйся — наконец-то снег!" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи спокойно, как будто рассказываешь" }
+      ]
+    },
+    {
+      "id": "into-koshka-doma",
+      "text": "Кошка дома",
+      "minAge": 5,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Спроси — кошка уже дома?" },
+        { "mode": "exclamation", "mark": "!", "hint": "Скажи радостно — кошка дома!" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи спокойно и ровно" }
+      ]
+    },
+    {
+      "id": "into-pora-spat",
+      "text": "Пора спать",
+      "minAge": 6,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Спроси — уже пора спать?" },
+        { "mode": "exclamation", "mark": "!", "hint": "Скажи решительно — пора спать!" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи мягко и спокойно" }
+      ]
+    },
+    {
+      "id": "into-poyut-pticy",
+      "text": "Поют птицы",
+      "minAge": 6,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Спроси — кто это поёт?" },
+        { "mode": "exclamation", "mark": "!", "hint": "Удивись — как красиво поют птицы!" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи спокойно, тихонько" }
+      ]
+    },
+    {
+      "id": "into-skoro-prazdnik",
+      "text": "Скоро праздник",
+      "minAge": 7,
+      "variants": [
+        { "mode": "question", "mark": "?", "hint": "Спроси — правда скоро праздник?" },
+        { "mode": "exclamation", "mark": "!", "hint": "Скажи с восторгом — скоро праздник!" },
+        { "mode": "calm", "mark": ".", "hint": "Скажи спокойно и ровно" }
+      ]
+    }
+  ],
+  "stress": [
+    {
+      "id": "stress-koshka-est-rybu",
+      "words": ["кошка", "ест", "рыбу"],
+      "minAge": 6,
+      "targets": [
+        { "index": 0, "question": "Кто ест рыбу?", "emoji": "🐱" },
+        { "index": 2, "question": "Что ест кошка?", "emoji": "🐟" }
+      ]
+    },
+    {
+      "id": "stress-mama-pekla-pirog",
+      "words": ["мама", "пекла", "пирог"],
+      "minAge": 6,
+      "targets": [
+        { "index": 0, "question": "Кто пёк пирог?", "emoji": "👩" },
+        { "index": 2, "question": "Что пекла мама?", "emoji": "🥧" }
+      ]
+    },
+    {
+      "id": "stress-papa-chitaet-knigu",
+      "words": ["папа", "читает", "книгу"],
+      "minAge": 6,
+      "targets": [
+        { "index": 0, "question": "Кто читает книгу?", "emoji": "👨" },
+        { "index": 1, "question": "Что делает папа?", "emoji": "📖" },
+        { "index": 2, "question": "Что читает папа?", "emoji": "📚" }
+      ]
+    },
+    {
+      "id": "stress-zayka-lyubit-morkov",
+      "words": ["зайка", "любит", "морковку"],
+      "minAge": 7,
+      "targets": [
+        { "index": 0, "question": "Кто любит морковку?", "emoji": "🐰" },
+        { "index": 2, "question": "Что любит зайка?", "emoji": "🥕" }
+      ]
+    }
+  ],
+  "emotion": [
+    {
+      "id": "emo-sneg-poshel",
+      "text": "Снег пошёл",
+      "minAge": 5,
+      "options": [
+        { "emotion": "joy", "phrase": "Снег пошёл!", "emoji": "😄", "name": "Весело", "hint": "Когда радуешься — голосок звенит и улыбается" },
+        { "emotion": "sad", "phrase": "Снег пошёл…", "emoji": "😢", "name": "Грустно", "hint": "Когда грустно — голосок тихий и опускается вниз" },
+        { "emotion": "surprise", "phrase": "Снег пошёл?!", "emoji": "😮", "name": "Удивлённо", "hint": "Когда удивляешься — голос подпрыгивает от неожиданности" }
+      ]
+    },
+    {
+      "id": "emo-priekhali-gosti",
+      "text": "Приехали гости",
+      "minAge": 5,
+      "options": [
+        { "emotion": "joy", "phrase": "Приехали гости!", "emoji": "😄", "name": "Весело", "hint": "Обрадуйся гостям — голос светится улыбкой" },
+        { "emotion": "sad", "phrase": "Приехали гости…", "emoji": "😢", "name": "Грустно", "hint": "Скажи устало — голос мягкий и тихий" },
+        { "emotion": "surprise", "phrase": "Приехали гости?!", "emoji": "😮", "name": "Удивлённо", "hint": "Удивись — вот это неожиданность!" }
+      ]
+    },
+    {
+      "id": "emo-nashli-shenka",
+      "text": "Нашли щенка",
+      "minAge": 6,
+      "options": [
+        { "emotion": "joy", "phrase": "Нашли щенка!", "emoji": "😄", "name": "Весело", "hint": "Как здорово — голос прыгает от радости" },
+        { "emotion": "sad", "phrase": "Нашли щенка…", "emoji": "😢", "name": "Грустно", "hint": "Скажи тихо, с жалостью к малышу" },
+        { "emotion": "surprise", "phrase": "Нашли щенка?!", "emoji": "😮", "name": "Удивлённо", "hint": "Не верится — голос взлетает вверх" }
+      ]
+    },
+    {
+      "id": "emo-zakonchilis-kanikuly",
+      "text": "Закончились каникулы",
+      "minAge": 7,
+      "options": [
+        { "emotion": "joy", "phrase": "Закончились каникулы!", "emoji": "😄", "name": "Весело", "hint": "Скажи бодро — впереди много нового!" },
+        { "emotion": "sad", "phrase": "Закончились каникулы…", "emoji": "😢", "name": "Грустно", "hint": "Скажи грустно — голос опускается" },
+        { "emotion": "surprise", "phrase": "Закончились каникулы?!", "emoji": "😮", "name": "Удивлённо", "hint": "Удивись — как быстро пролетело!" }
+      ]
+    }
+  ]
+}

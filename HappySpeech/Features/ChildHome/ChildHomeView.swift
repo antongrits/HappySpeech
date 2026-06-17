@@ -1398,6 +1398,28 @@ extension ChildHomeView {
         ) {
             router?.routeToListenYourself(childId: childId)
         }
+
+        // v32 expansion 2.4 — Voice Colors «Голосовые краски»
+        // (просодика: интонация, логическое ударение, эмоциональная окраска голоса).
+        ChildHomeV25EntryCard(
+            titleKey: "voiceColors.entry.title",
+            hintKey: "voiceColors.entry.hint",
+            iconName: "waveform.path",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToVoiceColors(childId: childId)
+        }
+
+        // v32 expansion 2.6 — Story Pictures «Рассказ по картинкам»
+        // (связная речь по серии сюжетов: упорядочивание → рассказ → радар полноты).
+        ChildHomeV25EntryCard(
+            title: String(localized: "storyPictures.entry.title", defaultValue: "Рассказ по картинкам"),
+            hint: String(localized: "storyPictures.entry.hint", defaultValue: "Составь историю по серии"),
+            iconName: "rectangle.3.group",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToStoryPictures(childId: childId)
+        }
     }
 }
 
