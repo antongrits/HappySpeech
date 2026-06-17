@@ -223,7 +223,10 @@ final class TongueTwistersInteractor: TongueTwistersBusinessLogic {
             } catch is CancellationError {
                 return
             } catch {
-                // Микрофон недоступен — мягко, без штрафа: статус-чип скрыт.
+                // Микрофон недоступен — мягко, без штрафа: трактуем как
+                // inconclusive (ровно как тихую/неразборчивую запись). Ребёнок не
+                // теряет «чистоту» из-за отсутствия микрофона, если рифма решена.
+                if self.rhymeSolved { self.phraseWasClean = true }
                 self.presenter?.presentCheckRecording(.init(
                     soundHeard: false, targetSound: sound, inconclusive: true
                 ))

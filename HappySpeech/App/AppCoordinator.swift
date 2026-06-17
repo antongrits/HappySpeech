@@ -375,6 +375,14 @@ enum AppRoute: Hashable {
     /// (весело/грустно/удивлённо, EmotionDetection). On-device, без штрафов.
     case voiceColors(childId: String)
 
+    // MARK: - Силач-голос (kid, фонопедия: сила и высота голоса)
+
+    /// «Силач-голос» (kid): два фонопедических режима — сила голоса (попадание
+    /// в зону комфортной громкости по RMS, антикрик) и высота голоса
+    /// (глиссандо вверх/вниз по питч-лесенке, reuse YINPitchTracker). Гласные
+    /// ряды (Алмазова/Архипова/Орлова). On-device, без сети, без штрафов.
+    case voiceStrongman(childId: String)
+
     // MARK: - Рассказ по серии картинок (kid, связная речь)
 
     /// «Рассказ по серии картинок» (kid): связная речь по сюжетной серии
@@ -1420,6 +1428,12 @@ struct AppCoordinatorView: View {
             VoiceColorsView(childId: childId.isEmpty ? container.currentChildId : childId)
                 .environment(\.circuitContext, .kid)
 
+        // MARK: - Силач-голос (фонопедия: сила и высота голоса)
+
+        case .voiceStrongman(let childId):
+            VoiceStrongmanView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - Рассказ по серии картинок (связная речь, серия сюжетов)
 
         case .storyPictures(let childId):
@@ -2041,6 +2055,10 @@ extension AppCoordinatorView {
         // MARK: Голосовые краски (просодика: интонация/ударение/эмоция)
         case "voiceColors", "voicecolors", "prosodyPlus", "intonation":
             return .voiceColors(childId: previewChild)
+
+        // MARK: Силач-голос (фонопедия: сила и высота голоса)
+        case "voiceStrongman", "voicestrongman", "voicePower", "loudnessPitch":
+            return .voiceStrongman(childId: previewChild)
 
         // MARK: Рассказ по серии картинок (связная речь)
         case "storyPictures", "storypictures", "pictureSeries", "narrativeSeries":

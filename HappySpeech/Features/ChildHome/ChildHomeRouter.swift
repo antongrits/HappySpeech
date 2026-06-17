@@ -59,6 +59,8 @@ protocol ChildHomeRoutingLogic {
     func routeToSoundHunterDay(childId: String)
     // v32 expansion 2.15 — грамматический конструктор-2 (сложные конструкции)
     func routeToAdvancedGrammar(childId: String)
+    // v32 expansion 2.10 — силач-голос (фонопедия: сила и высота голоса)
+    func routeToVoiceStrongman(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -332,6 +334,12 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// логическое ударение, эмоциональная окраска голоса).
     func routeToVoiceColors(childId: String) {
         coordinator?.navigate(to: .voiceColors(childId: childId))
+    }
+
+    /// v32 expansion 2.10 — «Силач-голос» (фонопедия: сила голоса —
+    /// зона комфортной громкости по RMS; высота голоса — глиссандо-лесенка).
+    func routeToVoiceStrongman(childId: String) {
+        coordinator?.navigate(to: .voiceStrongman(childId: childId))
     }
 
     /// v32 expansion 2.6 — «Рассказ по серии картинок» (связная речь по

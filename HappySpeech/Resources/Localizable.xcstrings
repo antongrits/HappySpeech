@@ -1,6 +1,40 @@
 {
   "sourceLanguage": "ru",
   "strings": {
+    "voiceStrongman.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice Strongman"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Силач-голос"
+          }
+        }
+      }
+    },
+    "voiceStrongman.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loud-quiet, high-low"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Громко-тихо, высоко-низко"
+          }
+        }
+      }
+    },
     "liveSounds.entry.title": {
       "extractionState": "manual",
       "localizations": {

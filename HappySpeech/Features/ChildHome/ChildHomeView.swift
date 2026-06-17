@@ -1410,6 +1410,19 @@ extension ChildHomeView {
             router?.routeToVoiceColors(childId: childId)
         }
 
+        // v32 expansion 2.10 — Voice Strongman «Силач-голос»
+        // (фонопедия: сила голоса — зона комфортной громкости по RMS, антикрик;
+        // высота голоса — глиссандо-лесенка вверх/вниз, reuse YINPitchTracker).
+        ChildHomeV25EntryCard(
+            title: String(localized: "voiceStrongman.entry.title", defaultValue: "Силач-голос"),
+            hint: String(localized: "voiceStrongman.entry.hint",
+                         defaultValue: "Громко-тихо, высоко-низко"),
+            iconName: "dumbbell",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToVoiceStrongman(childId: childId)
+        }
+
         // v32 expansion 2.6 — Story Pictures «Рассказ по картинкам»
         // (связная речь по серии сюжетов: упорядочивание → рассказ → радар полноты).
         ChildHomeV25EntryCard(
