@@ -22,8 +22,11 @@ public struct HSLoadingView: View {
                 size: CGSize(width: 72, height: 72)
             )
             Text(message)
-                .font(TypographyTokens.body())
-                .foregroundStyle(.secondary)
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear { rotation = 360 }

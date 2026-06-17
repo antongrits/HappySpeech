@@ -136,46 +136,50 @@ struct OfflineStateView: View {
     }
 
     // MARK: - Illustration
+    //
+    // Эталон offline (open-design): большой белый круг (180pt) с тёплым
+    // коралловым свечением-хало, в центре — маскот Ляля (размер ~110pt).
+    // wifi.slash-иконка небольшая (36pt) поверх маскота убрана — это
+    // упрощает композицию и делает фокус на эмоциональном персонаже,
+    // а не техническом символе. Pending-бейдж остаётся для информативности.
 
     private var illustrationSection: some View {
         ZStack {
-            // Soft pulse halo — warm coral glow.
+            // Outer soft coral halo
             Circle()
                 .fill(ColorTokens.Brand.primaryLo.opacity(0.22))
                 .frame(width: 240, height: 240)
                 .scaleEffect(isMascotPulsing ? 1.06 : 0.98)
-                .opacity(isMascotPulsing ? 0.85 : 0.55)
+                .opacity(isMascotPulsing ? 0.80 : 0.50)
 
-            // Inner soft circle
+            // White inner circle — clean card-like background
             Circle()
                 .fill(ColorTokens.Kid.surface)
-                .frame(width: 180, height: 180)
-                .shadow(color: ColorTokens.Overlay.shadow, radius: 18, x: 0, y: 8)
+                .frame(width: 182, height: 182)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 16, x: 0, y: 6)
 
-            // Анимированный offline-индикатор (Lottie) с fallback на wifi.slash icon.
-            HSLottieContainer(
-                asset: .emptyOffline,
-                fallback: AnyView(
-                    Image(systemName: "wifi.slash")
-                        .font(TypographyTokens.kidDisplay(56))
-                        .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
-                        .hsSymbolEffect(.pulse, value: viewModel.isRetrying)
-                ),
-                size: CGSize(width: 96, height: 96)
-            )
-            .offset(y: -8)
-
-            // Lyalya mascot — sits beside the icon
-            // F.tier1 v21: mascot мягче в dark.
-            LyalyaMascotView(state: .encouraging, size: 72)
+            // Mascot Lyalya — central protagonist of the offline state
+            LyalyaMascotView(state: .encouraging, size: 110)
                 .opacity(colorScheme == .dark ? 0.92 : 1.0)
-                .offset(x: 70, y: 38)
+                .accessibilityHidden(true)
+
+            // Small wifi.slash badge — bottom-right corner of the inner circle
+            Image(systemName: "wifi.slash")
+                .font(.system(size: 20, weight: .semibold))
+                .foregroundStyle(ColorTokens.Brand.primary.opacity(0.75))
+                .frame(width: 40, height: 40)
+                .background(
+                    Circle().fill(ColorTokens.Kid.surfaceAlt)
+                        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 4, x: 0, y: 2)
+                )
+                .offset(x: 62, y: 52)
+                .hsSymbolEffect(.pulse, value: viewModel.isRetrying)
                 .accessibilityHidden(true)
 
             // Pending sync badge
             if viewModel.pendingCount > 0 {
                 pendingBadge
-                    .offset(x: -78, y: -82)
+                    .offset(x: -72, y: -78)
             }
         }
         .frame(height: 240)
@@ -196,27 +200,29 @@ struct OfflineStateView: View {
     }
 
     // MARK: - Info
+    //
+    // Эталон offline: заголовок + тело — простой текстовый блок без glass-карточки,
+    // центрированный на кремовом фоне. Glass-карточка создавала лишний «вес» и
+    // отличалась от референса. Padding screenEdge сохранён для SE-safe ширины.
 
     private var infoSection: some View {
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp3) {
-                Text(String(localized: "offline.title"))
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.85)
-                    .fixedSize(horizontal: false, vertical: true)
+        VStack(spacing: SpacingTokens.sp3) {
+            Text(String(localized: "offline.title"))
+                .font(TypographyTokens.title(24))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
 
-                Text(String(localized: "offline.body"))
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.sp6)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(String(localized: "offline.body"))
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Countdown

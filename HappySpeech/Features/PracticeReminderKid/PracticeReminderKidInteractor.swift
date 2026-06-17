@@ -37,25 +37,39 @@ final class PracticeReminderKidInteractor {
         self.state = .initial
     }
 
-    /// Загружает реальные минуты/серию. Безопасно без репозиториев/childId.
+    /// Загружает реальные минуты/серию/имя/целевой звук. Безопасно без репозиториев/childId.
     func load() async {
         guard let sessionRepository, !childId.isEmpty else {
+            // Имя и звук даже без сессий — из профиля.
+            let profile = await loadChildProfile()
+            state.childName = profile?.name ?? ""
+            state.targetSound = profile?.targetSounds.first ?? ""
             state.isLoading = false
-            Self.logger.info("reminder load skipped (no repository/childId)")
+            Self.logger.info("reminder load skipped (no sessionRepository/childId)")
             return
         }
         do {
-            let sessions = try await sessionRepository.fetchRecent(childId: childId, limit: 120)
+            async let sessionsFetch = sessionRepository.fetchRecent(childId: childId, limit: 120)
+            async let profileFetch: ChildProfileDTO? = loadChildProfile()
+            let sessions = try await sessionsFetch
+            let profile = await profileFetch
             let minutes = minutesToday(in: sessions)
             let streak = await loadStreak(fallback: sessions)
             state.minutesToday = minutes
             state.streakDays = streak
+            state.childName = profile?.name ?? ""
+            state.targetSound = profile?.targetSounds.first ?? ""
             state.isLoading = false
-            Self.logger.info("reminder loaded (min=\(minutes), streak=\(streak))")
+            Self.logger.info("reminder loaded (min=\(minutes), streak=\(streak), name=\(self.state.childName, privacy: .private))")
         } catch {
             state.isLoading = false
             Self.logger.error("reminder load failed: \(error.localizedDescription, privacy: .public)")
         }
+    }
+
+    private func loadChildProfile() async -> ChildProfileDTO? {
+        guard let childRepository, !childId.isEmpty else { return nil }
+        return try? await childRepository.fetch(id: childId)
     }
 
     func snooze() {

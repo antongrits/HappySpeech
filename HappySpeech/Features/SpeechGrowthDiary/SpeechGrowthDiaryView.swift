@@ -27,10 +27,15 @@ final class SpeechGrowthDiaryViewModelHolder: SpeechGrowthDiaryDisplayLogic {
 
 // MARK: - View
 
+/// Дневник роста — daily reflection journal (kid-diary-journal class).
+///
+/// Первичный контент: вечерняя рефлексия дня (настроение + заметка + сохранение).
+/// Вторичная функция: видеодневник речи (доступен через toolbar).
 struct SpeechGrowthDiaryView: View {
 
     let childId: String
 
+    // Video diary (secondary)
     @State private var holder = SpeechGrowthDiaryViewModelHolder()
     @State private var interactor: SpeechGrowthDiaryInteractor?
     @State private var presenter: SpeechGrowthDiaryPresenter?
@@ -40,13 +45,15 @@ struct SpeechGrowthDiaryView: View {
     @State private var pendingTag: String = "звук"
     @State private var pendingSound: String = ""
 
+    // Daily reflection (primary — uses EveningReflection logic)
+    @State private var reflectionInteractor: EveningReflectionInteractor?
+    @State private var showVideoSheet = false
+
     @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
-
-    @State private var contentAppeared = false
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "Diary.View"
@@ -55,10 +62,337 @@ struct SpeechGrowthDiaryView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                ColorTokens.Kid.bg.ignoresSafeArea()
 
-                // kid-diary-journal: тёплый статичный mesh — дневник-скрапбук
-                // (вместо холодного calm), но контур остаётся parent-gated.
+                // kid-diary-journal: тёплый статичный kidWarm mesh — скрапбук-дневник.
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
+                if let ri = reflectionInteractor, ri.isLoaded {
+                    reflectionContent(ri)
+                } else {
+                    ProgressView().controlSize(.large)
+                }
+            }
+            .navigationTitle(Text(String(localized: "diary.nav.title", defaultValue: "Дневник роста")))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { toolbarContent }
+            .task { await bootstrap() }
+            .sheet(isPresented: $showVideoSheet) {
+                videoDiarySheet
+            }
+            .sheet(isPresented: $holder.pickerSheetActive) {
+                VideoPickerSheet(onPick: { url in
+                    holder.pickerSheetActive = false
+                    Task { await saveRecorded(url: url) }
+                })
+            }
+            .sheet(isPresented: $holder.shareSheetActive) {
+                shareDetailSheet
+            }
+        }
+        .environment(\.circuitContext, .kid)
+    }
+
+    // MARK: - Primary: Daily reflection
+
+    private func reflectionContent(_ ri: EveningReflectionInteractor) -> some View {
+        GeometryReader { geo in
+            ScrollView {
+                VStack(spacing: SpacingTokens.sp3) {
+                    // Date header row
+                    dateHeader
+                        .padding(.top, SpacingTokens.sp3)
+
+                    // Mascot greeting bubble
+                    mascotBubble
+
+                    sectionLabel("diary.section.today", defaultValue: "Как прошёл сегодня день?")
+
+                    // Mood + note card
+                    moodAndNoteCard(ri)
+
+                    // CTA
+                    saveButton(ri)
+                        .padding(.bottom, SpacingTokens.sp2)
+
+                    // History — "БОЛЬШАЯ ВЕХА"
+                    if !ri.history.isEmpty {
+                        milestoneSection(ri)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: geo.size.height)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.sp6)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
+        }
+    }
+
+    // MARK: - Date header
+
+    private var dateHeader: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Text(formattedDate())
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+            if let count = reflectionInteractor?.history.count, count > 0 {
+                HStack(spacing: SpacingTokens.sp1) {
+                    Image(systemName: "book.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                    Text(String(
+                        format: String(localized: "diary.entries.count", defaultValue: "%lld записей"),
+                        Int64(count)
+                    ))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                }
+            }
+        }
+    }
+
+    private func formattedDate() -> String {
+        let fmt = DateFormatter()
+        fmt.locale = Locale(identifier: "ru_RU")
+        fmt.dateFormat = "EEEE, d MMMM"
+        return fmt.string(from: Date()).capitalized
+    }
+
+    // MARK: - Mascot bubble
+
+    private var mascotBubble: some View {
+        HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            LyalyaMascotView(state: .encouraging, size: 56)
+                .accessibilityHidden(true)
+            HSCard(style: .elevated, padding: SpacingTokens.sp3) {
+                Text(String(localized: "diary.mascot.bubble", defaultValue: "Давай отметим, чем ты гордишься 💛"))
+                    .font(TypographyTokens.kidBody(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Mood + note card
+
+    private func moodAndNoteCard(_ ri: EveningReflectionInteractor) -> some View {
+        HSCard(style: .flat) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                // Mood question
+                Text(String(localized: "diary.mood.question", defaultValue: "Чем ты гордишься?"))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+
+                Text(String(localized: "diary.mood.subtitle", defaultValue: "Выбери настроение и расскажи Ляле пару слов"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+
+                // Mood picker row
+                moodRow(ri)
+
+                // Note field
+                TextField(
+                    String(localized: "diary.note.placeholder", defaultValue: "Сегодня я почти не запинался, когда читал вслух"),
+                    text: Binding(
+                        get: { ri.entry.fun },
+                        set: { ri.entry.fun = $0 }
+                    ),
+                    axis: .vertical
+                )
+                .lineLimit(3...5)
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .padding(SpacingTokens.sp2)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .fill(ColorTokens.Kid.bgSoft)
+                )
+                .accessibilityLabel(String(localized: "diary.note.a11y", defaultValue: "Заметка о дне"))
+            }
+        }
+    }
+
+    private func moodRow(_ ri: EveningReflectionInteractor) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            ForEach(EveningReflectionModels.Mood.allCases) { mood in
+                moodButton(mood, ri: ri)
+            }
+        }
+    }
+
+    private func moodButton(
+        _ mood: EveningReflectionModels.Mood,
+        ri: EveningReflectionInteractor
+    ) -> some View {
+        let isSelected = ri.entry.mood == mood
+        return Button {
+            ri.entry.mood = mood
+        } label: {
+            VStack(spacing: SpacingTokens.sp1) {
+                Text(mood.emoji).font(.system(size: 32))
+                Text(mood.label)
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(isSelected
+                        ? ColorTokens.Brand.primary
+                        : ColorTokens.Kid.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp2)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .fill(isSelected
+                        ? ColorTokens.Brand.primary.opacity(0.12)
+                        : ColorTokens.Kid.bgSoft)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .strokeBorder(
+                        isSelected ? ColorTokens.Brand.primary : Color.clear,
+                        lineWidth: 2
+                    )
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(mood.label)
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+
+    // MARK: - Save button
+
+    private func saveButton(_ ri: EveningReflectionInteractor) -> some View {
+        Button {
+            guard ri.entry.mood != nil else { return }
+            ri.submit()
+        } label: {
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 15, weight: .semibold))
+                    .accessibilityHidden(true)
+                Text(String(localized: "diary.cta.save", defaultValue: "Сохранить запись"))
+                    .font(TypographyTokens.headline(17))
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .frame(maxWidth: .infinity, minHeight: 56)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                    .fill(ColorTokens.Brand.primary)
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(ri.entry.mood == nil)
+        .opacity(ri.entry.mood == nil ? 0.55 : 1.0)
+        .accessibilityLabel(String(localized: "diary.cta.save", defaultValue: "Сохранить запись"))
+        .accessibilityHint(String(localized: "diary.cta.save.hint", defaultValue: "Сохраняет запись в дневник"))
+    }
+
+    // MARK: - Milestone history section
+
+    private func milestoneSection(_ ri: EveningReflectionInteractor) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionLabel("diary.section.milestones", defaultValue: "БОЛЬШАЯ ВЕХА")
+
+            ForEach(Array(ri.history.prefix(5).enumerated()), id: \.element.id) { index, entry in
+                historyEntry(entry)
+                    .scrollTransition(
+                        .animated(reduceMotion
+                            ? .linear(duration: 0)
+                            : .spring(response: 0.5, dampingFraction: 0.85))
+                    ) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(ri.history.count - index))
+            }
+        }
+    }
+
+    private func historyEntry(_ entry: EveningReflectionModels.Entry) -> some View {
+        HSCard(style: .flat) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primaryLo.opacity(0.22))
+                        .frame(width: 44, height: 44)
+                    Text(entry.mood?.emoji ?? "🌙")
+                        .font(.system(size: 24))
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    if let date = entry.savedAt {
+                        Text(date.formatted(date: .abbreviated, time: .omitted))
+                            .font(TypographyTokens.caption(12).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
+                    if !entry.fun.isEmpty {
+                        Text(entry.fun)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
+                    if !entry.hard.isEmpty {
+                        Text(entry.hard)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
+                }
+                Spacer(minLength: 0)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func sectionLabel(_ key: LocalizedStringKey, defaultValue: String) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Capsule()
+                .fill(ColorTokens.Brand.primaryLo)
+                .frame(width: 18, height: 3)
+            Text(key)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 0)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.leading, 2)
+    }
+
+    // MARK: - Video diary sheet (secondary feature)
+
+    private var videoDiarySheet: some View {
+        NavigationStack {
+            ZStack {
+                ColorTokens.Parent.bg.ignoresSafeArea()
                 HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.14 : 0.22)
@@ -67,10 +401,10 @@ struct SpeechGrowthDiaryView: View {
                     .allowsHitTesting(false)
 
                 if !holder.optInAccepted {
-                    optInSection
+                    videoOptInSection
                 } else if let listVM = holder.listVM {
                     if listVM.isEmpty {
-                        emptyStateSection
+                        videoEmptyState
                     } else {
                         clipsListSection(listVM)
                     }
@@ -78,13 +412,18 @@ struct SpeechGrowthDiaryView: View {
                     ProgressView()
                 }
             }
-            .navigationTitle(Text("diary.title"))
+            .navigationTitle(Text(String(localized: "diary.video.title", defaultValue: "Видеодневник речи")))
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar { toolbarContent }
-            .task { await bootstrap() }
-            .onAppear {
-                withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
-                    contentAppeared = true
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showVideoSheet = false
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    }
+                    .accessibilityLabel(Text(String(localized: "action.close")))
                 }
             }
             .sheet(isPresented: $holder.pickerSheetActive) {
@@ -100,9 +439,9 @@ struct SpeechGrowthDiaryView: View {
         .environment(\.circuitContext, .parent)
     }
 
-    // MARK: - Opt-in
+    // MARK: - Video opt-in
 
-    private var optInSection: some View {
+    private var videoOptInSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
             LyalyaMascotView(state: .explaining, size: 100)
                 .accessibilityHidden(true)
@@ -115,7 +454,7 @@ struct SpeechGrowthDiaryView: View {
                             .symbolRenderingMode(.hierarchical)
                             .hsSymbolEffect(.pulse, value: holder.optInAccepted)
                             .accessibilityHidden(true)
-                        Text("diary.optIn.title")
+                        Text(String(localized: "diary.optIn.title"))
                             .font(TypographyTokens.title(20))
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .multilineTextAlignment(.leading)
@@ -123,7 +462,7 @@ struct SpeechGrowthDiaryView: View {
                             .minimumScaleFactor(0.85)
                             .allowsTightening(true)
                     }
-                    Text("diary.optIn.body")
+                    Text(String(localized: "diary.optIn.body"))
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .multilineTextAlignment(.leading)
@@ -135,7 +474,7 @@ struct SpeechGrowthDiaryView: View {
             Button {
                 holder.optInAccepted = true
             } label: {
-                Text("diary.optIn.accept")
+                Text(String(localized: "diary.optIn.accept"))
                     .font(TypographyTokens.headline(17))
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
@@ -147,13 +486,11 @@ struct SpeechGrowthDiaryView: View {
             .buttonStyle(.plain)
         }
         .padding(SpacingTokens.screenEdge)
-        .opacity(contentAppeared ? 1 : 0)
-        .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
     }
 
-    // MARK: - Empty state
+    // MARK: - Video empty state
 
-    private var emptyStateSection: some View {
+    private var videoEmptyState: some View {
         VStack(spacing: SpacingTokens.sp4) {
             HSEmptyStateView(
                 icon: "film.stack",
@@ -167,17 +504,10 @@ struct SpeechGrowthDiaryView: View {
         .padding(SpacingTokens.screenEdge)
     }
 
-    // MARK: - List
+    // MARK: - Clips list
 
     private func clipsListSection(_ listVM: SpeechGrowthDiaryModels.List.ViewModel) -> some View {
         ScrollView {
-            VStack(spacing: SpacingTokens.sp3) {
-                mascotBubble
-                sectionLabel("diary.section.timeline")
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp3)
-
             LazyVStack(spacing: SpacingTokens.sp3) {
                 ForEach(Array(listVM.clips.enumerated()), id: \.element.id) { index, row in
                     clipRow(row)
@@ -188,7 +518,6 @@ struct SpeechGrowthDiaryView: View {
                                 .opacity(phase.isIdentity ? 1 : 0)
                                 .scaleEffect(phase.isIdentity ? 1 : 0.94)
                         }
-                        .hsParallaxTile(factor: 0.18)
                         .zIndex(Double(listVM.clips.count - index))
                 }
             }
@@ -201,40 +530,6 @@ struct SpeechGrowthDiaryView: View {
         }
         .scrollBounceBehavior(.basedOnSize)
         .safeAreaPadding(.bottom, SpacingTokens.sp2)
-    }
-
-    // kid-diary-journal: Ляля с тёплым пузырём-подсказкой над лентой записей.
-    private var mascotBubble: some View {
-        HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
-            LyalyaMascotView(state: .encouraging, size: 52)
-                .accessibilityHidden(true)
-            HSCard(style: .elevated, padding: SpacingTokens.sp3) {
-                Text("diary.mascot.bubble")
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func sectionLabel(_ key: LocalizedStringKey) -> some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            Capsule()
-                .fill(ColorTokens.Brand.primaryLo)
-                .frame(width: 18, height: 3)
-            Text(key)
-                .font(TypographyTokens.caption(13).weight(.semibold))
-                .textCase(.uppercase)
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
-            Spacer(minLength: 0)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.leading, 2)
     }
 
     private func clipRow(_ row: SpeechGrowthDiaryModels.List.ClipRow) -> some View {
@@ -259,12 +554,8 @@ struct SpeechGrowthDiaryView: View {
                         .minimumScaleFactor(0.85)
                 }
                 HStack(spacing: SpacingTokens.sp2) {
-                    if !row.topicTag.isEmpty {
-                        tagPill(row.topicTag)
-                    }
-                    if !row.targetSound.isEmpty {
-                        tagPill("/\(row.targetSound)/")
-                    }
+                    if !row.topicTag.isEmpty { tagPill(row.topicTag) }
+                    if !row.targetSound.isEmpty { tagPill("/\(row.targetSound)/") }
                     if row.isShared {
                         tagPill(
                             row.isShareExpired
@@ -288,7 +579,7 @@ struct SpeechGrowthDiaryView: View {
                     Button {
                         Task { await issueShare(for: row.id) }
                     } label: {
-                        Label("diary.button.share", systemImage: "square.and.arrow.up")
+                        Label(String(localized: "diary.button.share"), systemImage: "square.and.arrow.up")
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .frame(minHeight: 44)
@@ -297,7 +588,7 @@ struct SpeechGrowthDiaryView: View {
                     Button {
                         Task { await interactor?.deleteClip(id: row.id) }
                     } label: {
-                        Label("diary.button.delete", systemImage: "trash")
+                        Label(String(localized: "diary.button.delete"), systemImage: "trash")
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Semantic.error)
                             .frame(minHeight: 44)
@@ -315,9 +606,7 @@ struct SpeechGrowthDiaryView: View {
             .font(TypographyTokens.caption(11))
             .padding(.horizontal, SpacingTokens.sp1)
             .padding(.vertical, 2)
-            .background(
-                Capsule().fill(tint.opacity(0.18))
-            )
+            .background(Capsule().fill(tint.opacity(0.18)))
             .foregroundStyle(tint)
     }
 
@@ -325,7 +614,7 @@ struct SpeechGrowthDiaryView: View {
         Button {
             holder.pickerSheetActive = true
         } label: {
-            Label("diary.button.record", systemImage: "video.badge.plus")
+            Label(String(localized: "diary.button.record"), systemImage: "video.badge.plus")
                 .font(TypographyTokens.headline(17))
                 .frame(maxWidth: .infinity, minHeight: 56)
                 .background(
@@ -341,11 +630,11 @@ struct SpeechGrowthDiaryView: View {
 
     private var shareDetailSheet: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
-            Text("diary.share.title")
+            Text(String(localized: "diary.share.title"))
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
             if let shareVM = holder.shareVM {
-                Text("diary.share.expires")
+                Text(String(localized: "diary.share.expires"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                 Text(shareVM.expiresAtLabel)
@@ -366,7 +655,7 @@ struct SpeechGrowthDiaryView: View {
                 Button {
                     UIPasteboard.general.string = shareVM.token
                 } label: {
-                    Label("diary.share.copy", systemImage: "doc.on.clipboard")
+                    Label(String(localized: "diary.share.copy"), systemImage: "doc.on.clipboard")
                         .frame(maxWidth: .infinity, minHeight: 48)
                 }
                 .buttonStyle(.borderedProminent)
@@ -375,6 +664,32 @@ struct SpeechGrowthDiaryView: View {
         }
         .padding(SpacingTokens.screenEdge)
         .presentationDetents([.medium])
+    }
+
+    // MARK: - Toolbar
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                showVideoSheet = true
+            } label: {
+                Image(systemName: "video.badge.plus")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
+            .accessibilityLabel(Text(String(localized: "diary.video.open.a11y", defaultValue: "Видеодневник")))
+        }
+        ToolbarItem(placement: .topBarLeading) {
+            Button {
+                exitToParentHome()
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title3)
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
+            .accessibilityLabel(Text(String(localized: "diary.close.a11y")))
+        }
     }
 
     // MARK: - Actions
@@ -402,29 +717,20 @@ struct SpeechGrowthDiaryView: View {
         return CMTimeGetSeconds(duration)
     }
 
-    // MARK: - Toolbar
-
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                exitToParentHome()
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title3)
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
-            }
-            .accessibilityLabel(Text("diary.close.a11y"))
-        }
-    }
-
     // MARK: - Bootstrap
 
     private func bootstrap() async {
         guard !didBootstrap else { return }
         didBootstrap = true
+
+        // Primary: daily reflection
+        let ri = EveningReflectionInteractor(childId: childId)
+        ri.load()
+        self.reflectionInteractor = ri
+
+        // Secondary: video diary
         let presenter = SpeechGrowthDiaryPresenter(displayLogic: holder)
-        let interactor = SpeechGrowthDiaryInteractor(
+        let videoInteractor = SpeechGrowthDiaryInteractor(
             presenter: presenter,
             realmActor: container.realmActor,
             childId: childId
@@ -432,9 +738,9 @@ struct SpeechGrowthDiaryView: View {
         let router = SpeechGrowthDiaryRouter()
         router.coordinator = coordinator
         self.presenter = presenter
-        self.interactor = interactor
+        self.interactor = videoInteractor
         self.router = router
-        await interactor.loadClips()
+        await videoInteractor.loadClips()
     }
 }
 

@@ -33,8 +33,16 @@ struct WeeklyVideoReportView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Эталон parent-report: фон Parent.bg (#F0EFF6 — нейтральный
+                // тёплый лавандовый родительского контура), поверх — статичный
+                // warm-mesh softlight для воздуха.
+                ColorTokens.Parent.bg
+                    .ignoresSafeArea()
                 HSMeshGradientBackground(palette: .calm, animated: false)
                     .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .opacity(0.45)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "weeklyVideoReport.nav.title")))
@@ -180,16 +188,19 @@ struct WeeklyVideoReportView: View {
     }
 
     // MARK: - Real-data panel (overlay numbers)
+    //
+    // Эталон parent-report: крупный заголовок «Отличная неделя, Артём!» (title 28, bold),
+    // дата и имя ребёнка под ним (body 14, inkMuted). Затем секции «В цифрах» и «Прогресс».
 
     private var realDataPanel: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
             // Заголовок с именем + неделей
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                 Text(headerTitle)
-                    .font(TypographyTokens.title(22))
+                    .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.85)
+                    .minimumScaleFactor(0.80)
                 Text(String(localized: "weeklyVideoReport.realData.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
@@ -197,12 +208,13 @@ struct WeeklyVideoReportView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
-            // «Эта неделя в цифрах» — 4 компактные карточки в ряд (SE-safe: 2×2 при сжатии).
+            // «Эта неделя в цифрах» — всегда 2 колонки (2×2 сетка).
+            // Эталон: 4 плитки в 2 ряда — равномерно заполняют ширину на SE и 16 Pro.
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 sectionHeader(String(localized: "weeklyVideoReport.stats.title"))
                 let columns = Array(
                     repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2),
-                    count: interactor.state.overlayMetrics.count >= 4 ? 4 : 2
+                    count: 2
                 )
                 LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
                     ForEach(Array(interactor.state.overlayMetrics.enumerated()), id: \.element.id) { index, metric in

@@ -35,7 +35,7 @@ struct SoundJournalKidView: View {
 
                 // Тёплый kidWarm mesh (как в эталоне kid-progress) — единая
                 // тёплая палитра вместо холодного kidCool.
-                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .ignoresSafeArea()
                     .opacity(colorScheme == .dark ? 0.22 : 0.40)
                     .blendMode(.softLight)

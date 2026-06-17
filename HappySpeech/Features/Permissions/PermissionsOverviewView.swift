@@ -49,6 +49,10 @@ struct PermissionsOverviewView: View {
                     mascotSection
                     summaryCard
                     cardsSection
+                    // Эталон permissions overview: кнопка «Продолжить» внизу списка.
+                    // Видна всегда — даёт родителю выйти с экрана независимо от статуса.
+                    continueButton
+                        .padding(.top, SpacingTokens.small)
                     Spacer(minLength: SpacingTokens.xxLarge)
                 }
                 .padding(.top, SpacingTokens.medium)
@@ -99,21 +103,36 @@ struct PermissionsOverviewView: View {
     }
 
     // MARK: - Mascot
+    //
+    // Эталон: маскот сверху (100pt), под ним крупный hero-заголовок (title 22)
+    // и строка-пояснение (body 15, inkMuted). Навтайтл (.large) остаётся для
+    // навигации, но визуальный акцент — на hero-тексте под маскотом.
 
     private var mascotSection: some View {
-        VStack(spacing: SpacingTokens.small) {
+        VStack(spacing: SpacingTokens.regular) {
             LyalyaMascotView(state: mascotState, size: 100)
                 .offset(y: appeared ? 0 : -16)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityLabel(mascotAccessibilityLabel)
 
-            Text(display.overviewSummaryLabel)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "permissions.overview.heroTitle",
+                            defaultValue: "Чтобы заниматься, нам нужно совсем немного"))
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.82)
+                    .accessibilityAddTraits(.isHeader)
+
+                Text(display.overviewSummaryLabel)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(.horizontal, SpacingTokens.large)
         }
     }
 
@@ -180,6 +199,28 @@ struct PermissionsOverviewView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(display.overviewSummaryLabel)
+        }
+    }
+
+    // MARK: - Continue button (эталон: кнопка «Продолжить» внизу)
+
+    private var continueButton: some View {
+        VStack(spacing: SpacingTokens.small) {
+            HSButton(
+                String(localized: "permissions.overview.continue", defaultValue: "Продолжить"),
+                style: .primary
+            ) {
+                coordinator.pop()
+            }
+            .accessibilityLabel(String(localized: "permissions.overview.continue", defaultValue: "Продолжить"))
+            .accessibilityHint(String(localized: "permissions.overview.continue.hint", defaultValue: "Закрыть экран разрешений"))
+
+            Text(String(localized: "permissions.overview.changeLater", defaultValue: "Можно изменить позже в настройках"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkSoft)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
     }
 

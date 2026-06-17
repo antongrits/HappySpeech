@@ -141,6 +141,9 @@ public struct HSEmptyStateView: View {
     }
 
     // MARK: - Default layout (symbol / mascot variants)
+    //
+    // Эталон states-empty: маскот/иконка в тёплом кружке, заголовок Kid.ink,
+    // подпись Kid.inkMuted, опциональная коралловая CTA-кнопка.
 
     private var defaultBody: some View {
         VStack(spacing: SpacingTokens.large) {
@@ -149,18 +152,24 @@ public struct HSEmptyStateView: View {
 
             VStack(spacing: SpacingTokens.small) {
                 Text(title)
-                    .font(TypographyTokens.headline())
-                    .bold()
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                 Text(message)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(.secondary)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.small)
             }
 
             if let action {
-                HSButton(actionTitle, style: .secondary, action: action)
+                HSButton(actionTitle, style: .primary, action: action)
                     .padding(.horizontal, SpacingTokens.xLarge)
+                    .accessibilityLabel(actionTitle)
             }
         }
         .padding(SpacingTokens.xLarge)

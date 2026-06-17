@@ -86,7 +86,7 @@ struct PracticeReminderKidView: View {
                     VStack(spacing: SpacingTokens.sp4) {
                         Spacer(minLength: SpacingTokens.sp4)
                         mascotSection
-                        titleSection
+                        titleSection(state: interactor.state)
                         taskPill(state: interactor.state)
                         badgesRow(state: interactor.state)
                         Spacer(minLength: SpacingTokens.sp5)
@@ -136,8 +136,18 @@ struct PracticeReminderKidView: View {
 
     // MARK: - Title
 
-    private var titleSection: some View {
-        Text(String(localized: "practiceReminder.hero.title"))
+    private func titleSection(state: PracticeReminderKidModels.ViewState) -> some View {
+        let title: String
+        if !state.isLoading && !state.childName.isEmpty {
+            // «Маша, пора заниматься!» — персонализированный заголовок.
+            title = String(
+                format: String(localized: "practiceReminder.hero.title.named", defaultValue: "%@, пора заниматься!"),
+                state.childName
+            )
+        } else {
+            title = String(localized: "practiceReminder.hero.title")
+        }
+        return Text(title)
             .font(TypographyTokens.title(27))
             .foregroundStyle(ColorTokens.Kid.ink)
             .multilineTextAlignment(.center)
@@ -149,12 +159,23 @@ struct PracticeReminderKidView: View {
     // MARK: - Task pill
 
     private func taskPill(state: PracticeReminderKidModels.ViewState) -> some View {
-        HStack(spacing: SpacingTokens.sp2) {
+        let pillText: String
+        if !state.isLoading && !state.targetSound.isEmpty {
+            // «Сегодня нас ждёт звук «Р»» — из реального профиля ребёнка.
+            pillText = String(
+                format: String(localized: "practiceReminder.pill.sound", defaultValue: "Сегодня нас ждёт звук «%@»"),
+                state.targetSound
+            )
+        } else {
+            pillText = String(localized: "practiceReminder.hero.subtitle")
+        }
+
+        return HStack(spacing: SpacingTokens.sp2) {
             Image(systemName: "waveform.circle.fill")
                 .font(.system(size: 24, weight: .semibold))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .accessibilityHidden(true)
-            Text(String(localized: "practiceReminder.hero.subtitle"))
+            Text(pillText)
                 .font(TypographyTokens.body(15).weight(.medium))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.leading)

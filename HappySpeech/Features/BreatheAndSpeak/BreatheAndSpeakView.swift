@@ -100,7 +100,7 @@ struct BreatheAndSpeakView: View {
             .navigationTitle(Text("breatheAndSpeak.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button {
                         exitGame()
                     } label: {
@@ -128,14 +128,25 @@ struct BreatheAndSpeakView: View {
         step: BreatheAndSpeakModels.Start.StepViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            // Шапка: название упражнения + спокойный ряд точек-прогресса.
+            // Шапка: название упражнения + подзаголовок комплекса + прогресс-точки.
             VStack(spacing: SpacingTokens.sp3) {
-                Text(step.name)
-                    .font(TypographyTokens.kidTitle(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.8)
+                VStack(spacing: SpacingTokens.sp1) {
+                    Text(step.name)
+                        .font(TypographyTokens.kidTitle(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.8)
+
+                    if !startVM.complexTitle.isEmpty {
+                        Text(startVM.complexTitle)
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                }
 
                 progressDots(startVM: startVM, step: step)
             }

@@ -16,12 +16,18 @@ enum PracticeReminderKidModels {
         var streakDays: Int
         var isDismissed: Bool
         var isLoading: Bool
+        /// Имя ребёнка для персонализированного заголовка.
+        var childName: String
+        /// Целевой звук дня (например «Р»).
+        var targetSound: String
 
         static let initial = ViewState(
             minutesToday: 0,
             streakDays: 0,
             isDismissed: false,
-            isLoading: true
+            isLoading: true,
+            childName: "",
+            targetSound: ""
         )
     }
 }

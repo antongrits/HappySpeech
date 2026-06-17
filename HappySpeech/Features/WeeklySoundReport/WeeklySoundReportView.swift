@@ -70,8 +70,15 @@ struct WeeklySoundReportView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                // Эталон parent-report: Parent.bg фон родительского контура
+                // + статичный warm softlight поверх.
+                ColorTokens.Parent.bg
                     .ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: false)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .opacity(0.45)
+                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {

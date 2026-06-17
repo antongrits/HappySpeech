@@ -9,25 +9,36 @@ import Foundation
 enum EveningReflectionModels {
 
     enum Mood: String, Hashable, CaseIterable, Identifiable, Codable {
-        case bright
-        case calm
+        /// «Грустно» — ребёнок расстроен.
         case sad
+        /// «Так себе» — нейтрально-негативное.
+        case meh
+        /// «Норм» — нейтральное.
+        case calm
+        /// «Горжусь» — хорошее настроение.
+        case bright
+        /// «Супер!» — отличное настроение.
+        case fantastic
 
         var id: String { rawValue }
 
         var emoji: String {
             switch self {
-            case .bright: return "🌟"
-            case .calm:   return "🌿"
-            case .sad:    return "🌧️"
+            case .sad:       return "😢"
+            case .meh:       return "😐"
+            case .calm:      return "🙂"
+            case .bright:    return "😊"
+            case .fantastic: return "🌟"
             }
         }
 
         var label: String {
             switch self {
-            case .bright: return String(localized: "evening.mood.bright")
-            case .calm:   return String(localized: "evening.mood.calm")
-            case .sad:    return String(localized: "evening.mood.sad")
+            case .sad:       return String(localized: "evening.mood.sad",       defaultValue: "Грустно")
+            case .meh:       return String(localized: "evening.mood.meh",       defaultValue: "Так себе")
+            case .calm:      return String(localized: "evening.mood.calm",      defaultValue: "Норм")
+            case .bright:    return String(localized: "evening.mood.bright",    defaultValue: "Горжусь")
+            case .fantastic: return String(localized: "evening.mood.fantastic", defaultValue: "Супер")
             }
         }
     }
