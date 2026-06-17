@@ -55,15 +55,22 @@ struct ParentDailyDigestView: View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp4) {
                 hero
-                kpiGrid(state: interactor.state)
-                // Тихий день: занятий ещё не было — дружелюбная подсказка вместо
-                // ощущения «дыры» с нулями (метрики честно остаются нулевыми).
-                if interactor.state.isQuietDay {
-                    quietDayNote
-                }
-                // «Момент дня» показываем только при реальном событии сегодня.
-                if interactor.state.hasPhotoMoment {
-                    momentCard(state: interactor.state)
+                if interactor.state.isLoaded {
+                    kpiGrid(state: interactor.state)
+                    // Тихий день: занятий ещё не было — дружелюбная подсказка вместо
+                    // ощущения «дыры» с нулями (метрики честно остаются нулевыми).
+                    if interactor.state.isQuietDay {
+                        quietDayNote
+                    }
+                    // «Момент дня» показываем только при реальном событии сегодня.
+                    if interactor.state.hasPhotoMoment {
+                        momentCard(state: interactor.state)
+                    }
+                } else {
+                    // До первого резолва — скелетон KPI вместо мелькания «—».
+                    kpiGrid(state: interactor.state)
+                        .redacted(reason: .placeholder)
+                        .accessibilityHidden(true)
                 }
                 tipCard(state: interactor.state)
                 cta

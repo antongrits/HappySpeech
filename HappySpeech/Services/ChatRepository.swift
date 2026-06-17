@@ -126,7 +126,10 @@ public protocol ChatRepository: Sendable {
     /// текущего кэша, поток остаётся открытым до отмены.
     func messageStream(identity: ChatIdentity) -> AsyncStream<[ChatMessage]>
 
-    /// Отправляет текстовое сообщение от родителя.
+    /// Отправляет текстовое сообщение в тред.
+    ///
+    /// - Parameter sender: автор сообщения (`.parent` по умолчанию — родительский
+    ///   контур; специалист передаёт `.specialist`, отправляя сообщение родителю).
     ///
     /// Offline-first: сообщение сразу пишется в локальный кэш со статусом
     /// `.sending`; при наличии сети — выгружается в Firestore (`.sent`), иначе
@@ -136,7 +139,8 @@ public protocol ChatRepository: Sendable {
     func sendText(
         identity: ChatIdentity,
         text: String,
-        now: Date
+        now: Date,
+        sender: MessageSender
     ) async -> ChatMessage
 
     /// Отправляет сообщение с аудио-вложением (запись занятия).
@@ -177,6 +181,17 @@ public protocol ChatRepository: Sendable {
 // MARK: - ChatRepository defaults
 
 public extension ChatRepository {
+
+    /// Совместимость с родительским контуром: отправка от имени `.parent`
+    /// (исторический вызов `sendText(identity:text:now:)`).
+    @discardableResult
+    func sendText(
+        identity: ChatIdentity,
+        text: String,
+        now: Date
+    ) async -> ChatMessage {
+        await sendText(identity: identity, text: text, now: now, sender: .parent)
+    }
 
     /// Дефолт: воспроизведение по file:// (исходящее, проигрывается локально)
     /// без обращения к сети. Удалённые HTTP-URL должны переопределяться в

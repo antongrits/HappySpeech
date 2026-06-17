@@ -4,8 +4,7 @@ import SwiftUI
 
 struct ChildLanguageMilestonesView: View {
 
-    @State private var interactor = ChildLanguageMilestonesInteractor()
-    @State private var didBindChild = false
+    @State private var interactor: ChildLanguageMilestonesInteractor?
     @Environment(AppContainer.self) private var container
     @Environment(\.exitToParentHome) private var exitToParentHome
     @Environment(\.hapticService) private var hapticService
@@ -40,23 +39,33 @@ struct ChildLanguageMilestonesView: View {
             }
         }
         .environment(\.circuitContext, .parent)
-        .onAppear {
-            // Привязываем интерактор к реальному ребёнку, чтобы отметки
-            // персистились per-child. Один раз за жизненный цикл view.
-            guard !didBindChild else { return }
-            didBindChild = true
-            if !container.currentChildId.isEmpty {
-                interactor = ChildLanguageMilestonesInteractor(childId: container.currentChildId)
-            }
+        .task {
+            // Создаём интерактор ОДИН раз, сразу привязанным к активному ребёнку —
+            // до первого рендера контента. Раньше интерактор стартовал с пустым
+            // childId, и первый кадр показывал отметки ЧУЖОГО (persisted) ребёнка
+            // до свопа в onAppear.
+            guard interactor == nil else { return }
+            interactor = ChildLanguageMilestonesInteractor(childId: container.currentChildId)
         }
     }
 
+    @ViewBuilder
     private var content: some View {
+        if let interactor {
+            loadedContent(interactor: interactor)
+        } else {
+            ProgressView()
+                .controlSize(.large)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func loadedContent(interactor: ChildLanguageMilestonesInteractor) -> some View {
         ScrollView {
             VStack(spacing: SpacingTokens.sp3) {
-                hero
+                hero(interactor: interactor)
                 sectionLabel("languageMilestones.section.label")
-                sectionsList
+                sectionsList(interactor: interactor)
                 cta
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -84,7 +93,7 @@ struct ChildLanguageMilestonesView: View {
         .padding(.leading, 2)
     }
 
-    private var hero: some View {
+    private func hero(interactor: ChildLanguageMilestonesInteractor) -> some View {
         HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(interactor.state.ageBand)
@@ -107,10 +116,10 @@ struct ChildLanguageMilestonesView: View {
         }
     }
 
-    private var sectionsList: some View {
+    private func sectionsList(interactor: ChildLanguageMilestonesInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp3) {
             ForEach(Array(ChildLanguageMilestonesModels.Section.allCases.enumerated()), id: \.element.id) { index, section in
-                sectionCard(section)
+                sectionCard(section, interactor: interactor)
                     .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
                         content
                             .opacity(phase.isIdentity ? 1 : 0)
@@ -122,7 +131,10 @@ struct ChildLanguageMilestonesView: View {
         }
     }
 
-    private func sectionCard(_ section: ChildLanguageMilestonesModels.Section) -> some View {
+    private func sectionCard(
+        _ section: ChildLanguageMilestonesModels.Section,
+        interactor: ChildLanguageMilestonesInteractor
+    ) -> some View {
         let items = interactor.state.items(in: section)
         let done = items.filter(\.isAchieved).count
         return HSCard(style: .flat) {
@@ -140,13 +152,16 @@ struct ChildLanguageMilestonesView: View {
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
                 ForEach(items) { item in
-                    checkRow(item)
+                    checkRow(item, interactor: interactor)
                 }
             }
         }
     }
 
-    private func checkRow(_ item: ChildLanguageMilestonesModels.Item) -> some View {
+    private func checkRow(
+        _ item: ChildLanguageMilestonesModels.Item,
+        interactor: ChildLanguageMilestonesInteractor
+    ) -> some View {
         Button {
             hapticService.impact(.light)
             interactor.toggle(item.id)

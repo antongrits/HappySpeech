@@ -684,7 +684,7 @@ public struct PhonemeObservationDTO: Sendable, Identifiable, Equatable {
 ///      Realm удаляет неиспользуемые таблицы при отсутствии класса — ручной миграции
 ///      не требуется, потери данных нет.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 18
+    static let current: UInt64 = 19
 }
 
 // MARK: - RealmConfig

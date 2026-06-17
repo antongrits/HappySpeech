@@ -189,11 +189,16 @@ public actor MockChatRepository: ChatRepository {
     }
 
     @discardableResult
-    public func sendText(identity: ChatIdentity, text: String, now: Date) async -> ChatMessage {
+    public func sendText(
+        identity: ChatIdentity,
+        text: String,
+        now: Date,
+        sender: MessageSender
+    ) async -> ChatMessage {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         let message = ChatMessage(
             id: UUID().uuidString,
-            sender: .parent,
+            sender: sender,
             text: trimmed,
             createdAt: now,
             status: isOnline ? .sent : .sending

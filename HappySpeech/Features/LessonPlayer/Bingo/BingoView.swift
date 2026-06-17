@@ -215,12 +215,17 @@ struct BingoView: View {
     // MARK: Grid (3-column visual, 5×5 logical)
 
     private var grid: some View {
-        // Redesign v34 (3.17): фиксированная ширина ячейки (108pt) и gap 11pt
-        // обеспечивают: 20 + 3×108 + 2×11 + 20 = 386pt → запас ≥7pt на iPhone 17 Pro
-        // ширине 393pt. Меньше колонок = крупнее иллюстрация (72pt) и читаемая
-        // подпись (15pt Bold) для детей 5–8 лет.
+        // Redesign v34 (3.17) + SE-fix: 3 колонки. Раньше фикс-108pt давали
+        // 2×20 + 3×108 + 2×11 = 386pt > 375pt (SE) → правая колонка обрезалась
+        // горизонтально (вертикальный ScrollView это не спасает). Используем
+        // `.flexible()`-колонки: ячейка делит доступную ширину равномерно и
+        // ужимается на узких экранах (capped maxWidth 108pt — не раздувается).
+        // gap 10pt + краевой отступ 12pt: 2×12 + 3×≤108 + 2×10 ≤ 368pt ≤ 375pt.
         let columns = Array(
-            repeating: GridItem(.fixed(BingoGridMetrics.cellWidth), spacing: BingoGridMetrics.cellGap),
+            repeating: GridItem(
+                .flexible(minimum: 84, maximum: BingoGridMetrics.cellWidth),
+                spacing: BingoGridMetrics.cellGap
+            ),
             count: BingoGridMetrics.visualColumns
         )
         return LazyVGrid(columns: columns, spacing: BingoGridMetrics.cellGap) {
@@ -409,10 +414,13 @@ struct BingoView: View {
 
 private enum BingoGridMetrics {
     static let visualColumns: Int = 3
+    /// Верхняя граница ширины ячейки (на широких экранах). Реальная ширина
+    /// вычисляется flexible-колонкой от доступного места → на SE (375pt)
+    /// ужимается и не обрезается. 2×12 + 3×108 + 2×10 = 368pt ≤ 375pt.
     static let cellWidth: CGFloat = 108
     static let cellHeight: CGFloat = 135
-    static let cellGap: CGFloat = 11
-    static let horizontalPadding: CGFloat = 20
+    static let cellGap: CGFloat = 10
+    static let horizontalPadding: CGFloat = 12
     static let illustrationSize: CGFloat = 72
     static let wordFontSize: CGFloat = 15
     static let staggerDelay: Double = 0.030  // 30ms между ячейками
@@ -447,7 +455,8 @@ private struct BingoCellView: View {
                     .multilineTextAlignment(.center)
                 Spacer(minLength: 6)
             }
-            .frame(width: BingoGridMetrics.cellWidth, height: BingoGridMetrics.cellHeight)
+            .frame(maxWidth: .infinity)
+            .frame(height: BingoGridMetrics.cellHeight)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                     .fill(backgroundFill)

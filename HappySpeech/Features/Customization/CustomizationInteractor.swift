@@ -498,6 +498,10 @@ final class CustomizationInteractor {
             voice: currentVoice.rawValue,
             outfit: currentOutfit.rawValue,
             background: currentBackground.rawValue,
+            hairColor: currentHairColor.rawValue,
+            eyeColor: currentEyeColor.rawValue,
+            skinTone: currentSkinTone.rawValue,
+            accessories: CustomizationDTO.encodeAccessories(currentAccessories),
             updatedAt: Date()
         )
     }
@@ -508,6 +512,12 @@ final class CustomizationInteractor {
         currentVoice = dto.voiceEnum
         currentOutfit = dto.outfitEnum
         currentBackground = dto.backgroundEnum
+        // v19: восстанавливаем волосы/глаза/тон кожи/аксессуары — раньше они
+        // сбрасывались в дефолт, теперь переживают перезаход.
+        currentHairColor = dto.hairColorEnum
+        currentEyeColor = dto.eyeColorEnum
+        currentSkinTone = dto.skinToneEnum
+        currentAccessories = dto.accessorySet
     }
 
     private func applyDTOToOriginalState(_ dto: CustomizationDTO) {

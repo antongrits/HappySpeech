@@ -13,10 +13,14 @@ final class PhonemicListeningViewModelHolder: PhonemicListeningDisplayLogic {
     var lastWasCorrect: Bool?
     var summary: PhonemicListeningModels.Answer.SummaryViewModel?
     var isFinished: Bool = false
+    /// Контент не удалось собрать (раунды пусты) — дружелюбный экран-выход
+    /// вместо вечного спиннера.
+    var loadFailed: Bool = false
 
     func displayStart(viewModel: PhonemicListeningModels.Start.ViewModel) async {
         self.startVM = viewModel
         self.currentRound = viewModel.firstRound
+        self.loadFailed = false
         self.isFinished = false
         self.summary = nil
         self.lastFeedback = nil
@@ -85,6 +89,8 @@ struct PhonemicListeningView: View {
                     summarySection(summary)
                 } else if let round = holder.currentRound {
                     gameSection(round: round)
+                } else if holder.loadFailed {
+                    contentUnavailableSection
                 } else {
                     loadingSection
                 }
@@ -266,6 +272,52 @@ struct PhonemicListeningView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    // MARK: - Content unavailable (честный выход без вечного спиннера)
+
+    private var contentUnavailableSection: some View {
+        VStack(spacing: SpacingTokens.sp4) {
+            HSEmptyStateView(
+                mascot: .thinking,
+                title: String(
+                    localized: "phonemicListening.unavailable.title",
+                    defaultValue: "Игра пока недоступна"
+                ),
+                subtitle: String(
+                    localized: "phonemicListening.unavailable.message",
+                    defaultValue: "Не получилось подготовить задания. Попробуй ещё раз чуть позже."
+                )
+            )
+            VStack(spacing: SpacingTokens.sp3) {
+                Button {
+                    Task { await setupAndStart(forceRestart: true) }
+                } label: {
+                    Text("phonemicListening.summary.again")
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .frame(maxWidth: .infinity, minHeight: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                                .fill(ColorTokens.Brand.primary)
+                        )
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    exitGame()
+                } label: {
+                    Text("phonemicListening.summary.done")
+                        .font(TypographyTokens.body(16).weight(.medium))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .frame(maxWidth: .infinity, minHeight: 48)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .contain)
+    }
+
     // MARK: - Option ordering
 
     /// Варианты в перемешанном порядке отображения; `id` остаётся
@@ -306,6 +358,9 @@ struct PhonemicListeningView: View {
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))
+        // Если после старта нет ни раунда, ни финиша — контент не собрался:
+        // показываем честный экран-выход вместо вечного спиннера.
+        holder.loadFailed = (holder.currentRound == nil && !holder.isFinished)
         refreshOptionOrder(for: holder.currentRound)
     }
 

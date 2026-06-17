@@ -718,7 +718,7 @@
         {
           "id": "zh-wi-33",
           "word": "желудь",
-          "imageAsset": "word_giraffe",
+          "imageAsset": "word_zhyolud",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-33.m4a",
@@ -1167,7 +1167,7 @@
         {
           "id": "zh-wm-13",
           "word": "творожок",
-          "imageAsset": "word_nozhi",
+          "imageAsset": "word_tvorozhok",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-13.m4a",

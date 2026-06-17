@@ -109,6 +109,13 @@ enum RealmMigrations {
             // класса — ручной enumerateObjects / deleteData не требуется, потери
             // пользовательских данных нет.
         }
+        if oldSchemaVersion < 19 {
+            // v19: CustomizationObject.hairColor / .eyeColor / .skinTone /
+            // .accessories — новые свойства. Раньше выбор цвета волос/глаз/тона
+            // кожи/аксессуаров не персистился и откатывался при перезаходе. Realm
+            // подставит дефолты из модели (golden / blue / light / "") для
+            // существующих записей — enumerateObjects не требуется.
+        }
     }
 }
 

@@ -168,8 +168,6 @@ struct SpecSessionListView: View {
     @State private var sessions: [SessionDTO] = []
     @State private var isLoading: Bool = true
 
-    private static let demoChildId = "preview-child-1"
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -220,8 +218,15 @@ struct SpecSessionListView: View {
     private func reload() async {
         isLoading = true
         do {
-            let result = try await container.sessionRepository.fetchAll(childId: Self.demoChildId)
-            sessions = result.sorted { $0.date > $1.date }
+            // Реальный ростер специалиста: сессии всех детей в кабинете, а не
+            // одного demo-ребёнка (раньше таб всегда был пуст для специалиста).
+            let children = try await container.childRepository.fetchAll()
+            var all: [SessionDTO] = []
+            for child in children {
+                let childSessions = try await container.sessionRepository.fetchAll(childId: child.id)
+                all.append(contentsOf: childSessions)
+            }
+            sessions = all.sorted { $0.date > $1.date }
         } catch {
             HSLogger.app.error("SpecSessionList reload: \(error.localizedDescription, privacy: .public)")
             sessions = []

@@ -40,6 +40,9 @@ final class ParentDailyDigestInteractor {
     func refresh() {
         guard let repository = sessionRepository, !childId.isEmpty else {
             Self.logger.info("digest refresh skipped (no repository/childId)")
+            // Preview / тесты без репозитория — показываем seed-состояние сразу
+            // (скелетон не нужен, нечего ждать).
+            state.isLoaded = true
             return
         }
         Task { @MainActor [weak self] in
@@ -76,6 +79,7 @@ final class ParentDailyDigestInteractor {
         let streak = activeDayStreak(in: sessions, today: today)
 
         var newState = ParentDailyDigestModels.ViewState.initial
+        newState.isLoaded = true
         newState.photoMomentCaption = makePhotoMoment(from: todaySessions)
         newState.kpis = [
             ParentDailyDigestModels.KPI(

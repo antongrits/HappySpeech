@@ -14,6 +14,7 @@ struct SpecChildListView: View {
     @State private var searchText = ""
     @State private var sortOrder: SpecialistModels.Fetch.Request.SortOrder = .byLastActivity
     @State private var showSortSheet = false
+    @State private var showAddChildInfo = false
 
     var filteredChildren: [ChildProfileDTO] {
         guard !searchText.isEmpty else { return children }
@@ -120,7 +121,7 @@ struct SpecChildListView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        // Add child — M7
+                        showAddChildInfo = true
                     } label: {
                         Image(systemName: "plus")
                             .accessibilityHidden(true)
@@ -143,6 +144,10 @@ struct SpecChildListView: View {
             }
             .navigationDestination(for: String.self) { childId in
                 SpecChildDashboardView(childId: childId)
+            }
+            .sheet(isPresented: $showAddChildInfo) {
+                SpecAddChildInfoSheet()
+                    .presentationDetents([.medium])
             }
             .task { await reload() }
             .refreshable { await reload() }
@@ -572,5 +577,76 @@ struct SpecSoundRow: View {
         .accessibilityLabel(
             "Звук \(row.sound): \(percent)%, изменение \(deltaText). \(row.currentStageTitle)"
         )
+    }
+}
+
+// MARK: - SpecAddChildInfoSheet
+
+/// Информационный лист «Как добавить ученика».
+///
+/// Специалист НЕ создаёт профили детей напрямую: данные ребёнка принадлежат
+/// родителю (COPPA / Kids Category). Ученик появляется в кабинете специалиста,
+/// когда родитель делится кодом-приглашением, а специалист его принимает в
+/// родительском/семейном контуре. Лист честно объясняет этот путь — это
+/// реальное действие кнопки «+», а не мёртвый no-op.
+struct SpecAddChildInfoSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: SpacingTokens.sp4) {
+                LyalyaHeroView(state: .explaining, size: 120)
+                    .accessibilityHidden(true)
+                Text(String(
+                    localized: "spec.addChild.sheet.title",
+                    defaultValue: "Как добавить ученика"
+                ))
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Spec.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                Text(String(
+                    localized: "spec.addChild.sheet.message",
+                    defaultValue: """
+                    Ученики добавляются по коду-приглашению от родителя. \
+                    Попросите родителя поделиться кодом подключения — после \
+                    его ввода ребёнок появится в вашем списке.
+                    """
+                ))
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                Spacer()
+                HSButton(
+                    String(localized: "spec.addChild.sheet.dismiss", defaultValue: "Понятно"),
+                    style: .primary,
+                    size: .large
+                ) {
+                    dismiss()
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+            .padding(.top, SpacingTokens.sp5)
+            .padding(.bottom, SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(ColorTokens.Spec.bg.ignoresSafeArea())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    }
+                    .accessibilityLabel(Text(String(localized: "action.close")))
+                }
+            }
+        }
+        .environment(\.circuitContext, .specialist)
     }
 }

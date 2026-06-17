@@ -365,14 +365,14 @@ struct LyalyaMailView: View {
                             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                                 .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
                         )
-                        if vm.hasAudio {
+                        if vm.hasAudio, let audioFile = vm.audioFileName {
                             HSButton(
                                 String(localized: "lyalya.mail.play"),
                                 style: .primary,
                                 size: .medium,
                                 icon: "play.circle.fill"
                             ) {
-                                hapticService.impact(.light)
+                                playLetterAudio(fileName: audioFile, body: vm.body)
                             }
                         }
                     }
@@ -443,6 +443,21 @@ struct LyalyaMailView: View {
     private func deleteLetter(_ id: UUID) async {
         await interactor?.delete(.init(letterId: id))
         hapticService.notification(.success)
+    }
+
+    /// Проигрывает озвучку письма голосом Ляли. Если у письма есть bundled-аудио
+    /// (`audioFileName`) — играет его; иначе пытается озвучить текст письма через
+    /// общий voice-worker (семейная запись / phrase-mapping). Реальное аудио, а
+    /// не один лишь хаптик.
+    private func playLetterAudio(fileName: String, body: String) {
+        hapticService.impact(.light)
+        Task {
+            await LessonVoiceWorker.shared.speakAsset(
+                fileName,
+                fallbackText: body,
+                lessonType: "lyalya_mail"
+            )
+        }
     }
 }
 

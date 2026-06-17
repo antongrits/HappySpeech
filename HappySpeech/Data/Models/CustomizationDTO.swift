@@ -16,6 +16,15 @@ final class CustomizationObject: Object, @unchecked Sendable {
     @Persisted var outfit: String = LyalyaOutfit.everyday.rawValue
     /// v14: выбранная фоновая сцена (`LyalyaBackground.rawValue`).
     @Persisted var background: String = LyalyaBackground.meadow.rawValue
+    /// v19: цвет волос (`LyalyaHairColor.rawValue`). Раньше выбор не сохранялся.
+    @Persisted var hairColor: String = LyalyaHairColor.golden.rawValue
+    /// v19: цвет глаз (`LyalyaEyeColor.rawValue`).
+    @Persisted var eyeColor: String = LyalyaEyeColor.blue.rawValue
+    /// v19: тон кожи (`LyalyaSkinTone.rawValue`).
+    @Persisted var skinTone: String = LyalyaSkinTone.light.rawValue
+    /// v19: включённые аксессуары — rawValues через запятую (Set сериализуется
+    /// детерминированно, в отсортированном виде). Пустая строка = нет аксессуаров.
+    @Persisted var accessories: String = ""
     @Persisted var updatedAt: Date = Date()
 }
 
@@ -28,6 +37,12 @@ struct CustomizationDTO: Sendable {
     let voice: String
     let outfit: String
     let background: String
+    /// v19: цвет волос / глаз / тон кожи / аксессуары — раньше не сохранялись
+    /// (откатывались в дефолт при перезаходе). Аксессуары — rawValues через `,`.
+    let hairColor: String
+    let eyeColor: String
+    let skinTone: String
+    let accessories: String
     let updatedAt: Date
 
     init(object: CustomizationObject) {
@@ -36,6 +51,10 @@ struct CustomizationDTO: Sendable {
         self.voice = object.voice
         self.outfit = object.outfit
         self.background = object.background
+        self.hairColor = object.hairColor
+        self.eyeColor = object.eyeColor
+        self.skinTone = object.skinTone
+        self.accessories = object.accessories
         self.updatedAt = object.updatedAt
     }
 
@@ -45,6 +64,10 @@ struct CustomizationDTO: Sendable {
         voice: String,
         outfit: String = LyalyaOutfit.everyday.rawValue,
         background: String = LyalyaBackground.meadow.rawValue,
+        hairColor: String = LyalyaHairColor.golden.rawValue,
+        eyeColor: String = LyalyaEyeColor.blue.rawValue,
+        skinTone: String = LyalyaSkinTone.light.rawValue,
+        accessories: String = "",
         updatedAt: Date = Date()
     ) {
         self.skin = skin
@@ -52,6 +75,10 @@ struct CustomizationDTO: Sendable {
         self.voice = voice
         self.outfit = outfit
         self.background = background
+        self.hairColor = hairColor
+        self.eyeColor = eyeColor
+        self.skinTone = skinTone
+        self.accessories = accessories
         self.updatedAt = updatedAt
     }
 
@@ -60,4 +87,21 @@ struct CustomizationDTO: Sendable {
     var voiceEnum: LyalyaVoice { LyalyaVoice(rawValue: voice) ?? .classic }
     var outfitEnum: LyalyaOutfit { LyalyaOutfit(rawValue: outfit) ?? .everyday }
     var backgroundEnum: LyalyaBackground { LyalyaBackground(rawValue: background) ?? .meadow }
+    var hairColorEnum: LyalyaHairColor { LyalyaHairColor(rawValue: hairColor) ?? .golden }
+    var eyeColorEnum: LyalyaEyeColor { LyalyaEyeColor(rawValue: eyeColor) ?? .blue }
+    var skinToneEnum: LyalyaSkinTone { LyalyaSkinTone(rawValue: skinTone) ?? .light }
+
+    /// Декодирует включённые аксессуары из сериализованной строки rawValues.
+    var accessorySet: Set<LyalyaAccessory> {
+        Set(
+            accessories
+                .split(separator: ",")
+                .compactMap { LyalyaAccessory(rawValue: String($0).trimmingCharacters(in: .whitespaces)) }
+        )
+    }
+
+    /// Сериализует набор аксессуаров в детерминированную строку rawValues.
+    static func encodeAccessories(_ set: Set<LyalyaAccessory>) -> String {
+        set.map(\.rawValue).sorted().joined(separator: ",")
+    }
 }

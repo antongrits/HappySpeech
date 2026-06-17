@@ -42,6 +42,20 @@ final class LessonVoiceWorker: NSObject {
     /// Continuation для m4a-воспроизведения (resume по AVAudioPlayerDelegate).
     private var playbackContinuation: CheckedContinuation<Void, Never>?
 
+    /// Синтезатор речи — ТОЛЬКО для изолированных фонем (см. speakIsolatedSound).
+    /// ADR-V31 удалил Siri-TTS для озвучки СЛОВ (качество/единый голос Ляли).
+    /// Изолированные звуки (/с/, /ш/, /р/…) не имеют записей Ляли и по методике
+    /// ребёнок ОБЯЗАН их слышать на шаге звукового анализа — это узкое,
+    /// явно-выделенное исключение, не затрагивающее путь озвучки слов.
+    private lazy var phonemeSynthesizer: AVSpeechSynthesizer = {
+        let synth = AVSpeechSynthesizer()
+        synth.delegate = self
+        return synth
+    }()
+
+    /// Continuation для синтеза изолированной фонемы.
+    private var synthesisContinuation: CheckedContinuation<Void, Never>?
+
     /// text (нормализованный) → phrase_id
     private let phraseMapping: [String: String]
 
@@ -65,6 +79,17 @@ final class LessonVoiceWorker: NSObject {
         logger.info("LessonVoiceWorker init: \(count, privacy: .public) phrases loaded")
     }
 
+    // MARK: - Voice character (выбранный голос Ляли)
+
+    /// Множитель скорости воспроизведения от выбранного голоса Ляли.
+    /// `AVAudioPlayer.rate` меняет и темп, и высоту тона вместе — поэтому
+    /// «мягкий» голос звучит ниже/спокойнее, «весёлый» — выше/живее. Это делает
+    /// выбор голоса в кастомизации реально слышимым на КАЖДОЙ наррации урока
+    /// (раньше выбор сохранялся, но ни один нарратор его не применял).
+    private func voiceRateMultiplier() -> Float {
+        LyalyaCustomizationStorage.shared.voice.speechPitch
+    }
+
     // MARK: - Public API
 
     /// Воспроизводит текст голосом Ляли (m4a). Если файл не найден — silent skip.
@@ -83,6 +108,9 @@ final class LessonVoiceWorker: NSObject {
         ensurePlaybackSession()
 
         let logContext = lessonType.map { "[\($0)] " } ?? ""
+        // Применяем характер выбранного голоса Ляли поверх запрошенной скорости.
+        // Семейная запись родителя — реальный голос мамы/папы, его НЕ искажаем.
+        let lyalyaRate = rate * voiceRateMultiplier()
 
         // Priority 1: семейная запись родителя (если Realm доступен и запись найдена)
         if let familyURL = await familyRecordingURL(for: text) {
@@ -94,16 +122,75 @@ final class LessonVoiceWorker: NSObject {
         if let phraseId = phraseId(for: text),
            let url = Self.lyalyaURL(for: phraseId) {
             logger.debug("\(logContext, privacy: .public)Lyalya voice: '\(text, privacy: .private)' → \(phraseId, privacy: .public)")
-            await playFileURL(url, rate: rate, logContext: logContext)
+            await playFileURL(url, rate: lyalyaRate, logContext: logContext)
             return
         }
 
         // No file found — silent skip (word is visible on screen as text label).
         logger.warning("\(logContext, privacy: .public)No Lyalya m4a for '\(text, privacy: .private)' — silent skip (record missing phrase)")
         #if DEBUG
-        // В debug-сборках помогает находить непокрытые слова при тестировании.
-        assertionFailure("LessonVoiceWorker: missing Lyalya audio for '\(text)'")
+        // В debug-сборках помогает находить непокрытые СЛОВА при тестировании.
+        // Изолированные фонемы (1 символ) исключены: для них есть отдельный
+        // путь speakIsolatedSound c TTS-фоллбэком — не считаем их пропуском.
+        if Self.normalize(text).count > 1 {
+            assertionFailure("LessonVoiceWorker: missing Lyalya audio for '\(text)'")
+        }
         #endif
+    }
+
+    /// Озвучивает ОДИН изолированный звук (фонему) — шаг звукового анализа,
+    /// где ребёнок слышит /с/, /ш/, /р/ отдельно. Приоритет: семейная запись →
+    /// запись Ляли → AVSpeech-синтез (узкое исключение из ADR-V31, который убрал
+    /// TTS только для озвучки СЛОВ). Без синтеза изолированные звуки были немы
+    /// (silent-skip), и ребёнок видел букву, но не слышал её.
+    ///
+    /// - Parameters:
+    ///   - sound: одиночный символ-буква (например «С», «ш», «Р'»). Пусто →
+    ///     no-op.
+    ///   - lessonType: метка для логов.
+    func speakIsolatedSound(_ sound: String, lessonType: String? = nil) async {
+        let trimmed = sound.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+
+        ensurePlaybackSession()
+        let logContext = lessonType.map { "[\($0)] " } ?? ""
+
+        // Приоритет 1–2: реальная запись (семья / Ляля), если вдруг есть.
+        if let familyURL = await familyRecordingURL(for: trimmed) {
+            await playFileURL(familyURL, rate: 1.0, logContext: logContext + "[family-phoneme] ")
+            return
+        }
+        if let phraseId = phraseId(for: trimmed),
+           let url = Self.lyalyaURL(for: phraseId) {
+            await playFileURL(url, rate: 1.0, logContext: logContext + "[lyalya-phoneme] ")
+            return
+        }
+
+        // Фоллбэк: синтез изолированной фонемы (русская локаль, замедленно для
+        // чёткости детям). Останавливаем m4a-плеер, чтобы не накладывалось.
+        stop()
+        await synthesizeIsolatedSound(trimmed, logContext: logContext)
+    }
+
+    /// Произносит изолированную фонему через AVSpeechSynthesizer и ждёт
+    /// завершения. Замедленный темп + пауза — чтобы звук читался разборчиво.
+    private func synthesizeIsolatedSound(_ sound: String, logContext: String) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            synthesisContinuation?.resume()
+            synthesisContinuation = continuation
+
+            let utterance = AVSpeechUtterance(string: sound)
+            utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
+            // Медленнее обычного — изолированный звук должен звучать протяжно
+            // и разборчиво для ребёнка 5–8 лет.
+            utterance.rate = AVSpeechUtteranceMinimumSpeechRate
+                + (AVSpeechUtteranceDefaultSpeechRate - AVSpeechUtteranceMinimumSpeechRate) * 0.35
+            utterance.preUtteranceDelay = 0.05
+            utterance.postUtteranceDelay = 0.10
+
+            logger.debug("\(logContext, privacy: .public)TTS isolated phoneme: '\(sound, privacy: .private)'")
+            phonemeSynthesizer.speak(utterance)
+        }
     }
 
     /// Воспроизводит pre-rendered m4a контент-пака по относительному пути из
@@ -126,9 +213,10 @@ final class LessonVoiceWorker: NSObject {
     ) async {
         ensurePlaybackSession()
         let logContext = lessonType.map { "[\($0)] " } ?? ""
+        let lyalyaRate = rate * voiceRateMultiplier()
 
         if let url = Self.contentAssetURL(forRelativePath: assetPath) {
-            await playFileURL(url, rate: rate, logContext: logContext + "[content] ")
+            await playFileURL(url, rate: lyalyaRate, logContext: logContext + "[content] ")
             return
         }
 
@@ -170,7 +258,7 @@ final class LessonVoiceWorker: NSObject {
         if let relativePath = curriculumIndex[key],
            let url = Self.curriculumURL(forRelativePath: relativePath) {
             logger.debug("\(logContext, privacy: .public)curriculum: \(key, privacy: .public)")
-            await playFileURL(url, rate: 1.0, logContext: logContext + "[curriculum] ")
+            await playFileURL(url, rate: voiceRateMultiplier(), logContext: logContext + "[curriculum] ")
             return
         }
 
@@ -184,14 +272,22 @@ final class LessonVoiceWorker: NSObject {
         )
     }
 
-    /// Останавливает воспроизведение m4a.
-    /// Уже ожидающие `await speak(...)` получат resume немедленно.
+    /// Останавливает воспроизведение m4a и синтез изолированной фонемы.
+    /// Уже ожидающие `await speak(...)` / `await speakIsolatedSound(...)`
+    /// получат resume немедленно.
     func stop() {
         player?.stop()
         player = nil
         let pc = playbackContinuation
         playbackContinuation = nil
         pc?.resume()
+
+        if phonemeSynthesizer.isSpeaking {
+            phonemeSynthesizer.stopSpeaking(at: .immediate)
+        }
+        let sc = synthesisContinuation
+        synthesisContinuation = nil
+        sc?.resume()
     }
 
     // MARK: - Private: audio session
@@ -411,6 +507,35 @@ extension LessonVoiceWorker: AVAudioPlayerDelegate {
             self.logger.error("AVAudioPlayer decode error: \(error?.localizedDescription ?? "unknown")")
             let cont = self.playbackContinuation
             self.playbackContinuation = nil
+            cont?.resume()
+        }
+    }
+}
+
+// MARK: - AVSpeechSynthesizerDelegate (изолированные фонемы)
+
+extension LessonVoiceWorker: AVSpeechSynthesizerDelegate {
+
+    nonisolated func speechSynthesizer(
+        _ synthesizer: AVSpeechSynthesizer,
+        didFinish utterance: AVSpeechUtterance
+    ) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let cont = self.synthesisContinuation
+            self.synthesisContinuation = nil
+            cont?.resume()
+        }
+    }
+
+    nonisolated func speechSynthesizer(
+        _ synthesizer: AVSpeechSynthesizer,
+        didCancel utterance: AVSpeechUtterance
+    ) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let cont = self.synthesisContinuation
+            self.synthesisContinuation = nil
             cont?.resume()
         }
     }

@@ -127,7 +127,24 @@ final class SoundCompositionInteractor: SoundCompositionBusinessLogic {
         guard let word = currentWord,
               word.sounds.indices.contains(activeSoundIndex) else { return }
         let letter = word.sounds[activeSoundIndex].letter
-        speak(letter.lowercased(), soundIndexReset: false)
+        speakIsolatedPhoneme(letter)
+    }
+
+    /// Озвучивает изолированную фонему (через TTS-фоллбэк, если нет записи).
+    /// Раньше шла через `voice.speak(буква)` → silent-skip (нет m4a для
+    /// односимвольных букв) → ребёнок видел звук, но не слышал.
+    private func speakIsolatedPhoneme(_ letter: String) {
+        guard !letter.isEmpty else { return }
+        speakTask?.cancel()
+        voice.stop()
+        presenter?.presentPlaying(true)
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await self.voice.speakIsolatedSound(letter, lessonType: "sound_composition")
+            guard !Task.isCancelled, !self.isFinished else { return }
+            self.presenter?.presentPlaying(false)
+            self.speakTask = nil
+        }
     }
 
     // MARK: - beginPlacing (шаг 1 → шаг 2)
@@ -211,12 +228,13 @@ final class SoundCompositionInteractor: SoundCompositionBusinessLogic {
         presenter?.presentPlaying(true)
         speakTask = Task { @MainActor [weak self] in
             guard let self else { return }
-            // Звуки по очереди.
+            // Звуки по очереди — изолированные фонемы (TTS-фоллбэк, если нет
+            // записи Ляли), чтобы синтез был слышен, а не нем.
             for sound in word.sounds {
                 if Task.isCancelled || self.isFinished { break }
-                await self.voice.speak(sound.letter.lowercased(), lessonType: "sound_composition")
+                await self.voice.speakIsolatedSound(sound.letter, lessonType: "sound_composition")
             }
-            // Слово целиком — синтез.
+            // Слово целиком — синтез (озвучка СЛОВА остаётся на Ляле/m4a).
             if !Task.isCancelled, !self.isFinished {
                 await self.voice.speak(word.text, lessonType: "sound_composition")
             }

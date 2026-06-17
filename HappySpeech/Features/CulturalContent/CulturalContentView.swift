@@ -555,7 +555,7 @@ private struct CulturalContentReaderView: View {
                 }
                 Spacer(minLength: 0)
                 Button {
-                    onToggleBookmark(itemId)
+                    onToggleBookmark(viewModel.itemId)
                 } label: {
                     Image(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark")
                         .font(.title2)
@@ -581,16 +581,6 @@ private struct CulturalContentReaderView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Kid.surface)
         )
-    }
-
-    /// Извлекаем itemId из openVM — т.к. в OpenViewModel нет поля id,
-    /// используем title как fallback (catalog уникален по id, на parent layer
-    /// будет передан правильный id через onToggleBookmark).
-    private var itemId: String {
-        // Используем title для match — в этом MVP
-        CulturalItem.catalog.first(where: {
-            String(localized: String.LocalizationValue($0.titleKey)) == viewModel.title
-        })?.id ?? ""
     }
 
     // MARK: - Transcript (karaoke)

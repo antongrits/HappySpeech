@@ -99,7 +99,7 @@ struct SoundExplorerMapView: View {
                     reduceMotion: reduceMotion,
                     onTap: {
                         hapticService.notification(.success)
-                        coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
+                        coordinator.navigate(to: .articulationGym(soundGroup: featuredArticulationGroup(interactor)))
                     }
                 )
                 .padding(.bottom, SpacingTokens.tiny)
@@ -107,6 +107,51 @@ struct SoundExplorerMapView: View {
         } else {
             ProgressView().controlSize(.large)
         }
+    }
+
+    /// Маппинг звуковой ячейки карты в нужную группу артикуляционной
+    /// гимнастики. Раньше КАЖДАЯ ячейка жёстко роутила в `.sibilant` —
+    /// ребёнок, тапнув Р/Л/Ш/К, попадал в гимнастику ЧУЖОГО (свистящего)
+    /// звука. Теперь сопоставляем по конкретному звуку (точнее группы:
+    /// различает Сь/Зь, Рь/Ль) с фоллбэком на группу ячейки.
+    ///
+    /// `ArticulationSoundGroup` покрывает 3 группы (свистящие/шипящие/соноры).
+    /// Заднеязычные/гласные/губные своей гимнастики не имеют — ведём в
+    /// `.sonor` (содержит универсальную разминку языка + позы, ближайшие к
+    /// задним укладам), чтобы не уводить ребёнка в свистящие.
+    static func articulationGroup(for cell: SoundExplorerMapModels.SoundCell) -> ArticulationSoundGroup {
+        let sound = cell.id.trimmingCharacters(in: .whitespaces).uppercased()
+        let base = String(sound.prefix(1))
+        switch base {
+        case "С", "З", "Ц":           return .sibilant
+        case "Ш", "Ж", "Ч", "Щ":      return .hissing
+        case "Р", "Л":                return .sonor
+        default:
+            // По русскому имени группы ячейки.
+            switch cell.group {
+            case "Свистящие":   return .sibilant
+            case "Шипящие":     return .hissing
+            case "Соноры":      return .sonor
+            default:            return .sonor
+            }
+        }
+    }
+
+    /// Группа для футер-CTA «Играть»: ведёт в звук, который ребёнок сейчас
+    /// активно учит (первый `.learning`), иначе — в первый неосвоенный, иначе
+    /// в первую группу инвентаря с гимнастикой. Никогда не жёсткий `.sibilant`.
+    private func featuredArticulationGroup(_ interactor: SoundExplorerMapInteractor) -> ArticulationSoundGroup {
+        let pool = interactor.sounds
+        if let learning = pool.first(where: { $0.mastery == .learning }) {
+            return Self.articulationGroup(for: learning)
+        }
+        if let untried = pool.first(where: { $0.mastery == .untried }) {
+            return Self.articulationGroup(for: untried)
+        }
+        if let any = pool.first {
+            return Self.articulationGroup(for: any)
+        }
+        return .sibilant
     }
 
     /// Число освоенных звуков (для пилюли в шапке).
@@ -223,7 +268,7 @@ struct SoundExplorerMapView: View {
 
         return Button {
             hapticService.impact(.light)
-            coordinator.navigate(to: .articulationGym(soundGroup: .sibilant))
+            coordinator.navigate(to: .articulationGym(soundGroup: Self.articulationGroup(for: cell)))
         } label: {
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 2) {

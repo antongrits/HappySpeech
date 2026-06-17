@@ -56,11 +56,18 @@ final class SessionReviewPresenter: SessionReviewPresentationLogic {
 
     func presentFinalizeReview(_ response: SessionReviewModels.FinalizeReview.Response) async {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateStyle = .short
         formatter.timeStyle = .short
+        // Дата — аргумент формат-строки, НЕ часть ключа локализации (иначе
+        // специалист видел сырой ключ `review.saved.at.17.06.2026, 14:32`).
         display?.displayFinalizeReview(.init(
             confirmationText: String(
-                localized: "review.saved.at.\(formatter.string(from: response.savedAt))"
+                format: String(
+                    localized: "review.saved.at %@",
+                    defaultValue: "Сохранено в %@"
+                ),
+                formatter.string(from: response.savedAt)
             )
         ))
     }

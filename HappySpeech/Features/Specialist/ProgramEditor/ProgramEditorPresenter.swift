@@ -58,11 +58,19 @@ final class ProgramEditorPresenter: ProgramEditorPresentationLogic {
 
     func presentSaveProgram(_ response: ProgramEditorModels.SaveProgram.Response) async {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateStyle = .short
         formatter.timeStyle = .short
+        // Дата — аргумент формат-строки, НЕ часть ключа локализации. Раньше дата
+        // интерполировалась в префикс ключа → `String(localized:)` не находил
+        // такой ключ и возвращал сырую строку-ключ вместо «Сохранено в …».
         let vm = ProgramEditorModels.SaveProgram.ViewModel(
             confirmationMessage: String(
-                localized: "program.saved.at.\(formatter.string(from: response.savedAt))"
+                format: String(
+                    localized: "program.saved.at %@",
+                    defaultValue: "Сохранено в %@"
+                ),
+                formatter.string(from: response.savedAt)
             )
         )
         display?.displaySaveProgram(vm)

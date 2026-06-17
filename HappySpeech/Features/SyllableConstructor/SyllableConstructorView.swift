@@ -113,21 +113,35 @@ struct SyllableConstructorView: View {
     private func contentSection(
         startVM: SyllableConstructorModels.Start.ViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            tierChipsRow(startVM)
-            progressRow(startVM)
-            wordHeader(startVM)
-            KidSectionLabel(String(localized: "syllable.section.word"))
-            slotsRow(startVM)
-            KidSectionLabel(String(localized: "syllable.section.syllables"))
-            tileBankTray
-            Spacer(minLength: SpacingTokens.sp2)
-            actionRow(startVM)
+        // SE-fix: чипы + слово (5+ слогов) + банк плиток + feedback-banner +
+        // нижний CTA не помещались в высоту SE без скролла (KidTrayContainer
+        // не скроллит) → плитки и кнопка «Проверить» обрезались. Оборачиваем в
+        // скроллящийся контейнер: на высоких экранах контент заполняет высоту
+        // (minHeight: geo.height) без скролла, на SE прокручивается. Плитки
+        // размещаются тапом (не drag) → скролл безопасен; оживают
+        // scrollTransition-эффекты банка (гейтятся reduceMotion).
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    tierChipsRow(startVM)
+                    progressRow(startVM)
+                    wordHeader(startVM)
+                    KidSectionLabel(String(localized: "syllable.section.word"))
+                    slotsRow(startVM)
+                    KidSectionLabel(String(localized: "syllable.section.syllables"))
+                    tileBankTray
+                    Spacer(minLength: SpacingTokens.sp2)
+                    actionRow(startVM)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.vertical, SpacingTokens.sp3)
+                .frame(minHeight: geo.size.height)
+                .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.bankTiles.map(\.id))
+                .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.slotTiles.map(\.id))
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp2)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.vertical, SpacingTokens.sp3)
-        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.bankTiles.map(\.id))
-        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.slotTiles.map(\.id))
     }
 
     private func tierChipsRow(

@@ -1269,7 +1269,7 @@
         {
           "id": "ch-wm-16",
           "word": "туча",
-          "imageAsset": "word_bochka",
+          "imageAsset": "word_tucha",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-16.m4a",
@@ -1335,7 +1335,7 @@
         {
           "id": "ch-wm-25",
           "word": "девочка",
-          "imageAsset": "word_tochka",
+          "imageAsset": "word_doll",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-25.m4a",
@@ -1497,7 +1497,7 @@
         {
           "id": "ch-wm-49",
           "word": "каланча",
-          "imageAsset": "word_butterfly_insect",
+          "imageAsset": "word_kalancha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-49.m4a",
@@ -2116,7 +2116,7 @@
         {
           "id": "ch-wf-21",
           "word": "циркач",
-          "imageAsset": "word_pech",
+          "imageAsset": "word_tsirkach",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wf-21.m4a",

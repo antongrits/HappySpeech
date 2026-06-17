@@ -142,7 +142,11 @@ enum CulturalContentModels {
         }
 
         struct ViewModel: Sendable, Identifiable {
-            var id: String { title }
+            var id: String { itemId }
+            /// Реальный id элемента каталога — источник истины для закладки.
+            /// Раньше id вычислялся из `title`, а View восстанавливал itemId
+            /// обратным title-match → промах ⇒ закладка молча не сохранялась.
+            let itemId: String
             let title: String
             let author: String?
             let lines: [LineViewModel]

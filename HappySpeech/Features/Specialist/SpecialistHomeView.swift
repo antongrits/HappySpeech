@@ -115,6 +115,20 @@ struct SpecChildDashboardView: View {
     @State private var errorMessage: String?
     @State private var showMessageSheet = false
     @State private var messageText = ""
+    @State private var messageSent = false
+
+    /// Реальный id специалиста (аутентифицированный uid). Для не-вошедшего
+    /// фоллбэк — `local-parent` (single-device specialist=owner сценарий),
+    /// согласован с остальным специалистским контуром.
+    private var resolvedSpecialistId: String {
+        let uid = container.authService.currentUser?.uid
+        return (uid?.isEmpty == false ? uid : nil) ?? "local-parent"
+    }
+
+    /// Локальное персистентное хранилище заметок (UserDefaults, per-child).
+    private var notesStore: SpecialistCaseNotesStore {
+        SpecialistCaseNotesStore(specialistId: resolvedSpecialistId, childId: childId)
+    }
 
     // РЕДИЗАЙН specialist-home (2026-06-13): специалистский контур —
     // нейтрально-холодный статичный холст `Spec.bg` (эталон #ECEEF2) +
@@ -136,8 +150,20 @@ struct SpecChildDashboardView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             specBackground
+            // Подтверждение реальной отправки сообщения родителю (через
+            // ChatRepository) — не «тихий» no-op.
+            if messageSent {
+                HSToast(String(localized: "spec.message.sent"), type: .success)
+                    .padding(.bottom, SpacingTokens.sp6)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .zIndex(1)
+                    .task {
+                        try? await Task.sleep(for: .seconds(2.5))
+                        messageSent = false
+                    }
+            }
             if isLoading {
                 // Block J v18 — skeleton shimmer вместо ProgressView spinner.
                 VStack(spacing: SpacingTokens.regular) {
@@ -153,6 +179,11 @@ struct SpecChildDashboardView: View {
             } else {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
+                        // Ошибка загрузки данных — показываем понятный баннер с
+                        // повтором, а не молчаливо пустой дашборд.
+                        if let errorMessage {
+                            dashboardErrorBanner(message: errorMessage)
+                        }
                         // E v21: 3D Ляля на главном экране специалиста
                         // (требование «3D героев на каждом экране»).
                         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
@@ -235,13 +266,46 @@ struct SpecChildDashboardView: View {
         .task { await reload() }
     }
 
+    /// Баннер ошибки загрузки дашборда с кнопкой повтора.
+    private func dashboardErrorBanner(message: String) -> some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.error.opacity(0.10))) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                Label(
+                    String(localized: "errorState.title"),
+                    systemImage: "exclamationmark.triangle.fill"
+                )
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Semantic.error)
+                Text(message)
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                HSButton(
+                    String(localized: "errorState.retry"),
+                    style: .secondary,
+                    size: .medium
+                ) {
+                    Task { await reload() }
+                }
+            }
+            .padding(SpacingTokens.regular)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
     private func reload() async {
         isLoading = true
+        // Заметки персистятся локально (UserDefaults, per-child) — грузим их
+        // при каждом открытии, чтобы они переживали уход с экрана.
+        notes = loadPersistedNotes()
         do {
             async let childTask = container.childRepository.fetch(id: childId)
             async let sessionsTask = container.sessionRepository.fetchRecent(childId: childId, limit: 50)
             let (dto, recent) = try await (childTask, sessionsTask)
             child = dto
+            errorMessage = nil
             sessions = Array(recent.sorted { $0.date > $1.date }.prefix(10))
             let last30 = recent.filter { $0.date >= Date().addingTimeInterval(-30 * 24 * 3600) }
             summary = ReportsAggregator.summarize(sessions: last30)
@@ -253,23 +317,47 @@ struct SpecChildDashboardView: View {
         isLoading = false
     }
 
+    /// Читает persisted-заметки и маппит во view-тип `SpecialistNote`.
+    private func loadPersistedNotes() -> [SpecialistNote] {
+        notesStore.load().map { stored in
+            SpecialistNote(
+                id: stored.id.uuidString,
+                childId: childId,
+                specialistId: resolvedSpecialistId,
+                text: stored.body,
+                createdAt: stored.date
+            )
+        }
+    }
+
+    /// Сохраняет текущий список заметок в локальное хранилище.
+    private func persistNotes() {
+        let stored = notes.compactMap { note -> SpecialistCaseNotesModels.Note? in
+            guard let uuid = UUID(uuidString: note.id) else { return nil }
+            return SpecialistCaseNotesModels.Note(id: uuid, date: note.createdAt, body: note.text)
+        }
+        notesStore.save(stored)
+    }
+
     private func saveNote() {
         let text = noteText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         let note = SpecialistNote(
             id: UUID().uuidString,
             childId: childId,
-            specialistId: "current-specialist",
+            specialistId: resolvedSpecialistId,
             text: text,
             createdAt: Date()
         )
         notes.insert(note, at: 0)
+        persistNotes()
         showNoteSheet = false
         noteText = ""
     }
 
     private func deleteNote(_ noteId: String) {
         notes.removeAll { $0.id == noteId }
+        persistNotes()
     }
 
     private func performExport(_ format: SpecialistModels.RequestExport.ExportFormat) async {
@@ -291,8 +379,27 @@ struct SpecChildDashboardView: View {
     }
 
     private func sendMessage() {
+        let text = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let familyId = child?.parentId ?? ""
         showMessageSheet = false
         messageText = ""
+        guard !text.isEmpty, !familyId.isEmpty else {
+            HSLogger.app.error("sendMessage: empty text or missing familyId — not sent")
+            return
+        }
+        // Реальная отправка через ChatRepository: специалист → родитель.
+        // chatId детерминирован из (familyId, specialistId); offline-очередь
+        // доставит сообщение при восстановлении сети.
+        let identity = ChatIdentity(familyId: familyId, specialistId: resolvedSpecialistId)
+        Task {
+            _ = await container.chatRepository.sendText(
+                identity: identity,
+                text: text,
+                now: Date(),
+                sender: .specialist
+            )
+            messageSent = true
+        }
     }
 
     // MARK: - A-09: «Детальный пофонемный отчёт»
@@ -393,7 +500,7 @@ struct SpecChildDashboardView: View {
     /// Карточка-вход в конструктор домашних заданий специалиста.
     private var assignedHomeworkCard: some View {
         Button {
-            coordinator.navigate(to: .assignedHomework(specialistId: "current-specialist"))
+            coordinator.navigate(to: .assignedHomework(specialistId: resolvedSpecialistId))
         } label: {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "tray.and.arrow.up.fill")
@@ -440,7 +547,7 @@ struct SpecChildDashboardView: View {
         Button {
             coordinator.navigate(to: .specialistAssessment(
                 childId: childId,
-                specialistId: "current-specialist"
+                specialistId: resolvedSpecialistId
             ))
         } label: {
             HStack(spacing: SpacingTokens.sp3) {

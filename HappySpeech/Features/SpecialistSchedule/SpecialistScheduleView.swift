@@ -10,6 +10,7 @@ struct SpecialistScheduleView: View {
     @Environment(\.exitToSpecialistHome) private var exitToSpecialistHome
     @Environment(\.hapticService) private var hapticService
     @Environment(AppContainer.self) private var container
+    @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     // РЕДИЗАЙН specialist-home (2026-06-13): специалистский контур —
@@ -272,8 +273,12 @@ struct SpecialistScheduleView: View {
             size: .large,
             icon: "plus"
         ) {
-            hapticService.notification(.success)
-            exitToSpecialistHome()
+            // «Добавить занятие» = открыть конструктор задания: его срок (dueDate)
+            // становится новым слотом расписания (`SpecialistScheduleWorker` строит
+            // слоты из назначенных HomeworkAssignment). Раньше кнопка ошибочно
+            // ЗАКРЫВАЛА экран вместо добавления.
+            hapticService.impact(.light)
+            coordinator.navigate(to: .assignedHomework(specialistId: specialistId))
         }
     }
 }

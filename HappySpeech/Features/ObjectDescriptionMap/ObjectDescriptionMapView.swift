@@ -396,8 +396,8 @@ struct ObjectDescriptionMapView: View {
                         Image(systemName: "mic.fill")
                             .font(.system(size: 28))
                             .foregroundStyle(ColorTokens.Semantic.error)
-                            .symbolEffect(reduceMotion ? .pulse.byLayer : .pulse,
-                                          options: .repeating)
+                            // Reduce Motion: НЕ повторять пульс (статичная иконка).
+                            .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating)
                         Text("objectMap.recording.label")
                             .font(TypographyTokens.headline(18))
                             .foregroundStyle(ColorTokens.Kid.ink)

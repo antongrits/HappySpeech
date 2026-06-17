@@ -478,6 +478,9 @@ struct HelpCenterView: View {
                     .frame(maxWidth: .infinity, minHeight: 48)
                 }
                 .buttonStyle(.borderedProminent)
+                // Без явного tint `.borderedProminent` рендерит системный синий на
+                // всю ширину (off-palette). Привязываем к тёплому brand-токену.
+                .tint(ColorTokens.Brand.primary)
                 .accessibilityHint(Text("helpCenter.contact.hint"))
             }
         }

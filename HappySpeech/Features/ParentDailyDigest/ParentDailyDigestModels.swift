@@ -22,6 +22,9 @@ enum ParentDailyDigestModels {
         var photoMomentEmoji: String
         var photoMomentCaption: String
         var tip: Tip
+        /// Загружены ли реальные KPI из сессий. До первого резолва View рисует
+        /// скелетон, а не плейсхолдеры «—», чтобы не мелькали «нулевые» метрики.
+        var isLoaded: Bool = false
 
         /// Есть ли непустой «момент дня» (показывать карточку только тогда).
         var hasPhotoMoment: Bool { !photoMomentCaption.isEmpty }

@@ -1224,7 +1224,7 @@
         {
           "id": "sh-wm-3",
           "word": "шишка",
-          "imageAsset": "word_kasha",
+          "imageAsset": "word_shishka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SH/sh-wm-3.m4a",
@@ -1547,7 +1547,7 @@
         {
           "id": "sh-wm-45",
           "word": "катушка",
-          "imageAsset": "word_sapog",
+          "imageAsset": "word_katushka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wm-45.m4a",

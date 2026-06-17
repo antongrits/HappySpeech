@@ -161,6 +161,7 @@ final class CulturalContentPresenter: CulturalContentPresentationLogic {
         }
 
         let viewModel = CulturalContentModels.Open.ViewModel(
+            itemId: item.id,
             title: title,
             author: author,
             lines: lines,

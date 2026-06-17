@@ -122,22 +122,36 @@ struct DragAndMatchView: View {
 
     private var playingView: some View {
         ZStack {
-            VStack(spacing: SpacingTokens.small) {
-                header
-                KidSectionLabel(String(localized: "Перетащи картинки"))
-                wordsPool
-                Spacer(minLength: SpacingTokens.tiny)
-                KidSectionLabel(String(localized: "Домики звуков"))
-                bucketsRow
-                hintButton
+            // SE-fix: header + pool + корзины (minHeight 152) + hintButton не
+            // помещались в урезанный хост SessionShell → низ корзин и кнопка
+            // подсказки уходили под home-indicator. Оборачиваем в скроллящийся
+            // контейнер: на высоких экранах контент заполняет высоту
+            // (minHeight: geo.height) без скролла, на SE прокручивается, а
+            // drag-and-drop не конфликтует (bounce включается только при
+            // переполнении — .basedOnSize).
+            GeometryReader { geo in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: SpacingTokens.small) {
+                        header
+                        KidSectionLabel(String(localized: "Перетащи картинки"))
+                        wordsPool
+                        Spacer(minLength: SpacingTokens.tiny)
+                        KidSectionLabel(String(localized: "Домики звуков"))
+                        bucketsRow
+                        hintButton
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.regular)
+                    .padding(.bottom, SpacingTokens.large)
+                    .frame(minHeight: geo.size.height)
+                    .animation(
+                        reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
+                        value: display.placedWords
+                    )
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom, SpacingTokens.tiny)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.regular)
-            .padding(.bottom, SpacingTokens.large)
-            .animation(
-                reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
-                value: display.placedWords
-            )
 
             if display.showRoundComplete {
                 roundCompleteOverlay

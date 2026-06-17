@@ -349,40 +349,52 @@ struct RepeatAfterModelView: View {
     // MARK: - Recording
 
     private var recordingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            header
-            wordCard(highlightActive: false)
-            Spacer(minLength: 0)
+        // P0: стопка фикс-высот (mic 128 + спектрограмма 120 + транскрипт) в
+        // урезанном хосте SessionShell превышала высоту SE и обрезалась под
+        // home-indicator. Оборачиваем в скроллящийся контейнер (паттерн
+        // VisualAcoustic): на SE прокручивается, на высоких — заполняет высоту
+        // через minHeight: geo.height без пустого низа.
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.medium) {
+                    header
+                    wordCard(highlightActive: false)
+                    Spacer(minLength: 0)
 
-            // Большой центральный микрофон в стиле эталона (состояние записи).
-            RecordMicButton(
-                state: .recording,
-                hint: display.micLabel,
-                onTap: stopRecording
-            )
-            .padding(.horizontal, SpacingTokens.screenEdge)
+                    // Большой центральный микрофон в стиле эталона (состояние записи).
+                    RecordMicButton(
+                        state: .recording,
+                        hint: display.micLabel,
+                        onTap: stopRecording
+                    )
+                    .padding(.horizontal, SpacingTokens.screenEdge)
 
-            // Spectrogram visualizer — визуальный feedback голоса ребёнка.
-            // Reduce Motion: SpectrogramVisualizerView сам переключается на StaticSpectrogramView.
-            SpectrogramVisualizerView(
-                referenceSpectrogram: nil,
-                style: .warm
-            )
-            .frame(maxWidth: .infinity)
-            .frame(height: 120)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(String(localized: "spectrogram.recording.a11y", defaultValue: "Визуализация твоего голоса"))
+                    // Spectrogram visualizer — визуальный feedback голоса ребёнка.
+                    // Reduce Motion: SpectrogramVisualizerView сам переключается на StaticSpectrogramView.
+                    SpectrogramVisualizerView(
+                        referenceSpectrogram: nil,
+                        style: .warm
+                    )
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 120)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .accessibilityLabel(String(localized: "spectrogram.recording.a11y", defaultValue: "Визуализация твоего голоса"))
 
-            // v31 Волна D Ф.4 — live транскрипт через SpeechAnalyzerService
-            // (iOS 26 SpeechAnalyzer + WhisperKit fallback). Видим только в фазе
-            // .recording, активируется автоматически.
-            RepeatAfterModelLiveTranscriptView(isActive: display.phase == .recording)
-                .padding(.horizontal, SpacingTokens.screenEdge)
+                    // v31 Волна D Ф.4 — live транскрипт через SpeechAnalyzerService
+                    // (iOS 26 SpeechAnalyzer + WhisperKit fallback). Видим только в фазе
+                    // .recording, активируется автоматически.
+                    RepeatAfterModelLiveTranscriptView(isActive: display.phase == .recording)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
 
-            attemptDotsView
-            Spacer(minLength: 0)
+                    attemptDotsView
+                    Spacer(minLength: 0)
+                }
+                .padding(.vertical, SpacingTokens.medium)
+                .frame(minHeight: geo.size.height)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.small)
         }
-        .padding(.vertical, SpacingTokens.medium)
     }
 
     // MARK: - Processing

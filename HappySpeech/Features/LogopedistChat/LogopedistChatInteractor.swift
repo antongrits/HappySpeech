@@ -556,8 +556,8 @@ private struct EmptyChatRepository: ChatRepository {
         AsyncStream { $0.finish() }
     }
     @discardableResult
-    func sendText(identity: ChatIdentity, text: String, now: Date) async -> ChatMessage {
-        ChatMessage(id: UUID().uuidString, sender: .parent, text: text, createdAt: now, status: .failed)
+    func sendText(identity: ChatIdentity, text: String, now: Date, sender: MessageSender) async -> ChatMessage {
+        ChatMessage(id: UUID().uuidString, sender: sender, text: text, createdAt: now, status: .failed)
     }
     @discardableResult
     func sendAudio(

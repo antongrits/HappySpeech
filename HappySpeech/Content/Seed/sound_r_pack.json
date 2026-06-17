@@ -1557,7 +1557,7 @@
         {
           "id": "r-wi-113",
           "word": "ребус",
-          "imageAsset": "word_ryabchik",
+          "imageAsset": "word_rebus",
           "audioAsset": null,
           "hint": "Ре-бус. [Р] в начале.",
           "difficulty": 1,
@@ -1575,7 +1575,7 @@
         {
           "id": "r-wi-115",
           "word": "рапира",
-          "imageAsset": "word_rychag",
+          "imageAsset": "word_shpaga",
           "audioAsset": null,
           "hint": "Ра-пира. [Р] в начале.",
           "difficulty": 1,
@@ -2695,7 +2695,7 @@
         {
           "id": "r-wm-139",
           "word": "курага",
-          "imageAsset": "word_korzina",
+          "imageAsset": "word_kuraga",
           "audioAsset": null,
           "hint": "ку-Ра-га. [Р] в середине.",
           "difficulty": 2,
@@ -3408,7 +3408,7 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-50.m4a",
-          "imageAsset": "word_karandash"
+          "imageAsset": "word_inzhener"
         },
         {
           "id": "r-wf-51",
@@ -3779,7 +3779,7 @@
         {
           "id": "r-wf-99",
           "word": "боксёр",
-          "imageAsset": "word_samovar",
+          "imageAsset": "word_bokser",
           "audioAsset": null,
           "hint": "бок-сёР. [Р] в конце.",
           "difficulty": 2,

@@ -45,9 +45,13 @@ struct VisualVocabularyFlipView: View {
             KidGameTapScaffold(
                 promptText: String(localized: "vocabFlip.hero.subtitle"),
                 mascotState: .happy,
+                // CTA «Готово» завершает просмотр колоды (игра — листание
+                // карточек, отдельной фазы старта нет). Иконка checkmark
+                // соответствует завершению (раньше был play.fill «▶ Готово» —
+                // вводил в заблуждение: плей-стрелка на кнопке закрытия).
                 primary: KidGamePrimaryAction(
                     title: String(localized: "vocabFlip.cta.start"),
-                    icon: "play.fill"
+                    icon: "checkmark.circle.fill"
                 ) {
                     hapticService.notification(.success)
                     finishAndExit(interactor)
@@ -55,7 +59,11 @@ struct VisualVocabularyFlipView: View {
                 onClose: { finishAndExit(interactor) }
             ) {
                 filterBar(interactor: interactor)
-                grid(interactor: interactor)
+                if interactor.deck.isEmpty {
+                    emptyDeckState
+                } else {
+                    grid(interactor: interactor)
+                }
             }
         } else {
             ProgressView().controlSize(.large)
@@ -105,6 +113,36 @@ struct VisualVocabularyFlipView: View {
         .buttonStyle(.plain)
         .accessibilityLabel(Text(f.rawValue))
         .accessibilityAddTraits(selected ? [.isButton, .isSelected] : .isButton)
+    }
+
+    /// Пустая колода под выбранный фильтр звука — дружелюбное сообщение
+    /// вместо пустой сетки (для фильтра, где нет карточек).
+    private var emptyDeckState: some View {
+        VStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: .thinking, size: 96)
+                .accessibilityHidden(true)
+            Text(String(
+                localized: "vocabFlip.empty.title",
+                defaultValue: "Здесь пока нет карточек"
+            ))
+            .font(TypographyTokens.headline(18))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            Text(String(
+                localized: "vocabFlip.empty.subtitle",
+                defaultValue: "Выбери другой звук вверху."
+            ))
+            .font(TypographyTokens.body(14))
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
+            .multilineTextAlignment(.center)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.large)
+        .accessibilityElement(children: .combine)
     }
 
     private func grid(interactor: VisualVocabularyFlipInteractor) -> some View {

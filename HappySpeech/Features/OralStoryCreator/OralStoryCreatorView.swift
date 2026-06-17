@@ -272,8 +272,8 @@ struct OralStoryCreatorView: View {
                         Image(systemName: "mic.fill")
                             .font(.system(size: 32))
                             .foregroundStyle(ColorTokens.Semantic.error)
-                            .symbolEffect(reduceMotion ? .pulse.byLayer : .pulse,
-                                          options: .repeating)
+                            // Reduce Motion: НЕ повторять пульс (статичная иконка).
+                            .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating)
                         Text("storyCreator.recording.title")
                             .font(TypographyTokens.title(22))
                             .foregroundStyle(ColorTokens.Kid.ink)
