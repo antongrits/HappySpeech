@@ -1,6 +1,74 @@
 {
   "sourceLanguage": "ru",
   "strings": {
+    "liveSounds.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Living Sounds"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Живые звуки"
+          }
+        }
+      }
+    },
+    "liveSounds.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Build a word from sounds"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собери слово из звуков"
+          }
+        }
+      }
+    },
+    "advancedGrammar.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grammar+"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грамматика+"
+          }
+        }
+      }
+    },
+    "advancedGrammar.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Complex prepositions, agreement"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложные предлоги, согласование"
+          }
+        }
+      }
+    },
     "tongueTwisters.entry.title": {
       "extractionState": "manual",
       "localizations": {

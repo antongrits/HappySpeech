@@ -343,6 +343,23 @@ enum AppRoute: Hashable {
     /// звука (мак→рак→лак). On-device, без сети.
     case soundComposition(childId: String)
 
+    // MARK: - Грамматический конструктор-2 (kid, сложные грам. конструкции)
+
+    /// «Грамматический конструктор-2» (kid): сложные грамматические конструкции —
+    /// сложные предлоги (из-за/из-под + наглядная сцена), притяжательные
+    /// прилагательные (чей/чья/чьё/чьи) и согласование прилагательного с
+    /// существительным в роде/числе. Расширение базового GrammarGame.
+    /// On-device, без сети. (Филичёва/Чиркина/Лалаева, грам. строй при ОНР.)
+    case advancedGrammar(childId: String)
+
+    // MARK: - Живые звуки (kid, устный фонематический синтез)
+
+    /// «Живые звуки» (kid): устный фонематический синтез — Ляля произносит слово
+    /// по звукам с управляемой паузой ([к]…[о]…[т]); ребёнок сливает звуки и
+    /// выбирает картинку из 4 (collect, без ASR), либо ставит звуки-человечков в
+    /// ряд (bench). Операция, обратная анализу (Эльконин/Каше). On-device, офлайн.
+    case liveSounds(childId: String)
+
     // MARK: - Карта звонкости и мягкости (kid, дифференциация фонем)
 
     /// «Карта звонкости и мягкости» (kid): сортировка слов/слогов по парам
@@ -1379,6 +1396,18 @@ struct AppCoordinatorView: View {
             SoundCompositionView(childId: childId.isEmpty ? container.currentChildId : childId)
                 .environment(\.circuitContext, .kid)
 
+        // MARK: - Грамматический конструктор-2 (сложные грам. конструкции)
+
+        case .advancedGrammar(let childId):
+            AdvancedGrammarView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - Живые звуки (устный фонематический синтез)
+
+        case .liveSounds(let childId):
+            LiveSoundsView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - Карта звонкости и мягкости (дифференциация фонем)
 
         case .voicingSoftness(let childId):
@@ -1996,6 +2025,14 @@ extension AppCoordinatorView {
         // MARK: Звуковая мастерская (эльконинский звуковой анализ-синтез)
         case "soundComposition", "soundAnalysis", "elkonin":
             return .soundComposition(childId: previewChild)
+
+        // MARK: Грамматический конструктор-2 (сложные грам. конструкции)
+        case "advancedGrammar", "advancedgrammar", "grammar2", "grammarPlus":
+            return .advancedGrammar(childId: previewChild)
+
+        // MARK: Живые звуки (устный фонематический синтез)
+        case "liveSounds", "livesounds", "phonemicSynthesis", "blendSounds":
+            return .liveSounds(childId: previewChild)
 
         // MARK: Карта звонкости и мягкости (дифференциация фонем)
         case "voicingSoftness", "voicing", "softness":

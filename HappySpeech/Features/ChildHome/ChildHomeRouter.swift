@@ -47,6 +47,8 @@ protocol ChildHomeRoutingLogic {
     func routeToStoryLibrary(childId: String)
     // v32 Sprint 12 — 3 новые методически-ценные фичи
     func routeToSoundComposition(childId: String)
+    // v32 expansion 2.12 — живые звуки (устный фонематический синтез)
+    func routeToLiveSounds(childId: String)
     func routeToVoicingSoftness(childId: String)
     func routeToListenYourself(childId: String)
     // v32 expansion 2.6 — рассказ по серии картинок (связная речь)
@@ -55,6 +57,8 @@ protocol ChildHomeRoutingLogic {
     func routeToTongueTwisters(childId: String)
     // v32 expansion 2.5 — звуковой охотник дня (перенос звука в быт)
     func routeToSoundHunterDay(childId: String)
+    // v32 expansion 2.15 — грамматический конструктор-2 (сложные конструкции)
+    func routeToAdvancedGrammar(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -305,6 +309,13 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
         coordinator?.navigate(to: .soundComposition(childId: childId))
     }
 
+    /// v32 expansion 2.12 — «Живые звуки» (устный фонематический синтез: Ляля
+    /// произносит слово по звукам, ребёнок собирает слово — выбор картинки /
+    /// звуки-человечки в ряд).
+    func routeToLiveSounds(childId: String) {
+        coordinator?.navigate(to: .liveSounds(childId: childId))
+    }
+
     /// v32 Sprint 12 — «Карта звонкости и мягкости» (дифференциация фонем:
     /// звонкий↔глухой, твёрдый↔мягкий + слова-ловушки).
     func routeToVoicingSoftness(childId: String) {
@@ -339,5 +350,11 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// бытовую речь: дневная миссия → «поймал слово» → копилка дня → родит. подтверждение).
     func routeToSoundHunterDay(childId: String) {
         coordinator?.navigate(to: .soundHunterDay(childId: childId))
+    }
+
+    /// v32 expansion 2.15 — «Грамматический конструктор-2» (сложные предлоги
+    /// из-за/из-под, притяжательные чей/чья/чьё/чьи, согласование прил.+сущ.).
+    func routeToAdvancedGrammar(childId: String) {
+        coordinator?.navigate(to: .advancedGrammar(childId: childId))
     }
 }

@@ -1444,6 +1444,28 @@ extension ChildHomeView {
         ) {
             router?.routeToSoundHunterDay(childId: childId)
         }
+
+        // v32 expansion 2.12 — Live Sounds «Живые звуки»
+        // (устный фонематический синтез: Ляля произносит слово по звукам,
+        // ребёнок собирает слово — выбор картинки / звуки-человечки в ряд).
+        ChildHomeV25EntryCard(
+            title: String(localized: "liveSounds.entry.title", defaultValue: "Живые звуки"),
+            hint: String(localized: "liveSounds.entry.hint", defaultValue: "Собери слово из звуков"),
+            iconName: "circle.grid.3x3",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToLiveSounds(childId: childId)
+        }
+
+        // v32 expansion 2.15 — Advanced Grammar «Грамматический конструктор-2».
+        ChildHomeV25EntryCard(
+            title: String(localized: "advancedGrammar.entry.title", defaultValue: "Грамматика+"),
+            hint: String(localized: "advancedGrammar.entry.hint", defaultValue: "Сложные предлоги, согласование"),
+            iconName: "text.book.closed",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToAdvancedGrammar(childId: childId)
+        }
     }
 }
 

@@ -1,0 +1,277 @@
+{
+  "id": "pack_live_sounds_v1",
+  "soundTarget": "фонематический-синтез",
+  "group": "фонематика",
+  "version": 1,
+  "description": "Живые звуки — устный фонематический синтез (операция, обратная анализу). Ляля произносит слово по звукам с паузами ([к]…[о]…[т]); ребёнок мысленно сливает их и выбирает картинку слова из 4 (рецептивно-выборочный ответ, БЕЗ ASR — стабильно офлайн). Обратный режим: звуки-человечки встают в ряд и сливаются в слово. Каждое слово размечено по ЗВУКАМ (не буквам): тип звука (vowel — гласный/rose, consonant — согласный/lilac), оглушение/смягчение учтено в данных. Все 4 варианта-ответа — реальные слова с проверенными word_* ассетами; дистракторы фонетически близки (отличаются 1 звуком или порядком). Источник методики: Д. Б. Эльконин, Г. А. Каше. Уровни: easy 3 звука (6-7 лет), medium 4 звука и стечения (7-8 лет).",
+  "roundsPerSession": 8,
+  "words": [
+    {
+      "id": "ls-kot",
+      "text": "кот",
+      "asset": "word_kot",
+      "level": "easy",
+      "sounds": [
+        { "letter": "К", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "Т", "type": "consonant" }
+      ],
+      "distractors": ["word_dog", "word_rot", "word_kit"],
+      "distractorWords": ["пёс", "рот", "кит"]
+    },
+    {
+      "id": "ls-dom",
+      "text": "дом",
+      "asset": "word_dom",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Д", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "М", "type": "consonant" }
+      ],
+      "distractors": ["word_som", "word_kot", "word_nos"],
+      "distractorWords": ["сом", "кот", "нос"]
+    },
+    {
+      "id": "ls-som",
+      "text": "сом",
+      "asset": "word_som",
+      "level": "easy",
+      "sounds": [
+        { "letter": "С", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "М", "type": "consonant" }
+      ],
+      "distractors": ["word_dom", "word_sok", "word_nos"],
+      "distractorWords": ["дом", "сок", "нос"]
+    },
+    {
+      "id": "ls-nos",
+      "text": "нос",
+      "asset": "word_nos",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Н", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "С", "type": "consonant" }
+      ],
+      "distractors": ["word_sok", "word_rot", "word_som"],
+      "distractorWords": ["сок", "рот", "сом"]
+    },
+    {
+      "id": "ls-sok",
+      "text": "сок",
+      "asset": "word_sok",
+      "level": "easy",
+      "sounds": [
+        { "letter": "С", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "К", "type": "consonant" }
+      ],
+      "distractors": ["word_som", "word_nos", "word_kot"],
+      "distractorWords": ["сом", "нос", "кот"]
+    },
+    {
+      "id": "ls-rot",
+      "text": "рот",
+      "asset": "word_rot",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Р", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "Т", "type": "consonant" }
+      ],
+      "distractors": ["word_kot", "word_nos", "word_som"],
+      "distractorWords": ["кот", "нос", "сом"]
+    },
+    {
+      "id": "ls-mak",
+      "text": "мак",
+      "asset": "word_mak",
+      "level": "easy",
+      "sounds": [
+        { "letter": "М", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "К", "type": "consonant" }
+      ],
+      "distractors": ["word_rak", "word_lak", "word_kot"],
+      "distractorWords": ["рак", "лак", "кот"]
+    },
+    {
+      "id": "ls-rak",
+      "text": "рак",
+      "asset": "word_rak",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Р", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "К", "type": "consonant" }
+      ],
+      "distractors": ["word_mak", "word_lak", "word_kot"],
+      "distractorWords": ["мак", "лак", "кот"]
+    },
+    {
+      "id": "ls-luk",
+      "text": "лук",
+      "asset": "word_luk",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Л", "type": "consonant" },
+        { "letter": "У", "type": "vowel" },
+        { "letter": "К", "type": "consonant" }
+      ],
+      "distractors": ["word_sok", "word_mak", "word_rak"],
+      "distractorWords": ["сок", "мак", "рак"]
+    },
+    {
+      "id": "ls-kit",
+      "text": "кит",
+      "asset": "word_kit",
+      "level": "easy",
+      "sounds": [
+        { "letter": "К", "type": "consonant" },
+        { "letter": "И", "type": "vowel" },
+        { "letter": "Т", "type": "consonant" }
+      ],
+      "distractors": ["word_kot", "word_rot", "word_dom"],
+      "distractorWords": ["кот", "рот", "дом"]
+    },
+    {
+      "id": "ls-syr",
+      "text": "сыр",
+      "asset": "word_syr",
+      "level": "easy",
+      "sounds": [
+        { "letter": "С", "type": "consonant" },
+        { "letter": "Ы", "type": "vowel" },
+        { "letter": "Р", "type": "consonant" }
+      ],
+      "distractors": ["word_sok", "word_som", "word_nos"],
+      "distractorWords": ["сок", "сом", "нос"]
+    },
+    {
+      "id": "ls-dub",
+      "text": "дуб",
+      "asset": "word_dub",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Д", "type": "consonant" },
+        { "letter": "У", "type": "vowel" },
+        { "letter": "П", "type": "consonant" }
+      ],
+      "distractors": ["word_luk", "word_dom", "word_sok"],
+      "distractorWords": ["лук", "дом", "сок"]
+    },
+    {
+      "id": "ls-mama",
+      "text": "мама",
+      "asset": "word_mama",
+      "level": "medium",
+      "sounds": [
+        { "letter": "М", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "М", "type": "consonant" },
+        { "letter": "А", "type": "vowel" }
+      ],
+      "distractors": ["word_papa", "word_mak", "word_rak"],
+      "distractorWords": ["папа", "мак", "рак"]
+    },
+    {
+      "id": "ls-papa",
+      "text": "папа",
+      "asset": "word_papa",
+      "level": "medium",
+      "sounds": [
+        { "letter": "П", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "П", "type": "consonant" },
+        { "letter": "А", "type": "vowel" }
+      ],
+      "distractors": ["word_mama", "word_mak", "word_luk"],
+      "distractorWords": ["мама", "мак", "лук"]
+    },
+    {
+      "id": "ls-ruka",
+      "text": "рука",
+      "asset": "word_hand",
+      "level": "medium",
+      "sounds": [
+        { "letter": "Р", "type": "consonant" },
+        { "letter": "У", "type": "vowel" },
+        { "letter": "К", "type": "consonant" },
+        { "letter": "А", "type": "vowel" }
+      ],
+      "distractors": ["word_noga", "word_rak", "word_luk"],
+      "distractorWords": ["нога", "рак", "лук"]
+    },
+    {
+      "id": "ls-noga",
+      "text": "нога",
+      "asset": "word_noga",
+      "level": "medium",
+      "sounds": [
+        { "letter": "Н", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "Г", "type": "consonant" },
+        { "letter": "А", "type": "vowel" }
+      ],
+      "distractors": ["word_hand", "word_nos", "word_som"],
+      "distractorWords": ["рука", "нос", "сом"]
+    },
+    {
+      "id": "ls-okno",
+      "text": "окно",
+      "asset": "word_okno",
+      "level": "medium",
+      "sounds": [
+        { "letter": "О", "type": "vowel" },
+        { "letter": "К", "type": "consonant" },
+        { "letter": "Н", "type": "consonant" },
+        { "letter": "О", "type": "vowel" }
+      ],
+      "distractors": ["word_dom", "word_stol", "word_stul"],
+      "distractorWords": ["дом", "стол", "стул"]
+    },
+    {
+      "id": "ls-shar",
+      "text": "шар",
+      "asset": "word_shar",
+      "level": "easy",
+      "sounds": [
+        { "letter": "Ш", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "Р", "type": "consonant" }
+      ],
+      "distractors": ["word_rak", "word_mak", "word_syr"],
+      "distractorWords": ["рак", "мак", "сыр"]
+    },
+    {
+      "id": "ls-zub",
+      "text": "зуб",
+      "asset": "word_zub",
+      "level": "easy",
+      "sounds": [
+        { "letter": "З", "type": "consonant" },
+        { "letter": "У", "type": "vowel" },
+        { "letter": "П", "type": "consonant" }
+      ],
+      "distractors": ["word_dub", "word_luk", "word_sok"],
+      "distractorWords": ["дуб", "лук", "сок"]
+    },
+    {
+      "id": "ls-komar",
+      "text": "комар",
+      "asset": "word_komar",
+      "level": "medium",
+      "sounds": [
+        { "letter": "К", "type": "consonant" },
+        { "letter": "О", "type": "vowel" },
+        { "letter": "М", "type": "consonant" },
+        { "letter": "А", "type": "vowel" },
+        { "letter": "Р", "type": "consonant" }
+      ],
+      "distractors": ["word_shar", "word_mak", "word_rak"],
+      "distractorWords": ["шар", "мак", "рак"]
+    }
+  ]
+}

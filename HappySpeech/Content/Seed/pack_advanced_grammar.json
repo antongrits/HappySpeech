@@ -1,0 +1,302 @@
+{
+  "id": "pack_advanced_grammar_v1",
+  "soundTarget": "грамматика-сложная",
+  "group": "грамматика",
+  "version": 1,
+  "description": "Грамматический конструктор-2: сложные грамматические конструкции для детей 6–8 лет. Три типа заданий: сложные предлоги (из-за/из-под), притяжательные прилагательные (чей/чья/чьё/чьи) и согласование прилагательного с существительным в роде/числе. Разметка рода/числа/падежа выверена. Методика: Филичёва, Чиркина, Лалаева (формирование грамматического строя при ОНР).",
+  "stages": {
+    "complex_preposition": {
+      "stageId": "complex_preposition",
+      "note": "Сложные предлоги из-за / из-под и предложно-падежные конструкции. Сцена показывает положение предмета, ребёнок выбирает предлог и проговаривает всю конструкцию.",
+      "items": [
+        {
+          "id": "ag-prep-0",
+          "subject": "котёнок",
+          "subjectVerb": "выглянул",
+          "object": "стол",
+          "objectGenitive": "стола",
+          "preposition": "из-под",
+          "scene": "under",
+          "difficulty": 1,
+          "hint": "Котёнок был под столом и выглянул снизу — значит «из-под».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-0.m4a"
+        },
+        {
+          "id": "ag-prep-1",
+          "subject": "котёнок",
+          "subjectVerb": "выглянул",
+          "object": "кресло",
+          "objectAsset": "word_divan",
+          "objectGenitive": "кресла",
+          "preposition": "из-за",
+          "scene": "behind",
+          "difficulty": 1,
+          "hint": "Котёнок прятался позади кресла и выглянул сбоку — значит «из-за».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-1.m4a"
+        },
+        {
+          "id": "ag-prep-2",
+          "subject": "мяч",
+          "subjectVerb": "выкатился",
+          "object": "шкаф",
+          "objectGenitive": "шкафа",
+          "preposition": "из-под",
+          "scene": "under",
+          "difficulty": 1,
+          "hint": "Мяч лежал под шкафом и выкатился снизу — значит «из-под».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-2.m4a"
+        },
+        {
+          "id": "ag-prep-3",
+          "subject": "мышка",
+          "subjectVerb": "выбежала",
+          "object": "забор",
+          "objectGenitive": "забора",
+          "preposition": "из-за",
+          "scene": "behind",
+          "difficulty": 2,
+          "hint": "Мышка была позади забора и выбежала сбоку — значит «из-за».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-3.m4a"
+        },
+        {
+          "id": "ag-prep-4",
+          "subject": "белка",
+          "subjectVerb": "выглянула",
+          "object": "дерево",
+          "objectGenitive": "дерева",
+          "preposition": "из-за",
+          "scene": "behind",
+          "difficulty": 2,
+          "hint": "Белка спряталась позади дерева и выглянула сбоку — значит «из-за».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-4.m4a"
+        },
+        {
+          "id": "ag-prep-5",
+          "subject": "кошка",
+          "subjectVerb": "вылезла",
+          "object": "коробка",
+          "objectGenitive": "коробки",
+          "preposition": "из",
+          "scene": "inside",
+          "difficulty": 2,
+          "hint": "Кошка сидела внутри коробки и вылезла — значит «из».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-5.m4a"
+        },
+        {
+          "id": "ag-prep-6",
+          "subject": "мяч",
+          "subjectVerb": "выкатился",
+          "object": "диван",
+          "objectGenitive": "дивана",
+          "preposition": "из-под",
+          "scene": "under",
+          "difficulty": 3,
+          "hint": "Мяч закатился под диван и выкатился снизу — значит «из-под».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-6.m4a"
+        },
+        {
+          "id": "ag-prep-7",
+          "subject": "зайчик",
+          "subjectVerb": "выскочил",
+          "object": "дом",
+          "objectGenitive": "дома",
+          "preposition": "из-за",
+          "scene": "behind",
+          "difficulty": 3,
+          "hint": "Зайчик прятался позади дома и выскочил сбоку — значит «из-за».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-prep-7.m4a"
+        }
+      ]
+    },
+    "possessive": {
+      "stageId": "possessive",
+      "note": "Притяжательные прилагательные. Форма вопроса (чей/чья/чьё/чьи) согласуется с РОДОМ и ЧИСЛОМ части тела, а сама притяжательная форма — с хозяином. Хвост (м.р.) → чей → лисий хвост. Лапа (ж.р.) → чья → лисья лапа. Ухо (ср.р.) → чьё → лисье ухо. Уши (мн.ч.) → чьи → лисьи уши.",
+      "items": [
+        {
+          "id": "ag-poss-0",
+          "part": "хвост",
+          "partAdjective": "пушистый",
+          "partGender": "masculine",
+          "questionWord": "чей",
+          "owner": "лиса",
+          "possessive": "лисий",
+          "difficulty": 1,
+          "hint": "Хвост — он, мой. Спрашиваем «чей?». Хвост лисы — лисий хвост.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-0.m4a"
+        },
+        {
+          "id": "ag-poss-1",
+          "part": "лапа",
+          "partAdjective": "мягкая",
+          "partGender": "feminine",
+          "questionWord": "чья",
+          "owner": "медведь",
+          "possessive": "медвежья",
+          "difficulty": 1,
+          "hint": "Лапа — она, моя. Спрашиваем «чья?». Лапа медведя — медвежья лапа.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-1.m4a"
+        },
+        {
+          "id": "ag-poss-2",
+          "part": "ухо",
+          "partAdjective": "острое",
+          "partGender": "neuter",
+          "questionWord": "чьё",
+          "owner": "волк",
+          "possessive": "волчье",
+          "difficulty": 2,
+          "hint": "Ухо — оно, моё. Спрашиваем «чьё?». Ухо волка — волчье ухо.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-2.m4a"
+        },
+        {
+          "id": "ag-poss-3",
+          "part": "уши",
+          "partAdjective": "длинные",
+          "partGender": "plural",
+          "questionWord": "чьи",
+          "owner": "заяц",
+          "possessive": "заячьи",
+          "difficulty": 2,
+          "hint": "Ушей много — они. Спрашиваем «чьи?». Уши зайца — заячьи уши.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-3.m4a"
+        },
+        {
+          "id": "ag-poss-4",
+          "part": "хвост",
+          "partAdjective": "пушистый",
+          "partGender": "masculine",
+          "questionWord": "чей",
+          "owner": "белка",
+          "possessive": "беличий",
+          "difficulty": 2,
+          "hint": "Хвост — он. Спрашиваем «чей?». Хвост белки — беличий хвост.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-4.m4a"
+        },
+        {
+          "id": "ag-poss-5",
+          "part": "лапа",
+          "partAdjective": "мягкая",
+          "partGender": "feminine",
+          "questionWord": "чья",
+          "owner": "кошка",
+          "possessive": "кошачья",
+          "difficulty": 3,
+          "hint": "Лапа — она. Спрашиваем «чья?». Лапа кошки — кошачья лапа.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-5.m4a"
+        },
+        {
+          "id": "ag-poss-6",
+          "part": "хвост",
+          "partAdjective": "тонкий",
+          "partGender": "masculine",
+          "questionWord": "чей",
+          "owner": "мышь",
+          "possessive": "мышиный",
+          "difficulty": 3,
+          "hint": "Хвост — он. Спрашиваем «чей?». Хвост мыши — мышиный хвост.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-6.m4a"
+        },
+        {
+          "id": "ag-poss-7",
+          "part": "уши",
+          "partAdjective": "острые",
+          "partGender": "plural",
+          "questionWord": "чьи",
+          "owner": "собака",
+          "possessive": "собачьи",
+          "difficulty": 3,
+          "hint": "Ушей много — они. Спрашиваем «чьи?». Уши собаки — собачьи уши.",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-poss-7.m4a"
+        }
+      ]
+    },
+    "agreement": {
+      "stageId": "agreement",
+      "note": "Согласование прилагательного с существительным в роде и числе. Картинка задаёт род/число существительного, ребёнок выбирает окончание. Корректная разметка: мяч (м.р.) → красный, машина (ж.р.) → красная, яблоко (ср.р.) → красное, ботинки (мн.ч.) → красные.",
+      "items": [
+        {
+          "id": "ag-agr-0",
+          "noun": "мяч",
+          "gender": "masculine",
+          "adjectiveStem": "больш",
+          "ending": "ой",
+          "endingStressed": true,
+          "difficulty": 1,
+          "hint": "Мяч — он, мой. Значит «большой мяч».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-0.m4a"
+        },
+        {
+          "id": "ag-agr-1",
+          "noun": "машина",
+          "gender": "feminine",
+          "adjectiveStem": "красн",
+          "ending": "ая",
+          "difficulty": 1,
+          "hint": "Машина — она, моя. Значит «красная машина».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-1.m4a"
+        },
+        {
+          "id": "ag-agr-2",
+          "noun": "яблоко",
+          "gender": "neuter",
+          "adjectiveStem": "спел",
+          "ending": "ое",
+          "difficulty": 1,
+          "hint": "Яблоко — оно, моё. Значит «спелое яблоко».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-2.m4a"
+        },
+        {
+          "id": "ag-agr-3",
+          "noun": "ботинки",
+          "gender": "plural",
+          "adjectiveStem": "нов",
+          "ending": "ые",
+          "difficulty": 2,
+          "hint": "Ботинок много — они, мои. Значит «новые ботинки».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-3.m4a"
+        },
+        {
+          "id": "ag-agr-4",
+          "noun": "шар",
+          "gender": "masculine",
+          "adjectiveStem": "син",
+          "ending": "ий",
+          "difficulty": 2,
+          "hint": "Шар — он, мой. Значит «синий шар».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-4.m4a"
+        },
+        {
+          "id": "ag-agr-5",
+          "noun": "книга",
+          "gender": "feminine",
+          "adjectiveStem": "интересн",
+          "ending": "ая",
+          "difficulty": 2,
+          "hint": "Книга — она, моя. Значит «интересная книга».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-5.m4a"
+        },
+        {
+          "id": "ag-agr-6",
+          "noun": "чашка",
+          "gender": "feminine",
+          "adjectiveStem": "жёлт",
+          "ending": "ая",
+          "difficulty": 3,
+          "hint": "Чашка — она, моя. Значит «жёлтая чашка».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-6.m4a"
+        },
+        {
+          "id": "ag-agr-7",
+          "noun": "зонт",
+          "gender": "masculine",
+          "adjectiveStem": "больш",
+          "ending": "ой",
+          "endingStressed": true,
+          "difficulty": 3,
+          "hint": "Зонт — он, мой. Значит «большой зонт».",
+          "audio_file": "Audio/Content/AdvancedGrammar/ag-agr-7.m4a"
+        }
+      ]
+    }
+  }
+}
