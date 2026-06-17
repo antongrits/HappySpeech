@@ -1365,6 +1365,39 @@ extension ChildHomeView {
         ) {
             router?.routeToBilingualMode(childId: childId)
         }
+
+        // v32 Sprint 12 — Sound Composition «Звуковая мастерская»
+        // (эльконинский звуковой анализ-синтез: схема-домик, цветные фишки, синтез).
+        ChildHomeV25EntryCard(
+            titleKey: "soundComposition.entry.title",
+            hintKey: "soundComposition.entry.hint",
+            iconName: "circle.hexagongrid.fill",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToSoundComposition(childId: childId)
+        }
+
+        // v32 Sprint 12 — Voicing & Softness «Карта звонкости и мягкости»
+        // (дифференциация фонем: звонкий↔глухой, твёрдый↔мягкий + слова-ловушки).
+        ChildHomeV25EntryCard(
+            titleKey: "voicingSoftness.entry.title",
+            hintKey: "voicingSoftness.entry.hint",
+            iconName: "waveform.path.ecg",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToVoicingSoftness(childId: childId)
+        }
+
+        // v32 Sprint 12 — Listen Yourself «Послушай себя»
+        // (слуховой самоконтроль: два дубля + A/B-сравнение с эталоном Ляли).
+        ChildHomeV25EntryCard(
+            titleKey: "listenYourself.entry.title",
+            hintKey: "listenYourself.entry.hint",
+            iconName: "ear.fill",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToListenYourself(childId: childId)
+        }
     }
 }
 

@@ -63,6 +63,18 @@ public enum ColorTokens {
         })
     }
 
+    // MARK: - Эльконинские фишки звукового анализа
+    //
+    // Методический стандарт цветовой схемы звукового разбора (Д. Б. Эльконин):
+    // гласный — красный, твёрдый согласный — синий, мягкий согласный — зелёный.
+    // ⚠️ Использовать ТОЛЬКО на круглых фишках / легенде / палитре выбора —
+    // НИКОГДА не на крупных фоновых заливках (фон всегда тёплый cream).
+    public enum Chip {
+        public static let vowel = Color("ChipVowel")
+        public static let hard  = Color("ChipHard")
+        public static let soft  = Color("ChipSoft")
+    }
+
     // MARK: - Kid Circuit (warm cream world)
 
     public enum Kid {
@@ -224,6 +236,32 @@ public enum ColorTokens {
         /// Light: rgb(139,90,43), Dark: rgb(180,130,70).
         /// Используется в BreathingTreeView.
         public static let treeTrunk = Color("NatureTreeTrunk")
+    }
+
+    // MARK: - VoicingSoftness (дифференциация признаков)
+
+    /// Признак-акценты игры «Карта звонкости и мягкости» (мелкие семантические).
+    /// Звонкий = коралл-тепло (Brand.primary), глухой = нейтрально-тёплый серый
+    /// (НЕ off-palette синий/зелёный); твёрдый = коралл-силач, мягкий = Rose.
+    /// Тёплый серый «глухого» задан литералом через dynamic UIColor (нет своего
+    /// asset-католога), как `Skin.classic` — это допустимо в DesignSystem-слое.
+    public enum VoicingSoftness {
+        /// Звонкий — гудит (коралл-тепло). Алиас Brand.primary.
+        public static let voiced     = Brand.primary
+        /// Глухой — молчит. Тёплый нейтральный серый (Light #9A8C82, Dark чуть светлее).
+        public static let voiceless  = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.61, green: 0.55, blue: 0.51, alpha: 1.0)   // #9B8C82
+                : UIColor(red: 0.60, green: 0.55, blue: 0.51, alpha: 1.0)   // #9A8C82
+        })
+        /// Твёрдый — «сердитый брат» (коралл-силач, насыщеннее primary).
+        public static let hard       = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 1.00, green: 0.56, blue: 0.44, alpha: 1.0)   // #FF9070
+                : UIColor(red: 0.91, green: 0.38, blue: 0.23, alpha: 1.0)   // #E8623A
+        })
+        /// Мягкий — «ласковый братик» (тёплый розовый). Алиас Brand.rose.
+        public static let soft       = Brand.rose
     }
 
     // MARK: - Overlay Colors

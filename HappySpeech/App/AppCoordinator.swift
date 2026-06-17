@@ -324,6 +324,31 @@ enum AppRoute: Hashable {
     /// (па-та-ка), vDSP-детекция слоговых ядер по огибающей энергии измеряет темп
     /// диадохокинеза и ровность ритма (оромоторная разминка). Без ML и сети.
     case syllableRace(childId: String)
+
+    // MARK: - Послушай себя (kid, слуховой самоконтроль)
+
+    /// «Послушай себя» (kid): ребёнок записывает СВОЁ слово дважды, слушает оба
+    /// дубля и САМ выбирает лучший, затем сравнивает с эталоном Ляли (A/B) и сам
+    /// оценивает похожесть (эмодзи, без цифр). Опциональный «секретный совет»
+    /// (ASR) — подсказка, не оценка, после выбора. Формирование слухового
+    /// самоконтроля (Волкова/Левина). COPPA: запись локальна, on-device, не
+    /// выгружается.
+    case listenYourself(childId: String)
+
+    // MARK: - Звуковая мастерская (kid, эльконинский звуковой анализ-синтез)
+
+    /// «Звуковая мастерская» (kid): эльконинский звуковой анализ-синтез слова —
+    /// картинка-схема + «домик» клеток по числу звуков, раскладка цветных фишек
+    /// (гласный/твёрдый/мягкий) и синтез-слияние с бонус-цепочкой замены первого
+    /// звука (мак→рак→лак). On-device, без сети.
+    case soundComposition(childId: String)
+
+    // MARK: - Карта звонкости и мягкости (kid, дифференциация фонем)
+
+    /// «Карта звонкости и мягкости» (kid): сортировка слов/слогов по парам
+    /// звонкий↔глухой и твёрдый↔мягкий + слова-ловушки. Дифференциация
+    /// смешиваемых фонем (по Левиной / Ткаченко). On-device, без сети.
+    case voicingSoftness(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -1301,6 +1326,24 @@ struct AppCoordinatorView: View {
         case .syllableRace(let childId):
             SyllableRaceView(childId: childId.isEmpty ? container.currentChildId : childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - Послушай себя (слуховой самоконтроль)
+
+        case .listenYourself(let childId):
+            ListenYourselfView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - Звуковая мастерская (эльконинский звуковой анализ-синтез)
+
+        case .soundComposition(let childId):
+            SoundCompositionView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
+
+        // MARK: - Карта звонкости и мягкости (дифференциация фонем)
+
+        case .voicingSoftness(let childId):
+            VoicingSoftnessView(childId: childId.isEmpty ? container.currentChildId : childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1878,6 +1921,18 @@ extension AppCoordinatorView {
         // MARK: Скороговорка-ракета (диадохокинез, on-device DSP)
         case "syllableRace", "syllablerace", "ddk", "pataka":
             return .syllableRace(childId: previewChild)
+
+        // MARK: Послушай себя (слуховой самоконтроль)
+        case "listenYourself", "listenyourself", "selfListen", "twoTakes":
+            return .listenYourself(childId: previewChild)
+
+        // MARK: Звуковая мастерская (эльконинский звуковой анализ-синтез)
+        case "soundComposition", "soundAnalysis", "elkonin":
+            return .soundComposition(childId: previewChild)
+
+        // MARK: Карта звонкости и мягкости (дифференциация фонем)
+        case "voicingSoftness", "voicing", "softness":
+            return .voicingSoftness(childId: previewChild)
 
         default:
             return .auth

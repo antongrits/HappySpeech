@@ -1,0 +1,653 @@
+{
+  "id": "pack_sound_analysis_v1",
+  "soundTarget": "звуковой-анализ",
+  "group": "фонематика",
+  "version": 1,
+  "description": "Мастерская звукового состава слова (эльконинский звуковой анализ-синтез). Каждое слово размечено по звукам (НЕ буквам): тип каждого звука (vowel — гласный/красный, hard — твёрдый согласный/синий, soft — мягкий согласный/зелёный), ударный звук (stressIndex), слоговое деление (syllables). Разметка отражает звуковое (фонетическое) строение: оглушение звонких в конце слова (зуб→[зуп]), мягкость согласного перед и/е/ё/ю/я/ь, всегда-твёрдые ж/ш/ц, всегда-мягкие ч/щ/й. Источник методики: Д. Б. Эльконин, Л. Е. Журова, Г. А. Каше. Картинки — существующие word_* ассеты (проверены). Уровни: easy 3-4 звука (6-7 лет), medium 5 звуков (7-8 лет). Бонус — цепочки замены первого звука (мак→рак→лак).",
+  "roundsPerSession": 6,
+  "words": [
+    {
+      "id": "sa-mishka",
+      "text": "мишка",
+      "asset": "word_bear",
+      "level": "medium",
+      "stressIndex": 2,
+      "syllables": [
+        "миш",
+        "ка"
+      ],
+      "sounds": [
+        {
+          "letter": "М",
+          "type": "soft"
+        },
+        {
+          "letter": "И",
+          "type": "vowel"
+        },
+        {
+          "letter": "Ш",
+          "type": "hard"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-koshka",
+      "text": "кошка",
+      "asset": "word_cat",
+      "level": "medium",
+      "stressIndex": 2,
+      "syllables": [
+        "кош",
+        "ка"
+      ],
+      "sounds": [
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "Ш",
+          "type": "hard"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-myshka",
+      "text": "мышка",
+      "asset": "word_myshka",
+      "level": "medium",
+      "stressIndex": 2,
+      "syllables": [
+        "мыш",
+        "ка"
+      ],
+      "sounds": [
+        {
+          "letter": "М",
+          "type": "hard"
+        },
+        {
+          "letter": "Ы",
+          "type": "vowel"
+        },
+        {
+          "letter": "Ш",
+          "type": "hard"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-shuba",
+      "text": "шуба",
+      "asset": "word_shuba",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "шу",
+        "ба"
+      ],
+      "sounds": [
+        {
+          "letter": "Ш",
+          "type": "hard"
+        },
+        {
+          "letter": "У",
+          "type": "vowel"
+        },
+        {
+          "letter": "Б",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-luna",
+      "text": "луна",
+      "asset": "word_moon",
+      "level": "easy",
+      "stressIndex": 4,
+      "syllables": [
+        "лу",
+        "на"
+      ],
+      "sounds": [
+        {
+          "letter": "Л",
+          "type": "hard"
+        },
+        {
+          "letter": "У",
+          "type": "vowel"
+        },
+        {
+          "letter": "Н",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-lisa",
+      "text": "лиса",
+      "asset": "word_fox",
+      "level": "easy",
+      "stressIndex": 4,
+      "syllables": [
+        "ли",
+        "са"
+      ],
+      "sounds": [
+        {
+          "letter": "Л",
+          "type": "soft"
+        },
+        {
+          "letter": "И",
+          "type": "vowel"
+        },
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-roza",
+      "text": "роза",
+      "asset": "word_rose",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "ро",
+        "за"
+      ],
+      "sounds": [
+        {
+          "letter": "Р",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "З",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-koza",
+      "text": "коза",
+      "asset": "word_goat",
+      "level": "easy",
+      "stressIndex": 4,
+      "syllables": [
+        "ко",
+        "за"
+      ],
+      "sounds": [
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "З",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-vaza",
+      "text": "ваза",
+      "asset": "word_vaza",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "ва",
+        "за"
+      ],
+      "sounds": [
+        {
+          "letter": "В",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "З",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-osa",
+      "text": "оса",
+      "asset": "word_wasp",
+      "level": "easy",
+      "stressIndex": 3,
+      "syllables": [
+        "о",
+        "са"
+      ],
+      "sounds": [
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-usy",
+      "text": "усы",
+      "asset": "word_usy",
+      "level": "easy",
+      "stressIndex": 3,
+      "syllables": [
+        "у",
+        "сы"
+      ],
+      "sounds": [
+        {
+          "letter": "У",
+          "type": "vowel"
+        },
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "Ы",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-nos",
+      "text": "нос",
+      "asset": "word_nos",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "нос"
+      ],
+      "sounds": [
+        {
+          "letter": "Н",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "С",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-sok",
+      "text": "сок",
+      "asset": "word_sok",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "сок"
+      ],
+      "sounds": [
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-kit",
+      "text": "кит",
+      "asset": "word_kit",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "кит"
+      ],
+      "sounds": [
+        {
+          "letter": "К",
+          "type": "soft"
+        },
+        {
+          "letter": "И",
+          "type": "vowel"
+        },
+        {
+          "letter": "Т",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-busy",
+      "text": "бусы",
+      "asset": "word_busy",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "бу",
+        "сы"
+      ],
+      "sounds": [
+        {
+          "letter": "Б",
+          "type": "hard"
+        },
+        {
+          "letter": "У",
+          "type": "vowel"
+        },
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "Ы",
+          "type": "vowel"
+        }
+      ]
+    },
+    {
+      "id": "sa-zhuk",
+      "text": "жук",
+      "asset": "word_beetle",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "жук"
+      ],
+      "sounds": [
+        {
+          "letter": "Ж",
+          "type": "hard"
+        },
+        {
+          "letter": "У",
+          "type": "vowel"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-chai",
+      "text": "чай",
+      "asset": "word_chai",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "чай"
+      ],
+      "sounds": [
+        {
+          "letter": "Ч",
+          "type": "soft"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "Й",
+          "type": "soft"
+        }
+      ]
+    },
+    {
+      "id": "sa-banan",
+      "text": "банан",
+      "asset": "word_banan",
+      "level": "medium",
+      "stressIndex": 4,
+      "syllables": [
+        "ба",
+        "нан"
+      ],
+      "sounds": [
+        {
+          "letter": "Б",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "Н",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "Н",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-divan",
+      "text": "диван",
+      "asset": "word_divan",
+      "level": "medium",
+      "stressIndex": 4,
+      "syllables": [
+        "ди",
+        "ван"
+      ],
+      "sounds": [
+        {
+          "letter": "Д",
+          "type": "soft"
+        },
+        {
+          "letter": "И",
+          "type": "vowel"
+        },
+        {
+          "letter": "В",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "Н",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "sa-sani",
+      "text": "сани",
+      "asset": "word_sani",
+      "level": "easy",
+      "stressIndex": 2,
+      "syllables": [
+        "са",
+        "ни"
+      ],
+      "sounds": [
+        {
+          "letter": "С",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "Н",
+          "type": "soft"
+        },
+        {
+          "letter": "И",
+          "type": "vowel"
+        }
+      ]
+    }
+  ],
+  "chains": [
+    {
+      "id": "chain-mak",
+      "stressIndex": 2,
+      "syllables": [
+        "мак"
+      ],
+      "base": {
+        "text": "мак",
+        "asset": "word_mak"
+      },
+      "variants": [
+        {
+          "swapTo": "Р",
+          "text": "рак",
+          "asset": "word_rak"
+        },
+        {
+          "swapTo": "Л",
+          "text": "лак",
+          "asset": "word_lak"
+        },
+        {
+          "swapTo": "Б",
+          "text": "бак",
+          "asset": "word_bak"
+        }
+      ],
+      "sounds": [
+        {
+          "letter": "М",
+          "type": "hard"
+        },
+        {
+          "letter": "А",
+          "type": "vowel"
+        },
+        {
+          "letter": "К",
+          "type": "hard"
+        }
+      ]
+    },
+    {
+      "id": "chain-kot",
+      "stressIndex": 2,
+      "syllables": [
+        "кот"
+      ],
+      "base": {
+        "text": "кот",
+        "asset": "word_kot"
+      },
+      "variants": [
+        {
+          "swapTo": "Р",
+          "text": "рот",
+          "asset": "word_rot"
+        }
+      ],
+      "sounds": [
+        {
+          "letter": "К",
+          "type": "hard"
+        },
+        {
+          "letter": "О",
+          "type": "vowel"
+        },
+        {
+          "letter": "Т",
+          "type": "hard"
+        }
+      ]
+    }
+  ]
+}

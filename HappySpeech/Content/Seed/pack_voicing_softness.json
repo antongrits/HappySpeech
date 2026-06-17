@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "packId": "voicing_softness",
+  "title": "Карта звонкости и мягкости",
+  "description": "Дифференциация оппозиционных фонем по акустическим признакам: звонкость/глухость и твёрдость/мягкость. Методика Г. А. Каше, Т. Б. Филичёвой, Г. В. Чиркиной. Тактильно-вибрационная опора на работу голоса (звонкий — горлышко дрожит).",
+  "methodologySource": "Kashe; Filicheva-Chirkina; Volkova",
+  "roundsPerSession": 10,
+  "voicingPairs": [
+    { "id": "vp-bp", "voiced": "Б", "voiceless": "П", "soundFamily": "губно-губные", "example": "Б — бочка, П — почка" },
+    { "id": "vp-vf", "voiced": "В", "voiceless": "Ф", "soundFamily": "губно-зубные", "example": "В — ваза, Ф — фара" },
+    { "id": "vp-gd", "voiced": "Г", "voiceless": "К", "soundFamily": "заднеязычные", "example": "Г — гора, К — кора" },
+    { "id": "vp-dt", "voiced": "Д", "voiceless": "Т", "soundFamily": "переднеязычные", "example": "Д — дочка, Т — точка" },
+    { "id": "vp-zs", "voiced": "З", "voiceless": "С", "soundFamily": "свистящие", "example": "З — зуб, С — суп" },
+    { "id": "vp-zhsh", "voiced": "Ж", "voiceless": "Ш", "soundFamily": "шипящие", "example": "Ж — жар, Ш — шар" }
+  ],
+  "softnessPairs": [
+    { "id": "sp-l", "hard": "Л", "soft": "Ль", "soundFamily": "соноры", "hardSyllables": ["ЛА", "ЛО", "ЛУ", "ЛЫ"], "softSyllables": ["ЛЯ", "ЛЁ", "ЛЮ", "ЛИ"] },
+    { "id": "sp-r", "hard": "Р", "soft": "Рь", "soundFamily": "соноры", "hardSyllables": ["РА", "РО", "РУ", "РЫ"], "softSyllables": ["РЯ", "РЁ", "РЮ", "РИ"] },
+    { "id": "sp-s", "hard": "С", "soft": "Сь", "soundFamily": "свистящие", "hardSyllables": ["СА", "СО", "СУ", "СЫ"], "softSyllables": ["СЯ", "СЁ", "СЮ", "СИ"] },
+    { "id": "sp-z", "hard": "З", "soft": "Зь", "soundFamily": "свистящие", "hardSyllables": ["ЗА", "ЗО", "ЗУ", "ЗЫ"], "softSyllables": ["ЗЯ", "ЗЁ", "ЗЮ", "ЗИ"] },
+    { "id": "sp-n", "hard": "Н", "soft": "Нь", "soundFamily": "переднеязычные", "hardSyllables": ["НА", "НО", "НУ", "НЫ"], "softSyllables": ["НЯ", "НЁ", "НЮ", "НИ"] },
+    { "id": "sp-m", "hard": "М", "soft": "Мь", "soundFamily": "губно-губные", "hardSyllables": ["МА", "МО", "МУ", "МЫ"], "softSyllables": ["МЯ", "МЁ", "МЮ", "МИ"] }
+  ],
+  "trapWords": [
+    {
+      "id": "tw-koza-kosa",
+      "contrast": "voicing",
+      "pairId": "vp-zs",
+      "a": { "word": "коза", "asset": "word_goat", "diffIndex": 2, "feature": "voiced" },
+      "b": { "word": "коса", "asset": "word_kosa", "diffIndex": 2, "feature": "voiceless" },
+      "difficulty": 1
+    },
+    {
+      "id": "tw-zub-sup",
+      "contrast": "voicing",
+      "pairId": "vp-zs",
+      "a": { "word": "зуб", "asset": "word_zub", "diffIndex": 0, "feature": "voiced" },
+      "b": { "word": "суп", "asset": "word_sup", "diffIndex": 0, "feature": "voiceless" },
+      "difficulty": 2
+    },
+    {
+      "id": "tw-zhar-shar",
+      "contrast": "voicing",
+      "pairId": "vp-zhsh",
+      "a": { "word": "жар", "asset": "word_zhar", "diffIndex": 0, "feature": "voiced" },
+      "b": { "word": "шар", "asset": "word_shar", "diffIndex": 0, "feature": "voiceless" },
+      "difficulty": 1
+    },
+    {
+      "id": "tw-gora-kora",
+      "contrast": "voicing",
+      "pairId": "vp-gd",
+      "a": { "word": "гора", "asset": "word_mountain", "diffIndex": 0, "feature": "voiced" },
+      "b": { "word": "кора", "asset": "word_kora", "diffIndex": 0, "feature": "voiceless" },
+      "difficulty": 2
+    },
+    {
+      "id": "tw-dochka-tochka",
+      "contrast": "voicing",
+      "pairId": "vp-dt",
+      "a": { "word": "дочка", "asset": "word_dochka", "diffIndex": 0, "feature": "voiced" },
+      "b": { "word": "точка", "asset": "word_tochka", "diffIndex": 0, "feature": "voiceless" },
+      "difficulty": 2
+    },
+    {
+      "id": "tw-mishka-myshka",
+      "contrast": "softness",
+      "pairId": "sp-m",
+      "a": { "word": "мишка", "asset": "word_bear", "diffIndex": 1, "feature": "soft" },
+      "b": { "word": "мышка", "asset": "word_myshka", "diffIndex": 1, "feature": "hard" },
+      "difficulty": 2
+    }
+  ]
+}

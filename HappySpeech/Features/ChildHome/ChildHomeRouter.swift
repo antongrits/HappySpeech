@@ -45,6 +45,10 @@ protocol ChildHomeRoutingLogic {
     func routeToWordFormation(childId: String)
     func routeToWhoseTail(childId: String)
     func routeToStoryLibrary(childId: String)
+    // v32 Sprint 12 — 3 новые методически-ценные фичи
+    func routeToSoundComposition(childId: String)
+    func routeToVoicingSoftness(childId: String)
+    func routeToListenYourself(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -287,5 +291,23 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// Stories — «Сказки Ляли» (каталог 20 анимированных историй).
     func routeToStoryLibrary(childId: String) {
         coordinator?.navigate(to: .storyLibrary(childId: childId))
+    }
+
+    /// v32 Sprint 12 — «Звуковая мастерская» (эльконинский звуковой
+    /// анализ-синтез слова: схема-домик, цветные фишки, синтез-слияние).
+    func routeToSoundComposition(childId: String) {
+        coordinator?.navigate(to: .soundComposition(childId: childId))
+    }
+
+    /// v32 Sprint 12 — «Карта звонкости и мягкости» (дифференциация фонем:
+    /// звонкий↔глухой, твёрдый↔мягкий + слова-ловушки).
+    func routeToVoicingSoftness(childId: String) {
+        coordinator?.navigate(to: .voicingSoftness(childId: childId))
+    }
+
+    /// v32 Sprint 12 — «Послушай себя» (слуховой самоконтроль: два дубля +
+    /// A/B-сравнение с эталоном Ляли).
+    func routeToListenYourself(childId: String) {
+        coordinator?.navigate(to: .listenYourself(childId: childId))
     }
 }
