@@ -79,32 +79,12 @@ struct SpeechVisualizationView: View {
         NavigationStack {
             Group {
                 if let viewModel = holder.loadVM {
-                    ScrollView(showsIndicators: false) {
-                        VStack(spacing: SpacingTokens.sp4) {
-                            headerSection
-                            wordSection(viewModel: viewModel)
-                            spectrogramSection
-                            summarySection
-                            primaryCTA
-                        }
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                        .padding(.vertical, SpacingTokens.sp4)
-                    }
-                    .scrollBounceBehavior(.basedOnSize)
-                    .safeAreaPadding(.bottom)
+                    mainContent(viewModel: viewModel)
                 } else {
-                    // H v18 — Lyalya hero на loading-экране.
-                    VStack(spacing: SpacingTokens.sp3) {
-                        LyalyaMascotView(state: .thinking, size: 80)
-                            .accessibilityHidden(true)
-                        ProgressView()
-                            .controlSize(.large)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    loadingView
                 }
             }
-            // Тёплый статичный однотонный фон (кремовое семейство). Тёмный
-            // холст спектрограммы — это данные, а не фон.
+            // Тёплый статичный однотонный фон (кремовое семейство).
             .background(
                 ZStack {
                     ColorTokens.Kid.bg.ignoresSafeArea()
@@ -132,81 +112,240 @@ struct SpeechVisualizationView: View {
         .task { await setupAndLoad() }
     }
 
-    // MARK: - Sections
+    // MARK: - Loading View
 
-    @ViewBuilder
-    private var headerSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            Picker(
-                String(localized: "karaoke.mode.picker.title"),
-                selection: Binding<VisualizationMode>(
-                    get: { holder.modeVM?.mode ?? .listen },
-                    set: { newValue in
-                        Task { await interactor?.setMode(request: .init(mode: newValue)) }
-                    }
-                )
-            ) {
-                ForEach([VisualizationMode.listen, .practice], id: \.self) { mode in
-                    Text(mode.localizedTitle).tag(mode)
-                }
-            }
-            .pickerStyle(.segmented)
-
-            if let modeVM = holder.modeVM {
-                Text(modeVM.instructionText)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
-                    .lineLimit(nil)
-            }
+    private var loadingView: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .thinking, size: 80)
+                .accessibilityHidden(true)
+            ProgressView()
+                .controlSize(.large)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    @ViewBuilder
-    private func wordSection(viewModel: SpeechVisualizationModels.Load.ViewModel) -> some View {
-        // Step 10 Batch E — Pattern 2: word hero на HSLiquidGlassCard(.elevated).
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Text(viewModel.wordDisplay)
-                    .font(TypographyTokens.kidHero(28))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .accessibilityHidden(true)
+    // MARK: - Main Content
+    //
+    // open-design layout (non-scrollable flex column):
+    //   1. topbar (back + title + hint) — handled by NavigationStack
+    //   2. task section: lead label + large word + sound chip
+    //   3. mascot row: Ляля + speech bubble
+    //   4. viz-card (flex-fill, dark canvas, heat legend + live blip inside)
+    //   5. controls row: listen pill | mic circle | retry ghost
 
+    private func mainContent(viewModel: SpeechVisualizationModels.Load.ViewModel) -> some View {
+        GeometryReader { geo in
+            VStack(spacing: SpacingTokens.sp3) {
+                // Task section
+                taskSection(viewModel: viewModel)
+
+                // Mascot row
+                mascotRow
+
+                // Viz card — flex fills remaining space
+                vizCard(viewModel: viewModel)
+                    .frame(minHeight: max(160, geo.size.height * 0.38))
+
+                // Score summary (shown above controls when available)
+                if let scoreVM = holder.scoreVM {
+                    summaryBadge(scoreVM: scoreVM)
+                }
+
+                // Controls
+                controlsRow
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp3)
+            .padding(.bottom, SpacingTokens.sp4)
+        }
+        .safeAreaPadding(.bottom)
+    }
+
+    // MARK: - Task Section
+    //
+    // open-design: .task — "Задание N из M · sound-name" lead + "Скажи: Р-р-р" h2 + sound-chip pill.
+
+    private func taskSection(viewModel: SpeechVisualizationModels.Load.ViewModel) -> some View {
+        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                if let modeVM = holder.modeVM {
+                    Text(modeVM.instructionText)
+                        .font(TypographyTokens.caption(14).weight(.bold))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+                // Word display with active syllable highlights (karaoke)
                 KaraokeWordView(
                     syllables: viewModel.syllables,
                     activeSyllableID: holder.activeSyllableID
                 )
+                .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Sound chip (open-design: .sound-chip — target sound letter badge)
+            SoundBadge(letter: targetSound)
         }
+        .accessibilityElement(children: .combine)
     }
 
+    // MARK: - Mascot Row (open-design: .mascot-row — Ляля + speech bubble)
+
+    private var mascotRow: some View {
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: mascotState, size: 54)
+                .accessibilityHidden(true)
+
+            // Speech bubble
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+                    .rotationEffect(.degrees(45))
+                    .offset(x: -7)
+
+                Text(bubbleText)
+                    .font(TypographyTokens.body(14).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .padding(.vertical, SpacingTokens.sp2)
+                    .padding(.horizontal, SpacingTokens.sp3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .fill(ColorTokens.Kid.surface)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+                    .padding(.leading, SpacingTokens.sp2)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityLabel(Text(bubbleText))
+    }
+
+    private var mascotState: LyalyaState {
+        if holder.isPlaying { return .happy }
+        if holder.scoreVM != nil { return .celebrating }
+        return .idle
+    }
+
+    private var bubbleText: String {
+        if holder.isPlaying {
+            return String(localized: "karaoke.bubble.listen",
+                          defaultValue: "Слушай внимательно!")
+        }
+        if holder.scoreVM?.confettiBurst == true {
+            return String(localized: "karaoke.bubble.great",
+                          defaultValue: "Отлично! Молодец!")
+        }
+        if holder.modeVM?.mode == .practice {
+            return String(localized: "karaoke.bubble.practice",
+                          defaultValue: "Повтори так же — держи голос в зоне!")
+        }
+        return String(localized: "karaoke.bubble.ready",
+                      defaultValue: "Послушай, потом попробуй сам.")
+    }
+
+    // MARK: - Viz Card (open-design: .viz-card — dark canvas, heat legend + blip inside)
+
     @ViewBuilder
-    private var spectrogramSection: some View {
-        // Тёплая карточка-обёртка с нейтральным surface-фоном. Тёмный холст
-        // спектрограммы остаётся внутри — data-viz требует тёмного фона.
-        // Внешняя карточка «встраивает» блок в тёплую палитру экрана.
-        HSCard(style: .flat) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                heatLegendRow
+    private func vizCard(viewModel: SpeechVisualizationModels.Load.ViewModel) -> some View {
+        ZStack(alignment: .topLeading) {
+            // Dark warm canvas background
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Viz.canvasBg)
+
+            VStack(alignment: .leading, spacing: 0) {
+                // viz-head: title/blip + heat legend
+                vizCardHeader
+
+                // Spectrogram (fills remaining space, no fixed height)
                 SpectrogramVisualizerView(referenceSpectrogram: nil, style: .warm)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: RadiusTokens.concentric(
+                                outer: RadiusTokens.lg,
+                                inset: SpacingTokens.sp3
+                            ),
+                            style: .continuous
+                        )
+                    )
+                    .padding(.horizontal, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp3)
+                    .frame(maxHeight: .infinity)
                     .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
             }
         }
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .strokeBorder(
+                    Color(hue: 0.06, saturation: 0.6, brightness: 0.22),
+                    lineWidth: 1
+                )
+        )
+        .shadow(
+            color: ColorTokens.Overlay.shadowMedium,
+            radius: 14,
+            y: 8
+        )
     }
 
-    /// Тёплая heat-легенда «тихо → звонко» (коралл → золото) над спектрограммой.
-    private var heatLegendRow: some View {
+    // open-design .viz-head: recording blip + title, heat ramp label
+    private var vizCardHeader: some View {
         HStack(spacing: SpacingTokens.sp2) {
+            // live blip (open-design: animated dot)
+            Circle()
+                .fill(ColorTokens.Brand.primary)
+                .frame(width: 9, height: 9)
+                .opacity(holder.isPlaying ? 1.0 : 0.55)
+                .animation(
+                    holder.isPlaying && !reduceMotion
+                        ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true)
+                        : .default,
+                    value: holder.isPlaying
+                )
+
+            Text(holder.modeVM?.mode == .practice
+                 ? String(localized: "karaoke.vizcard.practice", defaultValue: "Твой голос · запись")
+                 : String(localized: "karaoke.vizcard.listen", defaultValue: "Спектр голоса · образец"))
+                .font(TypographyTokens.caption(13).weight(.heavy))
+                .foregroundStyle(Color(red: 1.0, green: 0.9, blue: 0.84))
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+
+            Spacer(minLength: SpacingTokens.sp2)
+
+            // Heat legend (open-design: тихо · ramp · звонко)
+            heatLegendInline
+        }
+        .padding(.horizontal, SpacingTokens.sp4)
+        .padding(.top, SpacingTokens.sp3)
+        .padding(.bottom, SpacingTokens.sp2)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("karaoke.heat.a11y"))
+    }
+
+    private var heatLegendInline: some View {
+        HStack(spacing: SpacingTokens.sp1) {
             Text("karaoke.heat.quiet")
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .font(TypographyTokens.caption(9).weight(.bold))
+                .foregroundStyle(Color(red: 0.91, green: 0.80, blue: 0.71))
             Capsule()
                 .fill(
                     LinearGradient(
                         colors: [
                             ColorTokens.Brand.primary.opacity(0.35),
+                            ColorTokens.Brand.primary,
                             ColorTokens.Brand.primaryHi,
                             ColorTokens.Brand.butter
                         ],
@@ -214,54 +353,186 @@ struct SpeechVisualizationView: View {
                         endPoint: .trailing
                     )
                 )
-                .frame(height: 8)
-                .frame(maxWidth: .infinity)
+                .frame(width: 60, height: 8)
+                .overlay(
+                    Capsule()
+                        .strokeBorder(Color.white.opacity(0.14), lineWidth: 1)
+                )
             Text("karaoke.heat.loud")
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .font(TypographyTokens.caption(9).weight(.bold))
+                .foregroundStyle(Color(red: 0.91, green: 0.80, blue: 0.71))
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text("karaoke.heat.a11y"))
     }
 
+    // MARK: - Summary Badge (floats above controls)
+
     @ViewBuilder
-    private var summarySection: some View {
-        if let scoreVM = holder.scoreVM {
-            HStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: scoreVM.confettiBurst ? "sparkles" : "speaker.wave.2")
-                    .font(.title2)
-                    .foregroundStyle(scoreVM.summaryColor)
-                    // Step 10 Batch E — Pattern 5: sparkles variableColor pulse
-                    // / speaker bounce при появлении score.
-                    .hsSymbolEffect(.variableColor, value: scoreVM.summaryText)
-                    .accessibilityHidden(true)
-                Text(scoreVM.summaryText)
-                    .font(TypographyTokens.headline(16))
+    private func summaryBadge(scoreVM: SpeechVisualizationModels.Score.ViewModel) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            // Checkmark badge (open-design: .feedback .badge — mint circle)
+            ZStack {
+                Circle()
+                    .fill(scoreVM.confettiBurst
+                          ? ColorTokens.Brand.butter
+                          : ColorTokens.Brand.mint)
+                    .frame(width: 28, height: 28)
+                Image(systemName: scoreVM.confettiBurst ? "star.fill" : "checkmark")
+                    .font(TypographyTokens.caption(13).weight(.heavy))
                     .foregroundStyle(ColorTokens.Kid.ink)
             }
-            .frame(maxWidth: .infinity)
-            .padding(SpacingTokens.sp3)
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(scoreVM.summaryColor.opacity(0.12))
-            )
-            .accessibilityElement(children: .combine)
+            .hsSymbolEffect(.variableColor, value: scoreVM.summaryText)
+
+            Text(scoreVM.summaryText)
+                .font(TypographyTokens.headline(14).weight(.heavy))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
+        .padding(.horizontal, SpacingTokens.sp4)
+        .padding(.vertical, SpacingTokens.sp2)
+        .background(
+            Capsule()
+                .fill(ColorTokens.Kid.surface.opacity(0.88))
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 10, y: 4)
+        )
+        .overlay(
+            Capsule()
+                .strokeBorder(
+                    scoreVM.summaryColor.opacity(0.40),
+                    lineWidth: 1
+                )
+        )
+        .transition(.opacity.combined(with: .scale(scale: 0.9)))
+        .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.scoreVM != nil)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(scoreVM.summaryText)
     }
 
-    @ViewBuilder
-    private var primaryCTA: some View {
-        Button {
-            Task { await tapPrimary() }
-        } label: {
-            Text(holder.modeVM?.primaryButtonTitle ?? String(localized: "karaoke.cta.listen"))
-                .font(TypographyTokens.cta())
-                .frame(maxWidth: .infinity)
+    // MARK: - Controls Row (open-design: pill left | mic center | ghost right)
+
+    private var controlsRow: some View {
+        HStack(spacing: SpacingTokens.sp4) {
+            // Left — "Послушай образец" pill (open-design .pill)
+            Button {
+                Task { await playListen() }
+            } label: {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "play.fill")
+                        .font(TypographyTokens.caption(13))
+                    Text(String(localized: "karaoke.cta.listen",
+                                defaultValue: "Послушай образец"))
+                        .font(TypographyTokens.caption(13).weight(.heavy))
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                        .multilineTextAlignment(.center)
+                }
+                .foregroundStyle(ColorTokens.Brand.primary)
                 .padding(.vertical, SpacingTokens.sp3)
+                .padding(.horizontal, SpacingTokens.sp3)
+                .frame(maxWidth: 96)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .strokeBorder(
+                                    ColorTokens.Brand.primary.opacity(0.45),
+                                    lineWidth: 1.5
+                                )
+                        )
+                        .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 3)
+                )
+            }
+            .disabled(holder.isPlaying)
+            .accessibilityLabel(Text("karaoke.cta.listen"))
+
+            Spacer(minLength: 0)
+
+            // Center — mic button (open-design: large coral circle, pulsing rings)
+            Button {
+                Task { await tapPrimary() }
+            } label: {
+                ZStack {
+                    // Pulsing ring (only in practice-recording mode, not reduceMotion)
+                    if holder.isPlaying && !reduceMotion {
+                        Circle()
+                            .stroke(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 2)
+                            .frame(width: 100, height: 100)
+                            .scaleEffect(1.15)
+                            .opacity(0)
+                            .animation(
+                                .easeOut(duration: 1.4).repeatForever(autoreverses: false),
+                                value: holder.isPlaying
+                            )
+                    }
+                    // Main circle
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [ColorTokens.Brand.primaryHi, ColorTokens.Brand.primary],
+                                center: .init(x: 0.4, y: 0.3),
+                                startRadius: 4,
+                                endRadius: 44
+                            )
+                        )
+                        .frame(width: 84, height: 84)
+                        .shadow(
+                            color: ColorTokens.Brand.primary.opacity(0.50),
+                            radius: 16,
+                            y: 6
+                        )
+                        .overlay(
+                            Circle()
+                                .strokeBorder(Color.white.opacity(0.35), lineWidth: 2)
+                                .frame(width: 84, height: 84)
+                        )
+                    Image(
+                        systemName: holder.isPlaying
+                            ? (holder.modeVM?.mode == .practice ? "stop.fill" : "pause.fill")
+                            : "mic.fill"
+                    )
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(Color.white)
+                }
+                .frame(width: 84, height: 84)
+            }
+            .accessibilityLabel(
+                holder.isPlaying
+                    ? Text("karaoke.cta.stop")
+                    : Text("karaoke.cta.record")
+            )
+            .accessibilityHint(Text("karaoke.cta.hint"))
+
+            Spacer(minLength: 0)
+
+            // Right — "Ещё раз" ghost button (open-design: .ghost — surface bg, no tint)
+            Button {
+                holder.activeSyllableID = nil
+                // Reset score display so user can re-attempt
+                // (keeping interactor state intact for new recording)
+            } label: {
+                VStack(spacing: SpacingTokens.sp1) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(ColorTokens.Kid.surface)
+                            .frame(width: 54, height: 54)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                            )
+                            .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 2)
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(TypographyTokens.headline(20))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                    Text(String(localized: "karaoke.cta.again", defaultValue: "Ещё раз"))
+                        .font(TypographyTokens.caption(11).weight(.heavy))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                }
+            }
+            .frame(maxWidth: 96)
+            .accessibilityLabel(Text("karaoke.cta.again"))
         }
-        .buttonStyle(.borderedProminent)
-        .tint(ColorTokens.Brand.primary)
-        .accessibilityHint(Text("karaoke.cta.hint"))
     }
 
     // MARK: - Actions
@@ -337,6 +608,32 @@ struct SpeechVisualizationView: View {
         }
         await interactor?.load(request: .init(word: word, targetSound: targetSound))
         await interactor?.setMode(request: .init(mode: .listen))
+    }
+}
+
+// MARK: - SoundBadge
+//
+// open-design: .sound-chip — circular pill showing target phoneme letter.
+// Used inside SpeechVisualizationView task section; intentionally simple
+// (no tap action, display-only).
+
+private struct SoundBadge: View {
+    let letter: String
+
+    var body: some View {
+        Text(letter)
+            .font(TypographyTokens.title(20).weight(.black))
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .frame(width: 44, height: 44)
+            .background(
+                Circle()
+                    .fill(ColorTokens.Brand.primary)
+                    .shadow(color: ColorTokens.Brand.primary.opacity(0.40), radius: 8, y: 3)
+            )
+            .accessibilityLabel(
+                String(localized: "karaoke.soundbadge.a11y",
+                       defaultValue: "Целевой звук: \(letter)")
+            )
     }
 }
 

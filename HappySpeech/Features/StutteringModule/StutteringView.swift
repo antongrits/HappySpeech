@@ -79,13 +79,13 @@ struct StutteringView: View {
 
     var body: some View {
         ZStack {
-            // Редизайн stuttering-home (2026-06-13): спокойный ОДНОТОННЫЙ
-            // тёплый фон (cream), статичный — без softLight-наложения «радуги».
+            // Спокойный ОДНОТОННЫЙ тёплый фон (cream), статичный.
             HSMeshGradientBackground(palette: .calm, animated: false)
                 .ignoresSafeArea()
                 .accessibilityHidden(true)
             scrollContent
         }
+        // open-design: inline title — крупный заголовок встроен в scroll-контент.
         .navigationTitle(String(localized: "stuttering.entry.title"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -123,53 +123,117 @@ struct StutteringView: View {
 
     private var scrollContent: some View {
         ScrollView {
-            VStack(spacing: SpacingTokens.sp5) {
-                mascotHeader
-                voicePromptBanner
-                adaptiveRecommendationHighlight
+            VStack(spacing: 0) {
+                // open-design: большой заголовок + subtitle внутри scroll (не navigationTitle large).
+                hubHeader
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.sp2)
+                    .padding(.bottom, SpacingTokens.sp4)
+
+                // Ляля + speech bubble (open-design: mascot row immediately under heading)
+                mascotBubbleRow
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.bottom, SpacingTokens.sp4)
+
+                // Adaptive recommendation strip (optional)
+                if scene.display.recommendedMode != nil {
+                    adaptiveRecommendationHighlight
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .padding(.bottom, SpacingTokens.sp3)
+                }
+
+                // Voice prompt (optional)
+                if !scene.display.voicePromptText.isEmpty {
+                    voicePromptBanner
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .padding(.bottom, SpacingTokens.sp3)
+                }
+
+                // Section header "Инструменты · выбери своё"
+                toolsSectionHeader
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.bottom, SpacingTokens.sp3)
+
+                // 2×2 grid + full-width diary card (open-design layout)
                 exerciseGrid
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.bottom, SpacingTokens.sp5)
+
+                // Educational info tiles
                 educationalSection
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.bottom, SpacingTokens.sp5)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.sp2)
-            .padding(.bottom, SpacingTokens.sp5)
         }
     }
 
-    // MARK: - Mascot Header
+    // MARK: - Hub Header (large title in scroll, open-design)
 
-    private var mascotHeader: some View {
-        // Редизайн: спокойная Ляля рядом с тёплым облачком-репликой —
-        // поддерживающий, не клинический тон (эталон stuttering-home).
+    private var hubHeader: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+            Text(String(localized: "stuttering.hub.title", defaultValue: "Плавная речь"))
+                .font(TypographyTokens.kidHero(32).weight(.heavy))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+            Text(String(localized: "stuttering.hub.subtitle", defaultValue: "Спокойные инструменты для ритма, дыхания и мягкого начала."))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: - Mascot Bubble Row (open-design: Ляля left + speech bubble right)
+
+    private var mascotBubbleRow: some View {
         HStack(alignment: .center, spacing: SpacingTokens.sp3) {
-            LyalyaHeroView(state: .encouraging, size: 96)
+            LyalyaMascotView(state: .idle, size: 66)
                 .accessibilityHidden(true)
 
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text(String(localized: "stuttering.hub.bubble"))
-                    .font(TypographyTokens.body(15).weight(.medium))
+            // Speech bubble with left-tail (open-design style)
+            ZStack(alignment: .leading) {
+                // tail (rotated square)
+                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .frame(width: 14, height: 14)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+                    .rotationEffect(.degrees(45))
+                    .offset(x: -7)
+
+                Text(String(localized: "stuttering.hub.bubble",
+                            defaultValue: "Дыши спокойно. Будем говорить плавно, не спеша."))
+                    .font(TypographyTokens.body(14).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.vertical, SpacingTokens.sp3)
+                    .padding(.horizontal, SpacingTokens.sp3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .fill(ColorTokens.Kid.surface)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+                    .padding(.leading, SpacingTokens.sp2)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(SpacingTokens.sp3)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
-            )
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, SpacingTokens.sp2)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            "\(String(localized: "stuttering.mascot.accessibility")). \(String(localized: "stuttering.hub.bubble"))"
+            String(localized: "stuttering.mascot.accessibility",
+                   defaultValue: "Ляля говорит: Дыши спокойно. Будем говорить плавно, не спеша.")
         )
     }
 
@@ -177,22 +241,21 @@ struct StutteringView: View {
 
     @ViewBuilder
     private var voicePromptBanner: some View {
-        if !scene.display.voicePromptText.isEmpty {
-            HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "speaker.wave.2.fill")
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .font(TypographyTokens.body(16))
-                Text(scene.display.voicePromptText)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-            }
-            .padding(SpacingTokens.sp3)
-            .background(ColorTokens.Brand.primary.opacity(0.08), in: RoundedRectangle(cornerRadius: RadiusTokens.md))
-            .accessibilityLabel(scene.display.voicePromptText)
-            .accessibilityAddTraits(.isStaticText)
+        HStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: "speaker.wave.2.fill")
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .font(TypographyTokens.body(16))
+            Text(scene.display.voicePromptText)
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
+        .padding(SpacingTokens.sp3)
+        .background(ColorTokens.Brand.primary.opacity(0.08),
+                    in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .accessibilityLabel(scene.display.voicePromptText)
+        .accessibilityAddTraits(.isStaticText)
     }
 
     // MARK: - Adaptive Recommendation Highlight
@@ -210,40 +273,63 @@ struct StutteringView: View {
         }
     }
 
-    // MARK: - Exercise Grid
+    // MARK: - Tools Section Header (open-design: "Инструменты" + "выбери своё")
+
+    private var toolsSectionHeader: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(String(localized: "stuttering.section.tools.title", defaultValue: "Инструменты"))
+                .font(TypographyTokens.headline(17).weight(.heavy))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: SpacingTokens.sp2)
+            Text(String(localized: "stuttering.section.tools.hint", defaultValue: "выбери своё"))
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+        }
+    }
+
+    // MARK: - Exercise Grid (open-design: 2-col grid + full-width diary card)
+    //
+    // Layout: 4 tool cards in 2×2 grid, then diary card full-width at bottom.
+    // ExerciseCard uses opaque surface fill (not glass) matching open-design .tool style.
 
     private var exerciseGrid: some View {
-        GeometryReader { geo in
-            let useTwoColumns = geo.size.width >= 375
-            let columns = useTwoColumns
-                ? [GridItem(.flexible(), spacing: SpacingTokens.sp3),
-                   GridItem(.flexible(), spacing: SpacingTokens.sp3)]
-                : [GridItem(.flexible())]
+        let nonDiaryCards = scene.display.cards.filter { $0.mode != .diary }
+        let diaryCard = scene.display.cards.first(where: { $0.mode == .diary })
+        let columns: [GridItem] = [
+            GridItem(.flexible(), spacing: SpacingTokens.sp3),
+            GridItem(.flexible(), spacing: SpacingTokens.sp3)
+        ]
 
+        return VStack(spacing: SpacingTokens.sp3) {
             LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
-                ForEach(Array(scene.display.cards.enumerated()), id: \.element.id) { idx, card in
+                ForEach(Array(nonDiaryCards.enumerated()), id: \.element.id) { idx, card in
                     ExerciseCard(
                         card: card,
-                        isWide: !useTwoColumns,
+                        isWide: false,
                         isRecommended: card.mode == scene.display.recommendedMode
                     )
                     .animation(
                         reduceMotion
                             ? .linear(duration: 0.15)
                             : MotionTokens.spring.delay(Double(idx) * 0.08),
-                        value: scene.display.cards.count
+                        value: nonDiaryCards.count
                     )
-                    .onTapGesture {
-                        navigateTo = card.mode
-                    }
+                    .onTapGesture { navigateTo = card.mode }
+                }
+            }
+
+            // Full-width diary card (open-design: diary-card spanning both columns)
+            if let diary = diaryCard {
+                DiaryCard(card: diary,
+                          isRecommended: diary.mode == scene.display.recommendedMode) {
+                    navigateTo = diary.mode
                 }
             }
         }
-        .frame(
-            minHeight: scene.display.cards.isEmpty
-                ? 0
-                : (scene.display.cards.count > 2 ? 420 : 140)
-        )
     }
 
     // MARK: - Educational Section
@@ -251,7 +337,7 @@ struct StutteringView: View {
     private var educationalSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             Text(String(localized: "stuttering.section.education.title"))
-                .font(TypographyTokens.headline(16))
+                .font(TypographyTokens.headline(16).weight(.heavy))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
 
             InfoTile(
@@ -278,7 +364,6 @@ struct StutteringView: View {
                 showInfoType = .techniques
             }
         }
-        .padding(.top, SpacingTokens.sp2)
     }
 
     // MARK: - Progress Toolbar Button
@@ -410,6 +495,10 @@ private struct InfoTile: View {
 }
 
 // MARK: - ExerciseCard
+//
+// open-design .tool: opaque surface background, 1pt line border, border-radius 22px.
+// Tinted icon circle (background = accent @ 16% opacity), bold title, muted duration.
+// Height fixed at 130pt — matches 2-column grid proportions on 375pt.
 
 private struct ExerciseCard: View {
 
@@ -421,42 +510,63 @@ private struct ExerciseCard: View {
     @State private var isPressed = false
 
     var body: some View {
-        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для exercise.
-        // ultraThickMaterial поверх calm mesh — kavsoft glass.
-        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                HStack {
-                    Image(systemName: card.symbol)
-                        .font(TypographyTokens.title(28))
-                        .foregroundStyle(symbolColor)
-                        .frame(width: 40, height: 40)
-                    Spacer()
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            // Tinted icon container (open-design: .ticon width=44 border-radius=14)
+            ZStack {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(symbolColor.opacity(0.16))
+                    .frame(width: 44, height: 44)
+                Image(systemName: card.symbol)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(symbolColor)
+            }
+
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                HStack(alignment: .top) {
+                    Text(card.title)
+                        .font(TypographyTokens.headline(16).weight(.heavy))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.85)
+                        .lineLimit(2)
                     if card.completedToday {
+                        Spacer(minLength: 2)
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(ColorTokens.Brand.mint)
-                            .font(TypographyTokens.body(16))
-                            // Step 10 Batch G — Pattern 5: bounce on completion.
+                            .font(TypographyTokens.body(14))
                             .hsSymbolEffect(.bounce, value: card.completedToday)
-                            .accessibilityLabel(String(localized: "stuttering.card.completed.accessibility"))
+                            .accessibilityLabel(
+                                String(localized: "stuttering.card.completed.accessibility")
+                            )
                     }
                 }
-                Text(card.title)
-                    .font(TypographyTokens.headline(18))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.85)
                 Text(card.duration)
-                    .font(TypographyTokens.caption(12))
+                    .font(TypographyTokens.caption(12).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
                 if card.streak > 0 {
                     Label("\(card.streak)", systemImage: "flame.fill")
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Brand.rose)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: isWide ? 100 : 130)
         }
+        .frame(maxWidth: .infinity, minHeight: 130, alignment: .topLeading)
+        .padding(SpacingTokens.sp4)
+        .background(ColorTokens.Kid.surface)
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .strokeBorder(
+                    isRecommended
+                        ? ColorTokens.Brand.primary.opacity(0.45)
+                        : ColorTokens.Kid.line,
+                    lineWidth: isRecommended ? 2 : 1
+                )
+        )
+        .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
         .scaleEffect(isPressed && !reduceMotion ? 0.97 : 1.0)
         .animation(MotionTokens.spring, value: isPressed)
         .accessibilityLabel(card.accessibilityLabel)
@@ -479,6 +589,92 @@ private struct ExerciseCard: View {
         case .lilac:   return ColorTokens.Brand.lilac
         case .gold:    return ColorTokens.Brand.gold
         }
+    }
+}
+
+// MARK: - DiaryCard
+//
+// open-design .diary-card: full-width, horizontal layout — icon · text body · chevron.
+// Accent color = Brand.gold (diary icon), subtitle = "last entry" row with mint dot.
+
+private struct DiaryCard: View {
+
+    let card: ExerciseCardViewModel
+    let isRecommended: Bool
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var isPressed = false
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: SpacingTokens.sp3) {
+                // Icon container
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(ColorTokens.Brand.gold.opacity(0.16))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: card.symbol)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                }
+
+                // Text body
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text(card.title)
+                        .font(TypographyTokens.headline(16).weight(.heavy))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    HStack(spacing: SpacingTokens.sp1) {
+                        Circle()
+                            .fill(card.completedToday
+                                  ? ColorTokens.Brand.mint
+                                  : ColorTokens.Kid.inkSoft)
+                            .frame(width: 8, height: 8)
+                        Text(card.completedToday
+                             ? String(localized: "stuttering.diary.today_done",
+                                     defaultValue: "Сегодня · запись сделана")
+                             : String(localized: "stuttering.diary.today_pending",
+                                     defaultValue: "Сегодня · добавь запись"))
+                            .font(TypographyTokens.caption(12).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+                // Chevron
+                Image(systemName: "chevron.right")
+                    .font(TypographyTokens.caption(14).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
+            .padding(SpacingTokens.sp4)
+            .background(ColorTokens.Kid.surface)
+            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                    .strokeBorder(
+                        isRecommended
+                            ? ColorTokens.Brand.primary.opacity(0.45)
+                            : ColorTokens.Kid.line,
+                        lineWidth: isRecommended ? 2 : 1
+                    )
+            )
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
+        }
+        .buttonStyle(.plain)
+        .scaleEffect(isPressed && !reduceMotion ? 0.98 : 1.0)
+        .animation(MotionTokens.spring, value: isPressed)
+        .accessibilityLabel(card.accessibilityLabel)
+        .accessibilityAddTraits(.isButton)
+        .contentShape(Rectangle())
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
     }
 }
 

@@ -170,23 +170,38 @@ struct ParentVoiceNoteView: View {
         _ loadVM: ParentVoiceNoteModels.Load.ViewModel
     ) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: "speaker.wave.3.fill")
-                .font(.system(size: 24))
-                .foregroundStyle(ColorTokens.Parent.accent)
-                .frame(width: 44, height: 44)
-                .background(Circle().fill(ColorTokens.Parent.accent.opacity(0.12)))
-                .hsSymbolEffect(.variableColor, value: loadVM.isEnabledGlobally)
-                .accessibilityHidden(true)
+            // Icon circle — pulses when enabled
+            ZStack {
+                Circle()
+                    .fill(
+                        loadVM.isEnabledGlobally
+                            ? ColorTokens.Parent.accent.opacity(0.18)
+                            : ColorTokens.Parent.accent.opacity(0.10)
+                    )
+                    .frame(width: 48, height: 48)
+                Image(systemName: loadVM.isEnabledGlobally ? "speaker.wave.3.fill" : "speaker.slash.fill")
+                    .font(.system(size: 22, weight: .medium))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .hsSymbolEffect(.variableColor, value: loadVM.isEnabledGlobally)
+            .accessibilityHidden(true)
+
             VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                 Text(loadVM.optInLabel)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .minimumScaleFactor(0.85)
                 Text(loadVM.optInSubtitle)
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Spacer()
+
+            Spacer(minLength: SpacingTokens.sp2)
+
             Toggle("", isOn: Binding(
                 get: { loadVM.isEnabledGlobally },
                 set: { newVal in
@@ -194,6 +209,7 @@ struct ParentVoiceNoteView: View {
                 }
             ))
             .labelsHidden()
+            .tint(ColorTokens.Parent.accent)
             .accessibilityLabel(Text(loadVM.optInLabel))
         }
     }
@@ -208,12 +224,24 @@ struct ParentVoiceNoteView: View {
             pendingDuration = 0
         } label: {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: template.symbolName)
-                    .font(.system(size: 22))
-                    .foregroundStyle(ColorTokens.Parent.accent)
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(ColorTokens.Parent.accent.opacity(0.12)))
-                    .accessibilityHidden(true)
+                // Icon circle — larger, warm accent fill
+                ZStack {
+                    Circle()
+                        .fill(
+                            template.hasClip
+                                ? ColorTokens.Brand.butter.opacity(0.22)
+                                : ColorTokens.Parent.accent.opacity(0.12)
+                        )
+                        .frame(width: 48, height: 48)
+                    Image(systemName: template.symbolName)
+                        .font(.system(size: 22, weight: .medium))
+                        .foregroundStyle(
+                            template.hasClip
+                                ? ColorTokens.Brand.gold
+                                : ColorTokens.Parent.accent
+                        )
+                }
+                .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(template.title)
@@ -228,13 +256,13 @@ struct ParentVoiceNoteView: View {
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     } else {
-                        Text("voice.row.empty")
+                        Text(String(localized: "voice.row.empty", defaultValue: "Ещё нет записи"))
                             .font(TypographyTokens.caption(12))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
                     }
                 }
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.sp2)
 
                 if template.hasClip {
                     Image(systemName: "checkmark.circle.fill")
@@ -244,21 +272,44 @@ struct ParentVoiceNoteView: View {
                 } else {
                     Image(systemName: "plus.circle")
                         .font(.system(size: 22))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .foregroundStyle(ColorTokens.Parent.accent.opacity(0.6))
                 }
             }
-            .padding(SpacingTokens.sp3)
-            .frame(minHeight: 64)
+            .padding(.horizontal, SpacingTokens.sp4)
+            .padding(.vertical, SpacingTokens.sp3)
+            .frame(minHeight: 68)
             .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Parent.surface)
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(
+                        template.hasClip
+                            ? AnyShapeStyle(
+                                LinearGradient(
+                                    colors: [
+                                        ColorTokens.Parent.surface,
+                                        ColorTokens.Brand.butter.opacity(0.12)
+                                    ],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                              )
+                            : AnyShapeStyle(ColorTokens.Parent.surface)
+                    )
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(
+                        template.hasClip
+                            ? ColorTokens.Brand.gold.opacity(0.25)
+                            : ColorTokens.Parent.line,
+                        lineWidth: 1
+                    )
             )
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(template.title))
         .accessibilityHint(Text(template.hasClip
-            ? "voice.row.hint.exists"
-            : "voice.row.hint.empty"))
+            ? String(localized: "voice.row.hint.exists", defaultValue: "Нажмите, чтобы перезаписать")
+            : String(localized: "voice.row.hint.empty", defaultValue: "Нажмите, чтобы записать")))
     }
 
     private func errorBanner(_ message: String) -> some View {
@@ -279,48 +330,128 @@ struct ParentVoiceNoteView: View {
         _ template: ParentVoiceNoteModels.Load.TemplateViewModel
     ) -> some View {
         NavigationStack {
-            VStack(spacing: SpacingTokens.sp4) {
-                Image(systemName: template.symbolName)
-                    .font(.system(size: 56))
-                    .foregroundStyle(ColorTokens.Parent.accent)
-                    .padding(.top, SpacingTokens.sp5)
-                    .accessibilityHidden(true)
-                Text(template.title)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
+            ZStack {
+                ColorTokens.Parent.bg.ignoresSafeArea()
 
-                Text(promptForRecorderState())
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, SpacingTokens.sp4)
+                ScrollView {
+                    VStack(spacing: SpacingTokens.sp4) {
+                        // Privacy pill — matches reference "Приватно · на устройстве"
+                        HSPrivacyPill()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.top, SpacingTokens.sp3)
 
-                elapsedDial()
+                        // Template icon + title
+                        VStack(spacing: SpacingTokens.sp2) {
+                            ZStack {
+                                Circle()
+                                    .fill(ColorTokens.Parent.accent.opacity(0.13))
+                                    .frame(width: 72, height: 72)
+                                Image(systemName: template.symbolName)
+                                    .font(.system(size: 32, weight: .medium))
+                                    .foregroundStyle(ColorTokens.Parent.accent)
+                            }
+                            .accessibilityHidden(true)
 
-                recorderButtons(template: template)
+                            Text(template.title)
+                                .font(TypographyTokens.title(22))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .minimumScaleFactor(0.85)
+                        }
 
-                Spacer()
+                        // "Прочитайте вслух" prompt card — key element from design ref
+                        if let phrase = template.promptPhrase, !phrase.isEmpty {
+                            promptPhraseCard(phrase)
+                        }
+
+                        // State hint text
+                        if !promptForRecorderState().isEmpty {
+                            Text(promptForRecorderState())
+                                .font(TypographyTokens.caption(14))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, SpacingTokens.sp4)
+                        }
+
+                        // Timer dial
+                        elapsedDial()
+
+                        // Action buttons
+                        recorderButtons(template: template)
+
+                        Spacer(minLength: SpacingTokens.sp8)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                }
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         cleanupAndDismissSheet()
                     } label: {
-                        Image(systemName: "xmark")
-                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
                     }
                     .accessibilityLabel(Text("voice.recorder.close.a11y"))
                 }
             }
         }
         .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+    }
+
+    /// «Прочитайте вслух» — карточка с фразой-подсказкой (дизайн-эталон).
+    private func promptPhraseCard(_ phrase: String) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "quote.opening")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .accessibilityHidden(true)
+                Text(String(localized: "voice.recorder.readAloud", defaultValue: "ПРОЧИТАЙТЕ ВСЛУХ"))
+                    .font(TypographyTokens.caption(11).weight(.bold))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .textCase(.uppercase)
+                    .kerning(0.6)
+            }
+            Text(phrase)
+                .font(TypographyTokens.title(18).italic())
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(SpacingTokens.sp4)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            ColorTokens.Parent.accent.opacity(0.06),
+                            ColorTokens.Brand.butter.opacity(0.10)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .strokeBorder(
+                    ColorTokens.Parent.accent.opacity(0.22),
+                    style: StrokeStyle(lineWidth: 1.5, dash: [6, 4])
+                )
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(String(localized: "voice.recorder.readAloud", defaultValue: "Прочитайте вслух") + ": " + phrase))
     }
 
     private func promptForRecorderState() -> String {
@@ -377,19 +508,53 @@ struct ParentVoiceNoteView: View {
     ) -> some View {
         switch recorderState {
         case .idle, .failed:
-            primaryRowButton(
-                title: String(localized: "voice.recorder.start"),
-                tint: ColorTokens.Brand.primary
-            ) {
-                Task { await startRecording() }
+            // Large mic button matching design reference
+            VStack(spacing: SpacingTokens.sp3) {
+                Button {
+                    Task { await startRecording() }
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Brand.primary)
+                            .frame(width: 80, height: 80)
+                            .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 12, y: 4)
+                        Image(systemName: "mic.fill")
+                            .font(.system(size: 32, weight: .medium))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(String(localized: "voice.recorder.start", defaultValue: "Начать запись")))
+
+                Text(String(localized: "voice.recorder.start", defaultValue: "Начать запись"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
             }
+
         case .recording:
-            primaryRowButton(
-                title: String(localized: "voice.recorder.stop"),
-                tint: ColorTokens.Semantic.error
-            ) {
-                stopRecording()
+            // Stop button — red circle with STOP
+            VStack(spacing: SpacingTokens.sp3) {
+                Button {
+                    stopRecording()
+                } label: {
+                    ZStack {
+                        Circle()
+                            .fill(ColorTokens.Semantic.error)
+                            .frame(width: 80, height: 80)
+                            .shadow(color: ColorTokens.Semantic.error.opacity(0.35), radius: 12, y: 4)
+                        Image(systemName: "stop.fill")
+                            .font(.system(size: 28, weight: .medium))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(String(localized: "voice.recorder.stop", defaultValue: "Остановить запись")))
+
+                Text(String(localized: "voice.recorder.stop", defaultValue: "Остановить"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
             }
+
         case .stopped:
             VStack(spacing: SpacingTokens.sp2) {
                 HStack(spacing: SpacingTokens.sp2) {
@@ -407,8 +572,8 @@ struct ParentVoiceNoteView: View {
                     }
                 }
                 primaryRowButton(
-                    title: String(localized: "voice.recorder.save"),
-                    tint: ColorTokens.Semantic.success
+                    title: String(localized: "voice.recorder.save", defaultValue: "Сохранить"),
+                    tint: ColorTokens.Brand.primary
                 ) {
                     Task { await saveRecording(template: template) }
                 }
@@ -416,7 +581,7 @@ struct ParentVoiceNoteView: View {
                     Button {
                         Task { await deleteExistingClip(template: template) }
                     } label: {
-                        Text("voice.recorder.deleteExisting")
+                        Text(String(localized: "voice.recorder.deleteExisting", defaultValue: "Удалить предыдущую запись"))
                             .font(TypographyTokens.caption(13).weight(.medium))
                             .foregroundStyle(ColorTokens.Semantic.error)
                             .frame(maxWidth: .infinity, minHeight: 40)
@@ -424,8 +589,9 @@ struct ParentVoiceNoteView: View {
                     .buttonStyle(.plain)
                 }
             }
+
         case .playingPreview:
-            Text("voice.recorder.playing.hint")
+            Text(String(localized: "voice.recorder.playing.hint", defaultValue: "Воспроизведение..."))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .frame(maxWidth: .infinity, minHeight: 56)

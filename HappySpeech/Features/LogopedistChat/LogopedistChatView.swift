@@ -137,8 +137,6 @@ struct LogopedistChatView: View {
                                 connectionWarning(text: connectionHint)
                             }
                             messagesList(viewModel: viewModel)
-                            Divider()
-                                .background(ColorTokens.Parent.line)
                             composerView(viewModel: viewModel)
                         }
                     } else {
@@ -308,58 +306,83 @@ struct LogopedistChatView: View {
             ? String(localized: "chat.specialist.typing")
             : (isLiveOnline ? String(localized: "chat.specialist.online") : viewModel.onlineStatusLabel)
 
-        HStack(spacing: SpacingTokens.sp3) {
-            ZStack {
-                Circle()
-                    .fill(ColorTokens.Parent.accent.opacity(0.18))
-                    .frame(width: 44, height: 44)
-                Image(systemName: "person.fill")
-                    .font(.title3)
-                    .foregroundStyle(ColorTokens.Parent.accent)
-                    .hsSymbolEffect(.bounce, value: isLiveOnline)
-            }
-            .overlay(alignment: .bottomTrailing) {
-                if isLiveOnline {
+        VStack(spacing: 0) {
+            HStack(spacing: SpacingTokens.sp3) {
+                // Avatar — 56pt coral circle matching design reference
+                ZStack {
                     Circle()
-                        .fill(ColorTokens.Semantic.success)
-                        .frame(width: 12, height: 12)
-                        .overlay(
-                            Circle().strokeBorder(ColorTokens.Parent.bg, lineWidth: 2)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    ColorTokens.Parent.accent.opacity(0.22),
+                                    ColorTokens.Parent.accent.opacity(0.12)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                        .accessibilityHidden(true)
+                        .frame(width: 56, height: 56)
+                    Image(systemName: "person.fill")
+                        .font(.system(size: 24, weight: .medium))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .hsSymbolEffect(.bounce, value: isLiveOnline)
                 }
-            }
+                .overlay(alignment: .bottomTrailing) {
+                    if isLiveOnline {
+                        Circle()
+                            .fill(ColorTokens.Semantic.success)
+                            .frame(width: 14, height: 14)
+                            .overlay(
+                                Circle().strokeBorder(ColorTokens.Parent.surface, lineWidth: 2.5)
+                            )
+                            .accessibilityHidden(true)
+                    }
+                }
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(viewModel.specialistName)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.85)
-                Text(viewModel.credentials)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .minimumScaleFactor(0.85)
-                // Presence-подпись — только когда специалист реально подключён.
-                if let presenceLabel {
-                    Text(presenceLabel)
-                        .font(TypographyTokens.caption(10))
-                        .foregroundStyle(
-                            (isTyping || isLiveOnline)
-                                ? ColorTokens.Semantic.success
-                                : ColorTokens.Parent.inkSoft
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(viewModel.specialistName)
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .minimumScaleFactor(0.85)
+                    // Credentials pill
+                    Text(viewModel.credentials)
+                        .font(TypographyTokens.caption(11).weight(.medium))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .padding(.horizontal, SpacingTokens.sp2)
+                        .padding(.vertical, 2)
+                        .background(
+                            Capsule()
+                                .fill(ColorTokens.Parent.accent.opacity(0.10))
                         )
                         .fixedSize(horizontal: false, vertical: true)
                         .minimumScaleFactor(0.85)
-                        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isTyping)
+                    // Presence-подпись — только когда специалист реально подключён.
+                    if let presenceLabel {
+                        Text(presenceLabel)
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(
+                                (isTyping || isLiveOnline)
+                                    ? ColorTokens.Semantic.success
+                                    : ColorTokens.Parent.inkSoft
+                            )
+                            .fixedSize(horizontal: false, vertical: true)
+                            .minimumScaleFactor(0.85)
+                            .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isTyping)
+                    }
                 }
-            }
 
-            Spacer(minLength: 0)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, SpacingTokens.sp4)
+            .padding(.vertical, SpacingTokens.sp3)
+            .background(ColorTokens.Parent.surface)
+
+            // Thin separator shadow under header — visual hierarchy
+            Rectangle()
+                .fill(ColorTokens.Parent.line)
+                .frame(height: 1)
         }
-        .padding(SpacingTokens.sp4)
-        .background(ColorTokens.Parent.surface)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "chat.header.a11y"),
@@ -672,21 +695,29 @@ struct LogopedistChatView: View {
 
     @ViewBuilder
     private func composerView(viewModel: LogopedistChatModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            if let recError = holder.recordingVM?.errorMessage {
-                composerNotice(text: recError)
-            } else if let playError = holder.playbackVM?.errorMessage {
-                composerNotice(text: playError)
-            }
+        VStack(spacing: 0) {
+            // Top border matching reference design
+            Rectangle()
+                .fill(ColorTokens.Parent.line)
+                .frame(height: 1)
 
-            if holder.recordingVM?.isRecording == true {
-                recordingBar
-            } else {
-                inputRow(viewModel: viewModel)
+            VStack(spacing: SpacingTokens.sp2) {
+                if let recError = holder.recordingVM?.errorMessage {
+                    composerNotice(text: recError)
+                } else if let playError = holder.playbackVM?.errorMessage {
+                    composerNotice(text: playError)
+                }
+
+                if holder.recordingVM?.isRecording == true {
+                    recordingBar
+                } else {
+                    inputRow(viewModel: viewModel)
+                }
             }
+            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.top, SpacingTokens.sp2)
+            .padding(.bottom, SpacingTokens.sp2)
         }
-        .padding(.horizontal, SpacingTokens.sp3)
-        .padding(.vertical, SpacingTokens.sp2)
         .background(ColorTokens.Parent.surface)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: holder.recordingVM?.isRecording)
     }
@@ -694,51 +725,52 @@ struct LogopedistChatView: View {
     @ViewBuilder
     private func inputRow(viewModel: LogopedistChatModels.Load.ViewModel) -> some View {
         HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            // Mic button — matches design reference: coral circle icon
             Button {
                 Task { await startRecording() }
             } label: {
                 Image(systemName: "mic.fill")
-                    .font(.title3)
+                    .font(.system(size: 18, weight: .medium))
                     .foregroundStyle(ColorTokens.Parent.accent)
                     .frame(width: 44, height: 44)
                     .background(
                         Circle()
-                            .fill(ColorTokens.Parent.accent.opacity(0.12))
+                            .fill(ColorTokens.Parent.accent.opacity(0.13))
                     )
             }
             .buttonStyle(.plain)
             .disabled(!viewModel.composerEnabled || holder.isSending)
             .accessibilityLabel(Text("chat.composer.record.a11y"))
 
+            // Text input pill — matches design reference: rounded, light bg
             HStack {
                 TextField(
                     String(localized: "chat.composer.placeholder"),
                     text: $composerText,
                     axis: .vertical
                 )
-                .font(TypographyTokens.body(14))
+                .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .lineLimit(1...4)
-                .padding(.horizontal, SpacingTokens.sp3)
-                .padding(.vertical, SpacingTokens.sp2)
+                .padding(.horizontal, SpacingTokens.sp4)
+                .padding(.vertical, 10)
                 .frame(minHeight: 44)
                 .onChange(of: composerText) { _, newValue in
-                    // Транслируем «печатает…» собеседнику через presence-канал.
-                    // Сам индикатор эфемерен — авто-сбрасывается по idle-таймеру.
                     presenceController?.setTyping(
                         !newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                     )
                 }
             }
             .background(
-                RoundedRectangle(cornerRadius: 22)
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
                     .fill(ColorTokens.Parent.bgDeep)
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 22)
+                RoundedRectangle(cornerRadius: 22, style: .continuous)
                     .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
             )
 
+            // Send button — arrow.up.circle.fill, coral when active
             Button {
                 Task { await send() }
             } label: {
@@ -747,9 +779,10 @@ struct LogopedistChatView: View {
                     .foregroundStyle(
                         canSend
                             ? ColorTokens.Parent.accent
-                            : ColorTokens.Parent.inkSoft
+                            : ColorTokens.Parent.inkSoft.opacity(0.5)
                     )
                     .frame(width: 44, height: 44)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.15), value: canSend)
             }
             .buttonStyle(.plain)
             .disabled(!canSend)

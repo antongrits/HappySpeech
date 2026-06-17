@@ -70,7 +70,8 @@ final class ParentVoiceNotePresenter: ParentVoiceNotePresentationLogic {
                 symbolName: option.symbolName,
                 hasClip: clip != nil,
                 durationLabel: clip.map { formatDuration($0.durationSec) },
-                recordedAtLabel: clip.map { formatRecordedAt($0.recordedAt) }
+                recordedAtLabel: clip.map { formatRecordedAt($0.recordedAt) },
+                promptPhrase: Self.promptPhrase(for: option.id)
             )
         }
         return .init(
@@ -81,6 +82,39 @@ final class ParentVoiceNotePresenter: ParentVoiceNotePresentationLogic {
             optInLabel: String(localized: "voice.optIn.title"),
             optInSubtitle: String(localized: "voice.optIn.subtitle")
         )
+    }
+
+    /// Канонические фразы-подсказки для экрана записи (один пример на шаблон).
+    /// Фраза отображается в карточке «ПРОЧИТАЙТЕ ВСЛУХ» (дизайн-эталон parent-voice).
+    static func promptPhrase(for templateId: String) -> String? {
+        switch templateId {
+        case "repeat-after-model":
+            return String(localized: "voice.prompt.repeat",
+                          defaultValue: "«Привет! Давай вместе научимся красиво говорить.»")
+        case "listen-and-choose":
+            return String(localized: "voice.prompt.listen",
+                          defaultValue: "«Слушай внимательно — ты обязательно угадаешь!»")
+        case "story-completion":
+            return String(localized: "voice.prompt.story",
+                          defaultValue: "«Давай вместе придумаем интересный конец истории.»")
+        case "breathing":
+            return String(localized: "voice.prompt.breathing",
+                          defaultValue: "«Сделай глубокий вдох — ты молодец!»")
+        case "rhythm":
+            return String(localized: "voice.prompt.rhythm",
+                          defaultValue: "«Хлопай в ладоши — раз, два, три!»")
+        case "articulation-imitation":
+            return String(localized: "voice.prompt.articulate",
+                          defaultValue: "«Покажи язычку, как умеешь: та-та-та!»")
+        case "narrative-quest":
+            return String(localized: "voice.prompt.narrative",
+                          defaultValue: "«Расскажи мне всё, что видишь на картинке!»")
+        case "minimal-pairs":
+            return String(localized: "voice.prompt.minimalPairs",
+                          defaultValue: "«Слушай разницу: дом — том, кот — год.»")
+        default:
+            return nil
+        }
     }
 
     static func localized(_ key: String) -> String {

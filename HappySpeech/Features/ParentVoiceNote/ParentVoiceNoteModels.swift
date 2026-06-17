@@ -90,6 +90,26 @@ enum ParentVoiceNoteModels {
             let hasClip: Bool
             let durationLabel: String?
             let recordedAtLabel: String?
+            /// Пример фразы для чтения вслух в листе записи (дизайн-эталон parent-voice).
+            let promptPhrase: String?
+
+            init(
+                id: String,
+                title: String,
+                symbolName: String,
+                hasClip: Bool,
+                durationLabel: String?,
+                recordedAtLabel: String?,
+                promptPhrase: String? = nil
+            ) {
+                self.id = id
+                self.title = title
+                self.symbolName = symbolName
+                self.hasClip = hasClip
+                self.durationLabel = durationLabel
+                self.recordedAtLabel = recordedAtLabel
+                self.promptPhrase = promptPhrase
+            }
         }
     }
 
