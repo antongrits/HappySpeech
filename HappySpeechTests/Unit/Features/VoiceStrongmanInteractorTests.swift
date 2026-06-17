@@ -20,6 +20,7 @@ final class VoiceStrongmanInteractorTests: XCTestCase {
         var recordingLog: [Bool] = []
         var playingLog: [Bool] = []
         var liveSamples: [VoiceStrongmanModels.LiveSample.Response] = []
+        var micDeniedCount = 0
 
         func presentStart(_ viewModel: VoiceStrongmanStartViewModel) { starts.append(viewModel) }
         func presentRecording(_ isRecording: Bool) { recordingLog.append(isRecording) }
@@ -27,6 +28,7 @@ final class VoiceStrongmanInteractorTests: XCTestCase {
         func presentLiveSample(_ r: VoiceStrongmanModels.LiveSample.Response) { liveSamples.append(r) }
         func presentScore(_ r: VoiceStrongmanModels.Score.Response) { scores.append(r) }
         func presentComplete(_ r: VoiceStrongmanModels.Complete.Response) { completes.append(r) }
+        func presentMicrophoneDenied() { micDeniedCount += 1 }
     }
 
     // MARK: - Planner spy
@@ -52,10 +54,15 @@ final class VoiceStrongmanInteractorTests: XCTestCase {
 
     private final class MockCapture: VoiceStrongmanCapturing {
         var scripted: VoiceStrongmanSnapshot = .empty
+        /// Если задано — `start()` бросит эту ошибку (например, denied-микрофон).
+        var startError: Error?
         private(set) var started = false
         private(set) var stopped = false
 
-        func start() async throws { started = true }
+        func start() async throws {
+            if let startError { throw startError }
+            started = true
+        }
         func stop() { stopped = true }
         func liveSnapshot() async -> VoiceStrongmanSnapshot { scripted }
         func finalSnapshot() async -> VoiceStrongmanSnapshot { scripted }
@@ -393,6 +400,20 @@ final class VoiceStrongmanInteractorTests: XCTestCase {
         await sut.start(.init(childId: "child-1"))
         sut.cancel()
         XCTAssertTrue(capture.stopped)
+    }
+
+    func test_startRecording_micDenied_surfacesDeniedNotSilent1Star() async {
+        let (sut, spy, planner, capture) = makeSUT(session: session(loudness: [mediumLoudness()]))
+        await sut.start(.init(childId: "child-1"))
+        capture.startError = VoiceStrongmanCaptureError.microphonePermissionDenied
+
+        await sut.startRecording()
+
+        // Без разрешения: понятное сообщение, НЕ «запись идёт», НЕ тихая 1★-оценка.
+        XCTAssertEqual(spy.micDeniedCount, 1, "Должно показаться denied-сообщение")
+        XCTAssertFalse(spy.recordingLog.contains(true), "Запись не должна стартовать без доступа")
+        XCTAssertTrue(spy.scores.isEmpty, "Не должно быть фиктивной оценки за молчание")
+        XCTAssertTrue(planner.itemOutcomes.isEmpty, "Без записи нет пословного outcome")
     }
 
     func test_playPrompt_emitsPlayingFlag() async {

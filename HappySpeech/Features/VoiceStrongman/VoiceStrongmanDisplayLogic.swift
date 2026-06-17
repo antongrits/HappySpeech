@@ -13,6 +13,8 @@ protocol VoiceStrongmanDisplayLogic: AnyObject {
     func displayLiveSample(_ viewModel: VoiceStrongmanModels.LiveSample.ViewModel)
     func displayScore(_ viewModel: VoiceStrongmanModels.Score.ViewModel)
     func displayComplete(_ viewModel: VoiceStrongmanModels.Complete.ViewModel)
+    /// Микрофон не разрешён: показать понятное сообщение, снять состояние записи.
+    func displayMicrophoneDenied(message: String)
 }
 
 // MARK: - VoiceStrongmanStartViewModel
@@ -75,6 +77,8 @@ extension VoiceStrongmanDisplay: VoiceStrongmanDisplayLogic {
         resultMessage = ""
         isRecording = false
         isPlaying = false
+        micDenied = false
+        micDeniedMessage = ""
     }
 
     func displayRecording(_ recording: Bool) {
@@ -85,7 +89,17 @@ extension VoiceStrongmanDisplay: VoiceStrongmanDisplayLogic {
             livePitch = 0
             liveContour = []
             loudnessInBand = false
+            micDenied = false
+            micDeniedMessage = ""
         }
+    }
+
+    func displayMicrophoneDenied(message: String) {
+        isRecording = false
+        showResult = false
+        micDenied = true
+        micDeniedMessage = message
+        mascotState = .encouraging
     }
 
     func displayPlaying(_ playing: Bool) {

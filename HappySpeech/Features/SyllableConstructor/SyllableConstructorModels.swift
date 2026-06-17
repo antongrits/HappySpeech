@@ -59,23 +59,19 @@ public struct SyllableWord: Sendable, Equatable, Identifiable, Codable {
     public let tier: SyllableTier
     /// Опциональный SF Symbol (для визуального ключа).
     public let symbolName: String?
-    /// Опциональный идентификатор аудио (m4a), если в `Audio/Lyalya/lessons/` есть запись.
-    public let audioPhraseId: String?
 
     public init(
         id: String,
         word: String,
         syllables: [String],
         tier: SyllableTier,
-        symbolName: String? = nil,
-        audioPhraseId: String? = nil
+        symbolName: String? = nil
     ) {
         self.id = id
         self.word = word
         self.syllables = syllables
         self.tier = tier
         self.symbolName = symbolName
-        self.audioPhraseId = audioPhraseId
     }
 }
 

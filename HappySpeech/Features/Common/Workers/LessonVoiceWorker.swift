@@ -384,7 +384,14 @@ final class LessonVoiceWorker: NSObject {
     private static func normalize(_ text: String) -> String {
         var result = text.lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        let punctuation = ["—", "–", "-", "?", "!", ".", ",", ";", ":", "\"", "'"]
+        // Снимаем тире/дефисы, конечную пунктуацию И все типографские кавычки
+        // (ёлочки «», немецкие „“, английские “”, одинарные ‚‘’) — динамические
+        // фразы новых фич часто берут целевое слово в кавычки, которых нет в
+        // ключе phrase-mapping; без этого озвучка не находит совпадение.
+        let punctuation = [
+            "—", "–", "-", "?", "!", ".", ",", ";", ":", "\"", "'",
+            "«", "»", "„", "“", "”", "‚", "‘", "’"
+        ]
         for ch in punctuation {
             result = result.replacingOccurrences(of: ch, with: "")
         }

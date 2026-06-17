@@ -61,6 +61,32 @@ private final class SpySyllablePresenter: SyllableConstructorPresentationLogic, 
     }
 }
 
+// MARK: - Planner spy
+
+private final class PlannerSpy: AdaptivePlannerService, @unchecked Sendable {
+    private(set) var sessionResults: [(sound: String, quality: SM2Quality)] = []
+    private(set) var itemOutcomes: [(itemId: String, correct: Bool)] = []
+
+    func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute {
+        AdaptiveRoute(steps: [], maxDurationSec: 0, fatigueLevel: .fresh, disorder: .dyslalia)
+    }
+    func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws {}
+    func recordSessionResult(childId: String, soundTarget: String, qualityScore: SM2Quality) async throws {
+        sessionResults.append((soundTarget, qualityScore))
+    }
+    func recordItemOutcome(childId: String, itemId: String, sound: String, correct: Bool) async {
+        itemOutcomes.append((itemId, correct))
+    }
+    func shouldTakeBreak(consecutiveWrong: Int, sessionDurationSec: Int, childAge: Int) -> Bool { false }
+}
+
+// MARK: - Persistence spy
+
+private final class SessionPersistenceSpy: SessionPersistenceCoordinating, @unchecked Sendable {
+    private(set) var persisted: [SessionDTO] = []
+    func persistAndSync(_ session: SessionDTO) async { persisted.append(session) }
+}
+
 // MARK: - Helpers
 
 private func makeWord(_ id: String, syllables: [String], tier: SyllableTier = .oneSyllableOpen) -> SyllableWord {
@@ -85,6 +111,108 @@ final class SyllableConstructorInteractorTests: XCTestCase {
         let spy = SpySyllablePresenter()
         interactor.presenter = spy
         return (interactor, spy, worker, haptic)
+    }
+
+    /// SUT с инжектированными планировщиком и персистентностью — для проверки
+    /// записи исходов (per-word outcome + session result).
+    private func makeSUTWithPersistence(
+        words: [SyllableTier: [SyllableWord]] = [.oneSyllableOpen: [makeWord("w1", syllables: ["ма", "ма"])]]
+    ) -> (SyllableConstructorInteractor, SpySyllablePresenter, PlannerSpy, SessionPersistenceSpy) {
+        let worker = StubSyllableWorker(wordsByTier: words)
+        let haptic = SpyHapticService()
+        let planner = PlannerSpy()
+        let persistence = SessionPersistenceSpy()
+        let interactor = SyllableConstructorInteractor(
+            childId: "child-1",
+            worker: worker,
+            hapticService: haptic,
+            adaptivePlanner: planner,
+            sessionPersistence: persistence
+        )
+        let spy = SpySyllablePresenter()
+        interactor.presenter = spy
+        return (interactor, spy, planner, persistence)
+    }
+
+    // MARK: - Outcome recording (адаптив / история)
+
+    func test_submit_correct_recordsItemOutcomeCorrect() async {
+        let (sut, _, planner, _) = makeSUTWithPersistence()
+        await sut.start(request: .init(childId: "child-1", preferredTier: .oneSyllableOpen))
+        let orderedIds = sortedIdsForExpected(tiles: sut.currentTiles, expected: ["ма", "ма"])
+        await sut.submitGuess(request: .init(tileIds: orderedIds))
+
+        XCTAssertEqual(planner.itemOutcomes.count, 1)
+        XCTAssertEqual(planner.itemOutcomes.first?.itemId, "w1")
+        XCTAssertTrue(planner.itemOutcomes.first?.correct ?? false,
+                      "Верно собранное слово → пословный outcome correct")
+    }
+
+    func test_submit_wrong_recordsItemOutcomeIncorrect() async {
+        let (sut, _, planner, _) = makeSUTWithPersistence(words: [
+            .twoSyllablesOpen: [makeWord("w-wrong", syllables: ["во", "да"], tier: .twoSyllablesOpen)]
+        ])
+        await sut.start(request: .init(childId: "child-1", preferredTier: .twoSyllablesOpen))
+        let reversedIds = sut.currentTiles.reversed().map(\.id)
+        await sut.submitGuess(request: .init(tileIds: reversedIds))
+
+        XCTAssertEqual(planner.itemOutcomes.count, 1)
+        XCTAssertFalse(planner.itemOutcomes.first?.correct ?? true,
+                       "Неверный порядок → пословный outcome incorrect")
+    }
+
+    func test_finish_recordsSessionResultAndPersists() async {
+        let (sut, _, planner, persistence) = makeSUTWithPersistence()
+        await sut.start(request: .init(childId: "child-1", preferredTier: .oneSyllableOpen))
+        let orderedIds = sortedIdsForExpected(tiles: sut.currentTiles, expected: ["ма", "ма"])
+        await sut.submitGuess(request: .init(tileIds: orderedIds))
+
+        await sut.finish()
+
+        XCTAssertEqual(planner.sessionResults.count, 1)
+        XCTAssertEqual(planner.sessionResults.first?.sound, "слоговая-структура")
+        XCTAssertEqual(persistence.persisted.count, 1)
+        XCTAssertEqual(persistence.persisted.first?.childId, "child-1")
+        XCTAssertEqual(persistence.persisted.first?.targetSound, "слоговая-структура")
+        XCTAssertEqual(persistence.persisted.first?.correctAttempts, 1)
+    }
+
+    func test_finish_isIdempotent() async {
+        let (sut, _, planner, persistence) = makeSUTWithPersistence()
+        await sut.start(request: .init(childId: "child-1", preferredTier: .oneSyllableOpen))
+        let orderedIds = sortedIdsForExpected(tiles: sut.currentTiles, expected: ["ма", "ма"])
+        await sut.submitGuess(request: .init(tileIds: orderedIds))
+
+        await sut.finish()
+        await sut.finish()
+
+        XCTAssertEqual(planner.sessionResults.count, 1, "Повторный finish не дублирует результат")
+        XCTAssertEqual(persistence.persisted.count, 1)
+    }
+
+    func test_finish_withoutAnyAttempt_recordsNothing() async {
+        let (sut, _, planner, persistence) = makeSUTWithPersistence()
+        await sut.start(request: .init(childId: "child-1", preferredTier: .oneSyllableOpen))
+        // Ребёнок вышел, ничего не проверив.
+        await sut.finish()
+
+        XCTAssertTrue(planner.sessionResults.isEmpty, "Без попыток нет результата сессии")
+        XCTAssertTrue(persistence.persisted.isEmpty)
+    }
+
+    func test_firstTryFraction_dropsAfterErrorOnSameWord() async {
+        let (sut, _, _, _) = makeSUTWithPersistence(words: [
+            .twoSyllablesOpen: [makeWord("w-x", syllables: ["во", "да"], tier: .twoSyllablesOpen)]
+        ])
+        await sut.start(request: .init(childId: "child-1", preferredTier: .twoSyllablesOpen))
+        // Сначала ошибка, потом верно по тому же слову → не «с первой попытки».
+        let reversedIds = sut.currentTiles.reversed().map(\.id)
+        await sut.submitGuess(request: .init(tileIds: reversedIds))
+        let orderedIds = sortedIdsForExpected(tiles: sut.currentTiles, expected: ["во", "да"])
+        await sut.submitGuess(request: .init(tileIds: orderedIds))
+
+        XCTAssertEqual(sut.firstTryFraction, 0, accuracy: 0.001,
+                       "Слово решено после ошибки — не засчитывается как с первой попытки")
     }
 
     func test_start_loadsWordAndShuffledTiles() async {

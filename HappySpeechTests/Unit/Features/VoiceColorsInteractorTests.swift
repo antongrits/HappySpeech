@@ -336,6 +336,45 @@ final class VoiceColorsInteractorTests: XCTestCase {
         XCTAssertEqual(VoiceEmotion.from(detected: .neutral), .joy)
     }
 
+    func test_emotion_neutralDetected_isNotMatch_noStarsForSilence() async {
+        // Тишина/немая попытка → модель отдаёт .neutral. При выбранной «радость»
+        // это НЕ должно засчитываться как совпадение (иначе звёзды за молчание).
+        let mock = MockEmotionDetectionService(emotion: .neutral, confidence: 0.9)
+        let (sut, spy, _, capture) = makeSUT(session: session(emotion: [snegEmotion()]), emotion: mock)
+        await sut.start(.init(childId: "child-1"))
+        sut.selectEmotion(.init(emotion: .joy))
+
+        capture.scripted = VoiceCaptureSnapshot(
+            contour: [], amplitudeEnvelope: [], amplitude: 0.05,
+            pcmData: Data(repeating: 0, count: 64)
+        )
+        await sut.startRecording()
+        await sut.stopRecording()
+
+        XCTAssertEqual(spy.scores.first?.mode, .emotion)
+        XCTAssertFalse(spy.scores.first?.isMatch ?? true,
+                       "Нейтральная (немая) попытка не должна засчитываться совпадением")
+        // Зеркало поддержки сохраняется: Ляля всё равно отражает выбранную эмоцию.
+        XCTAssertEqual(spy.scores.first?.detectedEmotion, .joy)
+    }
+
+    func test_emotion_emptyPCM_isNotMatch() async {
+        // Совсем пустая запись (нет PCM) с детектором → no-match (нет речи).
+        let mock = MockEmotionDetectionService(emotion: .happy, confidence: 0.9)
+        let (sut, spy, _, capture) = makeSUT(session: session(emotion: [snegEmotion()]), emotion: mock)
+        await sut.start(.init(childId: "child-1"))
+        sut.selectEmotion(.init(emotion: .joy))
+
+        capture.scripted = VoiceCaptureSnapshot(
+            contour: [], amplitudeEnvelope: [], amplitude: 0, pcmData: Data()
+        )
+        await sut.startRecording()
+        await sut.stopRecording()
+
+        XCTAssertFalse(spy.scores.first?.isMatch ?? true,
+                       "Пустая запись (нет PCM) не должна давать совпадение")
+    }
+
     // MARK: - Mode transition + persistence
 
     func test_advance_movesFromIntonationToStress() async {

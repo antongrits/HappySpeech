@@ -24,6 +24,14 @@ protocol VoiceStrongmanCapturing: AnyObject {
     func finalSnapshot() async -> VoiceStrongmanSnapshot
 }
 
+// MARK: - VoiceStrongmanCaptureError
+
+/// Типизированные ошибки захвата «Силача-голоса».
+enum VoiceStrongmanCaptureError: Error, Equatable {
+    /// Разрешение на микрофон не выдано (или отозвано в Настройках).
+    case microphonePermissionDenied
+}
+
 /// Снимок захвата.
 struct VoiceStrongmanSnapshot: Sendable, Equatable {
     /// Все нормализованные кадры громкости 0…1 за запись.
@@ -113,11 +121,34 @@ final class VoiceStrongmanAudioCapture: VoiceStrongmanCapturing {
 
     func start() async throws {
         guard !isRunning else { return }
+        // Без разрешения на запись tap отдаёт тишину → шар/лесенка не двигаются и
+        // ребёнок молча получает 1★ без объяснения. Запрашиваем/проверяем доступ
+        // к микрофону (как TongueTwisters/CarryoverVoiceNote) и при отказе бросаем
+        // типизированную ошибку, чтобы UI показал понятное сообщение.
+        guard await Self.ensureRecordPermission() else {
+            logger.info("VoiceStrongman: микрофон не разрешён")
+            throw VoiceStrongmanCaptureError.microphonePermissionDenied
+        }
         await accumulator.clear()
         try configureSession()
         try startTap()
         isRunning = true
         logger.info("VoiceStrongman capture started")
+    }
+
+    /// Возвращает true, если доступ к микрофону есть; при `.undetermined`
+    /// запрашивает системно (iOS 17+ `AVAudioApplication`).
+    private static func ensureRecordPermission() async -> Bool {
+        switch AVAudioApplication.shared.recordPermission {
+        case .granted:
+            return true
+        case .denied:
+            return false
+        case .undetermined:
+            return await AVAudioApplication.requestRecordPermission()
+        @unknown default:
+            return await AVAudioApplication.requestRecordPermission()
+        }
     }
 
     func stop() {

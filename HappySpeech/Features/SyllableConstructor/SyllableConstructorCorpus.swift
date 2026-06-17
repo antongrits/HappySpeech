@@ -66,8 +66,7 @@ public enum SyllableConstructorCorpus {
                         word: wordDTO.word,
                         syllables: wordDTO.syllables,
                         tier: tier,
-                        symbolName: wordDTO.symbol,
-                        audioPhraseId: wordDTO.audioPhraseId
+                        symbolName: wordDTO.symbol
                     )
                 }
             }
@@ -93,6 +92,5 @@ private struct SyllablePackDTO: Decodable {
         let word: String
         let syllables: [String]
         let symbol: String?
-        let audioPhraseId: String?
     }
 }

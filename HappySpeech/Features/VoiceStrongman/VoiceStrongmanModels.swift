@@ -342,6 +342,10 @@ final class VoiceStrongmanDisplay {
     var completionMessage: String = ""
     var matchRate: Float = 0
 
+    // Микрофон не разрешён — баннер вместо тихого 1★.
+    var micDenied: Bool = false
+    var micDeniedMessage: String = ""
+
     var pendingExit: Bool = false
 }
 

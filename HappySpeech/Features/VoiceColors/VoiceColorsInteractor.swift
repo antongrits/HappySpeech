@@ -308,12 +308,19 @@ final class VoiceColorsInteractor: VoiceColorsBusinessLogic {
         // Распознаём окраску голоса. При отсутствии сервиса / пустой записи
         // «зеркалим» выбранную ребёнком эмоцию (безоценочный модуль).
         var detected = currentEmotion
+        // Тишина / нейтральная (немая) попытка не должна засчитываться как
+        // совпадение — иначе ребёнок получает «успех» за молчание (звёзды за
+        // не-речь). Интонация/ударение честно дают no-match на тишину; приводим
+        // эмоцию к той же честности.
+        var isNeutralOrSilent = snapshot.pcmData.isEmpty
         if let service = emotionService, !snapshot.pcmData.isEmpty {
             let result = await service.analyze(pcmData: snapshot.pcmData)
+            isNeutralOrSilent = result.emotion == .neutral
             detected = VoiceEmotion.from(detected: result.emotion)
         }
-        // Совпадение — мягкое: считается, если распознанная окраска = выбранной.
-        let isMatch = detected == currentEmotion
+        // Совпадение — мягкое: считается, если распознанная окраска = выбранной
+        // И попытка не была нейтральной/немой.
+        let isMatch = !isNeutralOrSilent && detected == currentEmotion
         lastAttemptMatched = isMatch
         if isMatch { matches += 1 }
         // Ляля всегда отражает выбранную эмоцию (зеркало поддержки, не оценка):

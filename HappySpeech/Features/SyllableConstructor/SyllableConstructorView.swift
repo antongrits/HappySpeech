@@ -104,6 +104,13 @@ struct SyllableConstructorView: View {
             .task {
                 await setupAndStart()
             }
+            .onDisappear {
+                // Уход с экрана = конец сессии: фиксируем результат в планировщике
+                // и персистентности (история, прогресс, due-повторы FSRS).
+                Task { @MainActor [interactor] in
+                    await interactor?.finish()
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
     }
@@ -474,7 +481,9 @@ struct SyllableConstructorView: View {
             let interactor = SyllableConstructorInteractor(
                 childId: childId,
                 worker: worker,
-                hapticService: container.hapticService
+                hapticService: container.hapticService,
+                adaptivePlanner: container.adaptivePlannerService,
+                sessionPersistence: container.sessionPersistenceCoordinator
             )
             interactor.presenter = presenter
             self.presenter = presenter

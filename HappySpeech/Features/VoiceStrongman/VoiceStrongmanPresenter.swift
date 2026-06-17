@@ -11,6 +11,8 @@ protocol VoiceStrongmanPresentationLogic: AnyObject {
     func presentLiveSample(_ response: VoiceStrongmanModels.LiveSample.Response)
     func presentScore(_ response: VoiceStrongmanModels.Score.Response)
     func presentComplete(_ response: VoiceStrongmanModels.Complete.Response)
+    /// Микрофон не разрешён — показать понятное сообщение вместо тихого 1★.
+    func presentMicrophoneDenied()
 }
 
 // MARK: - VoiceStrongmanPresenter
@@ -37,6 +39,16 @@ final class VoiceStrongmanPresenter: VoiceStrongmanPresentationLogic {
 
     func presentRecording(_ isRecording: Bool) {
         display?.displayRecording(isRecording)
+    }
+
+    func presentMicrophoneDenied() {
+        logger.info("presentMicrophoneDenied")
+        display?.displayMicrophoneDenied(
+            message: String(
+                localized: "voiceStrongman.mic.denied",
+                defaultValue: "Чтобы услышать твой голос, разреши доступ к микрофону в Настройках телефона."
+            )
+        )
     }
 
     func presentPlaying(_ isPlaying: Bool) {
