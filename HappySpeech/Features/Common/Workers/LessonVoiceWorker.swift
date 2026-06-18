@@ -175,11 +175,15 @@ final class LessonVoiceWorker: NSObject {
     /// Произносит изолированную фонему через AVSpeechSynthesizer и ждёт
     /// завершения. Замедленный темп + пауза — чтобы звук читался разборчиво.
     private func synthesizeIsolatedSound(_ sound: String, logContext: String) async {
+        // Защита: TTS НИКОГДА не должен произносить служебные символы (подчёркивание
+        // id/ключа → ru-RU читает «нижнее подчёркивание»). Заменяем «_» на пробел,
+        // чтобы любой случайно просочившийся id озвучивался разборчиво, а не по символу.
+        let speakable = sound.replacingOccurrences(of: "_", with: " ")
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             synthesisContinuation?.resume()
             synthesisContinuation = continuation
 
-            let utterance = AVSpeechUtterance(string: sound)
+            let utterance = AVSpeechUtterance(string: speakable)
             utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
             // Медленнее обычного — изолированный звук должен звучать протяжно
             // и разборчиво для ребёнка 5–8 лет.
@@ -389,7 +393,7 @@ final class LessonVoiceWorker: NSObject {
         // фразы новых фич часто берут целевое слово в кавычки, которых нет в
         // ключе phrase-mapping; без этого озвучка не находит совпадение.
         let punctuation = [
-            "—", "–", "-", "?", "!", ".", ",", ";", ":", "\"", "'",
+            "—", "–", "-", "_", "?", "!", ".", ",", ";", ":", "\"", "'",
             "«", "»", "„", "“", "”", "‚", "‘", "’"
         ]
         for ch in punctuation {
