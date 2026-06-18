@@ -214,8 +214,8 @@ final class LiveSoundsBuilder {
     /// Минимальный встроенный набор реальных слов с проверенными ассетами —
     /// на случай отсутствия пака. Никаких пустых экранов.
     static func fallbackRounds() -> [LiveSoundsRound] {
-        func unit(_ l: String, _ t: LiveSoundType, _ p: Int) -> LiveSoundUnit {
-            LiveSoundUnit(letter: l, type: t, position: p)
+        func unit(_ letter: String, _ t: LiveSoundType, _ p: Int) -> LiveSoundUnit {
+            LiveSoundUnit(letter: letter, type: t, position: p)
         }
         func round(
             _ id: String, _ word: String, _ asset: String,
@@ -226,8 +226,8 @@ final class LiveSoundsBuilder {
             for (w, a) in distractors {
                 opts.append(PictureOption(id: opts.count, word: w, imageAsset: a, isCorrect: false))
             }
-            opts = stableShuffle(opts, seed: id).enumerated().map { idx, o in
-                PictureOption(id: idx, word: o.word, imageAsset: o.imageAsset, isCorrect: o.isCorrect)
+            opts = stableShuffle(opts, seed: id).enumerated().map { idx, option in
+                PictureOption(id: idx, word: option.word, imageAsset: option.imageAsset, isCorrect: option.isCorrect)
             }
             let bench = makeBench(for: sounds, distractorAssets: distractors.map { $0.1 }, seed: id)
             return LiveSoundsRound(

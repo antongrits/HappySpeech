@@ -1289,6 +1289,7 @@
 		87FC2CA797B87F6EB5A393F5 /* HelpCenterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24652CCCFA5490D6DF749A1 /* HelpCenterInteractor.swift */; };
 		8807C9F73B97362FE3DB9CDC /* AssignedHomeworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63640613AC63BC60C0A96D65 /* AssignedHomeworkView.swift */; };
 		883553A6FCE0BE44980EAF88 /* MLIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CD5DCA46987F709A6F874 /* MLIntegrationTests.swift */; };
+		883854A2BC370B65A29E7263 /* ChildHomeView+EntryCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CCA3154E45B041A16DD3B1 /* ChildHomeView+EntryCards.swift */; };
 		8877C7C28019056278AE0BA7 /* MockBlowDetectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07026037A2127FE751C63E9D /* MockBlowDetectionService.swift */; };
 		88A6661FC4FB955FA05884D3 /* PrecannedNarrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993650E13BEBEF9114C90A8F /* PrecannedNarrations.swift */; };
 		88A6EB97C50479F637348AD2 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 0D0D47B432C455E4F6435A2D /* FirebaseDatabase */; };
@@ -2872,6 +2873,7 @@
 		38BBEBECE4B2E35DC49297B4 /* AchievementEventSink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementEventSink.swift; sourceTree = "<group>"; };
 		38C28428EB2CBA22EC5AA2F6 /* VoiceColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceColorsView.swift; sourceTree = "<group>"; };
 		38C29C8BACA7A897E17F75F2 /* LocalLLMServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalLLMServiceTests.swift; sourceTree = "<group>"; };
+		38CCA3154E45B041A16DD3B1 /* ChildHomeView+EntryCards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChildHomeView+EntryCards.swift"; sourceTree = "<group>"; };
 		38E8FFF4CF5F532DA94FEF4F /* KidGameTapScaffold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidGameTapScaffold.swift; sourceTree = "<group>"; };
 		391258066C6D93156622EA87 /* pack_bedtime_stories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_bedtime_stories.json; sourceTree = "<group>"; };
 		3915545C5C891A8018EDDE44 /* RussianPhonemeClassifierWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianPhonemeClassifierWrapper.swift; sourceTree = "<group>"; };
@@ -8302,6 +8304,7 @@
 				429D1E4A82ECDBDF7133308E /* ChildHomeRouter.swift */,
 				6DC7AAC38F7803B62CB62CBE /* ChildHomeV25EntryCards.swift */,
 				79853A6CBF1D788687E7CE53 /* ChildHomeView.swift */,
+				38CCA3154E45B041A16DD3B1 /* ChildHomeView+EntryCards.swift */,
 				10934E133DD14EE69CF598EE /* ChildHomeViewComponents.swift */,
 				5B25B286A154BF5AB20B4909 /* ChildHomeViewListComponents.swift */,
 				BC98FE5C7767A58A60686632 /* ChildHomeViewMissionComponents.swift */,
@@ -11804,6 +11807,7 @@
 				4E5C90FCBF4ED43B9BFC31BC /* ChildHomePresenter.swift in Sources */,
 				D481C7BA804BA0AF3D7F68C4 /* ChildHomeRouter.swift in Sources */,
 				B22CF36668699643B0062C46 /* ChildHomeV25EntryCards.swift in Sources */,
+				883854A2BC370B65A29E7263 /* ChildHomeView+EntryCards.swift in Sources */,
 				F743B86C92ADAF149394EC50 /* ChildHomeView.swift in Sources */,
 				D1AD09F6FB5AE4A79D24A01F /* ChildHomeViewComponents.swift in Sources */,
 				3A9C7E9BE835DB461FCA12E4 /* ChildHomeViewListComponents.swift in Sources */,

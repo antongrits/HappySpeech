@@ -256,7 +256,7 @@ final class SoundCompositionBuilder {
     /// Минимальный встроенный набор реальных слов с верифицированными ассетами —
     /// на случай отсутствия пака в бандле. Никаких пустых экранов.
     static func fallbackWords() -> [SoundCompositionWord] {
-        func u(_ l: String, _ t: SoundType) -> SoundUnit { SoundUnit(letter: l, type: t) }
+        func u(_ letter: String, _ t: SoundType) -> SoundUnit { SoundUnit(letter: letter, type: t) }
         return [
             SoundCompositionWord(
                 id: "fb-kit", text: "кит", imageAsset: "word_kit",

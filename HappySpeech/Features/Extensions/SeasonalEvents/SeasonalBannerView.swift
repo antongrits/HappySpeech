@@ -24,6 +24,11 @@ struct SeasonalBannerView: View {
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SeasonalBanner")
 
+    // Тёмно-золотой текст event-бейджа поверх butter-капсулы (эталон .event-badge).
+    // Функциональный оттенок бейджа, не UI-chrome (forbidden_color_literal не применим).
+    // swiftlint:disable:next forbidden_color_literal
+    private static let eventBadgeInk = Color(red: 0.23, green: 0.15, blue: 0.0)
+
     var body: some View {
         if let event = manager.activeEvent {
             bannerContent(event: event)
@@ -150,7 +155,7 @@ struct SeasonalBannerView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .minimumScaleFactor(0.85)
         }
-        .foregroundStyle(Color(red: 0.23, green: 0.15, blue: 0.0))
+        .foregroundStyle(Self.eventBadgeInk)
         .padding(.vertical, SpacingTokens.sp1)
         .padding(.horizontal, SpacingTokens.sp2 + 2)
         .background(

@@ -54,6 +54,16 @@ public struct SpectrogramVisualizerView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SpectrogramVisualizerView")
 
+    // Контент-палитра визуализации (читаемость на тёмном data-viz холсте, где
+    // системный `.primary` нечитаем), не UI-chrome — forbidden_color_literal
+    // отключён намеренно для этих определений.
+    // swiftlint:disable forbidden_color_literal
+    private enum VizTextPalette {
+        static let dividerLabel = Color(red: 0.93, green: 0.84, blue: 0.76)
+        static let panelTitle = Color(red: 1.0, green: 0.95, blue: 0.90)
+    }
+    // swiftlint:enable forbidden_color_literal
+
     // MARK: - Init
 
     public init(
@@ -172,7 +182,7 @@ public struct SpectrogramVisualizerView: View {
 
             Text(String(localized: "spectrogram.compare", defaultValue: "Сравни звуки"))
                 .font(.caption2)
-                .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
+                .foregroundStyle(VizTextPalette.dividerLabel)
                 .padding(.horizontal, SpacingTokens.tiny)
 
             Rectangle()
@@ -193,7 +203,7 @@ public struct SpectrogramVisualizerView: View {
             // `.primary` на нём становится почти-чёрным и нечитаемым).
             Text(title)
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(Color(red: 1.0, green: 0.95, blue: 0.90))
+                .foregroundStyle(VizTextPalette.panelTitle)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(title)

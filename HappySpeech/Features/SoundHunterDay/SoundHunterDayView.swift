@@ -798,6 +798,16 @@ struct SoundHunterDayView: View {
             display.streakDays
         )
     }
+}
+
+// MARK: - SoundHunterDayView + Parent & Helpers
+//
+// PARENT-экран подтверждения переноса, mascot-row, parent-хелперы, actions,
+// circuit-aware цвета и bootstrap вынесены в same-file extension, чтобы тело
+// `SoundHunterDayView` не превышало SwiftLint type_body_length. Доступ private
+// сохраняется (same-file scope). Чистый view-рендер, без бизнес-логики.
+
+extension SoundHunterDayView {
 
     // MARK: - PARENT screen: подтверждение переноса
 
@@ -853,7 +863,10 @@ struct SoundHunterDayView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
                 Text(String(
-                    format: String(localized: "soundHunter.parent.caughtSummary %lld %@", defaultValue: "Сегодня поймал(а) %lld слов(а) с %@ в копилку охотника"),
+                    format: String(
+                        localized: "soundHunter.parent.caughtSummary %lld %@",
+                        defaultValue: "Сегодня поймал(а) %lld слов(а) с %@ в копилку охотника"
+                    ),
                     display.caughtWords.count, display.sound
                 ))
                 .font(TypographyTokens.body(12.5).weight(.semibold))
@@ -1032,7 +1045,11 @@ struct SoundHunterDayView: View {
                 .background(RoundedRectangle(cornerRadius: 9).fill(ColorTokens.Brand.mint.opacity(0.18)))
                 .accessibilityHidden(true)
             Text(String(
-                format: String(localized: "soundHunter.parent.signal %@", defaultValue: "Ваша отметка помогает плану занятий: при чистой свободной речи звук %@ двигается к завершению, иначе вернутся упражнения автоматизации."),
+                format: String(
+                    localized: "soundHunter.parent.signal %@",
+                    // swiftlint:disable:next line_length
+                    defaultValue: "Ваша отметка помогает плану занятий: при чистой свободной речи звук %@ двигается к завершению, иначе вернутся упражнения автоматизации."
+                ),
                 display.sound
             ))
             .font(TypographyTokens.body(12.5).weight(.semibold))
@@ -1066,14 +1083,20 @@ struct SoundHunterDayView: View {
                           defaultValue: "Сачок полон! Покажи маме свою копилку и расскажи, какие слова поймал 🌟")
         }
         return String(
-            format: String(localized: "soundHunter.mascot.catch %@", defaultValue: "Когда услышишь слово со звуком %@ — нажми «Поймал!». Я добавлю звёздочку в сачок 🌟"),
+            format: String(
+                localized: "soundHunter.mascot.catch %@",
+                defaultValue: "Когда услышишь слово со звуком %@ — нажми «Поймал!». Я добавлю звёздочку в сачок 🌟"
+            ),
             display.sound
         )
     }
 
     private var collectionMascotText: String {
         String(
-            format: String(localized: "soundHunter.mascot.collection %@", defaultValue: "Покажи маме свою копилку — пусть тоже порадуется твоему чистому %@! Завтра новая охота 🎯"),
+            format: String(
+                localized: "soundHunter.mascot.collection %@",
+                defaultValue: "Покажи маме свою копилку — пусть тоже порадуется твоему чистому %@! Завтра новая охота 🎯"
+            ),
             display.sound
         )
     }

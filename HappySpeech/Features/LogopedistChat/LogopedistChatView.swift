@@ -892,6 +892,15 @@ struct LogopedistChatView: View {
                 holder.showToast = false
             }
     }
+}
+
+// MARK: - LogopedistChatView + Wiring (Clean Swift bootstrap & actions)
+//
+// Bootstrap, real-time подписка/presence и user-action методы вынесены в
+// same-file extension, чтобы тело `LogopedistChatView` не превышало SwiftLint
+// type_body_length. Доступ private сохраняется (same-file scope).
+
+extension LogopedistChatView {
 
     // MARK: - Wiring
 

@@ -19,6 +19,14 @@ struct OutfitCard: View {
     private var cardWidth: CGFloat { isCompact ? 100 : 120 }
     private var cardHeight: CGFloat { isCompact ? 136 : 158 }
 
+    // Цвета золотой звёздочки-стоимости (тёмно-золотой текст и нижний край
+    // butter-градиента) — функциональные оттенки бейджа, не UI-chrome;
+    // forbidden_color_literal отключён намеренно для этих определений.
+    // swiftlint:disable:next forbidden_color_literal
+    private static let starCostInk = Color(red: 0.42, green: 0.31, blue: 0.0)
+    // swiftlint:disable:next forbidden_color_literal
+    private static let starPillGradientEnd = Color(red: 1.0, green: 0.78, blue: 0.25)
+
     var body: some View {
         Button(action: action) {
             VStack(spacing: 8) {
@@ -44,10 +52,10 @@ struct OutfitCard: View {
                             HStack(spacing: 3) {
                                 Image(systemName: "star.fill")
                                     .font(.system(size: 9, weight: .bold))
-                                    .foregroundStyle(Color(red: 0.42, green: 0.31, blue: 0.0))
+                                    .foregroundStyle(Self.starCostInk)
                                 Text("\(item.starCost)")
                                     .font(TypographyTokens.caption(10).weight(.bold))
-                                    .foregroundStyle(Color(red: 0.42, green: 0.31, blue: 0.0))
+                                    .foregroundStyle(Self.starCostInk)
                             }
                             .padding(.horizontal, 7)
                             .padding(.vertical, 3)
@@ -55,7 +63,7 @@ struct OutfitCard: View {
                                 Capsule(style: .continuous)
                                     .fill(
                                         LinearGradient(
-                                            colors: [ColorTokens.Brand.butter, Color(red: 1.0, green: 0.78, blue: 0.25)],
+                                            colors: [ColorTokens.Brand.butter, Self.starPillGradientEnd],
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         )

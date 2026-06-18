@@ -75,6 +75,19 @@ struct SpeechVisualizationView: View {
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SpeechVisualization.View")
 
+    // Тёплые светлые оттенки текста поверх тёмного data-viz холста спектрографа —
+    // контент-палитра визуализации (читаемость на тёмном панно), не UI-chrome,
+    // поэтому именованные константы, а не ColorTokens. forbidden_color_literal
+    // отключён намеренно для этого блока определений.
+    // swiftlint:disable forbidden_color_literal
+    private enum VizTextPalette {
+        static let heatLabel = Color(red: 1.0, green: 0.9, blue: 0.84)
+        static let idleTitle = Color(red: 1.0, green: 0.95, blue: 0.90)
+        static let idleSubtitle = Color(red: 0.93, green: 0.84, blue: 0.76)
+        static let legendEnd = Color(red: 0.91, green: 0.80, blue: 0.71)
+    }
+    // swiftlint:enable forbidden_color_literal
+
     init(word: String, targetSound: String) {
         self.word = word
         self.targetSound = targetSound
@@ -330,7 +343,7 @@ struct SpeechVisualizationView: View {
                  ? String(localized: "karaoke.vizcard.practice", defaultValue: "Твой голос · запись")
                  : String(localized: "karaoke.vizcard.listen", defaultValue: "Спектр голоса · образец"))
                 .font(TypographyTokens.caption(13).weight(.heavy))
-                .foregroundStyle(Color(red: 1.0, green: 0.9, blue: 0.84))
+                .foregroundStyle(VizTextPalette.heatLabel)
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
 
@@ -359,7 +372,7 @@ struct SpeechVisualizationView: View {
             Text(String(localized: "karaoke.viz.idle.title",
                         defaultValue: "Нажми микрофон — увидишь свой голос"))
                 .font(TypographyTokens.body(15).weight(.semibold))
-                .foregroundStyle(Color(red: 1.0, green: 0.95, blue: 0.90))
+                .foregroundStyle(VizTextPalette.idleTitle)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
@@ -368,7 +381,7 @@ struct SpeechVisualizationView: View {
             Text(String(localized: "karaoke.viz.idle.subtitle",
                         defaultValue: "Сначала послушай образец, потом повтори сам"))
                 .font(TypographyTokens.caption(12))
-                .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
+                .foregroundStyle(VizTextPalette.idleSubtitle)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
@@ -386,7 +399,7 @@ struct SpeechVisualizationView: View {
         HStack(spacing: SpacingTokens.sp1) {
             Text("karaoke.heat.quiet")
                 .font(TypographyTokens.caption(9).weight(.bold))
-                .foregroundStyle(Color(red: 0.91, green: 0.80, blue: 0.71))
+                .foregroundStyle(VizTextPalette.legendEnd)
             Capsule()
                 .fill(
                     LinearGradient(
@@ -407,7 +420,7 @@ struct SpeechVisualizationView: View {
                 )
             Text("karaoke.heat.loud")
                 .font(TypographyTokens.caption(9).weight(.bold))
-                .foregroundStyle(Color(red: 0.91, green: 0.80, blue: 0.71))
+                .foregroundStyle(VizTextPalette.legendEnd)
         }
     }
 

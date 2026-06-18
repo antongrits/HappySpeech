@@ -280,8 +280,8 @@ final class StoryPicturesBuilder {
     /// Встроенная серия «Ёжик и яблоко» — на случай отсутствия пака в бандле.
     /// COPPA-safe (животные, без людей). Никаких пустых экранов.
     static func fallbackSeries() -> PictureSeries {
-        func link(_ id: String, _ role: StoryLinkRole, _ q: String, _ hint: String, _ kw: [String]) -> StoryLink {
-            StoryLink(id: id, role: role, question: q, answerHint: hint, keywords: kw.map { $0.lowercased() })
+        func link(_ id: String, _ role: StoryLinkRole, _ question: String, _ hint: String, _ kw: [String]) -> StoryLink {
+            StoryLink(id: id, role: role, question: question, answerHint: hint, keywords: kw.map { $0.lowercased() })
         }
         return PictureSeries(
             id: "ps_hedgehog_apple",

@@ -39,6 +39,11 @@ public struct SpectrogramCanvasView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    // Светлый тёплый текст для читаемости на тёмном data-viz холсте спектрограммы.
+    // Контент-цвет визуализации, не UI-chrome (forbidden_color_literal не применим).
+    // swiftlint:disable:next forbidden_color_literal
+    private static let emptyStateText = Color(red: 0.93, green: 0.84, blue: 0.76)
+
     // MARK: - Init
 
     public init(
@@ -109,7 +114,7 @@ public struct SpectrogramCanvasView: View {
             )
             .font(.caption)
             // Светлый тёплый текст для читаемости на тёмном data-viz холсте.
-            .foregroundStyle(Color(red: 0.93, green: 0.84, blue: 0.76))
+            .foregroundStyle(Self.emptyStateText)
         }
     }
 

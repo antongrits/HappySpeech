@@ -391,7 +391,11 @@ final class LiveSoundsInteractor: LiveSoundsBusinessLogic {
             attempts: []
         )
         await sessionPersistence.persistAndSync(dto)
-        logger.info("LiveSounds session persisted score=\(score, privacy: .public) solved=\(self.firstTrySolvedCount, privacy: .public)/\(self.rounds.count, privacy: .public)")
+        let solved = self.firstTrySolvedCount
+        let total = self.rounds.count
+        logger.info(
+            "LiveSounds session persisted score=\(score, privacy: .public) solved=\(solved, privacy: .public)/\(total, privacy: .public)"
+        )
     }
 
     // MARK: - Helpers

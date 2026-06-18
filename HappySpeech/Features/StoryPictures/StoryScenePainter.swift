@@ -24,7 +24,13 @@ struct StoryScenePainter: View {
     }
 
     // MARK: - Palette (тёплая, из open-design)
-
+    //
+    // Это контент-палитра векторных иллюстраций сцен (небо/трава/яблоки/мех
+    // животных), а НЕ UI-chrome. Цвета функциональны и не переводятся в дизайн-
+    // токены тёплой темы — иначе рисунок изменит вид. Литералы вынесены в
+    // именованные константы; правило forbidden_color_literal здесь отключено
+    // намеренно для этого блока определений палитры.
+    // swiftlint:disable forbidden_color_literal
     private static let sky = Color(red: 1.0, green: 0.957, blue: 0.925)        // #FFF4EC
     private static let grass = Color(red: 0.851, green: 0.922, blue: 0.788)    // #D9EBC9
     private static let apple = Color(red: 0.886, green: 0.341, blue: 0.298)    // #E2574C
@@ -39,6 +45,18 @@ struct StoryScenePainter: View {
     private static let milk = Color(red: 0.96, green: 0.96, blue: 0.99)
     private static let carrot = Color(red: 0.95, green: 0.55, blue: 0.20)
     private static let snow = Color(red: 0.92, green: 0.95, blue: 0.98)
+    private static let spike = Color(red: 0.541, green: 0.376, blue: 0.220)
+    private static let nose = Color(red: 0.2, green: 0.15, blue: 0.1)
+    private static let cat = Color(red: 0.80, green: 0.70, blue: 0.58)
+    private static let saucer = Color(red: 0.85, green: 0.85, blue: 0.88)
+    private static let tongue = Color(red: 0.95, green: 0.55, blue: 0.6)
+    private static let squirrelFur = Color(red: 0.78, green: 0.45, blue: 0.25)
+    private static let nut = Color(red: 0.62, green: 0.45, blue: 0.30)
+    private static let hollow = Color(red: 0.35, green: 0.25, blue: 0.16)
+    private static let bunnyFur = Color(red: 0.88, green: 0.85, blue: 0.80)
+    private static let soil = Color(red: 0.45, green: 0.32, blue: 0.20)
+    private static let waterDrop = Color(red: 0.4, green: 0.6, blue: 0.9)
+    // swiftlint:enable forbidden_color_literal
 
     // MARK: - Draw dispatch
 
@@ -88,7 +106,7 @@ struct StoryScenePainter: View {
             p.move(to: CGPoint(x: cx + dx, y: cy))
             p.addLine(to: CGPoint(x: cx + dx + 2 * scale, y: cy - 12 * scale))
         }
-        ctx.stroke(p, with: .color(Color(red: 0.541, green: 0.376, blue: 0.220)), lineWidth: 2.4 * scale)
+        ctx.stroke(p, with: .color(spike), lineWidth: 2.4 * scale)
     }
 
     // MARK: - Hedgehog scenes
@@ -109,7 +127,7 @@ struct StoryScenePainter: View {
         spikes(ctx, cx: cx, cy: cy - bodyR * 0.4, scale: scale)
         circle(ctx, cx - bodyR * 0.7, cy, bodyR * 0.42, furLight)        // мордочка
         circle(ctx, cx - bodyR * 0.78, cy - bodyR * 0.12, bodyR * 0.07, eye)
-        circle(ctx, cx - bodyR * 0.98, cy + bodyR * 0.05, bodyR * 0.08, Color(red: 0.2, green: 0.15, blue: 0.1))
+        circle(ctx, cx - bodyR * 0.98, cy + bodyR * 0.05, bodyR * 0.08, nose)
     }
 
     private static func drawHedgehogTree(_ ctx: GraphicsContext, _ w: CGFloat, _ h: CGFloat, hedgehogX: CGFloat, apples: Bool, shake: Bool) {
@@ -147,7 +165,6 @@ struct StoryScenePainter: View {
     // MARK: - Kitten scenes
 
     private static func kitten(_ ctx: GraphicsContext, cx: CGFloat, cy: CGFloat, r: CGFloat, sleeping: Bool) {
-        let cat = Color(red: 0.80, green: 0.70, blue: 0.58)
         ellipse(ctx, cx, cy, r, r * 0.8, cat)
         circle(ctx, cx, cy - r * 0.7, r * 0.55, cat)
         // Ушки.
@@ -175,7 +192,7 @@ struct StoryScenePainter: View {
     private static func drawKitten(_ ctx: GraphicsContext, _ w: CGFloat, _ h: CGFloat, withMilk: Bool, sleeping: Bool, drinking: Bool) {
         if withMilk {
             // Блюдце с молоком.
-            ellipse(ctx, w * 0.72, h * 0.74, w * 0.10, h * 0.04, Color(red: 0.85, green: 0.85, blue: 0.88))
+            ellipse(ctx, w * 0.72, h * 0.74, w * 0.10, h * 0.04, saucer)
             ellipse(ctx, w * 0.72, h * 0.73, w * 0.075, h * 0.025, milk)
         }
         let cy = sleeping ? h * 0.72 : h * 0.66
@@ -185,7 +202,7 @@ struct StoryScenePainter: View {
             var tongue = Path()
             tongue.move(to: CGPoint(x: w * 0.47, y: h * 0.70))
             tongue.addLine(to: CGPoint(x: w * 0.55, y: h * 0.73))
-            ctx.stroke(tongue, with: .color(Color(red: 0.95, green: 0.55, blue: 0.6)), lineWidth: 3)
+            ctx.stroke(tongue, with: .color(Self.tongue), lineWidth: 3)
         }
         if sleeping {
             // Зззз.
@@ -197,7 +214,7 @@ struct StoryScenePainter: View {
     // MARK: - Squirrel scenes
 
     private static func squirrel(_ ctx: GraphicsContext, cx: CGFloat, cy: CGFloat, r: CGFloat) {
-        let fur = Color(red: 0.78, green: 0.45, blue: 0.25)
+        let fur = squirrelFur
         // Хвост.
         ellipse(ctx, cx + r * 0.9, cy - r * 0.3, r * 0.5, r * 0.9, fur)
         ellipse(ctx, cx, cy, r, r * 0.85, fur)
@@ -211,15 +228,15 @@ struct StoryScenePainter: View {
         switch stage {
         case 0:
             squirrel(ctx, cx: w * 0.40, cy: h * 0.66, r: w * 0.10)
-            circle(ctx, w * 0.25, h * 0.74, w * 0.025, Color(red: 0.62, green: 0.45, blue: 0.30)) // орех
+            circle(ctx, w * 0.25, h * 0.74, w * 0.025, nut) // орех
         case 1:
             appleTree(ctx, w: w, h: h, cx: w * 0.70, apples: false)
             squirrel(ctx, cx: w * 0.40, cy: h * 0.60, r: w * 0.09)
-            circle(ctx, w * 0.34, h * 0.55, w * 0.022, Color(red: 0.62, green: 0.45, blue: 0.30))
+            circle(ctx, w * 0.34, h * 0.55, w * 0.022, nut)
         case 2:
             appleTree(ctx, w: w, h: h, cx: w * 0.55, apples: false)
             // Дупло.
-            ellipse(ctx, w * 0.55, h * 0.42, w * 0.035, h * 0.05, Color(red: 0.35, green: 0.25, blue: 0.16))
+            ellipse(ctx, w * 0.55, h * 0.42, w * 0.035, h * 0.05, hollow)
             squirrel(ctx, cx: w * 0.42, cy: h * 0.50, r: w * 0.08)
         default:
             // Зима: снег.
@@ -228,14 +245,14 @@ struct StoryScenePainter: View {
                 circle(ctx, w * CGFloat(i) / 10 + w * 0.05, h * (0.2 + CGFloat(i % 3) * 0.1), w * 0.008, .white)
             }
             squirrel(ctx, cx: w * 0.45, cy: h * 0.66, r: w * 0.10)
-            circle(ctx, w * 0.30, h * 0.72, w * 0.022, Color(red: 0.62, green: 0.45, blue: 0.30))
+            circle(ctx, w * 0.30, h * 0.72, w * 0.022, nut)
         }
     }
 
     // MARK: - Bunny scenes
 
     private static func bunny(_ ctx: GraphicsContext, cx: CGFloat, cy: CGFloat, r: CGFloat) {
-        let fur = Color(red: 0.88, green: 0.85, blue: 0.80)
+        let fur = bunnyFur
         ellipse(ctx, cx, cy, r, r * 0.85, fur)
         circle(ctx, cx, cy - r * 0.8, r * 0.5, fur)
         // Уши.
@@ -247,7 +264,7 @@ struct StoryScenePainter: View {
 
     private static func drawBunny(_ ctx: GraphicsContext, _ w: CGFloat, _ h: CGFloat, stage: Int) {
         // Грядка.
-        ctx.fill(Path(CGRect(x: w * 0.55, y: h * 0.70, width: w * 0.35, height: h * 0.08)), with: .color(Color(red: 0.45, green: 0.32, blue: 0.20)))
+        ctx.fill(Path(CGRect(x: w * 0.55, y: h * 0.70, width: w * 0.35, height: h * 0.08)), with: .color(soil))
         bunny(ctx, cx: w * 0.30, cy: h * 0.66, r: w * 0.10)
         switch stage {
         case 0:
@@ -259,7 +276,7 @@ struct StoryScenePainter: View {
         case 1:
             // Лейка-капли.
             for i in 0..<4 {
-                circle(ctx, w * (0.60 + CGFloat(i) * 0.06), h * 0.58, w * 0.008, Color(red: 0.4, green: 0.6, blue: 0.9))
+                circle(ctx, w * (0.60 + CGFloat(i) * 0.06), h * 0.58, w * 0.008, waterDrop)
             }
         default:
             // Большая морковка в лапках.
@@ -269,7 +286,14 @@ struct StoryScenePainter: View {
             car.addLine(to: CGPoint(x: w * 0.42, y: h * 0.66))
             car.closeSubpath()
             ctx.fill(car, with: .color(carrot))
-            ctx.stroke(Path { p in p.move(to: CGPoint(x: w * 0.42, y: h * 0.55)); p.addLine(to: CGPoint(x: w * 0.40, y: h * 0.48)) }, with: .color(leaf), lineWidth: 3)
+            ctx.stroke(
+                Path { p in
+                    p.move(to: CGPoint(x: w * 0.42, y: h * 0.55))
+                    p.addLine(to: CGPoint(x: w * 0.40, y: h * 0.48))
+                },
+                with: .color(leaf),
+                lineWidth: 3
+            )
         }
     }
 

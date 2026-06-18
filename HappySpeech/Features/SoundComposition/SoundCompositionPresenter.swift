@@ -101,25 +101,25 @@ final class SoundCompositionPresenter: SoundCompositionPresentationLogic {
 
     /// Мягкая подсказка по признаку звука — БЕЗ слова «неправильно».
     private static func softHint(for type: SoundType, letter: String) -> String {
-        let l = letter.uppercased()
+        let upper = letter.uppercased()
         switch type {
         case .vowel:
             return String(
                 format: String(localized: "soundComposition.hint.vowel %@",
                                defaultValue: "Послушай: «%@» можно петь и тянуть — это гласный."),
-                l
+                upper
             )
         case .hard:
             return String(
                 format: String(localized: "soundComposition.hint.hard %@",
                                defaultValue: "Послушай: «%@» — звук-силач, он твёрдый. Попробуй ещё разок!"),
-                l
+                upper
             )
         case .soft:
             return String(
                 format: String(localized: "soundComposition.hint.soft %@",
                                defaultValue: "Послушай: «%@» — звук-братик, он мягкий. Попробуй ещё разок!"),
-                l
+                upper
             )
         }
     }

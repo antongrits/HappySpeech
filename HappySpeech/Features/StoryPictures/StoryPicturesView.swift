@@ -427,7 +427,12 @@ struct StoryPicturesView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: RadiusTokens.md)
-                .strokeBorder((display.allFrameLinksNamed && !display.isRecording ? ColorTokens.Brand.mint : ColorTokens.Brand.primary).opacity(0.25), lineWidth: 1)
+                .strokeBorder(
+                    (display.allFrameLinksNamed && !display.isRecording
+                        ? ColorTokens.Brand.mint
+                        : ColorTokens.Brand.primary).opacity(0.25),
+                    lineWidth: 1
+                )
         )
     }
 
@@ -621,7 +626,10 @@ struct StoryPicturesView: View {
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
             Text(String(
-                format: String(localized: "storyPictures.share.body %@", defaultValue: "Серия «%@» с озвучкой ребёнка сохранена. Покажите её дома или отправьте специалисту из родительского кабинета."),
+                format: String(
+                    localized: "storyPictures.share.body %@",
+                    defaultValue: "Серия «%@» с озвучкой ребёнка сохранена. Покажите её дома или отправьте специалисту из родительского кабинета."
+                ),
                 display.seriesTitle
             ))
             .font(TypographyTokens.body(15))
