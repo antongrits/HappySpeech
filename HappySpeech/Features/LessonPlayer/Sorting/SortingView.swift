@@ -125,24 +125,40 @@ struct SortingView: View {
         // P1-1 fix (v31 SE 3 audit): на 320pt бины обрезались снизу.
         // Оборачиваем в ScrollView, чтобы в compact-height категории всегда были
         // достижимы; spacings ужаты под compact, header + wordCard + бины помещаются.
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: SpacingTokens.medium) {
-                header
-                wordCard
-                KidSectionLabel(String(localized: "sorting.section.put_in_house"))
-                categoryButtons
-                hintButton
+        //
+        // 2026-06-18 fix: внутри SessionShell (HUD-степпер сверху + footer-pause
+        // снизу) на iPhone SE (375×667pt) корзины-категории уходили под футер и
+        // не попадали в hittable accessibility-дерево — ребёнок видел слово, но
+        // не видел корзин, и срабатывал idle-autoDistribute. GeometryReader
+        // меряет доступную высоту: при compact-height (< 560pt) ужимаем карточку
+        // слова и корзины так, чтобы весь интерактив помещался без скролла.
+        GeometryReader { geo in
+            let isCompact = geo.size.height < Self.compactHeightThreshold
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: isCompact ? SpacingTokens.small : SpacingTokens.medium) {
+                    header(isCompact: isCompact)
+                    wordCard(isCompact: isCompact)
+                    KidSectionLabel(String(localized: "sorting.section.put_in_house"))
+                    categoryButtons(isCompact: isCompact)
+                    hintButton
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, isCompact ? SpacingTokens.small : SpacingTokens.medium)
+                .padding(.bottom, SpacingTokens.large)
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: geo.size.height, alignment: .top)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.medium)
-            .padding(.bottom, SpacingTokens.large)
-            .frame(maxWidth: .infinity)
+            .scrollBounceBehavior(.basedOnSize)
         }
-        .scrollBounceBehavior(.basedOnSize)
     }
 
-    private var header: some View {
-        VStack(spacing: SpacingTokens.small) {
+    /// Высота game-content области, ниже которой включается compact-раскладка.
+    /// На iPhone SE (667pt экран) после HUD-степпера и footer-pause на игру
+    /// остаётся ~470pt — этого мало для полноразмерной карточки + корзин.
+    private static let compactHeightThreshold: CGFloat = 560
+
+    private func header(isCompact: Bool) -> some View {
+        VStack(spacing: isCompact ? SpacingTokens.tiny : SpacingTokens.small) {
             HStack(alignment: .firstTextBaseline) {
                 Text(display.setTitle)
                     .font(TypographyTokens.headline(15))
@@ -152,14 +168,18 @@ struct SortingView: View {
                 Spacer()
                 // D-10 v27 — убран дублирующий внутриигровой таймер:
                 // время сессии уже показывает шапка SessionShell.
-            }
-            HStack(spacing: SpacingTokens.small) {
-                HSProgressBar(value: progressValue, tint: ColorTokens.Brand.primary)
-                    .frame(height: 12)
                 KidStepChip(
                     current: min(display.currentWordIndex + 1, display.words.count),
                     total: display.words.count
                 )
+            }
+            // 2026-06-18: на compact-высоте (SE внутри SessionShell) убираем
+            // дублирующую прогресс-полосу — общий прогресс уже показывает
+            // HUD-степпер SessionShell, а шаг по словам остаётся в KidStepChip.
+            // Это освобождает вертикаль, чтобы корзины попали на экран.
+            if !isCompact {
+                HSProgressBar(value: progressValue, tint: ColorTokens.Brand.primary)
+                    .frame(height: 12)
             }
             // Drag-класс эталон: реплика Ляли вместо голого заголовка.
             HSSpeechBubble(
@@ -208,12 +228,12 @@ struct SortingView: View {
     }
 
     @ViewBuilder
-    private var wordCard: some View {
+    private func wordCard(isCompact: Bool) -> some View {
         if let word = currentWord {
-            VStack(spacing: SpacingTokens.medium) {
-                HSContentSymbol(word.emoji, size: 120)
+            VStack(spacing: isCompact ? SpacingTokens.small : SpacingTokens.medium) {
+                HSContentSymbol(word.emoji, size: isCompact ? 76 : 120)
                 Text(word.word)
-                    .font(TypographyTokens.kidDisplay(40))
+                    .font(TypographyTokens.kidDisplay(isCompact ? 30 : 40))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
@@ -223,7 +243,7 @@ struct SortingView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
             }
-            .padding(SpacingTokens.large)
+            .padding(isCompact ? SpacingTokens.medium : SpacingTokens.large)
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
@@ -253,25 +273,23 @@ struct SortingView: View {
         }
     }
 
-    private var categoryButtons: some View {
-        let columns = display.categories.count <= 2
-            ? [GridItem(.flexible()), GridItem(.flexible())]
-            : [GridItem(.flexible()), GridItem(.flexible())]
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.medium) {
+    private func categoryButtons(isCompact: Bool) -> some View {
+        let columns = [GridItem(.flexible()), GridItem(.flexible())]
+        return LazyVGrid(columns: columns, spacing: isCompact ? SpacingTokens.small : SpacingTokens.medium) {
             ForEach(Array(display.categories.enumerated()), id: \.element.id) { index, category in
-                categoryButton(category)
+                categoryButton(category, isCompact: isCompact)
                     .accessibilityIdentifier("sortingCategory_\(index)")
             }
         }
     }
 
-    private func categoryButton(_ category: SortingCategory) -> some View {
+    private func categoryButton(_ category: SortingCategory, isCompact: Bool) -> some View {
         let isHighlighted = display.highlightedCategoryId == category.id
         return Button {
             handleClassify(categoryId: category.id)
         } label: {
-            VStack(spacing: SpacingTokens.small) {
-                HSContentSymbol(category.emoji, size: 44)
+            VStack(spacing: isCompact ? SpacingTokens.micro : SpacingTokens.small) {
+                HSContentSymbol(category.emoji, size: isCompact ? 36 : 44)
                 Text(category.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -279,8 +297,8 @@ struct SortingView: View {
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.center)
             }
-            .frame(maxWidth: .infinity, minHeight: 132)
-            .padding(.vertical, SpacingTokens.small)
+            .frame(maxWidth: .infinity, minHeight: isCompact ? 88 : 132)
+            .padding(.vertical, isCompact ? SpacingTokens.tiny : SpacingTokens.small)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(isHighlighted

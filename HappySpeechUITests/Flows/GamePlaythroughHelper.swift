@@ -253,6 +253,10 @@ final class GamePlaythroughHelper {
         _ = app.buttons["sortingCategory_0"].waitForExistence(timeout: 25)
         var didProgress = false
         for _ in 0..<rounds {
+            // Корзины существуют, но в compact-height (SE внутри SessionShell)
+            // нижние ряды могут оказаться чуть ниже фолда — подскролливаем к
+            // первой корзине, чтобы она стала hittable (так же поступает ребёнок).
+            ensureSortingCategoryHittable(app)
             let tapped = tapFirstHittable(app, identifierPrefix: "sortingCategory_")
             if tapped {
                 didProgress = true
@@ -264,6 +268,23 @@ final class GamePlaythroughHelper {
         // После всех слов появляется кнопка завершения.
         _ = tapGameNextButtonIfPresent(app)
         return didProgress
+    }
+
+    /// Если корзина-категория существует, но не hittable (ушла под фолд на
+    /// маленьком экране) — подскролливает игровую область вверх, чтобы вернуть
+    /// её в видимую зону. Безопасно: при отсутствии скролл-области ничего не
+    /// делает.
+    private func ensureSortingCategoryHittable(_ app: XCUIApplication) {
+        let firstCategory = app.buttons["sortingCategory_0"]
+        guard firstCategory.exists, !firstCategory.isHittable else { return }
+        let surface = app.scrollViews.firstMatch.exists
+            ? app.scrollViews.firstMatch
+            : app.windows.firstMatch
+        guard surface.exists else { return }
+        for _ in 0..<3 where !firstCategory.isHittable {
+            surface.swipeUp(velocity: .slow)
+            Thread.sleep(forTimeInterval: 0.4)
+        }
     }
 
     // MARK: - Memory
